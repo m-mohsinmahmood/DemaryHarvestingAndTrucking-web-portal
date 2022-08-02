@@ -8,9 +8,12 @@ import { Subject, takeUntil } from 'rxjs';
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployeeDetails implements OnInit, OnDestroy
+export class EmployeeDetailComponent implements OnInit, OnDestroy
 {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    
+    isLoading: boolean = false;
+
 
     /**
      * Constructor
@@ -29,7 +32,8 @@ export class EmployeeDetails implements OnInit, OnDestroy
      * On init
      */
     ngOnInit(): void
-    {
+    
+    {   
     
     }
 

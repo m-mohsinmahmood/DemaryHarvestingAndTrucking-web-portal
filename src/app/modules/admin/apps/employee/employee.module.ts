@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'app/shared/shared.module';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
+import { EmployeeDetailComponent } from './details/details.component';
 // import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.routing';
 import { employeeRoutes } from 'app/modules/admin/apps/employee/employee.routing';
 import { AddComponent } from './add/add.component';
@@ -26,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     declarations: [
       EmployeeComponent,
       EmployeeListComponent,
+      EmployeeDetailComponent,
       AddComponent
     ],
     imports     : [

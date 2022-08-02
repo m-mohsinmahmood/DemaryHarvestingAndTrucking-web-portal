@@ -1,5 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -65,6 +67,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
+        private _router: Router,
         private _inventoryService: InventoryService,
         private _matDialog: MatDialog,
     )
@@ -270,15 +273,15 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the product by id
         this._inventoryService.getProductById(productId)
             .subscribe((product) => {
-
-                // Set the selected product
+                this._router.navigateByUrl('apps/employee/details/'+ productId) 
+                /* // Set the selected product
                 this.selectedProduct = product;
 
                 // Fill the form
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck();
+                this._changeDetectorRef.markForCheck(); */
             });
     }
 

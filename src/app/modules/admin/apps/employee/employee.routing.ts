@@ -1,7 +1,8 @@
 import { Route } from '@angular/router';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
-import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/ecommerce/inventory/inventory.resolvers';
+import { EmployeeDetailComponent } from 'app/modules/admin/apps/employee/details/details.component';
+import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryProductResolver,  InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/ecommerce/inventory/inventory.resolvers';
 
 export const employeeRoutes: Route[] = [
     {
@@ -18,17 +19,25 @@ export const employeeRoutes: Route[] = [
                     tags      : InventoryTagsResolver,
                     vendors   : InventoryVendorsResolver
                 },
-                // children : [
-                //     {
-                //         path         : 'details/:id',
-                //         component    : ,
-                //         resolve      : {
-                //             item: 
-                //         },
-                //         canDeactivate: []
-                //     }
-                // ]
-            }
+                children : [
+                    // {
+                    // path : 'details/:id',
+                    // component : EmployeeDetailComponent,
+                    // resolve : {
+                    //     product     : InventoryProductResolver
+                    //     }
+                    // },
+                    // {
+                    //     path     : 'details/:Id',
+                    //     component: EmployeeDetailComponent,
+                    // },
+                ]
+                
+            },
+            {
+                path     : 'details/:Id',
+                component: EmployeeDetailComponent,
+            },
         ]
         /*children : [
             {

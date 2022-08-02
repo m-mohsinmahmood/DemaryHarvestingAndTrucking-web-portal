@@ -51,7 +51,7 @@
                         <!-- Rows -->
                         <ng-container *ngIf="(products$ | async) as products">
                             <ng-container *ngFor="let product of products; trackBy: trackByFn">
-                                <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                <div class="inventory-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
 
                                     <!-- SKU -->
                                     <div class="hidden md:block truncate">
@@ -60,7 +60,7 @@
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{product.price | currency:'USD':'symbol':'1.2-2'}}
+                                        {{product.price }}
                                     </div>
 
                                     <!-- Price -->
