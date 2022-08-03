@@ -19,18 +19,18 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 40px auto 40px;
+                grid-template-columns: 15% 15% 30% 30% 10%;
 
                 @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
+                    grid-template-columns: 15% 15% 30% 30% 10%;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 15% 15% 30% 30% 10%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 150px 150px auto 200px 96px 96px 72px;
+                    grid-template-columns: 15% 15% 30% 30% 10%;
                 }
             }
         `
