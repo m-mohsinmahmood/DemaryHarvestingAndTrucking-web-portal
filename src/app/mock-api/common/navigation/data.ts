@@ -39,5 +39,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ],
   },
-  
+  {
+    id: "customers",
+    title: "Customers",
+    type: "basic",
+    icon: "heroicons_outline:clipboard-check",
+    link: "/apps/customers",
+  },
 ];
