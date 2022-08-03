@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add-modal',
-  templateUrl: './add-modal.component.html',
-  styleUrls: ['./add-modal.component.scss']
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss']
 })
-export class AddModalComponent implements OnInit {
+export class AddComponent implements OnInit {
 
   form: FormGroup;
   constructor(
-    public matDialogRef: MatDialogRef<AddModalComponent>,
+    public matDialogRef: MatDialogRef<AddComponent>,
     private _formBuilder: FormBuilder
     
     ) { }
@@ -28,8 +28,6 @@ export class AddModalComponent implements OnInit {
     currentEmployee : ['',[]]
 });
   }
-  
-  
   
   onSubmit(): void {
     console.warn('Your order has been submitted', this.form.value);

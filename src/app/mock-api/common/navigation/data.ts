@@ -24,11 +24,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:user",
     children: [
       {
-        id: "apps.ecommerce.inventory",
+        id: "apps.employee",
         title: "Employee List",
         type: "basic",
         icon: "heroicons_outline:user-group",
-        link: "/apps/ecommerce/inventory",
+        link: "/apps/employee",
       },
       {
         id: "apps.file-manager",
