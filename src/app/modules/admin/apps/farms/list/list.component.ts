@@ -7,13 +7,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
-import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
-import { AddCustomer } from '../add/add.component';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/farms/farms.types';
+import { FarmsService } from 'app/modules/admin/apps/farms/farms.service';
+import { AddFarm } from '../add/add.component';
 import { Router } from '@angular/router';
 
 @Component({
-    selector       : 'customers-list',
+    selector       : 'farms-list',
     templateUrl    : './list.component.html',
     styles         : [
         /* language=SCSS */
@@ -39,7 +39,7 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations     : fuseAnimations
 })
-export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
+export class FarmsListComponent implements OnInit, AfterViewInit, OnDestroy
 {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
@@ -67,7 +67,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _customersService: CustomersService,
+        private _farmsService: FarmsService,
         private _matDialog: MatDialog,
         private _router: Router,
     )
@@ -107,7 +107,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         });
 
         // Get the brands
-        this._customersService.brands$
+        this._farmsService.brands$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((brands: InventoryBrand[]) => {
 
@@ -119,7 +119,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             });
 
         // Get the categories
-        this._customersService.categories$
+        this._farmsService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((categories: InventoryCategory[]) => {
 
@@ -131,7 +131,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             });
 
         // Get the pagination
-        this._customersService.pagination$
+        this._farmsService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: InventoryPagination) => {
 
@@ -143,10 +143,10 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             });
 
         // Get the products
-        this.products$ = this._customersService.products$;
+        this.products$ = this._farmsService.products$;
 
         // Get the tags
-        this._customersService.tags$
+        this._farmsService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tags: InventoryTag[]) => {
 
@@ -159,7 +159,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             });
 
         // Get the vendors
-        this._customersService.vendors$
+        this._farmsService.vendors$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((vendors: InventoryVendor[]) => {
 
@@ -178,7 +178,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
                 switchMap((query) => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._customersService.getProducts(0, 10, 'name', 'asc', query);
+                    return this._farmsService.getProducts(0, 10, 'name', 'asc', query);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -220,7 +220,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
                 switchMap(() => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._customersService.getProducts(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
+                    return this._farmsService.getProducts(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -247,7 +247,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     openAddDialog(): void
     {
         // Open the dialog
-        const dialogRef = this._matDialog.open(AddCustomer);
+        const dialogRef = this._matDialog.open(AddFarm);
 
         dialogRef.afterClosed()
                  .subscribe((result) => {
@@ -269,9 +269,9 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             return;
         }
         // Get the product by id
-        this._customersService.getProductById(productId)
+        this._farmsService.getProductById(productId)
             .subscribe((product) => {
-                this._router.navigateByUrl('apps/customers/details/'+ productId) 
+                this._router.navigateByUrl('apps/farms/details/'+ productId) 
                 /* // Set the selected product
                 this.selectedProduct = product;
 
@@ -392,7 +392,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         };
 
         // Create tag on the server
-        this._customersService.createTag(tag)
+        this._farmsService.createTag(tag)
             .subscribe((response) => {
 
                 // Add the tag to the product
@@ -412,7 +412,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         tag.title = event.target.value;
 
         // Update the tag on the server
-        this._customersService.updateTag(tag.id, tag)
+        this._farmsService.updateTag(tag.id, tag)
             .pipe(debounceTime(300))
             .subscribe();
 
@@ -428,7 +428,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     deleteTag(tag: InventoryTag): void
     {
         // Delete the tag from the server
-        this._customersService.deleteTag(tag.id).subscribe();
+        this._farmsService.deleteTag(tag.id).subscribe();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -502,7 +502,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     createProduct(): void
     {
         // Create the product
-        this._customersService.createProduct().subscribe((newProduct) => {
+        this._farmsService.createProduct().subscribe((newProduct) => {
 
             // Go to new product
             this.selectedProduct = newProduct;
@@ -527,7 +527,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         delete product.currentImageIndex;
 
         // Update the product on the server
-        this._customersService.updateProduct(product.id, product).subscribe(() => {
+        this._farmsService.updateProduct(product.id, product).subscribe(() => {
 
             // Show a success message
             this.showFlashMessage('success');
@@ -561,7 +561,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
                 const product = this.selectedProductForm.getRawValue();
 
                 // Delete the product on the server
-                this._customersService.deleteProduct(product.id).subscribe(() => {
+                this._farmsService.deleteProduct(product.id).subscribe(() => {
 
                     // Close the details
                     this.closeDetails();
