@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 @Component({
     selector       : 'customers-list',
@@ -82,15 +82,14 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         // Create the selected product form
         this.selectedProductForm = this._formBuilder.group({
             id               : [''],
-            category         : [''],
+            harvestYear         : [''],
             name             : ['', [Validators.required]],
-            description      : [''],
-            tags             : [[]],
-            sku              : [''],
-            barcode          : [''],
-            brand            : [''],
-            vendor           : [''],
-            stock            : [''],
+            alternateName      : [''],
+            skipInvoiceMath1              : [''],
+            arizonaInvoiceMath          : [''],
+            skipInvoiceMath2            : [''],
+            email           : [''],
+            isActive            : [''],
             reserved         : [''],
             cost             : [''],
             basePrice        : [''],

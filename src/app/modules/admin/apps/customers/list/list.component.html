@@ -35,17 +35,18 @@
                         <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                             <div></div>
                             <div class="hidden md:block" [mat-sort-header]="'sku'">
-                                Employee Id
+                                ID
                             </div>
-                            <div [mat-sort-header]="'name'">Last Name First Name</div>
+                            <div [mat-sort-header]="'name'">Name</div>
                             <div class="hidden sm:block" [mat-sort-header]="'price'">
                                 Harvest Year
+                                
                             </div>
                             <div class="hidden lg:block" [mat-sort-header]="'stock'">
                                 Email
                             </div>
                             <div class="hidden lg:block" [mat-sort-header]="'active'">
-                                Role
+                                Is Active
                             </div>
                             <div class="hidden sm:block">Position</div>
                         </div>
@@ -66,7 +67,7 @@
 
                                     <!-- SKU -->
                                     <div class="hidden md:block truncate">
-                                        {{product.sku}}
+                                        {{product.id}}
                                     </div>
 
                                     <!-- Name -->
@@ -76,22 +77,18 @@
 
                                     <!-- Price -->
                                     <div class="hidden sm:block">
-                                        {{product.price | currency:'USD':'symbol':'1.2-2'}}
+                                        {{product.harvestYear}}
                                     </div>
 
                                     <!-- Stock -->
                                     <div class="hidden lg:flex items-center">
-                                        <div class="min-w-4 ml-2">{{product.stock}}</div>
+                                        <div class="min-w-4 ml-2">{{product.email}}</div>
                                     </div>
 
                                     <!-- Active -->
                                     <div class="hidden lg:block">
-                                        <ng-container *ngIf="product.active">
-                                            <mat-icon class="text-green-400 icon-size-5" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                        </ng-container>
-                                        <ng-container *ngIf="!product.active">
-                                            <mat-icon class="text-gray-400 icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                        </ng-container>
+                                        <div class="min-w-4 ml-2">{{product.isActive}}</div>
+                                    
                                     </div>
 
                                     <!-- Details button -->
