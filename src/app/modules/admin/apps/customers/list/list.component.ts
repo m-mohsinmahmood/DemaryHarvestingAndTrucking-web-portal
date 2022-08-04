@@ -9,6 +9,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
+import { AddCustomer } from '../add/add.component';
+import { Router } from '@angular/router';
+
 @Component({
     selector       : 'customers-list',
     templateUrl    : './list.component.html',
@@ -66,6 +69,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         private _formBuilder: FormBuilder,
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
+        private _router: Router,
     )
     {
     }
@@ -243,19 +247,19 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     openAddDialog(): void
     {
         // Open the dialog
-        // const dialogRef = this._matDialog.open(AddModalComponent);
+        const dialogRef = this._matDialog.open(AddCustomer);
 
-        // dialogRef.afterClosed()
-        //          .subscribe((result) => {
-        //              console.log('Compose dialog was closed!');
-        //          });
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
     /**
      * Toggle product details
      *
      * @param productId
      */
-    toggleDetails(productId: string): void
+     toggleDetails(productId: string): void
     {
         // If the product is already selected...
         if ( this.selectedProduct && this.selectedProduct.id === productId )
@@ -264,22 +268,22 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             this.closeDetails();
             return;
         }
+        console.log("im in list component " + this._customersService);
 
         // Get the product by id
         this._customersService.getProductById(productId)
             .subscribe((product) => {
-
-                // Set the selected product
+                this._router.navigateByUrl('apps/customers/details/'+ productId) 
+                /* // Set the selected product
                 this.selectedProduct = product;
 
                 // Fill the form
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck();
+                this._changeDetectorRef.markForCheck(); */
             });
     }
-
     /**
      * Close the details
      */

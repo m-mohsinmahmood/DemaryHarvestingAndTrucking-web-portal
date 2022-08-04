@@ -17,11 +17,17 @@ import { SharedModule } from 'app/shared/shared.module';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
 import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/list.component';
+import { AddCustomer } from './add/add.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CustomerDetailsComponent } from './details/details.component';
+
 
 @NgModule({
     declarations: [
         CustomersComponent,
-        CustomersListComponent
+        CustomersListComponent,
+        AddCustomer,
+        CustomerDetailsComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),
@@ -38,7 +44,8 @@ import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/li
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule
     ]
 })
 export class CustomersModule

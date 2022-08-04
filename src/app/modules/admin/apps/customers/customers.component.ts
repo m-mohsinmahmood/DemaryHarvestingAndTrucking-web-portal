@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
+
+
 @Component({
     selector       : 'customers',
     templateUrl    : './customers.component.html',
@@ -11,7 +13,9 @@ export class CustomersComponent
     /**
      * Constructor
      */
-    constructor()
+    constructor(        
+        )
     {
     }
+    
 }
