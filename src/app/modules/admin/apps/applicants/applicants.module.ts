@@ -18,6 +18,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
@@ -33,6 +34,7 @@ import { AddComponent } from './add/add.component';
     ],
     imports     : [
         RouterModule.forChild(applicantsRoutes),
+        MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,

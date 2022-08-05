@@ -37,7 +37,15 @@ export class ApplicantsListComponent implements OnInit {
   openAddDialog(): void
   {
       // Open the dialog
-      const dialogRef = this._matDialog.open(AddComponent);
+      const dialogRef = this._matDialog.open(AddComponent, {
+        height: '900vh',
+        disableClose: true,
+        /*position: {
+          top: '0',
+          left: '0'
+        },*/
+        autoFocus: false
+      });
 
       dialogRef.afterClosed()
                .subscribe((result) => {

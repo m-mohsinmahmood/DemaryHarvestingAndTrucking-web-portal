@@ -14,6 +14,7 @@ export class AddComponent implements OnInit {
   horizontalStepperForm: FormGroup;
   showMoreControls: any;
   floatLabelControl = new FormControl('auto' as FloatLabelType);
+  stepperPage: any = 0;
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', []],
@@ -21,7 +22,18 @@ export class AddComponent implements OnInit {
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', []],
   });
-  
+  thirdFormGroup = this._formBuilder.group({
+    secondCtrl: ['', []],
+  });
+  fourthFormGroup = this._formBuilder.group({
+    secondCtrl: ['', []],
+  });
+  fifthFormGroup = this._formBuilder.group({
+    secondCtrl: ['', []],
+  });
+  sixthFormGroup = this._formBuilder.group({
+    secondCtrl: ['', []],
+  });
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -56,6 +68,13 @@ export class AddComponent implements OnInit {
 onSubmit(): void {
   console.warn('Your order has been submitted', this.horizontalStepperForm.value);
   this.horizontalStepperForm.reset();
+}
+
+onStepperNext() {
+  this.stepperPage =+1 ;
+}
+onStepperBack() {
+  this.stepperPage =-1 ;
 }
 
  /**
