@@ -87,6 +87,8 @@ export const appRoutes: Route[] = [
                 {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)},
                 {path: 'customers', loadChildren: () => import('app/modules/admin/apps/customers/customers.module').then(m => m.CustomersModule)},
                 {path: 'applicants', loadChildren: () => import('app/modules/admin/apps/applicants/applicants.module').then(m => m.ApplicantsModule)},
+                {path: 'vehicle', loadChildren: () => import('app/modules/admin/apps/vehicle/vehicle.module').then(m => m.VehicleModule)},
+                {path: 'detail', loadChildren: () => import('app/modules/admin/apps/vehicle/details/details.module').then(m => m.DetailsModule)},
 
             ]},
 
