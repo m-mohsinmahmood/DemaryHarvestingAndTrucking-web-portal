@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/vehicle/inventory/data';
+import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/applicant/data';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ECommerceInventoryMockApi2
+export class ApplicantMockApi
 {
     private _categories: any[] = categoriesData;
     private _brands: any[] = brandsData;
@@ -33,12 +33,26 @@ export class ECommerceInventoryMockApi2
     registerHandlers(): void
     {
         // -----------------------------------------------------------------------------------------------------
+        // @ Categories - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/applicants/categories')
+            .reply(() => [200, cloneDeep(this._categories)]);
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ Brands - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/applicants/brands')
+            .reply(() => [200, cloneDeep(this._brands)]);
+
+        // -----------------------------------------------------------------------------------------------------
         // @ Products - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/vehicle/products', 300)
+            .onGet('api/apps/applicants/products', 300)
             .reply(({request}) => {
-              console.log('object:::::----');
+            //   console.log('object:::::----');
                 // Get available queries
                 const search = request.params.get('search');
                 const sort = request.params.get('sort') || 'name';
@@ -50,18 +64,18 @@ export class ECommerceInventoryMockApi2
                 let products: any[] | null = cloneDeep(this._products);
 
                 // Sort the products
-                // if ( sort === 'sku' || sort === 'name' || sort === 'active' )
-                // {
-                //     products.sort((a, b) => {
-                //         const fieldA = a[sort].toString().toUpperCase();
-                //         const fieldB = b[sort].toString().toUpperCase();
-                //         return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
-                //     });
-                // }
-                // else
-                // {
-                //     products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
-                // }
+                if ( sort === 'sku' || sort === 'name' || sort === 'active' )
+                {
+                    products.sort((a, b) => {
+                        const fieldA = a[sort].toString().toUpperCase();
+                        const fieldB = b[sort].toString().toUpperCase();
+                        return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+                    });
+                }
+                else
+                {
+                    products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
+                }
 
                 // If search exists...
                 if ( search )
@@ -122,7 +136,7 @@ export class ECommerceInventoryMockApi2
         // @ Product - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/vehicle/product')
+            .onGet('api/apps/applicants/product')
             .reply(({request}) => {
                 console.log('object-2');
                 // Get the id from the params
@@ -142,7 +156,7 @@ export class ECommerceInventoryMockApi2
         // @ Product - POST
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPost('api/apps/vehicle/product')
+            .onPost('api/apps/applicants/product')
             .reply(() => {
                 console.log('object-3');
                 // Generate a new product
@@ -179,7 +193,7 @@ export class ECommerceInventoryMockApi2
         // @ Product - PATCH
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPatch('api/apps/vehicle/product')
+            .onPatch('api/apps/applicants/product')
             .reply(({request}) => {
                 console.log('object-4');
                 // Get the id and product
@@ -210,7 +224,7 @@ export class ECommerceInventoryMockApi2
         // @ Product - DELETE
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onDelete('api/apps/vehicle/product')
+            .onDelete('api/apps/applicants/product')
             .reply(({request}) => {
 
                 // Get the id
@@ -229,5 +243,100 @@ export class ECommerceInventoryMockApi2
                 return [200, true];
             });
 
-            }
+        // -----------------------------------------------------------------------------------------------------
+        // @ Tags - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/applicants/tags')
+            .reply(() => [200, cloneDeep(this._tags)]);
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ Tags - POST
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPost('api/apps/applicants/tag')
+            .reply(({request}) => {
+
+                // Get the tag
+                const newTag = cloneDeep(request.body.tag);
+
+                // Generate a new GUID
+                newTag.id = FuseMockApiUtils.guid();
+
+                // Unshift the new tag
+                this._tags.unshift(newTag);
+
+                // Return the response
+                return [200, newTag];
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ Tags - PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/apps/applicants/tag')
+            .reply(({request}) => {
+
+                // Get the id and tag
+                const id = request.body.id;
+                const tag = cloneDeep(request.body.tag);
+
+                // Prepare the updated tag
+                let updatedTag = null;
+
+                // Find the tag and update it
+                this._tags.forEach((item, index, tags) => {
+
+                    if ( item.id === id )
+                    {
+                        // Update the tag
+                        tags[index] = assign({}, tags[index], tag);
+
+                        // Store the updated tag
+                        updatedTag = tags[index];
+                    }
+                });
+
+                // Return the response
+                return [200, updatedTag];
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ Tag - DELETE
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onDelete('api/apps/applicants/tag')
+            .reply(({request}) => {
+
+                // Get the id
+                const id = request.params.get('id');
+
+                // Find the tag and delete it
+                this._tags.forEach((item, index) => {
+
+                    if ( item.id === id )
+                    {
+                        this._tags.splice(index, 1);
+                    }
+                });
+
+                // Get the products that have the tag
+                const productsWithTag = this._products.filter(product => product.tags.indexOf(id) > -1);
+
+                // Iterate through them and delete the tag
+                productsWithTag.forEach((product) => {
+                    product.tags.splice(product.tags.indexOf(id), 1);
+                });
+
+                // Return the response
+                return [200, true];
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ Vendors - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/applicants/vendors')
+            .reply(() => [200, cloneDeep(this._vendors)]);
+    }
 }

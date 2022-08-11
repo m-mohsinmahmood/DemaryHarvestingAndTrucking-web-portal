@@ -107,83 +107,37 @@ export const vendors = [
 ];
 export const products = [
     {
-        id         : '7eb7cdddd859-1347-4317-968746876b6-9476a7e2ba3dc-dd',
-        vehicleName   : 'Honda MG-900',
-        assigneName       : 'John',
-        companyName: 'Michigan-Travels',
-        status:true,
-        assignDate:'1-1-111',
-        harvestYear: "2022",
-        fuelStart:"30",
-        fuelEnd:"10",
-        thumbnail  : 'assets/images/apps/ecommerce/products/truck3.jpg',
-        images     : [
-            'assets/images/apps/ecommerce/products/truck3.jpg',
-            'assets/images/apps/ecommerce/products/truck3.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-02.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-03.jpg'
-        ],
-        condition : [
-            {
-                id  : 'e1789f32-9475-43e7-9256-451d2e3a2282',
-                name: 'New',
-                // slug: 'benton'
-            },
-            {
-                id  : '61d52c2a-8947-4a2c-8c35-f36baef45b96',
-                name: 'Purchased',
-                // slug: 'capmia'
-            },
-            {
-                id  : 'f9987124-7ada-4b93-bef7-35280b3ddbd7',
-                name: 'Old',
-                // slug: 'lara'
-            },
-            {
-                id  : '5913ee46-a497-41db-a118-ee506011529f',
-                name: 'Borrowed',
-                // slug: 'premera'
-            },
-            {
-                id  : '2c4d98d8-f334-4125-9596-862515f5526b',
-                name: 'Dead',
-                // slug: 'zeon'
-            }
-        ],
-        type: [
-            {
-                id      : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
-                parentId: null,
-                name    : 'Trucks',
-                // slug    : 'mens'
-            },
-            {
-                id      : '07986d93-d4eb-4de1-9448-2538407f7254',
-                parentId: null,
-                name    : 'Cartwheel',
-                // slug    : 'ladies'
-            },
-            {
-                id      : 'ad12aa94-3863-47f8-acab-a638ef02a3e9',
-                parentId: null,
-                name    : 'Loader',
-                // slug    : 'unisex'
-            }
-        ],
-        typeValue:"Loader"
-
-        // city:'Lahore',
-        // role:'Engineer',
-        // position:'Initial',
-        // salary:'200',
-        // currentEmployee:'yes',
-        //     tags       : [
+        employee_id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
+        firstName   : 'Haris',
+        lastName       : 'Mahmood',
+        email: 'h@h.com',
+        address:'Johar Town',
+        city:'Lahore',
+        harvestYear:'2-2-2222',
+        role:'Engineer',
+        position:'Level-1',
+        salary:'1000$',
+        currentEmployee:'Yes',
+        
+        // tags       : [
         //     '167190fa-51b4-45fc-a742-8ce1b33d24ea',
         //     '7d6dd47e-7472-4f8b-93d4-46c114c44533',
         //     '8837b93f-388b-43cc-851d-4ca8f23f3a61',
         //     '2300ac48-f268-466a-b765-8b878b6e14a7',
         //     'b1286f3a-e2d0-4237-882b-f0efc0819ec3'
         // ],
+        // sku        : '337',
+        // barcode    : '8346201275534',
+        // brand      : '61d52c2a-8947-4a2c-8c35-f36baef45b96',
+        // vendor     : '998b0c07-abfd-4ba3-8de1-7563ef3c4d57',
+        // stock      : 30,
+        // reserved   : 5,
+        // cost       : 450.18,
+        // basePrice  : 1036,
+        // taxPercent : 30,
+        // // price      : 1346.8,
+        // price: "2022 - Segment A - 2022 Harvest Season 9",
+        // weight     : 0.61,
         // thumbnail  : 'assets/images/apps/ecommerce/products/truck4.jpg',
         // images     : [
         //     'assets/images/apps/ecommerce/products/truck4.jpg',
@@ -191,175 +145,29 @@ export const products = [
         //     'assets/images/apps/ecommerce/products/watch-01-02.jpg',
         //     'assets/images/apps/ecommerce/products/watch-01-03.jpg'
         // ],
+        // active     : true
     },
-
-    {
-        id         : '7eb7cdddd859-1347-4317-968746876b6-9476a7e2ba09893dc-dd',
-        vehicleName   : 'Honda MG-900-2',
-        assigneName       : 'John-2',
-        companyName: 'Michigan-Travels-2',
-        status:true,
-        assignDate:'2-2-222',
-        harvestYear: "2022-2",
-        fuelStart:"30",
-        fuelEnd:"10",
-        thumbnail  : 'assets/images/apps/ecommerce/products/truck2.jpg',
-        images     : [
-            'assets/images/apps/ecommerce/products/truck2.jpg',
-            'assets/images/apps/ecommerce/products/truck2.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-02.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-03.jpg'
-        ],
-        condition : [
-            {
-                id  : 'e1789f32-9475-43e7-9256-451d2e3a2282',
-                name: 'New',
-                // slug: 'benton'
-            },
-            {
-                id  : '61d52c2a-8947-4a2c-8c35-f36baef45b96',
-                name: 'Purchased',
-                // slug: 'capmia'
-            },
-            {
-                id  : 'f9987124-7ada-4b93-bef7-35280b3ddbd7',
-                name: 'Old',
-                // slug: 'lara'
-            },
-            {
-                id  : '5913ee46-a497-41db-a118-ee506011529f',
-                name: 'Borrowed',
-                // slug: 'premera'
-            },
-            {
-                id  : '2c4d98d8-f334-4125-9596-862515f5526b',
-                name: 'Dead',
-                // slug: 'zeon'
-            }
-        ],
-        type: [
-            {
-                id      : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
-                parentId: null,
-                name    : 'Trucks',
-                // slug    : 'mens'
-            },
-            {
-                id      : '07986d93-d4eb-4de1-9448-2538407f7254',
-                parentId: null,
-                name    : 'Cartwheel',
-                // slug    : 'ladies'
-            },
-            {
-                id      : 'ad12aa94-3863-47f8-acab-a638ef02a3e9',
-                parentId: null,
-                name    : 'Loader',
-                // slug    : 'unisex'
-            }
-        ],
-        typeValue:[{id:'b899ec30-b85a-40ab-bb1f-18a596d5c6de',name:'Cartwheeeeel',}]
-    },
-
-    {
-        id         : '7eb7cdddd859-1347-4317-968746876b6-9476a7e2ba3dc-dd',
-        vehicleName   : 'Honda MG-900-3',
-        assigneName       : 'John-3',
-        companyName: 'Michigan-Travels-3',
-        status:true,
-        assignDate:'3-3-3333',
-        harvestYear: "2022",
-        fuelStart:"30",
-        fuelEnd:"10",
-        thumbnail  : 'assets/images/apps/ecommerce/products/truck4.jpg',
-        images     : [
-            'assets/images/apps/ecommerce/products/truck4.jpg',
-            'assets/images/apps/ecommerce/products/truck4.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-02.jpg',
-            'assets/images/apps/ecommerce/products/watch-01-03.jpg'
-        ],
-        condition : [
-            {
-                id  : 'e1789f32-9475-43e7-9256-451d2e3a2282',
-                name: 'New',
-                // slug: 'benton'
-            },
-            {
-                id  : '61d52c2a-8947-4a2c-8c35-f36baef45b96',
-                name: 'Purchased',
-                // slug: 'capmia'
-            },
-            {
-                id  : 'f9987124-7ada-4b93-bef7-35280b3ddbd7',
-                name: 'Old',
-                // slug: 'lara'
-            },
-            {
-                id  : '5913ee46-a497-41db-a118-ee506011529f',
-                name: 'Borrowed',
-                // slug: 'premera'
-            },
-            {
-                id  : '2c4d98d8-f334-4125-9596-862515f5526b',
-                name: 'Dead',
-                // slug: 'zeon'
-            }
-        ],
-        type: [
-            {
-                id      : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
-                parentId: null,
-                name    : 'Trucks',
-                // slug    : 'mens'
-            },
-            {
-                id      : '07986d93-d4eb-4de1-9448-2538407f7254',
-                parentId: null,
-                name    : 'Cartwheel',
-                // slug    : 'ladies'
-            },
-            {
-                id      : 'ad12aa94-3863-47f8-acab-a638ef02a3e9',
-                parentId: null,
-                name    : 'Loader',
-                // slug    : 'unisex'
-            }
-        ],
-        typeValue:["truck"]
-    }
-
     // {
-    //     id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
-    //     category   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
-    //     name       : 'Truck 9',
-    //     description: 'Consequat esse in culpa commodo anim. Et ullamco anim amet est. Sunt dolore ex occaecat officia anim. In sit minim laborum nostrud. Consequat ex do velit voluptate do exercitation est adipisicing quis velit.',
-    //     tags       : [
+    //     employee_id         : '7eb7cdddd859-1347-4317-96b6-9476a7e2ba3c-dd',
+    //     firstName   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6dedddd',
+    //     lastName       : 'Truck 9-dd',
+    //     email: 'ddddddddddddd',
+    //     address:'llll-dddd',
+    //     city:'pppp-dd',
+    //     harvestYear:'ppppp-ddd',
+    //     role:'ppppp-ddd',
+    //     position:'ppppp-ddd',
+    //     salary:'ppppp-ddd',
+    //     currentEmployee:'ppppp-ddd',
+    //         tags       : [
     //         '167190fa-51b4-45fc-a742-8ce1b33d24ea',
     //         '7d6dd47e-7472-4f8b-93d4-46c114c44533',
     //         '8837b93f-388b-43cc-851d-4ca8f23f3a61',
     //         '2300ac48-f268-466a-b765-8b878b6e14a7',
     //         'b1286f3a-e2d0-4237-882b-f0efc0819ec3'
     //     ],
-    //     sku        : '337',
-    //     barcode    : '8346201275534',
-    //     brand      : '61d52c2a-8947-4a2c-8c35-f36baef45b96',
-    //     vendor     : '998b0c07-abfd-4ba3-8de1-7563ef3c4d57',
-    //     stock      : 30,
-    //     reserved   : 5,
-    //     cost       : 450.18,
-    //     basePrice  : 1036,
-    //     taxPercent : 30,
-    //     // price      : 1346.8,
-    //     price: "2022 - Segment A - 2022 Harvest Season 9",
-    //     weight     : 0.61,
-    //     thumbnail  : 'assets/images/apps/ecommerce/products/truck4.jpg',
-    //     images     : [
-    //         'assets/images/apps/ecommerce/products/truck4.jpg',
-    //         'assets/images/apps/ecommerce/products/truck4.jpg',
-    //         'assets/images/apps/ecommerce/products/watch-01-02.jpg',
-    //         'assets/images/apps/ecommerce/products/watch-01-03.jpg'
-    //     ],
-    //     active     : true
-    // },
+    // }
+
     // {
     //     id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
     //     category   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
@@ -426,8 +234,6 @@ export const products = [
     //     ],
     //     active     : true
     // },
-
-
     // {
     //     id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
     //     category   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
@@ -525,11 +331,10 @@ export const products = [
     //     ],
     //     active     : true
     // },
-    
 
 
 
-
+    // {
     //     id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
     //     category   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
     //     name       : 'Truck 3',
