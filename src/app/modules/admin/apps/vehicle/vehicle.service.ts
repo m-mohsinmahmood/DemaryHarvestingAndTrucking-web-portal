@@ -32,18 +32,18 @@ export class VehicleService
     /**
      * Getter for brands
      */
-    get brands$(): Observable<VehicleBrand[]>
-    {
-        return this._brands.asObservable();
-    }
+    // get brands$(): Observable<VehicleBrand[]>
+    // {
+    //     return this._brands.asObservable();
+    // }
 
     /**
      * Getter for categories
      */
-    get categories$(): Observable<VehicleCategory[]>
-    {
-        return this._categories.asObservable();
-    }
+    // get categories$(): Observable<VehicleCategory[]>
+    // {
+    //     return this._categories.asObservable();
+    // }
 
     /**
      * Getter for pagination
@@ -72,18 +72,18 @@ export class VehicleService
     /**
      * Getter for tags
      */
-    get tags$(): Observable<VehicleTag[]>
-    {
-        return this._tags.asObservable();
-    }
+    // get tags$(): Observable<VehicleTag[]>
+    // {
+    //     return this._tags.asObservable();
+    // }
 
     /**
      * Getter for vendors
      */
-    get vendors$(): Observable<VehicleVendor[]>
-    {
-        return this._vendors.asObservable();
-    }
+    // get vendors$(): Observable<VehicleVendor[]>
+    // {
+    //     return this._vendors.asObservable();
+    // }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -92,28 +92,28 @@ export class VehicleService
     /**
      * Get brands
      */
-    getBrands(): Observable<VehicleBrand[]>
-    {
-        // console.log('ww');
-        return this._httpClient.get<VehicleBrand[]>('api/apps/vehicle/brands').pipe(
-            tap((brands) => {
-                this._brands.next(brands);
-            })
-        );
-    }
+    // getBrands(): Observable<VehicleBrand[]>
+    // {
+    //     // console.log('ww');
+    //     return this._httpClient.get<VehicleBrand[]>('api/apps/vehicle/brands').pipe(
+    //         tap((brands) => {
+    //             this._brands.next(brands);
+    //         })
+    //     );
+    // }
 
     /**
      * Get categories
      */
-    getCategories(): Observable<VehicleCategory[]>
-    {
-        // console.log('qq');
-        return this._httpClient.get<VehicleCategory[]>('api/apps/vehicle/categories').pipe(
-            tap((categories) => {
-                this._categories.next(categories);
-            })
-        );
-    }
+    // getCategories(): Observable<VehicleCategory[]>
+    // {
+    //     // console.log('qq');
+    //     return this._httpClient.get<VehicleCategory[]>('api/apps/vehicle/categories').pipe(
+    //         tap((categories) => {
+    //             this._categories.next(categories);
+    //         })
+    //     );
+    // }
 
     /**
      * Get products
@@ -272,36 +272,36 @@ export class VehicleService
     /**
      * Get tags
      */
-    getTags(): Observable<VehicleTag[]>
-    {
-        return this._httpClient.get<VehicleTag[]>('api/apps/vehicle/tags').pipe(
-            tap((tags) => {
-                this._tags.next(tags);
-            })
-        );
-    }
+    // getTags(): Observable<VehicleTag[]>
+    // {
+    //     return this._httpClient.get<VehicleTag[]>('api/apps/vehicle/tags').pipe(
+    //         tap((tags) => {
+    //             this._tags.next(tags);
+    //         })
+    //     );
+    // }
 
     /**
      * Create tag
      *
      * @param tag
      */
-    createTag(tag: VehicleTag): Observable<VehicleTag>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.post<VehicleTag>('api/apps/vehicle/tag', {tag}).pipe(
-                map((newTag) => {
+    // createTag(tag: VehicleTag): Observable<VehicleTag>
+    // {
+    //     return this.tags$.pipe(
+    //         take(1),
+    //         switchMap(tags => this._httpClient.post<VehicleTag>('api/apps/vehicle/tag', {tag}).pipe(
+    //             map((newTag) => {
 
-                    // Update the tags with the new tag
-                    this._tags.next([...tags, newTag]);
+    //                 // Update the tags with the new tag
+    //                 this._tags.next([...tags, newTag]);
 
-                    // Return new tag from observable
-                    return newTag;
-                })
-            ))
-        );
-    }
+    //                 // Return new tag from observable
+    //                 return newTag;
+    //             })
+    //         ))
+    //     );
+    // }
 
     /**
      * Update the tag
@@ -309,92 +309,92 @@ export class VehicleService
      * @param id
      * @param tag
      */
-    updateTag(id: string, tag: VehicleTag): Observable<VehicleTag>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.patch<VehicleTag>('api/apps/vehicle/tag', {
-                id,
-                tag
-            }).pipe(
-                map((updatedTag) => {
+    // updateTag(id: string, tag: VehicleTag): Observable<VehicleTag>
+    // {
+    //     return this.tags$.pipe(
+    //         take(1),
+    //         switchMap(tags => this._httpClient.patch<VehicleTag>('api/apps/vehicle/tag', {
+    //             id,
+    //             tag
+    //         }).pipe(
+    //             map((updatedTag) => {
 
-                    // Find the index of the updated tag
-                    const index = tags.findIndex(item => item.id === id);
+    //                 // Find the index of the updated tag
+    //                 const index = tags.findIndex(item => item.id === id);
 
-                    // Update the tag
-                    tags[index] = updatedTag;
+    //                 // Update the tag
+    //                 tags[index] = updatedTag;
 
-                    // Update the tags
-                    this._tags.next(tags);
+    //                 // Update the tags
+    //                 this._tags.next(tags);
 
-                    // Return the updated tag
-                    return updatedTag;
-                })
-            ))
-        );
-    }
+    //                 // Return the updated tag
+    //                 return updatedTag;
+    //             })
+    //         ))
+    //     );
+    // }
 
     /**
      * Delete the tag
      *
      * @param id
      */
-    deleteTag(id: string): Observable<boolean>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.delete('api/apps/vehicle/tag', {params: {id}}).pipe(
-                map((isDeleted: boolean) => {
+    // deleteTag(id: string): Observable<boolean>
+    // {
+    //     return this.tags$.pipe(
+    //         take(1),
+    //         switchMap(tags => this._httpClient.delete('api/apps/vehicle/tag', {params: {id}}).pipe(
+    //             map((isDeleted: boolean) => {
 
-                    // Find the index of the deleted tag
-                    const index = tags.findIndex(item => item.id === id);
+    //                 // Find the index of the deleted tag
+    //                 const index = tags.findIndex(item => item.id === id);
 
-                    // Delete the tag
-                    tags.splice(index, 1);
+    //                 // Delete the tag
+    //                 tags.splice(index, 1);
 
-                    // Update the tags
-                    this._tags.next(tags);
+    //                 // Update the tags
+    //                 this._tags.next(tags);
 
-                    // Return the deleted status
-                    return isDeleted;
-                }),
-                filter(isDeleted => isDeleted),
-                switchMap(isDeleted => this.products$.pipe(
-                    take(1),
-                    map((products) => {
+    //                 // Return the deleted status
+    //                 return isDeleted;
+    //             }),
+    //             filter(isDeleted => isDeleted),
+    //             switchMap(isDeleted => this.products$.pipe(
+    //                 take(1),
+    //                 map((products) => {
 
-                        // Iterate through the contacts
-                        products.forEach((product) => {
+    //                     // Iterate through the contacts
+    //                     products.forEach((product) => {
 
-                            const tagIndex = product.tags.findIndex(tag => tag === id);
+    //                         const tagIndex = product.tags.findIndex(tag => tag === id);
 
-                            // If the contact has the tag, remove it
-                            if ( tagIndex > -1 )
-                            {
-                                product.tags.splice(tagIndex, 1);
-                            }
-                        });
+    //                         // If the contact has the tag, remove it
+    //                         if ( tagIndex > -1 )
+    //                         {
+    //                             product.tags.splice(tagIndex, 1);
+    //                         }
+    //                     });
 
-                        // Return the deleted status
-                        return isDeleted;
-                    })
-                ))
-            ))
-        );
-    }
+    //                     // Return the deleted status
+    //                     return isDeleted;
+    //                 })
+    //             ))
+    //         ))
+    //     );
+    // }
 
     /**
      * Get vendors
      */
-    getVendors(): Observable<VehicleVendor[]>
-    {
-        return this._httpClient.get<VehicleVendor[]>('api/apps/vehicle/vendors').pipe(
-            tap((vendors) => {
-                this._vendors.next(vendors);
-            })
-        );
-    }
+    // getVendors(): Observable<VehicleVendor[]>
+    // {
+    //     return this._httpClient.get<VehicleVendor[]>('api/apps/vehicle/vendors').pipe(
+    //         tap((vendors) => {
+    //             this._vendors.next(vendors);
+    //         })
+    //     );
+    // }
 
     /**
      * Update the avatar of the given contact

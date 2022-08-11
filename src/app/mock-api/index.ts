@@ -35,5 +35,5 @@ export const mockApiServices = [
     ProjectMockApi,
     SearchMockApi,
     ShortcutsMockApi,
-    UserMockApi
+    UserMockApi,
 ];

@@ -44,6 +44,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
             icon: "heroicons_outline:document",
             link: "/apps/file-manager",
           },
+  //         {
+  //   id: "applicants",
+  //   title: "Applicants",
+  //   type: "basic",
+  //   icon: "heroicons_outline:user-circle",
+  //   link: "/apps/applicants",  
+  // },
         ],
       
        
