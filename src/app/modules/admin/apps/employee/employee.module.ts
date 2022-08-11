@@ -21,6 +21,7 @@ import { EmployeeDetailComponent } from './details/details.component';
 import { employeeRoutes } from 'app/modules/admin/apps/employee/employee.routing';
 import { AddComponent } from './add/add.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UpdateComponent } from './update/update.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatDialogModule } from '@angular/material/dialog';
       EmployeeComponent,
       EmployeeListComponent,
       EmployeeDetailComponent,
-      AddComponent
+      AddComponent,
+      UpdateComponent
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

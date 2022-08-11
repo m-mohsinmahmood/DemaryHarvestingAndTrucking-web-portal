@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FloatLabelType } from '@angular/material/form-field';
-
+import { MatStepper } from '@angular/material/stepper';
+import {CdkStepperModule} from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-add',
@@ -70,13 +71,17 @@ onSubmit(): void {
   this.horizontalStepperForm.reset();
 }
 
-onStepperNext() {
-  this.stepperPage =+1 ;
+onStepperNext(stepper: MatStepper) {
+  this.stepperPage++ ;
+  stepper.next();
 }
-onStepperBack() {
-  this.stepperPage =-1 ;
+onStepperBack(stepper: MatStepper) {
+  this.stepperPage-- ;
+  stepper.previous();
 }
-
+selectionChange (event) {
+event.selectedIndex > 0  ? this.stepperPage++ : event.selectedIndex == 0 ? this.stepperPage = 0 : '';
+}
  /**
    * Save and close
    */

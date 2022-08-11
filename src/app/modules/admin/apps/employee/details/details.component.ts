@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateComponent } from '../update/update.component';
+
 
 @Component({
     selector       : 'employee-details',
@@ -20,6 +24,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
+        private _matDialog: MatDialog,
+        private _formBuilder: FormBuilder
     )
     {
     }
@@ -50,6 +56,15 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
+    openUpdateDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent);
+  
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+      });
+    }
     /**/
 }

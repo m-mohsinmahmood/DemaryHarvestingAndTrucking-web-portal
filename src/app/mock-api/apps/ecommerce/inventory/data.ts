@@ -111,6 +111,7 @@ export const products = [
             sku       : '3111',     
             name      : 'Bueno Trevor',
             price      : 2022,
+            cost       : ["Mechanic","Dispatcher"],
             stock      : "BuenoTrevor@gmail.com",
             active     : true
         
@@ -120,6 +121,7 @@ export const products = [
             sku       : '2425',     
             name      : 'Roy Fitz',
             price      : 2022,
+            cost       : ["Crew Chief","Dispatcher"],
             stock      : "royfitz@gmail.com",
             active     : true
         
@@ -129,6 +131,7 @@ export const products = [
             sku       : '2463',     
             name      : 'Phil Foden',
             price      : 2022,
+            cost       : "Mechanic",
             stock      : 'philFoden@gmail.com',
             active     : true
         
@@ -138,6 +141,7 @@ export const products = [
             sku       : '2365',     
             name      : 'Clark Johnson',
             price      : 2022,
+            cost       : "Mechanic",
             stock      : 'clarkjohnson@gmail.com',
             active     : true
         
@@ -147,6 +151,7 @@ export const products = [
             sku       : '2251',     
             name      : 'Peter Parker',
             price      : 2022,
+            cost       : "Mechanic",
             stock      : 'peterparker@gmail.com',
             active     : true
         
@@ -156,6 +161,7 @@ export const products = [
             sku       : '2241',     
             name      : 'Rick Flair',
             price      : 2022,
+            cost       : "Dispatcher",
             stock      : 'rickflair@gmail.com',
             active     : true
         
@@ -165,6 +171,7 @@ export const products = [
             sku       : '2000',     
             name      : 'Benjamin Mendy',
             price      : 2022,
+            cost       : ["Mechanic","Recruiter"],
             stock      : 'benjaminmendy@gmail.com',
             active     : true
         
@@ -174,6 +181,7 @@ export const products = [
             sku       : '2512',     
             name      : 'Zlatan Ibrahimovic',
             price      : 2022,
+            cost       : "Dispatcher",
             stock      : 'zlatan@gmail.com',
             active     : true
         
@@ -183,6 +191,7 @@ export const products = [
             sku       : '2473',     
             name      : 'Uncle Ben',
             price      : 2022,
+            cost       : "Dispatcher",
             stock      : 'ben@gmail.com',
             active     : true
         
@@ -192,6 +201,7 @@ export const products = [
             sku       : '3111',     
             name      : 'Bueno Trevor',
             price      : 2022,
+            cost       : "Recruiter",
             stock      : "BuenoTrevor@gmail.com",
             active     : true
         
@@ -201,6 +211,7 @@ export const products = [
             sku       : '2425',     
             name      : 'Roy Fitz',
             price      : 2022,
+            cost       : "Cheif Crew",
             stock      : "royfitz@gmail.com",
             active     : true
         
@@ -210,6 +221,7 @@ export const products = [
             sku       : '2463',     
             name      : 'Phil Foden',
             price      : 2022,
+            cost       : ["Crew Chief","Dispatcher"],
             stock      : 'philFoden@gmail.com',
             active     : true
         
@@ -219,6 +231,7 @@ export const products = [
             sku       : '2365',     
             name      : 'Clark Johnson',
             price      : 2022,
+            cost       : "Cheif Crew",
             stock      : 'clarkjohnson@gmail.com',
             active     : true
         
@@ -228,6 +241,7 @@ export const products = [
             sku       : '2251',     
             name      : 'Peter Parker',
             price      : 2022,
+            cost       : "Recruiter",
             stock      : 'peterparker@gmail.com',
             active     : true
         
@@ -237,6 +251,7 @@ export const products = [
             sku       : '2241',     
             name      : 'Rick Flair',
             price      : 2022,
+            cost       : ["Mechanic","Dispatcher"],
             stock      : 'rickflair@gmail.com',
             active     : true
         
@@ -246,6 +261,7 @@ export const products = [
             sku       : '2000',     
             name      : 'Benjamin Mendy',
             price      : 2022,
+            cost       : ["Mechanic","Dispatcher"],
             stock      : 'benjaminmendy@gmail.com',
             active     : true
         
@@ -255,15 +271,17 @@ export const products = [
             sku       : '2512',     
             name      : 'Zlatan Ibrahimovic',
             price      : 2022,
+            cost       : "Cheif Crew",
             stock      : 'zlatan@gmail.com',
             active     : true
         
         },
         {   
-            id        : '7eb7c859-1347-4317-96b6-968765',
-            sku       : '2473',     
-            name      : 'Uncle Ben',
+            id         : '7eb7c859-1347-4317-96b6-968765',
+            sku        : '2473',     
+            name       : 'Uncle Ben',
             price      : 2022,
+            cost       : "Cheif Crew",
             stock      : 'ben@gmail.com',
             active     : true
         

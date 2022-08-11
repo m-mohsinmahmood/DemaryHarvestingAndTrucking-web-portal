@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -8,6 +8,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+
+  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors']
 
   form: FormGroup;
   constructor(

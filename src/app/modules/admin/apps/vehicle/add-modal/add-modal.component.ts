@@ -34,7 +34,6 @@ export class AddModalComponent implements OnInit {
   
   
   onSubmit(): void {
-  debugger;
     console.warn('Thanks for submitting:', this.form.value);
     this.form.reset();
   }

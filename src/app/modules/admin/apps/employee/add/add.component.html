@@ -24,11 +24,15 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Role</mat-label>
-            <mat-select formControlName="role">
-                <mat-option value="one">First role</mat-option>
-                <mat-option value="two">Second role</mat-option>
-                <mat-option value="third">third role</mat-option>
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="role" multiple>
+                <mat-select-trigger>
+                    {{this.form.controls.role.value?.[0] || ''}}
+                    <span *ngIf="(this.form.controls.role.value?.length || 0) > 1" class="example-additional-selection">
+                  (+{{(this.form.controls.role.value?.length || 0) - 1}} {{this.form.controls.role.value?.length === 2 ? 'other' : 'others'}})
+                </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let topping of roles" [value]="topping">{{topping}}</mat-option>
             </mat-select>
         </mat-form-field>
 
