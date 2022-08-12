@@ -40,10 +40,10 @@
                                 Harvest Year
                             </div>
                             <div [mat-sort-header]="'namee'">Full Name</div>
-                            <div class="" [mat-sort-header]="'role'">
+                            <div class="hidden sm:block" [mat-sort-header]="'role'">
                                 Roles
                             </div>
-                            <div class="" [mat-sort-header]="'email'">
+                            <div class="hidden sm:block" [mat-sort-header]="'email'">
                                 Email
                             </div>
 
@@ -60,12 +60,12 @@
                                     </div>
 
                                     <!-- Name -->
-                                    <div class="hidden lg:block md:block truncate">
+                                    <div class="hidden lg:block md:block sm:block truncate">
                                         {{employee.harvestYear }}
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="">
+                                    <div class="hidden sm:block">
                                         {{employee.namee}}
                                         <!-- {{employee.firstLastName}} -->
                                     </div>

@@ -20,14 +20,17 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 130px 150px 0px;
+                grid-template-columns: 90px 190px 0px;
 
                 @screen sm {
-                    grid-template-columns: 15% 15% 10%;
+                    grid-template-columns: 10% 10% 10% 20% 30% 10%;
                 }
 
-                @screen md {
+                /* @screen md {
                     grid-template-columns: 15% 15% 30% 30% 10%;
+                } */
+                @screen md {
+                    grid-template-columns: 10% 10% 15% 25% 25% 10%;
                 }
 
                 @screen lg {
