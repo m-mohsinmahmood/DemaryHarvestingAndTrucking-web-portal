@@ -71,44 +71,26 @@
 
                                     <!-- SKU -->
                                     <div class="hidden md:block truncate">
-                                        <!-- {{product.sku}} -->
-                                        <!-- {{product.city}} -->
-                                        {{product.assigneName}}
+                                    
+                                        {{product.id}}
                                     </div>
 
                                     <!-- Price -->
                                     <div class="hidden sm:block">
-                                        <!-- {{product.price | currency:'USD':'symbol':'1.2-2'}} -->
-                                        {{product.companyName}}
-                                        <!-- {{product.email}} -->
+                                        {{product.harvestYear}}
+                                       
                                     </div>
 
                                     <!-- Assignee Name -->
                                     <div class="truncate hidden sm:block">
-                                        {{product.vehicleName}}
-                                        <!-- {{product.firstName}} -->
+                                        {{product.assigneName}}
+                                       
                                     </div>
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{product.harvestYear}}
-                                        <!-- {{product.lastName}} -->
+                                        {{product.vehicleName}}
                                     </div>
-
-                                    <!-- Stock -->
-                                    <!-- <div class="hidden lg:flex items-center">
-                                        <div class="min-w-4 ml-2">{{product.stock}}</div>
-                                    </div> -->
-
-                                    <!-- Active -->
-                                    <!-- <div class="hidden lg:block">
-                                        <ng-container *ngIf="product.active">
-                                            <mat-icon class="text-green-400 icon-size-5" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                        </ng-container>
-                                        <ng-container *ngIf="!product.active">
-                                            <mat-icon class="text-gray-400 icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                        </ng-container>
-                                    </div> -->
 
                                     <!-- Details button -->
                                     <div>
