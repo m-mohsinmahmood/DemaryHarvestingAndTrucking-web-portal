@@ -3,7 +3,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { FloatLabelType } from '@angular/material/form-field';
 import { MatStepper } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
+import {StepperOrientation} from '@angular/material/stepper';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-add',
@@ -12,63 +16,106 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
 })
 export class AddComponent implements OnInit {
 
+  stepperOrientation: Observable<StepperOrientation>;
+
+
   horizontalStepperForm: FormGroup;
   showMoreControls: any;
   floatLabelControl = new FormControl('auto' as FloatLabelType);
   stepperPage: any = 0;
+  isLinear = true;
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', []],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', []],
-  });
-  thirdFormGroup = this._formBuilder.group({
-    secondCtrl: ['', []],
-  });
-  fourthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', []],
-  });
-  fifthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', []],
-  });
-  sixthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', []],
-  });
-
+  firstFormGroup : FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup : FormGroup;
+  fourthFormGroup: FormGroup;
+  fifthFormGroup : FormGroup;
+  sixthFormGroup : FormGroup;
+ 
   constructor(
     private _formBuilder: FormBuilder,
     public matDialogRef: MatDialogRef<AddComponent>,
-    ) { }
+    breakpointObserver: BreakpointObserver,
+    ) { this.stepperOrientation = breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+  }
 
-  ngOnInit(): void {
-   // Horizontal stepper form
-//    this.horizontalStepperForm = this._formBuilder.group({
-//     step1: this._formBuilder.group({
-//         email   : ['', [Validators.required, Validators.email]],
-//         country : ['', Validators.required],
-//         language: ['', Validators.required]
-//     }),
-//     step2: this._formBuilder.group({
-//         firstName: ['', Validators.required],
-//         lastName : ['', Validators.required],
-//         userName : ['', Validators.required],
-//         about    : ['']
-//     }),
-//     step3: this._formBuilder.group({
-//         byEmail          : this._formBuilder.group({
-//             companyNews     : [true],
-//             featuredProducts: [false],
-//             messages        : [true]
-//         }),
-//         pushNotifications: ['everything', Validators.required]
-//     })
-// });
+  ngOnInit(): void {  
+    this.firstFormGroup = this._formBuilder.group({
+      firstEmail: ['', Validators.required],
+      firstSentDate: ['', Validators.required],
+      secondEmail: ['', Validators.required],
+      secondSentDate: ['', Validators.required],
+      applicationDate: ['', Validators.required]
+    });
+    
+    this.secondFormGroup = this._formBuilder.group({
+      fullName: ['', Validators.required],
+      lastNameFirstName : ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      cellPhone: ['', Validators.required],
+      homePhone: ['', Validators.required],
+      email: ['', Validators.required],
+    });
 
+    this.thirdFormGroup = this._formBuilder.group({
+      firstPhoneCall: ['', Validators.required],
+      firstInterviewResult : ['', Validators.required],
+      firstRanking: ['', Validators.required],
+      refreePhoneCall: ['', Validators.required],
+      refreeInterviewResult: ['', Validators.required],
+      refreeRanking: ['', Validators.required],
+      secondPhoneCall: ['', Validators.required],
+      secondInterviewResult : ['', Validators.required],
+      secondRanking: ['', Validators.required],
+      thirdPhoneCall: ['', Validators.required],
+      thirdInterviewResult: ['', Validators.required],
+      thirdRanking: ['', Validators.required],
+    });
+  
+    this.fourthFormGroup = this._formBuilder.group({
+      dob: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      address1: ['', Validators.required],
+      address2: ['', Validators.required],
+      city: ['', Validators.required],
+      county: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      country: ['', Validators.required],
+      usCitizen: ['', Validators.required],
+      license: ['', Validators.required],
+      passport: ['', Validators.required]
+    });
+    
+    this.fifthFormGroup = this._formBuilder.group({
+      firstQuestion: ['', Validators.required],
+      secondQuestion: ['', Validators.required],
+      thirdQuestion: ['', Validators.required],
+      fourthQuestion: ['', Validators.required],
+      fifthQuestion: ['', Validators.required],
+      workExperience: ['', Validators.required],
+      job: ['', Validators.required],
+      supervisor: ['', Validators.required],
+      supervisorContact: ['', Validators.required]
+    });
+
+    this.sixthFormGroup = this._formBuilder.group({
+      firstQuestion: ['', Validators.required],
+      secondQuestion: ['', Validators.required],
+      thirdQuestion: ['', Validators.required],
+    });
 }
-onSubmit(): void {
-  console.warn('Your order has been submitted', this.horizontalStepperForm.value);
-  this.horizontalStepperForm.reset();
+submit(): void {
+  console.warn('Your order has been submitted', this.firstFormGroup );
+  console.warn('Your order has been submitted', this.secondFormGroup );
+  console.warn('Your order has been submitted', this.thirdFormGroup );
+  console.warn('Your order has been submitted', this.fourthFormGroup );
+  console.warn('Your order has been submitted', this.fifthFormGroup );
+  console.warn('Your order has been submitted', this.sixthFormGroup );
+  
+  
 }
 
 onStepperNext(stepper: MatStepper) {
@@ -82,40 +129,13 @@ onStepperBack(stepper: MatStepper) {
 selectionChange (event) {
 event.selectedIndex > 0  ? this.stepperPage++ : event.selectedIndex == 0 ? this.stepperPage = 0 : '';
 }
- /**
-   * Save and close
-   */
+ 
   saveAndClose(): void
   {
-      // Save the message as a draft
-      this.saveAsDraft();
-
+     
       // Close the dialog
       this.matDialogRef.close();
   }
 
-  /**
-   * Discard the message
-   */
-  discard(): void
-  {
-
-  }
-
-  /**
-   * Save the message as a draft
-   */
-  saveAsDraft(): void
-  {
-
-  }
-
-  /**
-   * Send the message
-   */
-  send(): void
-  {
-
-  }
-
+ 
 }
