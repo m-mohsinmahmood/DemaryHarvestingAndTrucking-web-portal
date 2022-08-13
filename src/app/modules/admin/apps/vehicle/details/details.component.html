@@ -45,8 +45,8 @@
                         </div>
                         <div class="flex flex-col mt-8">
                             <span class="font-semibold mb-2">Vehicle status</span>
-                            <mat-slide-toggle [formControlName]="'active'" [color]="'primary'">
-                                {{selectedProductForm.get('active').value === true ? 'In use' : 'Free'}}
+                            <mat-slide-toggle [formControlName]="'status'" [color]="'primary'">
+                                {{selectedProductForm.get('status').value === true ? 'In use' : 'Free'}}
                             </mat-slide-toggle>
                         </div>
                     </div>
@@ -58,14 +58,18 @@
                             <!-- Name -->
                             <mat-form-field class="w-full">
                                 <mat-label>Vehicle Name</mat-label>
-                                <input matInput [formControlName]="'name'">
+                                <!-- <input matInput [formControlName]="'name'"> -->
+                                <input matInput [formControlName]="'vehicleName'">
+
                             </mat-form-field>
 
                             <!-- SKU and Barcode -->
                             <div class="flex">
                                 <mat-form-field class="w-full pr-2">
                                     <mat-label>vehicle ID</mat-label>
-                                    <input matInput [formControlName]="'sku'">
+                                    <!-- <input matInput [formControlName]="'sku'"> -->
+                                    <input matInput [formControlName]="'id'">
+
                                 </mat-form-field>
                                 <!-- <mat-form-field class="w-2/3 pl-2">
                                     <mat-label>Vehicle Type</mat-label>
@@ -77,8 +81,8 @@
                             <div class="flex">
                                 <mat-form-field class="w-1/2 pr-2">
                                     <mat-label>Vehicle Type</mat-label>
-                                    <mat-select [formControlName]="'category'">
-                                        <ng-container *ngFor="let category of categories">
+                                    <mat-select [formControlName]="'type'" >
+                                        <ng-container *ngFor="let category of selectedProductForm.get('type').value">
                                             <mat-option [value]="category.id">
                                                 {{category.name}}
                                             </mat-option>
@@ -87,8 +91,8 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-2">
                                     <mat-label>Vehicle Condition</mat-label>
-                                    <mat-select [formControlName]="'brand'">
-                                        <ng-container *ngFor="let brand of brands">
+                                    <mat-select [formControlName]="'brand'"  >
+                                        <ng-container *ngFor="let brand of selectedProductForm.get('condition').value">
                                             <mat-option [value]="brand.id">
                                                 {{brand.name}}
                                             </mat-option>
@@ -110,19 +114,19 @@
 
                             <mat-form-field class="w-full">
                                 <mat-label>Vehicle Company Name</mat-label>
-                                <input matInput [formControlName]="'description'">
+                                <input matInput [formControlName]="'companyName'">
                             </mat-form-field>
 
                             <div class="flex flex-col sm:flex-col lg:flex-row md:flex-col">
                                 <mat-form-field class="w-full">
                                     <mat-label>Vehicle Assignee Name</mat-label>
                                     <!-- <span matPrefix>$</span> -->
-                                    <input matInput [formControlName]="'brand'">
+                                    <input matInput [formControlName]="'assigneName'">
                                 </mat-form-field>
                                 <mat-form-field class="w-full pl-0 lg:pl-2 ">
                                     <mat-label>Vehicle Assign Date</mat-label>
                                     <!-- <span matPrefix>$</span> -->
-                                    <input matInput [formControlName]="'vendor'">
+                                    <input matInput [formControlName]="'assignDate'">
                                 </mat-form-field>
                                 
                             </div>
@@ -146,12 +150,12 @@
                             <mat-form-field class="w-full">
                                 <mat-label>Fuel on Shift Start</mat-label>
                                 <span matSuffix>Lit.</span>
-                                <input matInput [formControlName]="'cost'">
+                                <input matInput [formControlName]="'fuelStart'">
                             </mat-form-field>
                             <mat-form-field class="w-full">
                                 <mat-label>Fuel on Shift End</mat-label>
                                 <span matSuffix>Lit.</span>
-                                <input matInput [formControlName]="'basePrice'">
+                                <input matInput [formControlName]="'fuelEnd'">
                             </mat-form-field>
                             <!-- <mat-form-field class="w-full">
                                 <mat-label>Tax</mat-label>
@@ -188,7 +192,7 @@
                         <button mat-flat-button [color]="'primary'" class="mr-4" (click)="updateSelectedProduct()">
                             Updatee
                         </button>
-                        <button mat-flat-button [color]="'primary'" (click)="updateSelectedProduct1()">
+                        <button mat-flat-button [color]="'primary'" (click)="backToPage()">
                             Backk
                         </button>
                     </div>

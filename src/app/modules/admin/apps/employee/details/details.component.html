@@ -28,40 +28,41 @@
             </button>
         </div>
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl class="sm:divide-y sm:divide-gray-200">
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Margot</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Foster</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">margotfoster@example.com</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">2021 - 2022</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Admin</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Admin</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">$120,000</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Yes</dd>
-                </div>
-            </dl>
+                <dl class="sm:divide-y sm:divide-gray-200" >
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500" >First Name</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                    </div>
+                   
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Role</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Position</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                    </div>
+                </dl>
         </div>
     </div>
 </div>

@@ -32,7 +32,7 @@ import { DetailsComponent } from './details/detail.component';
     // InventoryComponent,
     InventoryListComponent,
     AddModalComponent,
-    //  DetailsComponent
+      DetailsComponent
   ],
   imports: [  
   RouterModule.forChild(vehicleRoutes),

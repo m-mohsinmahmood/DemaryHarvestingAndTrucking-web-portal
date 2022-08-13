@@ -34,7 +34,7 @@
                         <!-- Header -->
                         <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                             <!-- <div></div> -->
-                            <div class=" " [mat-sort-header]="'images'">
+                            <div class="" [mat-sort-header]="'images'">
                                 Vehicle Image
                             </div>
                             <div class="hidden md:block" [mat-sort-header]="'sku'">
@@ -43,6 +43,7 @@
                             <div class="hidden sm:block" [mat-sort-header]="'price'">
                                 Harvest Year
                             </div>
+                            <div  [mat-sort-header]="'brand'" class="hidden sm:block">Assignee Name</div>
                             <div  [mat-sort-header]="'name'">Vehicle Name</div>
                             
                             <!-- <div class="hidden lg:block" [mat-sort-header]="'stock'">
@@ -59,7 +60,7 @@
                                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
 
                                     <!-- Image -->
-                                    <div class="flex items-center">
+                                    <div class="flex items-center ">
                                         <div class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden">
                                             <img class="w-12 h-12" *ngIf="product.thumbnail" [alt]="'Product thumbnail image'" [src]="product.thumbnail">
                                             <div class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase" *ngIf="!product.thumbnail">
@@ -70,34 +71,26 @@
 
                                     <!-- SKU -->
                                     <div class="hidden md:block truncate">
-                                        {{product.sku}}
+                                    
+                                        {{product.id}}
                                     </div>
 
                                     <!-- Price -->
                                     <div class="hidden sm:block">
-                                        <!-- {{product.price | currency:'USD':'symbol':'1.2-2'}} -->
-                                        {{product.price}}
+                                        {{product.harvestYear}}
+                                       
+                                    </div>
+
+                                    <!-- Assignee Name -->
+                                    <div class="truncate hidden sm:block">
+                                        {{product.assigneName}}
+                                       
                                     </div>
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{product.name}}
+                                        {{product.vehicleName}}
                                     </div>
-
-                                    <!-- Stock -->
-                                    <!-- <div class="hidden lg:flex items-center">
-                                        <div class="min-w-4 ml-2">{{product.stock}}</div>
-                                    </div> -->
-
-                                    <!-- Active -->
-                                    <!-- <div class="hidden lg:block">
-                                        <ng-container *ngIf="product.active">
-                                            <mat-icon class="text-green-400 icon-size-5" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                        </ng-container>
-                                        <ng-container *ngIf="!product.active">
-                                            <mat-icon class="text-gray-400 icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                        </ng-container>
-                                    </div> -->
 
                                     <!-- Details button -->
                                     <div>
