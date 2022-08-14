@@ -25,8 +25,8 @@
     align-items: flex-start;
 }
 
-.example-radio-button {
-    margin: 5px;
+::ng-deep .example-radio-group .mat-radio-button .mat-radio-label .mat-radio-label-content {
+    white-space: normal;
 }
 
  ::ng-deep .personal-info-form .mat-form-field .mat-form-field-flex {
