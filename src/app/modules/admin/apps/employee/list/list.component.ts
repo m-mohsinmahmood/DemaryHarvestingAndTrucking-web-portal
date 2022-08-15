@@ -1,8 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,16 +17,12 @@ import { AddComponent } from '../add/add.component';
     styles         : [
         /* language=SCSS */
         `
-            .inventory-grid {
+            .employee-grid {
                 grid-template-columns: 90px 190px 0px;
 
                 @screen sm {
                     grid-template-columns: 10% 10% 10% 20% 30% 10%;
                 }
-
-                /* @screen md {
-                    grid-template-columns: 15% 15% 30% 30% 10%;
-                } */
                 @screen md {
                     grid-template-columns: 10% 10% 15% 25% 25% 10%;
                 }

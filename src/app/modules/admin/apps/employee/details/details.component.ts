@@ -11,6 +11,7 @@ import { EmployeeService } from 'app/modules/admin/apps/employee/employee.servic
 @Component({
     selector       : 'employee-details',
     templateUrl    : './details.component.html',
+    styleUrls: ['./details.component.scss'],
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,6 +33,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
+        private _router: Router,
+
     )
     {
     }
@@ -74,13 +77,22 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     openUpdateDialog(): void
     {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent);
+    // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: this.routeID}
+        });
+  
   
         dialogRef.afterClosed()
                  .subscribe((result) => {
                      console.log('Compose dialog was closed!');
-      });
+      });   
     }
-    /**/
+    
+    backHandler(): void 
+    {
+        this._router.navigate(["/apps/employee/"]) 
+    }
+  
+
 }

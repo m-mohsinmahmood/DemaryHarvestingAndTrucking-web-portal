@@ -3,7 +3,7 @@ export interface Employee
 
            id        : string,
             employeeID       : string,     
-            namee    : string,
+            name    : string,
             harvestYear      : number,
             role       : string[],
             email      : string,
@@ -15,6 +15,7 @@ export interface Employee
             position:string,
             salary:string,
             currentEmployee:string,
+            status:string
 }
 
 export interface EmployeePagination

@@ -64,13 +64,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:clipboard-check",
     link: "/apps/customers",  
   },
-  {
-    id: "applicants",
-    title: "Applicants",
-    type: "basic",
-    icon: "heroicons_outline:user-circle",
-    link: "/apps/applicants",  
-  },
+  // {
+  //   id: "applicants",
+  //   title: "Applicants",
+  //   type: "basic",
+  //   icon: "heroicons_outline:user-circle",
+  //   link: "/apps/applicants",  
+  // },
   // {
   //   id: "",
   //   title: "Equipment",

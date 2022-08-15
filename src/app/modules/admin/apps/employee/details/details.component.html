@@ -7,16 +7,14 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Employee Detail</div>
-        <!-- Actions -->
-        <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <!-- Search -->
+        <div (click)="backHandler()" class="flex items-center text-4xl font-extrabold tracking-tight">
+            <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+            <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
+            <mat-chip-list aria-label="Fish selection">
+                <mat-chip *ngIf="employees.status != 'N/A'" color="primary" class="ml-5" selected>{{employees.status}} </mat-chip>
+            </mat-chip-list>
         </div>
-    </div>
-
-    <!-- Main -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6">
+        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'primary'">
                 <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                 <span class="ml-2 mr-1">Delete</span>
@@ -27,42 +25,189 @@
                 <span class="ml-2 mr-1">Update</span>
             </button>
         </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                <dl class="sm:divide-y sm:divide-gray-200" >
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500" >First Name</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
-                    </div>
-                   
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
-                    </div>
-                </dl>
-        </div>
+        <!-- Actions -->
+    </div>
+
+    <!-- Main -->
+    <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
+        <mat-tab-group>
+            <mat-tab label="General Information">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        </div>
+
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </mat-tab>
+            <mat-tab label="Personal Information">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        </div>
+
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </mat-tab>
+            <mat-tab label="Interview Results">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        </div>
+
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </mat-tab>
+            <mat-tab label="Work Experience">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        </div>
+
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </mat-tab>
+            <mat-tab label="Educational Background">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Education</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"College"}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Reason for applying</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Travel"}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">How did you hear about us</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Newspaper"}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+
+
     </div>
 </div>
