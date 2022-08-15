@@ -7,3 +7,7 @@
 .checkbox {
     margin-left: 2rem;
 }
+::ng-deep .mat-form-field-wrapper
+{
+    padding-bottom: 0px !important;
+}

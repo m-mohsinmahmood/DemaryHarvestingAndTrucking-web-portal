@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -9,10 +9,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddCustomer implements OnInit {
 
-  form: FormGroup;
+  public form: FormGroup;
   constructor(
     public matDialogRef: MatDialogRef<AddCustomer>,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
     
     ) { }
 
@@ -28,12 +28,59 @@ export class AddCustomer implements OnInit {
     skipInvoiceMath2            : [''],
     email           : [''],
     isActive            : [''],
+  	title:[''],
+  	type:[''],
+  	descripition:[''],
+    farmItemRows: this._formBuilder.array([this.initFarmItemRows()]),
+    cropsItemRows: this._formBuilder.array([this.initCropItemRows()]),
+
+    
 });
+  }
+
+  get formArr() {
+    return this.form.get('farmItemRows') as FormArray;
+  }
+
+  get cropArr() {
+    return this.form.get('cropsItemRows') as FormArray;
   }
   
   onSubmit(): void {
     console.warn('Your order has been submitted', this.form.value);
     this.form.reset();
+  }
+
+  initFarmItemRows() {
+    return this._formBuilder.group({
+    farmId:[''],
+    farmHarvestYear:[''],
+    farmName:[''],
+    farmTotalAcres:[''],
+    });
+  }
+  initCropItemRows() {
+    return this._formBuilder.group({
+    farmId2:[''],
+    farmHarvestYear2:[''],
+    farmName2:[''],
+    farmTotalAcres2:[''],
+    });
+  }
+  addNewFarmRow() {
+    this.formArr.push(this.initFarmItemRows());
+  }
+
+  deleteFarmRow(index: number) {
+    this.formArr.removeAt(index);
+  }
+
+  addNewCropRow() {
+    this.cropArr.push(this.initCropItemRows());
+  }
+
+  deleteCropRow(index: number) {
+    this.cropArr.removeAt(index);
   }
   
    /**

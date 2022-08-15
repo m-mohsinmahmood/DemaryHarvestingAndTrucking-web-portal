@@ -14,6 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
@@ -39,6 +40,7 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
+        MatFormFieldModule
     ],
     bootstrap: [AppComponent],
 })
