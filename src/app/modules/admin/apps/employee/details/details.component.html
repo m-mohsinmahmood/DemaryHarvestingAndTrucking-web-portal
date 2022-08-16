@@ -11,7 +11,7 @@
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip *ngIf="employees.status != 'N/A'" color="primary" class="ml-5" selected>{{employees.status}} </mat-chip>
+                <mat-chip color="primary" class="ml-5" selected>{{employees.status}} </mat-chip>
             </mat-chip-list>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
@@ -30,7 +30,7 @@
 
     <!-- Main -->
     <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
-        <mat-tab-group>
+        <mat-tab-group mat-align-tabs="center">
             <mat-tab label="General Information">
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">

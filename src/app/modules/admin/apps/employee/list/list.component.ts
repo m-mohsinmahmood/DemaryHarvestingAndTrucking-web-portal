@@ -28,7 +28,7 @@ import { AddComponent } from '../add/add.component';
                 }
 
                 @screen lg {
-                    grid-template-columns: 10% 10% 30% 25% 15% 10%;
+                    grid-template-columns: 10% 5% 30% 25% 20% 10%;
                 }
                 
 

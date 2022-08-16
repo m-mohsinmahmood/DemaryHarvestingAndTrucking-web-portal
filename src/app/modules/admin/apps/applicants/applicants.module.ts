@@ -18,19 +18,25 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
+import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
 import { AddComponent } from './add/add.component';
+import { UpdateComponent } from './update/update.component';
 
 
 @NgModule({
     declarations: [
         ApplicantsComponent,
         ApplicantsListComponent,
-        AddComponent
+        ApplicantDetailComponent,
+        AddComponent,
+        UpdateComponent,
     ],
     imports     : [
         RouterModule.forChild(applicantsRoutes),
@@ -40,6 +46,7 @@ import { AddComponent } from './add/add.component';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatChipsModule,
         MatMenuModule,
         MatRadioModule,
         MatStepperModule,
@@ -53,6 +60,7 @@ import { AddComponent } from './add/add.component';
         MatDatepickerModule,
         MatNativeDateModule,
         MatMomentDateModule,
+        MatTabsModule,
         SharedModule
     ]
 })
