@@ -1,12 +1,12 @@
 <div class="flex flex-col h-screen 2xl:max-h-screen md:min-w-160 -m-6">
-    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">Add Applicant</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
                 [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
-    </header>
+    </div>
     <main class="mb-auto">
         <div class="modal-body relative p-4">
             <ng-container [ngSwitch]="stepperOrientation | async">
@@ -431,15 +431,18 @@
             </mat-horizontal-stepper>
         </div>
     </main>
-    <footer class="flex flex-0 items-center justify-end bg-gray-100  h-16 pr-3 sm:pr-5 pl-6 sm:pl-8">
-        <button *ngIf="isBack" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.previous()">
-            Back 
-          </button>
-        <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.next()">
-          Next
-        </button>
-        <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
-            Submit
-          </button>
-    </footer>
+
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+        <div class="flex gap-2 items-center mt-4 sm:mt-0"> 
+            <button *ngIf="isBack" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.previous()">
+                Back 
+              </button>
+            <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.next()">
+              Next
+            </button>
+            <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+                Submit
+              </button>
+        </div>
+     </div>
 </div>
