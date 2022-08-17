@@ -17,6 +17,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { SharedModule } from 'app/shared/shared.module';
@@ -59,6 +60,7 @@ import { UpdateComponent } from './update/update.component';
         MatDatepickerModule,
         MatNativeDateModule,
         MatMomentDateModule,
+        MatToolbarModule,
         MatChipsModule,
         SharedModule
     ]

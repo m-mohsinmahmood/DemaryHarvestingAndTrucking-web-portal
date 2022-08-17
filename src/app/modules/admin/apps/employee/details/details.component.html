@@ -1,26 +1,24 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div class=" sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
 
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+    <div class="relative flex flex-col xs:items-center sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex items-center text-4xl font-extrabold tracking-tight">
+        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+            <img class="inline-block h-14 w-14 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
-            <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="primary" class="ml-5" selected>{{employees.status}} </mat-chip>
-            </mat-chip-list>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'primary'">
+            <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
                 <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                 <span class="ml-2 mr-1">Delete</span>
             </button>
-            <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                mat-flat-button [color]="'primary'">
+            <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
+                [color]="'primary'">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                 <span class="ml-2 mr-1">Update</span>
             </button>
@@ -35,21 +33,32 @@
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                            <dt class="text-lg font-extrabold text-gray-500">Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}} {{employees.lname}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Email</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
                         </div>
-
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Address</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.address}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Phone</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.phone}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Emergency Contacts</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.emergencyContact}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Banking Info</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.bankingInfo}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Role</dt>
@@ -70,144 +79,246 @@
                     </dl>
                 </div>
             </mat-tab>
-            <mat-tab label="Personal Information">
+            <mat-tab label="Government Docs">
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">Passport</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Visa</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">I-94</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                            {{"PDF".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Driver License</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Social Security</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-gray-600">
+                                                            {{"TXT".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">DOT Docs</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Physical</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                            {{"PDF".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Drug Testing</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
                     </dl>
                 </div>
             </mat-tab>
-            <mat-tab label="Interview Results">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
+            <mat-tab label="Company Docs ">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0 ">
+                    <dl class="sm:divide-y sm:divide-gray-200 ">
+                        <div class="items-center py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Drug Testing</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">
+                                <div class="flex flex-wrap -m-2 mt-2">
+                                    <ng-container>
+                                        <a class="flex flex-col m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                            <div class="aspect-w-9 aspect-h-6">
+                                                <div class="flex items-center justify-center">
+                                                    <!-- Icons -->
+                                                    <div class="relative">
+                                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                            {{"DOC".toUpperCase()}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                </div>
+                            </dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Contract</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.lname}}</dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Approval Letter</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.email}}</dd>
                         </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Departure Form</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.harvestYear}}</dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Equipment Usage</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.role}}</dd>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
-                        </div>
-                    </dl>
-                </div>
-            </mat-tab>
-            <mat-tab label="Work Experience">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.fname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.lname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.email}}</dd>
-                        </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.role}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.position}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.currentEmployee}}</dd>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Work Agreement</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.position}}</dd>
                         </div>
                     </dl>
                 </div>
             </mat-tab>
-            <mat-tab label="Educational Background">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Education</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"College"}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Reason for applying</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Travel"}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">How did you hear about us</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Newspaper"}}</dd>
+            <mat-tab label="Work Records ">
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0 ">
+                    <dl class="sm:divide-y sm:divide-gray-200 ">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
+                            <dt class="text-lg font-extrabold text-gray-500 ">Work Record</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2 ">{{employees.fname}}</dd>
                         </div>
                     </dl>
                 </div>
             </mat-tab>
         </mat-tab-group>
-
-
-
     </div>
 </div>

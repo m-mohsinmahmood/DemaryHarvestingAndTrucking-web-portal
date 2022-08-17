@@ -18,7 +18,7 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .employee-grid {
-                grid-template-columns: 90px 190px 0px;
+                grid-template-columns: 90px 160px 0px;
 
                 @screen sm {
                     grid-template-columns: 10% 10% 10% 20% 30% 10%;
@@ -28,7 +28,7 @@ import { AddComponent } from '../add/add.component';
                 }
 
                 @screen lg {
-                    grid-template-columns: 10% 5% 30% 25% 20% 10%;
+                    grid-template-columns: 5% 5% 30% 25% 20% 10%;
                 }
                 
 

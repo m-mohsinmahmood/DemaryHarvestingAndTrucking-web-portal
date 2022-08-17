@@ -18,7 +18,7 @@
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Add</span>
+                <span class="lg:ml-2">Add</span>
             </button>
         </div>
     </div>
@@ -34,7 +34,7 @@
                         <!-- Header -->
                         <div class="employee-grid sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                             <div class="">
-                                Status
+                                Employee Id
                             </div>
                             <div class="hidden sm:block">
                                 Harvest Year
@@ -54,8 +54,8 @@
                                 <div class="employee-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
 
                                     <!-- SKU -->
-                                    <div class=" truncate">
-                                        {{employee.status}}
+                                    <div class="">
+                                        {{employee.employeeID}}
                                     </div>
 
                                     <!-- Name -->
@@ -64,32 +64,20 @@
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="capitalize hidden sm:block">
+                                    <div class="">
                                         {{employee.name}}
                                         <!-- {{employee.firstLastName}} -->
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="flex items-centerdden hidden sm:block">
+                                    <div class="flex items-center hidden sm:block">
                                         {{employee.role}}
                                     </div>
 
                                     <!-- Stock -->
-                                    <div class=" lg:flex items-center">
+                                    <div class="hidden truncate sm:block lg:flex items-center">
                                         <div class="min-w-4 ml-2">{{employee.email}}</div>
                                     </div>
-
-
-
-                                    <!-- Active -->
-                                    <!-- <div class="hidden lg:block">
-                                        <ng-container *ngIf="employee.active">
-                                            <mat-icon class="text-green-400 icon-size-5" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                        </ng-container>
-                                        <ng-container *ngIf="!employee.active">
-                                            <mat-icon class="text-gray-400 icon-size-5" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                        </ng-container>
-                                    </div> -->
 
                                     <!-- Details button -->
                                     <div>

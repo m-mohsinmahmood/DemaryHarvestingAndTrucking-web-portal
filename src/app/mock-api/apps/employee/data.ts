@@ -5,6 +5,10 @@ export const employees = [
       id: "7eb7c859-1347-4317-96b6-94768574897a7ec",
       employeeID: "3111",
       name: "Beauvais Trevor",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Mechanic", "Dispatcher"],
       email: "ariesbeau1957@gmail.com",
@@ -14,14 +18,18 @@ export const employees = [
       position: "Admin",
       salary: "10000",
       currentEmployee: "Yes",
-      status:"Employee"
+      
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343",
       employeeID: "2425",
       name: "BEGLEY EOIN",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief","Mechanic"],
       email: "eoinbegley@icloud.com",
       active: true,
       fname: "BEGLEY",
@@ -29,14 +37,18 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "In-process"
+      
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2781364781ba3c334343",
       employeeID: "2425",
       name: "BERQUIST BRADLEY",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief","Mechanic"],
       email: "bradberq@gmail.com",
       active: true,
       fname: "BERQUIST",
@@ -44,15 +56,19 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "New"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2b87381329890a3c334343",
       employeeID: "2425",
       name: "BOWD JAMES",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief","Mechanic"],
       email: "bowd8bh@btinternet.com",
       active: true,
       fname: "BOWD",
@@ -60,15 +76,19 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Pre-interview"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2b98127489137134a3c334343",
       employeeID: "2425",
       name: "BROSNAN BRENDAN",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "Brendanbrosnan2017@gmail.com",
       active: true,
       fname: "BROSNAN",
@@ -76,30 +96,38 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Hired"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2b12121a3c334343",
       employeeID: "2425",
       name: "BROSNAN JACK",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "jackobros111@gmail.com",
       active: true,
       fname: "BROSNAN",
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Hired"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba113c334343",
       employeeID: "2425",
       name: "BRUCE WILL",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "willabruce181@gmail.com",
       active: true,
       fname: "BRUCE",
@@ -107,13 +135,17 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Evaluated"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba3c34434343",
       employeeID: "2425",
       name: "CLARK JOHN",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Crew Chief", "Dispatcher"],
       email: "clarkemf90@gmail.com",
@@ -123,13 +155,17 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Employee"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2b3333a3c334343",
       employeeID: "2425",
       name: "CONCHON DIEGO",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Crew Chief", "Dispatcher"],
       email: "de_conchon@hotmail.com",
@@ -139,13 +175,17 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "Yes",
-      status: "Employee"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba3c3381974893734343",
       employeeID: "2425",
       name: "CURTIS MARK",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Crew Chief", "Dispatcher"],
       email: "markcurtis6@icloud.com",
@@ -155,66 +195,79 @@ export const employees = [
       city: "Kasur-2",
       salary: "20000",
       currentEmployee: "Yes",
-      status: "Employee"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-22222222222222222222",
       employeeID: "2425",
       name: "DAVIDSON CONALL",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "conall.davidson1@gmail.com",
       active: true,
       fname: "DAVIDSON",
       lname: "CONALL",
-  
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "New"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba91893c334343",
       employeeID: "2425",
       name: "DEMARAY BILL",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Crew Chief", "Dispatcher"],
       email: "bill@demarayharvesting.com",
       active: true,
       fname: "DEMARAY",
       lname: "BILL",
-  
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "Yes",
-      status: "Employee"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2y3418ba3c334343",
       employeeID: "2425",
       name: "DEMARAY SHARON",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief", "Dispatcher"],
       email: "sharon@demarayharvesting.com",
       active: true,
       fname: "DEMARAY",
       lname: "SHARON",
-  
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Hired"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba8349873c334343",
       employeeID: "2425",
       name: "DEMARAY TIM",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "tim@demarayharvesting.com",
       active: true,
       fname: "DEMARAY",
@@ -222,15 +275,19 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "Yes",
-      status: "Employee"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba389743897c334343",
       employeeID: "2425",
       name: "DEMARAY BILL",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief"],
       email: "bill@demarayharvesting.com",
       active: true,
       fname: "DEMARAY",
@@ -238,15 +295,19 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "In-progress"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e8974972ba3c334343",
       employeeID: "2425",
       name: "DERMODY SHANE",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
-      role: ['N/A'],
+      role: ["Crew Chief","Recruiter"],
       email: "sdermody10@gmail.com",
       active: true,
       fname: "DERMODY",
@@ -254,13 +315,17 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "No",
-      status: "Hired"
+      
   
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2ba39819329c334343",
       employeeID: "2425",
       name: "FINNEGAN THOMAS",
+      address: "51 Avenue Street b",
+      phone: "0901192294",
+      emergencyContact: "03001990134",
+      bankingInfo: "US LLC",
       harvestYear: 2022,
       role: ["Crew Chief", "Dispatcher"],
       email: "Thomasofinnegan@gmail.com",
@@ -270,7 +335,7 @@ export const employees = [
       position: "Admin-2",
       salary: "20000",
       currentEmployee: "Yes",
-      status: "Employee"
+      
   
     },
   ];

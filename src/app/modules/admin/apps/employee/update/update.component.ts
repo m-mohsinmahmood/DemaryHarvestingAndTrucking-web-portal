@@ -18,6 +18,8 @@ export class UpdateComponent implements OnInit {
 
   form: FormGroup;
   employees:any;
+  imageURL: string = '';
+  previews: string[] = [];
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateComponent>,
@@ -30,21 +32,26 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
 
-  this.form = this._formBuilder.group({
-    fname     : ['', [Validators.required]],
-    lname     : ['', [Validators.required]],
-    role    : ['', [Validators.required]],
-    position: ['', [Validators.required]],
-    email   : ['', [Validators.email]],
-    salary  : ['',[]],
-    currentEmployee : ['',[]],
-});
+    this.form = this._formBuilder.group({
+      avatar: [null],
+      name: [''],
+      firstName     : ['', [Validators.required]],
+      lastName     : ['', [Validators.required]],
+      role    : ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      email   : ['', [Validators.email]],
+      address : ['', [Validators.required]],
+      phone : ['', [Validators.required]],
+      emergencyContact : ['', [Validators.required]],
+      bankingInfo : ['', [Validators.required]],
+      salary  : ['',[]],
+      currentEmployee : ['',[]]
+    });
 
    // Get the employee by id
    this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-    console.log('UPDATE::',employee);
     this.employees = employee;
-    this.form.patchValue(employee);
+      this.form.patchValue(employee);
 
 });
 
@@ -54,7 +61,22 @@ export class UpdateComponent implements OnInit {
     console.warn('Your order has been submitted', this.form.value);
     this.form.reset();
   }
+
+  showPreview(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({
+      avatar: file
+    });
+    this.form.get('avatar').updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
   
+    
   saveAndClose(): void
   {
       // Save the message as a draft
@@ -69,7 +91,7 @@ export class UpdateComponent implements OnInit {
    */
   discard(): void
   {
-
+    this.matDialogRef.close();
   }
 
   /**
