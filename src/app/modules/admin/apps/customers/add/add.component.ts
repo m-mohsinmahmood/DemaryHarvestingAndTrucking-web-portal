@@ -1,8 +1,7 @@
+import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-add',
@@ -15,6 +14,7 @@ export class AddCustomer implements OnInit {
   constructor(
     public matDialogRef: MatDialogRef<AddCustomer>,
     private _formBuilder: FormBuilder,
+    private api: CustomersService,
     
     ) { }
 
@@ -121,6 +121,21 @@ export class AddCustomer implements OnInit {
      */
     send(): void
     {
+      console.log(this.form.controls);
+      this.api.createProduct()
+      .subscribe({
+        next:(res)=>{
+          alert("Customer Added Successfully1") 
+          this.form.reset();
+          this.matDialogRef.close('save');
+        },
+        error:()=>{
+          alert("Error!")
+        }
+      }
+
+      )
+
 
     }
 
