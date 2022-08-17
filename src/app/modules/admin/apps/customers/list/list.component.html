@@ -33,7 +33,6 @@
                     <div class="grid">
                         <!-- Header -->
                         <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                            <div></div>
                             <div class="hidden md:block" [mat-sort-header]="'sku'">
                                 ID
                             </div>
@@ -48,7 +47,7 @@
                             <div class="hidden lg:block" [mat-sort-header]="'active'">
                                 Is Active
                             </div>
-                            <div class="hidden sm:block">Position</div>
+                            <div class="hidden sm:block">Details</div>
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="(products$ | async) as products">
@@ -56,14 +55,14 @@
                                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
 
                                     <!-- Image -->
-                                    <div class="flex items-center">
+                                    <!-- <div class="flex items-center">
                                         <div class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border">
                                             <img class="w-8" *ngIf="product.thumbnail" [alt]="'Product thumbnail image'" [src]="product.thumbnail">
                                             <div class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase" *ngIf="!product.thumbnail">
                                                 NO THUMB
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- SKU -->
                                     <div class="hidden md:block truncate">
@@ -96,7 +95,7 @@
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleDetails(product.id)"> 
                                             <mat-icon
                                                 class="icon-size-5"
-                                                [svgIcon]="selectedProduct?.id === product.id ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-down'"></mat-icon>
+                                                [svgIcon]="selectedProduct?.id === product.id ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-right'"></mat-icon>
                                         </button>
                                     </div>
                                 </div>

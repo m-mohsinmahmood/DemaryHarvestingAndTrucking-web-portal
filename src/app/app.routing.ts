@@ -86,8 +86,6 @@ export const appRoutes: Route[] = [
                 {path: 'employee', loadChildren: () => import('app/modules/admin/apps/employee/employee.module').then(m => m.EmployeeModule)},
                 {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)},
                 {path: 'customers', loadChildren: () => import('app/modules/admin/apps/customers/customers.module').then(m => m.CustomersModule)},
-                {path: 'farms', loadChildren: () => import('app/modules/admin/apps/farms/farms.module').then(m => m.FarmsModule)}
-
             ]},
 
             // Pages

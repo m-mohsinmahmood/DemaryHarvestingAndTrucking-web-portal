@@ -19,18 +19,18 @@ import { Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 48px auto 40px;
+                grid-template-columns: 250px auto 40px;
 
                 @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
+                    grid-template-columns: 250px auto 112px 72px;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 48px 250px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 48px 250px auto 112px 96px 96px 72px;
                 }
             }
         `
@@ -92,8 +92,9 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             skipInvoiceMath1              : [''],
             arizonaInvoiceMath          : [''],
             skipInvoiceMath2            : [''],
-            email           : [''],
-            isActive            : [''],
+            email            : [''],
+            stateProvince    : [''],
+            isActive         : [''],
             reserved         : [''],
             cost             : [''],
             basePrice        : [''],
@@ -103,7 +104,15 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             thumbnail        : [''],
             images           : [[]],
             currentImageIndex: [0], // Image index that is currently being viewed
-            active           : [false]
+            active           : [false],
+            farmId: [''],
+            farmHarvestYear: [''],
+            farmName: [''],
+            farmTotalAcres: [''],
+            cropid: [''],
+            cropHarvestYear: [''],
+            cropCrop: [''],
+            cropPoundsPerBushel: [''],
         });
 
         // Get the brands
@@ -272,14 +281,14 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         this._customersService.getProductById(productId)
             .subscribe((product) => {
                 this._router.navigateByUrl('apps/customers/details/'+ productId) 
-                /* // Set the selected product
+                // Set the selected product
                 this.selectedProduct = product;
 
                 // Fill the form
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck(); */
+                this._changeDetectorRef.markForCheck(); 
             });
     }
     /**

@@ -1,10 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateComponent } from '../update/update.component';
+import { ActivatedRoute, Router } from "@angular/router";
+import { CustomersService } from '../customers.service';
+
 
 @Component({
     selector       : 'customer-details',
     templateUrl    : './details.component.html',
+    styleUrls: ['./details.component.scss'],
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -13,6 +20,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     
     isLoading: boolean = false;
+    routeID; // URL ID
+    customers:any;
 
 
     /**
@@ -20,6 +29,12 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
+        private _matDialog: MatDialog,
+        private _formBuilder: FormBuilder,
+        public activatedRoute: ActivatedRoute,
+        public _customerService: CustomersService,
+        private _router: Router,
+
     )
     {
     }
@@ -31,11 +46,21 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
+     ngOnInit(): void {
+        this.activatedRoute.params.subscribe((params) => {
+          console.log("PARAMS:", params); //log the entire params object
+          this.routeID = params.Id;
+          console.log("object", this.routeID);
+          console.log(params['id']) //log the value of id
+        });
     
-    {   
     
-    }
+        // Get the employee by id
+        this._customerService.getProductById(this.routeID).subscribe((customer) => {
+            this.customers = customer
+        });
+      }
+    
 
     /**
      * On destroy
@@ -50,6 +75,24 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    openUpdateDialog(): void
+    {
+    //Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: this.routeID}
+        });
+  
+  
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+      });   
+    }
+    
+    backHandler(): void 
+    {
+        this._router.navigate(["/apps/customers/"]) 
+    }
+  
 
-    /**/
 }

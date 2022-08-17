@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-add',
@@ -27,6 +29,7 @@ export class AddCustomer implements OnInit {
     arizonaInvoiceMath          : [''],
     skipInvoiceMath2            : [''],
     email           : [''],
+    stateProvince           : [''],
     isActive            : [''],
   	title:[''],
   	type:[''],
@@ -61,10 +64,10 @@ export class AddCustomer implements OnInit {
   }
   initCropItemRows() {
     return this._formBuilder.group({
-    farmId2:[''],
-    farmHarvestYear2:[''],
-    farmName2:[''],
-    farmTotalAcres2:[''],
+      cropid: [''],
+      cropHarvestYear: [''],
+      cropCrop: [''],
+      cropPoundsPerBushel: [''],
     });
   }
   addNewFarmRow() {
@@ -100,6 +103,8 @@ export class AddCustomer implements OnInit {
      */
     discard(): void
     {
+      this.matDialogRef.close();
+
 
     }
 

@@ -20,14 +20,16 @@ import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/li
 import { AddCustomer } from './add/add.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerDetailsComponent } from './details/details.component';
-
+import { UpdateComponent } from './update/update.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     declarations: [
         CustomersComponent,
         CustomersListComponent,
         AddCustomer,
-        CustomerDetailsComponent
+        CustomerDetailsComponent,
+        UpdateComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),
@@ -45,7 +47,8 @@ import { CustomerDetailsComponent } from './details/details.component';
         MatSlideToggleModule,
         MatTooltipModule,
         SharedModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTabsModule
     ]
 })
 export class CustomersModule

@@ -115,7 +115,15 @@ export const products = [
             arizonaInvoiceMath : 0,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 0
+            isActive     : 0,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -127,7 +135,15 @@ export const products = [
             arizonaInvoiceMath : 1,
             skipInvoiceMath2: 1,
             email      : "",
-            isActive     : 1
+            isActive     : 1,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -139,7 +155,15 @@ export const products = [
             arizonaInvoiceMath : 1,
             skipInvoiceMath2: 1,
             email      : "",
-            isActive     : 1
+            isActive     : 1,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -151,7 +175,15 @@ export const products = [
             arizonaInvoiceMath : 0,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 1
+            isActive     : 1,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -163,7 +195,15 @@ export const products = [
             arizonaInvoiceMath : 0,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 1
+            isActive     : 1,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -175,7 +215,15 @@ export const products = [
             arizonaInvoiceMath : 1,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 0
+            isActive     : 0,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -187,7 +235,15 @@ export const products = [
             arizonaInvoiceMath : 0,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 0
+            isActive     : 0,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
@@ -199,7 +255,15 @@ export const products = [
             arizonaInvoiceMath : 1,
             skipInvoiceMath2: 0,
             email      : "",
-            isActive     : 0
+            isActive     : 0,
+            farmId:  '',
+            farmHarvestYear:  '',
+            farmName:  '',
+            farmTotalAcres:  '',
+            cropid:  '678',
+            cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
+            cropCrop:  'ALBERTO DURHAM SEED',
+            cropPoundsPerBushel:  '60.00',
         
         },
         {   
