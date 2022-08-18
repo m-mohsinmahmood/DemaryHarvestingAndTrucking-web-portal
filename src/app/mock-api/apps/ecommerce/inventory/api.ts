@@ -64,18 +64,18 @@ export class ECommerceInventoryMockApi
                 let products: any[] | null = cloneDeep(this._products);
 
                 // Sort the products
-                if ( sort === 'sku' || sort === 'name' || sort === 'active' )
-                {
-                    products.sort((a, b) => {
-                        const fieldA = a[sort].toString().toUpperCase();
-                        const fieldB = b[sort].toString().toUpperCase();
-                        return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
-                    });
-                }
-                else
-                {
-                    products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
-                }
+                // if ( sort === 'sku' || sort === 'name' || sort === 'active' )
+                // {
+                //     products.sort((a, b) => {
+                //         const fieldA = a[sort].toString().toUpperCase();
+                //         const fieldB = b[sort].toString().toUpperCase();
+                //         return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+                //     });
+                // }
+                // else
+                // {
+                //     products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
+                // }
 
                 // If search exists...
                 if ( search )

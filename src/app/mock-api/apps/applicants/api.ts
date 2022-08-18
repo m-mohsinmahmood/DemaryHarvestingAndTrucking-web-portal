@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/vehicle/inventory/data';
+import { employees as employeesData} from 'app/mock-api/apps/employee/data';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ECommerceInventoryMockApi2
+export class ApplicantMockApi
 {
-    private _categories: any[] = categoriesData;
-    private _brands: any[] = brandsData;
-    private _products: any[] = productsData;
-    private _tags: any[] = tagsData;
-    private _vendors: any[] = vendorsData;
+    private _employees: any[] = employeesData;
+   
 
     /**
      * Constructor
@@ -32,13 +29,14 @@ export class ECommerceInventoryMockApi2
      */
     registerHandlers(): void
     {
+        
         // -----------------------------------------------------------------------------------------------------
-        // @ Products - GET
+        // @ Employees - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/vehicle/products', 300)
+            .onGet('api/apps/employee', 300)
             .reply(({request}) => {
-              console.log('object:::::----');
+
                 // Get available queries
                 const search = request.params.get('search');
                 const sort = request.params.get('sort') || 'name';
@@ -46,37 +44,37 @@ export class ECommerceInventoryMockApi2
                 const page = parseInt(request.params.get('page') ?? '1', 10);
                 const size = parseInt(request.params.get('size') ?? '10', 10);
 
-                // Clone the products
-                let products: any[] | null = cloneDeep(this._products);
+                // Clone the employees
+                let products: any[] | null = cloneDeep(this._employees);
 
                 // Sort the products
-                // if ( sort === 'sku' || sort === 'name' || sort === 'active' )
-                // {
-                //     products.sort((a, b) => {
-                //         const fieldA = a[sort].toString().toUpperCase();
-                //         const fieldB = b[sort].toString().toUpperCase();
-                //         return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
-                //     });
-                // }
-                // else
-                // {
-                //     products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
-                // }
+                if ( sort === 'role' || sort === 'namee' || sort === 'email' )
+                {
+                    products.sort((a, b) => {
+                        const fieldA = a[sort].toString().toUpperCase();
+                        const fieldB = b[sort].toString().toUpperCase();
+                        return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+                    });
+                }
+                else
+                {
+                    products.sort((a, b) => order === 'asc' ? a[sort] - b[sort] : b[sort] - a[sort]);
+                }
 
                 // If search exists...
                 if ( search )
                 {
-                    // Filter the products
+                    // Filter the employees
                     products = products.filter(contact => contact.name && contact.name.toLowerCase().includes(search.toLowerCase()));
                 }
 
                 // Paginate - Start
-                const productsLength = products.length;
+                const employeeLength = products.length;
 
                 // Calculate pagination details
                 const begin = page * size;
-                const end = Math.min((size * (page + 1)), productsLength);
-                const lastPage = Math.max(Math.ceil(productsLength / size), 1);
+                const end = Math.min((size * (page + 1)), employeeLength);
+                const lastPage = Math.max(Math.ceil(employeeLength / size), 1);
 
                 // Prepare the pagination object
                 let pagination = {};
@@ -99,7 +97,7 @@ export class ECommerceInventoryMockApi2
 
                     // Prepare the pagination mock-api
                     pagination = {
-                        length    : productsLength,
+                        length    : employeeLength,
                         size      : size,
                         page      : page,
                         lastPage  : lastPage,
@@ -119,34 +117,34 @@ export class ECommerceInventoryMockApi2
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Product - GET
+        // @ Employee - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/vehicle/product')
+            .onGet('api/apps/employee/product')
             .reply(({request}) => {
-                console.log('object-2');
+
                 // Get the id from the params
                 const id = request.params.get('id');
 
-                // Clone the products
-                const products = cloneDeep(this._products);
+                // Clone the employee
+                const employees = cloneDeep(this._employees);
 
-                // Find the product
-                const product = products.find(item => item.id === id);
+                // Find the employee
+                const employee = employees.find(item => item.id === id);
 
                 // Return the response
-                return [200, product];
+                return [200, employee];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Product - POST
+        // @ Employee - POST
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPost('api/apps/vehicle/product')
+            .onPost('api/apps/employee/product')
             .reply(() => {
-                console.log('object-3');
-                // Generate a new product
-                const newProduct = {
+
+                // Generate a new employee
+                const newEmployee = {
                     id         : FuseMockApiUtils.guid(),
                     category   : '',
                     name       : 'A New Product',
@@ -168,66 +166,65 @@ export class ECommerceInventoryMockApi2
                     active     : false
                 };
 
-                // Unshift the new product
-                this._products.unshift(newProduct);
+                // Unshift the new employee
+                this._employees.unshift(newEmployee);
 
                 // Return the response
-                return [200, newProduct];
+                return [200, newEmployee];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Product - PATCH
+        // @ Employee - PATCH
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPatch('api/apps/vehicle/product')
+            .onPatch('api/apps/employee/product')
             .reply(({request}) => {
-                console.log('object-4');
-                // Get the id and product
+
+                // Get the id and employee
                 const id = request.body.id;
                 const product = cloneDeep(request.body.product);
 
-                // Prepare the updated product
-                let updatedProduct = null;
+                // Prepare the updated employee
+                let updatedEmployee = null;
 
-                // Find the product and update it
-                this._products.forEach((item, index, products) => {
+                // Find the employee and update it
+                this._employees.forEach((item, index, employees) => {
 
                     if ( item.id === id )
                     {
-                        // Update the product
-                        products[index] = assign({}, products[index], product);
+                        // Update the employee
+                        employees[index] = assign({}, employees[index], product);
 
-                        // Store the updated product
-                        updatedProduct = products[index];
+                        // Store the updated employee
+                        updatedEmployee = employees[index];
                     }
                 });
 
                 // Return the response
-                return [200, updatedProduct];
+                return [200, updatedEmployee];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Product - DELETE
+        // @ Employee - DELETE
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onDelete('api/apps/vehicle/product')
+            .onDelete('api/apps/employee/product')
             .reply(({request}) => {
 
                 // Get the id
                 const id = request.params.get('id');
 
-                // Find the product and delete it
-                this._products.forEach((item, index) => {
+                // Find the employee and delete it
+                this._employees.forEach((item, index) => {
 
                     if ( item.id === id )
                     {
-                        this._products.splice(index, 1);
+                        this._employees.splice(index, 1);
                     }
                 });
 
                 // Return the response
                 return [200, true];
             });
-
-            }
+    }
 }

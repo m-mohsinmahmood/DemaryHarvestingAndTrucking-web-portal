@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
-import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/customers/customers.resolvers';
+import { ApplicantsResolver, ApplicantResolver, } from 'app/modules/admin/apps/applicants/applicants.resolvers';
 
 export const applicantsRoutes: Route[] = [
     {
@@ -12,12 +12,10 @@ export const applicantsRoutes: Route[] = [
                 path     : '',
                 component: ApplicantsListComponent,
                 resolve  : {
-                    brands    : InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products  : InventoryProductsResolver,
-                    tags      : InventoryTagsResolver,
-                    vendors   : InventoryVendorsResolver
-                }
+                   
+                    products  : ApplicantsResolver,
+                    
+                },
                 // children : [
                 //     {
                 //         path         : 'details/:id',

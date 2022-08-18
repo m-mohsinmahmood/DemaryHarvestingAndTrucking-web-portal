@@ -21,18 +21,18 @@ import { Route, Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 128px 138px 40px;
+                grid-template-columns: 120px  150px  120px;
 
                 @screen sm {
-                    grid-template-columns: 48px auto  72px;
+                    grid-template-columns: 48px 98px 90px 98px 98px 98px;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 48px 112px auto 112px 72px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 96px 96px auto 112px 96px;
+                    grid-template-columns: 150px 156px 256px 250px 250px 150px;
                     /* grid-template-columns: 48px 112px auto 112px 96px 96px 72px; */
 
                 }
@@ -77,7 +77,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
        
     )
     {
-        /* console.log("jjjjjjjjjjj") */
+         console.log("jjjjjjjjjjj") 
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -89,55 +89,56 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngOnInit(): void
     {
+        console.log('on init')
         // Create the selected product form
-        this.selectedProductForm = this._formBuilder.group({
-            id               : [''],
-            category         : [''],
-            name             : ['', [Validators.required]],
-            description      : [''],
-            tags             : [[]],
-            sku              : [''],
-            barcode          : [''],
-            brand            : [''],
-            vendor           : [''],
-            stock            : [''],
-            reserved         : [''],
-            cost             : [''],
-            basePrice        : [''],
-            taxPercent       : [''],
-            price            : [''],
-            weight           : [''],
-            thumbnail        : [''],
-            images           : [[]],
-            currentImageIndex: [0], // Image index that is currently being viewed
-            active           : [false]
-        });
+        // this.selectedProductForm = this._formBuilder.group({
+        //     id               : [''],
+        //     category         : [''],
+        //     name             : ['', [Validators.required]],
+        //     description      : [''],
+        //     tags             : [[]],
+        //     sku              : [''],
+        //     barcode          : [''],
+        //     brand            : [''],
+        //     vendor           : [''],
+        //     stock            : [''],
+        //     reserved         : [''],
+        //     cost             : [''],
+        //     basePrice        : [''],
+        //     taxPercent       : [''],
+        //     price            : [''],
+        //     weight           : [''],
+        //     thumbnail        : [''],
+        //     images           : [[]],
+        //     currentImageIndex: [0], // Image index that is currently being viewed
+        //     active           : [false]
+        // });
     
         /* console.log("PPPPPPPPPPPPP") */
 
         // Get the brands
-        this._inventoryService.brands$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: VehicleBrand[]) => {
-                /* console.log("ddd") */
-                // Update the brands
-                this.brands = brands;
+        // this._inventoryService.brands$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((brands: VehicleBrand[]) => {
+        //         /* console.log("ddd") */
+        //         // Update the brands
+        //         this.brands = brands;
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
         // Get the categories
-        this._inventoryService.categories$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: VehicleCategory[]) => {
-                /* console.log("www") */
-                // Update the categories
-                this.categories = categories;
+        // this._inventoryService.categories$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((categories: VehicleCategory[]) => {
+        //         /* console.log("www") */
+        //         // Update the categories
+        //         this.categories = categories;
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
         // Get the pagination
         this._inventoryService.pagination$
@@ -153,31 +154,32 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the products
         this.products$ = this._inventoryService.products$;
+        console.log("Products in Vehicle::", this.products$)
 
         // Get the tags
-        this._inventoryService.tags$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: VehicleTag[]) => {
+        // this._inventoryService.tags$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((tags: VehicleTag[]) => {
 
-                // Update the tags
-                this.tags = tags;
-                this.filteredTags = tags;
+        //         // Update the tags
+        //         this.tags = tags;
+        //         this.filteredTags = tags;
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
         // Get the vendors
-        this._inventoryService.vendors$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: VehicleVendor[]) => {
+        // this._inventoryService.vendors$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((vendors: VehicleVendor[]) => {
 
-                // Update the vendors
-                this.vendors = vendors;
+        //         // Update the vendors
+        //         this.vendors = vendors;
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -201,6 +203,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngAfterViewInit(): void
     {
+        console.log("after view ")
         if ( this._sort && this._paginator )
         {
             // Set the initial sort
@@ -243,6 +246,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngOnDestroy(): void
     {
+        console.log('ng-destroy')
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
@@ -272,12 +276,12 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
     {
         // If the product is already selected...
-        if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
+        // if ( this.selectedProduct && this.selectedProduct.id === productId )
+        // {
+        //     // Close the details
+        //     this.closeDetails();
+        //     return;
+        // }
        
         this._router.navigate(["/apps/vehicle/details/" + productId])
 
@@ -307,112 +311,113 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Cycle through images of selected product
      */
-    cycleImages(forward: boolean = true): void
-    {
-        // Get the image count and current image index
-        const count = this.selectedProductForm.get('images').value.length;
-        const currentIndex = this.selectedProductForm.get('currentImageIndex').value;
 
-        // Calculate the next and previous index
-        const nextIndex = currentIndex + 1 === count ? 0 : currentIndex + 1;
-        const prevIndex = currentIndex - 1 < 0 ? count - 1 : currentIndex - 1;
+    // cycleImages(forward: boolean = true): void
+    // {
+    //     // Get the image count and current image index
+    //     const count = this.selectedProductForm.get('images').value.length;
+    //     const currentIndex = this.selectedProductForm.get('currentImageIndex').value;
 
-        // If cycling forward...
-        if ( forward )
-        {
-            this.selectedProductForm.get('currentImageIndex').setValue(nextIndex);
-        }
-        // If cycling backwards...
-        else
-        {
-            this.selectedProductForm.get('currentImageIndex').setValue(prevIndex);
-        }
-    }
+    //     // Calculate the next and previous index
+    //     const nextIndex = currentIndex + 1 === count ? 0 : currentIndex + 1;
+    //     const prevIndex = currentIndex - 1 < 0 ? count - 1 : currentIndex - 1;
+
+    //     // If cycling forward...
+    //     if ( forward )
+    //     {
+    //         this.selectedProductForm.get('currentImageIndex').setValue(nextIndex);
+    //     }
+    //     // If cycling backwards...
+    //     else
+    //     {
+    //         this.selectedProductForm.get('currentImageIndex').setValue(prevIndex);
+    //     }
+    // }
 
     /**
      * Toggle the tags edit mode
      */
-    toggleTagsEditMode(): void
-    {
-        this.tagsEditMode = !this.tagsEditMode;
-    }
+    // toggleTagsEditMode(): void
+    // {
+    //     this.tagsEditMode = !this.tagsEditMode;
+    // }
 
     /**
      * Filter tags
      *
      * @param event
      */
-    filterTags(event): void
-    {
-        // Get the value
-        const value = event.target.value.toLowerCase();
+    // filterTags(event): void
+    // {
+    //     // Get the value
+    //     const value = event.target.value.toLowerCase();
 
-        // Filter the tags
-        this.filteredTags = this.tags.filter(tag => tag.title.toLowerCase().includes(value));
-    }
+    //     // Filter the tags
+    //     this.filteredTags = this.tags.filter(tag => tag.title.toLowerCase().includes(value));
+    // }
 
     /**
      * Filter tags input key down event
      *
      * @param event
      */
-    filterTagsInputKeyDown(event): void
-    {
-        // Return if the pressed key is not 'Enter'
-        if ( event.key !== 'Enter' )
-        {
-            return;
-        }
+    // filterTagsInputKeyDown(event): void
+    // {
+    //     // Return if the pressed key is not 'Enter'
+    //     if ( event.key !== 'Enter' )
+    //     {
+    //         return;
+    //     }
 
-        // If there is no tag available...
-        if ( this.filteredTags.length === 0 )
-        {
-            // Create the tag
-            this.createTag(event.target.value);
+    //     // If there is no tag available...
+    //     if ( this.filteredTags.length === 0 )
+    //     {
+    //         // Create the tag
+    //         this.createTag(event.target.value);
 
-            // Clear the input
-            event.target.value = '';
+    //         // Clear the input
+    //         event.target.value = '';
 
-            // Return
-            return;
-        }
+    //         // Return
+    //         return;
+    //     }
 
-        // If there is a tag...
-        const tag = this.filteredTags[0];
-        const isTagApplied = this.selectedProduct.tags.find(id => id === tag.id);
+    //     // If there is a tag...
+    //     const tag = this.filteredTags[0];
+    //     const isTagApplied = this.selectedProduct.tags.find(id => id === tag.id);
 
-        // If the found tag is already applied to the product...
-        if ( isTagApplied )
-        {
-            // Remove the tag from the product
-            this.removeTagFromProduct(tag);
-        }
-        else
-        {
-            // Otherwise add the tag to the product
-            this.addTagToProduct(tag);
-        }
-    }
+    //     // If the found tag is already applied to the product...
+    //     if ( isTagApplied )
+    //     {
+    //         // Remove the tag from the product
+    //         this.removeTagFromProduct(tag);
+    //     }
+    //     else
+    //     {
+    //         // Otherwise add the tag to the product
+    //         this.addTagToProduct(tag);
+    //     }
+    // }
 
     /**
      * Create a new tag
      *
      * @param title
      */
-    createTag(title: string): void
-    {
-        const tag = {
-            title
-        };
+    // createTag(title: string): void
+    // {
+    //     const tag = {
+    //         title
+    //     };
 
-        // Create tag on the server
-        this._inventoryService.createTag(tag)
-            .subscribe((response) => {
+    //     // Create tag on the server
+    //     this._inventoryService.createTag(tag)
+    //         .subscribe((response) => {
 
-                // Add the tag to the product
-                this.addTagToProduct(response);
-            });
-    }
+    //             // Add the tag to the product
+    //             this.addTagToProduct(response);
+    //         });
+    // }
 
     /**
      * Update the tag title
@@ -420,67 +425,67 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param event
      */
-    updateTagTitle(tag: VehicleTag, event): void
-    {
-        // Update the title on the tag
-        tag.title = event.target.value;
+    // updateTagTitle(tag: VehicleTag, event): void
+    // {
+    //     // Update the title on the tag
+    //     tag.title = event.target.value;
 
-        // Update the tag on the server
-        this._inventoryService.updateTag(tag.id, tag)
-            .pipe(debounceTime(300))
-            .subscribe();
+    //     // Update the tag on the server
+    //     this._inventoryService.updateTag(tag.id, tag)
+    //         .pipe(debounceTime(300))
+    //         .subscribe();
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
+    //     // Mark for check
+    //     this._changeDetectorRef.markForCheck();
+    // }
 
     /**
      * Delete the tag
      *
      * @param tag
      */
-    deleteTag(tag: VehicleTag): void
-    {
-        // Delete the tag from the server
-        this._inventoryService.deleteTag(tag.id).subscribe();
+    // deleteTag(tag: VehicleTag): void
+    // {
+    //     // Delete the tag from the server
+    //     this._inventoryService.deleteTag(tag.id).subscribe();
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
+    //     // Mark for check
+    //     this._changeDetectorRef.markForCheck();
+    // }
 
     /**
      * Add tag to the product
      *
      * @param tag
      */
-    addTagToProduct(tag: VehicleTag): void
-    {
-        // Add the tag
-        this.selectedProduct.tags.unshift(tag.id);
+    // addTagToProduct(tag: VehicleTag): void
+    // {
+    //     // Add the tag
+    //     this.selectedProduct.tags.unshift(tag.id);
 
-        // Update the selected product form
-        this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
+    //     // Update the selected product form
+    //     this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
+    //     // Mark for check
+    //     this._changeDetectorRef.markForCheck();
+    // }
 
     /**
      * Remove tag from the product
      *
      * @param tag
      */
-    removeTagFromProduct(tag: VehicleTag): void
-    {
-        // Remove the tag
-        this.selectedProduct.tags.splice(this.selectedProduct.tags.findIndex(item => item === tag.id), 1);
+    // removeTagFromProduct(tag: VehicleTag): void
+    // {
+    //     // Remove the tag
+    //     this.selectedProduct.tags.splice(this.selectedProduct.tags.findIndex(item => item === tag.id), 1);
 
-        // Update the selected product form
-        this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
+    //     // Update the selected product form
+    //     this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
+    //     // Mark for check
+    //     this._changeDetectorRef.markForCheck();
+    // }
 
     /**
      * Toggle product tag
@@ -488,122 +493,122 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param change
      */
-    toggleProductTag(tag: VehicleTag, change: MatCheckboxChange): void
-    {
-        if ( change.checked )
-        {
-            this.addTagToProduct(tag);
-        }
-        else
-        {
-            this.removeTagFromProduct(tag);
-        }
-    }
+    // toggleProductTag(tag: VehicleTag, change: MatCheckboxChange): void
+    // {
+    //     if ( change.checked )
+    //     {
+    //         this.addTagToProduct(tag);
+    //     }
+    //     else
+    //     {
+    //         this.removeTagFromProduct(tag);
+    //     }
+    // }
 
     /**
      * Should the create tag button be visible
      *
      * @param inputValue
      */
-    shouldShowCreateTagButton(inputValue: string): boolean
-    {
-        return !!!(inputValue === '' || this.tags.findIndex(tag => tag.title.toLowerCase() === inputValue.toLowerCase()) > -1);
-    }
+    // shouldShowCreateTagButton(inputValue: string): boolean
+    // {
+    //     return !!!(inputValue === '' || this.tags.findIndex(tag => tag.title.toLowerCase() === inputValue.toLowerCase()) > -1);
+    // }
 
     /**
      * Create product
      */
-    createProduct(): void
-    {
-        // Create the product
-        this._inventoryService.createProduct().subscribe((newProduct) => {
+    // createProduct(): void
+    // {
+    //     // Create the product
+    //     this._inventoryService.createProduct().subscribe((newProduct) => {
 
-            // Go to new product
-            this.selectedProduct = newProduct;
+    //         // Go to new product
+    //         this.selectedProduct = newProduct;
 
-            // Fill the form
-            this.selectedProductForm.patchValue(newProduct);
+    //         // Fill the form
+    //         this.selectedProductForm.patchValue(newProduct);
 
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
+    //         // Mark for check
+    //         this._changeDetectorRef.markForCheck();
+    //     });
+    // }
 
     /**
      * Update the selected product using the form data
      */
-    updateSelectedProduct(): void
-    {
-        // Get the product object
-        const product = this.selectedProductForm.getRawValue();
+    // updateSelectedProduct(): void
+    // {
+    //     // Get the product object
+    //     const product = this.selectedProductForm.getRawValue();
 
-        // Remove the currentImageIndex field
-        delete product.currentImageIndex;
+    //     // Remove the currentImageIndex field
+    //     delete product.currentImageIndex;
 
-        // Update the product on the server
-        this._inventoryService.updateProduct(product.id, product).subscribe(() => {
+    //     // Update the product on the server
+    //     this._inventoryService.updateProduct(product.id, product).subscribe(() => {
 
-            // Show a success message
-            this.showFlashMessage('success');
-        });
-    }
+    //         // Show a success message
+    //         this.showFlashMessage('success');
+    //     });
+    // }
 
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedProduct(): void
-    {
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title  : 'Delete product',
-            message: 'Are you sure you want to remove this product? This action cannot be undone!',
-            actions: {
-                confirm: {
-                    label: 'Delete'
-                }
-            }
-        });
+    // deleteSelectedProduct(): void
+    // {
+    //     // Open the confirmation dialog
+    //     const confirmation = this._fuseConfirmationService.open({
+    //         title  : 'Delete product',
+    //         message: 'Are you sure you want to remove this product? This action cannot be undone!',
+    //         actions: {
+    //             confirm: {
+    //                 label: 'Delete'
+    //             }
+    //         }
+    //     });
 
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
+    //     // Subscribe to the confirmation dialog closed action
+    //     confirmation.afterClosed().subscribe((result) => {
 
-            // If the confirm button pressed...
-            if ( result === 'confirmed' )
-            {
+    //         // If the confirm button pressed...
+    //         if ( result === 'confirmed' )
+    //         {
 
-                // Get the product object
-                const product = this.selectedProductForm.getRawValue();
+    //             // Get the product object
+    //             const product = this.selectedProductForm.getRawValue();
 
-                // Delete the product on the server
-                this._inventoryService.deleteProduct(product.id).subscribe(() => {
+    //             // Delete the product on the server
+    //             this._inventoryService.deleteProduct(product.id).subscribe(() => {
 
-                    // Close the details
-                    this.closeDetails();
-                });
-            }
-        });
-    }
+    //                 // Close the details
+    //                 this.closeDetails();
+    //             });
+    //         }
+    //     });
+    // }
 
     /**
      * Show flash message
      */
-    showFlashMessage(type: 'success' | 'error'): void
-    {
-        // Show the message
-        this.flashMessage = type;
+    // showFlashMessage(type: 'success' | 'error'): void
+    // {
+    //     // Show the message
+    //     this.flashMessage = type;
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
+    //     // Mark for check
+    //     this._changeDetectorRef.markForCheck();
 
-        // Hide it after 3 seconds
-        setTimeout(() => {
+    //     // Hide it after 3 seconds
+    //     setTimeout(() => {
 
-            this.flashMessage = null;
+    //         this.flashMessage = null;
 
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }, 3000);
-    }
+    //         // Mark for check
+    //         this._changeDetectorRef.markForCheck();
+    //     }, 3000);
+    // }
 
     /**
      * Track by function for ngFor loops
@@ -611,8 +616,8 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param index
      * @param item
      */
-    trackByFn(index: number, item: any): any
-    {
-        return item.id || index;
-    }
+    // trackByFn(index: number, item: any): any
+    // {
+    //     return item.id || index;
+    // }
 }

@@ -44,6 +44,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
             icon: "heroicons_outline:document",
             link: "/apps/file-manager",
           },
+  //         {
+  //   id: "applicants",
+  //   title: "Applicants",
+  //   type: "basic",
+  //   icon: "heroicons_outline:user-circle",
+  //   link: "/apps/applicants",  
+  // },
         ],
       
        
@@ -64,28 +71,21 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:user-circle",
     link: "/apps/applicants",  
   },
-  {
-    id: "",
-    title: "Equipment",
-    type: "collapsable",
-    icon: "heroicons_outline:user",
-    children: [
-      {
-        id: "",
-        title: "Vehicle List",
-        type: "basic",
-        icon: "heroicons_outline:user-group",
-        link: "/apps/vehicle",
-      },
-      // {
-      //   id: "",
-      //   title: "Details",
-      //   type: "basic",
-      //   icon: "heroicons_outline:user-group",
-      //   link: "/apps/detail",
-      // },
-    ],
-  }
+  // {
+  //   id: "",
+  //   title: "Equipment",
+  //   type: "collapsable",
+  //   icon: "heroicons_outline:user",
+  //   children: [
+  //     {
+  //       id: "",
+  //       title: "Vehicle List",
+  //       type: "basic",
+  //       icon: "heroicons_outline:user-group",
+  //       link: "/apps/vehicle",
+  //     },
+  //   ],
+  // }
   
 ]
     

@@ -4,61 +4,61 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { VehicleService } from 'app/modules/admin/apps/vehicle/vehicle.service';
 import { VehicleBrand, VehicleCategory, VehiclePagination, VehicleProduct, VehicleTag, VehicleVendor } from 'app/modules/admin/apps/vehicle/vehicle.types';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class InventoryBrandsResolver implements Resolve<any>
-{
-    /**
-     * Constructor
-     */
-    constructor(private _inventoryService: VehicleService)
-    {
-    }
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class InventoryBrandsResolver implements Resolve<any>
+// {
+//     /**
+//      * Constructor
+//      */
+//     constructor(private _inventoryService: VehicleService)
+//     {
+//     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+//     // -----------------------------------------------------------------------------------------------------
+//     // @ Public methods
+//     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Resolver
-     *
-     * @param route
-     * @param state
-     */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleBrand[]>
-    {
-        return this._inventoryService.getBrands();
-    }
-}
+//     /**
+//      * Resolver
+//      *
+//      * @param route
+//      * @param state
+//      */
+//     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleBrand[]>
+//     {
+//         return this._inventoryService.getBrands();
+//     }
+// }
 
-@Injectable({
-    providedIn: 'root'
-})
-export class InventoryCategoriesResolver implements Resolve<any>
-{
-    /**
-     * Constructor
-     */
-    constructor(private _inventoryService: VehicleService)
-    {
-    }
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class InventoryCategoriesResolver implements Resolve<any>
+// {
+//     /**
+//      * Constructor
+//      */
+//     constructor(private _inventoryService: VehicleService)
+//     {
+//     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+//     // -----------------------------------------------------------------------------------------------------
+//     // @ Public methods
+//     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Resolver
-     *
-     * @param route
-     * @param state
-     */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleCategory[]>
-    {
-        return this._inventoryService.getCategories();
-    }
-}
+//     /**
+//      * Resolver
+//      *
+//      * @param route
+//      * @param state
+//      */
+//     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleCategory[]>
+//     {
+//         return this._inventoryService.getCategories();
+//     }
+// }
 
 @Injectable({
     providedIn: 'root'
@@ -136,58 +136,58 @@ export class InventoryProductsResolver implements Resolve<any>
     }
 }
 
-@Injectable({
-    providedIn: 'root'
-})
-export class InventoryTagsResolver implements Resolve<any>
-{
-    /**
-     * Constructor
-     */
-    constructor(private _inventoryService: VehicleService)
-    {
-    }
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class InventoryTagsResolver implements Resolve<any>
+// {
+//     /**
+//      * Constructor
+//      */
+//     constructor(private _inventoryService: VehicleService)
+//     {
+//     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+//     // -----------------------------------------------------------------------------------------------------
+//     // @ Public methods
+//     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Resolver
-     *
-     * @param route
-     * @param state
-     */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleTag[]>
-    {
-        return this._inventoryService.getTags();
-    }
-}
+//     /**
+//      * Resolver
+//      *
+//      * @param route
+//      * @param state
+//      */
+//     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleTag[]>
+//     {
+//         return this._inventoryService.getTags();
+//     }
+// }
 
-@Injectable({
-    providedIn: 'root'
-})
-export class InventoryVendorsResolver implements Resolve<any>
-{
-    /**
-     * Constructor
-     */
-    constructor(private _inventoryService: VehicleService)
-    {
-    }
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class InventoryVendorsResolver implements Resolve<any>
+// {
+//     /**
+//      * Constructor
+//      */
+//     constructor(private _inventoryService: VehicleService)
+//     {
+//     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+//     // -----------------------------------------------------------------------------------------------------
+//     // @ Public methods
+//     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Resolver
-     *
-     * @param route
-     * @param state
-     */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleVendor[]>
-    {
-        return this._inventoryService.getVendors();
-    }
-}
+//     /**
+//      * Resolver
+//      *
+//      * @param route
+//      * @param state
+//      */
+//     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<VehicleVendor[]>
+//     {
+//         return this._inventoryService.getVendors();
+//     }
+// }
