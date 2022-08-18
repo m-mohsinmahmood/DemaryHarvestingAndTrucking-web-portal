@@ -174,11 +174,11 @@ export class CustomersService
     /**
      * Create product
      */
-    createProduct(): Observable<InventoryProduct>
+    createProduct(data:any): Observable<InventoryProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/customers/product', {}).pipe(
+            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/customers/product', {data}).pipe(
                 map((newProduct) => {
 
                     // Update the products with the new product

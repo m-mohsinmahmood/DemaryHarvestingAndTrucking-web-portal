@@ -122,7 +122,7 @@ export class AddCustomer implements OnInit {
     send(): void
     {
       console.log(this.form.controls);
-      this.api.createProduct()
+      this.api.createProduct(this.form.value)
       .subscribe({
         next:(res)=>{
           alert("Customer Added Successfully1") 

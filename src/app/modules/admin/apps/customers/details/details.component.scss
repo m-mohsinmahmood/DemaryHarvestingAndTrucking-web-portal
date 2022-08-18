@@ -5,3 +5,19 @@
 .tab .mat-tab-group .mat-tab-labels {
     padding: 12px !important;
 }
+
+.crops-grid {
+    grid-template-columns: auto auto auto auto;
+
+    @screen sm {
+        grid-template-columns: auto auto auto auto;
+    }
+
+    @screen md {
+        grid-template-columns: auto auto auto auto;
+    }
+
+    @screen lg {
+        grid-template-columns: auto auto auto auto;
+    }
+}

@@ -86,7 +86,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         // Create the selected product form
         this.selectedProductForm = this._formBuilder.group({
             id               : [''],
-            harvestYear         : [''],
+            harvestYear      : [''],
             name             : ['', [Validators.required]],
             alternateName      : [''],
             skipInvoiceMath1              : [''],
@@ -508,10 +508,10 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Create product
      */
-    createProduct(): void
+    createProduct(data:any): void
     {
         // Create the product
-        this._customersService.createProduct().subscribe((newProduct) => {
+        this._customersService.createProduct(data).subscribe((newProduct) => {
 
             // Go to new product
             this.selectedProduct = newProduct;

@@ -106,7 +106,58 @@
 
                 <!-- Farm Info-->
                 <mat-tab label="Farms Information">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
+                            <div class="grid">
+                                <!-- Header -->
+                                <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="hidden md:block" [mat-sort-header]="'sku'">
+                                        Farm ID
+                                    </div>
+                                    <div [mat-sort-header]="'name'">Farm Name</div>
+                                    <div class="hidden lg:block" [mat-sort-header]="'stock'">
+                                        Farm Harvest Year
+                                    </div>
+                                    <div class="hidden sm:block">Farm Total Acres</div>
+                                </div>
+                                <!-- Rows -->
+                                
+                                <!-- <ng-container *ngIf="(customers)">
+                                    <ng-container *ngFor="let customer of customers; let i = index"> -->
+                                        <div class="crops-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+        
+                                            <!-- SKU -->
+                                            <div class="hidden md:block truncate">
+                                                {{customers.farmId}}
+                                            </div>
+        
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                {{customers.farmName}}
+                                            </div>
+        
+                                            <!-- Harvest Year -->
+                                            <div class="hidden sm:block">
+                                                {{customers.farmHarvestYear}}
+                                            </div>
+        
+                                            <!-- Stock -->
+                                            <div class="hidden lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{customers.farmTotalAcres}}</div>
+                                            </div>
+                                        </div>
+                                    <!-- </ng-container>
+                                </ng-container> -->
+                            </div>
+        
+                    <!-- </ng-container> -->
+        
+                    <!-- <ng-template #noProducts>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                    </ng-template> -->
+        
+                </div>
+                    <!-- <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <dl class="sm:divide-y sm:divide-gray-200">
                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-lg font-extrabold text-gray-500">Farm ID</dt>
@@ -131,24 +182,63 @@
                                     {{customers.farmTotalAcres}}
                                 </dd>
                             </div>
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.position}}</dd>
-                </div> -->
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.harvestYear}}</dd>
-                </div> -->
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                    <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.currentEmployee}}</dd>
-                </div> -->
                         </dl>
-                    </div>
+                    </div> -->
                 </mat-tab>
                 <!--Crops Info-->
                 <mat-tab label="Crops Information">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden md:block" [mat-sort-header]="'sku'">
+                                            Crop ID
+                                        </div>
+                                        <div [mat-sort-header]="'name'">Crop Name</div>
+                                        <div class="hidden lg:block" [mat-sort-header]="'stock'">
+                                            Crop Harvest Year
+                                        </div>
+                                        <div class="hidden sm:block">Crop Pounds Per Bushel</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    
+                                    <!-- <ng-container *ngIf="(customers)">
+                                        <ng-container *ngFor="let customer of customers; let i = index"> -->
+                                            <div class="crops-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+            
+                                                <!-- SKU -->
+                                                <div class="hidden md:block truncate">
+                                                    {{customers.cropid}}
+                                                </div>
+            
+                                                <!-- Name -->
+                                                <div class="truncate">
+                                                    {{customers.cropCrop}}
+                                                </div>
+            
+                                                <!-- Price -->
+                                                <div class="hidden sm:block">
+                                                    {{customers.cropHarvestYear}}
+                                                </div>
+            
+                                                <!-- Stock -->
+                                                <div class="hidden lg:flex items-center">
+                                                    <div class="min-w-4 ml-2">{{customers.cropPoundsPerBushel}}</div>
+                                                </div>
+                                            </div>
+                                        <!-- </ng-container>
+                                    </ng-container> -->
+                                </div>
+            
+                        <!-- </ng-container> -->
+            
+                        <!-- <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template> -->
+            
+                    </div>
+                    <!-- <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <dl class="sm:divide-y sm:divide-gray-200">
                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-lg font-extrabold text-gray-500">Crop ID</dt>
@@ -174,7 +264,7 @@
                                 </dd>
                             </div>
                         </dl>
-                    </div>
+                    </div> -->
                 </mat-tab>
             </mat-tab-group>
         </div>
