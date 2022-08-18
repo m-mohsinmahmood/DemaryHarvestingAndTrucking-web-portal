@@ -9,7 +9,7 @@ import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.s
 
 
 @Component({
-    selector       : 'employee-details',
+    selector       : 'applicant-details',
     templateUrl    : './details.component.html',
     styleUrls: ['./details.component.scss'],
     encapsulation  : ViewEncapsulation.None,
@@ -21,7 +21,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     
     isLoading: boolean = false;
     routeID; // URL ID
-    employees:any;
+    applicants:any;
 
 
     /**
@@ -32,7 +32,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
         private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
-        public _employeeService: ApplicantService,
+        public _applicantService: ApplicantService,
         private _router: Router,
 
     )
@@ -48,16 +48,17 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
      */
      ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-          console.log("PARAMS:", params); //log the entire params object
-          this.routeID = params.Id;
+          console.log("PARAMS::", params); //log the entire params object
+          this.routeID = params.id;
           console.log("object", this.routeID);
-          console.log(params['id']) //log the value of id
+          
         });
     
     
-        // Get the employee by id
-        this._employeeService.getEmployeeById(this.routeID).subscribe((employee) => {
-            this.employees = employee
+        // Get the applicant by id
+        this._applicantService.getApplicantById(this.routeID).subscribe((applicant) => {
+            console.log('firsttt',applicant)
+            this.applicants = applicant
         });
       }
     
@@ -91,7 +92,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     
     backHandler(): void 
     {
-        this._router.navigate(["/apps/employee/"]) 
+        this._router.navigate(["/apps/applicants/"]) 
     }
   
 

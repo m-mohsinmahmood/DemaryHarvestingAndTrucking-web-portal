@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
-import { EmployeePagination, Employee  } from 'app/modules/admin/apps/employee/employee.types';
+import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 
 
 @Injectable({
@@ -14,7 +14,7 @@ export class ApplicantResolver implements Resolve<any>
      * Constructor
      */
     constructor(
-        private _employeeService: ApplicantService,
+        private _applicantService: ApplicantService,
         private _router: Router
     )
     {
@@ -30,9 +30,9 @@ export class ApplicantResolver implements Resolve<any>
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Employee>
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Applicant>
     {
-        return this._employeeService.getEmployeeById(route.paramMap.get('id'))
+        return this._applicantService.getApplicantById(route.paramMap.get('id'))
                    .pipe(
                        // Error here means the requested product is not available
                        catchError((error) => {
@@ -61,7 +61,7 @@ export class ApplicantsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _employeeService: ApplicantService)
+    constructor(private _applicantService: ApplicantService)
     {
     }
 
@@ -75,9 +75,9 @@ export class ApplicantsResolver implements Resolve<any>
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pagination: EmployeePagination; products: Employee[] }>
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pagination: ApplicantPagination; products: Applicant[] }>
     {
-        return this._employeeService.getEmployees();
+        return this._applicantService.getApplicants();
     }
 }
 

@@ -1,24 +1,17 @@
-export interface Employee
+export interface Applicant
 {
 
             id          : string,
-            employeeID  : string,     
+            applicantID  : string,     
             name        : string,
-            harvestYear : number,
-            role        : string[],
             email       : string,
             active      : true,
             fname       :string,
             lname       :string,
-            city        :string,
-            address     :string,
-            position    :string,
-            salary      :string,
-            currentEmployee:string,
-            status      :string
+            status      :string,
 }
 
-export interface EmployeePagination
+export interface ApplicantPagination
 {
     length: number;
     size: number;

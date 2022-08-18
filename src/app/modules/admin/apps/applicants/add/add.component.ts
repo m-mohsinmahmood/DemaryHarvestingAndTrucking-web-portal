@@ -109,13 +109,16 @@ export class AddComponent implements OnInit {
     });
 }
   submit(): void {
-    console.warn('Your order has been submitted', this.firstFormGroup );
-    console.warn('Your order has been submitted', this.secondFormGroup );
-    console.warn('Your order has been submitted', this.thirdFormGroup );
-    console.warn('Your order has been submitted', this.fourthFormGroup );
-    console.warn('Your order has been submitted', this.fifthFormGroup );
-    console.warn('Your order has been submitted', this.sixthFormGroup );
-   
+
+    const data = {
+      ...this.firstFormGroup.value,
+      ...this.secondFormGroup.value,
+      ...this.thirdFormGroup.value,
+      ...this.fourthFormGroup.value,
+      ...this.fifthFormGroup.value,
+      ...this.sixthFormGroup.value,
+      };
+      console.log('Combined-Data:',data)
   }
 
   selectionChange (event) {

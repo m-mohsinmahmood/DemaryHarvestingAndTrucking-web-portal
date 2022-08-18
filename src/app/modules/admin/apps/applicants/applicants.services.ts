@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { EmployeePagination, Employee } from 'app/modules/admin/apps/employee/employee.types';
+import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +10,9 @@ export class ApplicantService
 {
     // Private
   
-    private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
-    private _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
-    private _employeesdata: BehaviorSubject<Employee[] | null> = new BehaviorSubject(null);
+    private _pagination: BehaviorSubject<ApplicantPagination | null> = new BehaviorSubject(null);
+    private _applicantdata: BehaviorSubject<Applicant | null> = new BehaviorSubject(null);
+    private _applicantsdata: BehaviorSubject<Applicant[] | null> = new BehaviorSubject(null);
     
 
     /**
@@ -25,29 +25,29 @@ export class ApplicantService
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<EmployeePagination>
+    get pagination$(): Observable<ApplicantPagination>
     {
         return this._pagination.asObservable();
     }
 
     /**
-     * Getter for employee
+     * Getter for applicant
      */
-    get employee$(): Observable<Employee>
+    get applicant$(): Observable<Applicant>
     {
-        return this._employeedata.asObservable();
+        return this._applicantdata.asObservable();
     }
 
     /**
-     * Getter for employees
+     * Getter for applicant
      */
-    get employeedata$(): Observable<Employee[]>
+    get applicantdata$(): Observable<Applicant[]>
     {
-        return this._employeesdata.asObservable();
+        return this._applicantsdata.asObservable();
     }  
 
     /**
-     * Get employees
+     * Get applicants
      *
      *
      * @param page
@@ -56,10 +56,10 @@ export class ApplicantService
      * @param order
      * @param search
      */
-    getEmployees(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pagination: EmployeePagination; products: Employee[] }>
+    getApplicants(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
+        Observable<{ pagination: ApplicantPagination; products: Applicant[] }>
     {
-        return this._httpClient.get<{ pagination: EmployeePagination; products: Employee[] }>('api/apps/employee', {
+        return this._httpClient.get<{ pagination: ApplicantPagination; products: Applicant[] }>('api/apps/applicants', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -70,100 +70,104 @@ export class ApplicantService
         }).pipe(
             tap((response) => {
                 this._pagination.next(response.pagination);
-                this._employeesdata.next(response.products);
+                this._applicantsdata.next(response.products);
             })
         );
     }
 
     /**
-     * Get employee by id
+     * Get applicant by id
      */
-    getEmployeeById(id: string): Observable<Employee>
+    getApplicantById(id: string): Observable<Applicant>
     {
         console.log('ID::',id)
-        return this._employeesdata.pipe(
+        return this._applicantsdata.pipe(
             take(1),
-            map((employees) => {
-                console.log('first',employees)
-                // Find the employee
-                const employee = employees.find(item => item.id === id) || null;
+            map((applicants) => {
+                console.log('first',applicants)
+                // Find the applicant
+                const applicant = applicants.find(item => item.id === id) || null;
+              console.log('d',applicant)
+                // Update the applicant
+                this._applicantdata.next(applicant);
 
-                // Update the employee
-                this._employeedata.next(employee);
-
-                // Return the employee
-                return employee;
+                // Return the applicant
+                return applicant;
             }),
-            switchMap((employee) => {
+            switchMap((applicant) => {
 
-                if ( !employee )
+                if ( !applicant )
                 {
                     return throwError('Could not found product with id of ' + id + '!');
                 }
 
-                return of(employee);
+                return of(applicant);
             })
         );
     }
 
     /**
-     * Create product
+     * Create applicant
      */
-    createEmployee(): Observable<Employee>
+    createApplicant(): Observable<Applicant>
     {
-        return this.employeedata$.pipe(
+        return this.applicantdata$.pipe(
             take(1),
-            switchMap(employees => this._httpClient.post<Employee>('api/apps/employee/product', {}).pipe(
-                map((newEmployee) => {
+            switchMap(applicants => this._httpClient.post<Applicant>('api/apps/applicants/product', {}).pipe(
+                map((newApplicant) => {
 
-                    // Update the employees with the new product
-                    this._employeesdata.next([newEmployee, ...employees]);
+                    // Update the applicant with the new product
+                    this._applicantsdata.next([newApplicant, ...applicants]);
 
-                    // Return the new employee
-                    return newEmployee;
+                    // Return the new applicant
+                    return newApplicant;
                 })
             ))
         );
     }
 
     /**
-     * Update employee
+     * Update applicant
      *
      * @param id
-     * @param product
+     * @param applicant
      */
-    updateEmployee(id: string, product: Employee): Observable<Employee>
+    updateApplicant(id: string, applicant: Applicant): Observable<Applicant>
     {
-        return this.employeedata$.pipe(
+         console.log('app--',applicant, id)
+        return this.applicantdata$.pipe(
             take(1),
-            switchMap(employees => this._httpClient.patch<Employee>('api/apps/employee/product', {
+            switchMap(applicants => this._httpClient.patch<Applicant>('api/apps/applicants/product', {
                 id,
-                product
+                applicant
             }).pipe(
-                map((updatedEmployee) => {
+                map((updatedApplicant) => {
+                    console.log('updated-product:',updatedApplicant);
 
-                    // Find the index of the updated employee
-                    const index = employees.findIndex(item => item.id === id);
+                    // Find the index of the updated applicant
+                    const index = applicants.findIndex(item => item.id === id);
 
-                    // Update the employee
-                    employees[index] = updatedEmployee;
+                    // Update the applicant
+                    applicants[index] = updatedApplicant;
 
-                    // Update the employees
-                    this._employeesdata.next(employees);
+                    // Update the applicants
+                    this._applicantsdata.next(applicants);
 
-                    // Return the updated employee
-                    return updatedEmployee;
+                    // Return the updated applicant
+                    console.log('updated-product:',updatedApplicant);
+                    return updatedApplicant;
+
                 }),
-                switchMap(updatedEmployee => this.employee$.pipe(
+                switchMap(updatedApplicant => this.applicant$.pipe(
                     take(1),
                     filter(item => item && item.id === id),
                     tap(() => {
 
-                        // Update the employee if it's selected
-                        this._employeedata.next(updatedEmployee);
+                        // Update the applicant if it's selected
+                        this._applicantdata.next(updatedApplicant);
 
-                        // Return the updated employee
-                        return updatedEmployee;
+                        // Return the updated applicant
+                        return updatedApplicant;
                     })
                 ))
             ))
@@ -171,25 +175,25 @@ export class ApplicantService
     }
 
     /**
-     * Delete the employee
+     * Delete the applicant
      *
      * @param id
      */
-     deleteEmployee(id: string): Observable<boolean>
+     deleteApplicant(id: string): Observable<boolean>
     {
-        return this.employeedata$.pipe(
+        return this.applicantdata$.pipe(
             take(1),
-            switchMap(employees => this._httpClient.delete('api/apps/employee/product', {params: {id}}).pipe(
+            switchMap(applicants => this._httpClient.delete('api/apps/applicants/product', {params: {id}}).pipe(
                 map((isDeleted: boolean) => {
 
-                    // Find the index of the deleted employee
-                    const index = employees.findIndex(item => item.id === id);
+                    // Find the index of the deleted applicant
+                    const index = applicants.findIndex(item => item.id === id);
 
-                    // Delete the employee
-                    employees.splice(index, 1);
+                    // Delete the applicant
+                    applicants.splice(index, 1);
 
-                    // Update the employees
-                    this._employeesdata.next(employees);
+                    // Update the applicants
+                    this._applicantsdata.next(applicants);
 
                     // Return the deleted status
                     return isDeleted;
