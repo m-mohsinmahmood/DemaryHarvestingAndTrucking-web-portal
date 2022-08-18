@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
 import { EmployeeDetailComponent } from 'app/modules/admin/apps/employee/details/details.component';
-import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryProductResolver,  InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/ecommerce/inventory/inventory.resolvers';
+import { EmployeesResolver, EmployeeResolver, } from 'app/modules/admin/apps/employee/employee.resolvers';
 
 export const employeeRoutes: Route[] = [
     {
@@ -13,11 +13,9 @@ export const employeeRoutes: Route[] = [
                 path     : '',
                 component: EmployeeListComponent,
                 resolve  : {
-                    brands    : InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products  : InventoryProductsResolver,
-                    tags      : InventoryTagsResolver,
-                    vendors   : InventoryVendorsResolver
+                   
+                    products  : EmployeesResolver,
+                    
                 },
                 children : [
                     // {

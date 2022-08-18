@@ -1,27 +1,26 @@
-export interface InventoryProduct
+export interface Employee
 {
-    id: string;
-    category?: string;
-    name: string;
-    description?: string;
-    tags?: string[];
-    sku?: string | null;
-    barcode?: string | null;
-    brand?: string | null;
-    vendor: string | null;
-    stock: number;
-    reserved: number;
-    cost: number;
-    basePrice: number;
-    taxPercent: number;
-    price: number;
-    weight: number;
-    thumbnail: string;
-    images: string[];
-    active: boolean;
+
+    id               : string,
+    employeeID       : string,     
+    name             : string,
+    address          : string,
+    phone            : string,
+    emergencyContact : string,
+    bankingInfo      : string,
+    harvestYear      : number,
+    role             : string[],
+    email            : string,
+    active           : true,
+    fname            : string,
+    lname            : string,
+    city             : string,
+    position         : string,
+    salary           : string,
+    currentEmployee  : string,
 }
 
-export interface InventoryPagination
+export interface EmployeePagination
 {
     length: number;
     size: number;
@@ -29,32 +28,4 @@ export interface InventoryPagination
     lastPage: number;
     startIndex: number;
     endIndex: number;
-}
-
-export interface InventoryCategory
-{
-    id: string;
-    parentId: string;
-    name: string;
-    slug: string;
-}
-
-export interface InventoryBrand
-{
-    id: string;
-    name: string;
-    slug: string;
-}
-
-export interface InventoryTag
-{
-    id?: string;
-    title?: string;
-}
-
-export interface InventoryVendor
-{
-    id: string;
-    name: string;
-    slug: string;
 }

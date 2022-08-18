@@ -108,166 +108,185 @@ export const vendors = [
 export const products = [   
         {   
             id        : '7eb7c859-1347-4317-96b6-9476a7ec',
-            sku       : '3111',     
-            name      : 'Bueno Trevor',
+            employeeID       : '3111',     
+            namee    : 'Bueno Trevor',
             price      : 2022,
+            details       : ["Mechanic","Dispatcher"],
             stock      : "BuenoTrevor@gmail.com",
             active     : true
         
         },
         {   
             id        : '7eb7c859-1347-4317-96b6-9476a7e2ba3c334343',
-            sku       : '2425',     
-            name      : 'Roy Fitz',
+            employeeID       : '2425',     
+            namee      : 'Roy Fitz',
             price      : 2022,
+            details       : ["Crew Chief","Dispatcher"],
             stock      : "royfitz@gmail.com",
             active     : true
         
         },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-945758768',
-            sku       : '2463',     
-            name      : 'Phil Foden',
-            price      : 2022,
-            stock      : 'philFoden@gmail.com',
-            active     : true
+
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-945758768',
+        //     sku       : '2463',     
+        //     name      : 'Phil Foden',
+        //     price      : 2022,
+        //     cost       : "Mechanic",
+        //     stock      : 'philFoden@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9565788',
-            sku       : '2365',     
-            name      : 'Clark Johnson',
-            price      : 2022,
-            stock      : 'clarkjohnson@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9565788',
+        //     sku       : '2365',     
+        //     name      : 'Clark Johnson',
+        //     price      : 2022,
+        //     cost       : "Mechanic",
+        //     stock      : 'clarkjohnson@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-94456453',
-            sku       : '2251',     
-            name      : 'Peter Parker',
-            price      : 2022,
-            stock      : 'peterparker@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-94456453',
+        //     sku       : '2251',     
+        //     name      : 'Peter Parker',
+        //     price      : 2022,
+        //     cost       : "Mechanic",
+        //     stock      : 'peterparker@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9468787',
-            sku       : '2241',     
-            name      : 'Rick Flair',
-            price      : 2022,
-            stock      : 'rickflair@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9468787',
+        //     sku       : '2241',     
+        //     name      : 'Rick Flair',
+        //     price      : 2022,
+        //     cost       : "Dispatcher",
+        //     stock      : 'rickflair@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-967676',
-            sku       : '2000',     
-            name      : 'Benjamin Mendy',
-            price      : 2022,
-            stock      : 'benjaminmendy@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-967676',
+        //     sku       : '2000',     
+        //     name      : 'Benjamin Mendy',
+        //     price      : 2022,
+        //     cost       : ["Mechanic","Recruiter"],
+        //     stock      : 'benjaminmendy@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-95767',
-            sku       : '2512',     
-            name      : 'Zlatan Ibrahimovic',
-            price      : 2022,
-            stock      : 'zlatan@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-95767',
+        //     sku       : '2512',     
+        //     name      : 'Zlatan Ibrahimovic',
+        //     price      : 2022,
+        //     cost       : "Dispatcher",
+        //     stock      : 'zlatan@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-968765',
-            sku       : '2473',     
-            name      : 'Uncle Ben',
-            price      : 2022,
-            stock      : 'ben@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-968765',
+        //     sku       : '2473',     
+        //     name      : 'Uncle Ben',
+        //     price      : 2022,
+        //     cost       : "Dispatcher",
+        //     stock      : 'ben@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9476a7ec',
-            sku       : '3111',     
-            name      : 'Bueno Trevor',
-            price      : 2022,
-            stock      : "BuenoTrevor@gmail.com",
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9476a7ec',
+        //     sku       : '3111',     
+        //     name      : 'Bueno Trevor',
+        //     price      : 2022,
+        //     cost       : "Recruiter",
+        //     stock      : "BuenoTrevor@gmail.com",
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9476a7e2ba3c334343',
-            sku       : '2425',     
-            name      : 'Roy Fitz',
-            price      : 2022,
-            stock      : "royfitz@gmail.com",
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9476a7e2ba3c334343',
+        //     sku       : '2425',     
+        //     name      : 'Roy Fitz',
+        //     price      : 2022,
+        //     cost       : "Cheif Crew",
+        //     stock      : "royfitz@gmail.com",
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-945758768',
-            sku       : '2463',     
-            name      : 'Phil Foden',
-            price      : 2022,
-            stock      : 'philFoden@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-945758768',
+        //     sku       : '2463',     
+        //     name      : 'Phil Foden',
+        //     price      : 2022,
+        //     cost       : ["Crew Chief","Dispatcher"],
+        //     stock      : 'philFoden@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9565788',
-            sku       : '2365',     
-            name      : 'Clark Johnson',
-            price      : 2022,
-            stock      : 'clarkjohnson@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9565788',
+        //     sku       : '2365',     
+        //     name      : 'Clark Johnson',
+        //     price      : 2022,
+        //     cost       : "Cheif Crew",
+        //     stock      : 'clarkjohnson@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-94456453',
-            sku       : '2251',     
-            name      : 'Peter Parker',
-            price      : 2022,
-            stock      : 'peterparker@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-94456453',
+        //     sku       : '2251',     
+        //     name      : 'Peter Parker',
+        //     price      : 2022,
+        //     cost       : "Recruiter",
+        //     stock      : 'peterparker@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-9468787',
-            sku       : '2241',     
-            name      : 'Rick Flair',
-            price      : 2022,
-            stock      : 'rickflair@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-9468787',
+        //     sku       : '2241',     
+        //     name      : 'Rick Flair',
+        //     price      : 2022,
+        //     cost       : ["Mechanic","Dispatcher"],
+        //     stock      : 'rickflair@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-967676',
-            sku       : '2000',     
-            name      : 'Benjamin Mendy',
-            price      : 2022,
-            stock      : 'benjaminmendy@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-967676',
+        //     sku       : '2000',     
+        //     name      : 'Benjamin Mendy',
+        //     price      : 2022,
+        //     cost       : ["Mechanic","Dispatcher"],
+        //     stock      : 'benjaminmendy@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-95767',
-            sku       : '2512',     
-            name      : 'Zlatan Ibrahimovic',
-            price      : 2022,
-            stock      : 'zlatan@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id        : '7eb7c859-1347-4317-96b6-95767',
+        //     sku       : '2512',     
+        //     name      : 'Zlatan Ibrahimovic',
+        //     price      : 2022,
+        //     cost       : "Cheif Crew",
+        //     stock      : 'zlatan@gmail.com',
+        //     active     : true
         
-        },
-        {   
-            id        : '7eb7c859-1347-4317-96b6-968765',
-            sku       : '2473',     
-            name      : 'Uncle Ben',
-            price      : 2022,
-            stock      : 'ben@gmail.com',
-            active     : true
+        // },
+        // {   
+        //     id         : '7eb7c859-1347-4317-96b6-968765',
+        //     sku        : '2473',     
+        //     name       : 'Uncle Ben',
+        //     price      : 2022,
+        //     cost       : "Cheif Crew",
+        //     stock      : 'ben@gmail.com',
+        //     active     : true
         
-        },
+        // },
         
 
     // {
