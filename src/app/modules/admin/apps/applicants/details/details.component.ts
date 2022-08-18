@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
+import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 
 
 @Component({
@@ -34,6 +35,8 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
         public activatedRoute: ActivatedRoute,
         public _applicantService: ApplicantService,
         private _router: Router,
+        private _fuseConfirmationService: FuseConfirmationService,
+
 
     )
     {
@@ -93,6 +96,18 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     backHandler(): void 
     {
         this._router.navigate(["/apps/applicants/"]) 
+    }
+    deleteApplicant(){
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title  : 'Delete applicant',
+            message: 'Are you sure you want to remove this applicant? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Delete'
+                }
+            }
+        });
     }
   
 

@@ -11,13 +11,19 @@
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <span class="ml-1 capitalize">{{applicants.fname}} {{applicants.lname}}   </span>
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="primary" class="ml-5" selected>{{applicants.status}} </mat-chip>
+                <mat-chip color="" class="ml-5 
+                bg-{{applicants.status === 'In-Process'? 'green' : ''}}-400 
+                bg-{{applicants.status === 'Hired'? 'pink' : ''}}-400 
+                bg-{{applicants.status === 'New'? 'yellow' : ''}}-400
+                bg-{{applicants.status === 'Pre-Interview'? 'yellow' : ''}}-400
+                bg-{{applicants.status === 'Evaluated'? 'red' : ''}}-400
+                bg-{{applicants.status === 'Not Being Considered'? 'purple' : ''}}-400" selected>{{applicants.status}} </mat-chip>
             </mat-chip-list>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
                 <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1">Delete</span>
+                <span class="ml-2 mr-1" (click)="deleteApplicant()">Delete</span>
             </button>
             <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 mat-flat-button [color]="'primary'">
@@ -48,11 +54,11 @@
                         </div>
 
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Cell phone</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Cell Phone</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.cellPhone}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Home phone</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Home Phone</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.homePhone}}</dd>
                         </div>
                     
@@ -100,7 +106,7 @@
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.dob}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Martial Status</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Marital Status</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.martialStatus}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -125,7 +131,7 @@
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">US Citizen</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.citizen}}</dd>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.citizenStatus}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Tractor License</dt>
@@ -142,11 +148,11 @@
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First phone call</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">First Phone Call</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstPhoneCall}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First interview result </dt>
+                            <dt class="text-lg font-extrabold text-gray-500">First Interview Result </dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstInterviewResult}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -154,39 +160,39 @@
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstRanking}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Refree phone call</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Referee Phone Call</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreePhoneCall}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Refree interview result </dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Referee Interview Result </dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreeInterviewResult}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Refree ranking</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Referee Ranking</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreeRanking}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second phone call</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Second Phone Call</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondPhoneCall}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second interview result </dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Second Interview Result </dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondInterviewResult}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second ranking</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Second Ranking</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondRanking}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third phone call</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Third Phone Call</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdPhoneCall}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third interview result </dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Third Interview Result </dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdInterviewResult}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third ranking</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Third Ranking</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdRanking}}</dd>
                         </div>
 
@@ -226,7 +232,7 @@
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.job}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Supervisor name</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Supervisor Name</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.supervisor}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -244,11 +250,11 @@
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"College"}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Reason for applying</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">Reason For Applying</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Travel"}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">How did you hear about us</dt>
+                            <dt class="text-lg font-extrabold text-gray-500">How Did You Hear About Us?</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Newspaper"}}</dd>
                         </div>
                     </dl>
