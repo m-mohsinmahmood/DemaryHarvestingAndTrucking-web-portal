@@ -7,22 +7,25 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 
 let governmentDocs = [
-  {"docId":"1", "docName": "Passport" , "docType": "image"},
-  {"docId":"2", "docName": "Visa" , "docType": "image"},
-  {"docId":"3", "docName": "I-94" , "docType": "image"},
-  {"docId":"4", "docName": "License" , "docType": "image"},
-  {"docId":"5", "docName": "Social Security " , "docType": "image"},
-  {"docId":"6", "docName": "DOT docs" , "docType": "file"},
-  {"docId":"7", "docName": "Physical" , "docType": "file"},
-  {"docId":"8", "docName": "Drug Testing" , "docType": "file"},
+  {"docId":"1", "docName": "Passport" , "uploadedDocName": "",  "docType": "image" , "isUpload": false},
+  {"docId":"2", "docName": "Visa" , "uploadedDocName": "",  "docType": "image", "isUpload": false},
+  {"docId":"3", "docName": "I-94" ,"uploadedDocName": "",  "docType": "image", "isUpload": false},
+  {"docId":"4", "docName": "License" , "uploadedDocName": "",  "docType": "image", "isUpload": false},
+  {"docId":"5", "docName": "Social Security " , "uploadedDocName": "",  "docType": "image", "isUpload": false},
+  {"docId":"6", "docName": "DOT docs" , "uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"7", "docName": "Physical" , "uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"8", "docName": "Drug Testing" , "uploadedDocName": "",  "docType": "file", "isUpload": false},
 ]
 let companyDocs = [
-  {"docId":"9", "docName": "Drug Testing" , "docType": "file"},
-  {"docId":"10", "docName": "Contract" , "docType": "file"},
-  {"docId":"11", "docName": "Approval Letter" , "docType": "file"},
-  {"docId":"12", "docName": "Departure Form" , "docType": "file"},
-  {"docId":"13", "docName": "Equipment Usage" , "docType": "file"},
-  {"docId":"14", "docName": "Work Agreement" , "docType": "file"},
+  {"docId":"9", "docName": "Drug Testing" , "uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"10", "docName": "Contract" ,"uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"11", "docName": "Approval Letter" ,"uploadedDocName": "",   "docType": "file", "isUpload": false},
+  {"docId":"12", "docName": "Departure Form" ,"uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"13", "docName": "Equipment Usage" ,"uploadedDocName": "",  "docType": "file", "isUpload": false},
+  {"docId":"14", "docName": "Work Agreement" , "uploadedDocName": "", "docType": "file", "isUpload": false},
+]
+let recordDocs = [
+  {"docId":"15", "docName": "Work Record" ,"uploadedDocName": "",  "docType": "file", "isUpload": false},
 ]
 
 @Component({
@@ -43,6 +46,7 @@ export class AddComponent implements OnInit {
   imageInfos?: Observable<any>;
   employeeGovernemtDocs: any[] = governmentDocs;
   employeeCompanyDocs: any[] = companyDocs;
+  employeeRecordDocs: any = recordDocs;
 
 
   form: FormGroup;
@@ -99,8 +103,20 @@ export class AddComponent implements OnInit {
   }
   
   removeDocHandler(index) {
-  debugger;
-  this.selectedFileNames.splice(index,1)
+    if (index < 8){
+      this.employeeGovernemtDocs[index].isUpload  = false;  
+      this.employeeGovernemtDocs[index].uploadedDocName = '';
+    }
+    else if (index > 7 && index < 14){
+      let  item = this.employeeCompanyDocs.find((x) => {return x.docId == index+1});    
+      item.isUpload  = false;  
+      item.uploadedDocName = '';
+    }
+    else {
+      let  item = this.employeeRecordDocs.find((x) => {return x.docId == index+1});    
+      item.isUpload  = false;  
+      item.uploadedDocName = '';
+    }
   }
    
   uploadAvatar(fileList: FileList): void
@@ -178,7 +194,22 @@ export class AddComponent implements OnInit {
     selectFiles(event: any , index: any): void {
       this.message = [];
       this.progressInfos = [];
-      this.selectedFileNames[index] = event.target.files[0].name;
+      // this.selectedFileNames[index] = event.target.files[0].name;  
+      if (index < 8){
+        this.employeeGovernemtDocs[index].uploadedDocName  = event.target.files[0].name;  
+        this.employeeGovernemtDocs[index].isUpload  = true; 
+      }
+      else if (index > 7 && index < 14){
+        let  item = this.employeeCompanyDocs.find((x) => {return x.docId == index+1});
+        item.uploadedDocName  = event.target.files[0].name;  
+        item.isUpload  = true; 
+      }
+      else  {
+        let  item = this.employeeRecordDocs.find((x) => {return x.docId == index+1});
+        item.uploadedDocName  = event.target.files[0].name;  
+        item.isUpload  = true; 
+      }
+      
   
       this.previews = [];
       if (this.selectedFiles && this.selectedFiles[0]) {
