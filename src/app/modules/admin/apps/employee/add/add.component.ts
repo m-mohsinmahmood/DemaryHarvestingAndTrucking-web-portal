@@ -33,7 +33,7 @@ let companyDocs = [
 
 export class AddComponent implements OnInit {
 
-  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors']
+  roles: string[] = ['Crew Chief', 'Mechanic', 'Dispatcher', 'Recruiter', 'Training Instructor']
   selectedFiles: any[];
   selectedFileNames: string[] = [];
   progressInfos: any[] = [];

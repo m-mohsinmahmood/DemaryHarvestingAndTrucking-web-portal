@@ -19,13 +19,13 @@
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                 </div>
-                <div class="mb-4" *ngIf="imageURL ==''  ">
-                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                <div class="mb-4" *ngIf="imageURL ==''">
+                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
                 </div>
                 <label class="cursor-pointer mt-6">
-                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
-                <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
-              </label>
+                        <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                        <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                     </label>
             </div>
         </div>
 
@@ -54,14 +54,14 @@
             <div class="">
                 <mat-form-field appearance="outline">
                     <mat-label>First Name</mat-label>
-                    <input matInput formControlName="firstName">
+                    <input matInput formControlName="fname">
                 </mat-form-field>
 
             </div>
             <div class="">
                 <mat-form-field appearance="outline">
                     <mat-label>Last Name</mat-label>
-                    <input matInput formControlName="lastName">
+                    <input matInput formControlName="lname">
                 </mat-form-field>
             </div>
             <div>

@@ -20,6 +20,7 @@ export class UpdateComponent implements OnInit {
   employees:any;
   imageURL: string = '';
   previews: string[] = [];
+  avatar: string;
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateComponent>,
@@ -33,10 +34,9 @@ export class UpdateComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this._formBuilder.group({
-      avatar: [null],
-      name: [''],
-      firstName     : ['', [Validators.required]],
-      lastName     : ['', [Validators.required]],
+      avatar: ['', [Validators.required]],
+      fname     : ['', [Validators.required]],
+      lname     : ['', [Validators.required]],
       role    : ['', [Validators.required]],
       position: ['', [Validators.required]],
       email   : ['', [Validators.email]],
@@ -50,10 +50,10 @@ export class UpdateComponent implements OnInit {
 
    // Get the employee by id
    this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-    this.employees = employee;
-      this.form.patchValue(employee);
-
-});
+   this.avatar = employee.avatar
+   this.employees = employee;
+   this.form.patchValue(employee);
+  });
 
   }
   

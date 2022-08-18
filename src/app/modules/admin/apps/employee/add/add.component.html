@@ -1,4 +1,4 @@
-<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+<div class="flex flex-col w-240 h-screen 2xl:max-h-screen -m-6">
 
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
@@ -12,8 +12,6 @@
 
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
-
-
         <div class="py-3 center mx-auto">
             <div class="px-4 py-5 rounded-lg text-center w-48">
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
@@ -24,7 +22,7 @@
                 </div>
                 <label class="cursor-pointer mt-6">
                 <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
-                <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
               </label>
             </div>
         </div>
@@ -114,66 +112,79 @@
                 <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
             </div>
         </div>
-        <div class="font-medium text-2xl mt-2">
-            Government Docs
+        <div class="flex items-center">
+            <div matTooltipPosition="above" matTooltip="Please upload relevant documents here" class="font-medium text-2xl">
+                Government Docs
+            </div>
+            <div class="ml-1">(Please upload relevant documents here) </div>
         </div>
-        <div class="sm:grid sm:grid-cols-2 gap-2">
-            <div *ngFor="let doc of employeeGovernemtDocs; index as i">
-                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(i)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                </label>
-                <mat-form-field class="mt-2">
+        <div class="sm:grid sm:grid-cols-2 gap-2 mt-1">
+            <div class="flex items-center" *ngFor="let doc of employeeGovernemtDocs; index as i">
+                <mat-form-field>
                     <div>
                         <mat-toolbar>
-                            <input matInput [value]="selectedFileNames[i] ? selectedFileNames[i] : 'Upload '+ doc.docName " />
+                            <input matInput [value]="selectedFileNames[i] ? selectedFileNames[i] : doc.docName " />
                         </mat-toolbar>
                         <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , i)" />
                     </div>
+
                 </mat-form-field>
+                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(i)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                </label>
             </div>
         </div>
-        <div class="font-medium text-2xl mt-2">
-            Company Docs
+        <div class="flex items-center">
+            <div matTooltipPosition="above" matTooltip="Please upload relevant documents here" class="font-medium text-2xl">
+                Company Docs
+            </div>
+            <div class="ml-1">(Please upload relevant documents here) </div>
         </div>
-        <div class="sm:grid sm:grid-cols-2 gap-2">
-            <div *ngFor="let doc of employeeCompanyDocs; index as i">
-                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(i+7)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                </label>
-                <mat-form-field class="mt-2">
+        <div class="sm:grid sm:grid-cols-2 gap-2 mt-1">
+            <div class="flex items-center" *ngFor="let doc of employeeCompanyDocs; index as i">
+                <mat-form-field>
                     <div>
                         <mat-toolbar>
-                            <input matInput [value]="selectedFileNames[i+7] ? selectedFileNames[i+7] : 'Upload '+ doc.docName" />
-
+                            <input matInput [value]="selectedFileNames[i+7] ? selectedFileNames[i+7] : doc.docName" />
                         </mat-toolbar>
                         <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , i+7)" />
                     </div>
                 </mat-form-field>
+                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(i)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                </label>
             </div>
         </div>
-        <div class="font-medium text-2xl mt-2 sm:w-6/12 md:w-6/12 lg:w-6/12">
-            Work Records
+        <div class="flex items-center">
+            <div matTooltip="Please upload relevant documents here" class="font-medium text-2xl">
+                Work Records
+            </div>
+            <div class="ml-1">(Please upload relevant documents here)</div>
         </div>
-        <label class="flex justify-end sm:w-6/12 md:w-6/12 lg:w-6/12"> <mat-icon (click)="removeDocHandler(14)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-        </label>
-        <mat-form-field class="mt-2 sm:w-6/12 md:w-6/12 lg:w-6/12">
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[14] ? selectedFileNames[14] : 'Upload Work Record'" />
+        <div class="sm:grid sm:grid-cols-2 gap-2 mt-1">
+            <div class="flex items-center">
+                <mat-form-field>
+                    <div>
+                        <mat-toolbar>
+                            <input matInput [value]="selectedFileNames[14] ? selectedFileNames[14] : 'Work Record'" />
+                        </mat-toolbar>
+                        <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 14)" />
+                    </div>
+                </mat-form-field>
+                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(14)" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+            </label>
+            </div>
 
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 14)" />
-            </div>
-        </mat-form-field>
+        </div>
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center justify-end mt-4 sm:mt-6">
-
         </div>
     </form>
+
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
         <div class="flex gap-2 items-center mt-4 sm:mt-0">
             <!-- Discard -->
             <button type="submit" class="order-first sm:order-last bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="send()">
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
                 Save
             </button>
         </div>

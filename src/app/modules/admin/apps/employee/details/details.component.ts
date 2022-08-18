@@ -8,6 +8,25 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
 
 
+let governmentDocs = [
+    {"id":"1", "name": "Passport" , "type": "PDF"},
+    {"id":"2", "name": "Visa" , "type": "DOC"},
+    {"id":"3", "name": "I-94" , "type": "XLS"},
+    {"id":"4", "name": "License" , "type": "TXT"},
+    {"id":"5", "name": "Social Security " , "type": "JPG"},
+    {"id":"6", "name": "DOT docs" , "type": "DOC"},
+    {"id":"7", "name": "Physical" , "type": "PDF"},
+    {"id":"8", "name": "Drug Testing" , "type": "TXT"},
+  ]
+  let companyDocs = [
+    {"id":"9", "name": "Drug Testing" , "type": "TXT"},
+    {"id":"10", "name": "Contract" , "type": "PDF"},
+    {"id":"11", "name": "Approval Letter" , "type": "DOC"},
+    {"id":"12", "name": "Departure Form" , "type": "JPG"},
+    {"id":"13", "name": "Equipment Usage" , "type": "XLS"},
+    {"id":"14", "name": "Work Agreement" , "type": "PDF"},
+  ]
+
 @Component({
     selector       : 'employee-details',
     templateUrl    : './details.component.html',
@@ -22,6 +41,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
     isLoading: boolean = false;
     routeID; // URL ID
     employees:any;
+    employeeGovernemtDocs: any[] = governmentDocs;
+    employeeCompanyDocs: any[] = companyDocs;
 
 
     /**

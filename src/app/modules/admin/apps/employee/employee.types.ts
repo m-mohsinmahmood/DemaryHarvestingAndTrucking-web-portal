@@ -2,7 +2,8 @@ export interface Employee
 {
 
     id               : string,
-    employeeID       : string,     
+    employeeID       : string,   
+    avatar           : string,
     name             : string,
     address          : string,
     phone            : string,
