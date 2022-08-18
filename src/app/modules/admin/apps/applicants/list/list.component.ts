@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { EmployeePagination, Employee } from 'app/modules/admin/apps/employee/employee.types';
+import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { AddComponent } from '../add/add.component';
 
@@ -18,7 +18,7 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .employee-grid {
-                grid-template-columns: 90px 190px 0px;
+                grid-template-columns: 90px 160px 0px;
 
                 @screen sm {
                     grid-template-columns: 10% 10% 10% 20% 30% 10%;
@@ -28,7 +28,7 @@ import { AddComponent } from '../add/add.component';
                 }
 
                 @screen lg {
-                    grid-template-columns: 10% 5% 30% 25% 20% 10%;
+                    grid-template-columns: 10% 5% 25% 25% 20% 10%;
                 }
                 
 
@@ -45,14 +45,14 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    employeesdata$: Observable<Employee[]>;
+    applicantsdata$: Observable<Applicant[]>;
 
     
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: EmployeePagination;
+    pagination: ApplicantPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedProduct: Employee | null = null;
+    selectedProduct: Applicant | null = null;
     selectedProductForm: FormGroup;
     tagsEditMode: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -65,7 +65,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _employeeService: ApplicantService,
+        private _applicantService: ApplicantService,
         private _matDialog: MatDialog,
     )
     {
@@ -82,9 +82,9 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     {      
 
         // Get the pagination
-        this._employeeService.pagination$
+        this._applicantService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: EmployeePagination) => {
+            .subscribe((pagination: ApplicantPagination) => {
 
                 // Update the pagination
                 this.pagination = pagination;
@@ -94,8 +94,8 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
             });
 
         // Get the employees
-        this.employeesdata$ = this._employeeService.employeedata$;
-        console.log("PP",this.employeesdata$)
+        this.applicantsdata$ = this._applicantService.applicantdata$;
+        console.log("PP",this.applicantsdata$)
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -105,7 +105,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 switchMap((query) => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._employeeService.getEmployees(0, 10, 'name', 'asc', query);
+                    return this._applicantService.getApplicants(0, 10, 'name', 'asc', query);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -147,7 +147,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 switchMap(() => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._employeeService.getEmployees(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
+                    return this._applicantService.getApplicants(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -184,9 +184,9 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Toggle employee details
      *
-     * @param employeeId
+     * @param applicantId
      */
-    toggleDetails(employeeId: string): void
+    toggleDetails(applicantId: string): void
     {
         // If the product is already selected...
         /* if ( this.selectedProduct && this.selectedProduct.id === productId )
@@ -197,7 +197,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         } */
 
         // Get the product by id
-        /* this._employeeService.getProductById(productId)
+        /* this._applicantService.getProductById(productId)
             .subscribe((product) => {
                 this._router.navigateByUrl('apps/employee/details/'+ productId)  */
                 /* // Set the selected product
@@ -209,7 +209,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 // Mark for check
                 this._changeDetectorRef.markForCheck(); */
             /* }); */
-            this._router.navigate(["/apps/employee/details/" + employeeId])
+            this._router.navigate(["/apps/applicants/details/" + applicantId])
 
     }
 
@@ -229,7 +229,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     createEmployee(): void
     {
         // Create the employee
-        this._employeeService.createEmployee().subscribe((newEmployee) => {
+        this._applicantService.createApplicant().subscribe((newEmployee) => {
 
             // Go to new employee
             this.selectedProduct = newEmployee;
@@ -254,7 +254,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         delete employee.currentImageIndex;
 
         // Update the employee on the server
-        this._employeeService.updateEmployee(employee.id, employee).subscribe(() => {
+        this._applicantService.updateApplicant(employee.id, employee).subscribe(() => {
 
             // Show a success message
             this.showFlashMessage('success');
@@ -288,7 +288,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 const employee = this.selectedProductForm.getRawValue();
 
                 // Delete the employee on the server
-                this._employeeService.deleteEmployee(employee.id).subscribe(() => {
+                this._applicantService.deleteApplicant(employee.id).subscribe(() => {
 
                     // Close the details
                     this.closeDetails();

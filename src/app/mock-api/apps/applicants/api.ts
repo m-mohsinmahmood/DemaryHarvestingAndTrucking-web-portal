@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { employees as employeesData} from 'app/mock-api/apps/employee/data';
+import { applicants as applicantsData} from 'app/mock-api/apps/applicants/data';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApplicantMockApi
 {
-    private _employees: any[] = employeesData;
+    private _applicants: any[] = applicantsData;
    
 
     /**
@@ -31,10 +31,10 @@ export class ApplicantMockApi
     {
         
         // -----------------------------------------------------------------------------------------------------
-        // @ Employees - GET
+        // @ Applicants - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/employee', 300)
+            .onGet('api/apps/applicants', 300)
             .reply(({request}) => {
 
                 // Get available queries
@@ -44,11 +44,11 @@ export class ApplicantMockApi
                 const page = parseInt(request.params.get('page') ?? '1', 10);
                 const size = parseInt(request.params.get('size') ?? '10', 10);
 
-                // Clone the employees
-                let products: any[] | null = cloneDeep(this._employees);
+                // Clone the applicants
+                let products: any[] | null = cloneDeep(this._applicants);
 
                 // Sort the products
-                if ( sort === 'role' || sort === 'namee' || sort === 'email' )
+                if ( sort === 'country' || sort === 'namee' || sort === 'phone' )
                 {
                     products.sort((a, b) => {
                         const fieldA = a[sort].toString().toUpperCase();
@@ -64,7 +64,7 @@ export class ApplicantMockApi
                 // If search exists...
                 if ( search )
                 {
-                    // Filter the employees
+                    // Filter the applicants
                     products = products.filter(contact => contact.name && contact.name.toLowerCase().includes(search.toLowerCase()));
                 }
 
@@ -117,34 +117,34 @@ export class ApplicantMockApi
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Employee - GET
+        // @ Applicant - GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onGet('api/apps/employee/product')
+            .onGet('api/apps/applicants/product')
             .reply(({request}) => {
 
                 // Get the id from the params
                 const id = request.params.get('id');
 
-                // Clone the employee
-                const employees = cloneDeep(this._employees);
+                // Clone the applicant
+                const applicants = cloneDeep(this._applicants);
 
-                // Find the employee
-                const employee = employees.find(item => item.id === id);
+                // Find the applicant
+                const applicant = applicants.find(item => item.id === id);
 
                 // Return the response
-                return [200, employee];
+                return [200, applicant];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Employee - POST
+        // @ Applicant - POST
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPost('api/apps/employee/product')
+            .onPost('api/apps/applicants/product')
             .reply(() => {
 
-                // Generate a new employee
-                const newEmployee = {
+                // Generate a new applicant
+                const newApplicant = {
                     id         : FuseMockApiUtils.guid(),
                     category   : '',
                     name       : 'A New Product',
@@ -166,60 +166,61 @@ export class ApplicantMockApi
                     active     : false
                 };
 
-                // Unshift the new employee
-                this._employees.unshift(newEmployee);
+                // Unshift the new appliccant
+                this._applicants.unshift(newApplicant);
 
                 // Return the response
-                return [200, newEmployee];
+                return [200, newApplicant];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Employee - PATCH
+        // @ Applicant - PATCH
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPatch('api/apps/employee/product')
+            .onPatch('api/apps/applicants/product')
             .reply(({request}) => {
+            console.log('Request:',request);
 
-                // Get the id and employee
+                // Get the id and applicant
                 const id = request.body.id;
-                const product = cloneDeep(request.body.product);
+                const applicant = cloneDeep(request.body.applicant);
 
-                // Prepare the updated employee
-                let updatedEmployee = null;
+                // Prepare the updated applicant
+                let updatedApplicant = null;
 
-                // Find the employee and update it
-                this._employees.forEach((item, index, employees) => {
+                // Find the applicant and update it
+                this._applicants.forEach((item, index, applicants) => {
 
                     if ( item.id === id )
                     {
-                        // Update the employee
-                        employees[index] = assign({}, employees[index], product);
+                        // Update the applicant
+                        applicants[index] = assign({}, applicants[index], applicant);
 
-                        // Store the updated employee
-                        updatedEmployee = employees[index];
+                        // Store the updated applicant
+                        updatedApplicant = applicants[index];
                     }
                 });
 
                 // Return the response
-                return [200, updatedEmployee];
+                return [200, updatedApplicant];
             });
 
         // -----------------------------------------------------------------------------------------------------
-        // @ Employee - DELETE
+        // @ Applicant - DELETE
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onDelete('api/apps/employee/product')
+            .onDelete('api/apps/applicants/product')
             .reply(({request}) => {
 
                 // Get the id
                 const id = request.params.get('id');
 
                 // Find the employee and delete it
-                this._employees.forEach((item, index) => {
+                this._applicants.forEach((item, index) => {
 
                     if ( item.id === id )
                     {
-                        this._employees.splice(index, 1);
+                        this._applicants.splice(index, 1);
                     }
                 });
 
