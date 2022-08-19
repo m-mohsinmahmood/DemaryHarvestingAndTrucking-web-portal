@@ -16,43 +16,37 @@
             <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
                 <mat-step class="flex justify-center items-center " [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
-                        <<<<<<< HEAD <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
-                            <div class="items-center justify-center">
-                                =======
-                                <ng-template matStepLabel>Applicant Information</ng-template>
-
-                                <!-- <div> -->
-                                >>>>>>> haris-dev
-                                <div class="w-8/12">
-                                    <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
-                                </div>
-                                <<<<<<< HEAD <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
-                                    =======
-                                    <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12" appearance="outline">
-                                        >>>>>>> haris-dev
-                                        <mat-label>First Sent Date</mat-label>
-                                        <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
-                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker1></mat-datepicker>
-                                    </mat-form-field>
-                                    <div class="w-8/12">
-                                        <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
-                                    </div>
-                                    <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
-                                        <mat-label>Second Sent Date</mat-label>
-                                        <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
-                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker2></mat-datepicker>
-                                    </mat-form-field>
-                                    <div>
-                                        <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
-                                            <mat-label>Application Date</mat-label>
-                                            <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
-                                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker3></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                    <!-- </div> -->
+                        <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
+                        <div class="items-center justify-center">
+                            <ng-template matStepLabel>Applicant Information</ng-template>
+                            <!-- <div> -->
+                            <div class="w-8/12">
+                                <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
+                            </div>
+                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12" appearance="outline">
+                                <mat-label>First Sent Date</mat-label>
+                                <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                            <div class="w-8/12">
+                                <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
+                            </div>
+                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
+                                <mat-label>Second Sent Date</mat-label>
+                                <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Application Date</mat-label>
+                                    <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
+                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker3></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondFormGroup" [editable]="true">
@@ -475,7 +469,7 @@
                 </mat-step>
 
             </mat-horizontal-stepper>
-            </div>
+        </div>
     </main>
 
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
@@ -491,4 +485,4 @@
               </button>
         </div>
     </div>
-    </div>
+</div>
