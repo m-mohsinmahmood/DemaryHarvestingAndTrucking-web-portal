@@ -2,6 +2,8 @@
     min-width: 150px;
     max-width: 500px;
     width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .interview-results-form {
@@ -106,4 +108,9 @@
     bottom: 0;
     color: white;
     text-align: center;
+}
+
+::ng-deep mat-horizontal-stepper .mat-horizontal-content-container .mat-horizontal-stepper-content {
+    display: flex;
+    justify-content: center;
 }
