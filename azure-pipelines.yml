@@ -16,8 +16,9 @@ steps:
   displayName: 'Installing Node.js'
   
 - script: |
-    npm install -g @angular/cli
+    npm install -g @angular/cli@13.0.2
     npm install
+    npm audit fix
     ng build
   displayName: "npm install and build"
 - task: AzureStaticWebApp@0

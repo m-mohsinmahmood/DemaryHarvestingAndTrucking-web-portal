@@ -21,9 +21,9 @@
             </mat-chip-list>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
+            <button (click)="deleteApplicant()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"  mat-flat-button [color]="'warn'">
                 <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1" (click)="deleteApplicant()">Delete</span>
+                <span class="ml-2 mr-1" >Delete</span>
             </button>
             <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
                 [color]="'primary'">

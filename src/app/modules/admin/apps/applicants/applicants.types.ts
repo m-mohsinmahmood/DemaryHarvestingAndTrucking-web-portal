@@ -42,6 +42,8 @@ export interface Applicant
             citizenStatus: string,
             tractorStatus: string,
             passport: string,
+            avatar: string,
+
         
             // interviwe results
             firstPhoneCall: boolean,

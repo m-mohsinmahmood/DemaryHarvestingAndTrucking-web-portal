@@ -30,12 +30,13 @@
                 <ng-container *ngIf="applicants.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
-                        <div class="employee-grid sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                        <div class="applicant-grid sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                             <div [mat-sort-header]="'namee'">Name</div>
                             <div class="hidden sm:block" [mat-sort-header]="'country'">
                                 Country
                             </div>
                             <div class="hidden sm:block">Email</div>
+
                             <div class="hidden sm:block" [mat-sort-header]="'phone'">
                                 Phone
                             </div>
@@ -45,10 +46,15 @@
                         <!-- Rows -->
                         <ng-container *ngIf="applicantsdata$ | async as applicants">
                             <ng-container *ngFor="let applicant of applicants; trackBy: trackByFn">
-                                <div class="employee-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                <div class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
                                     <!-- Name -->
                                     <div class="capitalize">
                                         {{ applicant.name }}
+                                    </div>
+
+                                    <!-- Country -->
+                                    <div class="flex items-center hidden sm:block">
+                                        {{ applicant.country }}
                                     </div>
 
                                     <!-- Country -->

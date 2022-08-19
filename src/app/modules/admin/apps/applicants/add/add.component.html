@@ -16,35 +16,43 @@
             <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
                 <mat-step class="flex justify-center items-center " [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
-                        <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
-                        <div class="items-center justify-center">
-                            <div class="w-8/12">
-                                <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
-                            </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
-                                <mat-label>First Sent Date</mat-label>
-                                <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
-                            <div class="w-8/12">
-                                <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
-                            </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
-                                <mat-label>Second Sent Date</mat-label>
-                                <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
-                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                <mat-datepicker #picker2></mat-datepicker>
-                            </mat-form-field>
-                            <div>
-                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
-                                    <mat-label>Application Date</mat-label>
-                                    <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
-                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker3></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                        </div>
+                        <<<<<<< HEAD <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
+                            <div class="items-center justify-center">
+                                =======
+                                <ng-template matStepLabel>Applicant Information</ng-template>
+
+                                <!-- <div> -->
+                                >>>>>>> haris-dev
+                                <div class="w-8/12">
+                                    <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
+                                </div>
+                                <<<<<<< HEAD <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
+                                    =======
+                                    <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12" appearance="outline">
+                                        >>>>>>> haris-dev
+                                        <mat-label>First Sent Date</mat-label>
+                                        <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <div class="w-8/12">
+                                        <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
+                                    </div>
+                                    <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
+                                        <mat-label>Second Sent Date</mat-label>
+                                        <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                    <div>
+                                        <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                            <mat-label>Application Date</mat-label>
+                                            <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
+                                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker3></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- </div> -->
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondFormGroup" [editable]="true">
@@ -205,6 +213,35 @@
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="interview-results-form  mt-1 ">
                         <ng-template class="hidden" matStepLabel>Personal Information</ng-template>
+                        <!-- <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''  ">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                              </label>
+                            </div>
+                        </div> -->
+                        <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                        <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                        <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                     </label>
+                            </div>
+                        </div>
+
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
@@ -427,12 +464,18 @@
                     </form>
                 </mat-step>
                 <mat-step>
-                    <ng-template class="hidden" matStepLabel>Done</ng-template>
-                    <p>You are now done.</p>
+                    <<<<<<< HEAD <ng-template class="hidden" matStepLabel>Done</ng-template>
+                        <p>You are now done.</p>
+                        =======
+                        <ng-template matStepLabel>Done</ng-template>
+                        <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex justify-center items-center">
+                            <p class="text-lime-600	 flex justify-center items-center text-lime-500	">Congratulations you have filled out the form successfully. Please click on submit button to complete your application process</p>
+                        </div>
+                        >>>>>>> haris-dev
                 </mat-step>
 
             </mat-horizontal-stepper>
-        </div>
+            </div>
     </main>
 
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
@@ -448,4 +491,4 @@
               </button>
         </div>
     </div>
-</div>
+    </div>
