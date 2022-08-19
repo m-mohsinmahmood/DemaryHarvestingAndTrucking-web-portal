@@ -1,24 +1,27 @@
 export interface InventoryProduct
 {
     id: string;
+    harvestYear?:string;
     category?: string;
     name: string;
+    alternateName? : string; 
+    skipInvoiceMath1? : string;
+    arizonaInvoiceMath? : string;
+    skipInvoiceMath2?: string;
+    email?: string;
+    isActive?: string;
     description?: string;
     tags?: string[];
-    sku?: string | null;
-    barcode?: string | null;
-    brand?: string | null;
-    vendor: string | null;
-    stock: number;
-    reserved: number;
-    cost: number;
-    basePrice: number;
-    taxPercent: number;
-    price: number;
-    weight: number;
-    thumbnail: string;
     images: string[];
     active: boolean;
+    farmId: string;
+    farmHarvestYear: string;
+    farmName: string;
+    farmTotalAcres: string;
+    cropid: string;
+    cropHarvestYear: string;
+    cropCrop: string;
+    cropPoundsPerBushel: string;
 }
 
 export interface InventoryPagination

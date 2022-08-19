@@ -7,8 +7,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
+import { AddCustomer } from '../add/add.component';
+import { Router } from '@angular/router';
+
 @Component({
     selector       : 'customers-list',
     templateUrl    : './list.component.html',
@@ -16,18 +19,18 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 48px auto 40px;
+                grid-template-columns: 250px auto 40px;
 
                 @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
+                    grid-template-columns: 250px auto 112px 72px;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 48px 250px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 48px 250px auto 112px 96px 96px 72px;
                 }
             }
         `
@@ -66,6 +69,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         private _formBuilder: FormBuilder,
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
+        private _router: Router,
     )
     {
     }
@@ -82,15 +86,15 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         // Create the selected product form
         this.selectedProductForm = this._formBuilder.group({
             id               : [''],
-            category         : [''],
+            harvestYear      : [''],
             name             : ['', [Validators.required]],
-            description      : [''],
-            tags             : [[]],
-            sku              : [''],
-            barcode          : [''],
-            brand            : [''],
-            vendor           : [''],
-            stock            : [''],
+            alternateName      : [''],
+            skipInvoiceMath1              : [''],
+            arizonaInvoiceMath          : [''],
+            skipInvoiceMath2            : [''],
+            email            : [''],
+            stateProvince    : [''],
+            isActive         : [''],
             reserved         : [''],
             cost             : [''],
             basePrice        : [''],
@@ -100,7 +104,15 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             thumbnail        : [''],
             images           : [[]],
             currentImageIndex: [0], // Image index that is currently being viewed
-            active           : [false]
+            active           : [false],
+            farmId: [''],
+            farmHarvestYear: [''],
+            farmName: [''],
+            farmTotalAcres: [''],
+            cropid: [''],
+            cropHarvestYear: [''],
+            cropCrop: [''],
+            cropPoundsPerBushel: [''],
         });
 
         // Get the brands
@@ -244,19 +256,19 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     openAddDialog(): void
     {
         // Open the dialog
-        // const dialogRef = this._matDialog.open(AddModalComponent);
+        const dialogRef = this._matDialog.open(AddCustomer);
 
-        // dialogRef.afterClosed()
-        //          .subscribe((result) => {
-        //              console.log('Compose dialog was closed!');
-        //          });
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
     /**
      * Toggle product details
      *
      * @param productId
      */
-    toggleDetails(productId: string): void
+     toggleDetails(productId: string): void
     {
         // If the product is already selected...
         if ( this.selectedProduct && this.selectedProduct.id === productId )
@@ -265,11 +277,10 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             this.closeDetails();
             return;
         }
-
         // Get the product by id
         this._customersService.getProductById(productId)
             .subscribe((product) => {
-
+                this._router.navigateByUrl('apps/customers/details/'+ productId) 
                 // Set the selected product
                 this.selectedProduct = product;
 
@@ -277,10 +288,9 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck();
+                this._changeDetectorRef.markForCheck(); 
             });
     }
-
     /**
      * Close the details
      */
@@ -498,10 +508,10 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Create product
      */
-    createProduct(): void
+    createProduct(data:any): void
     {
         // Create the product
-        this._customersService.createProduct().subscribe((newProduct) => {
+        this._customersService.createProduct(data).subscribe((newProduct) => {
 
             // Go to new product
             this.selectedProduct = newProduct;

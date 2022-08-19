@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 
 @Injectable({
     providedIn: 'root'
@@ -125,7 +125,7 @@ export class CustomersService
     getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
         Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/ecommerce/inventory/products', {
+        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/customers/products', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -174,11 +174,11 @@ export class CustomersService
     /**
      * Create product
      */
-    createProduct(): Observable<InventoryProduct>
+    createProduct(data:any): Observable<InventoryProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
+            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/customers/product', {data}).pipe(
                 map((newProduct) => {
 
                     // Update the products with the new product
@@ -201,7 +201,7 @@ export class CustomersService
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.patch<InventoryProduct>('api/apps/ecommerce/inventory/product', {
+            switchMap(products => this._httpClient.patch<InventoryProduct>('api/apps/customers/product', {
                 id,
                 product
             }).pipe(
@@ -244,7 +244,7 @@ export class CustomersService
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.delete('api/apps/ecommerce/inventory/product', {params: {id}}).pipe(
+            switchMap(products => this._httpClient.delete('api/apps/customers/product', {params: {id}}).pipe(
                 map((isDeleted: boolean) => {
 
                     // Find the index of the deleted product
