@@ -18,8 +18,8 @@ steps:
 - script: |
     npm install -g @angular/cli@13.0.2
     npm install
-    npm audit fix
     ng build
+    npm audit fix --force
   displayName: "npm install and build"
 - task: AzureStaticWebApp@0
   inputs:
