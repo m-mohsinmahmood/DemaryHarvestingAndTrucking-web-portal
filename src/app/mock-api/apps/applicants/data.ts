@@ -15,8 +15,8 @@ export const applicants = [
      name: "Beauvais Trevor",
     fname: "Beauvais",
     lname: "Trevor",
-     cellPhone: "(555) 555-1234",
-     homePhone: "(555) 555-1234",
+     cellPhone: "+12012987481",
+     homePhone: "+12012987481",
      email: "ariesbeau1957@gmail.com",
 
      
@@ -82,11 +82,11 @@ export const applicants = [
     status: "In-Process",
 
     // contact info
-    name: "BEGLEY EOIN",
-    fname: "BEGLEY",
-    lname: "EOIN",
-    cellPhone: "032212-1111-000",
-    homePhone: "032212-5555-000",
+    name: "Begley Eoin",
+    fname: "Begley",
+    lname: "Eoin",
+    cellPhone: "+13324558954",
+    homePhone: "+13324558954",
     email: "eoinbegley@icloud.com",
 
     // personal info
@@ -144,11 +144,11 @@ export const applicants = [
     status: "Evaluated",
 
      // contact info
-     name: "BERQUIST BRADLEY",
-     fname: "BERQUIST",
-    lname: "BRADLEY",
-     cellPhone: "032212-9999-000",
-     homePhone: "032212-8888-000",
+     name: "Berquist Bradley",
+     fname: "Berquist",
+     lname: "Bradley",
+     cellPhone: "+13324557765",
+     homePhone: "+13324557765",
      email: "bradberq@gmail.com",
 
      // personal info
@@ -205,14 +205,14 @@ export const applicants = [
      name: "John Mack",
     fname: "John",
     lname: "Mack",
-     cellPhone: "(111) 111-1234",
-     homePhone: "(111) 111-1234",
+     cellPhone: "+13324533224",
+     homePhone: "+13324533224",
      email: "john@gmail.com",
 
      
     // personal info
     dob: "15-10-2020",
-    martialStatus: ["Married","Divorced"],
+    martialStatus: "Married",
     address1: "Ohio Streets",
     address2: "Ohio Streets",
     town: "Ohio Town Central",
@@ -222,6 +222,8 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "Yes",
     passport: "Yes",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
 
     // interviwe results
     firstPhoneCall: true,
@@ -261,6 +263,445 @@ export const applicants = [
       e_secondQuestion: "2",
       e_thirdQuestion: "1",
   },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-94767777778974543439999a7ec",
+    applicantID: "3221",
+    email1: "mick@gmail.com",
+    email2: "zack@gmail.com",
+    active: true,
+   
+    status: "New",
+
+
+     // contact info
+     name: "Zack Aron",
+    fname: "Zack",
+    lname: "Aron",
+     cellPhone: "+13399993224",
+     homePhone: "+13399993224",
+     email: "zack@gmail.com",
+
+     
+    // personal info
+    dob: "09-04-2022",
+    martialStatus: "Married",
+    address1: "Indiana Streets",
+    address2: "Indiana Streets",
+    town: "Indiana Town Central",
+    state: "Indiana",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "No",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "1",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "2",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "3",
+
+    // work experience
+    fifthQuestion: "2",
+    firstQuestion: "2",
+    fourthQuestion: "2",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "2",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "1",
+  },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-9476656565658974543439999a7ec",
+    applicantID: "3221",
+    email1: "mick@gmail.com",
+    email2: "mick@gmail.com",
+    active: true,
+   
+    status: "New",
+
+
+     // contact info
+     name: "Mick Jones",
+    fname: "Mick",
+    lname: "Jones",
+     cellPhone: "+13399996666",
+     homePhone: "+13399996666",
+     email: "mick@gmail.com",
+
+     
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Married",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-947665656565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "jeff@gmail.com",
+    email2: "jeff@gmail.com",
+    active: true,
+   
+    status: "Hired",
+
+
+     // contact info
+     name: "Jeff James",
+    fname: "Jeff",
+    lname: "James",
+     cellPhone: "+13399000666",
+     homePhone: "+13399000666",
+     email: "jeff@gmail.com",
+
+     
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Married",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-947665656565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "zack@gmail.com",
+    email2: "zack@gmail.com",
+    active: true,
+   
+    status: "Evaluated",
+
+
+     // contact info
+     name: "Zack Demaray",
+    fname: "Zack",
+    lname: "Demaray",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "zack@gmail.com",
+
+     
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Married",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "zack@gmail.com",
+    email2: "zack@gmail.com",
+    active: true,
+   
+    status: "Evaluated",
+
+
+     // contact info
+     name: "Efron Corbin",
+    fname: "Efron",
+    lname: "Corbin",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "efron@gmail.com",
+
+     
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Single",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+    
+    id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "dylon@gmail.com",
+    email2: "dylon@gmail.com",
+    active: true,
+   
+    status: "Hired",
+
+
+     // contact info
+     name: "Dylon James",
+    fname: "Dylon",
+    lname: "James",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "dylon@gmail.com",
+
+     
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Single",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+      
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  
   
 ];
   

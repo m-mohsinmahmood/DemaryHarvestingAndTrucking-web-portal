@@ -25,6 +25,10 @@ export class AddComponent implements OnInit {
   isSubmit = false;
   isBack = false;
   isLinear = false;
+  imageURL: string = '';
+  avatar: string= "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
+
+
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -92,6 +96,7 @@ export class AddComponent implements OnInit {
       usCitizen: ["", ""],
       license: ["", ""],
       passport: ["", ""],
+      avatar: [null],
     });
 
     this.fifthFormGroup = this._formBuilder.group({
@@ -149,5 +154,31 @@ export class AddComponent implements OnInit {
   saveAndClose(): void {
     // Close the dialog
     this.matDialogRef.close();
+  }
+  // showPreview(event) {
+  //   const file = (event.target as HTMLInputElement).files[0];
+  //   this.fourthFormGroup.patchValue({
+  //     avatar: file
+  //   });
+  //   this.fourthFormGroup.get('avatar').updateValueAndValidity()
+  //   // File Preview
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.imageURL = reader.result as string;
+  //   }
+  //   reader.readAsDataURL(file)
+  // }
+  showPreview(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.fourthFormGroup.patchValue({
+      avatar: file
+    });
+    this.fourthFormGroup.get('avatar').updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
   }
 }

@@ -17,11 +17,12 @@
                 <mat-step [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
                         <ng-template matStepLabel>Applicant Information</ng-template>
-                        <div>
+
+                        <!-- <div> -->
                             <div class="w-8/12">
                                 <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail" > First Email </mat-checkbox>
                             </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2" appearance="outline">
+                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12" appearance="outline">
                                 <mat-label>First Sent Date</mat-label>
                                 <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -44,7 +45,7 @@
                                     <mat-datepicker #picker3></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondFormGroup" [editable]="true">
@@ -202,6 +203,35 @@
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
                         <ng-template matStepLabel>Personal Information</ng-template>
+                        <!-- <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''  ">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                              </label>
+                            </div>
+                        </div> -->
+                        <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                        <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                        <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                     </label>
+                            </div>
+                        </div>
+
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
                             <div>
                                 <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
@@ -425,7 +455,9 @@
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel>Done</ng-template>
-                    <p>You are now done.</p>
+                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex justify-center items-center">
+                        <p class="text-lime-600	 flex justify-center items-center text-lime-500	">Congratulations you have filled out the form successfully. Please click on submit button to complete your application process</p>
+                    </div>
                 </mat-step>
 
             </mat-horizontal-stepper>

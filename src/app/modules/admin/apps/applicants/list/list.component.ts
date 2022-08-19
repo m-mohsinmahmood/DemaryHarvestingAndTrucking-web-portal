@@ -17,7 +17,7 @@ import { AddComponent } from '../add/add.component';
     styles         : [
         /* language=SCSS */
         `
-            .employee-grid {
+            .applicant-grid {
                 grid-template-columns: 130px 150px 0px;
 
                 @screen sm {
