@@ -53,6 +53,12 @@ export class UpdateComponent implements OnInit {
     console.log('UPDATE::',customer);
     this.customers = customer;
     this.form.patchValue(customer);
+    /*this.form.patchValue({
+      farmId: this.customers.farmId,
+      farmHarvestYear: this.customers.farmHarvestYear,
+      farmName: this.customers.farmName,
+      farmTotalAcres: this.customers.farmTotalAcres,
+  });*/
 
 });
 

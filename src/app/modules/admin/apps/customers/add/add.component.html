@@ -107,9 +107,9 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
+                    <mat-form-field class="form-farm-field block" appearance="outline">
                         <mat-label>Farm Harvest Year</mat-label>
-                        <input id="farmHarvestYear{{i}}" matInput formControlName="farmHarvestYear"  class="form-control reset">
+                        <input id="farmHarvestYear{{i}}" matInput formControlName="farmHarvestYear">
                     </mat-form-field>
                 </td>
                 <td>
@@ -126,7 +126,7 @@
                         <input id="farmTotalAcres{{i}}" matInput formControlName="farmTotalAcres" class="form-control reset">
                     </mat-form-field>
                 </td>
-                    <td> <button class='bg-red-800 text-white font-bold p-3 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.farmItemRows.controls.length > 1" (click)="deleteFarmRow(i)">x</button></td>
+                    <td> <button class='bg-red-800 text-white font-bold p-4 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.farmItemRows.controls.length > 1" (click)="deleteFarmRow(i)"><mat-icon style="color:#fff">delete</mat-icon></button></td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -154,30 +154,30 @@
                 <td>
                         <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
                         <mat-label>Crop ID</mat-label>
-                        <input id="cropid{{i}}" matInput formControlName="cropid" class="form-control-crop">
+                        <input id="cropid{{i}}" matInput formControlName="cropid" class="form-control">
                     </mat-form-field>
                 </td>
                 <td>
                     <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
                         <mat-label>Crop Harvest Year</mat-label>
-                        <input id="cropHarvestYear{{i}}" matInput formControlName="cropHarvestYear"  class="form-control-crop reset">
+                        <input id="cropHarvestYear{{i}}" matInput formControlName="cropHarvestYear"  class="form-control reset">
                     </mat-form-field>
                 </td>
                 <td>
 
                     <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
                         <mat-label>Crop Name</mat-label>
-                        <input id="cropCrop{{i}}" matInput formControlName="cropCrop" class="form-control-crop reset">
+                        <input id="cropCrop{{i}}" matInput formControlName="cropCrop" class="form-control reset">
                     </mat-form-field>
                 </td>
                 <td>
 
                     <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
                         <mat-label>Crop Pounds Per Bushel</mat-label>
-                        <input id="cropPoundsPerBushel{{i}}" matInput formControlName="cropPoundsPerBushel" class="form-control-crop reset">
+                        <input id="cropPoundsPerBushel{{i}}" matInput formControlName="cropPoundsPerBushel" class="form-control reset">
                     </mat-form-field>
                 </td>
-                    <td> <button class='bg-red-800 text-white font-bold p-3 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.cropsItemRows.controls.length > 1" (click)="deleteCropRow(i)">x</button></td>
+                    <td> <button class='bg-red-800 text-white font-bold p-4 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.cropsItemRows.controls.length > 1" (click)="deleteCropRow(i)"><mat-icon style="color:#fff">delete</mat-icon></button></td>
                   </tr>
                 </tbody>
                 <tfoot>
