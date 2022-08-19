@@ -18,17 +18,17 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .employee-grid {
-                grid-template-columns: 90px 160px 0px;
+                grid-template-columns: 70% 30%;
 
                 @screen sm {
-                    grid-template-columns: 10% 10% 10% 20% 30% 10%;
+                    grid-template-columns: 10% 20% 25% 30% 10%;
                 }
                 @screen md {
-                    grid-template-columns: 10% 10% 15% 25% 25% 10%;
+                    grid-template-columns: 10% 25% 30% 25% 10%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 5% 5% 30% 25% 20% 10%;
+                    grid-template-columns: 10% 25% 30% 25% 10%;
                 }
                 
 
