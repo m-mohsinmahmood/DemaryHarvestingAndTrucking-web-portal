@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { CustomerDetailsComponent } from './details/details.component';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
 import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/list.component';
 import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/customers/customers.resolvers';
@@ -27,7 +28,11 @@ export const customersRoutes: Route[] = [
                 //         },
                 //     }
                 // ]
-            }
+            },
+            {
+                path     : 'details/:Id',
+                component: CustomerDetailsComponent,
+            },
         ]
     }
 ];

@@ -18,7 +18,7 @@ import { UserMockApi } from 'app/mock-api/common/user/api';
 import { ECommerceInventoryMockApi2 } from './apps/vehicle/inventory/api';
 import { EmployeeMockApi } from './apps/employee/api';
 import { ApplicantMockApi } from './apps/applicants/api';
-
+import { CustomersInventoryMockApi } from 'app/mock-api/apps/customers/api';
 export const mockApiServices = [
     ActivitiesMockApi,
     AnalyticsMockApi,
@@ -38,6 +38,7 @@ export const mockApiServices = [
     SearchMockApi,
     ShortcutsMockApi,
     UserMockApi,
+    CustomersInventoryMockApi,
     EmployeeMockApi,
     ApplicantMockApi,
 ];

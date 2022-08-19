@@ -5,24 +5,23 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
-import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
+import { CustomersService } from '../customers.service';
 
 
 @Component({
-    selector       : 'applicant-details',
+    selector       : 'customer-details',
     templateUrl    : './details.component.html',
     styleUrls: ['./details.component.scss'],
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class  ApplicantDetailComponent implements OnInit, OnDestroy
+export class CustomerDetailsComponent implements OnInit, OnDestroy
 {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     
     isLoading: boolean = false;
     routeID; // URL ID
-    applicants:any;
+    customers:any;
 
 
     /**
@@ -33,10 +32,8 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
         private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
-        public _applicantService: ApplicantService,
+        public _customerService: CustomersService,
         private _router: Router,
-        private _fuseConfirmationService: FuseConfirmationService,
-
 
     )
     {
@@ -51,17 +48,16 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
      */
      ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-          console.log("PARAMS::", params); //log the entire params object
-          this.routeID = params.id;
+          console.log("PARAMS:", params); //log the entire params object
+          this.routeID = params.Id;
           console.log("object", this.routeID);
-          
+          console.log(params['id']) //log the value of id
         });
     
     
-        // Get the applicant by id
-        this._applicantService.getApplicantById(this.routeID).subscribe((applicant) => {
-            console.log('firsttt',applicant)
-            this.applicants = applicant
+        // Get the employee by id
+        this._customerService.getProductById(this.routeID).subscribe((customer) => {
+            this.customers = customer
         });
       }
     
@@ -81,7 +77,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     openUpdateDialog(): void
     {
-    // Open the dialog
+    //Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent,{
          data:{id: this.routeID}
         });
@@ -95,19 +91,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     
     backHandler(): void 
     {
-        this._router.navigate(["/apps/applicants/"]) 
-    }
-    deleteApplicant(){
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title  : 'Delete applicant',
-            message: 'Are you sure you want to remove this applicant? This action cannot be undone!',
-            actions: {
-                confirm: {
-                    label: 'Delete'
-                }
-            }
-        });
+        this._router.navigate(["/apps/customers/"]) 
     }
   
 

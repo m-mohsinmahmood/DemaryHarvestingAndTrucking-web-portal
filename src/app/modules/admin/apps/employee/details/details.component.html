@@ -84,7 +84,7 @@
                 <div class="h-screen border-t border-gray-200 px-4 py-5 sm:p-0 ">
                     <div *ngIf="employeeGovernemtDocs.length > 0">
                         <div>
-                            <div class="flex flex-wrap  -m-2 mt-2">
+                            <div class="flex flex-wrap m-4">
                                 <div *ngFor="let file of employeeGovernemtDocs; trackBy:trackByFn">
                                     <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card" [routerLink]="['./details/', file.id]">
                                         <div class="aspect-w-9 aspect-h-6">
@@ -114,7 +114,7 @@
             </mat-tab>
             <mat-tab label="Company Docs ">
                 <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-wrap  -m-2 mt-2">
+                    <div class="flex flex-wrap m-4">
                         <div *ngFor="let file of employeeCompanyDocs;">
                             <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card" [routerLink]="['./details/', file.id]">
                                 <div class="aspect-w-9 aspect-h-6">
@@ -142,7 +142,7 @@
             </mat-tab>
             <mat-tab label="Work Records ">
                 <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-wrap  -m-2 mt-2">
+                    <div class="flex flex-wrap m-4">
                         <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
                             <div class="aspect-w-9 aspect-h-6">
                                 <div class="flex items-center justify-center">

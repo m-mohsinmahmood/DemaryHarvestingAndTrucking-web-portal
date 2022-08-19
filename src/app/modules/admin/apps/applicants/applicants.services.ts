@@ -8,6 +8,12 @@ import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicant
 })
 export class ApplicantService
 {
+  patchValue(newProduct: Applicant) {
+    throw new Error('Method not implemented.');
+  }
+  markForCheck() {
+    throw new Error('Method not implemented.');
+  }
     // Private
   
     private _pagination: BehaviorSubject<ApplicantPagination | null> = new BehaviorSubject(null);
