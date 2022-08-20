@@ -20,7 +20,7 @@ export class UpdateComponent implements OnInit {
   employees:any;
   imageURL: string = '';
   previews: string[] = [];
-  avatar: string;
+  avatar: string = "";
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateComponent>,

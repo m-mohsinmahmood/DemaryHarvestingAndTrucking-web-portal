@@ -19,18 +19,17 @@ import { Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 250px auto 40px;
+                grid-template-columns: 90px 160px 0px;
 
                 @screen sm {
-                    grid-template-columns: 250px auto 112px 72px;
+                    grid-template-columns: 30% 20% 20% 10% 10% 10%;
                 }
-
                 @screen md {
-                    grid-template-columns: 48px 250px auto 112px 72px;
+                    grid-template-columns: 30% 15% 25% 25% 10% 10% ;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 250px auto 112px 96px 96px 72px;
+                    grid-template-columns: 25% 25% 25% 10% 15%;
                 }
             }
         `

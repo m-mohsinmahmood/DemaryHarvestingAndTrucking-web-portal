@@ -33,15 +33,15 @@
                     <div class="grid">
                         <!-- Header -->
                         <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                            <div class="hidden md:block" [mat-sort-header]="'sku'">
+                            <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
                                 ID
-                            </div>
+                            </div> -->
                             <div [mat-sort-header]="'name'">Name</div>
                             <div class="hidden sm:block" [mat-sort-header]="'price'">
                                 Harvest Year
                                 
                             </div>
-                            <div class="hidden lg:block" [mat-sort-header]="'stock'">
+                            <div class="hidden lg:block pl-2" [mat-sort-header]="'stock'">
                                 Email
                             </div>
                             <div class="hidden lg:block" [mat-sort-header]="'active'">
@@ -65,9 +65,9 @@
                                     </div> -->
 
                                     <!-- SKU -->
-                                    <div class="hidden md:block truncate">
+                                    <!-- <div class="hidden md:block truncate">
                                         {{product.id}}
-                                    </div>
+                                    </div> -->
 
                                     <!-- Name -->
                                     <div class="truncate">
@@ -86,7 +86,8 @@
 
                                     <!-- Active -->
                                     <div class="hidden lg:block">
-                                        <div class="min-w-4 ml-2">{{product.isActive}}</div>
+                                        <mat-icon *ngIf="product.isActive=== 1" style="color:green;">check</mat-icon>
+                                        <mat-icon *ngIf="product.isActive=== 0" style="color: red;">error</mat-icon> 
                                     
                                     </div>
 

@@ -48,6 +48,10 @@ export class UpdateComponent implements OnInit {
   sixthFormGroup : FormGroup;
   isSubmit = false;
   isBack = false;
+  imageURL: string = '';
+  avatar: string = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
+
+
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateComponent>,
@@ -122,6 +126,8 @@ this.fourthFormGroup = this._formBuilder.group({
   usCitizen: ["", ""],
   license: ["", ""],
   passport: ["", ""],
+  avatar: ['', [Validators.required]],
+
 });
 
 this.fifthFormGroup = this._formBuilder.group({
@@ -190,6 +196,7 @@ this.sixthFormGroup = this._formBuilder.group({
       usCitizen: employee.citizenStatus,
       license: employee.tractorStatus,
       passport: employee.passport,
+      avator: employee.avatar,
     });
     this.fifthFormGroup.patchValue({
       firstQuestion: employee.fifthQuestion,
@@ -304,6 +311,20 @@ this.sixthFormGroup = this._formBuilder.group({
       this.isBack = true;
     }
     event.selectedIndex == 6 ? this.isSubmit=true : this.isSubmit=false;
+    }
+
+    showPreview(event) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.fourthFormGroup.patchValue({
+        avatar: file
+      });
+      this.fourthFormGroup.get('avatar').updateValueAndValidity()
+      // File Preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageURL = reader.result as string;
+      }
+      reader.readAsDataURL(file)
     }
   
  

@@ -8,6 +8,7 @@ export interface InventoryProduct
     skipInvoiceMath1? : string;
     arizonaInvoiceMath? : string;
     skipInvoiceMath2?: string;
+    stateProvince? : string;
     email?: string;
     isActive?: string;
     description?: string;

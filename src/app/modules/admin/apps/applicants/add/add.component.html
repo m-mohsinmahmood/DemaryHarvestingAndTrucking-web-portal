@@ -1,4 +1,4 @@
-<div class="flex flex-col h-screen 2xl:max-h-screen md:min-w-160 -m-6">
+<div class="flex flex-col h-screen  2xl:max-h-screen md:min-w-160 -m-6">
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">Add Applicant</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
@@ -13,15 +13,17 @@
                 <div *ngSwitchCase="'horizontal'"></div>
                 <div *ngSwitchCase="'vertical'"></div>
             </ng-container>
-            <mat-horizontal-stepper [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
-                <mat-step [stepControl]="firstFormGroup" [editable]="true">
+            <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
+                <mat-step class="flex justify-center items-center " [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
-                        <ng-template matStepLabel>Applicant Information</ng-template>
-                        <div>
+                        <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
+                        <div class="items-center justify-center">
+                            <ng-template matStepLabel>Applicant Information</ng-template>
+                            <!-- <div> -->
                             <div class="w-8/12">
-                                <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail" > First Email </mat-checkbox>
+                                <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
                             </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2" appearance="outline">
+                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12" appearance="outline">
                                 <mat-label>First Sent Date</mat-label>
                                 <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -30,14 +32,14 @@
                             <div class="w-8/12">
                                 <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
                             </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2" appearance="outline">
+                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12 mt-2" appearance="outline">
                                 <mat-label>Second Sent Date</mat-label>
                                 <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
                                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
                             </mat-form-field>
                             <div>
-                                <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
                                     <mat-label>Application Date</mat-label>
                                     <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -48,56 +50,59 @@
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondFormGroup" [editable]="true">
-                    <form [formGroup]="secondFormGroup" class="form mt-1">
-                        <ng-template matStepLabel>Contact Information</ng-template>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Full Name</mat-label>
-                                <input matInput type="text" id="fullName" formControlName="fullName" placeholder="Full Name">
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Last Name First Name</mat-label>
-                                <input matInput type="text" id="lastNameFirstName" formControlName="lastNameFirstName" placeholder="Last Name First Name">
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>First Name</mat-label>
-                                <input matInput type="text" id="firstName" formControlName="firstName" placeholder="First Name">
-                            </mat-form-field>
-                        </div>
-                        <div>
+                    <form [formGroup]="secondFormGroup" class="interview-results-form mt-1">
+                        <ng-template class="hidden" matStepLabel>Contact Information</ng-template>
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12  lg:w-full" appearance="outline">
+                                    <mat-label>Full Name</mat-label>
+                                    <input matInput type="text" id="fullName" formControlName="fullName" placeholder="Full Name">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Last Name First Name</mat-label>
+                                    <input matInput type="text" id="lastNameFirstName" formControlName="lastNameFirstName" placeholder="Last Name First Name">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput type="text" id="firstName" formControlName="firstName" placeholder="First Name">
+                                </mat-form-field>
+                            </div>
+                            <div>
 
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
-                            </mat-form-field>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Cell Phone</mat-label>
+                                    <input matInput type="number" id="cellPhone" formControlName="cellPhone" placeholder="Cell Phone">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Home Phone</mat-label>
+                                    <input matInput type="number" id="homePhone" formControlName="homePhone" placeholder="Home Phone">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="sm:w-6/12 md:w-8/12 w-11/12 lg:w-full" appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="email" id="email" formControlName="email" placeholder="Email">
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Cell Phone</mat-label>
-                                <input matInput type="number" id="cellPhone" formControlName="cellPhone" placeholder="Cell Phone">
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Home Phone</mat-label>
-                                <input matInput type="number" id="homePhone" formControlName="homePhone" placeholder="Home Phone">
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                <mat-label>Email</mat-label>
-                                <input matInput type="email" id="email" formControlName="email" placeholder="Email">
-                            </mat-form-field>
-                        </div>
+
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="thirdFormGroup" [editable]="true">
                     <form [formGroup]="thirdFormGroup" class="interview-results-form mt-1">
-                        <ng-template matStepLabel>Interview Results</ng-template>
+                        <ng-template class="hidden" matStepLabel>Interview Results</ng-template>
                         <!-- First Section    -->
                         <section class="sm:w-6/12 md:w-8/12 lg:w-full">
                             <mat-checkbox class="firstphoneCall" id="firstphoneCall" name="firstphoneCall" formControlName="firstPhoneCall">1st Phone Call </mat-checkbox>
@@ -200,11 +205,40 @@
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
-                    <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
-                        <ng-template matStepLabel>Personal Information</ng-template>
+                    <form [formGroup]="fourthFormGroup" class="interview-results-form  mt-1 ">
+                        <ng-template class="hidden" matStepLabel>Personal Information</ng-template>
+                        <!-- <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''  ">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                              </label>
+                            </div>
+                        </div> -->
+                        <div class="py-3 center mx-auto flex justify-center items-center">
+                            <div class="px-4 py-5 rounded-lg text-center w-48">
+                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
+                                </div>
+                                <label class="cursor-pointer mt-6">
+                                        <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                                        <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                     </label>
+                            </div>
+                        </div>
+
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
                             <div>
-                                <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Date Of Birth</mat-label>
                                     <input id="date" name="date" formControlName="dob" matInput [matDatepicker]="picker4">
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
@@ -212,7 +246,7 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Marital Status</mat-label>
                                     <mat-select formControlName="maritalStatus">
                                         <mat-option value="single"> Single</mat-option>
@@ -222,43 +256,43 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Address 1</mat-label>
                                     <textarea matInput type="text" id="Address 1" formControlName="address1" placeholder="Address 1"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-ful w-11/12">
                                     <mat-label>Address 2</mat-label>
                                     <textarea matInput type="text" id="Address 2" formControlName="address2" placeholder="Address 2"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12">
                                     <mat-label> Town/City</mat-label>
                                     <input matInput type="text" id="city" name="city" formControlName="city" placeholder="Town/City" value="city">
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12">
                                     <mat-label> County/Province/State</mat-label>
                                     <input matInput type="text" id="county" name="county" formControlName="county" placeholder="Count/Province/State">
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12">
                                     <mat-label> Postal Code</mat-label>
                                     <input matInput type="number" id="postal-code" name="postal-code" formControlName="postalCode" placeholder="Postal Code">
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12">
                                     <mat-label> Country</mat-label>
                                     <input matInput type="text" id="country" name="country" formControlName="country" placeholder="Country">
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Are you a US Citizen?</mat-label>
                                     <mat-select formControlName="usCitizen">
                                         <mat-option value="Yes"> Yes</mat-option>
@@ -267,7 +301,7 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Do you have a Tractor/Lorry/CDL License?</mat-label>
                                     <mat-select matNativeControl formControlName="license">
                                         <mat-option value="Yes"> Yes</mat-option>
@@ -276,7 +310,7 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Passport?</mat-label>
                                     <mat-select matNativeControl formControlName="passport">
                                         <mat-option value="Yes"> Yes</mat-option>
@@ -289,7 +323,7 @@
                 </mat-step>
                 <mat-step [stepControl]="fifthFormGroup" [editable]="true">
                     <form [formGroup]="fifthFormGroup" class="interview-results-form">
-                        <ng-template matStepLabel>Work Experience</ng-template>
+                        <ng-template class="hidden" matStepLabel>Work Experience</ng-template>
                         <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With 5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-96">
@@ -380,7 +414,7 @@
                 </mat-step>
                 <mat-step [stepControl]="sixthFormGroup" [editable]="true">
                     <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
-                        <ng-template matStepLabel>Educational Background</ng-template>
+                        <ng-template class="hidden" matStepLabel>Educational Background</ng-template>
                         <div class="my-1.5 mt-2.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
                                 <label class="font-bold text-lg">On this question, Select the highest level of Education Completed. </label>
@@ -424,8 +458,14 @@
                     </form>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>Done</ng-template>
-                    <p>You are now done.</p>
+                    <<<<<<< HEAD <ng-template class="hidden" matStepLabel>Done</ng-template>
+                        <p>You are now done.</p>
+                        =======
+                        <ng-template matStepLabel>Done</ng-template>
+                        <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex justify-center items-center">
+                            <p class="text-lime-600	 flex justify-center items-center text-lime-500	">Congratulations you have filled out the form successfully. Please click on submit button to complete your application process</p>
+                        </div>
+                        >>>>>>> haris-dev
                 </mat-step>
 
             </mat-horizontal-stepper>
@@ -433,7 +473,7 @@
     </main>
 
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
-        <div class="flex gap-2 items-center mt-4 sm:mt-0"> 
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
             <button *ngIf="isBack" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.previous()">
                 Back 
               </button>
@@ -444,5 +484,5 @@
                 Submit
               </button>
         </div>
-     </div>
+    </div>
 </div>

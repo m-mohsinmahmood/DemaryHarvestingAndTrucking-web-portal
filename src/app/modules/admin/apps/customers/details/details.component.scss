@@ -6,18 +6,18 @@
     padding: 12px !important;
 }
 
-.crops-grid {
-    grid-template-columns: auto auto auto auto;
+.crops-grid, .farms-grid {
+    grid-template-columns: 25% 25% 25% 25%;
 
     @screen sm {
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: 25% 25% 25% 25%;
     }
 
     @screen md {
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: 25% 25% 25% 25% ;
     }
 
     @screen lg {
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: 25% 25% 25% 25%;
     }
 }
