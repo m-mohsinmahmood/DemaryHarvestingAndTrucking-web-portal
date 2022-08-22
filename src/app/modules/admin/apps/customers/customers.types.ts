@@ -23,6 +23,7 @@ export interface InventoryProduct
     cropHarvestYear: string;
     cropCrop: string;
     cropPoundsPerBushel: string;
+    contactNo: string;
 }
 
 export interface InventoryPagination

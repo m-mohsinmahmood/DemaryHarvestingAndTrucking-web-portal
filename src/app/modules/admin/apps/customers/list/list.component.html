@@ -41,13 +41,16 @@
                                 Harvest Year
                                 
                             </div>
-                            <div class="hidden lg:block pl-2" [mat-sort-header]="'stock'">
+                            <div class="hidden sm:block pl-2" [mat-sort-header]="'stock'">
                                 Email
                             </div>
-                            <div class="hidden lg:block" [mat-sort-header]="'active'">
-                                Is Active
+                            <div class="hidden sm:block pl-2" [mat-sort-header]="'stock'">
+                                Contact
                             </div>
-                            <div class="hidden sm:block">Details</div>
+                            <div class="hidden lg:block" [mat-sort-header]="'active'">
+                                Status
+                            </div>
+                            <div class="sm:block">Details</div>
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="(products$ | async) as products">
@@ -74,20 +77,24 @@
                                         {{product.name}}
                                     </div>
 
-                                    <!-- Price -->
+                                    <!-- Harvest Year -->
                                     <div class="hidden sm:block">
                                         {{product.harvestYear}}
                                     </div>
 
-                                    <!-- Stock -->
-                                    <div class="hidden lg:flex items-center">
+                                    <!-- Email -->
+                                    <div class="hidden sm:block items-center">
                                         <div class="min-w-4 ml-2">{{product.email}}</div>
+                                    </div>
+
+                                    <!-- Contact -->
+                                    <div class="hidden sm:block items-center">
+                                        <div class="min-w-4 ml-2">{{product.contactNo}}</div>
                                     </div>
 
                                     <!-- Active -->
                                     <div class="hidden lg:block">
-                                        <mat-icon *ngIf="product.isActive=== 1" style="color:green;">check</mat-icon>
-                                        <mat-icon *ngIf="product.isActive=== 0" style="color: red;">error</mat-icon> 
+                                        <mat-icon  class="{{product.isActive===1 ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="product.isActive===1 ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">check-circle</mat-icon>
                                     
                                     </div>
 

@@ -181,7 +181,8 @@ export class CustomersInventoryMockApi
                     cropCrop:  '',
                     cropPoundsPerBushel:  '',
                     images     : [],
-                    active     : false
+                    active     : false,
+                    contactNo:'',
                 };
 
                 // Unshift the new product

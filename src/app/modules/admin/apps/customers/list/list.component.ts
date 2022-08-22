@@ -19,18 +19,26 @@ import { Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 90px 160px 0px;
+                grid-template-columns: 200px 200px 0px;
 
                 @screen sm {
-                    grid-template-columns: 30% 20% 20% 10% 10% 10%;
+                    grid-template-columns: 20% 20% 20% 20% 10% 10%;
                 }
                 @screen md {
-                    grid-template-columns: 30% 15% 25% 25% 10% 10% ;
+                    grid-template-columns: 20% 20% 20% 20% 10% 10% ;
                 }
 
                 @screen lg {
-                    grid-template-columns: 25% 25% 25% 10% 15%;
+                    grid-template-columns: 20% 20% 20% 20% 10% 10%;
                 }
+            }
+            .redInActiveIcon
+            {
+                color:#dc2626;
+            }
+            .greenActiveIcon
+            {
+                color:#16a34a;
             }
         `
     ],
@@ -112,6 +120,8 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             cropHarvestYear: [''],
             cropCrop: [''],
             cropPoundsPerBushel: [''],
+            contactNo: [''],
+
         });
 
         // Get the brands
