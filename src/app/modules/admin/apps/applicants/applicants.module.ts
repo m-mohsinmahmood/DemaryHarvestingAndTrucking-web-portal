@@ -15,9 +15,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -28,6 +28,7 @@ import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/
 import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
 import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { UpdateComponent } from './update/update.component';
         MatNativeDateModule,
         MatMomentDateModule,
         MatTabsModule,
+        MatExpansionModule,
         SharedModule
     ]
 })

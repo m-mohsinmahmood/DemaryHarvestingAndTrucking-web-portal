@@ -240,7 +240,7 @@
                             </div>
                         </div>
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
-            
+
                             <div>
                                 <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
                                     <mat-label>Date Of Birth</mat-label>
@@ -293,6 +293,30 @@
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
                                     <mat-label> Country</mat-label>
                                     <input matInput type="text" id="country" name="country" formControlName="country" placeholder="Country">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
+                                    <mat-label>Languages</mat-label>
+                                    <mat-select formControlName="language">
+                                        <mat-option value="english"> English</mat-option>
+                                        <mat-option value="spanih">Spanish</mat-option>
+                                        <mat-option value="chinese">Chinese</mat-option>
+                                        <mat-option value="arabic">Arabic</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
+                                    <mat-label>Self Rating</mat-label>
+                                    <mat-select formControlName="rating">
+                                        <mat-option value="fluent"> Fluent</mat-option>
+                                        <mat-option value="native">Native speaker</mat-option>
+                                        <mat-option value="average">Average</mat-option>
+                                        <mat-option value="aboveAverage">Above average</mat-option>
+                                        <mat-option value="poor">Poor</mat-option>
+
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -474,7 +498,7 @@
 
     <header class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
         <button *ngIf="isBack" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.previous()">
-            Back 
+            Back
           </button>
         <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.next()">
           Next

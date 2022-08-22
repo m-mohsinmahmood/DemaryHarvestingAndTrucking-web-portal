@@ -7,7 +7,7 @@ export const applicants = [
     email1: "ariesbeau1957@gmail.com",
     email2: "ariesbeau1957@gmail.com",
     active: true,
-   
+
     status: "Hired",
 
 
@@ -18,8 +18,9 @@ export const applicants = [
      cellPhone: "+12012987481",
      homePhone: "+12012987481",
      email: "ariesbeau1957@gmail.com",
+     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
-     
+
     // personal info
     dob: "5-10-2020",
     martialStatus: "Married",
@@ -65,7 +66,7 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "2",
       e_secondQuestion: "2",
@@ -88,6 +89,8 @@ export const applicants = [
     cellPhone: "+13324558954",
     homePhone: "+13324558954",
     email: "eoinbegley@icloud.com",
+    image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+
 
     // personal info
     dob: "5-10-2020",
@@ -150,6 +153,8 @@ export const applicants = [
      cellPhone: "+13324557765",
      homePhone: "+13324557765",
      email: "bradberq@gmail.com",
+     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+
 
      // personal info
     dob: "5-10-2020",
@@ -191,13 +196,13 @@ export const applicants = [
 
     },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-947685748979999a7ec",
     applicantID: "3221",
     email1: "john@gmail.com",
     email2: "jon2@gmail.com",
     active: true,
-   
+
     status: "New",
 
 
@@ -208,8 +213,10 @@ export const applicants = [
      cellPhone: "+13324533224",
      homePhone: "+13324533224",
      email: "john@gmail.com",
+     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
-     
+
+
     // personal info
     dob: "15-10-2020",
     martialStatus: "Married",
@@ -257,20 +264,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "1",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-94767777778974543439999a7ec",
     applicantID: "3221",
     email1: "mick@gmail.com",
     email2: "zack@gmail.com",
     active: true,
-   
+
     status: "New",
 
 
@@ -282,7 +289,7 @@ export const applicants = [
      homePhone: "+13399993224",
      email: "zack@gmail.com",
 
-     
+
     // personal info
     dob: "09-04-2022",
     martialStatus: "Married",
@@ -330,20 +337,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "2",
       e_secondQuestion: "2",
       e_thirdQuestion: "1",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-9476656565658974543439999a7ec",
     applicantID: "3221",
     email1: "mick@gmail.com",
     email2: "mick@gmail.com",
     active: true,
-   
+
     status: "New",
 
 
@@ -355,7 +362,7 @@ export const applicants = [
      homePhone: "+13399996666",
      email: "mick@gmail.com",
 
-     
+
     // personal info
     dob: "22-04-2022",
     martialStatus: "Married",
@@ -403,20 +410,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-947665656565ddd8974543439999a7ec",
     applicantID: "3221",
     email1: "jeff@gmail.com",
     email2: "jeff@gmail.com",
     active: true,
-   
+
     status: "Hired",
 
 
@@ -428,7 +435,7 @@ export const applicants = [
      homePhone: "+13399000666",
      email: "jeff@gmail.com",
 
-     
+
     // personal info
     dob: "22-04-2022",
     martialStatus: "Married",
@@ -476,20 +483,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-947665656565ddd8974543439999a7ec",
     applicantID: "3221",
     email1: "zack@gmail.com",
     email2: "zack@gmail.com",
     active: true,
-   
+
     status: "Evaluated",
 
 
@@ -501,7 +508,7 @@ export const applicants = [
      homePhone: "+13399333666",
      email: "zack@gmail.com",
 
-     
+
     // personal info
     dob: "22-04-2022",
     martialStatus: "Married",
@@ -549,20 +556,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
     applicantID: "3221",
     email1: "zack@gmail.com",
     email2: "zack@gmail.com",
     active: true,
-   
+
     status: "Evaluated",
 
 
@@ -574,7 +581,7 @@ export const applicants = [
      homePhone: "+13399333666",
      email: "efron@gmail.com",
 
-     
+
     // personal info
     dob: "22-04-2022",
     martialStatus: "Single",
@@ -622,20 +629,20 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
   {
-    
+
     id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
     applicantID: "3221",
     email1: "dylon@gmail.com",
     email2: "dylon@gmail.com",
     active: true,
-   
+
     status: "Hired",
 
 
@@ -647,7 +654,7 @@ export const applicants = [
      homePhone: "+13399333666",
      email: "dylon@gmail.com",
 
-     
+
     // personal info
     dob: "22-04-2022",
     martialStatus: "Single",
@@ -695,14 +702,13 @@ export const applicants = [
       secondSentDate: "8/27/2022",
       applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
 
-      
+
       // education
       e_firstQuestion: "1",
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
-  
-  
+
+
 ];
-  
-  
+
