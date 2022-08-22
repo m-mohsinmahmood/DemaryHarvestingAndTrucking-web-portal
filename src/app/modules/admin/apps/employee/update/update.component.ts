@@ -72,7 +72,6 @@ export class UpdateComponent implements OnInit {
     const internationalPhoneNumbersFormGroups = [];
     if ( this.employees.internationalPhoneNumber.length > 0 )
     {
-    debugger;
         // Iterate through them
             internationalPhoneNumbersFormGroups.push(
                 this._formBuilder.group({
