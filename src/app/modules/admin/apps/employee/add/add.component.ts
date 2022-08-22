@@ -1,9 +1,12 @@
 
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { EmployeeService } from '../employee.service'
 import { MatDialogRef } from '@angular/material/dialog';
+import { Country } from 'app/modules/admin/apps/employee/employee.types';
+import { Subject, takeUntil } from 'rxjs';
+
 
 
 let governmentDocs = [
@@ -44,20 +47,24 @@ export class AddComponent implements OnInit {
   imageURL: string = '';
   previews: string[] = [];
   imageInfos?: Observable<any>;
+  countries: Country[];
   employeeGovernemtDocs: any[] = governmentDocs;
   employeeCompanyDocs: any[] = companyDocs;
   employeeRecordDocs: any = recordDocs;
-
-
   form: FormGroup;
+  countryCodeLength: any = 1;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+
   constructor(
     public matDialogRef: MatDialogRef<AddComponent>,
     private _formBuilder: FormBuilder,
     private _employeeService: EmployeeService,
-    
+    private _changeDetectorRef: ChangeDetectorRef,
+
+
     ) {
     }
-    
+
 
   ngOnInit(): void {
   // Create the form
@@ -71,23 +78,47 @@ export class AddComponent implements OnInit {
     email   : ['', [Validators.email]],
     address : ['', [Validators.required]],
     phone : ['', [Validators.required]],
+    phoneNumbers: this._formBuilder.array([]),
     emergencyContact : ['', [Validators.required]],
     bankingInfo : ['', [Validators.required]],
     salary  : ['',[]],
-    currentEmployee : ['',[]]
+    currentEmployee : ['',[]],
+    wages : ['',[]]
   });
 
-    // this.uploader.progressSource.subscribe(progress => {
-    //   this.progress = progress;
-    // });
+
+      const phoneNumbersFormGroups = [];
+      phoneNumbersFormGroups?.push(
+        this._formBuilder.group({
+            country    : ['us'],
+            phoneNumber: [''],
+        })
+      );
+        phoneNumbersFormGroups.forEach((phoneNumbersFormGroup) => {
+            (this.form.get('phoneNumbers') as FormArray)?.push(phoneNumbersFormGroup);
+        });
+
+        this._employeeService.countries$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((codes: Country[]) => {
+            this.countries = codes;
+
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+        });
+
   }
-  
+
+  ngAfterContentChecked(): void {
+   this._changeDetectorRef.detectChanges()
+  }
+
   onSubmit(): void {
     console.warn('Your order has been submitted', this.form.value);
     this.form.reset();
   }
-  
-  
+
+
   showPreview(event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({
@@ -101,24 +132,24 @@ export class AddComponent implements OnInit {
     }
     reader.readAsDataURL(file)
   }
-  
+
   removeDocHandler(index) {
     if (index < 8){
-      this.employeeGovernemtDocs[index].isUpload  = false;  
+      this.employeeGovernemtDocs[index].isUpload  = false;
       this.employeeGovernemtDocs[index].uploadedDocName = '';
     }
     else if (index > 7 && index < 14){
-      let  item = this.employeeCompanyDocs.find((x) => {return x.docId == index+1});    
-      item.isUpload  = false;  
+      let  item = this.employeeCompanyDocs.find((x) => {return x.docId == index+1});
+      item.isUpload  = false;
       item.uploadedDocName = '';
     }
     else {
-      let  item = this.employeeRecordDocs.find((x) => {return x.docId == index+1});    
-      item.isUpload  = false;  
+      let  item = this.employeeRecordDocs.find((x) => {return x.docId == index+1});
+      item.isUpload  = false;
       item.uploadedDocName = '';
     }
   }
-   
+
   uploadAvatar(fileList: FileList): void
     {
         // Return if canceled
@@ -139,7 +170,7 @@ export class AddComponent implements OnInit {
         // Upload the avatar
         // this._employeeService.uploadAvatar(this.contact.id, file).subscribe();
     }
-    
+
     removeAvatar(): void
     {
         // Get the form control for 'avatar'
@@ -155,7 +186,7 @@ export class AddComponent implements OnInit {
         // this.contact.avatar = null;
     }
 
-  
+
    /**
      * Save and close
      */
@@ -194,58 +225,81 @@ export class AddComponent implements OnInit {
     selectFiles(event: any , index: any): void {
       this.message = [];
       this.progressInfos = [];
-      // this.selectedFileNames[index] = event.target.files[0].name;  
+      // this.selectedFileNames[index] = event.target.files[0].name;
       if (index < 8){
-        this.employeeGovernemtDocs[index].uploadedDocName  = event.target.files[0].name;  
-        this.employeeGovernemtDocs[index].isUpload  = true; 
+        this.employeeGovernemtDocs[index].uploadedDocName  = event.target.files[0].name;
+        this.employeeGovernemtDocs[index].isUpload  = true;
       }
       else if (index > 7 && index < 14){
         let  item = this.employeeCompanyDocs.find((x) => {return x.docId == index+1});
-        item.uploadedDocName  = event.target.files[0].name;  
-        item.isUpload  = true; 
+        item.uploadedDocName  = event.target.files[0].name;
+        item.isUpload  = true;
       }
       else  {
         let  item = this.employeeRecordDocs.find((x) => {return x.docId == index+1});
-        item.uploadedDocName  = event.target.files[0].name;  
-        item.isUpload  = true; 
+        item.uploadedDocName  = event.target.files[0].name;
+        item.isUpload  = true;
       }
-      
-  
+
+
       this.previews = [];
       if (this.selectedFiles && this.selectedFiles[0]) {
         const numberOfFiles = this.selectedFiles.length;
         for (let i = 0; i < numberOfFiles; i++) {
           const reader = new FileReader();
-  
+
           reader.onload = (e: any) => {
             console.log(e.target.result);
             this.previews.push(e.target.result);
           };
-  
+
           reader.readAsDataURL(this.selectedFiles[i]);
-  
+
         //  this.selectedFileNames.push(this.selectedFiles[i].name);
         }
       }
     }
-    
+
     upload(idx: number, file: File): void {
       this.progressInfos[idx] = { value: 0, fileName: file.name };
-  
+
       if (file) {
-      
+
       }
     }
-    
+
     uploadFiles(): void {
       this.message = [];
-  
+
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
           this.upload(i, this.selectedFiles[i]);
         }
       }
     }
+
+     /**
+     * Get country info by iso code
+     *
+     * @param iso
+     */
+      getCountryByIso(iso: string): Country
+      {
+          const country = this.countries.find(country => country.iso === iso);
+          this.countryCodeLength = country.code.length
+          return country;
+      }
+
+      /**
+       * Track by function for ngFor loops
+       *
+       * @param index
+       * @param item
+       */
+      trackByFn(index: number, item: any): any
+      {
+          return item.id || index;
+      }
 
 }
 

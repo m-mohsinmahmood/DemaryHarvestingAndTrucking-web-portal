@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { EmployeePagination, Employee } from 'app/modules/admin/apps/employee/employee.types';
+import { EmployeePagination, Employee , Country } from 'app/modules/admin/apps/employee/employee.types';
 
 @Injectable({
     providedIn: 'root'
@@ -9,11 +9,13 @@ import { EmployeePagination, Employee } from 'app/modules/admin/apps/employee/em
 export class EmployeeService
 {
     // Private
-  
+
     private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
     private _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
     private _employeesdata: BehaviorSubject<Employee[] | null> = new BehaviorSubject(null);
-    
+    private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
+
+
 
     /**
      * Constructor
@@ -44,7 +46,12 @@ export class EmployeeService
     get employeedata$(): Observable<Employee[]>
     {
         return this._employeesdata.asObservable();
-    }  
+    }
+
+    get countries$(): Observable<Country[]>
+    {
+        return this._countries.asObservable();
+    }
 
     /**
      * Get employees
@@ -105,6 +112,18 @@ export class EmployeeService
             })
         );
     }
+
+     /**
+     * Get countries
+     */
+      getCountries(): Observable<Country[]>
+      {
+          return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
+              tap((countries) => {
+                  this._countries.next(countries);
+              })
+          );
+      }
 
     /**
      * Create product
@@ -198,11 +217,11 @@ export class EmployeeService
         );
     }
 
-    
 
-    
 
-   
 
-    
+
+
+
+
 }

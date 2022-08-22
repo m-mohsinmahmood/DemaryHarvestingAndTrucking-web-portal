@@ -18,21 +18,17 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .employee-grid {
-                grid-template-columns: 70% 30%;
+                grid-template-columns: 10% 50% 30%;
 
                 @screen sm {
-                    grid-template-columns: 10% 20% 25% 30% 10%;
+                    grid-template-columns: 3% 20% 25% 30% 10%;
                 }
                 @screen md {
-                    grid-template-columns: 10% 25% 30% 25% 10%;
+                    grid-template-columns: 3% 25% 30% 25% 10%;
                 }
-
                 @screen lg {
-                    grid-template-columns: 10% 25% 30% 25% 10%;
+                    grid-template-columns: 3% 25% 30% 25% 10%;
                 }
-                
-
-                
             }
         `
     ],
@@ -47,7 +43,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy
 
     employeesdata$: Observable<Employee[]>;
 
-    
+
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
     pagination: EmployeePagination;
@@ -79,7 +75,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy
      * On init
      */
     ngOnInit(): void
-    {      
+    {
 
         // Get the pagination
         this._employeeService.pagination$
@@ -221,7 +217,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy
         this.selectedProduct = null;
     }
 
-    
+
 
     /**
      * Create employee

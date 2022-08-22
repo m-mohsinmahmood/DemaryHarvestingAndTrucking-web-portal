@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
 import { EmployeeDetailComponent } from 'app/modules/admin/apps/employee/details/details.component';
-import { EmployeesResolver, EmployeeResolver, } from 'app/modules/admin/apps/employee/employee.resolvers';
+import { EmployeesResolver, EmployeeResolver, ContactsCountriesResolver } from 'app/modules/admin/apps/employee/employee.resolvers';
 
 export const employeeRoutes: Route[] = [
     {
@@ -13,9 +13,10 @@ export const employeeRoutes: Route[] = [
                 path     : '',
                 component: EmployeeListComponent,
                 resolve  : {
-                   
+
                     products  : EmployeesResolver,
-                    
+                    countries: ContactsCountriesResolver
+
                 },
                 children : [
                     // {
@@ -30,7 +31,7 @@ export const employeeRoutes: Route[] = [
                     //     component: EmployeeDetailComponent,
                     // },
                 ]
-                
+
             },
             {
                 path     : 'details/:Id',

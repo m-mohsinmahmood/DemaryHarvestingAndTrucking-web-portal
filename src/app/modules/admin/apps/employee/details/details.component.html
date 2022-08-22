@@ -10,7 +10,7 @@
         <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <img *ngIf="employees.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employees.avatar}}" alt="">
-            <img *ngIf="employees.avatar == ''" class="inline-block h-14 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+            <img *ngIf="employees.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
             <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
@@ -52,6 +52,10 @@
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Phone</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.phone}}</dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-extrabold text-gray-500">International Phone Number</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{employees.internationalPhoneNumber[0].phoneNumber}}</dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">Emergency Contacts</dt>

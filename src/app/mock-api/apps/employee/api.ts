@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { employees as employeesData} from 'app/mock-api/apps/employee/data';
+import { employees as employeesData , countries as countriesData} from 'app/mock-api/apps/employee/data';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,9 @@ import { employees as employeesData} from 'app/mock-api/apps/employee/data';
 export class EmployeeMockApi
 {
     private _employees: any[] = employeesData;
-   
+    private _countries: any[] = countriesData;
+
+
 
     /**
      * Constructor
@@ -29,7 +31,7 @@ export class EmployeeMockApi
      */
     registerHandlers(): void
     {
-        
+
         // -----------------------------------------------------------------------------------------------------
         // @ Employees - GET
         // -----------------------------------------------------------------------------------------------------
@@ -226,5 +228,11 @@ export class EmployeeMockApi
                 // Return the response
                 return [200, true];
             });
+
+            // get countries
+
+            this._fuseMockApiService
+            .onGet('api/apps/employee/countries')
+            .reply(() => [200, cloneDeep(this._countries)]);
     }
 }
