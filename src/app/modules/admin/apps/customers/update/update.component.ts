@@ -42,6 +42,7 @@ export class UpdateComponent implements OnInit {
       title:[''],
       type:[''],
       descripition:[''],
+      contactNo: [''],
       farmItemRows: this._formBuilder.array([this.initFarmItemRows()]),
       cropsItemRows: this._formBuilder.array([this.initCropItemRows()]),
   

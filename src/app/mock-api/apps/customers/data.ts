@@ -125,6 +125,7 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
         
         },
         {   
@@ -146,6 +147,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         {   
@@ -167,6 +170,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         {   
@@ -188,6 +193,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         {   
@@ -209,6 +216,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         {   
@@ -230,6 +239,7 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
         
         },
         {   
@@ -251,6 +261,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         {   
@@ -272,6 +284,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
+            contactNo: '+1(909)-123-1234'
+
         
         },
         // {   
