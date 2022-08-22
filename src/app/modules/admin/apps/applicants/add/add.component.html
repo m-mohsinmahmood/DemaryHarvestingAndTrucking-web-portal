@@ -19,7 +19,6 @@
                         <ng-template class="hidden" matStepLabel>Applicant Information</ng-template>
                         <div class="items-center justify-center">
                             <ng-template matStepLabel>Applicant Information</ng-template>
-                            <!-- <div> -->
                             <div class="w-8/12">
                                 <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail"> First Email </mat-checkbox>
                             </div>
@@ -100,133 +99,16 @@
 
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="thirdFormGroup" [editable]="true">
-                    <form [formGroup]="thirdFormGroup" class="interview-results-form mt-1">
-                        <ng-template class="hidden" matStepLabel>Interview Results</ng-template>
-                        <!-- First Section    -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full">
-                            <mat-checkbox class="firstphoneCall" id="firstphoneCall" name="firstphoneCall" formControlName="firstPhoneCall">1st Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>1st Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="interviewResults" formControlName="firstInterviewResult" placeholder="1st Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>1st Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="firstRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="refreePhoneCall" id="refreePhoneCall" formControlName="refreePhoneCall" name="refreePhoneCall">Refree Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>Refree Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="refreeInterviewResult" formControlName="refreeInterviewResult" placeholder="Refree Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>Refree Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="refreeRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <!-- Second section -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="secondPhoneCall" id="secondPhoneCall" name="secondPhoneCall" formControlName="secondPhoneCall">2nd Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>2nd Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="secondInterviewResult" formControlName="secondInterviewResult" placeholder="1st Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>2nd Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="secondRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <!-- Third Section -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="thirdPhoneCall" id="thirdPhoneCall" formControlName="thirdPhoneCall" name="thirdPhoneCall">3rd Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>3rd Face/Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="thirdInterviewResult" formControlName="thirdInterviewResult" placeholder="3rd Face/Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>3rd Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="thirdRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </form>
-                </mat-step>
+
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="interview-results-form  mt-1 ">
                         <ng-template class="hidden" matStepLabel>Personal Information</ng-template>
-                        <!-- <div class="py-3 center mx-auto flex justify-center items-center">
-                            <div class="px-4 py-5 rounded-lg text-center w-48">
-                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
-                                </div>
-                                <div class="mb-4" *ngIf="imageURL ==''  ">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
-                                </div>
-                                <label class="cursor-pointer mt-6">
-                                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
-                                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
-                              </label>
-                            </div>
-                        </div> -->
                         <div class="py-3 center mx-auto flex justify-center items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
                                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                                 </div>
-                                <div class="mb-4" *ngIf="imageURL ==''">
+                                <div class="mb-4" *ngIf="imageURL ===''">
                                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
                                 </div>
                                 <label class="cursor-pointer mt-6">
@@ -285,10 +167,35 @@
                                     <input matInput type="number" id="postal-code" name="postal-code" formControlName="postalCode" placeholder="Postal Code">
                                 </mat-form-field>
                             </div>
+
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 w-11/12">
                                     <mat-label> Country</mat-label>
                                     <input matInput type="text" id="country" name="country" formControlName="country" placeholder="Country">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
+                                    <mat-label>Languages</mat-label>
+                                    <mat-select formControlName="language">
+                                        <mat-option value="english"> English</mat-option>
+                                        <mat-option value="spanih">Spanish</mat-option>
+                                        <mat-option value="chinese">Chinese</mat-option>
+                                        <mat-option value="arabic">Arabic</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
+                                    <mat-label>Self Rating</mat-label>
+                                    <mat-select formControlName="rating">
+                                        <mat-option value="fluent"> Fluent</mat-option>
+                                        <mat-option value="native">Native speaker</mat-option>
+                                        <mat-option value="average">Average</mat-option>
+                                        <mat-option value="aboveAverage">Above average</mat-option>
+                                        <mat-option value="poor">Poor</mat-option>
+
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -458,16 +365,14 @@
                     </form>
                 </mat-step>
                 <mat-step>
-                    <<<<<<< HEAD <ng-template class="hidden" matStepLabel>Done</ng-template>
+                 <ng-template class="hidden" matStepLabel>Done</ng-template>
                         <p>You are now done.</p>
-                        =======
                         <ng-template matStepLabel>Done</ng-template>
                         <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex justify-center items-center">
                             <p class="text-lime-600	 flex justify-center items-center text-lime-500	">Congratulations you have filled out the form successfully. Please click on submit button to complete your application process</p>
                         </div>
-                        >>>>>>> haris-dev
-                </mat-step>
 
+                </mat-step>
             </mat-horizontal-stepper>
         </div>
     </main>
@@ -475,7 +380,7 @@
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
         <div class="flex gap-2 items-center mt-4 sm:mt-0">
             <button *ngIf="isBack" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.previous()">
-                Back 
+                Back
               </button>
             <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.next()">
               Next

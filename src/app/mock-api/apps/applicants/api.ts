@@ -9,7 +9,7 @@ import { applicants as applicantsData} from 'app/mock-api/apps/applicants/data';
 export class ApplicantMockApi
 {
     private _applicants: any[] = applicantsData;
-   
+
 
     /**
      * Constructor
@@ -29,7 +29,7 @@ export class ApplicantMockApi
      */
     registerHandlers(): void
     {
-        
+
         // -----------------------------------------------------------------------------------------------------
         // @ Applicants - GET
         // -----------------------------------------------------------------------------------------------------
