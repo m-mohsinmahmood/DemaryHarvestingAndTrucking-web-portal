@@ -19,8 +19,11 @@
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                 </div>
-                <div class="mb-4" *ngIf="imageURL ==''">
-                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
+                <div class="mb-4" *ngIf="imageURL =='' && avatar ">
+                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt=" " />
+                </div>
+                <div class="mb-4" *ngIf="imageURL =='' && avatar == ''">
+                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
                 </div>
                 <label class="cursor-pointer mt-6">
                         <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
@@ -31,7 +34,7 @@
 
 
         <!-- <div>
-            <input id="avatar-file-input" 
+            <input id="avatar-file-input"
             class="" type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadAvatar(avatarFileInput.files)" #avatarFileInput>
             <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover" for="avatar-file-input" matRipple>
                         <mat-icon
@@ -76,6 +79,39 @@
                     <input type="number" matInput formControlName="phone">
                 </mat-form-field>
             </div>
+            <div *ngFor="let phoneNumber of form.get('internationalPhoneNumbers')['controls']; let i = index; let first = first; trackBy: trackByFn">
+                <div class="flex">
+                    <mat-form-field [ngClass]="countryCodeLength == 2 ? 'countryCode1' : countryCodeLength == 3 ? 'countryCode2' : 'countryCode3'" appearance="outline">
+                        <mat-label>International Phone Number</mat-label>
+                        <input class="text-sm mb-1" type="number" matInput [formControl]="phoneNumber.get('phoneNumber')" [placeholder]="'International Phone Number'">
+                        <mat-select class="" [formControl]="phoneNumber.get('country')" matPrefix>
+                            <mat-select-trigger>
+                                <span class="flex items-center">
+                            <span
+                                class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
+                                [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                [style.backgroundSize]="'24px 3876px'"
+                                [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"></span>
+                                <span class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(phoneNumber.get('country').value).code}}</span>
+                                </span>
+                            </mat-select-trigger>
+                            <ng-container *ngFor="let country of countries; trackBy: trackByFn">
+                                <mat-option [value]="country.iso">
+                                    <span class="flex items-center">
+                                <span
+                                    class="w-6 h-4 overflow-hidden"
+                                    [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                    [style.backgroundSize]="'24px 3876px'"
+                                    [style.backgroundPosition]="country.flagImagePos"></span>
+                                    <span class="ml-2">{{country.name}}</span>
+                                    <span class="ml-2 font-medium">{{country.code}}</span>
+                                    </span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Emergency Contacts</mat-label>
@@ -111,10 +147,11 @@
                     <input matInput formControlName="email">
                 </mat-form-field>
             </div>
-            <div class="flex justify-center items-center">
-                <mat-checkbox formControlName="salary">Salary</mat-checkbox>
-                <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
-            </div>
+        </div>
+        <div class="flex justify-center items-center">
+            <mat-checkbox formControlName="salary">Salary</mat-checkbox>
+            <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
+            <mat-checkbox formControlName="wages" class="checkbox ml-2">Wages </mat-checkbox>
         </div>
 
 

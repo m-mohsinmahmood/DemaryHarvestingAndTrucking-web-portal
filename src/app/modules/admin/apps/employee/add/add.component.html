@@ -1,4 +1,4 @@
-<div class="flex flex-col xs:w-72 sm:w-120 md:w-180 w-240 h-screen 2xl:max-h-screen -m-6">
+<div class="flex flex-col  max-w-240 md:min-w-160 max-h-screen -m-6">
 
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <!-- <div>
-            <input id="avatar-file-input" 
+            <input id="avatar-file-input"
             class="" type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadAvatar(avatarFileInput.files)" #avatarFileInput>
             <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover" for="avatar-file-input" matRipple>
                         <mat-icon
@@ -46,7 +46,7 @@
         <div class="font-medium text-2xl ">
             General Information
         </div>
-        <div class="lg:grid lg:grid-cols-2 gap-2">
+        <div class="sm:grid sm:grid-cols-2 gap-2">
             <div class="">
                 <mat-form-field appearance="outline">
                     <mat-label>First Name</mat-label>
@@ -71,6 +71,39 @@
                     <mat-label>Phone</mat-label>
                     <input type="number" matInput formControlName="phone">
                 </mat-form-field>
+            </div>
+            <div *ngFor="let phoneNumber of form.get('phoneNumbers')['controls']; let i = index; let first = first; trackBy: trackByFn">
+                <div class="flex">
+                    <mat-form-field [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'" appearance="outline">
+                        <mat-label>International Phone Number</mat-label>
+                        <input class="text-sm mb-1" type="number" matInput [formControl]="phoneNumber.get('phoneNumber')" [placeholder]="'International Phone Number'">
+                        <mat-select [formControl]="phoneNumber.get('country')" matPrefix>
+                            <mat-select-trigger>
+                                <span class="flex items-center">
+                            <span
+                                class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
+                                [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                [style.backgroundSize]="'24px 3876px'"
+                                [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"></span>
+                                <span class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(phoneNumber.get('country').value).code}}</span>
+                                </span>
+                            </mat-select-trigger>
+                            <ng-container *ngFor="let country of countries; trackBy: trackByFn">
+                                <mat-option [value]="country.iso">
+                                    <span class="flex items-center">
+                                <span
+                                    class="w-6 h-4 overflow-hidden"
+                                    [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                    [style.backgroundSize]="'24px 3876px'"
+                                    [style.backgroundPosition]="country.flagImagePos"></span>
+                                    <span class="ml-2">{{country.name}}</span>
+                                    <span class="ml-2 font-medium">{{country.code}}</span>
+                                    </span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
             <div>
                 <mat-form-field appearance="outline">
@@ -107,12 +140,13 @@
                     <input matInput formControlName="email">
                 </mat-form-field>
             </div>
-            <div class="flex justify-center items-center">
-                <mat-checkbox formControlName="salary">Salary</mat-checkbox>
-                <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
-            </div>
         </div>
-        <div class="mt-2 flex items-center">
+        <div class="flex justify-center items-center">
+            <mat-checkbox formControlName="salary">Salary</mat-checkbox>
+            <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
+            <mat-checkbox formControlName="wages" class="checkbox ml-2">Wages </mat-checkbox>
+        </div>
+        <div class="mt-4 flex items-center">
             <div matTooltipPosition="above" matTooltip="Please upload relevant documents here" class="font-medium text-2xl">
                 Government Docs
             </div>
@@ -155,7 +189,7 @@
                 </label>
             </div>
         </div>
-        <div class="flex items-center">
+        <!-- <div class="flex items-center">
             <div matTooltip="Please upload relevant documents here" class="font-medium text-2xl">
                 Work Records
             </div>
@@ -176,7 +210,7 @@
             </label>
             </div>
 
-        </div>
+        </div> -->
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center justify-end mt-4 sm:mt-6">
         </div>
     </form>

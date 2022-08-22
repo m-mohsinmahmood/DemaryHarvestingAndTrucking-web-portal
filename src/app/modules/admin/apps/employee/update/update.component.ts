@@ -1,8 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Inject } from '@angular/core';
+
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EmployeeService } from '../employee.service';
+import { Country } from 'app/modules/admin/apps/employee/employee.types';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -21,12 +26,19 @@ export class UpdateComponent implements OnInit {
   imageURL: string = '';
   previews: string[] = [];
   avatar: string = "";
+  internationalPhoneNumber: string [] = [];
+  countries: Country[];
+  countryCodeLength: any = '0';
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateComponent>,
     private _formBuilder: FormBuilder,
     public _employeeService: EmployeeService,
-    @Inject(MAT_DIALOG_DATA) public data: {id: string},
+    private _changeDetectorRef: ChangeDetectorRef,
+    @Inject(MAT_DIALOG_DATA) public data: {id:string},
+
    ) {
 
     }
@@ -42,21 +54,77 @@ export class UpdateComponent implements OnInit {
       email   : ['', [Validators.email]],
       address : ['', [Validators.required]],
       phone : ['', [Validators.required]],
+      internationalPhoneNumbers: this._formBuilder.array([]),
       emergencyContact : ['', [Validators.required]],
       bankingInfo : ['', [Validators.required]],
       salary  : ['',[]],
-      currentEmployee : ['',[]]
+      currentEmployee : ['',[]],
+      wages : ['',[]]
+
     });
 
    // Get the employee by id
    this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-   this.avatar = employee.avatar
+   this.avatar = employee.avatar;
    this.employees = employee;
    this.form.patchValue(employee);
   });
+    const internationalPhoneNumbersFormGroups = [];
+    if ( this.employees.internationalPhoneNumber.length > 0 )
+    {
+    debugger;
+        // Iterate through them
+            internationalPhoneNumbersFormGroups.push(
+                this._formBuilder.group({
+                    country    : [this.employees.internationalPhoneNumber[0].country],
+                    phoneNumber: [this.employees.internationalPhoneNumber[0].phoneNumber],
+
+                })
+            );
+
+    }
+    else
+    {
+        // Create a phone number form group
+        internationalPhoneNumbersFormGroups.push(
+            this._formBuilder.group({
+                country    : ['us'],
+                phoneNumber: [''],
+            })
+        );
+    }
+
+    internationalPhoneNumbersFormGroups.forEach((internationalPhoneNumbersFormGroup) => {
+        (this.form.get('internationalPhoneNumbers') as FormArray)?.push(internationalPhoneNumbersFormGroup);
+    });
+
+//   const internationalPhoneNumbersFormGroups = [];
+//   internationalPhoneNumbersFormGroups?.push(
+//     this._formBuilder.group({
+//         country    : ['us'],
+//         phoneNumber: [''],
+//     })
+//   );
+//     internationalPhoneNumbersFormGroups.forEach((internationalPhoneNumbersFormGroup) => {
+//         (this.form.get('internationalPhoneNumbers') as FormArray)?.push(internationalPhoneNumbersFormGroup);
+//     });
+
+    this._employeeService.countries$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((codes: Country[]) => {
+        this.countries = codes;
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+    });
+
 
   }
-  
+
+  ngAfterContentChecked(): void {
+    this._changeDetectorRef.detectChanges()
+   }
+
   onSubmit(): void {
     console.warn('Your order has been submitted', this.form.value);
     this.form.reset();
@@ -75,8 +143,8 @@ export class UpdateComponent implements OnInit {
     }
     reader.readAsDataURL(file)
   }
-  
-    
+
+
   saveAndClose(): void
   {
       // Save the message as a draft
@@ -109,7 +177,31 @@ export class UpdateComponent implements OnInit {
   {
 
   }
-  
- 
+
+    /**
+     * Get country info by iso code
+     *
+     * @param iso
+     */
+     getCountryByIso(iso: string): Country
+     {
+        const country = this.countries.find(country => country.iso === iso);
+        this.countryCodeLength = country.code.length
+        return country;
+     }
+
+     /**
+      * Track by function for ngFor loops
+      *
+      * @param index
+      * @param item
+      */
+     trackByFn(index: number, item: any): any
+     {
+         return item.id || index;
+     }
+
+
+
 
 }

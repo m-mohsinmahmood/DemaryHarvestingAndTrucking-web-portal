@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { EmployeePagination, Employee  } from 'app/modules/admin/apps/employee/employee.types';
+import { EmployeePagination, Employee , Country  } from 'app/modules/admin/apps/employee/employee.types';
 
 
 @Injectable({
@@ -53,6 +53,33 @@ export class EmployeeResolver implements Resolve<any>
     }
 }
 
+@Injectable({
+    providedIn: 'root'
+})
+export class ContactsCountriesResolver implements Resolve<any>
+{
+    /**
+     * Constructor
+     */
+    constructor(private _employeeService: EmployeeService)
+    {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Country[]>
+    {
+        return this._employeeService.getCountries();
+    }
+}
 @Injectable({
     providedIn: 'root'
 })

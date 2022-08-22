@@ -2,7 +2,7 @@ export interface Employee
 {
 
     id               : string,
-    employeeID       : string,   
+    employeeID       : string,
     avatar           : string,
     name             : string,
     address          : string,
@@ -19,6 +19,20 @@ export interface Employee
     position         : string,
     salary           : string,
     currentEmployee  : string,
+    wages            : string,
+    internationalPhoneNumbers?: {
+        country: string;
+        phoneNumber: string;
+    }[];
+}
+
+export interface Country
+{
+    id: string;
+    iso: string;
+    name: string;
+    code: string;
+    flagImagePos: string;
 }
 
 export interface EmployeePagination
