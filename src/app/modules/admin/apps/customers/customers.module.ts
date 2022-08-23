@@ -22,6 +22,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerDetailsComponent } from './details/details.component';
 import { UpdateComponent } from './update/update.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AddFarmsComponent } from './details/add-farms/add-farms.component';
+import { AddCropsComponent } from './details/add-crops/add-crops.component';
+import { HarvestInfoComponent } from './details/harvest-info/harvest-info.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +32,10 @@ import { MatTabsModule } from '@angular/material/tabs';
         CustomersListComponent,
         AddCustomer,
         CustomerDetailsComponent,
-        UpdateComponent
+        UpdateComponent,
+        AddFarmsComponent,
+        AddCropsComponent,
+        HarvestInfoComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),

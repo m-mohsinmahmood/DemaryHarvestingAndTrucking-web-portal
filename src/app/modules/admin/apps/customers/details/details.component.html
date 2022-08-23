@@ -9,8 +9,11 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex items-center text-4xl font-extrabold tracking-tight">
+        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+            <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
+            <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+            
             <span class="ml-1 capitalize">{{customers.name}} </span>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
@@ -75,6 +78,13 @@
                 <!-- Harvest Information-->
                 <mat-tab label="Harvest Information">
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                        <div class="flex justify-end float-right my-4 sm:mr-14 mr-4">
+                            <!-- Add product button -->
+                            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openHarvestInfoDialog()">
+                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                <span class="ml-2 mr-1">Add Harvest Information</span>
+                            </button>
+                        </div>
                         <dl class="sm:divide-y sm:divide-gray-200">
                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
@@ -109,6 +119,13 @@
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                         <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
                             <div class="grid">
+                                <div class="flex justify-end float-right my-4 sm:mt-0 sm:mr-14 mr-4">
+                                    <!-- Add product button -->
+                                    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
+                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                        <span class="ml-2 mr-1">Add Farm</span>
+                                    </button>
+                                </div>
                                 <!-- Header -->
                                 <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                     <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
@@ -118,7 +135,7 @@
                                     <div class="hidden lg:block" [mat-sort-header]="'stock'">
                                         Farm Harvest Year
                                     </div>
-                                    <div class="hidden sm:block">Farm Total Acres</div>
+                                    <div class=" sm:block">Farm Total Acres</div>
                                 </div>
                                 <!-- Rows -->
                                 
@@ -142,7 +159,7 @@
                                             </div>
         
                                             <!-- Stock -->
-                                            <div class="hidden lg:flex items-center">
+                                            <div class="lg:flex items-center">
                                                 <div class="min-w-4 ml-2">{{customers.farmTotalAcres}}</div>
                                             </div>
                                         </div>
@@ -185,11 +202,20 @@
                         </dl>
                     </div> -->
                 </mat-tab>
+                
                 <!--Crops Info-->
                 <mat-tab label="Crops Information">
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                             <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
                                 <div class="grid">
+
+                                    <div class="flex justify-end float-right my-4 sm:mt-0 sm:mr-14 mr-4">
+                                        <!-- Add product button -->
+                                        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-2 mr-1">Add Crop</span>
+                                        </button>
+                                    </div>
                                     <!-- Header -->
                                     <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                         <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
@@ -199,7 +225,7 @@
                                         <div class="hidden lg:block" [mat-sort-header]="'stock'">
                                             Crop Harvest Year
                                         </div>
-                                        <div class="hidden sm:block">Crop Pounds Per Bushel</div>
+                                        <div class="sm:block">Crop Pounds Per Bushel</div>
                                     </div>
                                     <!-- Rows -->
                                     
@@ -223,7 +249,7 @@
                                                 </div>
             
                                                 <!-- Stock -->
-                                                <div class="hidden lg:flex items-center">
+                                                <div class=" lg:flex items-center">
                                                     <div class="min-w-4 ml-2">{{customers.cropPoundsPerBushel}}</div>
                                                 </div>
                                             </div>

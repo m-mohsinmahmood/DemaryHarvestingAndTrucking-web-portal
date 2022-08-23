@@ -19,17 +19,17 @@ import { Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 200px 200px 0px;
+                grid-template-columns: 10% 50% 30%;
 
                 @screen sm {
-                    grid-template-columns: 20% 20% 20% 20% 10% 10%;
+                    grid-template-columns: 3% 20% 20% 20% 15% 10% 10%;
                 }
                 @screen md {
-                    grid-template-columns: 20% 20% 20% 20% 10% 10% ;
+                    grid-template-columns: 3% 20% 20% 20% 15% 10% 10% ;
                 }
 
                 @screen lg {
-                    grid-template-columns: 20% 20% 20% 20% 10% 10%;
+                    grid-template-columns: 3% 20% 20% 20% 15% 10% 10%;
                 }
             }
             .redInActiveIcon
@@ -99,6 +99,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             skipInvoiceMath1              : [''],
             arizonaInvoiceMath          : [''],
             skipInvoiceMath2            : [''],
+            avatar: [''],
             email            : [''],
             stateProvince    : [''],
             isActive         : [''],

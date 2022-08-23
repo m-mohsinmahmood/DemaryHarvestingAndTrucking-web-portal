@@ -33,9 +33,7 @@
                     <div class="grid">
                         <!-- Header -->
                         <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                            <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
-                                ID
-                            </div> -->
+                            <div> </div>
                             <div [mat-sort-header]="'name'">Name</div>
                             <div class="hidden sm:block" [mat-sort-header]="'price'">
                                 Harvest Year
@@ -73,6 +71,10 @@
                                     </div> -->
 
                                     <!-- Name -->
+                                    <div>
+                                        <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">
+                                        <div *ngIf="product.avatar ==''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{product.name.charAt(0)}} </div>
+                                    </div>
                                     <div class="truncate">
                                         {{product.name}}
                                     </div>
