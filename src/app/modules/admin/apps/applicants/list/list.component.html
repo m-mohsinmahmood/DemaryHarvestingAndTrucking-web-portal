@@ -1,6 +1,10 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+>
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b"
+    >
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -10,101 +14,262 @@
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
-                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search Applicant'" />
+            <mat-form-field
+                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    matPrefix
+                    [svgIcon]="'heroicons_solid:search'"
+                ></mat-icon>
+                <input
+                    matInput
+                    [formControl]="searchInputControl"
+                    [autocomplete]="'off'"
+                    [placeholder]="'Search Applicant'"
+                />
             </mat-form-field>
             <!-- Add product button -->
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
-        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-        <span class="lg:ml-2 ">Add</span>
-      </button>
+            <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="openAddDialog()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="lg:ml-2">Add</span>
+            </button>
         </div>
     </div>
+    <mat-accordion>
+        <mat-expansion-panel
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+        >
+            <mat-expansion-panel-header>
+                <mat-panel-title class="text-2xl font-extrabold tracking-tight">
+                    Filter Applicants
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl class="sm:divide-y sm:divide-gray-200">
+                    <div
+                        class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 justify-center items-center"
+                    >
+                        <dt class="text-lg font-extrabold text-gray-500">
+                            Country
+                        </dt>
+                        <mat-form-field appearance="fill" class="h-12">
+                            <mat-select multiple>
+                                <mat-option
+                                    *ngFor="let country of country_list"
+                                    [value]="country"
+                                    >{{ country }}</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div
+                        class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 justify-center items-center"
+                    >
+                        <dt class="text-lg font-extrabold text-gray-500">
+                            Status
+                        </dt>
+                        <mat-form-field appearance="fill" class="h-12">
+                            <!-- <mat-label>Select status</mat-label> -->
+                            <mat-select multiple>
+                                <mat-option
+                                    *ngFor="let status of statusList"
+                                    [value]="status"
+                                    >{{ status }}</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <button class="ml-4" mat-flat-button [color]="'primary'">
+                        <span class="lg:ml-2">Apply filters</span>
+                    </button>
+                </dl>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
         <!-- Products list -->
-        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+        <div
+            class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
+        >
             <ng-container *ngIf="applicantsdata$ | async as applicants">
                 <ng-container *ngIf="applicants.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
-                        <div class="applicant-grid sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                        <div
+                            class="applicant-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort
+                            matSortDisableClear
+                        >
                             <div [mat-sort-header]="'namee'">Name</div>
-                            <div class="hidden sm:block" [mat-sort-header]="'country'">
+                            <div
+                                class="hidden sm:block"
+                                [mat-sort-header]="'country'"
+                            >
                                 Country
                             </div>
                             <div class="hidden sm:block">Email</div>
 
-                            <div class="hidden sm:block" [mat-sort-header]="'phone'">
+                            <div
+                                class="hidden sm:block"
+                                [mat-sort-header]="'phone'"
+                            >
                                 Phone
                             </div>
                             <div class="">Status</div>
                             <div class="">Details</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="applicantsdata$ | async as applicants">
-                            <ng-container *ngFor="let applicant of applicants; trackBy: trackByFn">
-                                <div class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                        <ng-container
+                            *ngIf="applicantsdata$ | async as applicants"
+                        >
+                            <ng-container
+                                *ngFor="
+                                    let applicant of applicants;
+                                    trackBy: trackByFn
+                                "
+                            >
+                                <div
+                                    class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b"
+                                >
                                     <!-- Name -->
                                     <div class="capitalize">
                                         {{ applicant.name }}
                                     </div>
 
                                     <!-- Country -->
-                                    <div class="flex items-center hidden sm:block">
+                                    <div
+                                        class="flex items-center hidden sm:block"
+                                    >
                                         {{ applicant.country }}
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="hidden lg:block md:block sm:block truncate">
+                                    <div
+                                        class="hidden lg:block md:block sm:block truncate"
+                                    >
                                         {{ applicant.email }}
                                     </div>
 
                                     <!-- Cellphone -->
-                                    <div class="lg:flex items-center hidden sm:block">
-                                        <div class="min-w-4 ml-2">{{ applicant.cellPhone }}</div>
+                                    <div
+                                        class="lg:flex items-center hidden sm:block"
+                                    >
+                                        <div class="min-w-4 ml-2">
+                                            {{ applicant.cellPhone }}
+                                        </div>
                                     </div>
 
                                     <!-- Status -->
-                                    <div class="truncate">
-                                        {{ applicant.status }}
+                                    <div>
+                                        <div
+                                            class="truncate rounded-full h-7 w-26 flex justify-center items-center
+                                     bg-{{
+                                                applicant.status ===
+                                                'In-Process'
+                                                    ? 'green'
+                                                    : ''
+                                            }}-400
+                                     bg-{{
+                                                applicant.status === 'Hired'
+                                                    ? 'pink'
+                                                    : ''
+                                            }}-400
+                                     bg-{{
+                                                applicant.status === 'New'
+                                                    ? 'yellow'
+                                                    : ''
+                                            }}-400
+                                     bg-{{
+                                                applicant.status ===
+                                                'Pre-Interview'
+                                                    ? 'yellow'
+                                                    : ''
+                                            }}-400
+                                     bg-{{
+                                                applicant.status === 'Evaluated'
+                                                    ? 'red'
+                                                    : ''
+                                            }}-400
+                                     bg-{{
+                                                applicant.status ===
+                                                'Not Being Considered'
+                                                    ? 'purple'
+                                                    : ''
+                                            }}-400
+                                        "
+                                        >
+                                            {{ applicant.status }}
+                                        </div>
                                     </div>
 
                                     <!-- Details button -->
                                     <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleDetails(applicant.id)">
-                      <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="
-                          selectedProduct?.id === applicant.id
-                            ? 'heroicons_solid:chevron-up'
-                            : 'heroicons_solid:chevron-right'
-                        "
-                      ></mat-icon>
-                    </button>
+                                        <button
+                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                            mat-stroked-button
+                                            (click)="
+                                                toggleDetails(applicant.id)
+                                            "
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    selectedProduct?.id ===
+                                                    applicant.id
+                                                        ? 'heroicons_solid:chevron-up'
+                                                        : 'heroicons_solid:chevron-right'
+                                                "
+                                            ></mat-icon>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="grid">
-                                    <ng-container *ngIf="selectedProduct?.id === applicant.id">
-                                        <ng-container *ngTemplateOutlet="
-                        rowDetailsTemplate;
-                        context: { $implicit: applicant }
-                      "></ng-container>
+                                    <ng-container
+                                        *ngIf="
+                                            selectedProduct?.id === applicant.id
+                                        "
+                                    >
+                                        <ng-container
+                                            *ngTemplateOutlet="
+                                                rowDetailsTemplate;
+                                                context: {
+                                                    $implicit: applicant
+                                                }
+                                            "
+                                        ></ng-container>
                                     </ng-container>
                                 </div>
                             </ng-container>
                         </ng-container>
                     </div>
 
-                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                        [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator
+                        class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{ 'pointer-events-none': isLoading }"
+                        [length]="pagination.length"
+                        [pageIndex]="pagination.page"
+                        [pageSize]="pagination.size"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        [showFirstLastButtons]="true"
+                    ></mat-paginator>
                 </ng-container>
             </ng-container>
 
             <ng-template #noProducts>
-                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                <div
+                    class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                >
                     There are no products!
                 </div>
             </ng-template>
