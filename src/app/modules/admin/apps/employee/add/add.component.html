@@ -52,7 +52,6 @@
                     <mat-label>First Name</mat-label>
                     <input matInput formControlName="firstName">
                 </mat-form-field>
-
             </div>
             <div class="">
                 <mat-form-field appearance="outline">
@@ -152,18 +151,30 @@
             </div>
             <div class="ml-1">(Please upload relevant documents here) </div>
         </div>
-        <div class="lg:grid lg:grid-cols-2 gap-2 mt-1">
-            <div class="flex items-center" *ngFor="let doc of employeeGovernemtDocs; index as i">
+        <div class="sm:grid sm:grid-cols-2 gap-2 flex items-center" *ngFor="let doc of employeeGovernemtDocs; index as i">
+            <div class="mb-1">
                 <mat-form-field>
                     <div>
                         <mat-toolbar>
                             <input matInput [value]="doc.uploadedDocName != '' ? doc.uploadedDocName  : doc.docName" />
+                            <mat-icon matSuffix class="mr-2">cloud_upload</mat-icon>
                         </mat-toolbar>
-                        <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , i)" />
+                        <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event, i)" />
                     </div>
-
                 </mat-form-field>
-                <label class="flex justify-end"> <mat-icon (click)="removeDocHandler(i)" *ngIf="doc?.isUpload" color = "warn"  [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                <!-- <mat-form-field>
+                    <input type="file" class="absolute top-0 z-10 h-full w-full cursor-pointer opacity-0" accept="" />
+                    <input matInput [value]="doc.uploadedDocName != '' ? doc.uploadedDocName  : doc.docName" class="z-0" />
+
+                    <mat-hint class="mat-form-field-hint-end">JPEG / JPG / PNG</mat-hint>
+                </mat-form-field> -->
+            </div>
+            <div class="flex items-baseline">
+                <mat-form-field appearance="outline">
+                    <mat-label>Number</mat-label>
+                    <input type="number" matInput formControlName="phone">
+                </mat-form-field>
+                <label class="flex justify-end"><mat-icon (click)="removeDocHandler(i)" *ngIf="doc?.isUpload" color = "warn"  [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                     <mat-icon (click)="removeDocHandler(i)" *ngIf="!doc?.isUpload" color = "#64748b"  [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                 </label>
             </div>
