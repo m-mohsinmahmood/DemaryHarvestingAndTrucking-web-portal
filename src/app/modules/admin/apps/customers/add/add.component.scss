@@ -4,10 +4,20 @@
     align-items: flex-start;
 }
 
-.checkbox {
-    margin-left: 2rem;
-}
-::ng-deep .mat-form-field-wrapper
-{
-    padding-bottom: 0px !important;
-}
+// .checkbox {
+//     margin-left: 2rem;
+// }
+// ::ng-deep .mat-form-field-wrapper
+// {
+//     padding-bottom: 0px !important;
+// }
+
+
+// @screen sm {
+//     .checkbox-commercial-trucking {
+//         margin-left: 0rem;
+//     }
+// }
+// .checkbox-commercial-trucking {
+//     margin-left: 2rem;
+// }

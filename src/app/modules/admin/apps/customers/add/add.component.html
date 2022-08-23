@@ -57,159 +57,22 @@
             </mat-form-field> -->
 
         </tr>
-
         <tr class="my-6 font-bold grid-cols-2 flex items-center justify-between	" >
-            <td class="float-left">Harvest</td>
+            <td class="float-left">Customer Type</td>
             <td></td>
         </tr>
-        <tr class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
-
-            <mat-form-field appearance="outline">
-                <mat-label>Harvest Year</mat-label>
-                <input matInput formControlName="harvestYear">
-            </mat-form-field>
-    
-            <mat-form-field appearance="outline">
-                <mat-label>Skip invoice Math</mat-label>
-                <input matInput formControlName="skipInvoiceMath1">
-            </mat-form-field>
-        </tr>
-        <tr class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
-
-            <mat-form-field appearance="outline">
-                <mat-label>Is Active?</mat-label>
-                <mat-select formControlName="isActive">
-                    <mat-option value="one">Active</mat-option>
-                    <mat-option value="two">Not Active</mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <mat-form-field appearance="outline">
-                <mat-label>Arizona Invoice Math</mat-label>
-                <input matInput  formControlName="arizonaInvoiceMath">
-                <!-- <mat-error *ngIf="(f.title.dirty && f.title.invalid==true )">
-                  <span>Please Enter Valid Number</span>
-                </mat-error> -->
-              </mat-form-field>
-
-        </tr>
-
-
-        
-
-          <!-- <mat-form-field appearance="outline">
-            <mat-label>descripition</mat-label>
-            <textarea matInput  formControlName="descripition"></textarea>
-          </mat-form-field> -->
-
-        <!-- Farm Row -->
-        <div class="row">
-            <div class="grid table-responsive" formArrayName="farmItemRows">
-              <table class="table">
-                <thead>
-                    <tr class="mb-0.5 font-bold grid-cols-2 flex items-center justify-between" >
-                        <td class="float-left">Farms</td>
-                        <td> <button type="button" mat-flat-button [color]="'primary'" (click)="addNewFarmRow()" class="btn not-italic btn-primary my-4 float-right">
-                            <i class="fa fa-plus-circle not-italic" aria-hidden="true">Add
-                          </i></button></td>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr class="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-between gap-x-6" *ngFor="let itemrow of form.controls.farmItemRows['controls']; let i=index"  [formGroupName]="i">
-                    
-                <!-- <td>
-                        <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Farm ID</mat-label>
-                        <input id="farmId{{i}}" matInput formControlName="farmId" class="form-control">
-                    </mat-form-field>
-                </td> -->
-                <td>
-                    <mat-form-field class="form-farm-field block" appearance="outline">
-                        <mat-label>Farm Harvest Year</mat-label>
-                        <input id="farmHarvestYear{{i}}" matInput formControlName="farmHarvestYear">
-                    </mat-form-field>
-                </td>
-                <td>
-
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Farm Name</mat-label>
-                        <input id="farmName{{i}}" matInput formControlName="farmName" class="form-control reset">
-                    </mat-form-field>
-                </td>
-                <td>
-
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Farm Total Acres</mat-label>
-                        <input id="farmTotalAcres{{i}}" matInput formControlName="farmTotalAcres" class="form-control reset">
-                    </mat-form-field>
-                </td>
-                    <td> <button class='bg-red-800 text-white font-bold p-4 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.farmItemRows.controls.length > 1" (click)="deleteFarmRow(i)"><mat-icon style="color:#fff">delete</mat-icon></button></td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr></tr>
-                </tfoot>
-              </table>
-          </div>
+        <div class="mt-2 checkBoxes Customer-type flex flex-col lg:block">
+            <mat-checkbox formControlName="commercialTrucking" class="checkbox-commercial-trucking">Commercial Trucking</mat-checkbox>
+            <mat-checkbox formControlName="customFarming" class="checkbox lg:ml-8">Custom Farming</mat-checkbox>
+            <mat-checkbox formControlName="customHarvesting" class="checkbox lg:ml-8">custom Harvesting</mat-checkbox>
+            <mat-checkbox formControlName="equipmentLeasing" class="checkbox lg:ml-8">Equipment Leasing</mat-checkbox>  
+            <mat-checkbox formControlName="cdlTestingTraining" class="checkbox lg:ml-8">CDL Testing Training</mat-checkbox>   
+ 
         </div>
-
-        <!-- Crop Row -->
-        <div class="row">
-            <div class="grid table-responsive" formArrayName="cropsItemRows">
-              <table class="table">
-                <thead>
-                    <tr class="mb-0.5 font-bold grid-cols-2 table-auto flex items-center justify-between" >
-                        <td class="float-left">Crops</td>
-                        <td> <button type="button" mat-flat-button [color]="'primary'" (click)="addNewCropRow()" class="btn not-italic btn-primary my-4 float-right">
-                            <i class="fa fa-plus-circle not-italic" aria-hidden="true">Add
-                          </i></button></td>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr class="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-between gap-x-6" *ngFor="let itemrow of form.controls.cropsItemRows['controls']; let i=index"  [formGroupName]="i">
-                    
-                <!-- <td>
-                        <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Crop ID</mat-label>
-                        <input id="cropid{{i}}" matInput formControlName="cropid" class="form-control">
-                    </mat-form-field>
-                </td> -->
-                <td>
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Crop Harvest Year</mat-label>
-                        <input id="cropHarvestYear{{i}}" matInput formControlName="cropHarvestYear"  class="form-control reset">
-                    </mat-form-field>
-                </td>
-                <td>
-
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Crop Name</mat-label>
-                        <input id="cropCrop{{i}}" matInput formControlName="cropCrop" class="form-control reset">
-                    </mat-form-field>
-                </td>
-                <td>
-
-                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
-                        <mat-label>Crop Pounds Per Bushel</mat-label>
-                        <input id="cropPoundsPerBushel{{i}}" matInput formControlName="cropPoundsPerBushel" class="form-control reset">
-                    </mat-form-field>
-                </td>
-                    <td> <button class='bg-red-800 text-white font-bold p-4 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.cropsItemRows.controls.length > 1" (click)="deleteCropRow(i)"><mat-icon style="color:#fff">delete</mat-icon></button></td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr></tr>
-                </tfoot>
-              </table>
-          </div>
-        </div>
-
-
-
         <!-- Actions -->
-        <div class="mt-6">
+        <div class="mt-2 checkBoxes Customer-type flex flex-col lg:block">
             <mat-checkbox formControlName="salary">Salary</mat-checkbox>
-            <mat-checkbox formControlName="currentEmployee" class="checkbox">Current Employee</mat-checkbox>
+            <mat-checkbox formControlName="currentEmployee" class="checkbox lg:ml-8">Current Employee</mat-checkbox>
         </div>
         <div class="flex flex-col sm:flex-row sm:items-center justify-end mt-4 sm:mt-6">
             
@@ -225,4 +88,5 @@
                 Save
             </button>
         </div>
+    </div>
 </div>

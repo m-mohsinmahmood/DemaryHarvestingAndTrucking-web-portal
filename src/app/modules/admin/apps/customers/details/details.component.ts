@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CustomersService } from '../customers.service';
+import { AddFarmsComponent } from './add-farms/add-farms.component';
+import { AddCropsComponent } from './add-crops/add-crops.component';
+import { HarvestInfoComponent } from './harvest-info/harvest-info.component';
 
 
 @Component({
@@ -92,6 +95,39 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
     backHandler(): void 
     {
         this._router.navigate(["/apps/customers/"]) 
+    }
+
+    openAddFarmDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddFarmsComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
+    openAddCropDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddCropsComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
+    openHarvestInfoDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(HarvestInfoComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
   
 

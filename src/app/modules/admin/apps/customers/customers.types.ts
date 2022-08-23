@@ -3,6 +3,7 @@ export interface InventoryProduct
     id: string;
     harvestYear?:string;
     category?: string;
+    avatar: string;
     name: string;
     alternateName? : string; 
     skipInvoiceMath1? : string;
