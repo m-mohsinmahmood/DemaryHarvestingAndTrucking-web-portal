@@ -18,26 +18,25 @@ import { AddComponent } from '../add/add.component';
 @Component({
   selector: 'app-employee',
   templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
     styles         : [
         /* language=SCSS */
         `
             .applicant-grid {
-                grid-template-columns: 130px 150px 0px;
+                grid-template-columns: 7% 35% 36% 0% ;
 
                 @screen sm {
-                    grid-template-columns: 10% 10% 25% 20% 15% 10%;
+                    grid-template-columns: 4% 10% 25% 19% 10% 15% 10%;
                 }
                 @screen md {
-                    grid-template-columns: 10% 10% 20% 20% 15% 10%;
+                    grid-template-columns: 4% 10% 20% 20% 15% 10%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 15% 10% 25% 20% 15% 10%;
+                    grid-template-columns: 2.5% 15% 20% 20% 10% 15% 10%;
                 }
-
-
-
             }
+
         `
     ],
     encapsulation  : ViewEncapsulation.None,

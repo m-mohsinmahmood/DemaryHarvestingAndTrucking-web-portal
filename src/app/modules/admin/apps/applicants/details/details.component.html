@@ -9,11 +9,16 @@
         <!-- Title -->
         <div (click)="backHandler()" class="flex items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+            <div>
+                <img *ngIf="applicants.avatar" class="max-w-none flex items-center justify-center h-12 w-14 rounded-full" src="{{applicants.avatar}}" alt="">
+                <div *ngIf="applicants.avatar === ''" class="flex items-center justify-center h-12 w-14 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicants.name.charAt(0)}} </div>
+            </div>
             <span class="ml-1 capitalize">{{applicants.fname}} {{applicants.lname}}   </span>
+
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="" class="ml-5 
-                bg-{{applicants.status === 'In-Process'? 'green' : ''}}-400 
-                bg-{{applicants.status === 'Hired'? 'pink' : ''}}-400 
+                <mat-chip color="" class="ml-5
+                bg-{{applicants.status === 'In-Process'? 'green' : ''}}-400
+                bg-{{applicants.status === 'Hired'? 'pink' : ''}}-400
                 bg-{{applicants.status === 'New'? 'yellow' : ''}}-400
                 bg-{{applicants.status === 'Pre-Interview'? 'yellow' : ''}}-400
                 bg-{{applicants.status === 'Evaluated'? 'red' : ''}}-400
