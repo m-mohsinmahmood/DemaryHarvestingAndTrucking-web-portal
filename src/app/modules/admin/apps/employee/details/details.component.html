@@ -29,6 +29,7 @@
 
     <!-- Main -->
     <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
+        <!-- General Information -->
         <mat-tab-group mat-align-tabs="center">
             <mat-tab label="General Information">
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -84,85 +85,280 @@
                     </dl>
                 </div>
             </mat-tab>
+            <!-- Government Docs -->
             <mat-tab label="Government Docs">
-                <div class="h-screen border-t border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div *ngIf="employeeGovernemtDocs.length > 0">
-                        <div>
-                            <div class="flex flex-wrap m-4">
-                                <div *ngFor="let file of employeeGovernemtDocs; trackBy:trackByFn">
-                                    <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card" [routerLink]="['./details/', file.id]">
-                                        <div class="aspect-w-9 aspect-h-6">
-                                            <div class="flex items-center justify-center">
-                                                <!-- Icons -->
+                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
+                    <div class="flex flex-auto overflow-hidden">
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="">
+                                        </div>
+                                        <div name="'date'">Doc Name</div>
+                                        <div class="hidden sm:block" name="'Number'">
+                                            Number
+                                        </div>
+                                        <div class="hidden sm:block" name="'note'">
+                                            Note
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container *ngIf="employeeGovernemtDocs.length > 0">
+                                        <ng-container *ngFor="let file of employeeGovernemtDocs; trackBy:trackByFn">
+                                            <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                                <!-- Doc Image -->
                                                 <div class="relative">
-                                                    <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                    <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
                                                     <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white" [class.bg-red-600]="file.type === 'PDF'" [class.bg-blue-600]="file.type === 'DOC'" [class.bg-green-600]="file.type === 'XLS'" [class.bg-gray-600]="file.type === 'TXT'"
                                                         [class.bg-amber-600]="file.type === 'JPG'">
                                                         {{file.type.toUpperCase()}}
                                                     </div>
                                                 </div>
+                                                <!-- Date -->
+                                                <div class="flex items-center">
+                                                    {{file.name}}
+                                                </div>
+                                                <!-- Doc Number -->
+                                                <div class="flex items-center hidden sm:block">
+                                                    {{"9988-53003-5662"}}
+                                                </div>
+                                                <!-- Doc Note -->
+                                                <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
+                                                    <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
+                                                </div>
+                                                <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
                                             </div>
-                                        </div>
-                                        <div class="flex flex-col flex-auto justify-center text-center text-sm font-medium">
-                                            <div class="truncate" [matTooltip]="file.name">{{file.name}}</div>
-                                            <ng-container *ngIf="file.contents">
-                                                <div class="text-secondary truncate">{{file.contents}}</div>
-                                            </ng-container>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="Company Docs ">
-                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-wrap m-4">
-                        <div *ngFor="let file of employeeCompanyDocs;">
-                            <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card" [routerLink]="['./details/', file.id]">
-                                <div class="aspect-w-9 aspect-h-6">
-                                    <div class="flex items-center justify-center">
-                                        <!-- Icons -->
-                                        <div class="relative">
-                                            <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                            <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white" [class.bg-red-600]="file.type === 'PDF'" [class.bg-blue-600]="file.type === 'DOC'" [class.bg-green-600]="file.type === 'XLS'" [class.bg-gray-600]="file.type === 'TXT'"
-                                                [class.bg-amber-600]="file.type === 'JPG'">
-                                                {{file.type.toUpperCase()}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col flex-auto justify-center text-center text-sm font-medium">
-                                    <div class="truncate" [matTooltip]="file.name">{{file.name}}</div>
-                                    <ng-container *ngIf="file.contents">
-                                        <div class="text-secondary truncate">{{file.contents}}</div>
+                                        </ng-container>
                                     </ng-container>
                                 </div>
-                            </a>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Work Records ">
+            <!-- Company Docs -->
+            <mat-tab label="Company Docs ">
                 <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-wrap m-4">
-                        <a class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
-                            <div class="aspect-w-9 aspect-h-6">
-                                <div class="flex items-center justify-center">
-                                    <!-- Icons -->
-                                    <div class="relative">
-                                        <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-                                            {{" PDF ".toUpperCase()}}
+                    <div class="flex flex-auto overflow-hidden">
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="">
+                                        </div>
+                                        <div name="'date'">Doc Name</div>
+                                        <div class="hidden sm:block" name="'Number'">
+                                            Number
+                                        </div>
+                                        <div class="hidden sm:block" name="'note'">
+                                            Note
                                         </div>
                                     </div>
+                                    <!-- Rows -->
+                                    <ng-container *ngIf="employeeCompanyDocs.length > 0">
+                                        <ng-container *ngFor="let file of employeeCompanyDocs; trackBy:trackByFn">
+                                            <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                                <!-- Doc Image -->
+                                                <div class="relative">
+                                                    <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                    <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white" [class.bg-red-600]="file.type === 'PDF'" [class.bg-blue-600]="file.type === 'DOC'" [class.bg-green-600]="file.type === 'XLS'" [class.bg-gray-600]="file.type === 'TXT'"
+                                                        [class.bg-amber-600]="file.type === 'JPG'">
+                                                        {{file.type.toUpperCase()}}
+                                                    </div>
+                                                </div>
+                                                <!-- Date -->
+                                                <div class="flex items-center">
+                                                    {{file.name}}
+                                                </div>
+                                                <!-- Doc Number -->
+                                                <div class="flex items-center hidden sm:block">
+                                                    {{"9988-53003-5662"}}
+                                                </div>
+                                                <!-- Doc Note -->
+                                                <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
+                                                    <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
+                                                </div>
+                                                <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
                                 </div>
-                            </div>
-                            <div class="flex flex-col flex-auto justify-center text-center text-sm font-medium ">
-                                <div class="truncate " matTooltip="Work Record ">{{"Work Record "}}</div>
-                            </div>
-                        </a>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Work Record Tab -->
+
+            <mat-tab label="Work Records ">
+                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
+                    <div class="flex flex-auto overflow-hidden">
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class=""></div>
+                                        <div name="'date'">Date</div>
+                                        <div class="hidden sm:block" name="'Number'">
+                                            Number
+                                        </div>
+                                        <div class="hidden sm:block" name="'note'">
+                                            Note
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/8/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"9988-53003-5662"}}
+                                            </div>
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note "}}</div>
+                                            </div>
+                                            <!-- Download -->
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/8/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"9988-53003-5662"}}
+                                            </div>
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
+                                            </div>
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noProducts>
+                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- Payroll -->
+            <mat-tab label="Payroll ">
+                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
+                    <div class="flex flex-auto overflow-hidden">
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class=""></div>
+                                        <div name="'date'">Date</div>
+                                        <div class="hidden sm:block" name="'Number'">
+                                            Number
+                                        </div>
+                                        <div class="hidden sm:block" name="'note'">
+                                            Note
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/7/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"9988-53003-5662"}}
+                                            </div>
+
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note "}}</div>
+                                            </div>
+                                            <!-- Download -->
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/8/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"9988-53003-5662"}}
+                                            </div>
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
+                                            </div>
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noProducts>
+                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            </ng-template>
+                        </div>
                     </div>
                 </div>
             </mat-tab>
