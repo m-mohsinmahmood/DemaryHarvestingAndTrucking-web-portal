@@ -645,7 +645,7 @@ export const applicants = [
     email2: "dylon@gmail.com",
     active: true,
 
-    status: "Hired",
+    status: "Rejected",
 
 
      // contact info

@@ -7,10 +7,10 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex items-center text-4xl font-extrabold tracking-tight">
+        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <div>
-                <img *ngIf="applicants.avatar" class="max-w-none flex items-center justify-center h-12 w-14 rounded-full" src="{{applicants.avatar}}" alt="">
+                <img *ngIf="applicants.avatar" class="max-w-none flex items-center justify-center h-14 w-14 rounded-full" src="{{applicants.avatar}}" alt="">
                 <div *ngIf="applicants.avatar === ''" class="flex items-center justify-center h-12 w-14 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicants.name.charAt(0)}} </div>
             </div>
             <span class="ml-1 capitalize">{{applicants.fname}} {{applicants.lname}}   </span>
@@ -18,11 +18,11 @@
             <mat-chip-list aria-label="Fish selection">
                 <mat-chip color="" class="ml-5
                 bg-{{applicants.status === 'In-Process'? 'green' : ''}}-400
-                bg-{{applicants.status === 'Hired'? 'pink' : ''}}-400
+                bg-{{applicants.status === 'Hired'? 'green' : ''}}-700
                 bg-{{applicants.status === 'New'? 'yellow' : ''}}-400
-                bg-{{applicants.status === 'Pre-Interview'? 'yellow' : ''}}-400
-                bg-{{applicants.status === 'Evaluated'? 'red' : ''}}-400
-                bg-{{applicants.status === 'Not Being Considered'? 'purple' : ''}}-400" selected>{{applicants.status}} </mat-chip>
+                bg-{{applicants.status === 'Pre-Interview'? 'orange' : ''}}-400
+                bg-{{applicants.status === 'Evaluated'? 'blue' : ''}}-400
+                bg-{{applicants.status === 'Rejeted'? 'red' : ''}}-400" selected>{{applicants.status}} </mat-chip>
             </mat-chip-list>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">

@@ -18,7 +18,6 @@ import { AddComponent } from '../add/add.component';
 @Component({
   selector: 'app-employee',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
     styles         : [
         /* language=SCSS */
         `
@@ -26,14 +25,14 @@ import { AddComponent } from '../add/add.component';
                 grid-template-columns: 7% 35% 36% 0% ;
 
                 @screen sm {
-                    grid-template-columns: 4% 10% 25% 19% 10% 15% 10%;
+                    grid-template-columns: 4% 10% 25% 19% 20% 0% 0%;
                 }
                 @screen md {
-                    grid-template-columns: 4% 10% 20% 20% 15% 10%;
+                    grid-template-columns: 4% 15% 25% 20% 20% 0% 0%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 2.5% 15% 20% 20% 10% 15% 10%;
+                    grid-template-columns: 5% 15% 20% 20% 20% 0% 0%;
                 }
             }
 
