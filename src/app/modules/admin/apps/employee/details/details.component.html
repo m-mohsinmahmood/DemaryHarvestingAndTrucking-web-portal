@@ -362,6 +362,94 @@
                     </div>
                 </div>
             </mat-tab>
+            <mat-tab label="Requested Docs ">
+                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
+                    <div class="flex flex-auto overflow-hidden">
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="employee-detail-grid items-center z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class=""></div>
+                                        <div name="'date'">Date</div>
+                                        <div class="hidden sm:block" name="'Number'">
+                                            Uploaded By
+                                        </div>
+                                        <div class="hidden sm:block" name="'note'">
+                                            Note
+                                        </div>
+                                        <div class="" name="'upload Button'">
+                                            <button (click)="openUploadDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
+                                                [color]="'primary'">
+                                            <mat-icon [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                                            <span class="ml-2 mr-1">Upload</span>
+                                        </button>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/7/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"Admin"}}
+                                            </div>
+
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Please sign this document"}}</div>
+                                            </div>
+                                            <!-- Download -->
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
+                                            <!-- Doc Image -->
+                                            <div class="relative">
+                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+                                                    {{" PDF ".toUpperCase()}}
+                                                </div>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="flex items-center">
+                                                {{"23/8/2022"}}
+                                            </div>
+                                            <!-- Doc Number -->
+                                            <div class="flex items-center hidden sm:block">
+                                                {{"Employee"}}
+                                            </div>
+                                            <!-- Doc Note -->
+                                            <div class="hidden truncate sm:block lg:flex items-center">
+                                                <div class="min-w-4 ml-2">{{"Signed"}}</div>
+                                            </div>
+                                            <a href="" class="flex items-center underline text-blue-500">
+                                                Download
+                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                                            </a>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noProducts>
+                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
         </mat-tab-group>
     </div>
 </div>

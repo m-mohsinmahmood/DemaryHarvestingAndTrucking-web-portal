@@ -1,38 +1,53 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
-import { MatDrawerToggleResult } from '@angular/material/sidenav';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation,
+    Inject,
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
+import {
+    MatDialog,
+    MatDialogRef,
+    MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
+export interface DialogData {
+    note: string;
+    file: string;
+}
 
 const governmentDocs = [
-    {'id':'1', 'name': 'Passport' , 'type': 'PDF'},
-    {'id':'2', 'name': 'Visa' , 'type': 'DOC'},
-    {'id':'3', 'name': 'I-94' , 'type': 'XLS'},
-    {'id':'4', 'name': 'License' , 'type': 'TXT'},
-    {'id':'5', 'name': 'Social Security ' , 'type': 'JPG'},
-    {'id':'6', 'name': 'DOT docs' , 'type': 'DOC'},
-    {'id':'7', 'name': 'Physical' , 'type': 'PDF'},
-    {'id':'8', 'name': 'Drug Testing' , 'type': 'TXT'},
-  ];
-  const companyDocs = [
-    {'id':'9', 'name': 'Drug Testing' , 'type': 'TXT'},
-    {'id':'10', 'name': 'Contract' , 'type': 'PDF'},
-    {'id':'11', 'name': 'Approval Letter' , 'type': 'DOC'},
-    {'id':'12', 'name': 'Departure Form' , 'type': 'JPG'},
-    {'id':'13', 'name': 'Equipment Usage' , 'type': 'XLS'},
-    {'id':'14', 'name': 'Work Agreement' , 'type': 'PDF'},
-  ];
+    { id: '1', name: 'Passport', type: 'PDF' },
+    { id: '2', name: 'Visa', type: 'DOC' },
+    { id: '3', name: 'I-94', type: 'XLS' },
+    { id: '4', name: 'License', type: 'TXT' },
+    { id: '5', name: 'Social Security ', type: 'JPG' },
+    { id: '6', name: 'DOT docs', type: 'DOC' },
+    { id: '7', name: 'Physical', type: 'PDF' },
+    { id: '8', name: 'Drug Testing', type: 'TXT' },
+];
+const companyDocs = [
+    { id: '9', name: 'Drug Testing', type: 'TXT' },
+    { id: '10', name: 'Contract', type: 'PDF' },
+    { id: '11', name: 'Approval Letter', type: 'DOC' },
+    { id: '12', name: 'Departure Form', type: 'JPG' },
+    { id: '13', name: 'Equipment Usage', type: 'XLS' },
+    { id: '14', name: 'Work Agreement', type: 'PDF' },
+];
 
 @Component({
-    selector       : 'employee-details',
-    templateUrl    : './details.component.html',
+    selector: 'employee-details',
+    templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    styles         : [
+    styles: [
         /* language=SCSS */
         `
             .employee-detail-grid {
@@ -48,23 +63,24 @@ const governmentDocs = [
                     grid-template-columns: 3% 20% 20% 40% 10%;
                 }
             }
-        `
+        `,
     ],
-    encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeDetailComponent implements OnInit, OnDestroy
-{
+export class EmployeeDetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading: boolean = false;
     routeID; // URL ID
     employees: any;
+    note: string;
+    file: string;
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
 
-
-    /**
+    /*
+    *
      * Constructor
      */
     constructor(
@@ -73,11 +89,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
-        private _router: Router,
-
-    )
-    {
-    }
+        private _router: Router
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -86,27 +99,23 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-     ngOnInit(): void {
+    ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-          console.log('PARAMS:', params); //log the entire params object
-          this.routeID = params.Id;
-          console.log('object', this.routeID);
-          console.log(params['id']); //log the value of id
+            this.routeID = params.Id;
         });
-
 
         // Get the employee by id
-        this._employeeService.getEmployeeById(this.routeID).subscribe((employee) => {
-            this.employees = employee;
-        });
-      }
-
+        this._employeeService
+            .getEmployeeById(this.routeID)
+            .subscribe((employee) => {
+                this.employees = employee;
+            });
+    }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
@@ -115,24 +124,58 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    openUpdateDialog(): void
-    {
-    // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent,{
-         data:{id: this.routeID}
+    openUploadDialog(): void {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UploadDocModal, {
+            data: { name: this.note, animal: this.file },
         });
 
-
-        dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-      });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('The dialog was closed');
+            this.note = result;
+        });
     }
 
-    backHandler(): void
-    {
+    openUpdateDialog(): void {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent, {
+            data: { id: this.routeID },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+    backHandler(): void {
         this._router.navigate(['/apps/employee/']);
     }
+}
 
+@Component({
+    selector: 'upload-doc-modal',
+    templateUrl: 'upload-doc-modal.html',
+})
+export class UploadDocModal {
+    form: FormGroup;
 
+    constructor(
+        public dialogRef: MatDialogRef<UploadDocModal>,
+        private _formBuilder: FormBuilder,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData
+    ) {}
+
+    ngOnInit(): void {
+        this.form = this._formBuilder.group({
+            file: ['', [Validators.required]],
+            note: ['', [Validators.required]],
+        });
+    }
+
+    onSubmit(): void {}
+
+    discard(): void {
+        // Close the dialog
+        this.dialogRef.close();
+    }
 }
