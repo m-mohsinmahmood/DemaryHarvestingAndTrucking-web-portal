@@ -52,7 +52,7 @@
                                     <!-- Name -->
                                     <div>
                                         <img *ngIf="employee.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{employee.avatar}}" alt="">
-                                        <div *ngIf="employee.avatar == ''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{employee.name.charAt(0)}} </div>
+                                        <div *ngIf="employee.avatar === ''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{employee.name.charAt(0)}} </div>
                                     </div>
                                     <div class="flex items-center">
                                         {{employee.name}}
