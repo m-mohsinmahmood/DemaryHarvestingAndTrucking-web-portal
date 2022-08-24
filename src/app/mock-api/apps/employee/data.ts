@@ -23,7 +23,6 @@ export const employees = [
       position: "Admin",
       salary: "10000",
       currentEmployee: "Yes",
-
     },
     {
       id: "7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343",

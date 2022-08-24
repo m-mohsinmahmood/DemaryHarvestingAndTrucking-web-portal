@@ -18,7 +18,6 @@ export const applicants = [
      cellPhone: "+12012987481",
      homePhone: "+12012987481",
      email: "ariesbeau1957@gmail.com",
-     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
 
     // personal info
@@ -33,6 +32,8 @@ export const applicants = [
     citizenStatus: "No",
     tractorStatus: "No",
     passport: "No",
+    avatar: "",
+
 
     // interviwe results
     firstPhoneCall: true,
@@ -89,7 +90,6 @@ export const applicants = [
     cellPhone: "+13324558954",
     homePhone: "+13324558954",
     email: "eoinbegley@icloud.com",
-    image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
 
     // personal info
@@ -104,6 +104,8 @@ export const applicants = [
     citizen: "Yes",
     tractorStatus: "Yes",
     passport: "Yes",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+
 
     // interviwe results
     firstPhoneCall: "true",
@@ -153,7 +155,6 @@ export const applicants = [
      cellPhone: "+13324557765",
      homePhone: "+13324557765",
      email: "bradberq@gmail.com",
-     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
 
      // personal info
@@ -168,6 +169,8 @@ export const applicants = [
     citizen: "Yes",
     tractorStatus: "Yes",
     passport: "Yes",
+    avatar: "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+
 
      // interviwe results
      firstPhoneCall: "true",
@@ -213,7 +216,6 @@ export const applicants = [
      cellPhone: "+13324533224",
      homePhone: "+13324533224",
      email: "john@gmail.com",
-     image: "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
 
 
 
@@ -229,7 +231,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "Yes",
     passport: "Yes",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "",
 
 
     // interviwe results
@@ -375,7 +377,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "No",
     passport: "No",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "",
 
 
     // interviwe results
@@ -429,8 +431,8 @@ export const applicants = [
 
      // contact info
      name: "Jeff James",
-    fname: "Jeff",
-    lname: "James",
+     fname: "Jeff",
+     lname: "James",
      cellPhone: "+13399000666",
      homePhone: "+13399000666",
      email: "jeff@gmail.com",
@@ -448,7 +450,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "No",
     passport: "No",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 
 
     // interviwe results
@@ -521,7 +523,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "No",
     passport: "No",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "",
 
 
     // interviwe results
@@ -594,7 +596,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "No",
     passport: "No",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "",
 
 
     // interviwe results
@@ -643,7 +645,7 @@ export const applicants = [
     email2: "dylon@gmail.com",
     active: true,
 
-    status: "Hired",
+    status: "Rejected",
 
 
      // contact info
@@ -667,7 +669,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "No",
     passport: "No",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+    avatar: "",
 
 
     // interviwe results

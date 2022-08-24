@@ -22,22 +22,20 @@ import { AddComponent } from '../add/add.component';
         /* language=SCSS */
         `
             .applicant-grid {
-                grid-template-columns: 130px 150px 0px;
+                grid-template-columns: 7% 35% 36% 0% ;
 
                 @screen sm {
-                    grid-template-columns: 10% 10% 25% 20% 15% 10%;
+                    grid-template-columns: 4% 10% 25% 19% 20% 0% 0%;
                 }
                 @screen md {
-                    grid-template-columns: 10% 10% 20% 20% 15% 10%;
+                    grid-template-columns: 4% 15% 25% 20% 20% 0% 0%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 15% 10% 25% 20% 15% 10%;
+                    grid-template-columns: 5% 15% 20% 20% 20% 0% 0%;
                 }
-
-
-
             }
+
         `
     ],
     encapsulation  : ViewEncapsulation.None,
