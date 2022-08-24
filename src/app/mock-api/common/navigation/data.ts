@@ -71,21 +71,42 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:user-circle",
     link: "/apps/applicants",  
   },
-  // {
-  //   id: "",
-  //   title: "Equipment",
-  //   type: "collapsable",
-  //   icon: "heroicons_outline:user",
-  //   children: [
-  //     {
-  //       id: "",
-  //       title: "Vehicle List",
-  //       type: "basic",
-  //       icon: "heroicons_outline:user-group",
-  //       link: "/apps/vehicle",
-  //     },
-  //   ],
-  // }
+  {
+    id: "equipment",
+    title: "Equipment",
+    type: "collapsable",
+    icon: "heroicons_outline:user",
+    children: [
+      {
+        id: "equipment.vehicles",
+        title: "Vehicles",
+        type: "basic",
+        icon: "heroicons_outline:truck",
+        link: "/apps/equipment/vehicle",
+      },
+      {
+        id: "equipment.machinery",
+        title: "Machinery",
+        type: "basic",
+        icon: "heroicons_outline:cog",
+        link: "/apps/equipment/machinery",
+      },
+      {
+        id: "equipment.property",
+        title: "Property",
+        type: "basic",
+        icon: "heroicons_outline:circle-stack",
+        link: "/apps/equipment/property",
+      },
+      {
+        id: "equipment.part",
+        title: "Parts/Tools",
+        type: "basic",
+        icon: "heroicons_outline:wrench-screwdriver",
+        link: "/apps/equipment/parts-tools",
+      },
+    ],
+  }
   
 ]
     
