@@ -211,27 +211,17 @@
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
                         <ng-template matStepLabel>Personal</ng-template>
-                        <!-- <div class="py-3 center mx-auto flex justify-center items-center">
-                            <div class="px-4 py-5 rounded-lg text-center w-48">
-                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
-                                </div>
-                                <div class="mb-4" *ngIf="imageURL ==''  ">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
-                                </div>
-                                <label class="cursor-pointer mt-6">
-                                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
-                                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
-                              </label>
-                            </div>
-                        </div> -->
+
                         <div class="py-3 center mx-auto flex justify-center items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
-                                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                <div class="imagePreview mb-4" *ngIf="imageURL && imageURL !== ''">
                                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                                 </div>
-                                <div class="mb-4" *ngIf="imageURL ==''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt="Avatar Upload" />
+                                <div class="mb-4" *ngIf="imageURL ==='' && fourthFormGroup.get('avatar').value ">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{fourthFormGroup.get('avatar').value}}" alt=" " />
+                                </div>
+                                <div class="mb-4" *ngIf="imageURL ==='' && fourthFormGroup.get('avatar').value === ''">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
                                 </div>
                                 <label class="cursor-pointer mt-6">
                                         <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
@@ -298,7 +288,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Languages</mat-label>
-                                    <mat-select formControlName="language">
+                                    <mat-select >
                                         <mat-option value="english"> English</mat-option>
                                         <mat-option value="spanih">Spanish</mat-option>
                                         <mat-option value="chinese">Chinese</mat-option>
@@ -309,7 +299,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full w-11/12">
                                     <mat-label>Self Rating</mat-label>
-                                    <mat-select formControlName="rating">
+                                    <mat-select >
                                         <mat-option value="fluent"> Fluent</mat-option>
                                         <mat-option value="native">Native speaker</mat-option>
                                         <mat-option value="average">Average</mat-option>
@@ -487,8 +477,10 @@
                 </mat-step>
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
-                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex justify-center items-center">
-                        <p class="text-lime-600	 flex justify-center items-center text-lime-500	">You have successfully updated the applicants details.</p>
+                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
+                        <mat-icon color="primary"  class="icon-size-18 sm:icon-size-24 bg-blue-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
+                         [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                            <p class="flex justify-center items-center ">You have successfully updated the applicants details. Please click on submit button to complete update process.</p>
                     </div>
                 </mat-step>
 

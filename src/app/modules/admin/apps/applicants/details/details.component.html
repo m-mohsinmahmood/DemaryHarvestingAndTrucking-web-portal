@@ -38,6 +38,49 @@
         </div>
         <!-- Actions -->
     </div>
+    <mat-accordion class="bg-gray-100">
+        <mat-expansion-panel
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100"
+        >
+            <mat-expansion-panel-header>
+                <mat-panel-title class="text-lg font-extrabold tracking-tight flex items-center ">
+                    <mat-icon class=" mr-3 "[svgIcon]="'heroicons_outline:filter'"></mat-icon>
+                    Filter Details
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+                    <div class="flex flex-col sm:flex-row md:flex-row ">
+                        <div class="w-10/12  ">
+                            <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-60 ">
+                                <mat-label>Select Country</mat-label>
+                                <mat-select multiple >
+                                    <mat-option
+                                        *ngFor="let country of country_list"
+                                        [value]="country"
+                                        >{{ country }}</mat-option
+                                    >
+                                </mat-select>
+                            </mat-form-field>
+                                <mat-form-field appearance="outline" class="mx-1 mt-2 w-60">
+                                    <mat-label>Select status</mat-label>
+                                    <mat-select multiple>
+                                        <mat-option
+                                            *ngFor="let status of statusList"
+                                            [value]="status"
+                                            >{{ status }}</mat-option
+                                        >
+                                    </mat-select>
+                                </mat-form-field>
+                        </div>
+                        <div class="w-2/12   flex justify-center items-center">
+                            <button class="" mat-flat-button [color]="'primary'">
+                                <span class="" >Filter</span>
+                            </button>
+                        </div>
+
+                    </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <!-- Main -->
     <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
@@ -72,39 +115,6 @@
             <mat-tab label="Personal Information">
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y lg:divide-y sm:divide-gray-200">
-                        <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.fname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.lname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email}}</dd>
-                        </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Status</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.status}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email1</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email1}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email2</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email2}}</dd>
-                        </div> -->
-                        <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.status}}</dd>
-                        </div> -->
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-extrabold text-gray-500">DOB</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.dob}}</dd>

@@ -26,7 +26,6 @@ import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.r
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
 import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
-import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 
@@ -36,7 +35,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
         ApplicantsComponent,
         ApplicantsListComponent,
         ApplicantDetailComponent,
-        AddComponent,
         UpdateComponent,
     ],
     imports     : [
