@@ -13,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { SharedModule } from 'app/shared/shared.module';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
@@ -52,6 +53,7 @@ import { HarvestInfoComponent } from './details/harvest-info/harvest-info.compon
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
+        MatSidenavModule,
         SharedModule,
         MatDialogModule,
         MatTabsModule
