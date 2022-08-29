@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/customers/data';
+import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData, analytics as analyticsData } from 'app/mock-api/apps/customers/data';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +13,7 @@ export class CustomersInventoryMockApi
     private _products: any[] = productsData;
     private _tags: any[] = tagsData;
     private _vendors: any[] = vendorsData;
+    private _analytics: any = analyticsData;
 
     /**
      * Constructor
@@ -32,6 +33,11 @@ export class CustomersInventoryMockApi
      */
     registerHandlers(): void
     {
+
+        // Analytics Customer
+        this._fuseMockApiService
+        .onGet('api/customers/analytics')
+        .reply(() => [200, cloneDeep(this._analytics)]);
         // -----------------------------------------------------------------------------------------------------
         // @ Categories - GET
         // -----------------------------------------------------------------------------------------------------
