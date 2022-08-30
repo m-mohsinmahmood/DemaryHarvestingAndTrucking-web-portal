@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
-import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
+import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/machinery.service';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/machinery/machinery.types';
 
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryBrandsResolver implements Resolve<any>
+export class MachineryBrandsResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: MachineryService)
     {
     }
 
@@ -35,12 +35,12 @@ export class InventoryBrandsResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryCategoriesResolver implements Resolve<any>
+export class MachineryCategoriesResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: MachineryService)
     {
     }
 
@@ -63,13 +63,13 @@ export class InventoryCategoriesResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryProductResolver implements Resolve<any>
+export class MachineryProductResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
     constructor(
-        private _inventoryService: VehicleService,
+        private _inventoryService: MachineryService,
         private _router: Router
     )
     {
@@ -111,12 +111,12 @@ export class InventoryProductResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryProductsResolver implements Resolve<any>
+export class MachineryProductsResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: MachineryService)
     {
     }
 
@@ -139,12 +139,12 @@ export class InventoryProductsResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryTagsResolver implements Resolve<any>
+export class MachineryTagsResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: MachineryService)
     {
     }
 
@@ -167,12 +167,12 @@ export class InventoryTagsResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class InventoryVendorsResolver implements Resolve<any>
+export class MachineryVendorsResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: MachineryService)
     {
     }
 

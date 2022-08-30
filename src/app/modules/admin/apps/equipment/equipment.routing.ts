@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { VehicleComponent } from 'app/modules/admin/apps/equipment/vehicle/vehicle.component';
 import { VehicleListComponent } from 'app/modules/admin/apps/equipment/vehicle/list/vehicle.component';
+import { VehicleDetailComponent } from 'app/modules/admin/apps/equipment/vehicle/details/details.component';
 import { MachineryComponent } from 'app/modules/admin/apps/equipment/machinery/machinery.component';
 import { MachineryListComponent } from 'app/modules/admin/apps/equipment/machinery/list/machinery.component';
 import { PropertyComponent } from 'app/modules/admin/apps/equipment/property/property.component';
@@ -14,6 +15,14 @@ import {
     InventoryTagsResolver,
     InventoryVendorsResolver,
 } from 'app/modules/admin/apps/equipment/vehicle/vehicle.resolvers';
+
+import {
+    MachineryBrandsResolver,
+    MachineryCategoriesResolver,
+    MachineryProductsResolver,
+    MachineryTagsResolver,
+    MachineryVendorsResolver,
+} from 'app/modules/admin/apps/equipment/machinery/machinery.resolvers';
 
 export const equipmentRoutes: Route[] = [
     {
@@ -46,13 +55,17 @@ export const equipmentRoutes: Route[] = [
                 path: '',
                 component: MachineryListComponent,
                 resolve: {
-                    brands: InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products: InventoryProductsResolver,
-                    tags: InventoryTagsResolver,
-                    vendors: InventoryVendorsResolver,
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
                 },
             },
+            {
+                path     : 'details/:Id',
+                component: VehicleDetailComponent,
+            }
         ],
     },
     {

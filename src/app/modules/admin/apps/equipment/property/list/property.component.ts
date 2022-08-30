@@ -6,8 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/vehicle/vehicle.types';
-import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/property/property.types';
+import { PropertyService } from 'app/modules/admin/apps/equipment/property/property.service';
 
 @Component({
     selector       : 'property-list',
@@ -64,7 +64,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: VehicleService
+        private _inventoryService: PropertyService
     )
     {
     }

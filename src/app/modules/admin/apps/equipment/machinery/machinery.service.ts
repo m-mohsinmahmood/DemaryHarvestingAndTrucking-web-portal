@@ -125,7 +125,7 @@ export class MachineryService
     getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
         Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/ecommerce/inventory/products', {
+        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/equipment/machinery/products', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -361,13 +361,6 @@ export class MachineryService
                         // Iterate through the contacts
                         products.forEach((product) => {
 
-                            const tagIndex = product.tags.findIndex(tag => tag === id);
-
-                            // If the contact has the tag, remove it
-                            if ( tagIndex > -1 )
-                            {
-                                product.tags.splice(tagIndex, 1);
-                            }
                         });
 
                         // Return the deleted status

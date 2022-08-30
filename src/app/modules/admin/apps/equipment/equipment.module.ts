@@ -13,9 +13,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from 'app/shared/shared.module';
 import { VehicleComponent } from 'app/modules/admin/apps/equipment/vehicle/vehicle.component';
 import { VehicleListComponent } from 'app/modules/admin/apps/equipment/vehicle/list/vehicle.component';
+import { VehicleDetailComponent } from 'app/modules/admin/apps/equipment/vehicle/details/details.component';
 import { MachineryComponent } from 'app/modules/admin/apps/equipment/machinery/machinery.component';
 import { MachineryListComponent } from 'app/modules/admin/apps/equipment/machinery/list/machinery.component';
 import { PropertyComponent } from 'app/modules/admin/apps/equipment/property/property.component';
@@ -24,13 +27,14 @@ import { PartComponent } from 'app/modules/admin/apps/equipment/part/part.compon
 import { PartListComponent } from 'app/modules/admin/apps/equipment/part/list/part.component';
 import { equipmentRoutes } from 'app/modules/admin/apps/equipment/equipment.routing';
 import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
-import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 @NgModule({
     declarations: [
         VehicleComponent,
         VehicleListComponent,
+        VehicleDetailComponent,
         MachineryComponent,
         MachineryListComponent,
         PropertyComponent,
@@ -55,6 +59,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
+        MatTabsModule,
         SharedModule
     ]
 })

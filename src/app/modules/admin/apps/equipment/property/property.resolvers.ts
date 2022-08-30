@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
-import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
+import { PropertyService } from 'app/modules/admin/apps/equipment/property/property.service';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class InventoryBrandsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: PropertyService)
     {
     }
 
@@ -40,7 +40,7 @@ export class InventoryCategoriesResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: PropertyService)
     {
     }
 
@@ -69,7 +69,7 @@ export class InventoryProductResolver implements Resolve<any>
      * Constructor
      */
     constructor(
-        private _inventoryService: VehicleService,
+        private _inventoryService: PropertyService,
         private _router: Router
     )
     {
@@ -116,7 +116,7 @@ export class InventoryProductsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: PropertyService)
     {
     }
 
@@ -144,7 +144,7 @@ export class InventoryTagsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: PropertyService)
     {
     }
 
@@ -172,7 +172,7 @@ export class InventoryVendorsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _inventoryService: VehicleService)
+    constructor(private _inventoryService: PropertyService)
     {
     }
 

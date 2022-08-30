@@ -8,6 +8,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/vehicle/vehicle.types';
 import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector       : 'vehicle-list',
@@ -16,18 +17,16 @@ import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle
         /* language=SCSS */
         `
             .vehicle-grid {
-                grid-template-columns: 48px auto 40px;
+                grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
 
                 @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
+                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
                 }
-
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
                 }
-
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
                 }
             }
         `
@@ -64,6 +63,7 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
+        private _router: Router,
         private _inventoryService: VehicleService
     )
     {
@@ -242,31 +242,12 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Toggle product details
      *
-     * @param productId
+     * @param vehicleId
      */
-    toggleDetails(productId: string): void
-    {
-        // If the product is already selected...
-        if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-
-        // Get the product by id
-        this._inventoryService.getProductById(productId)
-            .subscribe((product) => {
-
-                // Set the selected product
-                this.selectedProduct = product;
-
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+     toggleDetails(machineId: string): void {
+        this._router.navigate([
+            `/apps/equipment/machinery/details/${machineId}`,
+        ]);
     }
 
     /**
@@ -350,21 +331,6 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
             return;
         }
 
-        // If there is a tag...
-        const tag = this.filteredTags[0];
-        const isTagApplied = this.selectedProduct.tags.find(id => id === tag.id);
-
-        // If the found tag is already applied to the product...
-        if ( isTagApplied )
-        {
-            // Remove the tag from the product
-            this.removeTagFromProduct(tag);
-        }
-        else
-        {
-            // Otherwise add the tag to the product
-            this.addTagToProduct(tag);
-        }
     }
 
     /**
@@ -428,11 +394,6 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     addTagToProduct(tag: InventoryTag): void
     {
-        // Add the tag
-        this.selectedProduct.tags.unshift(tag.id);
-
-        // Update the selected product form
-        this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -445,11 +406,6 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
      */
     removeTagFromProduct(tag: InventoryTag): void
     {
-        // Remove the tag
-        this.selectedProduct.tags.splice(this.selectedProduct.tags.findIndex(item => item === tag.id), 1);
-
-        // Update the selected product form
-        this.selectedProductForm.get('tags').patchValue(this.selectedProduct.tags);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();

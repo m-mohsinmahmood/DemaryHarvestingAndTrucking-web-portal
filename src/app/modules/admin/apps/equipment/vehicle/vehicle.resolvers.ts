@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/vehicle/vehicle.types';
 
 @Injectable({
     providedIn: 'root'
@@ -87,7 +87,7 @@ export class InventoryProductResolver implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<InventoryProduct>
     {
-        return this._inventoryService.getProductById(route.paramMap.get('id'))
+        return this._inventoryService.getVehicleById(route.paramMap.get('id'))
                    .pipe(
                        // Error here means the requested product is not available
                        catchError((error) => {

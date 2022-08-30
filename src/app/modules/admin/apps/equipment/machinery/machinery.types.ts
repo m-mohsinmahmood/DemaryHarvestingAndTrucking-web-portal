@@ -1,28 +1,26 @@
-export interface InventoryProduct
-{
+export interface InventoryProduct {
     id: string;
-    category?: string;
     name: string;
-    description?: string;
-    tags?: string[];
-    sku?: string | null;
-    barcode?: string | null;
-    brand?: string | null;
-    vendor: string | null;
-    stock: number;
-    reserved: number;
-    cost: number;
-    basePrice: number;
-    taxPercent: number;
-    price: number;
-    weight: number;
-    thumbnail: string;
-    images: string[];
-    active: boolean;
+    photo: string;
+    odometer: string;
+    serviceRecords: [];
+    purchaseCompany: string;
+    purchaseDate: Date;
+    purchasePrice: number;
+    value: number;
+    make: string;
+    model: string;
+    titleName: string;
+    titleNumber: number;
+    year: number;
+    vinNumber: string;
+    saleTradeDate: Date;
+    saleTradePrice: number;
+    documents: [];
+    groupDocuments: [];
 }
 
-export interface InventoryPagination
-{
+export interface InventoryPagination {
     length: number;
     size: number;
     page: number;
@@ -31,29 +29,25 @@ export interface InventoryPagination
     endIndex: number;
 }
 
-export interface InventoryCategory
-{
+export interface InventoryCategory {
     id: string;
     parentId: string;
     name: string;
     slug: string;
 }
 
-export interface InventoryBrand
-{
+export interface InventoryBrand {
     id: string;
     name: string;
     slug: string;
 }
 
-export interface InventoryTag
-{
+export interface InventoryTag {
     id?: string;
     title?: string;
 }
 
-export interface InventoryVendor
-{
+export interface InventoryVendor {
     id: string;
     name: string;
     slug: string;
