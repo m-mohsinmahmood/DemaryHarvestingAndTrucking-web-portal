@@ -15,6 +15,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
 import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/list.component';
@@ -72,6 +73,7 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         MatSidenavModule,
         MatDividerModule,
         NgApexchartsModule,
+        MatButtonToggleModule,
         SharedModule,
         MatDialogModule,
         MatTabsModule,
