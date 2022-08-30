@@ -14,6 +14,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { UpdateComponent } from '../update/update.component';
+import { SettingsComponent } from 'app/layout/common/settings/settings.component';
+import { FilterComponent } from './../filter/filter.component';
 
 @Component({
   selector: 'app-employee',
@@ -191,6 +193,23 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                  .subscribe((result) => {
                      console.log('Compose dialog was closed!');
                  });
+    }
+
+    openFilterDialog(){
+        // Open the dialog
+        const dialogRef = this._matDialog.open(FilterComponent,{
+  height: '800px',
+  width: '300px',
+});
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+
     }
     /**
      * Toggle employee details

@@ -28,6 +28,7 @@ import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/
 import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
 import { UpdateComponent } from './update/update.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { FilterComponent } from './filter/filter.component';
 
 
 @NgModule({
@@ -36,9 +37,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
         ApplicantsListComponent,
         ApplicantDetailComponent,
         UpdateComponent,
+        FilterComponent,
     ],
     imports     : [
-        RouterModule.forChild(applicantsRoutes),
+    RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,

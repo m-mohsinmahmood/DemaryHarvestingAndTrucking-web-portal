@@ -95,21 +95,6 @@ this.secondFormGroup = this._formBuilder.group({
   email: ['', ''],
 });
 
-this.thirdFormGroup = this._formBuilder.group({
-  firstPhoneCall: ['', ''],
-  firstInterviewResult: ['', ''],
-  firstRanking: ['', ''],
-  refreePhoneCall: ['', ''],
-  refreeInterviewResult: ['', ''],
-  refreeRanking: ['', ''],
-  secondPhoneCall: ['', ''],
-  secondInterviewResult: ['', ''],
-  secondRanking: ['', ''],
-  thirdPhoneCall: ['', ''],
-  thirdInterviewResult: ['', ''],
-  thirdRanking: ['', ''],
-});
-
 this.fourthFormGroup = this._formBuilder.group({
   dob: ['', ''],
   maritalStatus: ['', ''],
@@ -170,20 +155,6 @@ if(this.data !== null){
        homePhone: employee.homePhone,
        email: employee.email,
      });
-     this.thirdFormGroup.patchValue({
-       firstPhoneCall: employee.firstPhoneCall,
-       firstInterviewResult: employee.firstInterviewResult,
-       firstRanking: employee.firstRanking,
-       refreePhoneCall: employee.refreePhoneCall,
-       refreeInterviewResult: employee.refreeInterviewResult,
-       refreeRanking: employee.refreeRanking,
-       secondPhoneCall: employee.secondPhoneCall,
-       secondInterviewResult: employee.secondInterviewResult,
-       secondRanking: employee.secondRanking,
-       thirdPhoneCall: employee.thirdPhoneCall,
-       thirdInterviewResult: employee.thirdInterviewResult,
-       thirdRanking: employee.thirdRanking,
-     });
      this.fourthFormGroup.patchValue({
        dob: moment( employee.dob).subtract(1, 'week').hour(18).minute(56).toISOString(),
        maritalStatus: employee.martialStatus,
@@ -223,9 +194,6 @@ if(this.data !== null){
 }else{
     console.log('Else Called');
 }
-
-
-
   }
 
   submit(): void {

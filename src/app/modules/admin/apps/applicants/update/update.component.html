@@ -13,11 +13,11 @@
                 <div *ngSwitchCase="'horizontal'"></div>
                 <div *ngSwitchCase="'vertical'"></div>
             </ng-container>
-            <mat-horizontal-stepper [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
+            <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
                 <mat-step [stepControl]="firstFormGroup" [editable]="true" class="">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
-                        <ng-template matStepLabel>Applicant</ng-template>
-                        <!-- <div class=" "> -->
+
+                          <ng-template matStepLabel>Applicant Information</ng-template>
                             <div class="w-8/12">
                                 <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail" [value]="firstFormGroup.get('firstEmail').value" > First Email </mat-checkbox>
                             </div>
@@ -44,19 +44,12 @@
                                     <mat-datepicker #picker3></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <!-- <div>
-                                <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                    <mat-label>Full Name</mat-label>
-                                    <input matInput type="text" id="fullName" formControlName="fullName" placeholder="Full Name">
-                                </mat-form-field>
-                            </div> -->
 
-                        <!-- </div> -->
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondFormGroup" [editable]="true">
                     <form [formGroup]="secondFormGroup" class="form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
-                        <ng-template matStepLabel>Contact</ng-template>
+                        <ng-template matStepLabel>Contact Information</ng-template>
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
                         <div>
                             <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
@@ -104,113 +97,9 @@
                     </div>
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="thirdFormGroup" [editable]="true">
-                    <form [formGroup]="thirdFormGroup" class="interview-results-form mt-1">
-                        <ng-template matStepLabel>Interview</ng-template>
-                        <!-- First Section    -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full">
-                            <mat-checkbox class="firstphoneCall" id="firstphoneCall" name="firstphoneCall" formControlName="firstPhoneCall">1st Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>1st Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="interviewResults" formControlName="firstInterviewResult" placeholder="1st Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>1st Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="firstRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="refreePhoneCall" id="refreePhoneCall" formControlName="refreePhoneCall" name="refreePhoneCall">Refree Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>Refree Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="refreeInterviewResult" formControlName="refreeInterviewResult" placeholder="Refree Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>Refree Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="refreeRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <!-- Second section -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="secondPhoneCall" id="secondPhoneCall" name="secondPhoneCall" formControlName="secondPhoneCall">2nd Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>2nd Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="secondInterviewResult" formControlName="secondInterviewResult" placeholder="1st Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>2nd Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="secondRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <!-- Third Section -->
-                        <section class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-                            <mat-checkbox class="thirdPhoneCall" id="thirdPhoneCall" formControlName="thirdPhoneCall" name="thirdPhoneCall">3rd Phone Call </mat-checkbox>
-                        </section>
-                        <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                            <mat-label>3rd Face/Phone Interview Results</mat-label>
-                            <textarea matInput type="text" id="thirdInterviewResult" formControlName="thirdInterviewResult" placeholder="3rd Face/Phone Interview Results"> </textarea>
-                        </mat-form-field>
-                        <div class="md:flex lg:flex align-center">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-                                <label>3rd Interview Ranking: </label>
-                            </div>
-                            <mat-radio-group class="grid md:flex lg:flex" formControlName="thirdRanking">
-                                <mat-radio-button value="1">1</mat-radio-button>
-                                <mat-radio-button value="2">2</mat-radio-button>
-                                <mat-radio-button value="3">3</mat-radio-button>
-                                <mat-radio-button value="4">4</mat-radio-button>
-                                <mat-radio-button value="5">5</mat-radio-button>
-                                <mat-radio-button value="6">6</mat-radio-button>
-                                <mat-radio-button value="7">7</mat-radio-button>
-                                <mat-radio-button value="8">8</mat-radio-button>
-                                <mat-radio-button value="9">9</mat-radio-button>
-                                <mat-radio-button value="10">10</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </form>
-                </mat-step>
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
-                        <ng-template matStepLabel>Personal</ng-template>
+                        <ng-template matStepLabel>Personal Information</ng-template>
 
                         <div class="py-3 center mx-auto flex justify-center items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
@@ -341,7 +230,7 @@
                 </mat-step>
                 <mat-step [stepControl]="fifthFormGroup" [editable]="true">
                     <form [formGroup]="fifthFormGroup" class="interview-results-form">
-                        <ng-template matStepLabel>Work</ng-template>
+                        <ng-template matStepLabel>Work Information</ng-template>
                         <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With 5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-96">
@@ -432,7 +321,7 @@
                 </mat-step>
                 <mat-step [stepControl]="sixthFormGroup" [editable]="true">
                     <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
-                        <ng-template matStepLabel>Educational</ng-template>
+                        <ng-template matStepLabel>Educational Information</ng-template>
                         <div class="my-1.5 mt-2.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
                                 <label class="font-bold text-lg">On this question, Select the highest level of Education Completed. </label>
@@ -500,3 +389,4 @@
           </button>
     </header>
 </div>
+
