@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { EmployeePagination, Employee , Country } from 'app/modules/admin/apps/employee/employee.types';
+import { employeeNavigation } from './employeeNavigation';
+
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +16,8 @@ export class EmployeeService
     private _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
     private _employeesdata: BehaviorSubject<Employee[] | null> = new BehaviorSubject(null);
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
+    public navigationLabels = employeeNavigation;
+
 
 
 

@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -60,6 +61,7 @@ import { UploadDocModal } from './details/details.component';
         MatRadioModule,
         MatStepperModule,
         MatDatepickerModule,
+        MatSidenavModule,
         MatNativeDateModule,
         MatMomentDateModule,
         MatToolbarModule,

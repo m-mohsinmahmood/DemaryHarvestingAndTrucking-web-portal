@@ -9,10 +9,11 @@ import {
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
+import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import {
     MatDialog,
     MatDialogRef,
@@ -76,8 +77,16 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     employees: any;
     note: string;
     file: string;
+    routes = [];
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
+    employee: Employee;
+
+    // Sidebar stuff
+      drawerMode: 'over' | 'side' = 'side';
+      drawerOpened: boolean = true;
+      selectedIndex: string = "Contact Data";
+
 
     /*
     *
@@ -89,7 +98,9 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
-        private _router: Router
+        private _router: Router,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -100,9 +111,13 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+
+        this.routes = this._employeeService.navigationLabels;
+
+
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
-        });
+        })
 
         // Get the employee by id
         this._employeeService
@@ -110,6 +125,25 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
             .subscribe((employee) => {
                 this.employees = employee;
             });
+
+        // Subscribe to media changes
+        this._fuseMediaWatcherService.onMediaChange$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(({ matchingAliases }) => {
+
+          // Set the drawerMode and drawerOpened if the given breakpoint is active
+          if (matchingAliases.includes('lg')) {
+            this.drawerMode = 'side';
+            this.drawerOpened = true;
+          }
+          else {
+            this.drawerMode = 'over';
+            this.drawerOpened = false;
+          }
+
+          // Mark for check
+          this._changeDetectorRef.markForCheck();
+        });
     }
 
     /**
@@ -124,6 +158,20 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    navigationHandler(index) {
+        const { title } = index;
+        if (title === this.selectedIndex) {
+          return;
+        }
+        // this.isLoading = true;
+        this.selectedIndex = title;
+    };
+
+    toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+      };
+
     openUploadDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UploadDocModal, {
@@ -150,6 +198,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     backHandler(): void {
         this._router.navigate(['/apps/employee/']);
     }
+
 }
 
 @Component({
