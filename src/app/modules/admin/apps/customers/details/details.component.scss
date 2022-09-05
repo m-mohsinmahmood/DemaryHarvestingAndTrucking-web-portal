@@ -46,14 +46,14 @@
 
 .crops-grid,
 .farms-grid {
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 18% 18% 18% 18% 18%;
     @screen sm {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
     @screen md {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
     @screen lg {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
 }

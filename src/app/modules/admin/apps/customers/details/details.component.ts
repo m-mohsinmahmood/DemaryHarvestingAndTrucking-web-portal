@@ -59,6 +59,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
      */
      ngOnInit(): void {
 
+
         this.routes = this._customerService.navigationLabels;
 
         this.activatedRoute.params.subscribe((params) => {
@@ -71,8 +72,18 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
 
         // Get the employee by id
         this._customerService.getProductById(this.routeID).subscribe((customer) => {
-            this.customers = customer
+            this.customers = customer;
+            // if(this.customers.customerType == "Commercial Trucking")
+            // {
+
+            //   if(this.routes.find((x)=> x.title = "Farm Data"))
+            //   {
+            //     this.routes.splice(1, 1);
+            //   }
+
+            // }
         });
+
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$

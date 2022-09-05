@@ -122,6 +122,8 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
             cropCrop: [''],
             cropPoundsPerBushel: [''],
             contactNo: [''],
+            customerType:[''],
+
 
         });
 
