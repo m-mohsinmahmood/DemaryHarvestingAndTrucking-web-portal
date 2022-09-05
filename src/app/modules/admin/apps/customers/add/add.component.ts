@@ -35,6 +35,11 @@ export class AddCustomer implements OnInit {
   	type:[''],
   	descripition:[''],
     contactNo: [''],
+    commercialTrucking:[''],
+    customFarming: [''],
+    customHarvesting:[''],
+    equipmentLeasing:[''],
+    cdlTestingTraining:[''],
     farmItemRows: this._formBuilder.array([this.initFarmItemRows()]),
     cropsItemRows: this._formBuilder.array([this.initCropItemRows()]),
 

@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
-import { MatDrawerToggleResult } from '@angular/material/sidenav';
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CustomersService } from '../customers.service';
+import { AddFarmsComponent } from './add-farms/add-farms.component';
+import { AddCropsComponent } from './add-crops/add-crops.component';
+import { HarvestInfoComponent } from './harvest-info/harvest-info.component';
 
 
 @Component({
@@ -18,10 +21,16 @@ import { CustomersService } from '../customers.service';
 export class CustomerDetailsComponent implements OnInit, OnDestroy
 {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-    
+
     isLoading: boolean = false;
     routeID; // URL ID
     customers:any;
+    routes = [];
+
+    // Sidebar stuff
+      drawerMode: 'over' | 'side' = 'side';
+      drawerOpened: boolean = true;
+      selectedIndex: string = "Contact Data";
 
 
     /**
@@ -34,6 +43,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
         public activatedRoute: ActivatedRoute,
         public _customerService: CustomersService,
         private _router: Router,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+
 
     )
     {
@@ -47,20 +58,42 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
      * On init
      */
      ngOnInit(): void {
+
+        this.routes = this._customerService.navigationLabels;
+
         this.activatedRoute.params.subscribe((params) => {
           console.log("PARAMS:", params); //log the entire params object
           this.routeID = params.Id;
           console.log("object", this.routeID);
           console.log(params['id']) //log the value of id
         });
-    
-    
+
+
         // Get the employee by id
         this._customerService.getProductById(this.routeID).subscribe((customer) => {
             this.customers = customer
         });
-      }
-    
+
+        // Subscribe to media changes
+        this._fuseMediaWatcherService.onMediaChange$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(({ matchingAliases }) => {
+
+          // Set the drawerMode and drawerOpened if the given breakpoint is active
+          if (matchingAliases.includes('lg')) {
+            this.drawerMode = 'side';
+            this.drawerOpened = true;
+          }
+          else {
+            this.drawerMode = 'over';
+            this.drawerOpened = false;
+          }
+
+          // Mark for check
+          this._changeDetectorRef.markForCheck();
+        });
+    }
+
 
     /**
      * On destroy
@@ -75,24 +108,72 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    clicked(index) {
+        const { title } = index;
+        if (title === this.selectedIndex) {
+          return;
+        }
+        // this.isLoading = true;
+        this.selectedIndex = title;
+      };
+
+
+
     openUpdateDialog(): void
     {
     //Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent,{
          data:{id: this.routeID}
         });
-  
-  
+
+
         dialogRef.afterClosed()
                  .subscribe((result) => {
                      console.log('Compose dialog was closed!');
-      });   
+      });
     }
-    
-    backHandler(): void 
+    toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+      };
+
+
+    backHandler(): void
     {
-        this._router.navigate(["/apps/customers/"]) 
+        this._router.navigate(["/apps/customers/"])
     }
-  
+
+    openAddFarmDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddFarmsComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
+    openAddCropDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddCropsComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
+    openHarvestInfoDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(HarvestInfoComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
 
 }
