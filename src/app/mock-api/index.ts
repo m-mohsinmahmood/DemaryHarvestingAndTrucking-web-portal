@@ -19,6 +19,8 @@ import { ECommerceInventoryMockApi2 } from './apps/vehicle/inventory/api';
 import { EmployeeMockApi } from './apps/employee/api';
 import { ApplicantMockApi } from './apps/applicants/api';
 import { CustomersInventoryMockApi } from 'app/mock-api/apps/customers/api';
+import { VehicleMockApi } from 'app/mock-api/apps/equipment/vehicle/api';
+import { MachineryMockApi } from 'app/mock-api/apps/equipment/machinery/api';
 export const mockApiServices = [
     ActivitiesMockApi,
     AnalyticsMockApi,
@@ -41,4 +43,6 @@ export const mockApiServices = [
     CustomersInventoryMockApi,
     EmployeeMockApi,
     ApplicantMockApi,
+    VehicleMockApi,
+    MachineryMockApi
 ];
