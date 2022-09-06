@@ -125,7 +125,7 @@ export class PropertyService
     getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
         Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/ecommerce/inventory/products', {
+        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/equipment/property/products', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -137,6 +137,7 @@ export class PropertyService
             tap((response) => {
                 this._pagination.next(response.pagination);
                 this._products.next(response.products);
+                console.log('----',response.products);
             })
         );
     }

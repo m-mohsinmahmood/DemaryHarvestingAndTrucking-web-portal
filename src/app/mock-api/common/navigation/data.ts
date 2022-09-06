@@ -17,7 +17,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ],
   },
-  
+
   {
     id: "entities",
     title: "Entities",
@@ -49,11 +49,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
   //   title: "Applicants",
   //   type: "basic",
   //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/applicants",  
+  //   link: "/apps/applicants",
   // },
         ],
-      
-       
+
+
       },
     ],
   },
@@ -62,14 +62,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
     title: "Customers",
     type: "basic",
     icon: "heroicons_outline:user",
-    link: "/apps/customers",  
+    link: "/apps/customers",
   },
   {
     id: "applicants",
     title: "Applicants",
     type: "basic",
     icon: "heroicons_outline:user-circle",
-    link: "/apps/applicants",  
+    link: "/apps/applicants",
   },
   {
     id: "equipment",
@@ -95,19 +95,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id: "equipment.property",
         title: "Property",
         type: "basic",
-        icon: "heroicons_outline:circle-stack",
+        icon: "heroicons_outline:cog",
         link: "/apps/equipment/property",
       },
       {
         id: "equipment.part",
         title: "Parts/Tools",
         type: "basic",
-        icon: "heroicons_outline:wrench-screwdriver",
+        icon: "heroicons_outline:cog",
         link: "/apps/equipment/parts-tools",
       },
     ],
   }
-  
+
 ]
-    
+
 

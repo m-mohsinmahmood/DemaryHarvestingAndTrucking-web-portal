@@ -9,6 +9,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/vehicle/vehicle.types';
 import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateAddComponent } from '../update-add/update-add.component';
 
 @Component({
     selector       : 'vehicle-list',
@@ -64,7 +66,8 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _inventoryService: VehicleService
+        private _inventoryService: VehicleService,
+        private _matDialog: MatDialog
     )
     {
     }
@@ -235,6 +238,21 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
+
+    openAddDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddComponent);
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -246,7 +264,7 @@ export class VehicleListComponent implements OnInit, AfterViewInit, OnDestroy
      */
      toggleDetails(machineId: string): void {
         this._router.navigate([
-            `/apps/equipment/machinery/details/${machineId}`,
+            `/apps/equipment/vehicle/details/${machineId}`,
         ]);
     }
 

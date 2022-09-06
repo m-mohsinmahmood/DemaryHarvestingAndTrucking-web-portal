@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -27,6 +27,16 @@ import { PartComponent } from 'app/modules/admin/apps/equipment/part/part.compon
 import { PartListComponent } from 'app/modules/admin/apps/equipment/part/list/part.component';
 import { equipmentRoutes } from 'app/modules/admin/apps/equipment/equipment.routing';
 import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
+import { UpdateAddComponent } from './vehicle/update-add/update-add.component';
+import { UpdateAddMachineryComponent } from './machinery/update/update-add.component';
+
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MachineryDetailComponent } from './machinery/details/details.component';
 
 
 
@@ -41,7 +51,10 @@ import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
         PropertyListComponent,
         PartComponent,
         PartListComponent,
-        AddModalComponent
+        AddModalComponent,
+        UpdateAddComponent,
+        UpdateAddMachineryComponent,
+        MachineryDetailComponent,
     ],
     imports     : [
         RouterModule.forChild(equipmentRoutes),
@@ -60,7 +73,29 @@ import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
         MatSlideToggleModule,
         MatTooltipModule,
         MatTabsModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatRadioModule,
+        MatStepperModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatRippleModule,
+        MatSortModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMomentDateModule,
+        MatTabsModule,
+        MatExpansionModule,
     ]
 })
 export class EquipmentModule

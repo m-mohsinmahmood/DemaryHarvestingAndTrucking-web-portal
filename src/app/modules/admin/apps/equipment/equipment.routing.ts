@@ -23,6 +23,7 @@ import {
     MachineryTagsResolver,
     MachineryVendorsResolver,
 } from 'app/modules/admin/apps/equipment/machinery/machinery.resolvers';
+import { MachineryDetailComponent } from './machinery/details/details.component';
 
 export const equipmentRoutes: Route[] = [
     {
@@ -45,6 +46,17 @@ export const equipmentRoutes: Route[] = [
                     vendors: InventoryVendorsResolver,
                 },
             },
+            {
+                path     : 'details/:Id',
+                component: VehicleDetailComponent,
+                resolve: {
+                    brands: InventoryBrandsResolver,
+                    categories: InventoryCategoriesResolver,
+                    products: InventoryProductsResolver,
+                    tags: InventoryTagsResolver,
+                    vendors: InventoryVendorsResolver,
+                },
+            }
         ],
     },
     {
@@ -64,7 +76,14 @@ export const equipmentRoutes: Route[] = [
             },
             {
                 path     : 'details/:Id',
-                component: VehicleDetailComponent,
+                component: MachineryDetailComponent,
+                resolve: {
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
+                },
             }
         ],
     },

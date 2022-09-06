@@ -39,6 +39,7 @@ import {
 } from 'app/modules/admin/apps/equipment/machinery/machinery.types';
 import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/machinery.service';
 import { Router } from '@angular/router';
+import { UpdateAddMachineryComponent } from '../update/update-add.component';
 
 @Component({
     selector: 'machinery-list',
@@ -283,14 +284,18 @@ export class MachineryListComponent
             `/apps/equipment/machinery/details/${machineId}`,
         ]);
     }
-
-    openAddDialog(): void {
+    openAddDialog(): void
+    {
         // Open the dialog
-        // const dialogRef = this._matDialog.open(AddComponent);
-        // dialogRef.afterClosed()
-        //          .subscribe((result) => {
-        //              console.log('Compose dialog was closed!');
-        //          });
+        const dialogRef = this._matDialog.open(UpdateAddMachineryComponent);
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
 
     /**
