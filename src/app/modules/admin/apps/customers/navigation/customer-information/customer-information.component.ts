@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'customer-information',
     templateUrl: './customer-information.component.html',
+    styleUrls: ['./customer-information.component.scss']
 })
 
 export class CustomerInformationComponent implements OnInit {
