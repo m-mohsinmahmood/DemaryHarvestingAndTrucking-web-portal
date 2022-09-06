@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'customer-information',
     templateUrl: './customer-information.component.html',
 })
+
 export class CustomerInformationComponent implements OnInit {
 
     @Input() customers: any;
