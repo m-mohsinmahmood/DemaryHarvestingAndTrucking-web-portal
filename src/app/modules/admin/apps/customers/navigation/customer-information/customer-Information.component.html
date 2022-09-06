@@ -1,0 +1,56 @@
+<div class="border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Name</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.name}}</dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.email}}</dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Address</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.alternateName}}
+            </dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">State/Province</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.stateProvince}}
+            </dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Cell Phone</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.contactNo}}
+            </dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Home Phone</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.contactNo}}
+            </dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Manager's Name</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+            </dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Customer Type</dt>
+            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.customerType}}
+            </dd>
+        </div>
+
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-lg font-extrabold text-gray-500">Status</dt>
+            <div class="hidden lg:block">
+                <mat-icon class="{{customers.isActive===1 ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="customers.isActive===1 ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">
+                    check-circle</mat-icon>
+
+            </div>
+        </div>
+    </dl>
+</div>

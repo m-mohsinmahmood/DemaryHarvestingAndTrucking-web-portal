@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -29,6 +30,7 @@ import { employeeRoutes } from 'app/modules/admin/apps/employee/employee.routing
 import { AddComponent } from './add/add.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateComponent } from './update/update.component';
+import { UploadDocModal } from './details/details.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,8 @@ import { UpdateComponent } from './update/update.component';
       EmployeeListComponent,
       EmployeeDetailComponent,
       AddComponent,
-      UpdateComponent
+      UpdateComponent,
+      UploadDocModal
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),
@@ -58,6 +61,7 @@ import { UpdateComponent } from './update/update.component';
         MatRadioModule,
         MatStepperModule,
         MatDatepickerModule,
+        MatSidenavModule,
         MatNativeDateModule,
         MatMomentDateModule,
         MatToolbarModule,

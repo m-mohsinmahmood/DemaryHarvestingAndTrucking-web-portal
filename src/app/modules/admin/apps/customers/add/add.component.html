@@ -51,10 +51,13 @@
                 <input matInput formControlName="contactNo">
             </mat-form-field>
             
-            <!-- <mat-form-field appearance="outline">
-                <mat-label>State/Province</mat-label>
-                <input matInput formControlName="stateProvince">
-            </mat-form-field> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="isActive">
+                    <mat-option value="1">Active</mat-option>
+                    <mat-option value="0">Not Active</mat-option>
+                </mat-select>
+            </mat-form-field>
 
         </tr>
         <tr class="my-6 font-bold grid-cols-2 flex items-center justify-between	" >

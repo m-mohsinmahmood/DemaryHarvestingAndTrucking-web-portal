@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
+import { customerNavigation } from './customerNavigation';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,9 @@ export class CustomersService
     private _products: BehaviorSubject<InventoryProduct[] | null> = new BehaviorSubject(null);
     private _tags: BehaviorSubject<InventoryTag[] | null> = new BehaviorSubject(null);
     private _vendors: BehaviorSubject<InventoryVendor[] | null> = new BehaviorSubject(null);
+    public navigationLabels = customerNavigation;
+    private _data: BehaviorSubject<any> = new BehaviorSubject(null);
+
 
     /**
      * Constructor
@@ -84,10 +88,30 @@ export class CustomersService
         return this._vendors.asObservable();
     }
 
+     /**
+     * Getter for customer analytics
+     */
+
+    get data$(): Observable<any>
+    {
+        return this._data.asObservable();
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+
+    // Get customers analytics data
+    getData(): Observable<any>
+         {
+             return this._httpClient.get('api/customers/analytics').pipe(
+                 tap((response: any) => {
+                    console.log("service" , response);
+                     this._data.next(response);
+                 })
+             );
+         }
     /**
      * Get brands
      */

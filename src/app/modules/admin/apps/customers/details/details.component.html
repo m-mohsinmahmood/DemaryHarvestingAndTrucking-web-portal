@@ -1,299 +1,102 @@
-<div
-    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 overflow-auto sm:overflow-hidden bg-card dark:bg-transparent">
-
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 overflow-auto bg-card dark:bg-transparent">
     <!-- Header -->
-    <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
-        <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    <div class="border-b">
+        <div class="overflow-auto relative py-8 px-6 md:px-8 flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between">
+            <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+                <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+            </div>
+            <!-- Title -->
+            <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
+                <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
+                <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+
+                <span class="ml-1 capitalize">{{customers.name}} </span>
+            </div>
+            <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+                <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
+                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                    <span class="ml-2 mr-1">Delete</span>
+                </button>
+                <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
+                    [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                    <span class="ml-2 mr-1">Update</span>
+                </button>
+            </div>
         </div>
-        <!-- Title -->
-        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
-            <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
-            <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
-            
-            <span class="ml-1 capitalize">{{customers.name}} </span>
+        <div>
+            <mat-icon class="subnav-menu-icon ml-1" svgIcon="heroicons_outline:menu" (click)="toggleDrawer()">
+            </mat-icon>
         </div>
-        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button
-                class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                mat-flat-button [color]="'warn'">
-                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1">Delete</span>
-            </button>
-            <button (click)="openUpdateDialog()"
-                class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                mat-flat-button [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-                <span class="ml-2 mr-1">Update</span>
-            </button>
-        </div>
-        <!-- Actions -->
     </div>
-    <div class="overflow-auto">
-        <!-- Main -->
-        <div class="tab bg-white shadow sm:rounded-lg overflow-auto	">
-            <mat-tab-group mat-align-tabs="center">
-                <mat-tab label="Customer Information">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.name}}</dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.email}}</dd>
-                            </div>
-
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Alternative Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.alternateName}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">State/Province</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.stateProvince}}
-                                </dd>
-                            </div>
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.position}}</dd>
-                        </div> -->
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.harvestYear}}</dd>
-                        </div> -->
-                            <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.currentEmployee}}</dd>
-                        </div> -->
-                        </dl>
-                    </div>
-                </mat-tab>
 
 
-                <!-- Harvest Information-->
-                <mat-tab label="Harvest Information">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <div class="flex justify-end float-right my-4 sm:mr-14 mr-4">
-                            <!-- Add product button -->
-                            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openHarvestInfoDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="ml-2 mr-1">Add Harvest Information</span>
-                            </button>
-                        </div>
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Harvest Year</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.harvestYear}}</dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Skip Invoice Math</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.skipInvoiceMath1}}
-                                </dd>
-                            </div>
 
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Is Active</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.isActive}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Arizona Invoice Math</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.arizonaInvoiceMath}}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </mat-tab>
-
-
-                <!-- Farm Info-->
-                <mat-tab label="Farms Information">
-                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                        <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
-                            <div class="grid">
-                                <div class="flex justify-end float-right my-4 sm:mt-0 sm:mr-14 mr-4">
-                                    <!-- Add product button -->
-                                    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
-                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-2 mr-1">Add Farm</span>
-                                    </button>
-                                </div>
-                                <!-- Header -->
-                                <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                    <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
-                                        Farm ID
-                                    </div> -->
-                                    <div [mat-sort-header]="'name'">Farm Name</div>
-                                    <div class="hidden lg:block" [mat-sort-header]="'stock'">
-                                        Farm Harvest Year
-                                    </div>
-                                    <div class=" sm:block">Farm Total Acres</div>
-                                </div>
-                                <!-- Rows -->
-                                
-                                <!-- <ng-container *ngIf="(customers)">
-                                    <ng-container *ngFor="let customer of customers; let i = index"> -->
-                                        <div class="crops-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-        
-                                            <!-- SKU -->
-                                            <!-- <div class="hidden md:block truncate">
-                                                {{customers.farmId}}
-                                            </div> -->
-        
-                                            <!-- Name -->
-                                            <div class="truncate">
-                                                {{customers.farmName}}
-                                            </div>
-        
-                                            <!-- Harvest Year -->
-                                            <div class="hidden sm:block">
-                                                {{customers.farmHarvestYear}}
-                                            </div>
-        
-                                            <!-- Stock -->
-                                            <div class="lg:flex items-center">
-                                                <div class="min-w-4 ml-2">{{customers.farmTotalAcres}}</div>
-                                            </div>
-                                        </div>
-                                    <!-- </ng-container>
-                                </ng-container> -->
-                            </div>
-        
-                    <!-- </ng-container> -->
-        
-                    <!-- <ng-template #noProducts>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
-                    </ng-template> -->
-        
+    <div>
+        <mat-drawer-container class="sub-nav-component bg-card divide-x" autosize>
+            <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
+                <div class="flex" *ngFor="let route of routes;let i = index">
+                                <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
+                                    <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
+                                    <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
+                                </button>
                 </div>
-                    <!-- <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Farm ID</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.farmId}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Farm Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.farmName}}
-                                </dd>
-                            </div>
+            </mat-drawer>
 
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Farm Harvest Year</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.farmHarvestYear}}
-                                </dd>
+            <div class=" flex sub-sidenav-content bg-light p-2">
+                <div class="w-full">
+                    <div class="tab bg-white shadow sm:rounded-lg overflow-auto	">
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Contact Data'">
+                                <customer-information [customers]="customers">
+                                </customer-information>
+                            </ng-template>
+                        </div>
+                            <div>
+                                <ng-template [ngIf]="selectedIndex === 'Farm Data'">
+                                  <app-farm-data [customers]="customers">
+                                  </app-farm-data>
+                                </ng-template>
                             </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Farm Total Acres</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.farmTotalAcres}}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div> -->
-                </mat-tab>
-                
-                <!--Crops Info-->
-                <mat-tab label="Crops Information">
-                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                            <!-- <ng-container *ngIf="(customers.cropid).length > 0; else noProducts"> -->
-                                <div class="grid">
-
-                                    <div class="flex justify-end float-right my-4 sm:mt-0 sm:mr-14 mr-4">
-                                        <!-- Add product button -->
-                                        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
-                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                            <span class="ml-2 mr-1">Add Crop</span>
-                                        </button>
-                                    </div>
-                                    <!-- Header -->
-                                    <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <!-- <div class="hidden md:block" [mat-sort-header]="'sku'">
-                                            Crop ID
-                                        </div> -->
-                                        <div [mat-sort-header]="'name'">Crop Name</div>
-                                        <div class="hidden lg:block" [mat-sort-header]="'stock'">
-                                            Crop Harvest Year
-                                        </div>
-                                        <div class="sm:block">Crop Pounds Per Bushel</div>
-                                    </div>
-                                    <!-- Rows -->
-                                    
-                                    <!-- <ng-container *ngIf="(customers)">
-                                        <ng-container *ngFor="let customer of customers; let i = index"> -->
-                                            <div class="crops-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-            
-                                                <!-- SKU -->
-                                                <!-- <div class="hidden md:block truncate">
-                                                    {{customers.cropid}}
-                                                </div> -->
-            
-                                                <!-- Name -->
-                                                <div class="truncate">
-                                                    {{customers.cropCrop}}
-                                                </div>
-            
-                                                <!-- Price -->
-                                                <div class="hidden sm:block">
-                                                    {{customers.cropHarvestYear}}
-                                                </div>
-            
-                                                <!-- Stock -->
-                                                <div class=" lg:flex items-center">
-                                                    <div class="min-w-4 ml-2">{{customers.cropPoundsPerBushel}}</div>
-                                                </div>
-                                            </div>
-                                        <!-- </ng-container>
-                                    </ng-container> -->
-                                </div>
-            
-                        <!-- </ng-container> -->
-            
-                        <!-- <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
-                        </ng-template> -->
-            
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Rate Data'">
+                                <app-rate-data>
+                                </app-rate-data>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Job Data'">
+                                <app-job-data>
+                                </app-job-data>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Job Status'">
+                                <app-job-status>
+                                </app-job-status>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Invoice'">
+                                <app-invoice>
+                                </app-invoice>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Resources'">
+                                <app-resources>
+                                </app-resources>
+                            </ng-template>
+                        </div>
                     </div>
-                    <!-- <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Crop ID</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.cropid}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Crop Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.cropCrop}}
-                                </dd>
-                            </div>
+                </div>
+            </div>
 
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Crop Harvest Year</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.cropHarvestYear}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Crop Pounds Per Bushel</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{customers.cropPoundsPerBushel}}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div> -->
-                </mat-tab>
-            </mat-tab-group>
-        </div>
+        </mat-drawer-container>
+
+        <!-- Main -->
+
     </div>
 
 </div>

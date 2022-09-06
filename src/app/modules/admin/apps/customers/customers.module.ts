@@ -13,7 +13,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
 import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/list.component';
@@ -21,10 +23,19 @@ import { AddCustomer } from './add/add.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerDetailsComponent } from './details/details.component';
 import { UpdateComponent } from './update/update.component';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { AddFarmsComponent } from './details/add-farms/add-farms.component';
 import { AddCropsComponent } from './details/add-crops/add-crops.component';
 import { HarvestInfoComponent } from './details/harvest-info/harvest-info.component';
+import { CustomerInformationComponent } from '../customers/navigation/customer-information/customer-information.component';
+import { RateDataComponent } from './navigation/rate-data/rate-data.component';
+import { InvoiceComponent } from './navigation/invoice/invoice.component';
+import { JobStatusComponent } from './navigation/job-status/job-status.component';
+import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
+import { ResourcesComponent } from './navigation/resources/resources.component';
+import { JobDataComponent } from './navigation/job-data/job-data.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +46,14 @@ import { HarvestInfoComponent } from './details/harvest-info/harvest-info.compon
         UpdateComponent,
         AddFarmsComponent,
         AddCropsComponent,
-        HarvestInfoComponent
+        HarvestInfoComponent,
+        CustomerInformationComponent,
+        RateDataComponent,
+        InvoiceComponent,
+        JobStatusComponent,
+        FarmDataComponent,
+        ResourcesComponent,
+        JobDataComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),
@@ -52,9 +70,14 @@ import { HarvestInfoComponent } from './details/harvest-info/harvest-info.compon
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
+        MatSidenavModule,
+        MatDividerModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
         SharedModule,
         MatDialogModule,
-        MatTabsModule
+        MatTabsModule,
+
     ]
 })
 export class CustomersModule

@@ -7,6 +7,35 @@ import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduc
 @Injectable({
     providedIn: 'root'
 })
+
+export class AnalyticsResolver implements Resolve<any>
+{
+    /**
+     * Constructor
+     */
+    constructor(private _analyticsService: CustomersService)
+    {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>
+    {
+        return this._analyticsService.getData();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class InventoryBrandsResolver implements Resolve<any>
 {
     /**

@@ -12,17 +12,15 @@
 
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
-
-
         <div class="py-3 center mx-auto">
             <div class="px-4 py-5 rounded-lg text-center w-48">
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                 </div>
-                <div class="mb-4" *ngIf="imageURL =='' && avatar ">
+                <div class="mb-4" *ngIf="imageURL ==='' && avatar ">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt=" " />
                 </div>
-                <div class="mb-4" *ngIf="imageURL =='' && avatar == ''">
+                <div class="mb-4" *ngIf="imageURL ==='' && avatar === ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
                 </div>
                 <label class="cursor-pointer mt-6">
@@ -31,25 +29,6 @@
                      </label>
             </div>
         </div>
-
-
-        <!-- <div>
-            <input id="avatar-file-input"
-            class="" type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadAvatar(avatarFileInput.files)" #avatarFileInput>
-            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover" for="avatar-file-input" matRipple>
-                        <mat-icon
-                            class="text-white"
-                            [svgIcon]="'heroicons_outline:camera'"></mat-icon>
-                    </label>
-        </div> -->
-        <!-- <div>
-
-            <button mat-icon-button (click)="removeAvatar()">
-                        <mat-icon
-                            class="text-white"
-                            [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                    </button>
-        </div> -->
         <div class="font-medium text-2xl ">
             General Information
         </div>
@@ -148,155 +127,17 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="flex justify-center items-center">
-            <mat-checkbox formControlName="salary">Salary</mat-checkbox>
-            <mat-checkbox formControlName="currentEmployee" class="checkbox ml-2">Current Employee</mat-checkbox>
-            <mat-checkbox formControlName="wages" class="checkbox ml-2">Wages </mat-checkbox>
+        <div class="flex items center justify-center">
+            <div>
+                <mat-checkbox formControlName="salary">Salary</mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox formControlName="wages" class="ml-4">Wages </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox formControlName="currentEmployee" class="ml-4">Current Employee</mat-checkbox>
+            </div>
         </div>
-
-
-        <!-- <div class="font-medium text-2xl mt-2">
-            Government Docs
-        </div>
-        <mat-form-field class="mt-2">
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[1] ? selectedFileNames[1] : 'Upload Passport'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 1)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[2] ? selectedFileNames[2] : 'Upload Visa'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 2)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[3] ? selectedFileNames[3] : 'Upload I-94'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 3)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[4] ? selectedFileNames[4] : 'Upload Driver License'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 4)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[5] ? selectedFileNames[5] : 'Upload Social Seccurity'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 5)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[6] ? selectedFileNames[6] : 'Upload DOT Docs'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 6)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[7] ? selectedFileNames[7] : 'Upload Physical'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 7)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[8] ? selectedFileNames[8] : 'Upload Drug Testing'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 8)" />
-            </div>
-        </mat-form-field>
-
-        <div class="font-medium text-2xl mt-2">
-            Company Docs
-        </div>
-        <mat-form-field class="mt-2">
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[9] ? selectedFileNames[9] : 'Upload Drug Testing'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 9)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[10] ? selectedFileNames [10]: 'Upload Contract'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 10)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[11] ? selectedFileNames[11] : 'Upload Approval Letter'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 11)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[12] ? selectedFileNames[12] : 'Upload Departure Form'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 12)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[13] ? selectedFileNames[13] : 'Upload Equipment Usage'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 13)" />
-            </div>
-        </mat-form-field>
-        <mat-form-field>
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[14] ? selectedFileNames[14] : 'Upload Work Agreement'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 14)" />
-            </div>
-        </mat-form-field>
-
-        <div class="font-medium text-2xl mt-2">
-            Work Records
-        </div>
-        <mat-form-field class="mt-2">
-            <div>
-                <mat-toolbar>
-                    <input matInput [value]="selectedFileNames[15] ? selectedFileNames[15] : 'Upload Work Record'" />
-                </mat-toolbar>
-                <input type="file" id="fileInput" name="fileInput" accept="" multiple (change)="selectFiles($event , 15)" />
-            </div>
-        </mat-form-field> -->
-
-
-        <!-- <button mat-flat-button color="primary" [disabled]="selectedFiles" (click)="uploadFiles()">
-            Upload
-          </button> -->
-        <!-- Body -->
-
-        <!-- Actions -->
-
-
-
 
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center justify-end mt-4 sm:mt-6">
 

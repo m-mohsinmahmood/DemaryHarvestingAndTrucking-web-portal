@@ -15,7 +15,7 @@
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
             <mat-form-field
-                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
+                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-48"
             >
                 <mat-icon
                     class="icon-size-5"
@@ -39,87 +39,20 @@
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="lg:ml-2">Add</span>
             </button>
+            <button
+                class="ml-2"
+                mat-flat-button
+                [color]="'warn'"
+                (click)="openFilterDialog()">
+                <mat-icon class="icon-size-5"[svgIcon]="'heroicons_outline:filter'"></mat-icon>
+                <span class="ml-1 sm:ml-2">Filter</span>
+            </button>
         </div>
     </div>
-    <mat-accordion class="sm:hidden ">
-        <mat-expansion-panel
-            (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
-        >
-            <mat-expansion-panel-header>
-                <mat-panel-title class="text-2xl font-extrabold tracking-tight">
-                    Filter Applicants
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-                    <div class="flex flex-col sm:flex-row md:flex-row">
-                        <div class="w-10/12  ">
-                            <mat-form-field appearance="fill" class="mx-1 mt-2 w-60">
-                                <mat-label>Select Country</mat-label>
-                                <mat-select multiple >
-                                    <mat-option
-                                        *ngFor="let country of country_list"
-                                        [value]="country"
-                                        >{{ country }}</mat-option
-                                    >
-                                </mat-select>
-                            </mat-form-field>
-                                <mat-form-field appearance="fill" class="mx-1 mt-2 w-60">
-                                    <mat-label>Select status</mat-label>
-                                    <mat-select multiple>
-                                        <mat-option
-                                            *ngFor="let status of statusList"
-                                            [value]="status"
-                                            >{{ status }}</mat-option
-                                        >
-                                    </mat-select>
-                                </mat-form-field>
-                        </div>
-                        <div class="w-2/12   flex justify-center items-center">
-                            <button class="" mat-flat-button [color]="'primary'">
-                                <span class="" >Filter</span>
-                            </button>
-                        </div>
-
-                    </div>
-        </mat-expansion-panel>
-    </mat-accordion>
 
 
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
-
-                        <div class="flex flex-col justify-center hidden sm:block w-64 h-68 sm:w-50 bg-gray-100">
-                            <mat-label class="text-4xl font-extrabold ml-2 ">Filters</mat-label>
-                            <div class="border-b border-gray-200  w-full "></div>
-                            <div class="">
-                                <mat-form-field appearance="fill" class="mx-1 ml-4 mt-1  w-40 ">
-                                    <mat-label>Select Country</mat-label>
-                                    <mat-select multiple >
-                                        <mat-option
-                                            *ngFor="let country of country_list"
-                                            [value]="country"
-                                            >{{ country }}</mat-option
-                                        >
-                                    </mat-select>
-                                </mat-form-field>
-                                    <mat-form-field appearance="fill" class="mx-1 ml-4 w-40">
-                                        <mat-label>Select status</mat-label>
-                                        <mat-select multiple>
-                                            <mat-option
-                                                *ngFor="let status of statusList"
-                                                [value]="status"
-                                                >{{ status }}</mat-option
-                                            >
-                                        </mat-select>
-                                    </mat-form-field>
-                            </div>
-                            <div class="flex justify-center ">
-                                <button class="" mat-flat-button [color]="'primary'">
-                                    <span class="" >Filter</span>
-                                </button>
-                            </div>
-
-                        </div>
 
         <div
             class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
