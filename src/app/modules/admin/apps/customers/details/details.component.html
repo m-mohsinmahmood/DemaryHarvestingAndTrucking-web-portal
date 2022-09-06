@@ -37,10 +37,10 @@
         <mat-drawer-container class="sub-nav-component bg-card divide-x" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
-                    <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
-                            <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
-                            <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
-                        </button>
+                                <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
+                                    <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
+                                    <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
+                                </button>
                 </div>
             </mat-drawer>
 
@@ -53,12 +53,12 @@
                                 </customer-information>
                             </ng-template>
                         </div>
-                        <div>
-                            <ng-template [ngIf]="selectedIndex === 'Farm Data'">
-                                <app-farm-data [customers]="customers">
-                                </app-farm-data>
-                            </ng-template>
-                        </div>
+                            <div>
+                                <ng-template [ngIf]="selectedIndex === 'Farm Data'">
+                                  <app-farm-data [customers]="customers">
+                                  </app-farm-data>
+                                </ng-template>
+                            </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Rate Data'">
                                 <app-rate-data>

@@ -127,7 +127,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Custom Farming'
 
         },
         {
@@ -150,7 +151,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Custom Harvesting',
 
 
         },
@@ -174,7 +176,9 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Commercial Trucking'
+
 
 
         },
@@ -199,7 +203,9 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Custom Harvesting',
+
 
 
         },
@@ -224,7 +230,9 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Custom Harvesting',
+
 
 
         },
@@ -249,7 +257,9 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Commercial Trucking'
+
 
         },
         {
@@ -273,7 +283,9 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Custom Farming'
+
 
 
         },
@@ -298,7 +310,8 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'Commercial Trucking'
 
 
         }];

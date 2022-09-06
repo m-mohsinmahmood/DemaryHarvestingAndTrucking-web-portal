@@ -35,6 +35,7 @@ export class AddCustomer implements OnInit {
   	type:[''],
   	descripition:[''],
     contactNo: [''],
+    customerType:[''],
     commercialTrucking:[''],
     customFarming: [''],
     customHarvesting:[''],
