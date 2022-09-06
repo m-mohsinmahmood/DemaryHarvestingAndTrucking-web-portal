@@ -32,8 +32,8 @@ export const applicants = [
     citizenStatus: "No",
     tractorStatus: "No",
     passport: "No",
-    avatar: "",
-
+    // imageURL: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 
     // interviwe results
     firstPhoneCall: true,
@@ -62,10 +62,10 @@ export const applicants = [
 
     // other
       firstEmail: true,
-      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      firstSentDate: "1/12/2022",
       secondEmail: true,
-      secondSentDate: "8/27/2022",
-      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondSentDate: "1/24/2022",
+      applicationDate: "1/28/2022",
 
 
       // education
@@ -231,7 +231,7 @@ export const applicants = [
     citizenStatus: "Yes",
     tractorStatus: "Yes",
     passport: "Yes",
-    avatar: "",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 
 
     // interviwe results
