@@ -13,7 +13,7 @@ export class EmployeeService
     // Private
 
     private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
-    private _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
+    public _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
     private _employeesdata: BehaviorSubject<Employee[] | null> = new BehaviorSubject(null);
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
     public navigationLabels = employeeNavigation;
