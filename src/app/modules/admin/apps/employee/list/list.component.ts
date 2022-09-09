@@ -264,11 +264,13 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     async importValidation() {
         this.importEmployeeList.map(async (val, index) => {
             try {
-                const value = await this.importSchema.validateAsync(val);
-                    console.log(value);
+                const value = await this.importSchema.validateAsync(val, {
+                    abortEarly: false,
+                });
+                console.log(value);
             } catch (err) {
-                this.importEmployeeList[index].error = err.details[0].message
-                console.log("INDEX", index)
+                this.importEmployeeList[index].error = err.details[0].message;
+                console.log('INDEX', index);
                 this.isFileError = true;
                 console.log(err);
             }
