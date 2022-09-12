@@ -269,7 +269,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
                 });
                 console.log(value);
             } catch (err) {
-                this.importEmployeeList[index].error = err.details[0].message;
+                const message = err.details.map(i => i.message).join(',');
+                this.importEmployeeList[index].error = message;
                 console.log('INDEX', index);
                 this.isFileError = true;
                 console.log(err);
