@@ -128,7 +128,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Farming'
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
         },
         {
@@ -152,7 +154,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
+            customerType: 'P',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -167,7 +171,7 @@ export const products = [
             skipInvoiceMath2: 1,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -177,7 +181,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
 
@@ -194,7 +200,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -204,7 +210,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
 
@@ -221,7 +229,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -231,8 +239,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
-
+            customerType: 'CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -248,7 +257,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -258,7 +267,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
+            customerType: 'CT',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -274,7 +285,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -284,7 +295,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Farming'
+            customerType: 'CT, CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
 
@@ -301,7 +314,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -311,8 +324,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
-
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
         }];
 

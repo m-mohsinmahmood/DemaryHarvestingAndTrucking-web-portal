@@ -26,6 +26,8 @@ export interface InventoryProduct
     cropPoundsPerBushel: string;
     contactNo: string;
     customerType:string;
+    phoneNo: string,
+    position:string,
 }
 
 export interface InventoryPagination

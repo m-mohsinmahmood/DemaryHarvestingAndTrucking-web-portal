@@ -9,12 +9,12 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
-import { AddCustomer } from '../add/add.component';
+// import { AddCustomer } from '../add/add.component';
 import { Router } from '@angular/router';
 
 @Component({
-    selector       : 'customers-list',
-    templateUrl    : './list.component.html',
+    selector       : 'customers-contacts',
+    templateUrl    : './customers-contacts.component.html',
     styles         : [
         /* language=SCSS */
         `
@@ -46,7 +46,7 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations     : fuseAnimations
 })
-export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
+export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
 {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
@@ -270,13 +270,13 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
 
     openAddDialog(): void
     {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(AddCustomer);
+        // // Open the dialog
+        // const dialogRef = this._matDialog.open(AddCustomer);
 
-        dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+        // dialogRef.afterClosed()
+        //          .subscribe((result) => {
+        //              console.log('Compose dialog was closed!');
+        //          });
     }
     /**
      * Toggle product details

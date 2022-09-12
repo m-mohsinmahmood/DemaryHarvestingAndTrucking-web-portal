@@ -189,6 +189,8 @@ export class CustomersInventoryMockApi
                     images     : [],
                     active     : false,
                     contactNo:'',
+                    phoneNo: '',
+                    position:'',
                 };
 
                 // Unshift the new product

@@ -29,13 +29,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AddFarmsComponent } from './details/add-farms/add-farms.component';
 import { AddCropsComponent } from './details/add-crops/add-crops.component';
 import { HarvestInfoComponent } from './details/harvest-info/harvest-info.component';
-import { CustomerInformationComponent } from '../customers/navigation/customer-information/customer-information.component';
 import { RateDataComponent } from './navigation/rate-data/rate-data.component';
 import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobDataComponent } from './navigation/job-data/job-data.component';
+import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
+import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
 
 @NgModule({
     declarations: [
@@ -47,13 +48,14 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         AddFarmsComponent,
         AddCropsComponent,
         HarvestInfoComponent,
-        CustomerInformationComponent,
         RateDataComponent,
         InvoiceComponent,
         JobStatusComponent,
         FarmDataComponent,
         ResourcesComponent,
-        JobDataComponent
+        JobDataComponent,
+        ContactsDataComponent,
+        CustomersContactsList
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),

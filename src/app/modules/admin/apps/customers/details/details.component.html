@@ -8,8 +8,8 @@
             <!-- Title -->
             <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
                 <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-                <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
-                <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+                <!-- <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
+                <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt=""> -->
 
                 <span class="ml-1 capitalize">{{customers.name}} </span>
             </div>
@@ -49,8 +49,9 @@
                     <div class="tab bg-white shadow sm:rounded-lg overflow-auto	">
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Contact Data'">
-                                <customer-information [customers]="customers">
-                                </customer-information>
+                                <customers-contacts [customers]="customers">
+
+                                </customers-contacts>
                             </ng-template>
                         </div>
                             <div>
