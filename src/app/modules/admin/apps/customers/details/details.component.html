@@ -13,7 +13,7 @@
 
                 <span class="ml-1 capitalize">{{customers.name}} </span>
             </div>
-            <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <!-- <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
                 <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
                     <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                     <span class="ml-2 mr-1">Delete</span>
@@ -23,7 +23,7 @@
                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                     <span class="ml-2 mr-1">Update</span>
                 </button>
-            </div>
+            </div> -->
         </div>
         <div>
             <mat-icon class="subnav-menu-icon ml-1" svgIcon="heroicons_outline:menu" (click)="toggleDrawer()">
@@ -37,7 +37,7 @@
         <mat-drawer-container class="sub-nav-component bg-card divide-x" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
-                                <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
+                    <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
                                     <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
                                     <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
                                 </button>
@@ -54,12 +54,12 @@
                                 </customers-contacts>
                             </ng-template>
                         </div>
-                            <div>
-                                <ng-template [ngIf]="selectedIndex === 'Farm Data'">
-                                  <app-farm-data [customers]="customers">
-                                  </app-farm-data>
-                                </ng-template>
-                            </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Farm Data'">
+                                <app-farm-data [customers]="customers">
+                                </app-farm-data>
+                            </ng-template>
+                        </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Rate Data'">
                                 <app-rate-data>

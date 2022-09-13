@@ -17,10 +17,17 @@ import { takeUntil } from 'rxjs/operators';
 export class ContactsDataComponent implements OnInit {
 
   @Input() customers: any;
+  @Input() isContactData: boolean;
+  @Output() toggleCustomerContacts: EventEmitter <any> = new EventEmitter<any>();
 
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
+
+
+  backHandler() {
+      this.toggleCustomerContacts.emit();
+  }
 }
