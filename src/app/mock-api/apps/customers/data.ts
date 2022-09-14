@@ -131,6 +131,17 @@ export const products = [
             customerType: 'CF',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            contactsListData: [
+                {
+                contactFirstName:'Lorum Ipsum',
+                contactLastName:'Lorum Ipsum',
+                contactPosition:'Lorum Ipsum',
+                contactPhoneNumber:'Lorum Ipsum',
+                contactEmail:'Lorum Ipsum',
+                contactDetails:'Lorum Ipsum',
+
+                }
+            ]
 
         },
         {

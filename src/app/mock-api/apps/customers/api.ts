@@ -191,6 +191,7 @@ export class CustomersInventoryMockApi
                     contactNo:'',
                     phoneNo: '',
                     position:'',
+                    
                 };
 
                 // Unshift the new product

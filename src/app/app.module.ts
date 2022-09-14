@@ -13,6 +13,8 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 
 const routerConfig: ExtraOptions = {
@@ -40,7 +42,8 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatGridListModule
     ],
     bootstrap: [AppComponent],
 })

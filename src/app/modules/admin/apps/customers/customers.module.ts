@@ -37,6 +37,7 @@ import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobDataComponent } from './navigation/job-data/job-data.component';
 import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { CustomersContactsList } from './navigation/customer-information/custome
         SharedModule,
         MatDialogModule,
         MatTabsModule,
+        MatGridListModule
 
     ]
 })

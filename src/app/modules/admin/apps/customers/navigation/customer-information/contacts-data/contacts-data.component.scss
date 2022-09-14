@@ -57,3 +57,12 @@
         grid-template-columns: 18% 18% 18% 18% 18%;
     }
 }
+
+
+mat-grid-tile {
+    background: lightblue;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper  {
+    padding: 0px !important;
+  }

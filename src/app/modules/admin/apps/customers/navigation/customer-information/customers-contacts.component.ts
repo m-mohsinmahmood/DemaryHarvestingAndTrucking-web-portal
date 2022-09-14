@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { ContactsDataComponent } from './contacts-data/contacts-data.component';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 // import { AddCustomer } from '../add/add.component';
@@ -22,14 +23,14 @@ import { Router } from '@angular/router';
                 grid-template-columns: 10% 50% 30%;
 
                 @screen sm {
-                    grid-template-columns: 15% 10% 10% 10% 10% 10% 10% 5% 5%;
+                    grid-template-columns: 15% 15% 15% 15% 15% 15%;
                 }
                 @screen md {
-                    grid-template-columns: 15% 10% 10% 10% 10% 10% 10% 5% 5%;
+                    grid-template-columns:  15% 15% 15% 15% 15% 15%;
                 }
 
                 @screen lg {
-                    grid-template-columns: 15% 10% 10% 10% 10% 10% 10% 5% 5%;
+                    grid-template-columns:  15% 15% 15% 15% 15% 15%;
                 }
             }
             .redInActiveIcon
