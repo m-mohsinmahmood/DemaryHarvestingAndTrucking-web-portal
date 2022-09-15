@@ -6,7 +6,11 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
-import { UpdateAddComponent } from '../update-add/update-add.component';
+// import { UpdateAddMachineryComponent } from '../update/update-add.component';
+// import { MachineryService } from './../machinery.service';
+// import { PartService } from './../part.service';
+import {UpdateAddPropertyComponent } from '../update/update-add.component';
+import { PropertyService } from 'app/modules/admin/apps/equipment/property/property.service';
 
 
 const governmentDocs = [
@@ -53,7 +57,7 @@ const governmentDocs = [
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VehicleDetailComponent implements OnInit, OnDestroy
+export class PropertyDetailComponent implements OnInit, OnDestroy
 {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -72,7 +76,7 @@ export class VehicleDetailComponent implements OnInit, OnDestroy
         private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
-        public _vehicleService: VehicleService,
+        public _machineService: PropertyService,
         private _router: Router,
 
     )
@@ -96,7 +100,8 @@ export class VehicleDetailComponent implements OnInit, OnDestroy
 
 
         // Get the employee by id
-        this._vehicleService.getVehicleById(this.routeID).subscribe((vehicle) => {
+        this._machineService.getProductById(this.routeID).subscribe((vehicle) => {
+            console.log('EEE',vehicle);
             this.vehicleDetails = vehicle;
         });
       }
@@ -118,7 +123,7 @@ export class VehicleDetailComponent implements OnInit, OnDestroy
     openUpdateDialog(): void
     {
     // Open the dialog
-         const dialogRef = this._matDialog.open(UpdateAddComponent,{
+         const dialogRef = this._matDialog.open(UpdateAddPropertyComponent,{
           data:{id: this.routeID}
          });
 
@@ -131,7 +136,7 @@ export class VehicleDetailComponent implements OnInit, OnDestroy
 
     backHandler(): void
     {
-        this._router.navigate(['/apps/equipment/vehicle']);
+        this._router.navigate(['/apps/equipment/property']);
     }
 
 

@@ -6,8 +6,11 @@ import { MatSort } from '@angular/material/sort';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/part/part.types';
 import { PartService } from 'app/modules/admin/apps/equipment/part/part.service';
+import { PartsProduct, PartsBrand, PartsCategory, PartsTag, PartsPagination, PartsVendor } from '../part.types';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateAddPartsComponent } from '../update/update-add.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector       : 'part-list',
@@ -23,11 +26,11 @@ import { PartService } from 'app/modules/admin/apps/equipment/part/part.service'
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 50px 192px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 50px 192px auto 112px 96px 96px 72px;
                 }
             }
         `
@@ -41,20 +44,20 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    products$: Observable<InventoryProduct[]>;
+    products$: Observable<PartsProduct[]>;
 
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredTags: InventoryTag[];
+    brands: PartsBrand[];
+    categories: PartsCategory[];
+    filteredTags: PartsTag[];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: InventoryPagination;
+    pagination: PartsPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedProduct: InventoryProduct | null = null;
+    selectedProduct: PartsProduct | null = null;
     selectedProductForm: FormGroup;
-    tags: InventoryTag[];
+    tags: PartsTag[];
     tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
+    vendors: PartsVendor[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -64,7 +67,9 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: PartService
+        private _inventoryService: PartService,
+        private _matDialog: MatDialog,
+        private _router: Router
     )
     {
     }
@@ -105,7 +110,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the brands
         this._inventoryService.brands$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: InventoryBrand[]) => {
+            .subscribe((brands: PartsBrand[]) => {
 
                 // Update the brands
                 this.brands = brands;
@@ -117,7 +122,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the categories
         this._inventoryService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: InventoryCategory[]) => {
+            .subscribe((categories: PartsCategory[]) => {
 
                 // Update the categories
                 this.categories = categories;
@@ -129,7 +134,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the pagination
         this._inventoryService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: InventoryPagination) => {
+            .subscribe((pagination: PartsPagination) => {
 
                 // Update the pagination
                 this.pagination = pagination;
@@ -140,11 +145,12 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the products
         this.products$ = this._inventoryService.products$;
+        console.log('PRODUCTS',this.products$);
 
         // Get the tags
         this._inventoryService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: InventoryTag[]) => {
+            .subscribe((tags: PartsTag[]) => {
 
                 // Update the tags
                 this.tags = tags;
@@ -157,7 +163,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the vendors
         this._inventoryService.vendors$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: InventoryVendor[]) => {
+            .subscribe((vendors: PartsVendor[]) => {
 
                 // Update the vendors
                 this.vendors = vendors;
@@ -244,29 +250,24 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param productId
      */
-    toggleDetails(productId: string): void
+     toggleDetails(machineId: string): void {
+        this._router.navigate([
+            `/apps/equipment/parts-tools/details/${machineId}`,
+        ]);
+    }
+
+    openAddDialog(): void
     {
-        // If the product is already selected...
-        if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddPartsComponent);
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
 
-        // Get the product by id
-        this._inventoryService.getProductById(productId)
-            .subscribe((product) => {
-
-                // Set the selected product
-                this.selectedProduct = product;
-
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+         dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
 
     /**
@@ -393,7 +394,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param event
      */
-    updateTagTitle(tag: InventoryTag, event): void
+    updateTagTitle(tag: PartsTag, event): void
     {
         // Update the title on the tag
         tag.title = event.target.value;
@@ -412,7 +413,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    deleteTag(tag: InventoryTag): void
+    deleteTag(tag: PartsTag): void
     {
         // Delete the tag from the server
         this._inventoryService.deleteTag(tag.id).subscribe();
@@ -426,7 +427,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    addTagToProduct(tag: InventoryTag): void
+    addTagToProduct(tag: PartsTag): void
     {
         // Add the tag
         this.selectedProduct.tags.unshift(tag.id);
@@ -443,7 +444,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    removeTagFromProduct(tag: InventoryTag): void
+    removeTagFromProduct(tag: PartsTag): void
     {
         // Remove the tag
         this.selectedProduct.tags.splice(this.selectedProduct.tags.findIndex(item => item === tag.id), 1);
@@ -461,7 +462,7 @@ export class PartListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param change
      */
-    toggleProductTag(tag: InventoryTag, change: MatCheckboxChange): void
+    toggleProductTag(tag: PartsTag, change: MatCheckboxChange): void
     {
         if ( change.checked )
         {

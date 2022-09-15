@@ -89,6 +89,12 @@
                                 </app-resources>
                             </ng-template>
                         </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Documentation'">
+                                <document-list>
+                                </document-list>
+                            </ng-template>
+                        </div>
                     </div>
                 </div>
             </div>

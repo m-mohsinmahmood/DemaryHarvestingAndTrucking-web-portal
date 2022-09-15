@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/part/part.types';
+import { PartsBrand, PartsCategory, PartsPagination, PartsProduct, PartsTag, PartsVendor } from './part.types';
+// import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/part/part.types';
 
 @Injectable({
     providedIn: 'root'
@@ -9,13 +10,13 @@ import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduc
 export class PartService
 {
     // Private
-    private _brands: BehaviorSubject<InventoryBrand[] | null> = new BehaviorSubject(null);
-    private _categories: BehaviorSubject<InventoryCategory[] | null> = new BehaviorSubject(null);
-    private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
-    private _product: BehaviorSubject<InventoryProduct | null> = new BehaviorSubject(null);
-    private _products: BehaviorSubject<InventoryProduct[] | null> = new BehaviorSubject(null);
-    private _tags: BehaviorSubject<InventoryTag[] | null> = new BehaviorSubject(null);
-    private _vendors: BehaviorSubject<InventoryVendor[] | null> = new BehaviorSubject(null);
+    private _brands: BehaviorSubject<PartsBrand[] | null> = new BehaviorSubject(null);
+    private _categories: BehaviorSubject<PartsCategory[] | null> = new BehaviorSubject(null);
+    private _pagination: BehaviorSubject<PartsPagination | null> = new BehaviorSubject(null);
+    private _product: BehaviorSubject<PartsProduct | null> = new BehaviorSubject(null);
+    private _products: BehaviorSubject<PartsProduct[] | null> = new BehaviorSubject(null);
+    private _tags: BehaviorSubject<PartsTag[] | null> = new BehaviorSubject(null);
+    private _vendors: BehaviorSubject<PartsVendor[] | null> = new BehaviorSubject(null);
 
     /**
      * Constructor
@@ -31,7 +32,7 @@ export class PartService
     /**
      * Getter for brands
      */
-    get brands$(): Observable<InventoryBrand[]>
+    get brands$(): Observable<PartsBrand[]>
     {
         return this._brands.asObservable();
     }
@@ -39,7 +40,7 @@ export class PartService
     /**
      * Getter for categories
      */
-    get categories$(): Observable<InventoryCategory[]>
+    get categories$(): Observable<PartsCategory[]>
     {
         return this._categories.asObservable();
     }
@@ -47,7 +48,7 @@ export class PartService
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<InventoryPagination>
+    get pagination$(): Observable<PartsPagination>
     {
         return this._pagination.asObservable();
     }
@@ -55,7 +56,7 @@ export class PartService
     /**
      * Getter for product
      */
-    get product$(): Observable<InventoryProduct>
+    get product$(): Observable<PartsProduct>
     {
         return this._product.asObservable();
     }
@@ -63,7 +64,7 @@ export class PartService
     /**
      * Getter for products
      */
-    get products$(): Observable<InventoryProduct[]>
+    get products$(): Observable<PartsProduct[]>
     {
         return this._products.asObservable();
     }
@@ -71,7 +72,7 @@ export class PartService
     /**
      * Getter for tags
      */
-    get tags$(): Observable<InventoryTag[]>
+    get tags$(): Observable<PartsTag[]>
     {
         return this._tags.asObservable();
     }
@@ -79,7 +80,7 @@ export class PartService
     /**
      * Getter for vendors
      */
-    get vendors$(): Observable<InventoryVendor[]>
+    get vendors$(): Observable<PartsVendor[]>
     {
         return this._vendors.asObservable();
     }
@@ -91,9 +92,9 @@ export class PartService
     /**
      * Get brands
      */
-    getBrands(): Observable<InventoryBrand[]>
+    getBrands(): Observable<PartsBrand[]>
     {
-        return this._httpClient.get<InventoryBrand[]>('api/apps/ecommerce/inventory/brands').pipe(
+        return this._httpClient.get<PartsBrand[]>('api/apps/ecommerce/inventory/brands').pipe(
             tap((brands) => {
                 this._brands.next(brands);
             })
@@ -103,9 +104,9 @@ export class PartService
     /**
      * Get categories
      */
-    getCategories(): Observable<InventoryCategory[]>
+    getCategories(): Observable<PartsCategory[]>
     {
-        return this._httpClient.get<InventoryCategory[]>('api/apps/ecommerce/inventory/categories').pipe(
+        return this._httpClient.get<PartsCategory[]>('api/apps/ecommerce/inventory/categories').pipe(
             tap((categories) => {
                 this._categories.next(categories);
             })
@@ -123,9 +124,9 @@ export class PartService
      * @param search
      */
     getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
+        Observable<{ pagination: PartsPagination; products: PartsProduct[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/ecommerce/inventory/products', {
+        return this._httpClient.get<{ pagination: PartsPagination; products: PartsProduct[] }>('api/apps/equipment/property/products', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -137,6 +138,7 @@ export class PartService
             tap((response) => {
                 this._pagination.next(response.pagination);
                 this._products.next(response.products);
+                console.log('PPPPP',response.products);
             })
         );
     }
@@ -144,7 +146,7 @@ export class PartService
     /**
      * Get product by id
      */
-    getProductById(id: string): Observable<InventoryProduct>
+    getProductById(id: string): Observable<PartsProduct>
     {
         return this._products.pipe(
             take(1),
@@ -174,11 +176,11 @@ export class PartService
     /**
      * Create product
      */
-    createProduct(): Observable<InventoryProduct>
+    createProduct(): Observable<PartsProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
+            switchMap(products => this._httpClient.post<PartsProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
                 map((newProduct) => {
 
                     // Update the products with the new product
@@ -197,11 +199,11 @@ export class PartService
      * @param id
      * @param product
      */
-    updateProduct(id: string, product: InventoryProduct): Observable<InventoryProduct>
+    updateProduct(id: string, product: PartsProduct): Observable<PartsProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.patch<InventoryProduct>('api/apps/ecommerce/inventory/product', {
+            switchMap(products => this._httpClient.patch<PartsProduct>('api/apps/ecommerce/inventory/product', {
                 id,
                 product
             }).pipe(
@@ -266,9 +268,9 @@ export class PartService
     /**
      * Get tags
      */
-    getTags(): Observable<InventoryTag[]>
+    getTags(): Observable<PartsTag[]>
     {
-        return this._httpClient.get<InventoryTag[]>('api/apps/ecommerce/inventory/tags').pipe(
+        return this._httpClient.get<PartsTag[]>('api/apps/ecommerce/inventory/tags').pipe(
             tap((tags) => {
                 this._tags.next(tags);
             })
@@ -280,11 +282,11 @@ export class PartService
      *
      * @param tag
      */
-    createTag(tag: InventoryTag): Observable<InventoryTag>
+    createTag(tag: PartsTag): Observable<PartsTag>
     {
         return this.tags$.pipe(
             take(1),
-            switchMap(tags => this._httpClient.post<InventoryTag>('api/apps/ecommerce/inventory/tag', {tag}).pipe(
+            switchMap(tags => this._httpClient.post<PartsTag>('api/apps/ecommerce/inventory/tag', {tag}).pipe(
                 map((newTag) => {
 
                     // Update the tags with the new tag
@@ -303,11 +305,11 @@ export class PartService
      * @param id
      * @param tag
      */
-    updateTag(id: string, tag: InventoryTag): Observable<InventoryTag>
+    updateTag(id: string, tag: PartsTag): Observable<PartsTag>
     {
         return this.tags$.pipe(
             take(1),
-            switchMap(tags => this._httpClient.patch<InventoryTag>('api/apps/ecommerce/inventory/tag', {
+            switchMap(tags => this._httpClient.patch<PartsTag>('api/apps/ecommerce/inventory/tag', {
                 id,
                 tag
             }).pipe(
@@ -381,9 +383,9 @@ export class PartService
     /**
      * Get vendors
      */
-    getVendors(): Observable<InventoryVendor[]>
+    getVendors(): Observable<PartsVendor[]>
     {
-        return this._httpClient.get<InventoryVendor[]>('api/apps/ecommerce/inventory/vendors').pipe(
+        return this._httpClient.get<PartsVendor[]>('api/apps/ecommerce/inventory/vendors').pipe(
             tap((vendors) => {
                 this._vendors.next(vendors);
             })

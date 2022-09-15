@@ -36,6 +36,8 @@ import { JobStatusComponent } from './navigation/job-status/job-status.component
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobDataComponent } from './navigation/job-data/job-data.component';
+import { DocumentComponent } from './navigation/document/document.component';
+// import { DocumentDetailsComponent } from './navigation/document-details/ducument-details.component';
 
 @NgModule({
     declarations: [
@@ -53,10 +55,12 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         JobStatusComponent,
         FarmDataComponent,
         ResourcesComponent,
-        JobDataComponent
+        JobDataComponent,
+        DocumentComponent,
+        // DocumentDetailsComponent,
     ],
     imports     : [
-        RouterModule.forChild(customersRoutes),
+    RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,

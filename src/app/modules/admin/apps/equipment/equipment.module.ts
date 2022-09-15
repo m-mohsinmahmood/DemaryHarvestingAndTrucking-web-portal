@@ -37,6 +37,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MachineryDetailComponent } from './machinery/details/details.component';
+import { UpdateAddPartsComponent } from './part/update/update-add.component';
+import { PartsDetailComponent } from './part/details/details.component';
+import { UpdateAddPropertyComponent } from './property/update/update-add.component';
+import { PropertyDetailComponent } from './property/details/details.component';
 
 
 
@@ -55,9 +59,14 @@ import { MachineryDetailComponent } from './machinery/details/details.component'
         UpdateAddComponent,
         UpdateAddMachineryComponent,
         MachineryDetailComponent,
+        UpdateAddPartsComponent,
+        PartsDetailComponent,
+        UpdateAddPropertyComponent,
+        PropertyDetailComponent,
+
     ],
     imports     : [
-        RouterModule.forChild(equipmentRoutes),
+    RouterModule.forChild(equipmentRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,

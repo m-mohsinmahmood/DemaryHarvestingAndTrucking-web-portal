@@ -29,6 +29,10 @@ import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/deta
 import { UpdateComponent } from './update/update.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FilterComponent } from './filter/filter.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -63,7 +67,29 @@ import { FilterComponent } from './filter/filter.component';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
-        SharedModule
+        SharedModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        // MatButtonModule,
+        // MatCheckboxModule,
+        // MatFormFieldModule,
+        // MatIconModule,
+        // MatInputModule,
+        // MatMenuModule,
+        // MatPaginatorModule,
+        // MatProgressBarModule,
+        // MatRippleModule,
+        // MatSortModule,
+        // MatSelectModule,
+        // MatSlideToggleModule,
+        // MatTooltipModule,
+        MatSidenavModule,
+        MatDividerModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
+        // SharedModule,
+        // MatDialogModule,
+        // MatTabsModule,
     ]
 })
 export class ApplicantsModule

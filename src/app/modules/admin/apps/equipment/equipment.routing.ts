@@ -24,6 +24,10 @@ import {
     MachineryVendorsResolver,
 } from 'app/modules/admin/apps/equipment/machinery/machinery.resolvers';
 import { MachineryDetailComponent } from './machinery/details/details.component';
+import { PropertyBrandsResolver, PropertyCategoriesResolver, PropertyProductsResolver, PropertyTagsResolver, PropertyVendorsResolver } from './property/property.resolvers';
+import { PartsBrandsResolver, PartsCategoriesResolver, PartsProductsResolver, PartsTagsResolver, PartsVendorsResolver } from './part/part.resolvers';
+import { PartsDetailComponent } from './part/details/details.component';
+import { PropertyDetailComponent } from './property/details/details.component';
 
 export const equipmentRoutes: Route[] = [
     {
@@ -95,13 +99,24 @@ export const equipmentRoutes: Route[] = [
                 path: '',
                 component: PropertyListComponent,
                 resolve: {
-                    brands: InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products: InventoryProductsResolver,
-                    tags: InventoryTagsResolver,
-                    vendors: InventoryVendorsResolver,
+                    brands: PropertyBrandsResolver,
+                    categories: PropertyCategoriesResolver,
+                    products: PropertyProductsResolver,
+                    tags: PropertyTagsResolver,
+                    vendors: PropertyVendorsResolver,
                 },
             },
+            {
+                path     : 'details/:Id',
+                component: PropertyDetailComponent,
+                resolve: {
+                    brands: PropertyBrandsResolver,
+                    categories: PropertyCategoriesResolver,
+                    products: PropertyProductsResolver,
+                    tags: PropertyTagsResolver,
+                    vendors: PropertyVendorsResolver,
+                },
+            }
         ],
     },
     {
@@ -112,13 +127,24 @@ export const equipmentRoutes: Route[] = [
                 path: '',
                 component: PartListComponent,
                 resolve: {
-                    brands: InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products: InventoryProductsResolver,
-                    tags: InventoryTagsResolver,
-                    vendors: InventoryVendorsResolver,
+                    brands: PartsBrandsResolver,
+                    categories: PartsCategoriesResolver,
+                    products: PartsProductsResolver,
+                    tags: PartsTagsResolver,
+                    vendors: PartsVendorsResolver,
                 },
             },
+            {
+                path     : 'details/:Id',
+                component: PartsDetailComponent,
+                resolve: {
+                    brands: PartsBrandsResolver,
+                    categories: PartsCategoriesResolver,
+                    products: PartsProductsResolver,
+                    tags: PartsTagsResolver,
+                    vendors: PartsVendorsResolver,
+                },
+            }
         ],
     },
 ];

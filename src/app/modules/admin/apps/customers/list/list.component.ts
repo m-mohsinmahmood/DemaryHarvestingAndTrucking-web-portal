@@ -290,7 +290,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the product by id
         this._customersService.getProductById(productId)
             .subscribe((product) => {
-                this._router.navigateByUrl('apps/customers/details/'+ productId) 
+                this._router.navigateByUrl('apps/customers/details/'+ productId)
                 // Set the selected product
                 this.selectedProduct = product;
 
@@ -298,7 +298,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit, OnDestroy
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck(); 
+                this._changeDetectorRef.markForCheck();
             });
     }
     /**
