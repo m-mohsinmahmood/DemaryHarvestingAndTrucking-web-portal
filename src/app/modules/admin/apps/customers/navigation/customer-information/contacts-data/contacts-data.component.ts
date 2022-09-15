@@ -83,9 +83,20 @@ export class ContactsDataComponent implements OnInit {
 
   });
   }
+  
 
 
   backHandler() {
       this.toggleCustomerContacts.emit();
+  }
+
+  enableEditButton()
+  {
+    this.isEditMode = true;
+
+  }
+
+  disableEditButton() {
+    this.isEditMode = false;
   }
 }

@@ -1,46 +1,51 @@
 <div *ngIf="isContactData" class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 bg-card dark:bg-transparent">
 
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center py-8 px-6 md:px-8 border-b">
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center py-8 px-6 md:px-8 border-b place-content-between">
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight"> </div>
         <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <span class="ml-1 capitalize">Contact Data</span>
         </div>
         <!-- Actions -->
+        <div class ="flex items-center">
+        <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+            <span class="ml-2 mr-1">Edit</span>
+        </button>
+
+        <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
+            <span class="ml-2 mr-1">Cancel</span>
+        </button>
+        <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Save</span>
+        </button>
+        </div>
+        
     </div>
     <!-- Main -->
     <form [formGroup]="selectedProductForm" (ngSubmit)="onSubmit()" class="justify-center p-8 table-auto">
 
         <div class="grid gap-4 sm:grid-cols-2 table-auto py-5">
             <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Contact Name: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Company Name: </mat-label>
+                <mat-label *ngIf="!isEditMode">Cinnova</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
-
             <div class="flex items-center">
                 <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Company Name: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label *ngIf="!isEditMode">Cinnova</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
 
-
             <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Phone Number: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
-                <mat-form-field *ngIf="isEditMode" appearance="outline">
-                        <input matInput formControlName="">
-                </mat-form-field>
-            </div>
-            <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Office Number: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Contact Name: </mat-label>
+                <mat-label *ngIf="!isEditMode">Adam Smith</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
@@ -48,21 +53,32 @@
 
             <div class="flex items-center">
                 <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Website: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label *ngIf="!isEditMode">cinnova.com</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
+            <div class="flex items-center">
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Contact Position: </mat-label>
+                <mat-label *ngIf="!isEditMode">Developer</mat-label>
+                <mat-form-field *ngIf="isEditMode" appearance="outline">
+                        <input matInput formControlName="">
+                </mat-form-field>
+            </div>
+
+
+            
             <div class="flex items-center">
                 <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Address: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label *ngIf="!isEditMode">Cincinnati, USA</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
+
             <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Billing Address: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Cell Phone Number: </mat-label>
+                <mat-label *ngIf="!isEditMode">+1(123)-456-7890</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
@@ -74,9 +90,14 @@
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
-            
+            <div class="flex items-center">
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Office Phone Number: </mat-label>
+                <mat-label *ngIf="!isEditMode">+1(123)-456-7890</mat-label>
+                <mat-form-field *ngIf="isEditMode" appearance="outline">
+                        <input matInput formControlName="">
+                </mat-form-field>
+            </div>
 
-            
             <div class="flex items-center">
                 <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">State: </mat-label>
                 <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
@@ -85,36 +106,30 @@
                 </mat-form-field>
             </div>
             <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Zip Code: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Email: </mat-label>
+                <mat-label *ngIf="!isEditMode">abc@xyz.com</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
             <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Email: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Zip Code: </mat-label>
+                <mat-label *ngIf="!isEditMode">54000</mat-label>
+                <mat-form-field *ngIf="isEditMode" appearance="outline">
+                        <input matInput formControlName="">
+                </mat-form-field>
+            </div>
+          
+            
+            <div class="flex items-center">
+                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Fax: </mat-label>
+                <mat-label *ngIf="!isEditMode">000-0000-0000</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
                 </mat-form-field>
             </div>
             <div class="flex items-center">
                 <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">LinkedIn: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
-                <mat-form-field *ngIf="isEditMode" appearance="outline">
-                        <input matInput formControlName="">
-                </mat-form-field>
-            </div>
-            
-            <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Fax: </mat-label>
-                <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
-                <mat-form-field *ngIf="isEditMode" appearance="outline">
-                        <input matInput formControlName="">
-                </mat-form-field>
-            </div>
-            <div class="flex items-center">
-                <mat-label class="text-lg font-extrabold text-gray-500 w-1/2">Company Position: </mat-label>
                 <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
                 <mat-form-field *ngIf="isEditMode" appearance="outline">
                         <input matInput formControlName="">
