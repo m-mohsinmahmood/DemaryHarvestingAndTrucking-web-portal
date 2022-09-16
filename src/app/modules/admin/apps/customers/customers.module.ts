@@ -34,10 +34,12 @@ import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
-import { JobDataComponent } from './navigation/job-data/job-data.component';
+import { JobResultComponent } from './navigation/job-result/job-result.component';
 import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
     declarations: [
@@ -54,7 +56,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
         JobStatusComponent,
         FarmDataComponent,
         ResourcesComponent,
-        JobDataComponent,
+        JobResultComponent,
         ContactsDataComponent,
         CustomersContactsList
     ],
@@ -80,7 +82,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
         SharedModule,
         MatDialogModule,
         MatTabsModule,
-        MatGridListModule
+        MatGridListModule,
+        MatExpansionModule
 
     ]
 })

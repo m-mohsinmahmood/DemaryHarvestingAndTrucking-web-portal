@@ -16,7 +16,7 @@ export const customerNavigation = [
     },
     {
         id: 4,
-        title: 'Job Data',
+        title: 'Job Result',
         icon: 'mat_outline:checklist',
     },
     {

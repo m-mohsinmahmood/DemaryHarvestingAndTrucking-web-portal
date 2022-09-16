@@ -1,0 +1,43 @@
+.job-result-grid {
+    grid-template-columns: 10% 50% 30%;
+
+    @screen sm {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    }
+    @screen md {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    }
+
+    @screen lg {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    }
+}
+
+.job-result-custom-farming-grid {
+    grid-template-columns: 10% 50% 30%;
+
+    @screen sm {
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+    }
+    @screen md {
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+    }
+
+    @screen lg {
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+    }
+}
+
+// ::ng-deep .mat-form-field + .mat-form-field {
+//     margin-left: 8px;
+//   }
+
+// .mat-expansion-panel
+//   {
+//     background: #F5F5F5 !important;
+//   }
+//   .mat-accordion .mat-expansion-panel
+//   {
+//     marging
+
+//   }
