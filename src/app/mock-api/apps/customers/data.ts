@@ -127,7 +127,21 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            contactsListData: [
+                {
+                contactFirstName:'Lorum Ipsum',
+                contactLastName:'Lorum Ipsum',
+                contactPosition:'Lorum Ipsum',
+                contactPhoneNumber:'Lorum Ipsum',
+                contactEmail:'Lorum Ipsum',
+                contactDetails:'Lorum Ipsum',
+
+                }
+            ]
 
         },
         {
@@ -150,7 +164,10 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'P',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -165,7 +182,7 @@ export const products = [
             skipInvoiceMath2: 1,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -174,7 +191,11 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+
 
 
         },
@@ -190,7 +211,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -199,7 +220,11 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+
 
 
         },
@@ -215,7 +240,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -224,7 +249,10 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -240,7 +268,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -249,7 +277,11 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CT',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+
 
         },
         {
@@ -264,7 +296,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -273,7 +305,11 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CT, CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+
 
 
         },
@@ -289,7 +325,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -298,8 +334,10 @@ export const products = [
             cropHarvestYear:  '2022 - Segment A - 2022 Harvest Season',
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
-            contactNo: '+1(909)-123-1234'
-
+            contactNo: '+1(909)-123-1234',
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
         }];
 
