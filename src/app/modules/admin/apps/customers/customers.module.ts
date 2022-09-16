@@ -36,6 +36,9 @@ import { JobStatusComponent } from './navigation/job-status/job-status.component
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobDataComponent } from './navigation/job-data/job-data.component';
+import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
+import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +56,10 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         JobStatusComponent,
         FarmDataComponent,
         ResourcesComponent,
-        JobDataComponent
+        JobDataComponent,
+        AddFarmComponent,
+        AddCropComponent,
+        AddDestinationComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),
