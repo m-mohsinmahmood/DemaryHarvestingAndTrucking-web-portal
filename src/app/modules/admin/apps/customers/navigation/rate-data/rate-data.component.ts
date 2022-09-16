@@ -7,17 +7,13 @@ import { Component, OnInit } from '@angular/core';
     /* language=SCSS */
     `
         .rate-data-grid {
-            grid-template-columns: 10% 50% 30%;
-
-            @screen sm {
-                grid-template-columns: 10% 20% 20% 20% 15% 10% 10%;
-            }
-            @screen md {
-                grid-template-columns: 10% 20% 20% 20% 15% 10% 10% ;
-            }
-
             @screen lg {
-                grid-template-columns: 10% 20% 20% 20% 15% 10% 10%;
+                grid-template-columns: 15% 15% 20% 30% 20% ;
+            }
+        }
+        .rate-data-grid-trucking {
+            @screen lg {
+                grid-template-columns: 15% 15% 15% 15% 10% 10% 10%;
             }
         }
     `
@@ -28,11 +24,11 @@ export class RateDataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  console.log("hits");
+  console.log('hits');
   }
 
-  onTabChanged(event) {
-    console.log("Log" , event.tab.textLabel);
+  onTabChanged(event): void {
+     console.log('Log' , event.tab.textLabel);
   }
 
 }
