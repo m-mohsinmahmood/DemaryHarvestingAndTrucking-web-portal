@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import {
   Component,
@@ -48,44 +49,43 @@ export class ContactsDataComponent implements OnInit {
     console.log('contacts-data')
      // Create the selected product form
      this.selectedProductForm = this._formBuilder.group({
-      id               : [''],
-      harvestYear      : [''],
-      name             : [''],
-      alternateName      : [''],
-      skipInvoiceMath1              : [''],
-      arizonaInvoiceMath          : [''],
-      skipInvoiceMath2            : [''],
-      avatar: [''],
-      email            : [''],
-      stateProvince    : [''],
-      isActive         : [''],
-      reserved         : [''],
-      cost             : [''],
-      basePrice        : [''],
-      taxPercent       : [''],
-      price            : [''],
-      weight           : [''],
-      thumbnail        : [''],
-      images           : [[]],
-      currentImageIndex: [0], // Image index that is currently being viewed
-      active           : [false],
-      farmId: [''],
-      farmHarvestYear: [''],
-      farmName: [''],
-      farmTotalAcres: [''],
-      cropid: [''],
-      cropHarvestYear: [''],
-      cropCrop: [''],
-      cropPoundsPerBushel: [''],
-      contactNo: [''],
-      customerType:[''],
-      phoneNo: [''],
-      position:[''],
-
-
-
+      c_name               : [''],
+      c_name2      : [''],
+      contact_name             : [''],
+      w_name      : [''],
+      c_position              : [''],
+      address          : [''],
+      c_phonenumber            : [''],
+      city: [''],
+      o_phonenumber            : [''],
+      state    : [''],
+      email         : [''],
+      zipcode         : [''],
+      fax             : [''],
+      linkedin        : [''],
+      note_1       : [''],
+      note_2            : [''],
 
   });
+  this.selectedProductForm.patchValue({
+    c_name               : "Cinnova",
+      c_name2      : "Cinnova",
+      contact_name             : "Adam Smith",
+      w_name      : "cinnova.com",
+      c_position              : "Developer",
+      address          : "Cincinnati, USA",
+      c_phonenumber            : "+1(123)-456-7890",
+      city: "Lorium Ipsum",
+      o_phonenumber            : "+1(123)-456-7890",
+      state    : "Lorium Ipsum",
+      email         : "abc@xyz.com",
+      zipcode         : "54000",
+      fax             : "000-0000-0000",
+      linkedin        : "Lorium Ipsum",
+      note_1       : "Lorium Ipsum",
+      note_2            : "Lorium Ipsum",
+
+  })
   }
 
 
