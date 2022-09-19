@@ -17,7 +17,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ],
   },
-  
+
   {
     id: "entities",
     title: "Entities",
@@ -49,11 +49,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
   //   title: "Applicants",
   //   type: "basic",
   //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/applicants",  
+  //   link: "/apps/applicants",
   // },
         ],
-      
-       
+
+
       },
     ],
   },
@@ -62,14 +62,21 @@ export const defaultNavigation: FuseNavigationItem[] = [
     title: "Customers",
     type: "basic",
     icon: "heroicons_outline:user",
-    link: "/apps/customers",  
+    link: "/apps/customers",
   },
   {
     id: "applicants",
     title: "Applicants",
     type: "basic",
     icon: "heroicons_outline:user-circle",
-    link: "/apps/applicants",  
+    link: "/apps/applicants",
+  },
+  {
+    id: "crops",
+    title: "Crops",
+    type: "basic",
+    icon: "heroicons_outline:cog",
+    link: "/apps/crops",
   },
   // {
   //   id: "",
@@ -86,7 +93,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
   //     },
   //   ],
   // }
-  
+
 ]
-    
+
 

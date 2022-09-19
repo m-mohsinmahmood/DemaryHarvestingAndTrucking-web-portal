@@ -13,6 +13,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CropsComponent } from './modules/admin/apps/crops/crops.component';
 
 
 const routerConfig: ExtraOptions = {
