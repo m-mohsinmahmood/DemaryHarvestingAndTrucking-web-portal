@@ -27,6 +27,7 @@ import { cropsRoutes } from 'app/modules/admin/apps/crops/crops.routing';
 import { CropsComponent } from 'app/modules/admin/apps/crops/crops.component';
 import { CropsListComponent } from 'app/modules/admin/apps/crops/list/list.component';
 import { AddCropsComponent } from './add/add.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { AddCropsComponent } from './add/add.component';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
+        NgxDatatableModule,
         SharedModule
     ]
 })

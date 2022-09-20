@@ -1,51 +1,83 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCropsComponent } from '../add/add.component';
+import { CropService } from '../crops.services';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
-    styles: [
-        `
-            .crop-grid {
-                grid-template-columns: 30% 30% 40%;
-
-                @screen sm {
-                    grid-template-columns: 30% 30% 40%;
-                }
-                @screen md {
-                    grid-template-columns: 25% 25% 25%;
-                }
-                @screen lg {
-                    grid-template-columns: 30% 30% 40%;
-                }
-            }
-        `,
-    ],
+    styleUrls: ['./list.component.css'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
 })
 export class CropsListComponent implements OnInit {
 
+    @ViewChild('myTable') table: CropsListComponent;
+    @ViewChild(DatatableComponent) myFilterTable: DatatableComponent;
+
+
     isLoading: boolean = false;
     searchInputControl: FormControl = new FormControl();
+    temp = [];
+    rows: any = [];
+    totalCount: number = 0;
+    closeResult: string;
+    dataParams: any = {
+        pageNnum: '',
+        pageSize: '',
+    };
+    constructor(
+        private _matDialog: MatDialog,
+        private cropsService: CropService
+    ) {}
 
 
-    constructor(private _matDialog: MatDialog) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.dataParams.page_num = 1;
+        this.dataParams.page_size = 20;
+        this.getAllCrops();
+    }
 
-    openAddDialog(): void
-    {
+    getAllCrops(): void {
+        this.rows = this.cropsService.crops;
+        this.totalCount = this.cropsService.totalCount;
+        this.temp = this.rows;
+    }
+
+    openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCropsComponent);
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
 
-        dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+    updateFilter(event): void {
+        const val = event.target.value.toLowerCase();
+
+        // filter our data
+        const temp = this.temp.filter(function(d) {
+          return d.cropName.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+
+        // update the rows
+        this.rows = temp;
+        // Whenever the filter changes, always go back to the first page
+        this.myFilterTable.offset = 0;
     }
 }
