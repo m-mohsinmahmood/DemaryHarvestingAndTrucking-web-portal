@@ -12,7 +12,7 @@
 
     </header>
         <!-- Actions -->
-     <div class ="flex justify-end mr-12 mt-2">
+     <div class ="flex justify-end mr-12 mt-4">
         <button *ngIf="!isEditMode" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
             <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
             <span class="ml-2 mr-1">Edit</span>
@@ -23,122 +23,118 @@
 <div class="flex justify-center py-4">
     <img class="inline-block h-24 w-24 rounded-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
 </div>
-        <form [formGroup]="selectedProductForm"  class="p-6 table-auto ">
-            <div class="grid gap-2 sm:grid-cols-2 table-auto py-5 pl-12 min-h-128">
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Company Name: </mat-label>
-                    <mat-label *ngIf="!isEditMode">Cinnova Technologies (Pvt. Ltd.) Ohio, United states</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80" >
+        <form [formGroup]="selectedProductForm"  class="p-6 table-auto">
+            <div class="grid sm:gap-2 sm:grid-cols-2 grid-cols-1 table-auto py-5 sm:pl-0 md:pl-12 pl-2 min-h-128">
+                <div class="flex sm:flex-row flex-col  sm:items-center mb-2">
+                    <mat-label class="text-lg font-extrabold text-gray-500 sm:w-{{!isEditMode? '4/12':'4/12' }}">Company Name: </mat-label>
+                    <mat-label *ngIf="!isEditMode" class="break-all">Cinnova Technologies Lahore, Pakistan.</mat-label>
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class=" md:w-80 sm:w-50" >
                             <input matInput formControlName="c_name">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Company Name: </mat-label>
-                    <mat-label *ngIf="!isEditMode" >Cinnova Technologies (Pvt. Ltd.) Lahore, Pakistan</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80" >
-                            <input matInput formControlName="c_name2">
-                    </mat-form-field>
-                </div>
-
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Contact Name: </mat-label>
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
+                    <mat-label class="text-lg font-extrabold text-gray-500 sm:w-{{!isEditMode? '4/12':'4/12' }}">Contact Name: </mat-label>
                     <mat-label *ngIf="!isEditMode">Adam Smith S/O Smith Jones</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="sm:w-50 md:w-80 ">
                             <input matInput formControlName="contact_name">
                     </mat-form-field>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Website: </mat-label>
                     <mat-label *ngIf="!isEditMode">cinnova.com</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="w_name">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Contact Position: </mat-label>
                     <mat-label *ngIf="!isEditMode">Senior Developer</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="c_position">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Address: </mat-label>
                     <mat-label *ngIf="!isEditMode">Cincinnati, Ohio, United states</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="address">
                     </mat-form-field>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Cell  Number: </mat-label>
                     <mat-label *ngIf="!isEditMode">+1(123)-456-7890</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="c_phonenumber">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">City: </mat-label>
                     <mat-label *ngIf="!isEditMode">Detroit, United states</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="city">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Office Number: </mat-label>
                     <mat-label *ngIf="!isEditMode">+1(123)-456-7890</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="o_phonenumber">
                     </mat-form-field>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">State: </mat-label>
                     <mat-label *ngIf="!isEditMode">Michigan, United states</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="state">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Email: </mat-label>
                     <mat-label *ngIf="!isEditMode">adam.smith@comapny.com</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="email">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Zip Code: </mat-label>
                     <mat-label *ngIf="!isEditMode">54000</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="zipcode">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:flex-row flex-col sm:items-center mb-2">
                     <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Fax: </mat-label>
                     <mat-label *ngIf="!isEditMode">000-0000-0000</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="fax">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">LinkedIn: </mat-label>
-                    <mat-label *ngIf="!isEditMode">Adam Smith</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
+                <div class="flex sm:flex-row flex-col sm:items-center sm:col-span-full mb-2">
+                    <mat-label class="text-lg font-extrabold text-gray-500 sm:w-{{!isEditMode? '2/12':'2/12' }}">LinkedIn: </mat-label>
+                    <mat-label *ngIf="!isEditMode" class="w-full">Adam Smith</mat-label>
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="md:w-80 sm:w-50">
                             <input matInput formControlName="linkedin">
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Note 1: </mat-label>
-                    <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
-                            <input matInput formControlName="note_1">
+                <div class="flex sm:flex-row flex-col sm:items-center col-span-full mb-2">
+                    <mat-label class="text-lg font-extrabold text-gray-500 md:w-{{!isEditMode? '2/12':'2/12' }} sm:w-{{!isEditMode? '4/12':'2/12' }}">Note 1:</mat-label>
+                    <mat-label *ngIf="!isEditMode" class="">Lorium Ipsum content content content content content content content content content content content
+                        content content content content content content content content content content
+                    </mat-label>
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-full">
+                            <textarea matInput formControlName="note_1"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="flex items-center">
-                    <mat-label class="text-lg font-extrabold text-gray-500 w-{{!isEditMode? '4/12':'4/12' }}">Note 2 : </mat-label>
-                    <mat-label *ngIf="!isEditMode">Lorium Ipsum</mat-label>
-                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-80">
-                            <input matInput formControlName="note_2">
+                <div class="flex sm:flex-row flex-col sm:items-center col-span-full mt-{{!isEditMode?'0':'3'}}">
+                    <mat-label class="text-lg font-extrabold text-gray-500 md:w-{{!isEditMode? '2/12':'2/12' }} sm:w-{{!isEditMode? '4/12':'2/12' }}">Note 2:</mat-label>
+                    <mat-label *ngIf="!isEditMode">Lorium Ipsum content content content content content content content content content content content
+                        content content content content content content content content content content</mat-label>
+                    <mat-form-field *ngIf="isEditMode" appearance="outline" class="w-full">
+                            <textarea matInput formControlName="note_2"></textarea>
+
                     </mat-form-field>
                 </div>
             <!-- </div> -->
