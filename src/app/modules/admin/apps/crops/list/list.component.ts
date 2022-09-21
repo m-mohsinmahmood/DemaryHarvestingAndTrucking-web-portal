@@ -27,7 +27,6 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 })
 export class CropsListComponent implements OnInit {
 
-    @ViewChild('myTable') table: CropsListComponent;
     @ViewChild(DatatableComponent) myFilterTable: DatatableComponent;
 
 
@@ -49,9 +48,8 @@ export class CropsListComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.dataParams.page_num = 1;
-        this.dataParams.page_size = 20;
         this.getAllCrops();
+        this.myFilterTable.offset = 0;
     }
 
     getAllCrops(): void {

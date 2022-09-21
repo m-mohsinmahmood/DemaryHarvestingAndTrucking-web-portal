@@ -42,8 +42,7 @@
             </mat-menu>
         </div>
     </div>
-
-    <ngx-datatable #myTable #myFilterTable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" [sorts]="[{ prop: 'name', dir: 'desc' }]">
+    <ngx-datatable #myFilterTable class="material" [limit]="10" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [sorts]="[{ prop: 'name', dir: 'desc' }]">
         <ngx-datatable-column name="Crop" prop="cropName">
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{ row.cropName }}

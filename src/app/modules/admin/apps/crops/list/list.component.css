@@ -1,10 +1,15 @@
+.ngx-datatable {
+    height: 100% !important;
+    max-height: 100% !important;
+}
+
 .ngx-datatable.bootstrap {
     background-color: transparent;
     box-shadow: 0 0 0 #000;
 }
 
 .ngx-datatable.scroll-vertical {
-    height: 300px;
+    height: 500px;
 }
 
 .no-detail-row .datatable-row-detail {
