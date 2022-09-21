@@ -276,13 +276,14 @@ if(this.data !== null){
 
   }
   selectionChange(event) {
+    console.log('dddddd',event)
     if (event.selectedIndex == 0){
       this.isBack = false;
     }
     else {
       this.isBack = true;
     }
-    event.selectedIndex == 6 ? this.isSubmit=true : this.isSubmit=false;
+    event.selectedIndex == 5 ? this.isSubmit=true : this.isSubmit=false;
     }
 
     showPreview(event) {
