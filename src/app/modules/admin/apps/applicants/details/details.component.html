@@ -30,28 +30,37 @@
     </div>
 
     <!-- Main -->
-    <div class="flex mb-4">
-        <div class="w-6/12 h-12 flex justify-start items-center">
+    <div class="flex sm:flex-row flex-col mb-4 pt-2">
+        <div class="w-4/12 h-12 flex justify-start items-center ">
             <div class="flex" *ngFor="let route of routes;let i = index">
-                <button mat-stroked-button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 ml-2 justify-start w-full" (click)="clicked(route)">
-                        <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
+                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
+                        <span style="font-size: 13px;  margin-left: 0px;"> {{route.title}} </span>
                     </button>
             </div>
         </div>
-        <div class="w-6/12 h-12 flex justify-end items-center">
-            <button mat-stroked-button color="" class="mr-2">
-                Old Submitted Application
+        <div class="w-8/12 sm:h-12 flex sm:flex-row flex-col  justify-end items-center ">
+            <button mat-stroked-button   class="my-1 ml-2">
+                <span style="font-size: 13px;"> Old Submitted Application </span>
             </button>
-            <button mat-stroked-button color="" class="mr-2" (click)="openUpdateDialog()">
+            <button mat-stroked-button   class="my-1 ml-2" (click)="openUpdateDialog()">
+                <span style="font-size: 13px;"> Update Profile </span>
+            </button>
+            <button mat-stroked-button   class="my-1 ml-2">
+                <span style="font-size: 13px"> Download/Print Profile </span>
+            </button>
+            <!-- <button mat-stroked-button color="" class="mr-2">
+                Old Submitted Application
+            </button> -->
+            <!-- <button mat-stroked-button color="" class="mr-2" (click)="openUpdateDialog()">
                 Update Profile
             </button>
             <button mat-stroked-button color="" class="mr-2">
                 Download/Print Profile
-            </button>
+            </button> -->
         </div>
     </div>
-    <div class="flex flex-row">
-        <div class="w-8/12">
+    <div class="flex sm:flex-row flex-col ">
+        <div class="md:w-8/12">
             <div>
                 <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
                     <app-applicantdata>
@@ -66,30 +75,55 @@
             </div>
 
         </div>
-        <div class="w-4/12 min-h-72 bg-gray-100">
-            <mat-stepper orientation="vertical" linear="" #stepper class="bg-gray-100 rounded">
-                <mat-step [stepControl]="">
-                    <ng-template matStepLabel>N/A</ng-template>
-                </mat-step>
-                <mat-step [stepControl]="">
-                    <ng-template matStepLabel>New</ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Pre-Interview</ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>In Process</ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Hired</ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Evaluated</ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Not Being Considered</ng-template>
-                </mat-step>
-            </mat-stepper>
+        <div class="md:w-4/12">
+            <div class="h-120 bg-gray-100 rounded">
+            <div class="flex flex-col p-4">
+                <div class="flex relative min-h-18" *ngFor="let item of items">
+                   <div class="flex flex-col items-center">
+                    <div class="flex border-2 border-solid border-white rounded-full w-8 h-8 bg-white
+
+                      bg-{{
+                        item.status === 'a'
+                            ? 'blue'
+                            : 'to-blue-400'
+                    }}-400
+                    bg-{{
+                        item.status === 'b'
+                            ? 'red'
+                            : ''
+                    }}-400
+                    bg-{{
+                        item.status === 'c'
+                            ? 'orange'
+                            : ''
+                    }}-400
+                      bg-{{
+                        item.status === 'd1'
+                            ? 'yellow'
+                            : ''
+                    }}-400
+             bg-{{
+                        item.status ===
+                        'e1'
+                            ? 'green'
+                            : ''
+                    }}-400
+
+                      " ></div>
+                    <div class="timeline-track "  ></div>
+                     </div>
+                   <div class="flex-1 flex flex-row px-4">
+                    <span class="w-8/12 text-md">{{item.content}}</span>
+                    <div class=" w-4/12 flex justify-end font-mono text-xs">
+                        <div>
+
+                        </div>
+                        {{item.date}}
+                    </div>
+                   </div>
+                </div>
+            </div>
+
             <div class="flex flex-row justify-center items-center mb-5">
                 <button
                     class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44"
@@ -102,6 +136,7 @@
                     <span>Reject</span>
                 </button>
             </div>
+        </div>
         </div>
     </div>
 

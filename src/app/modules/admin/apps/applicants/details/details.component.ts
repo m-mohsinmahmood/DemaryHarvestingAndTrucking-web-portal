@@ -33,6 +33,7 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     applicants$: Observable<any>;
     routes = [];
     selectedIndex: string = 'Applicant Data';
+    items=[];
 
 
 
@@ -62,6 +63,13 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
      * On init
      */
      ngOnInit(): void {
+        this.items = [
+            {content:'Applicant to Vehicle Operator', date:'15/02/2022', status:'a'},
+            {content:'Advance phone screening by Tom Anthony', date:'15/02/2022', status:'b'},
+            {content:'Completed phone screening by John Mack', date:'15/02/2022',status:'c'},
+            {content:'Adavnce to interview by Tom Anthony',date:'15/02/2022',status:'d1'},
+            {content:'completed interview by Katherine synder', date:'15/02/2022',status:'e1'}
+        ];
 
         this.routes = this._applicantService.navigationLabels;
         console.log('object', this._applicantService.navigationLabels);
