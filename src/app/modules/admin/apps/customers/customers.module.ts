@@ -39,6 +39,7 @@ import { ContactsDataComponent } from './navigation/customer-information/contact
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         ResourcesComponent,
         JobResultComponent,
         ContactsDataComponent,
-        CustomersContactsList
+        CustomersContactsList,
+        AddItemComponent
     ],
     imports     : [
         RouterModule.forChild(customersRoutes),

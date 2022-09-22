@@ -28,6 +28,16 @@ export interface InventoryProduct
     customerType:string;
     phoneNo: string,
     position:string,
+    billTo               : string;
+      notesInvoice         :  string;  
+      addressInInvoice     :  string;
+      termsInvoice         :  string;
+      dateInvoice          :  string;
+      next15Days           :  string; 
+      invoiceNumber           : string;
+      balanceInvoice: string;
+      paymentCredit: string;
+      totalInvoice: string;
 }
 
 export interface InventoryPagination
