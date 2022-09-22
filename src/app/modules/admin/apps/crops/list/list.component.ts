@@ -31,6 +31,7 @@ export class CropsListComponent implements OnInit {
 
 
     isLoading: boolean = false;
+    isEdit: boolean = false;
     searchInputControl: FormControl = new FormControl();
     temp = [];
     rows: any = [];
@@ -64,13 +65,27 @@ export class CropsListComponent implements OnInit {
             console.log('Compose dialog was closed!');
         });
     }
+    openEditDialog(event): void {
+    this.isEdit = true;
+        const dialogRef = this._matDialog.open(AddCropsComponent, {
+            data: {
+                isEdit: this.isEdit,
+                cropName: event.cropName,
+                variety: event.variety,
+                bushelWeight: event.bushelWeight
+        }
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
 
     updateFilter(event): void {
         const val = event.target.value.toLowerCase();
 
         // filter our data
         const temp = this.temp.filter(function(d) {
-          return d.cropName.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.cropName.toLowerCase().indexOf(val) !== -1 || !val;
         });
 
         // update the rows
