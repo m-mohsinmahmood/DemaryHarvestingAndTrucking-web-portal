@@ -1,15 +1,15 @@
 export interface InventoryProduct
 {
     id: string;
-    harvestYear?:string;
+    harvestYear?: string;
     category?: string;
     avatar: string;
     name: string;
-    alternateName? : string; 
-    skipInvoiceMath1? : string;
-    arizonaInvoiceMath? : string;
+    alternateName?: string;
+    skipInvoiceMath1?: string;
+    arizonaInvoiceMath?: string;
     skipInvoiceMath2?: string;
-    stateProvince? : string;
+    stateProvince?: string;
     email?: string;
     isActive?: string;
     description?: string;
@@ -77,3 +77,25 @@ export interface InventoryVendor
     name: string;
     slug: string;
 }
+
+export interface Documents
+{
+    folders: Item[];
+    files: Item[];
+    path: any[];
+}
+
+export interface Item
+{
+    id?: string;
+    folderId?: string;
+    name?: string;
+    createdBy?: string;
+    createdAt?: string;
+    modifiedAt?: string;
+    size?: string;
+    type?: string;
+    contents?: string | null;
+    description?: string | null;
+}
+

@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
@@ -37,10 +38,8 @@ import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobResultComponent } from './navigation/job-result/job-result.component';
 import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
-
 
 @NgModule({
     declarations: [
@@ -63,7 +62,7 @@ import { AddItemComponent } from './navigation/invoice/add-item/add-item.compone
         AddItemComponent
     ],
     imports     : [
-        RouterModule.forChild(customersRoutes),
+    RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,

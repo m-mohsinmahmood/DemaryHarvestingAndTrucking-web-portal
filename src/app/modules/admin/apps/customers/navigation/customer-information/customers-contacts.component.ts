@@ -345,7 +345,18 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
                   this._changeDetectorRef.markForCheck();
               }); */
 
-              this.isContactData = true;
+              /* this.isContactData = true; */
+              // Open the dialog
+        const dialogRef = this._matDialog.open(ContactsDataComponent,{
+            height: '800px',
+  width: '1200px',
+        });
+
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+      });
       }
 
       toggleCustomerContacts() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor,Item } from 'app/modules/admin/apps/customers/customers.types';
 
 @Injectable({
     providedIn: 'root'
@@ -218,5 +218,130 @@ export class InventoryVendorsResolver implements Resolve<any>
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<InventoryVendor[]>
     {
         return this._customersService.getVendors();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentItemsResolver implements Resolve<any>
+{
+    /**
+     * Constructor
+     */
+    constructor(private _customersService: CustomersService)
+    {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Item[]>
+    {
+        console.log('File Resolver');
+        return this._customersService.getItems();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentFolderResolver implements Resolve<any>
+{
+    /**
+     * Constructor
+     */
+    constructor(
+        private _router: Router,
+        private _customersService: CustomersService
+    )
+    {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Item[]>
+    {
+        return this._customersService.getItems(route.paramMap.get('folderId'))
+                   .pipe(
+                       // Error here means the requested task is not available
+                       catchError((error) => {
+
+                           // Log the error
+                           console.error(error);
+
+                           // Get the parent url
+                           const parentUrl = state.url.split('/').slice(0, -1).join('/');
+
+                           // Navigate to there
+                           this._router.navigateByUrl(parentUrl);
+
+                           // Throw an error
+                           return throwError(error);
+                       })
+                   );
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentItemResolver implements Resolve<any>
+{
+    /**
+     * Constructor
+     */
+    constructor(
+        private _router: Router,
+        private _customersService: CustomersService
+    )
+    {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Item>
+    {
+        return this._customersService.getItemById(route.paramMap.get('id'))
+                   .pipe(
+                       // Error here means the requested task is not available
+                       catchError((error) => {
+
+                           // Log the error
+                           console.error(error);
+
+                           // Get the parent url
+                           const parentUrl = state.url.split('/').slice(0, -1).join('/');
+
+                           // Navigate to there
+                           this._router.navigateByUrl(parentUrl);
+
+                           // Throw an error
+                           return throwError(error);
+                       })
+                   );
     }
 }

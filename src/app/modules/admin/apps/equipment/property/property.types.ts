@@ -1,4 +1,4 @@
-export interface InventoryProduct
+export interface PropertyProduct
 {
     id: string;
     category?: string;
@@ -21,7 +21,7 @@ export interface InventoryProduct
     active: boolean;
 }
 
-export interface InventoryPagination
+export interface PropertyPagination
 {
     length: number;
     size: number;
@@ -31,7 +31,7 @@ export interface InventoryPagination
     endIndex: number;
 }
 
-export interface InventoryCategory
+export interface PropertyCategory
 {
     id: string;
     parentId: string;
@@ -39,20 +39,20 @@ export interface InventoryCategory
     slug: string;
 }
 
-export interface InventoryBrand
+export interface PropertyBrand
 {
     id: string;
     name: string;
     slug: string;
 }
 
-export interface InventoryTag
+export interface PropertyTag
 {
     id?: string;
     title?: string;
 }
 
-export interface InventoryVendor
+export interface PropertyVendor
 {
     id: string;
     name: string;

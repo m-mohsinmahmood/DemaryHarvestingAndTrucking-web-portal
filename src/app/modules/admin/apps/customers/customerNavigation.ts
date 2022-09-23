@@ -34,4 +34,9 @@ export const customerNavigation = [
         title: 'Resources',
         icon: 'heroicons_outline:rectangle-group',
     },
+    {
+        id: 8,
+        title: 'Documentation',
+        icon: 'heroicons_outline:document',
+    },
 ];

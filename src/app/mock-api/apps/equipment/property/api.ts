@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/ecommerce/inventory/data';
+import { brands as brandsData, categories as categoriesData, products as productsData, tags as tagsData, vendors as vendorsData } from 'app/mock-api/apps/equipment/property/data';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ECommerceInventoryMockApi
+export class PropertyMockApi
 {
     private _categories: any[] = categoriesData;
     private _brands: any[] = brandsData;
@@ -52,6 +52,7 @@ export class ECommerceInventoryMockApi
         this._fuseMockApiService
             .onGet('api/apps/equipment/property/products', 300)
             .reply(({request}) => {
+                console.log('=====lllll=');
 
                 // Get available queries
                 const search = request.params.get('search');

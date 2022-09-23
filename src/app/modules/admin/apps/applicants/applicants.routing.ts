@@ -13,24 +13,16 @@ export const applicantsRoutes: Route[] = [
                 path     : '',
                 component: ApplicantsListComponent,
                 resolve  : {
-                   
                     products  : ApplicantsResolver,
-                    
                 },
-                // children : [
-                //     {
-                //         path         : 'details/:id',
-                //         component    : FileManagerDetailsComponent,
-                //         resolve      : {
-                //             item: FileManagerItemResolver
-                //         },
-                //     }
-                // ]
-            }
+            },
         ]
     },
     {
         path:'details/:id',
         component: ApplicantDetailComponent,
+        resolve  : {
+            product  : ApplicantsResolver,
+        },
     }
 ];

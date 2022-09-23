@@ -22,15 +22,6 @@ export const customersRoutes: Route[] = [
                     vendors   : InventoryVendorsResolver,
                     data      : AnalyticsResolver,
                 }
-                // children : [
-                //     {
-                //         path         : 'details/:id',
-                //         component    : FileManagerDetailsComponent,
-                //         resolve      : {
-                //             item: FileManagerItemResolver
-                //         },
-                //     }
-                // ]
             },
             {
                 path     : 'details/:Id',
@@ -56,6 +47,7 @@ export const customersRoutes: Route[] = [
                     data      : AnalyticsResolver,
                 }
             },
+
         ]
     }
 ];

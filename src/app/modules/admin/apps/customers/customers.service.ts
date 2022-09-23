@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
+import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor, Item, Documents } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
 
 @Injectable({
@@ -19,6 +20,8 @@ export class CustomersService
     private _vendors: BehaviorSubject<InventoryVendor[] | null> = new BehaviorSubject(null);
     public navigationLabels = customerNavigation;
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
+    private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
+    private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
 
 
     /**
@@ -89,13 +92,29 @@ export class CustomersService
     }
 
      /**
-     * Getter for customer analytics
-     */
+      * Getter for customer analytics
+      */
 
     get data$(): Observable<any>
     {
         return this._data.asObservable();
     }
+
+    /**
+     * Getter for items
+     */
+     get documents$(): Observable<Documents>
+     {
+         return this._documents.asObservable();
+     }
+
+     /**
+      * Getter for item
+      */
+     get item$(): Observable<Item>
+     {
+         return this._item.asObservable();
+     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -107,7 +126,7 @@ export class CustomersService
          {
              return this._httpClient.get('api/customers/analytics').pipe(
                  tap((response: any) => {
-                    console.log("service" , response);
+                    console.log('service' , response);
                      this._data.next(response);
                  })
              );
@@ -198,7 +217,7 @@ export class CustomersService
     /**
      * Create product
      */
-    createProduct(data:any): Observable<InventoryProduct>
+    createProduct(data: any): Observable<InventoryProduct>
     {
         return this.products$.pipe(
             take(1),
@@ -461,4 +480,47 @@ export class CustomersService
             ))
         );
     }*/
+
+    getItems(folderId: string | null = null): Observable<Item[]>
+    {
+        return this._httpClient.get<Documents>('api/apps/customers/details', {params: {folderId}}).pipe(
+            tap((response: any) => {
+                this._documents.next(response);
+            })
+        );
+    }
+
+    /**
+     * Get item by id
+     */
+    getItemById(id: string): Observable<Item>
+    {
+        return this._documents.pipe(
+            take(1),
+            map((documents) => {
+
+                // Find within the folders and files
+                const item = [...documents.folders, ...documents.files].find(value => value.id === id) || null;
+
+                // Update the item
+                this._item.next(item);
+
+                // Return the item
+                return item;
+            }),
+            switchMap((item) => {
+
+                if ( !item )
+                {
+                    return throwError('Could not found the item with id of ' + id + '!');
+                }
+
+                return of(item);
+            })
+        );
+    }
+
+
+
+
 }

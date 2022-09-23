@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersService } from '../customers.service';
 import { AddFarmsComponent } from './add-farms/add-farms.component';
 import { AddCropsComponent } from './add-crops/add-crops.component';
@@ -24,13 +26,14 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
 
     isLoading: boolean = false;
     routeID; // URL ID
-    customers:any;
+    customers: any;
     routes = [];
+    folderId: any;
 
     // Sidebar stuff
       drawerMode: 'over' | 'side' = 'side';
       drawerOpened: boolean = true;
-      selectedIndex: string = "Contact Data";
+      selectedIndex: string = 'Contact Data';
 
 
     /**
@@ -63,10 +66,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
         this.routes = this._customerService.navigationLabels;
 
         this.activatedRoute.params.subscribe((params) => {
-          console.log("PARAMS:", params); //log the entire params object
+          console.log('PARAMS:', params); //log the entire params object
           this.routeID = params.Id;
-          console.log("object", this.routeID);
-          console.log(params['id']) //log the value of id
+          console.log('object', this.routeID);
+          console.log(params['id']); //log the value of id
         });
 
 
@@ -103,6 +106,25 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
           // Mark for check
           this._changeDetectorRef.markForCheck();
         });
+
+        // this._customerService.getItems2().subscribe((i) => {
+        //     // console.log('All items', i.folders[0].folderId);
+        //     this.folderId = i.folders[0].folderId;
+
+        // });
+        // this._customerService.items$.subscribe((c)=>{
+        //     console.log('All Document data', c);
+        //     this._customerService.getItems2(c.folders[0].folderId).subscribe((b) => {
+        //         console.log('Filtered', b);
+        //     });
+        // });
+
+        // for first document
+    // this._customerService.getItems2(a).subscribe((b) => {
+    //     console.log('Filtered', b);
+    // });
+
+
     }
 
 
@@ -150,7 +172,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
 
     backHandler(): void
     {
-        this._router.navigate(["/apps/customers/"])
+        this._router.navigate(['/apps/customers/']);
     }
 
     openAddFarmDialog(): void
