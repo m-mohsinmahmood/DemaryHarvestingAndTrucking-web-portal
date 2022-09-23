@@ -29,8 +29,8 @@
         <!-- Actions -->
     </div>
 
-    <!-- Main -->
-    <div class="flex sm:flex-row flex-col mb-4 pt-2">
+    <!-- Main for Web & Tab -->
+    <div class="sm:flex sm:flex-row mb-4 pt-2  sm:visible hidden">
         <div class="w-4/12 h-12 flex justify-start items-center ">
             <div class="flex" *ngFor="let route of routes;let i = index">
                 <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
@@ -38,7 +38,7 @@
                     </button>
             </div>
         </div>
-        <div class="w-8/12 sm:h-12 flex sm:flex-row flex-col  justify-end items-center ">
+        <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center ">
             <button mat-stroked-button   class="my-1 ml-2">
                 <span style="font-size: 13px;"> Old Submitted Application </span>
             </button>
@@ -48,17 +48,26 @@
             <button mat-stroked-button   class="my-1 ml-2">
                 <span style="font-size: 13px"> Download/Print Profile </span>
             </button>
-            <!-- <button mat-stroked-button color="" class="mr-2">
-                Old Submitted Application
-            </button> -->
-            <!-- <button mat-stroked-button color="" class="mr-2" (click)="openUpdateDialog()">
-                Update Profile
-            </button>
-            <button mat-stroked-button color="" class="mr-2">
-                Download/Print Profile
-            </button> -->
         </div>
     </div>
+        <!-- Main for Mobile -->
+    <div class="flex sm:flex-row mb-4 pt-2  sm:hidden visible overflow-x-scroll">
+            <div class="flex" *ngFor="let route of routes;let i = index">
+                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
+                        <span style="font-size: 13px;  margin-left: 0px;"> {{route.title}} </span>
+                    </button>
+            </div>
+            <button mat-stroked-button   class="my-1 ml-2 min-w-48">
+                <span style="font-size: 13px;" class=""> Old Submitted Application </span>
+            </button>
+            <button mat-stroked-button   class="my-1 ml-2 min-w-40" (click)="openUpdateDialog()">
+                <span style="font-size: 13px;"> Update Profile </span>
+            </button>
+            <button mat-stroked-button   class="my-1 ml-2 min-w-48">
+                <span style="font-size: 13px"> Download/Print Profile </span>
+            </button>
+    </div>
+
     <div class="flex sm:flex-row flex-col ">
         <div class="md:w-8/12">
             <div>
