@@ -38,15 +38,15 @@
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
                     <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
-                                    <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
-                                    <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span>
-                                </button>
+                            <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
+                            <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"></span>
+                        </button>
                 </div>
             </mat-drawer>
 
-            <div class=" flex sub-sidenav-content bg-light p-2">
+            <div class=" flex sub-sidenav-content bg-light">
                 <div class="w-full">
-                    <div class="tab bg-white shadow sm:rounded-lg overflow-auto	">
+                    <div class="tab bg-white shadow overflow-auto	">
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Contact Data'">
                                 <customers-contacts [customers]="customers">

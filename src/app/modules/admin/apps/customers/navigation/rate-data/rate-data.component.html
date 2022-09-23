@@ -1,4 +1,541 @@
-<div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-    <h2 class="center text-center">Administrator will use this tab to set rates
-    </h2>
+<!--Resources Nested Tabs-->
+<div class="sm:rounded-lg overflow-auto	">
+    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onTabChanged($event)">
+        <!-- Custom Harvesting-->
+        <mat-tab label="Custom Harvesting">
+            <div class="border-t border-gray-200 ">
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Combining </header>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Crop
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Weight
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Combining Rate
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            Base Bushels
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div class="sm:block">Premium Rate
+                                            <mat-hint>(Per Bushel)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    "Corn"
+                                                </div>
+
+                                                <!-- Harvest Year -->
+                                                <div class="hidden sm:block">
+                                                    "56 Pounds"
+                                                </div>
+
+                                                <!-- Email -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                </div>
+
+                                                <!-- Contact -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                </div>
+                                                <!-- Active -->
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">"Per Bushel" </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Hauling -->
+            <div class="flex items-baseline justify-between border-t border-gray-200">
+                <header class="mt-4 ml-2 text-2xl font-extrabold tracking-tight"> Hauling </header>
+                <button class="border-2" mat-button [matMenuTriggerFor]="menu">Choose Hauling Rate
+                <mat-icon
+                    class="icon-size-5 text-secondary"
+                    [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item>Item 2</button>
+                </mat-menu>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Farm Name
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Rate Type
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Hauling Rate
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Farm Name
+                                                </div>
+                                                <div class="truncate">
+                                                    "Bushels"
+                                                </div>
+                                                <!-- Harvest Year -->
+                                                <div class="hidden sm:block">
+                                                    "0.30$"
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+
+        <!--Commercial Trucking -->
+        <mat-tab label="Commercial Trucking">
+            <div class="flex items-center justify-end border-t border-gray-200 ">
+                <button class="mt-4 mr-4" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">Add Rate</span>
+                </button>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid-trucking z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Farm
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Rate Type
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Weight
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Quantity
+                                        </div>
+                                        <div class="sm:block">Rate</div>
+                                        <div class="sm:block">Base Rate
+                                            <mat-hint>(Per Ton)</mat-hint>
+                                        </div>
+                                        <div class="sm:block">Premium Rate
+                                            <mat-hint>(Per Mile)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid-trucking grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Corn
+                                                </div>
+                                                <div class="truncate">
+                                                    Rate Type
+                                                </div>
+                                                <div class="truncate">
+                                                    Weight
+                                                </div>
+                                                <div class="truncate">
+                                                    Quantity
+                                                </div>
+                                                <div class="truncate">
+                                                    Rate
+                                                </div>
+                                                <div class="truncate">
+                                                    Base Rate
+                                                </div>
+                                                <!-- Email -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">56$ </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+
+
+        <!--Custom Farming-->
+        <mat-tab label="Custom Farming">
+            <div class="border-t border-gray-200 ">
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> </header>
+            </div>
+            <div class="mt-4 px-4 border-t border-gray-100 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Equipment Type
+                                        </div>
+                                        <div class="sm:block">Rate</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Bushel
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">$556 </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+
+        <!-- Summary -->
+        <mat-tab label="Summary">
+            <div class="border-t border-gray-200 ">
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Combining </header>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Crop
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Weight
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Combining Rate
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            Base Bushels
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div class="sm:block">Premium Rate
+                                            <mat-hint>(Per Bushel)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    "Corn"
+                                                </div>
+
+                                                <!-- Harvest Year -->
+                                                <div class="hidden sm:block">
+                                                    "56 Pounds"
+                                                </div>
+
+                                                <!-- Email -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                </div>
+
+                                                <!-- Contact -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                </div>
+                                                <!-- Active -->
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">"Per Bushel" </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Hauling -->
+            <div class="border-t border-gray-200 flex items-baseline justify-between">
+                <div>
+                    <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Hauling </header>
+                </div>
+                <button class="border-2" mat-button [matMenuTriggerFor]="menu">Choose Hauling Rate
+                <mat-icon
+                    class="icon-size-5 text-secondary"
+                    [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item>Item 2</button>
+                </mat-menu>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Farm Name
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Rate Type
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Hauling Rate
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Farm Name
+                                                </div>
+                                                <div class="truncate">
+                                                    "Bushels"
+                                                </div>
+                                                <!-- Harvest Year -->
+                                                <div class="hidden sm:block">
+                                                    "0.30$"
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Commercial Trucking -->
+            <div class="border-t border-gray-200 ">
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Commercial Trucking </header>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid-trucking z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Farm
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Rate Type
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Weight
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Quantity
+                                        </div>
+                                        <div class="sm:block">Rate</div>
+                                        <div class="sm:block">Base Rate
+                                            <mat-hint>(Per Ton)</mat-hint>
+                                        </div>
+                                        <div class="sm:block">Premium Rate
+                                            <mat-hint>(Per Mile)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid-trucking grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Corn
+                                                </div>
+                                                <div class="truncate">
+                                                    Rate Type
+                                                </div>
+                                                <div class="truncate">
+                                                    Weight
+                                                </div>
+                                                <div class="truncate">
+                                                    Quantity
+                                                </div>
+                                                <div class="truncate">
+                                                    Rate
+                                                </div>
+                                                <div class="truncate">
+                                                    Base Rate
+                                                </div>
+                                                <!-- Email -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">56$ </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Custom Farming -->
+            <div class="border-t border-gray-200 ">
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Combining </header>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="rate-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Equipment Type
+                                        </div>
+                                        <div class="sm:block">Rate</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngFor="let number of [0,1,2,3,4]" class="rate-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    Bushel
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">$556 </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
 </div>

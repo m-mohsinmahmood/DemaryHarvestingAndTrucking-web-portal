@@ -26,6 +26,7 @@ import { CustomerDetailsComponent } from './details/details.component';
 import { UpdateComponent } from './update/update.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AddFarmsComponent } from './details/add-farms/add-farms.component';
 import { AddCropsComponent } from './details/add-crops/add-crops.component';
@@ -38,8 +39,10 @@ import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobResultComponent } from './navigation/job-result/job-result.component';
 import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
+import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
+import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +62,10 @@ import { AddItemComponent } from './navigation/invoice/add-item/add-item.compone
         JobResultComponent,
         ContactsDataComponent,
         CustomersContactsList,
-        AddItemComponent
+        AddItemComponent,
+        AddFarmComponent,
+        AddCropComponent,
+        AddDestinationComponent
     ],
     imports     : [
     RouterModule.forChild(customersRoutes),
