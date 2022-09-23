@@ -33,6 +33,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
+import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 
 @NgModule({
@@ -42,9 +45,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
         ApplicantDetailComponent,
         UpdateComponent,
         FilterComponent,
+        ApplicantdataComponent,
+        RecruiterremarksComponent,
     ],
     imports     : [
-    RouterModule.forChild(applicantsRoutes),
+RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -90,6 +95,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
         // SharedModule,
         // MatDialogModule,
         // MatTabsModule,
+        FuseDrawerModule,
+
     ]
 })
 export class ApplicantsModule

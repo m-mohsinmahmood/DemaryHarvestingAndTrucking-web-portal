@@ -14,40 +14,52 @@
                 <div *ngSwitchCase="'vertical'"></div>
             </ng-container>
             <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
-                <mat-step [stepControl]="firstFormGroup" [editable]="true" class="">
+                <mat-step [stepControl]="firstFormGroup" [editable]="true" class="bg-blue-500">
                     <form [formGroup]="firstFormGroup" class="form mt-1">
 
-                          <ng-template matStepLabel>Applicant Information</ng-template>
-                            <div class="w-8/12">
-                                <mat-checkbox id="firstEmail" name="firstEmail" formControlName="firstEmail" [value]="firstFormGroup.get('firstEmail').value" > First Email </mat-checkbox>
+                          <ng-template matStepLabel>General Information</ng-template>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">First Name: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                        <input matInput formControlName="c_name">
+                                </mat-form-field>
                             </div>
-                            <mat-form-field class="sm:w-3/12 md:w-8/12 lg:w-full mt-2" appearance="outline">
-                                <mat-label>First Sent Date</mat-label>
-                                <input id="date" name="date" formControlName="firstSentDate" matInput [matDatepicker]="picker1">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
-                            <div class="w-8/12">
-                                <mat-checkbox id="secondEmail" name="secondEmail" formControlName="secondEmail"> Second Email </mat-checkbox>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Last Name: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                        <input matInput formControlName="c_name">
+                                </mat-form-field>
                             </div>
-                            <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full mt-2" appearance="outline">
-                                <mat-label>Second Sent Date</mat-label>
-                                <input id="date" name="date" value="Date" formControlName="secondSentDate" matInput [matDatepicker]="picker2">
-                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                <mat-datepicker #picker2></mat-datepicker>
-                            </mat-form-field>
-                            <div>
-                                <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
-                                    <mat-label>Application Date</mat-label>
-                                    <input id="date" name="date" formControlName="applicationDate" value="Date" matInput [matDatepicker]="picker3">
-                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker3></mat-datepicker>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Email: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                        <input type="email" matInput formControlName="c_name">
+                                </mat-form-field>
+                            </div>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Cell Phone Number: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input type="tel" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Home Phone Number: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input type="tel" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                                <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Languages: </mat-label>
+                                <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input type="text" matInput >
                                 </mat-form-field>
                             </div>
 
+
+
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup" [editable]="true">
+                <!-- <mat-step [stepControl]="secondFormGroup" [editable]="true">
                     <form [formGroup]="secondFormGroup" class="form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
                         <ng-template matStepLabel>Contact Information</ng-template>
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
@@ -96,7 +108,7 @@
                         </div>
                     </div>
                     </form>
-                </mat-step>
+                </mat-step> -->
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
                     <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
                         <ng-template matStepLabel>Personal Information</ng-template>
@@ -319,20 +331,43 @@
                         </div>
                     </form>
                 </mat-step>
+                <mat-step [stepControl]="" [editable]="true">
+                    <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
+                        <ng-template matStepLabel>Education Information</ng-template>
+                        <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                            <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Degree Name: </mat-label>
+                            <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input matInput >
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                            <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Institue Name: </mat-label>
+                            <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input matInput >
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row flex-col  sm:items-center w-200">
+                            <mat-label class="text-lg font-extrabold text-gray-500 sm:w-3/12">Education: </mat-label>
+                            <mat-form-field appearance="outline" class=" md:w-full sm:w-50" >
+                                    <input type="email" matInput>
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-step>
                 <mat-step [stepControl]="sixthFormGroup" [editable]="true">
                     <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
-                        <ng-template matStepLabel>Educational Information</ng-template>
+                        <ng-template matStepLabel>Other</ng-template>
                         <div class="my-1.5 mt-2.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
-                                <label class="font-bold text-lg">On this question, Select the highest level of Education Completed. </label>
+                                <label class="font-bold text-lg">Your blood group </label>
                             </div>
                             <mat-radio-group class="example-radio-group" formControlName="e_firstQuestion">
-                                <mat-radio-button class="m-1" value="1">High School</mat-radio-button>
-                                <mat-radio-button class="m-1" value="2">Vocational School</mat-radio-button>
-                                <mat-radio-button class="m-1" value="3">Technical School</mat-radio-button>
-                                <mat-radio-button class="m-1" value="4">Jr. College</mat-radio-button>
-                                <mat-radio-button class="m-1" value="5">College</mat-radio-button>
-                                <mat-radio-button class="m-1" value="5">Graduate School</mat-radio-button>
+                                <mat-radio-button class="m-1" value="a+">A+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="a-">A-</mat-radio-button>
+                                <mat-radio-button class="m-1" value="b+">B+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="b-">B-</mat-radio-button>
+                                <mat-radio-button class="m-1" value="ab+">AB+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="o+">O+</mat-radio-button>
                             </mat-radio-group>
                         </div>
                         <div class=" my-1.5">
