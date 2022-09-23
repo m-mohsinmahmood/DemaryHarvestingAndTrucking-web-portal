@@ -35,6 +35,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
 import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterr
         RecruiterremarksComponent,
     ],
     imports     : [
-    RouterModule.forChild(applicantsRoutes),
+RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -94,6 +95,8 @@ import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterr
         // SharedModule,
         // MatDialogModule,
         // MatTabsModule,
+        FuseDrawerModule,
+
     ]
 })
 export class ApplicantsModule
