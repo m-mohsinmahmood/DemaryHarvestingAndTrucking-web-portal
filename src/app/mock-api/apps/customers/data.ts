@@ -131,6 +131,7 @@ export const products = [
             customerType: 'CF',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            lName: 'And Darcy',
             contactsListData: [
                 {
                 contactFirstName:'Lorum Ipsum',
@@ -168,6 +169,8 @@ export const products = [
             customerType: 'P',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            lName: '',
+
 
 
         },
@@ -195,6 +198,8 @@ export const products = [
             customerType: 'CT, CF, CH',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            lName: 'River',
+
 
 
 
@@ -202,7 +207,7 @@ export const products = [
         {
             id        : '2793',
             harvestYear : '2022 - Segment A - 2022 Harvest Season',
-            name      : 'Art Wilson',
+            name      : 'Art',
             alternateName :  '',
             avatar: "",
 
@@ -224,6 +229,7 @@ export const products = [
             customerType: 'CF',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            lName: 'Wilson',
 
 
 
@@ -231,7 +237,7 @@ export const products = [
         {
             id        : '2893',
             harvestYear : '2022 - Segment A - 2022 Harvest Season',
-            name      : 'Ceres Tom',
+            name      : 'Ceres',
             alternateName :  '',
             avatar: "",
 
@@ -253,6 +259,7 @@ export const products = [
             customerType: 'CH',
             phoneNo: '+1(909)-123-1234',
             position:'Position Name',
+            lName: 'Tom',
 
 
         },

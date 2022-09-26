@@ -38,6 +38,7 @@ export interface InventoryProduct
       balanceInvoice: string;
       paymentCredit: string;
       totalInvoice: string;
+      lName:string;
 }
 
 export interface InventoryPagination

@@ -10,8 +10,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ContactsDataComponent } from './contacts-data/contacts-data.component';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
-// import { AddCustomer } from '../add/add.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AddCustomerContact } from './add/add.component';
 
 @Component({
     selector       : 'customers-contacts',
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 10% 50% 30%;
+                grid-template-columns: 30% 30% 15%;
 
                 @screen sm {
                     grid-template-columns: 15% 15% 15% 15% 15% 15%;
@@ -51,9 +51,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
 {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
-
     products$: Observable<InventoryProduct[]>;
-
+    customers: any; 
+    routeID;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
     filteredTags: InventoryTag[];
@@ -79,6 +79,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
         private _router: Router,
+        public activatedRoute: ActivatedRoute,
     )
     {
     }
@@ -127,10 +128,29 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
             customerType:[''],
             phoneNo: [''],
             position:[''],
-
+            fname:[''],
+            lName:[''],
 
 
         });
+
+        this.activatedRoute.params.subscribe((params) => {
+            console.log('PARAMSS:', params);
+            this.routeID = params.Id;
+            console.log('object', this.routeID);
+            console.log(params['id']); //log the value of id
+  
+          });
+  
+          this._customersService.getProductById(this.routeID).subscribe((customer) => {
+  
+              this.customers = customer;
+  
+              console.log("FFF",customer);
+  
+  
+  
+          });
 
         // Get the brands
         this._customersService.brands$
@@ -213,6 +233,15 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
             .subscribe();
     }
 
+    openAddDialog(): void {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddCustomerContact);
+    
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
     /**
      * After view init
      */
@@ -269,17 +298,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-
-    openAddDialog(): void
-    {
-        // // Open the dialog
-        // const dialogRef = this._matDialog.open(AddCustomer);
-
-        // dialogRef.afterClosed()
-        //          .subscribe((result) => {
-        //              console.log('Compose dialog was closed!');
-        //          });
-    }
     /**
      * Toggle product details
      *

@@ -43,7 +43,8 @@ import { AddItemComponent } from './navigation/invoice/add-item/add-item.compone
 import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
 import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
 import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
-
+import { AddCustomerContact } from './navigation/customer-information/add/add.component';
+import { GeneralInfoComponent } from './general-info/general-info.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -65,7 +66,9 @@ import { AddDestinationComponent } from './navigation/farm-data/add-destination/
         AddItemComponent,
         AddFarmComponent,
         AddCropComponent,
-        AddDestinationComponent
+        AddDestinationComponent,
+        AddCustomerContact,
+        GeneralInfoComponent
     ],
     imports     : [
     RouterModule.forChild(customersRoutes),

@@ -15,6 +15,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CustomersService } from '../../../customers.service';
+import { AddCustomerContact } from '../add/add.component';
 
 @Component({
   selector: 'contacts-data',
@@ -87,6 +88,15 @@ export class ContactsDataComponent implements OnInit {
 
   })
   }
+
+  openAddDialog(): void {
+    // Open the dialog
+    const dialogRef = this._matDialog.open(AddCustomerContact);
+
+    dialogRef.afterClosed().subscribe((result) => {
+        console.log('Compose dialog was closed!');
+    });
+}
 
 
 

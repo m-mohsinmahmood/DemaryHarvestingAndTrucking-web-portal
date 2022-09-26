@@ -1,0 +1,139 @@
+<!-- Header -->
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Title -->
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Contact Data</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+
+    </header>
+    <!-- Image-->
+    <form [formGroup]="addContactForm" class="flex flex-col flex-auto sm:p-8 sm:grid overflow-y-auto">
+        <div class="py-3 center mx-auto">
+            <div class="px-4 py-5 rounded-lg text-center w-48">
+                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                </div>
+                <div class="mb-4" *ngIf="imageURL ==''  ">
+                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                </div>
+                <label class="cursor-pointer mt-6">
+                <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
+                    <input formControlName="avatar" type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+              </label>
+            </div>
+        </div>
+
+
+
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500 sm:w-4/12">Company Name: </mat-label>
+                    <input matInput formControlName="c_name">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500 sm:w-4/12">Contact Name: </mat-label>
+                    <input matInput formControlName="contact_name">
+                </mat-form-field>
+            </div>
+            
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500 w-4/12">Website: </mat-label>
+                    <input matInput formControlName="w_name">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Contact Position: </mat-label>
+                    <input matInput formControlName="c_position">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Address: </mat-label>
+                    <input matInput formControlName="address">
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Cell Number: </mat-label>
+                    <input matInput formControlName="c_phonenumber">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">City: </mat-label>
+                    <input matInput formControlName="city">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Office Number: </mat-label>
+                    <input matInput formControlName="o_phonenumber">
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">State: </mat-label>
+                    <input matInput formControlName="state">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Email: </mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Zip Code: </mat-label>
+                    <input matInput formControlName="zipcode">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500">Fax: </mat-label>
+                    <input matInput formControlName="fax">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-gray-500 text-gray-500 sm:w-2/12">LinkedIn: </mat-label>
+                    <input matInput formControlName="linkedin">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label class="text-gray-500 md:w-2/12 sm:w-4/12">Note 1:</mat-label>
+                    <textarea matInput formControlName="note_1"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Note 2:</mat-label>
+
+                    <textarea matInput formControlName="note_2"></textarea>
+
+                </mat-form-field>
+            </div>
+            <!-- </div> -->
+        </div>
+    </form>
+    <div class="flex justify-end mr-14 mt-1 mb-4">
+        <button class="ml-4" mat-flat-button [color]="'warn'" (click)="discard()">
+            <span class="ml-2 mr-1">Cancel</span>
+        </button>
+        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="saveAndClose()">
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Save</span>
+        </button>
+    </div>
+</div>
