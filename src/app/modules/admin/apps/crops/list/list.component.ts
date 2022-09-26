@@ -16,7 +16,6 @@ import { AddCropsComponent } from '../add/add.component';
 import { CropService } from '../crops.services';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
-
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
@@ -26,9 +25,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
     animations: fuseAnimations,
 })
 export class CropsListComponent implements OnInit {
-
     @ViewChild(DatatableComponent) myFilterTable: DatatableComponent;
-
 
     isLoading: boolean = false;
     isEdit: boolean = false;
@@ -46,17 +43,16 @@ export class CropsListComponent implements OnInit {
         private cropsService: CropService
     ) {}
 
-
-
     ngOnInit(): void {
+        this.isLoading = true;
         this.getAllCrops();
-        this.myFilterTable.offset = 0;
     }
 
     getAllCrops(): void {
         this.rows = this.cropsService.crops;
         this.totalCount = this.cropsService.totalCount;
         this.temp = this.rows;
+        this.isLoading = false;
     }
 
     openAddDialog(): void {
@@ -66,14 +62,14 @@ export class CropsListComponent implements OnInit {
         });
     }
     openEditDialog(event): void {
-    this.isEdit = true;
+        this.isEdit = true;
         const dialogRef = this._matDialog.open(AddCropsComponent, {
             data: {
                 isEdit: this.isEdit,
                 cropName: event.cropName,
                 variety: event.variety,
-                bushelWeight: event.bushelWeight
-        }
+                bushelWeight: event.bushelWeight,
+            },
         });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
@@ -84,8 +80,8 @@ export class CropsListComponent implements OnInit {
         const val = event.target.value.toLowerCase();
 
         // filter our data
-        const temp = this.temp.filter(function(d) {
-        return d.cropName.toLowerCase().indexOf(val) !== -1 || !val;
+        const temp = this.temp.filter(function (d) {
+            return d.cropName.toLowerCase().indexOf(val) !== -1 || !val;
         });
 
         // update the rows

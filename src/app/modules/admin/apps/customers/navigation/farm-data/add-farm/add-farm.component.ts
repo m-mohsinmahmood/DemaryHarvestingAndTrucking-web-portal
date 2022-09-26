@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-interface Food {
+interface Calender {
     value: string;
     viewValue: string;
   }
@@ -13,31 +13,44 @@ interface Food {
   styleUrls: ['./add-farm.component.scss']
 })
 export class AddFarmComponent implements OnInit {
+
   selectedValue: string;
   form: FormGroup;
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+  calenderYear: Calender[] = [
+    {value: '22', viewValue: '2022'},
+    {value: '21', viewValue: '2021'},
+    {value: '20', viewValue: '2020'},
+    {value: '19', viewValue: '2019'},
+    {value: '18', viewValue: '2018'},
+    {value: '17', viewValue: '2017'},
   ];
 
 
   constructor(
     private _formBuilder: FormBuilder,
     public matDialogRef: MatDialogRef<AddFarmComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
     ) { }
 
   ngOnInit(): void {
     // Create the form
     this.form = this._formBuilder.group({
-        avatar: [null],
-        name: [''],
-        firstName     : ['', [Validators.required]],
-        lastName     : ['', [Validators.required]],
-        role    : ['', [Validators.required]],
-        position: ['', [Validators.required]],
+        farmName     : ['', [Validators.required]],
+        field     : ['', [Validators.required]],
+        acres    : ['', [Validators.required]],
+        status: ['', [Validators.required]],
+        calenderYear: ['', [Validators.required]],
       });
+
+      if (this.data && this.data.isEdit) {
+        this.form.patchValue({
+            farmName: this.data.farmName,
+            field: this.data.field,
+            acres: this.data.acres,
+            calenderYear: this.data.calenderYear
+        });
+    }
   }
 
   onSubmit(): void {

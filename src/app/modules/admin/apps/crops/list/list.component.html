@@ -7,6 +7,52 @@
         </div>
         <!-- Title -->
         <div class="text-4xl font-extrabold tracking-tight">Crops</div>
+        <!-- Filter -->
+        <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>
+            <div class="flex flex-col w-64 overflow-auto bg-card ">
+                <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+                    <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+                    <div class="ml-3 text-2xl font-semibold tracking-tight">Filters</div>
+                    <button class="ml-auto" mat-icon-button mat-icon-button (click)="settingsDrawer.close()()">
+                <mat-icon
+                    class="text-current"
+                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+                </div>
+                <div class="flex flex-col justify-center items-center ">
+                    <div class="h-120 sm:h-120 md:h-128">
+                        <div class="w-inherit  flex  flex-col">
+                            <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full ">
+                                <mat-label>Select Country</mat-label>
+                                <mat-select multiple>
+                                    <!-- <mat-option *ngFor="let country of country_list" [value]="country">{{ country }}</mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="mx-1 mt-2 w-full">
+                                <mat-label>Select status</mat-label>
+                                <mat-select multiple>
+                                    <!-- <mat-option *ngFor="let status of statusList" [value]="status">{{ status }}</mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                        <button class="" mat-flat-button [color]="'primary'">
+                    <span class="" >Apply filters</span>
+                </button>
+                    </div>
+                    <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                        <button class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                    <mat-icon
+                    class="m-0 icon-size-4"
+                    color="warn"
+                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    <span>Remove filters</span>
+                  </button>
+                    </div>
+                </div>
+            </div>
+        </fuse-drawer>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -25,7 +71,7 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>
                     <mat-icon>filter</mat-icon>
-                    <span>Filters</span>
+                    <span (click)="settingsDrawer.toggle()">Filters</span>
                 </button>
                 <button mat-menu-item>
                     <mat-icon>upload</mat-icon>
