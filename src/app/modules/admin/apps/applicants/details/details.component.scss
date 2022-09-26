@@ -7,11 +7,13 @@
 }
 
 .timeline-track{
+    // display: flex;
     flex-grow: 1;
     // background-color: blue;
     width: 1px;
     background-color: #9fa2a4;
     box-shadow: 0 4px 8px #8db8e4;
+
 }
 // ::ng-deep .countryCode1 .mat-stroked-button{
 //       min-width: none;
