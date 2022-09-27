@@ -7,25 +7,7 @@ import { AddDestinationComponent } from './add-destination/add-destination.compo
 @Component({
     selector: 'app-farm-data',
     templateUrl: './farm-data.component.html',
-    styles: [
-        /* language=SCSS */
-        `
-            .farm-data-grid {
-                grid-template-columns: 25% 25 25% 25%;
-
-                @screen sm {
-                    grid-template-columns: 10% 20% 20% 20% 15% 10% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 25% 25 25% 25%;
-                }
-
-                @screen lg {
-                    grid-template-columns: 20% 30% 30% 20%;
-                }
-            }
-        `,
-    ],
+    styleUrls: ['./farm-data.component.scss'],
 })
 export class FarmDataComponent implements OnInit {
     @Input() customers: any;
@@ -34,8 +16,22 @@ export class FarmDataComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    openAddDestinationDialog(): void {
-        const dialogRef = this._matDialog.open(AddDestinationComponent);
+    openAddFarmDialog(): void {
+        const dialogRef = this._matDialog.open(AddFarmComponent);
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+    openEditFarmDialog(): void {
+        const dialogRef = this._matDialog.open(AddFarmComponent, {
+            data: {
+                isEdit: 'true',
+                farmName: 'Adam',
+                field: 'field',
+                acres: '445',
+                calenderYear: '2022'
+            }
+        });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
@@ -48,8 +44,36 @@ export class FarmDataComponent implements OnInit {
         });
     }
 
-    openAddFarmDialog(): void {
-        const dialogRef = this._matDialog.open(AddFarmComponent);
+
+    openEditCropDialog(): void {
+        const dialogRef = this._matDialog.open(AddCropComponent, {
+            data: {
+                isEdit: 'true',
+                cropName: 'Barley',
+                calenderYear: '2022'
+            }
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+    openAddDestinationDialog(): void {
+        const dialogRef = this._matDialog.open(AddDestinationComponent);
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+    openEditDestinationDialog(): void {
+        const dialogRef = this._matDialog.open(AddDestinationComponent, {
+            data: {
+                isEdit: 'true',
+                farmName: 'Barley',
+                name: 'Arizona',
+                calenderYear: '2022'
+            }
+        });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });

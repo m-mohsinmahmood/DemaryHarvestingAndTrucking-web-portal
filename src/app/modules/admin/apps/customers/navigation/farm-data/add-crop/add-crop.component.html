@@ -2,7 +2,7 @@
 
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
-        <div class="text-lg font-medium">Add Farm/Field</div>
+        <div class="text-lg font-medium">Add Crops</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
@@ -12,13 +12,24 @@
 
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
-
+        <mat-form-field appearance="outline">
+            <mat-label>Crop Name </mat-label>
+            <input matInput formControlName="cropName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Calender Year</mat-label>
+            <mat-select formControlName="calenderYear" name="calender">
+                <mat-option *ngFor="let calender of calenderYear" [value]="calender.value">
+                    {{ calender.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
 
     </form>
 
     <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
-        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+        <div class="flex gap-2 items-center sm:mt-0">
             <!-- Discard -->
             <button type="submit" class="order-first sm:order-last bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard

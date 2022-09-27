@@ -22,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 import { SharedModule } from 'app/shared/shared.module';
 import { cropsRoutes } from 'app/modules/admin/apps/crops/crops.routing';
 import { CropsComponent } from 'app/modules/admin/apps/crops/crops.component';
@@ -61,7 +62,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         MatTabsModule,
         MatExpansionModule,
         NgxDatatableModule,
-        SharedModule
+        SharedModule,
+        FuseDrawerModule
     ]
 })
 export class CropsModule

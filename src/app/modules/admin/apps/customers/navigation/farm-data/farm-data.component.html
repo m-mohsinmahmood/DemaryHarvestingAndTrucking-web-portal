@@ -1,36 +1,52 @@
 <!--Resources Nested Tabs-->
-<div class="sm:rounded-lg overflow-auto	">
+<div class="sm:rounded-lg overflow-auto">
     <mat-tab-group mat-align-tabs="start">
         <!-- Farms Harvesting-->
         <mat-tab label="Farms/Fields">
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Farms</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Farms
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Farms'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Farms'" />
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-2 mr-1">Add Farm</span>
-                        </button>
+                    <button mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Farm</span>
+                    </button>
                     <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
-                    <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -39,35 +55,49 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div>Farm Name</div>
                                         <div class="hidden sm:block">
-                                            Farm Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Fields
                                         </div>
-                                        <div class="hidden sm:block pl-2">
-                                            Acres
+                                        <div class="hidden sm:block">Acres</div>
+                                        <div class="hidden sm:block">
+                                            Status
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div class="hidden sm:block">
+                                            Calender Year
+                                        </div>
+                                        <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Adam</div>
                                                 <!-- Harvest Year -->
                                                 <div class="hidden sm:block">
-                                                    Delivered
+                                                    field
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">445 Acres </div>
+                                                    <div class="min-w-4">
+                                                        445 Acres
+                                                    </div>
                                                 </div>
-                                                <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
+                                                            'heroicons_solid:check-circle'
+                                                        "></mat-icon>
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    2022
+                                                </div>
+                                                <!-- Action -->
+                                                <div (click)="openEditFarmDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -79,45 +109,61 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
-
                     </div>
-
                 </div>
             </div>
         </mat-tab>
 
         <!--Crops-->
         <mat-tab label="Crops">
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Crops</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Crops
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Crops'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
                     </mat-form-field>
                     <!-- Add product button -->
                     <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="ml-2 mr-1">Add Crops</span>
-                            </button>
-                    <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
                         <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Crops</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 border-t border-gray-100 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -126,35 +172,39 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="">Name</div>
                                         <div class="hidden sm:block">
-                                            Crop Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Calender Year
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div class="">Action</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
-                                                <!-- Harvest Year -->
-                                                <div class="hidden sm:block">
-                                                    Delivered
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-crops grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Barley</div>
+
+                                                <!-- Status -->
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="greenActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">12 Feb,2022 </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        2022
+                                                    </div>
                                                 </div>
                                                 <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <!-- Action -->
+                                                <div (click)="openEditCropDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -166,45 +216,61 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
-
                     </div>
-
                 </div>
             </div>
         </mat-tab>
 
         <!-- Destination -->
         <mat-tab label="Destination">
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Destination</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Destination
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 lg:flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'" />
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="ml-2 mr-1">Add Destination</span>
-                            </button>
-                    <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
+                    <button class="mt-2 lg:mt-0 mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
                         <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Destination</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -213,35 +279,39 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div>Farm Name</div>
+                                        <div class="hidden sm:block">Name</div>
                                         <div class="hidden sm:block">
-                                            Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Calender Year
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Barley</div>
+                                                <div class="hidden sm:block">Arizona</div>
                                                 <!-- Harvest Year -->
-                                                <div class="hidden sm:block">
-                                                    Delivered
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="redInActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">12 Feb,2022 </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        2022
+                                                    </div>
                                                 </div>
                                                 <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <div (click)="openEditDestinationDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -253,7 +323,9 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
                     </div>
                 </div>
@@ -262,34 +334,50 @@
 
         <!--Summary -->
         <mat-tab label="Summary">
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Farms</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Farms
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Farms'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Farms'" />
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-2 mr-1">Add Farm</span>
-                        </button>
+                    <button mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Farm</span>
+                    </button>
                     <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
-                    <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -298,35 +386,49 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div>Farm Name</div>
                                         <div class="hidden sm:block">
-                                            Farm Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Fields
                                         </div>
-                                        <div class="hidden sm:block pl-2">
-                                            Acres
+                                        <div class="hidden sm:block">Acres</div>
+                                        <div class="hidden sm:block">
+                                            Status
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div class="hidden sm:block">
+                                            Calender Year
+                                        </div>
+                                        <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Adam</div>
                                                 <!-- Harvest Year -->
                                                 <div class="hidden sm:block">
-                                                    Delivered
+                                                    field
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">445 Acres </div>
+                                                    <div class="min-w-4">
+                                                        445 Acres
+                                                    </div>
                                                 </div>
-                                                <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
+                                                            'heroicons_solid:check-circle'
+                                                        "></mat-icon>
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    2022
+                                                </div>
+                                                <!-- Action -->
+                                                <div (click)="openEditFarmDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -338,43 +440,58 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
-
                     </div>
-
                 </div>
             </div>
 
-
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Crops</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Crops
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Crops'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
                     </mat-form-field>
                     <!-- Add product button -->
                     <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="ml-2 mr-1">Add Crops</span>
-                            </button>
-                    <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
                         <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Crops</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 border-t border-gray-100 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -383,35 +500,39 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="">Name</div>
                                         <div class="hidden sm:block">
-                                            Crop Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Calender Year
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div class="">Action</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
-                                                <!-- Harvest Year -->
-                                                <div class="hidden sm:block">
-                                                    Delivered
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-crops grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Barley</div>
+
+                                                <!-- Status -->
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="greenActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">12 Feb,2022 </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        2022
+                                                    </div>
                                                 </div>
                                                 <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <!-- Action -->
+                                                <div (click)="openEditCropDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -423,40 +544,58 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between border-t border-gray-200">
-                <div class="mt-4">
-                    <header class="ml-2 text-2xl font-extrabold tracking-tight">Riverview Destination</header>
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Riverview Destination
+                    </header>
                 </div>
-                <div class="mt-4 flex">
+                <div class="mt-2 lg:flex">
                     <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'">
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'" />
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="ml-2 mr-1">Add Destination</span>
-                            </button>
-                    <!-- Import/Export -->
-                    <button class="mr-4" mat-button [matMenuTriggerFor]="menu">Import/Export
+                    <button class="mt-2 lg:mt-0 mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
                         <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon></button>
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
+                        <span class="lg:ml-2">Add Destination</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Import</button>
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Download Template</button>
+                        <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
                     </mat-menu>
                 </div>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+            <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -465,35 +604,39 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div>Farm Name</div>
+                                        <div class="hidden sm:block">Name</div>
                                         <div class="hidden sm:block">
-                                            Name
-                                        </div>
-                                        <div class="hidden sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Calender Year
                                         </div>
-                                        <div class="sm:block"></div>
+                                        <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Adam
-                                                </div>
+                                            <div *ngFor="
+                                                    let number of [
+                                                        0, 1, 2, 3, 4
+                                                    ]
+                                                " class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">Barley</div>
+                                                <div class="hidden sm:block">Arizona</div>
                                                 <!-- Harvest Year -->
-                                                <div class="hidden sm:block">
-                                                    Delivered
+                                                <div class="hidden sm:block items-center">
+                                                    <mat-icon class="redInActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">12 Feb,2022 </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        2022
+                                                    </div>
                                                 </div>
                                                 <!-- Active -->
-                                                <div class="hidden lg:block">
+                                                <div (click)="openEditDestinationDialog()">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </div>
                                             </div>
@@ -505,15 +648,13 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                There are no products!
+                            </div>
                         </ng-template>
                     </div>
                 </div>
             </div>
         </mat-tab>
-
-
     </mat-tab-group>
-
-
 </div>
