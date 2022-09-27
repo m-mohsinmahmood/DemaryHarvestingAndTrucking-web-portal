@@ -236,7 +236,7 @@
     </div>
 
     <fuse-drawer
-    class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999"
+    class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999 bg-green-300"
     fixed
     [mode]="'over'"
     [name]="'settingsDrawer'"
@@ -261,8 +261,8 @@
                     [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </button>
         </div>
-        <div class="flex flex-col justify-center items-center ">
-            <div class="sm:h-200 md:h-128 h-160 ">
+        <div class="flex flex-col justify-center items-center md:h-screen">
+            <div class="sm:h-200 md:h-5/6 h-160">
                 <div class="w-inherit  flex  flex-col">
                     <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full ">
                         <mat-label>Select Country</mat-label>
@@ -285,6 +285,8 @@
                             </mat-select>
                         </mat-form-field>
 
+
+
                 </div>
             </div>
             <div class="w-inherit flex justify-center items-center mt-1 mb-1">
@@ -301,7 +303,6 @@
                     <span>Remove filters</span>
                   </button>
             </div>
-
         </div>
     </div>
 
