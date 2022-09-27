@@ -19,8 +19,8 @@ import { AddCustomerContact } from './add/add.component';
     styles         : [
         /* language=SCSS */
         `
-            .inventory-grid {
-                grid-template-columns: 30% 30% 15%;
+            .contact-grid {
+                grid-template-columns: 60% 40%;
 
                 @screen sm {
                     grid-template-columns: 15% 15% 15% 15% 15% 15%;
@@ -30,7 +30,7 @@ import { AddCustomerContact } from './add/add.component';
                 }
 
                 @screen lg {
-                    grid-template-columns:  15% 15% 15% 15% 15% 15%;
+                    grid-template-columns:  15% 15% 15% 15% 15% 15% 10%;
                 }
             }
             .redInActiveIcon
@@ -52,7 +52,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
     products$: Observable<InventoryProduct[]>;
-    customers: any; 
+    customers: any;
     routeID;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
@@ -139,17 +139,17 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
             this.routeID = params.Id;
             console.log('object', this.routeID);
             console.log(params['id']); //log the value of id
-  
+
           });
-  
+
           this._customersService.getProductById(this.routeID).subscribe((customer) => {
-  
+
               this.customers = customer;
-  
+
               console.log("FFF",customer);
-  
-  
-  
+
+
+
           });
 
         // Get the brands
@@ -236,7 +236,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
     openAddDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddCustomerContact);
-    
+
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
@@ -366,8 +366,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy
               /* this.isContactData = true; */
               // Open the dialog
         const dialogRef = this._matDialog.open(ContactsDataComponent,{
-            height: '800px',
-  width: '1200px',
+          width: '1200px',
         });
 
 

@@ -18,7 +18,7 @@
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Add</span>
+                <span class="lg:ml-2 mr-1">Add</span>
             </button>
         </div>
     </div>
@@ -32,7 +32,7 @@
                 <ng-container *ngIf="products.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
-                        <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                        <div class="customer-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                             <div>Company Name</div>
                             <div class="hidden sm:block">Main Contact</div>
                             <div class="hidden sm:block">Position</div>
@@ -59,7 +59,7 @@
                         <!-- Rows -->
                         <ng-container *ngIf="(products$ | async) as products">
                             <ng-container *ngFor="let product of products; trackBy: trackByFn">
-                                <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
+                                <div class="customer-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
                                     <!-- Image -->
                                     <!-- <div>
                                         <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">

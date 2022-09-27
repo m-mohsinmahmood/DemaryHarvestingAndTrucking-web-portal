@@ -49,7 +49,7 @@ import { CustomerDetailsComponent } from '../details/details.component';
     styles: [
         /* language=SCSS */
         `
-            .inventory-grid {
+            .customer-grid {
                 grid-template-columns: 50% 20% 20%;
 
                 @screen sm {
@@ -58,7 +58,6 @@ import { CustomerDetailsComponent } from '../details/details.component';
                 @screen md {
                     grid-template-columns: 15% 10% 10% 10% 10% 10% 10% 5% 5% 5%;
                 }
-
                 @screen lg {
                     grid-template-columns: 15% 10% 10% 10% 10% 10% 10% 5% 5% 5%;
                 }
@@ -318,7 +317,7 @@ export class CustomersListComponent
         // Get the product by id
         this._customersService.getProductById(productId)
             .subscribe((product) => {
-                this._router.navigateByUrl('apps/customers/general-information/'+ productId) 
+                this._router.navigateByUrl('apps/customers/general-information/'+ productId)
                 // Set the selected product
                 this.selectedProduct = product;
 
@@ -326,7 +325,7 @@ export class CustomersListComponent
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this._changeDetectorRef.markForCheck(); 
+                this._changeDetectorRef.markForCheck();
             });
     }
     /**
