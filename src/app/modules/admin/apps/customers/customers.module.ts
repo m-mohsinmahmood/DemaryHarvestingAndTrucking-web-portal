@@ -45,6 +45,8 @@ import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.compo
 import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
 import { GeneralInfoComponent } from './general-info/general-info.component';
+import { DocumentComponent } from './navigation/document/document.component';
+
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -68,10 +70,11 @@ import { GeneralInfoComponent } from './general-info/general-info.component';
         AddCropComponent,
         AddDestinationComponent,
         AddCustomerContact,
-        GeneralInfoComponent
+        GeneralInfoComponent,
+        DocumentComponent,
     ],
     imports     : [
-    RouterModule.forChild(customersRoutes),
+RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,

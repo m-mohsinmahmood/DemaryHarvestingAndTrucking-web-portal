@@ -39,7 +39,7 @@ import { UploadDocModal } from './details/details.component';
       EmployeeDetailComponent,
       AddComponent,
       UpdateComponent,
-      UploadDocModal
+      UploadDocModal,
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),
