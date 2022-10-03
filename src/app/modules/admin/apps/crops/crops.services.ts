@@ -51,40 +51,34 @@ export class CropService {
     }
 
     getCrops(): Observable<{ crops: Crops[] }> {
-        return this._httpClient
-            .get<{ crops: Crops[] }>(environment.baseUrl + 'crops')
-            .pipe(
-                tap((response) => {
-                    this._crops.next(response.crops);
-                }),
-                catchError(this.handleError)
-            );
+        return this._httpClient.get<{ crops: Crops[] }>('api-1/crops').pipe(
+            tap((response) => {
+                this._crops.next(response.crops);
+            }),
+            catchError(this.handleError)
+        );
     }
     getCropById(id: string): Observable<Crops> {
-        return this._httpClient
-            .get<Crops>(environment.baseUrl + 'crops' + id)
-            .pipe(
-                tap((response) => {
-                    this._crop.next(response);
-                }),
-                catchError(this.handleError)
-            );
+        return this._httpClient.get<Crops>('api-1/crops' + id).pipe(
+            tap((response) => {
+                this._crop.next(response);
+            }),
+            catchError(this.handleError)
+        );
     }
     createCrop(data: any): Observable<Crops> {
         return this.crops$.pipe(
             take(1),
             switchMap((crops) =>
-                this._httpClient
-                    .post<Crops>(environment.baseUrl + 'crops', data)
-                    .pipe(
-                        tap(this.getCrops())
-                        // map((newCrop) => {
-                        //     // Update the crops with the new crops
-                        //     this._crops.next([data, ...crops]);
-                        //     // Return the new crops
-                        //     return data;
-                        // })
-                    )
+                this._httpClient.post<Crops>('api-1/crops', data).pipe(
+                    tap(this.getCrops())
+                    // map((newCrop) => {
+                    //     // Update the crops with the new crops
+                    //     this._crops.next([data, ...crops]);
+                    //     // Return the new crops
+                    //     return data;
+                    // })
+                )
             )
         );
     }
@@ -92,24 +86,20 @@ export class CropService {
         return this.crops$.pipe(
             take(1),
             switchMap((crops) =>
-                this._httpClient
-                    .put<Crops>(environment.baseUrl + 'crops', data)
-                    .pipe(
-                        map((newCrop) => {
-                            this._crops.next([data]);
-                            return data;
-                            // Update the crops with the new crops
-                            // Return the new crop
-                        })
-                    )
+                this._httpClient.put<Crops>('api-1/crops', data).pipe(
+                    map((newCrop) => {
+                        this._crops.next([data]);
+                        return data;
+                        // Update the crops with the new crops
+                        // Return the new crop
+                    })
+                )
             )
         );
     }
     searchCrop(data: any): Observable<{ crops: Crops[] }> {
         return this._httpClient
-            .get<{ crops: Crops[] }>(
-                environment.baseUrl + 'crops?search=' + data.search
-            )
+            .get<{ crops: Crops[] }>('api-1/crops?search=' + data.search)
             .pipe(
                 tap((response) => {
                     this._crops.next(response.crops);

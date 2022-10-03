@@ -9,6 +9,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs';
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class Interceptor implements HttpInterceptor {
     constructor() {}
@@ -16,15 +18,14 @@ export class Interceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (localStorage.getItem('accessToken') != null) {
-            const token = localStorage.getItem('accessToken');
-            // if the token is  stored in localstorage add it to http header
-            const headers = new HttpHeaders().set('accessToken', token);
-            //clone http to the custom AuthRequest and send it to the server
-            const AuthRequest = request.clone({ headers: headers });
-            return next.handle(AuthRequest);
-        } else {
-            return next.handle(request);
+        let requestUrl = request.url;
+        if (requestUrl.indexOf('api-1') !== -1) {
+            requestUrl = requestUrl.replace('api-1', environment.baseUrl);
         }
+        request = request.clone({
+            url: requestUrl,
+        });
+        // move to next HttpClient request life cycle
+        return next.handle(request);
     }
 }
