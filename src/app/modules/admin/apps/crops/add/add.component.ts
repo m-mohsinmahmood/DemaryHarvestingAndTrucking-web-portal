@@ -48,7 +48,6 @@ export class AddCropsComponent implements OnInit {
     if (this.data && this.data.isEdit){
         this.updateCrop(this.form.value);
         this.matDialogRef.close();
-
     }
     else {
         this.createCrop(this.form.value);

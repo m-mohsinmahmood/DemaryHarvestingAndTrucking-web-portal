@@ -106,7 +106,7 @@ export class CropService {
 
     updateCrop(data: any) {
         this._httpClient
-            .post(`api-1/crops`, data)
+            .put(`api-1/crops`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {},
