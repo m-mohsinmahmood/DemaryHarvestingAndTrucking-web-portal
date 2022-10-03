@@ -9,6 +9,7 @@ import {
     BehaviorSubject,
     catchError,
     filter,
+    finalize,
     map,
     Observable,
     of,
@@ -18,6 +19,7 @@ import {
     throwError,
 } from 'rxjs';
 import { Crops } from 'app/modules/admin/apps/crops/crops.types';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -49,16 +51,8 @@ export class CropService {
     }
 
     getCrops(): Observable<{ crops: Crops[] }> {
-        const headers = {
-            'Content-Type': 'application/json',
-        };
         return this._httpClient
-            .get<{ crops: Crops[] }>(
-                'https://dht-dev.azure-api.net/dht-dev/crops',
-                {
-                    headers: new HttpHeaders(headers),
-                }
-            )
+            .get<{ crops: Crops[] }>(environment.baseUrl + 'crops')
             .pipe(
                 tap((response) => {
                     this._crops.next(response.crops);
@@ -66,52 +60,61 @@ export class CropService {
                 catchError(this.handleError)
             );
     }
-    getCropById(id: string): Observable<Crops>{
-        const headers = {
-            'Content-Type': 'application/json',
-        };
+    getCropById(id: string): Observable<Crops> {
         return this._httpClient
-        .get<Crops>(
-            'https://dht-dev.azure-api.net/dht-dev/crops' + id,
-            {
-                headers: new HttpHeaders(headers),
-            }
-        )
-        .pipe(
-            tap((response) => {
-                this._crop.next(response);
-            }),
-            catchError(this.handleError)
-        );
+            .get<Crops>(environment.baseUrl + 'crops' + id)
+            .pipe(
+                tap((response) => {
+                    this._crop.next(response);
+                }),
+                catchError(this.handleError)
+            );
     }
-    createCrop(data: any): Observable<Crops>
-    {
+    createCrop(data: any): Observable<Crops> {
         return this.crops$.pipe(
             take(1),
-            switchMap(crops => this._httpClient.post<Crops>('https://dht-dev.azure-api.net/dht-dev/crops', data).pipe(
-                map((newCrop) => {
-
-                    // Update the products with the new product
-                    this._crops.next([newCrop, ...crops]);
-                    // Return the new product
-                    return newCrop;
-                })
-            ))
+            switchMap((crops) =>
+                this._httpClient
+                    .post<Crops>(environment.baseUrl + 'crops', data)
+                    .pipe(
+                        tap(this.getCrops())
+                        // map((newCrop) => {
+                        //     // Update the crops with the new crops
+                        //     this._crops.next([data, ...crops]);
+                        //     // Return the new crops
+                        //     return data;
+                        // })
+                    )
+            )
         );
     }
-    updateCrop(data: any): Observable<Crops>
-    {
+    updateCrop(data: any): Observable<Crops> {
         return this.crops$.pipe(
             take(1),
-            switchMap(crops => this._httpClient.put<Crops>(' https://dht-dev.azure-api.net/dht-dev/crops', data).pipe(
-                map((newCrop) => {
-
-                    // Update the products with the new product
-                    this._crops.next([newCrop, ...crops]);
-                    // Return the new product
-                    return newCrop;
-                })
-            ))
+            switchMap((crops) =>
+                this._httpClient
+                    .put<Crops>(environment.baseUrl + 'crops', data)
+                    .pipe(
+                        map((newCrop) => {
+                            this._crops.next([data]);
+                            return data;
+                            // Update the crops with the new crops
+                            // Return the new crop
+                        })
+                    )
+            )
         );
+    }
+    searchCrop(data: any): Observable<{ crops: Crops[] }> {
+        return this._httpClient
+            .get<{ crops: Crops[] }>(
+                environment.baseUrl + 'crops?search=' + data.search
+            )
+            .pipe(
+                tap((response) => {
+                    this._crops.next(response.crops);
+                }),
+                catchError(this.handleError)
+            );
     }
 }

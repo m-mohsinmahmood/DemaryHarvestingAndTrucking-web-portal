@@ -62,7 +62,8 @@
             <!-- Search -->
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput (keyup)="updateFilter($event)" [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                <form [formGroup]="searchform"><input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                </form>
             </mat-form-field>
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
@@ -93,7 +94,7 @@
         </div>
     </div>
     <div *ngIf="!this.isLoading">
-        <ngx-datatable #myFilterTable class="material" [limit]="10" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [sorts]="[{ prop: 'name', dir: 'desc' }]">
+        <ngx-datatable #myFilterTable class="material" [limit]="10" [rows]="rows | async" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [sorts]="[{ prop: 'name', dir: 'desc' }]">
             <ngx-datatable-column name="Crop" prop="cropName">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     {{ row.name }}
