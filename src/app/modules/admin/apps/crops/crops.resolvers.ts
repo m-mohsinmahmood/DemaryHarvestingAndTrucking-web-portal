@@ -26,7 +26,7 @@ export class CropsResolver implements Resolve<any>
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ crops: Crops[] }>
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
     {
         return this._cropService.getCrops();
     }

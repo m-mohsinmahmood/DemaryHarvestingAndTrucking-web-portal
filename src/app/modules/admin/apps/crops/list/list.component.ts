@@ -50,7 +50,10 @@ export class CropsListComponent implements OnInit {
 
     searchResult: Subscription;
     crop$: Observable<Crops>;
+    is_loading_crop$: Observable<boolean>;
     crops$: Observable<Crops[]>;
+    is_loading_crops$: Observable<boolean>;
+
     rows: Observable<any[]>;
     isLoading: boolean = false;
     isEdit: boolean = false;
@@ -69,29 +72,31 @@ export class CropsListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.rows = this._cropsService.crops$;
-        this.searchResult = this.searchform.valueChanges
-            .pipe(
-                debounceTime(500),
-                switchMap((data) => {
-                    return this._cropsService.searchCrop(data);
-                })
-            )
-            .subscribe();
-        this.isLoading = true;
-        this.getAllCrops();
+        this.initApis();
+        this.initObservables();
     }
-    getAllCrops(): void {
-        // this.rows = this._cropsService.crops$;
-        // this.rows = this.rows.source._value;
-        // this.temp = this.rows;
-        this.isLoading = false;
+
+    initObservables() {
+        this.is_loading_crops$ = this._cropsService.is_loading_crops$;
+        this.is_loading_crop$ = this._cropsService.is_loading_crop$;
+        this.crops$ = this._cropsService.crops$;
+        this.crop$ = this._cropsService.crop$;
+        this.searchResult = this.searchform.valueChanges
+            .pipe(debounceTime(500))
+            .subscribe((data) => {
+                this._cropsService.searchCrops(data);
+            });
+    }
+
+    initApis() {
+        this._cropsService.getCrops();
     }
 
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCropsComponent);
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
+            //Call this function only when success is returned from the create API call//
+            this._cropsService.getCrops();
         });
     }
     openEditDialog(event): void {
@@ -106,7 +111,8 @@ export class CropsListComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
+            //Call this function only when success is returned from the update API call//
+            this._cropsService.getCrops();
         });
     }
 }

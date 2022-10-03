@@ -38,14 +38,10 @@ export class AddCropsComponent implements OnInit {
     }
 
     createCrop(data: any): void {
-        this._cropsService.createCrop(data).subscribe((newCrop) => {
-            console.log(newCrop);
-        });
+        this._cropsService.createCrop(data);
     }
     updateCrop(data: any): void{
-        this._cropsService.updateCrop(data).subscribe((newCrop) => {
-            console.log(newCrop);
-        });
+        this._cropsService.updateCrop(data);
     }
 
     onSubmit(): void {

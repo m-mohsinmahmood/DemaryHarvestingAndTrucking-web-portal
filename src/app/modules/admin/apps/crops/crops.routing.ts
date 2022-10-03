@@ -12,9 +12,9 @@ export const cropsRoutes: Route[] = [
             {
                 path     : '',
                 component: CropsListComponent,
-                resolve  : {
-                    crops    : CropsResolver
-                }
+                // resolve  : {
+                //     crops    : CropsResolver
+                // }
             }
         ]
     },
