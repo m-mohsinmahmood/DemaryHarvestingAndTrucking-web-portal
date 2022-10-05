@@ -30,6 +30,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCropsComponent } from '../add/add.component';
 import { CropService } from '../crops.services';
+import { AlertService } from 'app/core/alert/alert.service'; 
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Crops } from '../crops.types';
 import { MatTableDataSource } from '@angular/material/table';
@@ -71,7 +72,8 @@ export class CropsListComponent implements OnInit {
 
     constructor(
         private _matDialog: MatDialog,
-        private _cropsService: CropService
+        private _cropsService: CropService,
+        private _alertSerice: AlertService
     ) {}
 
     ngOnInit(): void {
@@ -100,6 +102,15 @@ export class CropsListComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             //Call this function only when success is returned from the create API call//
             //this._cropsService.getCrops();
+            this._alertSerice.showAlert({
+                type: 'success',
+                shake: false,
+                slideRight: true,
+                title: 'Create Crop',
+                message: 'Crop has been successfully created.',
+                time: 5000
+            });
+            
         });
     }
     openEditDialog(event): void {
