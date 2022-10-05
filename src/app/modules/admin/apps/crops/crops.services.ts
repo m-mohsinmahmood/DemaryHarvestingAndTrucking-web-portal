@@ -9,7 +9,7 @@ import {
     HttpParams,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, take, throwError } from 'rxjs';
-import { Crops} from 'app/modules/admin/apps/crops/crops.types';
+import { Crops } from 'app/modules/admin/apps/crops/crops.types';
 
 @Injectable({
     providedIn: 'root',
