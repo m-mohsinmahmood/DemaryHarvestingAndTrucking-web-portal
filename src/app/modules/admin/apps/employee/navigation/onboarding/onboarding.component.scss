@@ -1,0 +1,21 @@
+.timeline-track{
+    // display: flex;
+    flex-grow: 1;
+    // background-color: blue;
+    width: 1px;
+    background-color: #9fa2a4;
+    box-shadow: 0 4px 8px #8db8e4;
+
+}
+::ng-deep  .mat-form-field-appearance-outline .mat-form-field-flex {
+    // padding: 0 0.75em 0 0.75em;
+    // margin-top: -0.25em;
+    // position: relative;
+    height: 40px;
+    // width: 100%;
+    // background-color: aqua;
+    // background-color: rgb(225, 242, 242);
+}
+::ng-deep  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 !important;
+}
