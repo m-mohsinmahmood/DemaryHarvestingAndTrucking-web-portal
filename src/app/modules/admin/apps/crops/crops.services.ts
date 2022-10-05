@@ -24,7 +24,7 @@ export class CropService {
     private is_loading_crop: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly is_loading_crop$: Observable<boolean> =
-        this.is_loading_crops.asObservable();
+        this.is_loading_crop.asObservable();
     //#endregion
     //#region Observables
     private crops: BehaviorSubject<Crops[] | null> = new BehaviorSubject(null);
@@ -110,6 +110,7 @@ export class CropService {
             .subscribe(
                 (res: any) => {
                     //show notification based on message returned from the api
+                    this.is_loading_crop.next(false);
                 },
                 (err) => {
                     this.handleError(err);

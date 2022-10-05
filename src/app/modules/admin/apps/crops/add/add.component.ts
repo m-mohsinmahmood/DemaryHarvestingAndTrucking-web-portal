@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CropService } from '../crops.services';
-
 
 @Component({
     selector: 'app-add',
@@ -10,6 +11,9 @@ import { CropService } from '../crops.services';
     styleUrls: ['./add.component.scss'],
 })
 export class AddCropsComponent implements OnInit {
+    isLoadingCrop: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isLoadingCrop$: Observable<boolean> = this.isLoadingCrop.asObservable();
+
     form: FormGroup;
 
     constructor(
@@ -20,6 +24,7 @@ export class AddCropsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.isLoadingCrop$ = this._cropsService.is_loading_crop$;
         this.form = this._formBuilder.group({
             id: [''],
             name: [''],
@@ -40,20 +45,19 @@ export class AddCropsComponent implements OnInit {
     createCrop(cropData: any): void {
         this._cropsService.createCrop(cropData);
     }
-    updateCrop(cropData: any): void{
-        this._cropsService.updateCrop(cropData,this.data.paginationData);
+    updateCrop(cropData: any): void {
+        this._cropsService.updateCrop(cropData, this.data.paginationData);
     }
 
     onSubmit(): void {
-    if (this.data && this.data.cropData.isEdit){
-        this.updateCrop(this.form.value);
-        this.matDialogRef.close();
-    }
-    else {
-        this.createCrop(this.form.value);
-        this.matDialogRef.close();
-    }
-        console.warn('Your order has been submitted', this.form.value);
+        this.isLoadingCrop.next(true);
+        if (this.data && this.data.cropData.isEdit) {
+            this.updateCrop(this.form.value);
+            this.matDialogRef.close();
+        } else {
+            this.createCrop(this.form.value);
+            this.matDialogRef.close();
+        }
     }
 
     saveAndClose(): void {
