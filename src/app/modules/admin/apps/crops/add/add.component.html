@@ -23,15 +23,15 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
         <mat-form-field appearance="outline">
             <mat-label>Crop </mat-label>
-            <input matInput formControlName="crop" />
+            <input matInput formControlName="name" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Variety</mat-label>
-            <input matInput formControlName="variety" />
+            <input matInput formControlName="category" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Bushel Weight</mat-label>
-            <input matInput formControlName="bushelWeight" />
+            <input matInput formControlName="bushel_weight" />
         </mat-form-field>
     </form>
 

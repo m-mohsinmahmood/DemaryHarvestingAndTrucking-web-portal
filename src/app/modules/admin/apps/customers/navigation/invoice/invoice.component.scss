@@ -46,9 +46,33 @@
 
 }
 
+::ng-deep .mat-tabs-wrapper-invoice .mat-tab-body-content
+{
+    overflow-y: hidden !important;
+}
+// ::ng-deep customer-details > .overflow-auto {
+//     // overflow-y: hidden !important;
+// }
+
 mat-form-field {
     width: 100%;
   }
+
+  ::ng-deep .mat-form-field-wrapper
+  {
+    padding: 0px !important;
+
+  }
+
+  ::ng-deep mat-form-field .mat-form-field-wrapper {
+    width: 100%;
+    background-color: #fff;
+  }
+
+
+ 
+
+
 // ::ng-deep .mat-form-field + .mat-form-field {
 //     margin-left: 8px;
 //   }

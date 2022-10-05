@@ -2,27 +2,30 @@
     <!-- Header -->
     <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
         <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <div class="absolute inset-x-0 bottom-0" *ngIf="is_loading_crops$ | async">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
         <div class="text-4xl font-extrabold tracking-tight">Crops</div>
         <!-- Filter -->
         <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>
-            <div class="flex flex-col w-64 overflow-auto bg-card ">
+            <div class="flex flex-col w-64 overflow-auto bg-card">
                 <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
                     <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
-                    <div class="ml-3 text-2xl font-semibold tracking-tight">Filters</div>
+                    <div class="ml-3 text-2xl font-semibold tracking-tight">
+                        Filters
+                    </div>
                     <button class="ml-auto" mat-icon-button mat-icon-button (click)="settingsDrawer.close()()">
-                <mat-icon
-                    class="text-current"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-            </button>
+                        <mat-icon
+                            class="text-current"
+                            [svgIcon]="'heroicons_outline:x'"
+                        ></mat-icon>
+                    </button>
                 </div>
                 <div class="flex flex-col justify-center items-center md:h-screen">
                     <div class="sm:h-200 md:h-5/6 h-160">
-                        <div class="w-inherit  flex  flex-col">
-                            <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full ">
+                        <div class="w-inherit flex flex-col">
+                            <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                                 <mat-label>Select Country</mat-label>
                                 <mat-select multiple>
                                     <!-- <mat-option *ngFor="let country of country_list" [value]="country">{{ country }}</mat-option> -->
@@ -38,17 +41,18 @@
                     </div>
                     <div class="w-inherit flex justify-center items-center mt-1 mb-1">
                         <button class="" mat-flat-button [color]="'primary'">
-                    <span class="" >Apply filters</span>
-                </button>
+                            <span class="">Apply filters</span>
+                        </button>
                     </div>
                     <div class="w-inherit flex justify-center items-center mt-1 mb-1">
                         <button class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                    <mat-icon
-                    class="m-0 icon-size-4"
-                    color="warn"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                    <span>Remove filters</span>
-                  </button>
+                            <mat-icon
+                                class="m-0 icon-size-4"
+                                color="warn"
+                                [svgIcon]="'heroicons_outline:x'"
+                            ></mat-icon>
+                            <span>Remove filters</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -58,7 +62,9 @@
             <!-- Search -->
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput (keyup)="updateFilter($event)" [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                <form [formGroup]="searchform">
+                    <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                </form>
             </mat-form-field>
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
@@ -88,29 +94,61 @@
             </mat-menu>
         </div>
     </div>
-    <ngx-datatable #myFilterTable class="material" [limit]="10" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [sorts]="[{ prop: 'name', dir: 'desc' }]">
-        <ngx-datatable-column name="Crop" prop="cropName">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.cropName }}
+    <div class="flex flex-auto overflow-hidden">
+        <!-- Crops list -->
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+            <ng-container *ngIf="crops$ | async as crops">
+                <div class="grid">
+                    <!-- Header -->
+                    <div class="crops-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                        <div>Crops</div>
+                        <div class="hidden sm:block">Variety</div>
+                        <div class="hidden sm:block">Bushel Weight</div>
+                        <div class="sm:block">Actions</div>
+                    </div>
+                    <!-- Rows -->
+                    <ng-container *ngIf="crops$ | async as crops">
+                        <ng-container *ngFor="let crop of crops.crops; trackBy: trackByFn">
+                            <div class="crops-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
+                                <!-- crop Name -->
+                                <div class="truncate">
+                                    {{ crop.name }}
+                                </div>
+                                <!-- Variety -->
+                                <div class="hidden sm:block items-left">
+                                    <div class="min-w-4">
+                                        {{ crop.category }}
+                                    </div>
+                                </div>
+
+                                <!-- Bushel Weight -->
+                                <div class="hidden sm:block items-center">
+                                    <div class="min-w-4">
+                                        {{ crop.bushel_weight }}
+                                    </div>
+                                </div>
+                                <!-- Actions -->
+                                <div>
+                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="openEditDialog(crop)">
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_solid:pencil-square'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="crops.count" [pageIndex]="currentPage" [pageSize]="pageSize"
+                    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+            </ng-container>
+            <ng-template #noCropss>
+                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                    There are no products!
+                </div>
             </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Variety">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.variety }}
-            </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Bushel Weight">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.bushelWeight }}
-            </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="actions">
-            <ng-template let-column="column" ngx-datatable-header-template>
-                Actions
-            </ng-template>
-            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                <mat-icon (click)="openEditDialog(row)" [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-            </ng-template>
-        </ngx-datatable-column>
-    </ngx-datatable>
+        </div>
+    </div>
 </div>
