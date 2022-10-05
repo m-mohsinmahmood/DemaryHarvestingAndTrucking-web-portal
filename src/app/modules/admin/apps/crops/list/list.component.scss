@@ -5,3 +5,16 @@
     background-color: #9fa2a4;
     box-shadow: 0 4px 8px #8db8e4;
 }
+
+.crops-grid {
+    grid-template-columns: 60% 40%;
+    @screen sm {
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+    @screen md {
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+    @screen lg {
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+}

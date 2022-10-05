@@ -12,7 +12,8 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Interceptor } from '../app/interceptors/interceptor';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -25,6 +26,7 @@ const routerConfig: ExtraOptions = {
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
+        HttpClientModule,
 
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
@@ -39,6 +41,9 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     ],
     bootstrap: [AppComponent],
 })
