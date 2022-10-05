@@ -11,6 +11,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddCustomer implements OnInit {
 
   public form: FormGroup;
+  private _customersService: any;
+  selectedProduct: any;
+  private _changeDetectorRef: any;
   constructor(
     public matDialogRef: MatDialogRef<AddCustomer>,
     private _formBuilder: FormBuilder,
@@ -122,6 +125,23 @@ export class AddCustomer implements OnInit {
     {
 
     }
+
+    createProduct(): void {
+      // Create the product
+      this._customersService.createProduct().subscribe((newProduct) => {
+          // Go to new product
+          this.selectedProduct = newProduct;
+
+          // Fill the form
+          this.form.patchValue(this.form.value);
+
+          // Mark for check
+          this._changeDetectorRef.markForCheck();
+      });
+  }
+
+
+    
 
     /**
      * Send the message

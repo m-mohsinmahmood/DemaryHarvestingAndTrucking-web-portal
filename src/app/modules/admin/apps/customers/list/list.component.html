@@ -49,11 +49,12 @@
                                 Customer Type
 
                             </div>
-                            <div class="sm:block">Contacts</div>
 
                             <div class="hidden lg:block">
                                 Status
                             </div>
+                            <div class="sm:block">Contacts</div>
+
                             <div class="sm:block">Details</div>
                         </div>
                         <!-- Rows -->
@@ -101,6 +102,12 @@
                                         {{product.customerType}}
                                     </div>
 
+                                    <!-- Active -->
+                                    <div class="hidden lg:block">
+                                        <mat-icon class="{{product.isActive===1 ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="product.isActive===1 ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">check-circle</mat-icon>
+
+                                    </div>
+
                                     <!-- Contacts button -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleDetails(product.id)">
@@ -111,11 +118,7 @@
                                     </div>
 
 
-                                    <!-- Active -->
-                                    <div class="hidden lg:block">
-                                        <mat-icon class="{{product.isActive===1 ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="product.isActive===1 ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">check-circle</mat-icon>
 
-                                    </div>
 
                                     <!-- Details button -->
                                     <div>
