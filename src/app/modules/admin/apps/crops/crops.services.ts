@@ -1,18 +1,17 @@
+/* eslint-disable quotes */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import {
     HttpClient,
-    HttpHeaders,
     HttpErrorResponse,
+    HttpParams,
 } from '@angular/common/http';
-import {
-    BehaviorSubject,
-    catchError,
-    Observable,
-    take,
-    throwError,
-} from 'rxjs';
-import { Crops } from 'app/modules/admin/apps/crops/crops.types';
+import { BehaviorSubject, Observable, take, throwError } from 'rxjs';
+import { Crops, Pagination } from 'app/modules/admin/apps/crops/crops.types';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Injectable({
     providedIn: 'root',
@@ -52,14 +51,36 @@ export class CropService {
     }
     //#endregion
     //#region Api call functions
-    getCrops() {
+    /**
+     * Get products
+     *
+     *
+     * @param page
+     * @param limit
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getCrops(
+        page: number = 1,
+        limit: number = 10,
+        // sort: string = 'name',
+        // order: 'asc' | 'desc' | '' = 'asc',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
         this._httpClient
-            .get(`api-1/crops`)
+            .get(`api-1/crops`, {
+                params,
+            })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
                     this.is_loading_crops.next(true);
-                    this.crops.next(res.crops);
+                    this.crops.next(res);
                     this.is_loading_crops.next(false);
                 },
                 (err) => {
@@ -80,9 +101,6 @@ export class CropService {
                 },
                 (err) => {
                     this.handleError(err);
-                },
-                () => {
-                    this.getCrops();
                 }
             );
     }
@@ -104,9 +122,9 @@ export class CropService {
             );
     }
 
-    updateCrop(data: any) {
+    updateCrop(cropData: any,paginatioData: any) {
         this._httpClient
-            .put(`api-1/crops`, data)
+            .put(`api-1/crops`, cropData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {},
@@ -114,25 +132,25 @@ export class CropService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getCrops();
+                    this.getCrops(paginatioData.page,paginatioData.limit,paginatioData.search);
                 }
             );
     }
 
-    searchCrops(data: any) {
-        this._httpClient
-            .get(`api-1/crops?search=${data.search}`)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.is_loading_crops.next(true);
-                    this.crops.next(res.crops);
-                    this.is_loading_crops.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
+    // searchCrops(data: any) {
+    //     this._httpClient
+    //         .get(`api-1/crops?search=${data.search}`)
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.is_loading_crops.next(true);
+    //                 this.crops.next(res.crops);
+    //                 this.is_loading_crops.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
     //#endregion
 }

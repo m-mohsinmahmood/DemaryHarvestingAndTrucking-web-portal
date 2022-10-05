@@ -5,3 +5,13 @@ export interface Crops
     category: string;
     bushel_weight: number;
 }
+
+// export interface Pagination
+// {
+//     length: number;
+//     limit: number;
+//     page: number;
+//     lastPage: number;
+//     startIndex: number;
+//     endIndex: number;
+// }

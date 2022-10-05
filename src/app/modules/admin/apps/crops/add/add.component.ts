@@ -27,25 +27,25 @@ export class AddCropsComponent implements OnInit {
             bushel_weight: ['', [Validators.required]],
         });
         // Create the form
-        if (this.data && this.data.isEdit) {
+        if (this.data && this.data.cropData.isEdit) {
             this.form.patchValue({
-                id: this.data.id,
-                name: this.data.name,
-                category: this.data.category,
-                bushel_weight: this.data.bushel_weight,
+                id: this.data.cropData.id,
+                name: this.data.cropData.name,
+                category: this.data.cropData.category,
+                bushel_weight: this.data.cropData.bushel_weight,
             });
         }
     }
 
-    createCrop(data: any): void {
-        this._cropsService.createCrop(data);
+    createCrop(cropData: any): void {
+        this._cropsService.createCrop(cropData);
     }
-    updateCrop(data: any): void{
-        this._cropsService.updateCrop(data);
+    updateCrop(cropData: any): void{
+        this._cropsService.updateCrop(cropData,this.data.paginationData);
     }
 
     onSubmit(): void {
-    if (this.data && this.data.isEdit){
+    if (this.data && this.data.cropData.isEdit){
         this.updateCrop(this.form.value);
         this.matDialogRef.close();
     }

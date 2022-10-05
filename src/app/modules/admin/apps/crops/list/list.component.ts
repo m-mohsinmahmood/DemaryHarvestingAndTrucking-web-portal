@@ -32,11 +32,12 @@ import { AddCropsComponent } from '../add/add.component';
 import { CropService } from '../crops.services';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Crops } from '../crops.types';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.css'],
+    styleUrls: ['./list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
@@ -44,11 +45,12 @@ import { Crops } from '../crops.types';
 export class CropsListComponent implements OnInit {
     @ViewChild(DatatableComponent) myFilterTable: DatatableComponent;
     @ViewChild('input') input: ElementRef;
+
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
 
-    searchResult: Subscription;
+    search: Subscription;
     crop$: Observable<Crops>;
     is_loading_crop$: Observable<boolean>;
     crops$: Observable<Crops[]>;
@@ -58,14 +60,15 @@ export class CropsListComponent implements OnInit {
     isLoading: boolean = false;
     isEdit: boolean = false;
     searchInputControl: FormControl = new FormControl();
-    temp = [];
-    //   rows: any = [];
     totalCount: number = 0;
     closeResult: string;
-    dataParams: any = {
-        pageNnum: '',
-        pageSize: '',
-    };
+    pageSize = 10;
+    currentPage = 0;
+    pageSizeOptions: number[] = [10, 25, 50, 100];
+    searchResult: string;
+    page: string;
+    limit: string;
+
     constructor(
         private _matDialog: MatDialog,
         private _cropsService: CropService
@@ -75,16 +78,16 @@ export class CropsListComponent implements OnInit {
         this.initApis();
         this.initObservables();
     }
-
     initObservables() {
         this.is_loading_crops$ = this._cropsService.is_loading_crops$;
         this.is_loading_crop$ = this._cropsService.is_loading_crop$;
         this.crops$ = this._cropsService.crops$;
         this.crop$ = this._cropsService.crop$;
-        this.searchResult = this.searchform.valueChanges
+        this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
-                this._cropsService.searchCrops(data);
+                this.searchResult = data.search;
+                this._cropsService.getCrops(1, 10, this.searchResult);
             });
     }
 
@@ -96,23 +99,40 @@ export class CropsListComponent implements OnInit {
         const dialogRef = this._matDialog.open(AddCropsComponent);
         dialogRef.afterClosed().subscribe((result) => {
             //Call this function only when success is returned from the create API call//
-            this._cropsService.getCrops();
+            //this._cropsService.getCrops();
         });
     }
     openEditDialog(event): void {
         this.isEdit = true;
         const dialogRef = this._matDialog.open(AddCropsComponent, {
             data: {
-                isEdit: this.isEdit,
-                id: event.id,
-                name: event.name,
-                category: event.category,
-                bushel_weight: event.bushel_weight,
+                cropData: {
+                    isEdit: this.isEdit,
+                    id: event.id,
+                    name: event.name,
+                    category: event.category,
+                    bushel_weight: event.bushel_weight,
+                },
+                paginationData: {
+                    page: this.page,
+                    limit: this.limit,
+                    search: this.searchResult,
+                },
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
             //Call this function only when success is returned from the update API call//
             this._cropsService.getCrops();
         });
+    }
+
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this.getNextData(this.page.toString(), this.limit.toString());
+    }
+
+    getNextData(page, limit) {
+        this._cropsService.getCrops(page, limit, this.searchResult);
     }
 }
