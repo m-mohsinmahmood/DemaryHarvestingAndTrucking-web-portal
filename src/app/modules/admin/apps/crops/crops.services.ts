@@ -9,9 +9,7 @@ import {
     HttpParams,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, take, throwError } from 'rxjs';
-import { Crops, Pagination } from 'app/modules/admin/apps/crops/crops.types';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { Crops} from 'app/modules/admin/apps/crops/crops.types';
 
 @Injectable({
     providedIn: 'root',
