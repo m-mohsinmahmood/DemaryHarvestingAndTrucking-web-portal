@@ -23,17 +23,15 @@ import {
     tap,
     filter,
     Subscription,
-    Observer,
 } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCropsComponent } from '../add/add.component';
 import { CropService } from '../crops.services';
-import { AlertService } from 'app/core/alert/alert.service'; 
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { MatSort, Sort } from '@angular/material/sort';
 import { Crops } from '../crops.types';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-list',
@@ -67,13 +65,13 @@ export class CropsListComponent implements OnInit {
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
-    page: string;
-    limit: string;
+    page: number;
+    limit: number;
 
     constructor(
         private _matDialog: MatDialog,
         private _cropsService: CropService,
-        private _alertSerice: AlertService
+        private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -89,7 +87,7 @@ export class CropsListComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this._cropsService.getCrops(1, 10, this.searchResult);
+                this._cropsService.getCrops(1, 10,'','', this.searchResult);
             });
     }
 
@@ -102,15 +100,6 @@ export class CropsListComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             //Call this function only when success is returned from the create API call//
             //this._cropsService.getCrops();
-            this._alertSerice.showAlert({
-                type: 'success',
-                shake: false,
-                slideRight: true,
-                title: 'Create Crop',
-                message: 'Crop has been successfully created.',
-                time: 5000
-            });
-            
         });
     }
     openEditDialog(event): void {
@@ -121,7 +110,7 @@ export class CropsListComponent implements OnInit {
                     isEdit: this.isEdit,
                     id: event.id,
                     name: event.name,
-                    category: event.category,
+                    variety: event.variety,
                     bushel_weight: event.bushel_weight,
                 },
                 paginationData: {
@@ -133,8 +122,19 @@ export class CropsListComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((result) => {
             //Call this function only when success is returned from the update API call//
-            this._cropsService.getCrops();
+            // this._cropsService.getCrops();
         });
+    }
+
+    sortData(sort: any) {
+        console.log(sort);
+        this._cropsService.getCrops(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
     }
 
     pageChanged(event) {
@@ -144,6 +144,6 @@ export class CropsListComponent implements OnInit {
     }
 
     getNextData(page, limit) {
-        this._cropsService.getCrops(page, limit, this.searchResult);
+        this._cropsService.getCrops(page, limit,'','', this.searchResult);
     }
 }

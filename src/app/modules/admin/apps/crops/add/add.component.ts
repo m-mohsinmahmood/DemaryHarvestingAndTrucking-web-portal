@@ -1,8 +1,11 @@
+/* eslint-disable curly */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { Subscription } from 'rxjs';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CropService } from '../crops.services';
 
 @Component({
@@ -11,8 +14,8 @@ import { CropService } from '../crops.services';
     styleUrls: ['./add.component.scss'],
 })
 export class AddCropsComponent implements OnInit {
-    isLoadingCrop: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    isLoadingCrop$: Observable<boolean> = this.isLoadingCrop.asObservable();
+    isLoadingCrop$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
 
     form: FormGroup;
 
@@ -25,10 +28,17 @@ export class AddCropsComponent implements OnInit {
 
     ngOnInit(): void {
         this.isLoadingCrop$ = this._cropsService.is_loading_crop$;
+        this.closeDialog$ = this._cropsService.closeDialog$;
+        this._cropsService.closeDialog$.subscribe((res) => {
+            if (res) {
+                this.matDialogRef.close();
+                this._cropsService.closeDialog.next(false);
+            }
+        });
         this.form = this._formBuilder.group({
             id: [''],
             name: [''],
-            category: [''],
+            variety: [''],
             bushel_weight: ['', [Validators.required]],
         });
         // Create the form
@@ -36,7 +46,7 @@ export class AddCropsComponent implements OnInit {
             this.form.patchValue({
                 id: this.data.cropData.id,
                 name: this.data.cropData.name,
-                category: this.data.cropData.category,
+                variety: this.data.cropData.variety,
                 bushel_weight: this.data.cropData.bushel_weight,
             });
         }
@@ -50,21 +60,17 @@ export class AddCropsComponent implements OnInit {
     }
 
     onSubmit(): void {
-        this.isLoadingCrop.next(true);
+        this._cropsService.is_loading_crop.next(true);
         if (this.data && this.data.cropData.isEdit) {
             this.updateCrop(this.form.value);
-            this.matDialogRef.close();
         } else {
             this.createCrop(this.form.value);
-            this.matDialogRef.close();
         }
     }
 
     saveAndClose(): void {
+        this._cropsService.is_loading_crop.next(false);
         this.matDialogRef.close();
     }
 
-    discard(): void {
-        this.matDialogRef.close();
-    }
 }
