@@ -46,6 +46,7 @@ import { AddDestinationComponent } from './navigation/farm-data/add-destination/
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
 import { GeneralInfoComponent } from './general-info/general-info.component';
 import { DocumentComponent } from './navigation/document/document.component';
+import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +73,7 @@ import { DocumentComponent } from './navigation/document/document.component';
         AddCustomerContact,
         GeneralInfoComponent,
         DocumentComponent,
+        AddRateDataComponent
     ],
     imports     : [
 RouterModule.forChild(customersRoutes),
