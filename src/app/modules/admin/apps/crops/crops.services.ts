@@ -74,7 +74,7 @@ export class CropService {
     //#endregion
     //#region Api call functions
     /**
-     * Get products
+     * Get Crops
      *
      *
      * @param page

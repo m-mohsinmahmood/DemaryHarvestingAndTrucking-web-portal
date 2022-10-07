@@ -16,7 +16,7 @@ import { CustomersService } from '../customers.service';
 export class GeneralInfoComponent implements OnInit, OnDestroy
 {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-    
+
     isLoading: boolean = false;
     routeID; // URL ID
     customers:any;
@@ -51,14 +51,15 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
           console.log("object", this.routeID);
           console.log(params['id']) //log the value of id
         });
-    
-    
+
+
         // Get the employee by id
-        this._customerService.getProductById(this.routeID).subscribe((customer) => {
-            this.customers = customer
-        });
+        this._customerService.getCustomerById(this.routeID)
+        // .subscribe((customer) => {
+        //     this.customers = customer
+        // });
       }
-    
+
 
     /**
      * On destroy
@@ -79,19 +80,19 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
         const dialogRef = this._matDialog.open(UpdateComponent,{
          data:{id: this.routeID}
         });
-  
-  
+
+
         dialogRef.afterClosed()
                  .subscribe((result) => {
                      console.log('Compose dialog was closed!');
-      });   
-    }
-    
-    backHandler(): void 
-    {
-        this._router.navigate(["/apps/customers/"]) 
+      });
     }
 
-    
+    backHandler(): void
+    {
+        this._router.navigate(["/apps/customers/"])
+    }
+
+
 
 }

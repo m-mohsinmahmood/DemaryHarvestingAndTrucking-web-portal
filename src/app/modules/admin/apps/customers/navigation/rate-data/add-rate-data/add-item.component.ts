@@ -15,7 +15,7 @@ export class AddRateDataComponent implements OnInit {
     public matDialogRef: MatDialogRef<AddRateDataComponent>,
     private _formBuilder: FormBuilder,
     private api: CustomersService,
-    
+
     ) { }
 
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class AddRateDataComponent implements OnInit {
   this.itemForm = this._formBuilder.group({
     rateData    : [''],
     equipmentType         : [''],
-    
+
 });
   }
 
@@ -34,7 +34,7 @@ export class AddRateDataComponent implements OnInit {
   get cropArr() {
     return this.itemForm.get('cropsItemRows') as FormArray;
   }
-  
+
   onSubmit(): void {
     console.warn('Your order has been submitted', this.itemForm.value);
     this.itemForm.reset();
@@ -71,7 +71,7 @@ export class AddRateDataComponent implements OnInit {
   deleteCropRow(index: number) {
     this.cropArr.removeAt(index);
   }
-  
+
    /**
      * Save and close
      */
@@ -108,19 +108,19 @@ export class AddRateDataComponent implements OnInit {
     send(): void
     {
       console.log(this.itemForm.controls);
-      this.api.createProduct(this.itemForm.value)
-      .subscribe({
-        next:(res)=>{
-          alert("Customer Added Successfully1") 
-          this.itemForm.reset();
-          this.matDialogRef.close('save');
-        },
-        error:()=>{
-          alert("Error!")
-        }
-      }
+      this.api.createCustomer(this.itemForm.value);
+    //   .subscribe({
+    //     next:(res)=>{
+    //       alert("Customer Added Successfully1")
+    //       this.itemForm.reset();
+    //       this.matDialogRef.close('save');
+    //     },
+    //     error:()=>{
+    //       alert("Error!")
+    //     }
+    //   }
 
-      )
+    //   )
 
 
     }

@@ -74,18 +74,19 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy
 
 
         // Get the employee by id
-        this._customerService.getProductById(this.routeID).subscribe((customer) => {
-            this.customers = customer;
-            // if(this.customers.customerType == "Commercial Trucking")
-            // {
+        this._customerService.getCustomerById(this.routeID)
+        // .subscribe((customer) => {
+        //     this.customers = customer;
+        //     // if(this.customers.customerType == "Commercial Trucking")
+        //     // {
 
-            //   if(this.routes.find((x)=> x.title = "Farm Data"))
-            //   {
-            //     this.routes.splice(1, 1);
-            //   }
+        //     //   if(this.routes.find((x)=> x.title = "Farm Data"))
+        //     //   {
+        //     //     this.routes.splice(1, 1);
+        //     //   }
 
-            // }
-        });
+        //     // }
+        // });
 
 
         // Subscribe to media changes

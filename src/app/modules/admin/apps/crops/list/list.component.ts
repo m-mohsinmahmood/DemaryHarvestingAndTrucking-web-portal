@@ -44,7 +44,6 @@ import * as Joi from 'joi';
     animations: fuseAnimations,
 })
 export class CropsListComponent implements OnInit {
-    @ViewChild(DatatableComponent) myFilterTable: DatatableComponent;
     @ViewChild('input') input: ElementRef;
 
     searchform: FormGroup = new FormGroup({
@@ -58,12 +57,7 @@ export class CropsListComponent implements OnInit {
     is_loading_crops$: Observable<boolean>;
     exportCrop$: Observable<Crops>;
 
-    rows: Observable<any[]>;
-    isLoading: boolean = false;
     isEdit: boolean = false;
-    searchInputControl: FormControl = new FormControl();
-    totalCount: number = 0;
-    closeResult: string;
     pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
