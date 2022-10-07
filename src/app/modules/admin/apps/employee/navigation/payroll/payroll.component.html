@@ -2,8 +2,8 @@
     <p class="text-black font-semibold text-2xl px-4 py-3">
         Payroll
     </p>
-    <div class="flex sm:flex-row">
-         <div class="flex flex-col w-5/12 p-2 bg-gray-200 mr-2 rounded-md">
+    <div class="flex sm:flex-row flex-col">
+         <div class="flex flex-col sm:w-5/12 w-full  p-2 bg-gray-200 mr-2 rounded-md">
             <div class="flex justify-between py-1">
                <p class="text-sm font-normal text-gray-500">Name</p>
                <p class="text-sm font-semibold text-black">Adam Smith</p>
@@ -37,7 +37,7 @@
                 <p class="text-sm font-semibold text-black">$222</p>
              </div>
          </div>
-         <div class="w-7/12 bg-gray-200">Progress Container</div>
+         <div class="sm:w-7/12 w-full bg-gray-200 sm:mt-auto mt-2">Progress Container</div>
     </div>
     <div class="flex justify-between mx-2 rounded-md ">
         <p class="text-black font-semibold text-lg py-3 ">
@@ -54,13 +54,13 @@
                         <div class="grid">
                             <!-- Header -->
                             <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                <div>Date</div>
+                                <div class="hidden sm:block">Date</div>
                                 <div>Chief Crew</div>
                                 <div>State</div>
-                                <div>Hours</div>
-                                <div>Hourly Rate</div>
-                                <div>Total Wages</div>
-                                <div>Status</div>
+                                <div class="hidden sm:block">Hours</div>
+                                <div class="hidden sm:block">Hourly Rate</div>
+                                <div class="hidden sm:block">Total Wages</div>
+                                <div class="hidden sm:block">Status</div>
                             </div>
                             <!-- Rows -->
                             <ng-container>
@@ -70,13 +70,13 @@
                                                 0, 1,2
                                             ]
                                         " class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate">09/02/22</div>
+                                        <div class="truncate hidden sm:block">09/02/22</div>
                                         <div class="truncate">Demaray Time</div>
                                         <div class="truncate">South Dakota</div>
-                                        <div class="truncate">12</div>
-                                        <div class="truncate">Hourly Rate</div>
-                                        <div class="truncate">Lorium</div>
-                                        <div class="truncate rounded-full h-7 w-26 bg-blue-200 flex justify-center items-center">Verified</div>
+                                        <div class="truncate hidden sm:block">12</div>
+                                        <div class="truncate hidden sm:block">Hourly Rate</div>
+                                        <div class="truncate hidden sm:block">Lorium</div>
+                                        <div class="truncate hidden sm:block rounded-full h-7 w-26 bg-blue-200 flex justify-center items-center">Verified</div>
 
                                         <!-- Action -->
                                         <div (click)="openEditFarmDialog()">
@@ -123,11 +123,11 @@
                             </div>
                             <!-- Header -->
                             <div class="farm-data-farms2 z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                <div>Date</div>
+                                <div class="hidden sm:block">Date</div>
                                 <div>Chief Crew</div>
                                 <div>Hours Worked(hths)</div>
-                                <div>State</div>
-                                <div>Wages</div>
+                                <div class="hidden sm:block">State</div>
+                                <div class="hidden sm:block">Wages</div>
                             </div>
                             <!-- Rows -->
                             <ng-container>
@@ -137,11 +137,11 @@
                                                 0, 1,2
                                             ]
                                         " class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate">09/02/22</div>
+                                        <div class="truncate hidden sm:block">09/02/22</div>
                                         <div class="truncate">Demaray Time</div>
                                         <div class="truncate">10.22</div>
-                                        <div class="truncate">Noth Dakota</div>
-                                        <div class="truncate">23.4</div>
+                                        <div class="truncate hidden sm:block">Noth Dakota</div>
+                                        <div class="truncate hidden sm:block">23.4</div>
                                         <!-- <div class="truncate">Lorium</div>
                                         <div class="truncate rounded-full h-7 w-26 bg-blue-200 flex justify-center items-center">Verified</div> -->
 
