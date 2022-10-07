@@ -30,8 +30,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddCropsComponent } from '../add/add.component';
 import { CropService } from '../crops.services';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { MatSort, Sort } from '@angular/material/sort';
 import { Crops } from '../crops.types';
+import { read, utils, writeFile } from 'xlsx';
+import * as XLSX from 'xlsx';
+import * as Joi from 'joi';
 
 @Component({
     selector: 'app-list',
@@ -54,6 +56,7 @@ export class CropsListComponent implements OnInit {
     is_loading_crop$: Observable<boolean>;
     crops$: Observable<Crops[]>;
     is_loading_crops$: Observable<boolean>;
+    exportCrop$: Observable<Crops>;
 
     rows: Observable<any[]>;
     isLoading: boolean = false;
@@ -145,5 +148,18 @@ export class CropsListComponent implements OnInit {
 
     getNextData(page, limit) {
         this._cropsService.getCrops(page, limit,'','', this.searchResult);
+    }
+    // Export
+    handleExport() {
+        const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
+        const wb = utils.book_new();
+        const ws: any = utils.json_to_sheet([]);
+        utils.sheet_add_aoa(ws, headings);
+        // utils.sheet_add_json(ws, {
+        //     origin: 'A2',
+        //     skipHeader: true,
+        // });
+        utils.book_append_sheet(wb, ws, 'Report');
+        writeFile(wb, 'Crops Data.xlsx');
     }
 }

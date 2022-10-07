@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     baseUrl: 'https://dht-dev.azure-api.net/dht-dev',
+    azureUrl: 'https://dht-dev.azurewebsites.net/api/',
 };
 
 /*
