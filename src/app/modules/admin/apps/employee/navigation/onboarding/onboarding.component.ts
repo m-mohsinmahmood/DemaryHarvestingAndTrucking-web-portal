@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-onboarding',
@@ -9,9 +8,7 @@ import { FormBuilder } from '@angular/forms';
 export class OnboardingComponent implements OnInit {
     items=[];
     folders=[];
-    selectedProductForm: any;
-  constructor(    private _formBuilder: FormBuilder,
-    ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.items = [
@@ -36,24 +33,6 @@ export class OnboardingComponent implements OnInit {
         {folder:'Summary'}
 
     ];
-    this.selectedProductForm = this._formBuilder.group({
-        fname               : [''],
-        lname      : [''],
-        email             : [''],
-        cellnumber      : [''],
-        homenumber              : [''],
-        usnumber          : [''],
-        address1            : [''],
-        address2: [''],
-        city            : [''],
-        country    : [''],
-        postalcode         : [''],
-        sname         : [''],
-        snumber             : [''],
-        ename        : [''],
-        enumber       : [''],
-
-    });
   }
 
 }

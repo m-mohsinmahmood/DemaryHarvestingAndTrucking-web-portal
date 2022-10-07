@@ -20,7 +20,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { SharedModule } from 'app/shared/shared.module';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
