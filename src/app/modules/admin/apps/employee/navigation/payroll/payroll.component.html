@@ -1,1 +1,180 @@
-<p>payroll works!</p>
+<div class="flex flex-col p-2">
+    <p class="text-black font-semibold text-2xl px-4 py-3">
+        Payroll
+    </p>
+    <div class="flex sm:flex-row flex-col">
+         <div class="flex flex-col sm:w-5/12 w-full  p-2 bg-gray-200 mr-2 rounded-md">
+            <div class="flex justify-between py-1">
+               <p class="text-sm font-normal text-gray-500">Name</p>
+               <p class="text-sm font-semibold text-black">Adam Smith</p>
+            </div>
+            <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">Role</p>
+                <p class="text-sm font-semibold text-black">Truck Driver</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">Payroll Type</p>
+                <p class="text-sm font-semibold text-black">Lorium Ipsum</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">Base Hourly Rate</p>
+                <p class="text-sm font-semibold text-black">$21</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">H2A Rate (State Dependent)</p>
+                <p class="text-sm font-semibold text-black">$233</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">YTD Hpurs worked</p>
+                <p class="text-sm font-semibold text-black">23</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">YTD Wages Received</p>
+                <p class="text-sm font-semibold text-black">Lorium Ipsum</p>
+             </div>
+             <div class="flex justify-between py-1">
+                <p class="text-sm font-normal text-gray-500">Bonuses Received</p>
+                <p class="text-sm font-semibold text-black">$222</p>
+             </div>
+         </div>
+         <div class="sm:w-7/12 w-full bg-gray-200 sm:mt-auto mt-2">Progress Container</div>
+    </div>
+    <div class="flex justify-between mx-2 rounded-md ">
+        <p class="text-black font-semibold text-lg py-3 ">
+            Current Pay Period Daily Work Records
+        </p>
+    </div>
+    <div class="sm:p-0 rounded-md mx-2 my-2 border">
+        <!-- Main -->
+        <div class="flex flex-auto overflow-hidden">
+            <!-- Products list -->
+            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                <ng-container>
+                    <ng-container>
+                        <div class="grid">
+                            <!-- Header -->
+                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Date</div>
+                                <div>Chief Crew</div>
+                                <div>State</div>
+                                <div class="hidden sm:block">Hours</div>
+                                <div class="hidden sm:block">Hourly Rate</div>
+                                <div class="hidden sm:block">Total Wages</div>
+                                <div class="hidden sm:block">Status</div>
+                            </div>
+                            <!-- Rows -->
+                            <ng-container>
+                                <ng-container>
+                                    <div *ngFor="
+                                            let number of [
+                                                0, 1,2
+                                            ]
+                                        " class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">09/02/22</div>
+                                        <div class="truncate">Demaray Time</div>
+                                        <div class="truncate">South Dakota</div>
+                                        <div class="truncate hidden sm:block">12</div>
+                                        <div class="truncate hidden sm:block">Hourly Rate</div>
+                                        <div class="truncate hidden sm:block">Lorium</div>
+                                        <div class="truncate hidden sm:block rounded-full h-7 w-26 bg-blue-200 flex justify-center items-center">Verified</div>
+
+                                        <!-- Action -->
+                                        <div (click)="openEditFarmDialog()">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                            [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                    </ng-container>
+                </ng-container>
+                <ng-template #noProducts>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There are no products!
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-between mx-2 rounded-md ">
+        <p class="text-black font-semibold text-lg py-3 ">
+            Summary DWR Report
+        </p>
+    </div>
+    <div class="sm:p-0 rounded-md mx-2 my-2 border">
+        <!-- Main -->
+        <div class="flex flex-auto overflow-hidden">
+            <!-- Products list -->
+            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                <ng-container>
+                    <ng-container>
+                        <div class="grid">
+                            <div class="flex justify-evenly pl-6 py-3 border-b">
+                                <div class=" w-6/12 flex justify-around">
+                                        <p class="text-sm font-semibold text-black">Employee Name:</p>
+                                        <p class="text-sm font-normal text-gray-500">Adam Smith</p>
+                                </div>
+                                <div class="w-6/12 flex justify-around">
+                                    <p class="text-sm font-semibold text-black">Payroll Period:</p>
+                                    <p class="text-sm font-normal text-gray-500">09 Jan 2022 to 09 Mar 2022</p>
+                                </div>
+                            </div>
+                            <!-- Header -->
+                            <div class="farm-data-farms2 z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Date</div>
+                                <div>Chief Crew</div>
+                                <div>Hours Worked(hths)</div>
+                                <div class="hidden sm:block">State</div>
+                                <div class="hidden sm:block">Wages</div>
+                            </div>
+                            <!-- Rows -->
+                            <ng-container>
+                                <ng-container>
+                                    <div *ngFor="
+                                            let number of [
+                                                0, 1,2
+                                            ]
+                                        " class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">09/02/22</div>
+                                        <div class="truncate">Demaray Time</div>
+                                        <div class="truncate">10.22</div>
+                                        <div class="truncate hidden sm:block">Noth Dakota</div>
+                                        <div class="truncate hidden sm:block">23.4</div>
+                                        <!-- <div class="truncate">Lorium</div>
+                                        <div class="truncate rounded-full h-7 w-26 bg-blue-200 flex justify-center items-center">Verified</div> -->
+
+                                        <!-- Action -->
+                                        <div (click)="openEditFarmDialog()">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="flex justify-evenly pl-6 py-3 border-b">
+                                    <div class=" w-6/12 flex justify-around">
+                                            <p class="text-sm font-semibold text-black">Employee Name:</p>
+                                            <p class="text-sm font-normal text-gray-500">Adam Smith</p>
+                                    </div>
+                                    <div class="w-6/12 flex justify-around">
+                                        <p class="text-sm font-semibold text-black">Payroll Period:</p>
+                                        <p class="text-sm font-normal text-gray-500">09 Jan 2022 to 09 Mar 2022</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                            [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                    </ng-container>
+                </ng-container>
+                <ng-template #noProducts>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There are no products!
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+
+</div>
