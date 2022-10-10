@@ -57,9 +57,7 @@ import * as Joi from 'joi';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
 })
-export class CustomersListComponent
-    implements OnInit
-{
+export class CustomersListComponent implements OnInit {
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -78,7 +76,6 @@ export class CustomersListComponent
     searchResult: string;
     page: number;
     limit: number;
-
 
     products$: Observable<InventoryProduct[]>;
     brands: InventoryBrand[];
@@ -117,7 +114,7 @@ export class CustomersListComponent
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
-    };
+    }
 
     initObservables() {
         this.isLoadingCustomers$ = this._customersService.isLoadingCustomers$;
@@ -128,7 +125,13 @@ export class CustomersListComponent
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this._customersService.getCustomers(1, 10,'','', this.searchResult);
+                this._customersService.getCustomers(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
             });
     }
 
@@ -136,11 +139,10 @@ export class CustomersListComponent
         this._customersService.getCustomers();
     }
 
-
     /**
      * After view init
      */
-    ngAfterViewInit(): void { }
+    ngAfterViewInit(): void {}
     /**
      * On destroy
      */
@@ -208,7 +210,13 @@ export class CustomersListComponent
     }
 
     getNextData(page, limit) {
-        this._customersService.getCustomers(page, limit,'','', this.searchResult);
+        this._customersService.getCustomers(
+            page,
+            limit,
+            '',
+            '',
+            this.searchResult
+        );
     }
     // Export
     handleExport() {
@@ -224,61 +232,9 @@ export class CustomersListComponent
         writeFile(wb, 'Crops Data.xlsx');
     }
 
+    // ----------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ----------------------------------------------------------------------------------------------
-
-
-    toggleGeneralInfo(productId: string): void
-    {
-        // If the product is already selected...
-        if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-        // Get the product by id
-        this._customersService.getCustomerById(productId);
-            // .subscribe((product) => {
-            //     this._router.navigateByUrl('apps/customers/general-information/'+ productId)
-            //     // Set the selected product
-            //     this.selectedProduct = product;
-
-            //     // Fill the form
-            //     this.selectedProductForm.patchValue(product);
-
-            //     // Mark for check
-            //     this._changeDetectorRef.markForCheck();
-            // });
-    }
-    /**
-     * Close the details
-     */
-    closeGeneralInfo(): void
-    {
-        this.selectedProduct = null;
-    }
-
-
-    /**
-     * Toggle product details
-     *
-     * @param productId
-     */
-    toggleDetails(productId: string): void {
+    toggleGeneralInfo(productId: string): void {
         // If the product is already selected...
         if (this.selectedProduct && this.selectedProduct.id === productId) {
             // Close the details
@@ -286,33 +242,38 @@ export class CustomersListComponent
             return;
         }
         // Get the product by id
-        this._customersService
-            .getCustomerById(productId);
-            // .subscribe((product) => {
-            //     // Open the dialog
-            //     /* const dialogRef = this._matDialog.open(
-            //         CustomerDetailsComponent,
-            //         {
-            //             data: { Id: productId },
-            //         }
-            //     );
+        this._customersService.getCustomerById(productId);
+        // .subscribe((product) => {
+        //     this._router.navigateByUrl('apps/customers/general-information/'+ productId)
+        //     // Set the selected product
+        //     this.selectedProduct = product;
 
-            //     dialogRef.afterClosed().subscribe((result) => {
-            //         console.log('Compose dialog was closed!');
-            //     }); */
+        //     // Fill the form
+        //     this.selectedProductForm.patchValue(product);
 
-            //     this._router.navigateByUrl(
-            //         'apps/customers/details/' + productId
-            //     );
-            //     // Set the selected product
-            //     this.selectedProduct = product;
+        //     // Mark for check
+        //     this._changeDetectorRef.markForCheck();
+        // });
+    }
+    /**
+     * Close the details
+     */
+    closeGeneralInfo(): void {
+        this.selectedProduct = null;
+    }
 
-            //     // Fill the form
-            //     this.selectedProductForm.patchValue(product);
-
-            //     // Mark for check
-            //     this._changeDetectorRef.markForCheck();
-            // });
+    /**
+     * Toggle product details
+     *
+     * @param productId
+     */
+    toggleDetails(productId: string): void {
+        // Get the Customer by id
+        this.customer$ = this._customersService.getCustomerById(productId);
+        this.customer$.subscribe((data) => {
+            console.log(data.id);
+            this._router.navigateByUrl('apps/customers/details/' + data?.id);
+        });
     }
     /**
      * Close the details
@@ -334,21 +295,20 @@ export class CustomersListComponent
             return;
         }
         // Get the product by id
-        this._customersService
-            .getCustomerById(productId);
-            // .subscribe((product) => {
-            //     this._router.navigateByUrl(
-            //         'apps/customers/contacts-data/' + productId
-            //     );
-            //     // Set the selected product
-            //     this.selectedProduct = product;
+        this._customersService.getCustomerById(productId);
+        // .subscribe((product) => {
+        //     this._router.navigateByUrl(
+        //         'apps/customers/contacts-data/' + productId
+        //     );
+        //     // Set the selected product
+        //     this.selectedProduct = product;
 
-            //     // Fill the form
-            //     this.selectedProductForm.patchValue(product);
+        //     // Fill the form
+        //     this.selectedProductForm.patchValue(product);
 
-            //     // Mark for check
-            //     this._changeDetectorRef.markForCheck();
-            // });
+        //     // Mark for check
+        //     this._changeDetectorRef.markForCheck();
+        // });
     }
     /**
      * Track by function for ngFor loops

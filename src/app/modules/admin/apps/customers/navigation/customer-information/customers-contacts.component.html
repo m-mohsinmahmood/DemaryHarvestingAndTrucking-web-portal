@@ -28,8 +28,8 @@
 
         <!-- Products list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="(products$ | async) as products">
-                <ng-container *ngIf="products.length > 0; else noProducts">
+            <ng-container *ngIf="this.customersContact.customer_contacts">
+                <ng-container *ngIf="this.customersContact; else noProducts">
                     <div class="grid">
                         <!-- Header -->
                         <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
@@ -48,8 +48,8 @@
                             <div class="sm:block">Details</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="(products$ | async) as products">
-                            <ng-container *ngFor="let product of products; trackBy: trackByFn">
+                        <ng-container *ngIf="this.customersContact.customer_contacts">
+                            <ng-container *ngFor="let customerContact of this.customersContact.customer_contacts; trackBy: trackByFn">
                                 <div class="contact-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
                                     <!-- Image -->
                                     <!-- <div>
@@ -59,59 +59,51 @@
 
                                     <!-- First Name -->
                                     <div class="truncate">
-                                        {{product.name}}
+                                        {{customerContact.first_name}}
                                     </div>
 
                                     <div class="hidden sm:block truncate">
-                                        {{product.lName}}
+                                        {{customerContact.last_name}}
                                     </div>
 
                                     <!-- Last Name -->
                                     <div class="hidden sm:block items-left">
-                                        <div class="min-w-4">{{product.contactNo}}</div>
+                                        <div class="min-w-4">{{customerContact.cell_number}}</div>
                                     </div>
 
                                     <!-- Position -->
                                     <div class="hidden sm:block items-center">
-                                        <div class="min-w-4">{{product.position}}</div>
+                                        <div class="min-w-4">{{customerContact.position}}</div>
                                     </div>
 
                                     <!-- Phone Number -->
                                     <div class="hidden sm:block items-left">
-                                        <div class="min-w-4">{{product.phoneNo}}</div>
+                                        <div class="min-w-4">{{customerContact.office_number}}</div>
                                     </div>
 
                                     <!-- Email -->
                                     <div class="hidden sm:block items-center">
-                                        <div class="min-w-4">{{product.email}}</div>
+                                        <div class="min-w-4">{{customerContact.email}}</div>
                                     </div>
 
                                     <!-- Details button -->
                                     <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(product.id)">
+                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact.id)">
                                             <mat-icon
                                                 class="icon-size-5"
-                                                [svgIcon]="selectedProduct?.id === product.id ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-right'"></mat-icon>
+                                                [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
                                         </button>
                                     </div>
-                                </div>
-                                <div class="grid">
-                                    <ng-container *ngIf="selectedProduct?.id === product.id">
-                                        <ng-container *ngTemplateOutlet="rowDetailsTemplate; context: {$implicit: product}"></ng-container>
-                                    </ng-container>
                                 </div>
                             </ng-container>
                         </ng-container>
                     </div>
 
-                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                        [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="10" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
 
                 </ng-container>
             </ng-container>
-
-
-
             <ng-template #noProducts>
                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
             </ng-template>
