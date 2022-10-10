@@ -25,75 +25,35 @@ export class AddCustomer implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.form = this._formBuilder.group({
-            id: [''],
-            harvestYear: [''],
-            name: ['', [Validators.required]],
-            alternateName: [''],
-            skipInvoiceMath1: [''],
-            arizonaInvoiceMath: [''],
-            skipInvoiceMath2: [''],
-            email: [''],
-            stateProvince: [''],
-            isActive: [''],
-            title: [''],
-            type: [''],
-            descripition: [''],
-            contactNo: [''],
-            customerType: [''],
-            commercialTrucking: [''],
-            customFarming: [''],
-            customHarvesting: [''],
-            equipmentLeasing: [''],
-            cdlTestingTraining: [''],
-            farmItemRows: this._formBuilder.array([this.initFarmItemRows()]),
-            cropsItemRows: this._formBuilder.array([this.initCropItemRows()]),
+          id: [''],
+          customer_name:[''],
+          company_name:[''],
+          main_contact: [''],
+          phone_number:[''],
+          state: [''],
+          country: [''],
+          email: [''],
+          fax: [''],
+          customer_type: [''],
+          status: [''],
+          address: [''],
+          billing_address: [''],
+          city: [''],
+          zip_code: [''],
+          company_position: [''],
+          commercialTrucking: [''],
+          website: [''],
+          linkedin: [''],
         });
     }
 
-    get formArr() {
-        return this.form.get('farmItemRows') as FormArray;
-    }
-
-    get cropArr() {
-        return this.form.get('cropsItemRows') as FormArray;
-    }
+    
 
     onSubmit(): void {
         console.warn('Your order has been submitted', this.form.value);
         this.form.reset();
     }
 
-    initFarmItemRows() {
-        return this._formBuilder.group({
-            farmId: [''],
-            farmHarvestYear: [''],
-            farmName: [''],
-            farmTotalAcres: [''],
-        });
-    }
-    initCropItemRows() {
-        return this._formBuilder.group({
-            cropid: [''],
-            cropHarvestYear: [''],
-            cropCrop: [''],
-            cropPoundsPerBushel: [''],
-        });
-    }
-    addNewFarmRow() {
-        this.formArr.push(this.initFarmItemRows());
-    }
-
-    deleteFarmRow(index: number) {
-        this.formArr.removeAt(index);
-    }
-
-    addNewCropRow() {
-        this.cropArr.push(this.initCropItemRows());
-    }
-
-    deleteCropRow(index: number) {
-        this.cropArr.removeAt(index);
-    }
 
     /**
      * Save and close
