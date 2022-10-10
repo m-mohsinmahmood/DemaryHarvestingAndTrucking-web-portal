@@ -301,7 +301,7 @@ export class CustomersService {
 
     createCustomerContact(data: any) {
         this._httpClient
-            .post(`api-1/customer-customer`, data)
+            .post(`api-1/customer-contact`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -322,7 +322,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerContact('1234');
+                    this.getCustomerContact(data.customer_id);
                 }
             );
     }

@@ -26,13 +26,20 @@ export class AddCustomer implements OnInit {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
-            harvestYear: [''],
-            name: ['', [Validators.required]],
+            company_name: ['', [Validators.required]],
+            main_contact: ['', [Validators.required]],
+            position: ['', [Validators.required]],
+            phone_number: ['', [Validators.required]],
+            state: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            email: ['', [Validators.required]],
+            customer_type: ['', [Validators.required]],
+            status: ['', [Validators.required]],
+
             alternateName: [''],
             skipInvoiceMath1: [''],
             arizonaInvoiceMath: [''],
             skipInvoiceMath2: [''],
-            email: [''],
             stateProvince: [''],
             isActive: [''],
             title: [''],
@@ -137,7 +144,7 @@ export class AddCustomer implements OnInit {
      */
     send(): void {
         console.log(this.form.controls);
-        this.api.createCustomer(this.form.value)
+        this.api.createCustomer(this.form.value);
         // .subscribe({
         //     next: (res) => {
         //         alert('Customer Added Successfully1');
