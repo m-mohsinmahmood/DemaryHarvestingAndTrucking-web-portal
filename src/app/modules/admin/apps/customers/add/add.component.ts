@@ -97,7 +97,7 @@ export class AddCustomer implements OnInit {
      */
     send(): void {
         console.log(this.form.controls);
-        this.api.createCustomer(this.form.value)
+        this.api.createCustomer(this.form.value);
         // .subscribe({
         //     next: (res) => {
         //         alert('Customer Added Successfully1');

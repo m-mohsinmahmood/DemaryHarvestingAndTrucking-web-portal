@@ -26,6 +26,7 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
@@ -33,6 +34,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ContactsDataComponent } from './contacts-data/contacts-data.component';
 import {
+    CustomerContacts,
     InventoryBrand,
     InventoryCategory,
     InventoryPagination,
@@ -56,6 +58,26 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
     @Input() customersContact: any;
+
+    search: Subscription;
+    crop$: Observable<CustomerContacts>;
+    customerContacts$: Observable<CustomerContacts[]>;
+    isLoadingCustomerContact$: Observable<boolean>;
+    isLoadingCustomerContacts$: Observable<boolean>;
+    exportCustomerContacts$: Observable<CustomerContacts>;
+
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+
+    isEdit: boolean = false;
+    pageSize = 10;
+    currentPage = 0;
+    pageSizeOptions: number[] = [10, 25, 50, 100];
+    searchResult: string;
+    page: number;
+    limit: number;
+
     products$: Observable<InventoryProduct[]>;
    // customers: any;
     routeID;
@@ -96,10 +118,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         // Create the selected product form
         this.selectedProductForm = this._formBuilder.group({
             id: [''],
-            harvestYear: [''],
-            name: ['', [Validators.required]],
-            alternateName: [''],
-            skipInvoiceMath1: [''],
+            customer_id: [''],
+            company_name: ['', [Validators.required]],
+            first_name: [''],
+            last_name: [''],
             arizonaInvoiceMath: [''],
             skipInvoiceMath2: [''],
             avatar: [''],
@@ -140,9 +162,13 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+
+
     openAddDialog(): void {
         // Open the dialog
-        const dialogRef = this._matDialog.open(AddCustomerContact);
+        const dialogRef = this._matDialog.open(AddCustomerContact,{
+            data:{customerId: this.routeID}
+        });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
