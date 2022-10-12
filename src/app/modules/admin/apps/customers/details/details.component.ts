@@ -146,6 +146,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         this._customerService.getCustomerField(id);
         this._customerService.getCustomerFarm(id);
         this._customerService.getCustomerDestination(id);
+        this._customerService.getCustomerCrops(id);
+
     }
 
     // // Get the employee by id
