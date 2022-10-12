@@ -174,7 +174,8 @@ export class FarmDataComponent implements OnInit {
                     name: data.destination_name,
                     calenderYear: data.calendar_year,
                     farmId:data.farm_id,
-                    customer_id: this.routeID
+                    customer_id: this.routeID,
+                    destination_id: data.destination_id
 
                 },
                 paginationData: {

@@ -58,16 +58,9 @@ export class AddDestinationComponent implements OnInit {
     routeID: any;
     isLoadingDestination$: Observable<boolean>;
     date = new FormControl(moment());
+    calendar_year;
 
 
-    calenderYear: Calender[] = [
-      {value: '22', viewValue: '2022'},
-      {value: '21', viewValue: '2021'},
-      {value: '20', viewValue: '2020'},
-      {value: '19', viewValue: '2019'},
-      {value: '18', viewValue: '2018'},
-      {value: '17', viewValue: '2017'},
-    ];
 
 
   constructor(
@@ -84,8 +77,9 @@ export class AddDestinationComponent implements OnInit {
         //     console.log('ddddd',params);
         //     this.routeID = params.Id;
         // });
-                //     console.log('ddddd',params);
 
+        // passing year value on page opening/rendering
+        this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
 
         this.isLoadingDestination$ = this._customerService.is_loading_destination$;
         this.closeDialog$ = this._customerService.closeDialog$;
@@ -100,21 +94,22 @@ export class AddDestinationComponent implements OnInit {
         this.form = this._formBuilder.group({
             farmName     : ['', [Validators.required]],
             name     : ['', [Validators.required]],
-            // calenderYear: ['', [Validators.required]],
+            calendar_year: [],
             // date: ['', []],
           });
           if (this.data?.farmdata && this.data?.farmdata.isEdit) {
             this.form.patchValue({
                 farmName: this.data.farmdata.farmName,
                 name: this.data.farmdata.name,
-                calenderYear: this.data.calenderYear
+                calendar_year: this.data.farmdata.calendar_year,
             });
+
         }
+
       }
 
       onSubmit(): void {
-        // console.warn('Your order has been submitted', this.form.value);
-        // this.form.reset();
+
         console.log('sss',this.data);
         console.log('ddd',this.form.value);
         const payload_update ={
@@ -122,7 +117,7 @@ export class AddDestinationComponent implements OnInit {
             customer_id: this.data?.farmdata?.customer_id,
             farm_id: this.data?.farmdata?.farmId,
             name: this.form.value.name,
-            calendar_year:  moment(this.date.value).format('YYYY/MM/DD'),
+            calendar_year:  moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
         };
         const payload_create ={
             // id: 'ea384f4a-10d5-4042-927b-8b2edf2be3ab',
@@ -135,7 +130,6 @@ export class AddDestinationComponent implements OnInit {
         console.log('Payload Data:',payload_create);
 
         if (this.data?.farmdata && this.data?.farmdata.isEdit) {
-
             this.updateDestination(payload_update);
         } else {
             this.createDestination(payload_create);
@@ -162,14 +156,15 @@ export class AddDestinationComponent implements OnInit {
     }
 
   chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.date.value;
+    const ctrlValue = moment(this.calendar_year.value);
     ctrlValue.year(normalizedYear.year());
-    this.date.setValue(ctrlValue);
-    // this.form.setValue(ctrlValue);
+    this.calendar_year.setValue(ctrlValue);
+        this.form.value.calendar_year = ctrlValue;
     datepicker.close();
 
-    console.log(this.date.value);
   }
 
 
 }
+
+
