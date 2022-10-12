@@ -85,7 +85,7 @@
                                                 <mat-icon class="greenActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                             </div>
                                             <div class="hidden sm:block items-center ">
-                                                {{customerField.calendar_year}}
+                                                {{customerField.calendar_year | date: 'YYYY' }}
                                             </div>
                                             <!-- Action -->
                                             <div (click)="openEditFarmDialog(customerField) ">

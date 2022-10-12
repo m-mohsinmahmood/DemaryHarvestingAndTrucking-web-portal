@@ -82,6 +82,11 @@ export class FarmDataComponent implements OnInit {
                 farm_id: event.farm_id,
                 acres:  event.acres,
                 calendar_year: event.calendar_year,
+                paginationData: {
+                    page: this.page,
+                    limit: this.limit,
+                    search: this.searchResult,
+                },
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
