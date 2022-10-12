@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Input, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { debounceTime, Observable, Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { Moment } from 'moment';
-import * as moment from 'moment';
 import { CustomersService } from '../../customers.service';
 import { AddFarmComponent } from '../farm-data/add-farm/add-farm.component';
 import { AddCropComponent } from './add-crop/add-crop.component';

@@ -74,12 +74,12 @@
                         </div>
 
                         <div *ngIf="customerFields$ | async as customerFields">
-                            <ng-template *ngIf="customerDestination$ | async as customerDestination">
+                            <div *ngIf="customerDestination$ | async as customerDestination">
                                 <ng-template *ngIf="customerFarms$ | async as customerFarms" [ngIf]="selectedIndex === 'Farm Data'">
                                     <app-farm-data [customerFields]="customerFields" [customerId]="this.routeID" [customerFarms]="customerFarms" [destinationData]="customerDestination">
                                     </app-farm-data>
                                 </ng-template>
-                            </ng-template>
+                            </div>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Rate Data'">

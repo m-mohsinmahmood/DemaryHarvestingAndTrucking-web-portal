@@ -162,32 +162,6 @@ export class CustomersService {
         this.customerFarm.asObservable();
     //#endregion
 
-    // API for Destination
-    private customerDestination: BehaviorSubject<any[] | null> =
-        new BehaviorSubject(null);
-    readonly customerDestination$: Observable<any[] | null> =
-        this.customerDestination.asObservable();
-
-    // API for Crops
-    private customerCrops: BehaviorSubject<any[] | null> = new BehaviorSubject(
-        null
-    );
-    readonly customerCrops$: Observable<any[] | null> =
-        this.customerCrops.asObservable();
-
-    // Loding for destination
-    is_loading_destination: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly is_loading_destination$: Observable<boolean> =
-        this.is_loading_destination.asObservable();
-
-    // Loding for crops
-    is_loading_crops: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-        false
-    );
-    readonly is_loading_crops$: Observable<boolean> =
-        this.is_loading_crops.asObservable();
-
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(
         null
     );

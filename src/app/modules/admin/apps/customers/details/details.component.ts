@@ -78,7 +78,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    selectedIndex: string = 'Farm Data';
+    selectedIndex: string = 'Contact Data';
 
     /**
      * Constructor
