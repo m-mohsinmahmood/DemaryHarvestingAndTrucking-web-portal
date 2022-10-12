@@ -679,7 +679,7 @@ export class CustomersService {
     getCustomerDestination(
         id: string,
         page: number = 1,
-        limit: number = 3,
+        limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -777,7 +777,7 @@ export class CustomersService {
     getCustomerCrops(
         id: string,
         page: number = 1,
-        limit: number = 3,
+        limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
