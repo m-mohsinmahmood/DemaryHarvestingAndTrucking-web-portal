@@ -3,7 +3,10 @@ import { Input, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, Observable, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 import { CustomersService } from '../../customers.service';
 import { AddFarmComponent } from '../farm-data/add-farm/add-farm.component';
 import { AddCropComponent } from './add-crop/add-crop.component';
@@ -18,6 +21,8 @@ export class FarmDataComponent implements OnInit {
     @Input() customerFields: any;
     @Input() customerId: string;
     @Input() customerFarms: any;
+    @Input() destinationData: any;
+    @Input() cropsData: any;
 
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -33,6 +38,8 @@ export class FarmDataComponent implements OnInit {
     limit: number;
     routeID: any;
     isLoading: any;
+    customerCrops$: Observable<any>;
+    customerCrop: any;
 
     constructor(
         private _matDialog: MatDialog,
@@ -56,16 +63,38 @@ export class FarmDataComponent implements OnInit {
                     '',
                     this.searchResult
                 );
+                this._customersService.getCustomerDestination(
+                    this.routeID,
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomerCrops(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
             });
+
+        this.customerCrops$ = this._customersService.customerCrops$;
+        // this.customerCrops$.subscribe((m) => {
+        //     console.log('---', m);
+        //     this.customerCrop = m;
+        // });
     }
 
     openAddFarmDialog(): void {
-        const dialogRef = this._matDialog.open(AddFarmComponent,{
+        const dialogRef = this._matDialog.open(AddFarmComponent, {
             data: {
                 customerFarms: this.customerFarms,
                 id: this.customerId,
-                isEdit: false
-            }
+                isEdit: false,
+            },
         });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
@@ -81,7 +110,7 @@ export class FarmDataComponent implements OnInit {
                 field_id: event.field_id,
                 farm_name: event.farm_name,
                 farm_id: event.farm_id,
-                acres:  event.acres,
+                acres: event.acres,
                 calendar_year: event.calendar_year,
                 paginationData: {
                     page: this.page,
@@ -95,20 +124,27 @@ export class FarmDataComponent implements OnInit {
         });
     }
 
+
     openAddCropDialog(): void {
-        const dialogRef = this._matDialog.open(AddCropComponent);
+        this.isEdit = false;
+        const dialogRef = this._matDialog.open(AddCropComponent,{
+            data:{
+                customer_id: this.routeID,
+                isEdit: this.isEdit,
+
+            }
+        });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
     }
-
     openEditCropDialog(): void {
         const dialogRef = this._matDialog.open(AddCropComponent, {
             data: {
                 isEdit: 'true',
                 cropName: 'Barley',
-                calenderYear: '2022',
-            },
+                calenderYear: '2022'
+            }
         });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
@@ -116,25 +152,44 @@ export class FarmDataComponent implements OnInit {
     }
 
     openAddDestinationDialog(): void {
-        const dialogRef = this._matDialog.open(AddDestinationComponent);
+        const dialogRef = this._matDialog.open(AddDestinationComponent,{
+            data:{
+                customer_id: this.routeID,
+            }
+        });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
     }
 
-    openEditDestinationDialog(): void {
+    openEditDestinationDialog(data): void {
+        console.log('Edit data:',data);
+        this.isEdit = true;
         const dialogRef = this._matDialog.open(AddDestinationComponent, {
             data: {
-                isEdit: 'true',
-                farmName: 'Barley',
-                name: 'Arizona',
-                calenderYear: '2022',
+                farmdata:{
+                    isEdit: this.isEdit,
+                    farmName: data.farm_name,
+                    name: data.destination_name,
+                    calenderYear: data.calendar_year,
+                    farmId:data.farm_id,
+                    customer_id: this.routeID
+
+                },
+                paginationData: {
+                    page: this.page,
+                    limit: this.limit,
+                    search: this.searchResult,
+                },
             },
+
         });
+
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
     }
+
     sortData(sort: any) {
         this._customersService.getCustomerField(
             this.customerId,
@@ -153,6 +208,8 @@ export class FarmDataComponent implements OnInit {
     }
 
     getNextData(page, limit) {
+        this._customersService.getCustomerDestination(this.routeID,page, limit,'','', this.searchResult);
+        this._customersService.getCustomerCrops(this.routeID,page, limit,'','', this.searchResult);
         this._customersService.getCustomerField(
             this.customerId,
             page,

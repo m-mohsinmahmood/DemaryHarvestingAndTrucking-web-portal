@@ -57,6 +57,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     isLoadingCustomerFarms$: Observable<boolean>;
     exportustomerFarms$: Observable<CustomerFarm>;
 
+    customerDestination$: Observable<any>;
+    customerCrops$: Observable<any>;
 
     search: Subscription;
     isEdit: boolean = false;
@@ -107,6 +109,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         this.initCustomerContactObservables();
         this.initCustomerFieldObservables();
         this.initCustomerFarmObservables();
+        this.initCustomerDestinationObservables();
     }
 
     initCustomerContactObservables() {
@@ -134,10 +137,15 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         this.customerFarm$ = this._customerService.customerFarm$;
     }
 
+    initCustomerDestinationObservables() {
+        this.customerDestination$ = this._customerService.customerDestination$;
+    }
+
     initApis(id: string) {
         this._customerService.getCustomerContact(id);
         this._customerService.getCustomerField(id);
         this._customerService.getCustomerFarm(id);
+        this._customerService.getCustomerDestination(id);
     }
 
     // // Get the employee by id
@@ -240,7 +248,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
     openAddCropDialog(): void {
         // Open the dialog
-        const dialogRef = this._matDialog.open(AddCropsComponent)
+        const dialogRef = this._matDialog.open(AddCropsComponent);
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });

@@ -6,12 +6,13 @@
                 <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
             </div>
             <!-- Title -->
-            <div *ngIf="customerContacts$ | async ; let customerContact" (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
+            <div *ngIf="customerContacts$ | async; let customerContact" (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
                 <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
                 <!-- <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
                 <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt=""> -->
 
-                <span class="ml-1 capitalize">{{customerContact.customer_contacts[0]?.company_name}} </span>
+                <span class="ml-1 capitalize">{{ customerContact?.customer_contacts[0]?.company_name }}
+                </span>
             </div>
             <!-- <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
                 <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
@@ -31,79 +32,90 @@
         </div>
     </div>
 
-
-
     <div>
         <mat-drawer-container class="sub-nav-component bg-card divide-x" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
-                <div class="flex" *ngFor="let route of routes;let i = index">
-                    <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
-                            <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
-                            <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"></span>
-                        </button>
+                <div class="flex" *ngFor="let route of routes; let i = index">
+                    <button style="padding: 15px" [style.background-color]="
+                            route.title === selectedIndex
+                                ? '#d4d7dd'
+                                : 'transparent'
+                        " [ngClass]="
+                            route.title === selectedIndex
+                                ? 'opacity-100'
+                                : 'opacity-80'
+                        " mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
+                        <mat-icon
+                            svgIcon="{{ route.icon }}"
+                            class="icon-size-5 text-primary"
+                        ></mat-icon>
+                        <span
+                            style="
+                                font-size: 13px;
+                                font-weight: bold;
+                                margin-left: 10px;
+                            "
+                        ></span>
+                    </button>
                 </div>
             </mat-drawer>
 
-            <div class=" flex sub-sidenav-content bg-light">
+            <div class="flex sub-sidenav-content bg-light">
                 <div class="w-full">
-                    <div class="tab bg-white shadow">
-                        <div *ngIf="customerContacts$ | async ; let customerContacts">
+                    <div class="tab bg-white shadow overflow-auto">
+                        <div *ngIf="
+                                customerContacts$ | async;
+                                let customerContact
+                            ">
                             <ng-template [ngIf]="selectedIndex === 'Contact Data'">
-                                <customers-contacts [customersContact]="customerContacts">
-
+                                <customers-contacts [customersContact]="customerContact">
                                 </customers-contacts>
                             </ng-template>
                         </div>
+
                         <div *ngIf="customerFields$ | async as customerFields">
-                            <ng-template *ngIf="customerFarms$ | async as customerFarms" [ngIf]="selectedIndex === 'Farm Data'">
-                                <app-farm-data [customerFields]="customerFields" [customerId]="this.routeID" [customerFarms]="customerFarms">
-                                </app-farm-data>
+                            <ng-template *ngIf="customerDestination$ | async as customerDestination">
+                                <ng-template *ngIf="customerFarms$ | async as customerFarms" [ngIf]="selectedIndex === 'Farm Data'">
+                                    <app-farm-data [customerFields]="customerFields" [customerId]="this.routeID" [customerFarms]="customerFarms" [destinationData]="customerDestination">
+                                    </app-farm-data>
+                                </ng-template>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Rate Data'">
-                                <app-rate-data>
-                                </app-rate-data>
+                                <app-rate-data> </app-rate-data>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Job Result'">
-                                <app-job-result>
-                                </app-job-result>
+                                <app-job-result> </app-job-result>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Job Status'">
-                                <app-job-status>
-                                </app-job-status>
+                                <app-job-status> </app-job-status>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Invoice'">
-                                <app-invoice>
-                                </app-invoice>
+                                <app-invoice> </app-invoice>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Resources'">
-                                <app-resources>
-                                </app-resources>
+                                <app-resources> </app-resources>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Documentation'">
-                                <document-list>
-                                </document-list>
+                                <document-list> </document-list>
                             </ng-template>
                         </div>
                     </div>
                 </div>
             </div>
-
         </mat-drawer-container>
 
         <!-- Main -->
-
     </div>
-
 </div>

@@ -136,6 +136,32 @@ export class CustomersService {
         this.customerFarm.asObservable();
     //#endregion
 
+    // API for Destination
+    private customerDestination: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerDestination$: Observable<any[] | null> =
+        this.customerDestination.asObservable();
+
+    // API for Crops
+    private customerCrops: BehaviorSubject<any[] | null> = new BehaviorSubject(
+        null
+    );
+    readonly customerCrops$: Observable<any[] | null> =
+        this.customerCrops.asObservable();
+
+    // Loding for destination
+    is_loading_destination: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly is_loading_destination$: Observable<boolean> =
+        this.is_loading_destination.asObservable();
+
+    // Loding for crops
+    is_loading_crops: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
+    readonly is_loading_crops$: Observable<boolean> =
+        this.is_loading_crops.asObservable();
+
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(
         null
     );
@@ -237,7 +263,7 @@ export class CustomersService {
             );
     }
 
-    getCustomerById(id: string){
+    getCustomerById(id: string) {
         this._httpClient
             .get(`api-1/customers?id=${id}`)
             .pipe(take(1))
@@ -646,6 +672,202 @@ export class CustomersService {
     }
 
     //#endregion
+
+    //#region Destination and crops
+
+    //Destinations functions
+    getCustomerDestination(
+        id: string,
+        page: number = 1,
+        limit: number = 3,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-destination?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_destination.next(true);
+                    this.customerDestination.next(res);
+                    this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    updateCustomerDestination(
+        customerDestinationData: any,
+        paginatioData: any
+    ) {
+        console.log('Edited data:', customerDestinationData);
+        console.log('Pagination data:', paginatioData);
+        this._httpClient
+            .put(`api-1/customer-destination`, customerDestinationData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_destination.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Destination',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerDestination(
+                        customerDestinationData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        '',
+                        '',
+                        paginatioData.search
+                    );
+                }
+            );
+    }
+    createCustomerDestination(data: any) {
+        this._httpClient
+            .post(`api-1/customer-destination`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.is_loading_destination.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Contact',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerDestination(data.customer_id);
+                }
+            );
+    }
+
+    // Crop functions
+
+    getCustomerCrops(
+        id: string,
+        page: number = 1,
+        limit: number = 3,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-crop?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_crops.next(true);
+                    this.customerCrops.next(res);
+                    this.is_loading_crops.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    createCustomerCrops(data: any) {
+        this._httpClient
+            .post(`api-1/customer-crop`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.is_loading_crops.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Crop',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(data.customer_id);
+                }
+            );
+    }
+
+    updateCustomerCrops(customerCropsData: any, paginatioData: any) {
+        console.log('Edited Crops data:', customerCropsData);
+        console.log('Pagination data:', paginatioData);
+        this._httpClient
+            .put(`api-1/customer-destination`, customerCropsData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_crops.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Destination',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(
+                        customerCropsData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        '',
+                        '',
+                        paginatioData.search
+                    );
+                }
+            );
+    }
 
     getItems(folderId: string | null = null): Observable<Item[]> {
         return this._httpClient
