@@ -10,6 +10,7 @@ import { debounceTime, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Moment } from 'moment';
 import * as moment from 'moment';
+import { AddRealFarmComponent } from './add-real-farm/add-farm.component';
 
 @Component({
     selector: 'app-farm-data',
@@ -123,6 +124,42 @@ export class FarmDataComponent implements OnInit {
             console.log('Compose dialog was closed!');
         });
     }
+
+    openAddRealFarmDialog(): void {
+        const dialogRef = this._matDialog.open(AddRealFarmComponent,{
+            data: {
+                customerFarms: this.customerFarms,
+                id: this.customerId,
+                isEdit: false
+            }
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+    openEditRealFarmDialog(event): void {
+        console.log(event);
+        const dialogRef = this._matDialog.open(AddRealFarmComponent, {
+            data: {
+                customerFarms: this.customerFarms,
+                isEdit: true,
+                customer_id: this.customerId,
+                name: event.name,
+                id: event.id,
+                paginationData: {
+                    page: this.page,
+                    limit: this.limit,
+                    search: this.searchResult,
+                },
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+
 
 
     openAddCropDialog(): void {

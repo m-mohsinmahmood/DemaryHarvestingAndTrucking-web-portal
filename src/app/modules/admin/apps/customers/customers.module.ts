@@ -51,6 +51,7 @@ import { GeneralInfoComponent } from './general-info/general-info.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import { AddRealFarmComponent } from './navigation/farm-data/add-real-farm/add-farm.component';
 
 @NgModule({
     declarations: [
@@ -78,6 +79,7 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
         GeneralInfoComponent,
         DocumentComponent,
         AddRateDataComponent,
+        AddRealFarmComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),

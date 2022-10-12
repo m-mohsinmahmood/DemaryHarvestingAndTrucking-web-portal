@@ -611,7 +611,7 @@ export class CustomersService {
             );
     }
 
-    createCustomerfarm(data: any) {
+    createCustomerFarm(data: any) {
         this._httpClient
             .post(`api-1/customer-farm`, data)
             .pipe(take(1))

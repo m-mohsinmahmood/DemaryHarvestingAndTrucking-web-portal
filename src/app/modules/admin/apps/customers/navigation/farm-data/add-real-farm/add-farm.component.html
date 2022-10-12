@@ -1,0 +1,36 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Field': 'Add Field'}}</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"
+            ></mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="this.data.isEdit" class="flex justify-end mr-12 mt-4">
+        <button *ngIf="isEdit" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+            <span class="ml-2 mr-1">Edit</span>
+        </button>
+    </div>
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-8 overflow-y-auto">
+        <mat-form-field appearance="outline">
+            <mat-label>Farm Name</mat-label>
+            <input [readonly]="isEdit" matInput formControlName="name" />
+        </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mr-14 mt-1 mb-4">
+        <button *ngIf="!isEdit" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
+            <span class="ml-2 mr-1">Cancel</span>
+        </button>
+        <button *ngIf="!isEdit" class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Save</span>
+        </button>
+    </div>
+</div>
