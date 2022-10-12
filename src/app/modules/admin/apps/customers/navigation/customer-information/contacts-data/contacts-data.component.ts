@@ -37,7 +37,7 @@ export class ContactsDataComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
-    imageURL: string;
+    imageURL: string = '';
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
@@ -63,21 +63,21 @@ export class ContactsDataComponent implements OnInit {
             id: [''],
             customer_id: [''],
             company_name: ['', [Validators.required]],
-            first_name: [''],
-            last_name: [''],
-            website: [''],
-            position: [''],
-            address: [''],
-            cell_number: [''],
-            city: [''],
-            office_number: [''],
-            state: [''],
-            email: [''],
-            zip_code: [''],
-            fax: [''],
-            linkedin: [''],
-            note_1: [''],
-            note_2: [''],
+            first_name: ['',[Validators.required]],
+            last_name: ['',[Validators.required]],
+            website: ['',[Validators.required]],
+            position: ['',[Validators.required]],
+            address: ['',[Validators.required]],
+            cell_number: ['',[Validators.required]],
+            city: ['',[Validators.required]],
+            office_number: ['',[Validators.required]],
+            state: ['',[Validators.required]],
+            email: ['',[Validators.required]],
+            zip_code: ['',[Validators.required]],
+            fax: ['',[Validators.required]],
+            linkedin: ['',[Validators.required]],
+            note_1: ['',[Validators.required]],
+            note_2: ['',[Validators.required]],
             avatar: [[]],
         });
         this.form.patchValue({
@@ -120,16 +120,16 @@ export class ContactsDataComponent implements OnInit {
     }
 
     showPreview(event) {
-        const file = (event.target as HTMLInputElement).files[0];
-        // this.form.patchValue({
-        //     avatar: file,
-        // });
-        // File Preview
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.imageURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
+        // const file = (event.target as HTMLInputElement).files[0];
+        // // this.form.patchValue({
+        // //     avatar: file,
+        // // });
+        // // File Preview
+        // const reader = new FileReader();
+        // reader.onload = () => {
+        //     this.imageURL = reader.result as string;
+        // };
+        // reader.readAsDataURL(file);
     }
 
     backHandler() {
