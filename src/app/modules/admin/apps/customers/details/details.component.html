@@ -51,6 +51,12 @@
             <div class="flex sub-sidenav-content bg-light">
                 <div class="w-full">
                     <div class="tab bg-white shadow overflow-auto">
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Customer General Information'">
+                                <app-general-info></app-general-info>
+                            </ng-template>
+                        </div>
+
                         <div *ngIf="
                                 customerContacts$ | async;
                                 let customerContact

@@ -117,6 +117,7 @@ export class CustomersListComponent implements OnInit {
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
+        localStorage.removeItem("state");
     }
 
     initObservables() {
@@ -245,29 +246,12 @@ export class CustomersListComponent implements OnInit {
 
     // ----------------------------------------------------------------------------------------------
 
-    toggleGeneralInfo(customerId: string): void {
+    toggleGeneralInfo(customerId: string, state: string): void {
 
         this._customersService.getCustomerById(customerId);
-        this._router.navigateByUrl('apps/customers/general-information/' + customerId);
-        // If the product is already selected...
-        // if (this.selectedProduct && this.selectedProduct.id === productId) {
-        //     // Close the details
-        //     this.closeDetails();
-        //     return;
-        // }
-        // // Get the product by id
-        // this._customersService.getCustomerById(productId);
-        // .subscribe((product) => {
-        //     this._router.navigateByUrl('apps/customers/general-information/'+ productId)
-        //     // Set the selected product
-        //     this.selectedProduct = product;
-
-        //     // Fill the form
-        //     this.selectedProductForm.patchValue(product);
-
-        //     // Mark for check
-        //     this._changeDetectorRef.markForCheck();
-        // });
+        this._router.navigateByUrl('apps/customers/details/' + customerId);
+        localStorage.setItem("state",state);
+        
     }
     /**
      * Close the details
