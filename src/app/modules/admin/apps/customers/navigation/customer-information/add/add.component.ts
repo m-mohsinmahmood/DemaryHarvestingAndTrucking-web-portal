@@ -61,52 +61,6 @@ export class AddCustomerContact implements OnInit {
             note_2: [''],
             avatar: [[]],
         });
-        // Create the form
-        // if (this.data && this.data.customerContactData.isEdit) {
-        //     this.form.patchValue({
-        //         id: this.data.customerContactData.id,
-        //         customer_id:this.data.customerContactData.customer_id,
-        //         company_name: this.data.customerContactData.company_name,
-        //         first_name: this.data.customerContactData.first_name,
-        //         last_name: this.data.customerContactData.last_name,
-        //         website: this.data.customerContactData.website,
-        //         position: this.data.customerContactData.position,
-        //         address: this.data.customerContactData.address,
-        //         cell_number: this.data.customerContactData.cell_number,
-        //         city: this.data.customerContactData.city,
-        //         office_number: this.data.customerContactData.office_number,
-        //         state: this.data.customerContactData.state,
-        //         email: this.data.customerContactData.email,
-        //         zip_code: this.data.customerContactData.zip_code,
-        //         fax: this.data.customerContactData.fax,
-        //         linkedin: this.data.customerContactData.linkedin,
-        //         note_1: this.data.customerContactData.note_1,
-        //         note_2: this.data.customerContactData.note_2,
-        //         avatar: [[]],
-
-        //     });
-        // }
-        // Create the form
-
-        // this.addContactForm.patchValue({
-        //   c_name               : "Cinnova",
-        //     c_name2      : "Cinnova",
-        //     contact_name             : "Adam Smith",
-        //     w_name      : "cinnova.com",
-        //     c_position              : "Developer",
-        //     address          : "Cincinnati, USA",
-        //     c_phonenumber            : "+1(123)-456-7890",
-        //     city: "Lorium Ipsum",
-        //     o_phonenumber            : "+1(123)-456-7890",
-        //     state    : "Lorium Ipsum",
-        //     email         : "abc@xyz.com",
-        //     zipcode         : "54000",
-        //     fax             : "000-0000-0000",
-        //     linkedin        : "Lorium Ipsum",
-        //     note_1       : "Lorium Ipsum",
-        //     note_2            : "Lorium Ipsum",
-
-        // });
     }
 
     createCustomerContact(cropData: any): void {
@@ -118,11 +72,7 @@ export class AddCustomerContact implements OnInit {
 
     onSubmit(): void {
         this._customerService.isLoadingCustomerContact.next(true);
-        // if (this.data && this.data.cropData.isEdit) {
-        //     this.updateCustomerContact(this.form.value);
-        // } else {
-            this.createCustomerContact(this.form.value);
-       // }
+        this.createCustomerContact(this.form.value);
     }
 
     saveAndClose(): void {

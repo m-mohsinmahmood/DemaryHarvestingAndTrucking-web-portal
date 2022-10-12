@@ -13,12 +13,16 @@
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
         <mat-form-field appearance="outline">
-            <mat-label>Farm Name </mat-label>
-            <input matInput formControlName="farmName" />
+            <mat-label>Farm Name</mat-label>
+            <mat-select formControlName="farm_id" name="name">
+                <mat-option *ngFor="let farm of this.data.customerFarms.customer_farms" [value]="farm.id">
+                    {{ farm.name }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Field</mat-label>
-            <input matInput formControlName="field" />
+            <input matInput formControlName="name" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Acres</mat-label>
@@ -26,7 +30,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Calender Year</mat-label>
-            <mat-select formControlName="calenderYear" name="calender">
+            <mat-select formControlName="calendar_year" name="calender">
                 <mat-option *ngFor="let calender of calenderYear" [value]="calender.value">
                     {{ calender.viewValue }}
                 </mat-option>

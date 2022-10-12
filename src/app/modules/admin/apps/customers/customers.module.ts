@@ -15,6 +15,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
@@ -73,10 +74,10 @@ import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-i
         AddCustomerContact,
         GeneralInfoComponent,
         DocumentComponent,
-        AddRateDataComponent
+        AddRateDataComponent,
     ],
-    imports     : [
-RouterModule.forChild(customersRoutes),
+    imports: [
+        RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -98,10 +99,8 @@ RouterModule.forChild(customersRoutes),
         MatDialogModule,
         MatTabsModule,
         MatGridListModule,
-        MatExpansionModule
-
-    ]
+        MatExpansionModule,
+        MatDatepickerModule,
+    ],
 })
-export class CustomersModule
-{
-}
+export class CustomersModule {}

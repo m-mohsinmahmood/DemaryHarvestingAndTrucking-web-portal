@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @angular-eslint/component-class-suffix */
 import {
     AfterViewInit,
@@ -8,7 +9,7 @@ import {
     OnInit,
     ViewChild,
     ViewEncapsulation,
-    Input
+    Input,
 } from '@angular/core';
 import {
     FormBuilder,
@@ -55,12 +56,9 @@ import { AddCustomerContact } from './add/add.component';
     animations: fuseAnimations,
 })
 export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild(MatPaginator) private _paginator: MatPaginator;
-    @ViewChild(MatSort) private _sort: MatSort;
     @Input() customersContact: any;
 
     search: Subscription;
-    crop$: Observable<CustomerContacts>;
     customerContacts$: Observable<CustomerContacts[]>;
     isLoadingCustomerContact$: Observable<boolean>;
     isLoadingCustomerContacts$: Observable<boolean>;
@@ -79,7 +77,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     limit: number;
 
     products$: Observable<InventoryProduct[]>;
-   // customers: any;
+    // customers: any;
     routeID;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
@@ -115,59 +113,27 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Create the selected product form
-        this.selectedProductForm = this._formBuilder.group({
-            id: [''],
-            customer_id: [''],
-            company_name: ['', [Validators.required]],
-            first_name: [''],
-            last_name: [''],
-            arizonaInvoiceMath: [''],
-            skipInvoiceMath2: [''],
-            avatar: [''],
-            email: [''],
-            stateProvince: [''],
-            isActive: [''],
-            reserved: [''],
-            cost: [''],
-            basePrice: [''],
-            taxPercent: [''],
-            price: [''],
-            weight: [''],
-            thumbnail: [''],
-            images: [[]],
-            currentImageIndex: [0], // Image index that is currently being viewed
-            active: [false],
-            farmId: [''],
-            farmHarvestYear: [''],
-            farmName: [''],
-            farmTotalAcres: [''],
-            cropid: [''],
-            cropHarvestYear: [''],
-            cropCrop: [''],
-            cropPoundsPerBushel: [''],
-            contactNo: [''],
-            customerType: [''],
-            phoneNo: [''],
-            position: [''],
-            fname: [''],
-            lName: [''],
-        });
-
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
-            console.log('object', this.routeID);
         });
-
-
+        this.search = this.searchform.valueChanges
+            .pipe(debounceTime(500))
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this._customersService.getCustomerContact(
+                    this.routeID,
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
     }
 
-
-
     openAddDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(AddCustomerContact,{
-            data:{customerId: this.routeID}
+        const dialogRef = this._matDialog.open(AddCustomerContact, {
+            data: { customerId: this.routeID },
         });
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
@@ -192,15 +158,50 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    sortData(sort: any) {
+        this._customersService.getCustomerContact(
+            this.routeID,
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
+    }
+
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this.getNextData(this.page.toString(), this.limit.toString());
+    }
+    getNextData(page, limit) {
+        this._customersService.getCustomerContact(
+            this.routeID,
+            page,
+            limit,
+            '',
+            '',
+            this.searchResult
+        );
+    }
+
     /**
      * Toggle Customer Contacts
      *
      * @param productId
      */
-    toggleContactsDetails(productId: string): void {
+    toggleContactsDetails(customerContact: string): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
             width: '1200px',
+            data: {
+                customerContact,
+                paginationData: {
+                    page: this.page,
+                    limit: this.limit,
+                    search: this.searchResult,
+                },
+            },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -217,23 +218,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     closeContactsDetails(): void {
         this.selectedProduct = null;
     }
-
-    /**
-     * Cycle through images of selected product
-     */
-
-    /**
-     * Create a new tag
-     *
-     * @param title
-     */
-
-    /**
-     * Update the tag title
-     *
-     * @param tag
-     * @param event
-     */
 
     createProduct(data: any): void {
         // Create the product

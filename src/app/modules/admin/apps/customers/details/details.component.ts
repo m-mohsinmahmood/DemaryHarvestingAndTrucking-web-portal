@@ -24,7 +24,7 @@ import { CustomersService } from '../customers.service';
 import { AddFarmsComponent } from './add-farms/add-farms.component';
 import { AddCropsComponent } from './add-crops/add-crops.component';
 import { HarvestInfoComponent } from './harvest-info/harvest-info.component';
-import { CustomerContacts } from '../customers.types';
+import { CustomerContacts, CustomerField, CustomerFarm } from '../customers.types';
 
 @Component({
     selector: 'customer-details',
@@ -36,13 +36,29 @@ import { CustomerContacts } from '../customers.types';
 export class CustomerDetailsComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    search: Subscription;
+    // Customer Contact Observables
     customerContact$: Observable<CustomerContacts>;
     isLoadingCustomerContact$: Observable<boolean>;
     customerContacts$: Observable<CustomerContacts[]>;
     isLoadingCustomerContacts$: Observable<boolean>;
     exportCustomerContacts$: Observable<CustomerContacts>;
 
+    // Customer Fields Observables
+    customerField$: Observable<CustomerField>;
+    isLoadingCustomerField$: Observable<boolean>;
+    customerFields$: Observable<CustomerField[]>;
+    isLoadingCustomerFields$: Observable<boolean>;
+    exportustomerFields$: Observable<CustomerField>;
+
+    // Customer Farms Observables
+    customerFarm$: Observable<CustomerFarm>;
+    isLoadingCustomerFarm$: Observable<boolean>;
+    customerFarms$: Observable<CustomerFarm[]>;
+    isLoadingCustomerFarms$: Observable<boolean>;
+    exportustomerFarms$: Observable<CustomerFarm>;
+
+
+    search: Subscription;
     isEdit: boolean = false;
     pageSize = 10;
     currentPage = 0;
@@ -88,35 +104,40 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
             this.routeID = params.Id;
         });
         this.initApis(this.routeID);
-        this.initObservables();
+        this.initCustomerContactObservables();
+        this.initCustomerFieldObservables();
+        this.initCustomerFarmObservables();
     }
 
-    initObservables() {
+    initCustomerContactObservables() {
         this.isLoadingCustomerContacts$ =
             this._customerService.isLoadingCustomerContacts$;
         this.isLoadingCustomerContact$ =
             this._customerService.isLoadingCustomerContact$;
         this.customerContacts$ = this._customerService.customerContacts$;
-
-        console.log('Customer Contact', this.customerContacts$);
-
         this.customerContact$ = this._customerService.customerContact$;
-        // this.search = this.searchform.valueChanges
-        //     .pipe(debounceTime(500))
-        //     .subscribe((data) => {
-        //         this.searchResult = data.search;
-        //         this._customerService.getCustomers(
-        //             1,
-        //             10,
-        //             '',
-        //             '',
-        //             this.searchResult
-        //         );
-        //     });
+    }
+    initCustomerFieldObservables() {
+        this.isLoadingCustomerFields$ =
+            this._customerService.isLoadingCustomerFields$;
+        this.isLoadingCustomerField$ =
+            this._customerService.isLoadingCustomerField$;
+        this.customerFields$ = this._customerService.customerFields$;
+        this.customerField$ = this._customerService.customerField$;
+    }
+    initCustomerFarmObservables() {
+        this.isLoadingCustomerFarms$ =
+            this._customerService.isLoadingCustomerFarms$;
+        this.isLoadingCustomerFarm$ =
+            this._customerService.isLoadingCustomerFarms$;
+        this.customerFarms$ = this._customerService.customerFarms$;
+        this.customerFarm$ = this._customerService.customerFarm$;
     }
 
     initApis(id: string) {
         this._customerService.getCustomerContact(id);
+        this._customerService.getCustomerField(id);
+        this._customerService.getCustomerFarm(id);
     }
 
     // // Get the employee by id
@@ -212,7 +233,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     openAddFarmDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddFarmsComponent);
-
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
@@ -220,8 +240,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
     openAddCropDialog(): void {
         // Open the dialog
-        const dialogRef = this._matDialog.open(AddCropsComponent);
-
+        const dialogRef = this._matDialog.open(AddCropsComponent)
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
@@ -230,7 +249,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     openHarvestInfoDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(HarvestInfoComponent);
-
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });

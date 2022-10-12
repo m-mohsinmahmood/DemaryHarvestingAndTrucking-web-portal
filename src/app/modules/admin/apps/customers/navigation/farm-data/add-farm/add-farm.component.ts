@@ -1,6 +1,8 @@
+import { templateJitUrl } from '@angular/compiler';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CustomersService } from '../../../customers.service';
 
 interface Calender {
     value: string;
@@ -29,39 +31,58 @@ export class AddFarmComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
+    private _customersService: CustomersService,
     public matDialogRef: MatDialogRef<AddFarmComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
     ) { }
 
   ngOnInit(): void {
+    this._customersService.closeDialog$.subscribe((res) => {
+        if (res) {
+            this.matDialogRef.close();
+            this._customersService.closeDialog.next(false);
+        }
+    });
     // Create the form
     this.form = this._formBuilder.group({
-        farmName     : ['', [Validators.required]],
-        field     : ['', [Validators.required]],
+        farm_id : [''],
+        customer_id : this.data.id,
+        name     : ['', [Validators.required]],
         acres    : ['', [Validators.required]],
-        status: ['', [Validators.required]],
-        calenderYear: ['', [Validators.required]],
+        calendar_year: ['', [Validators.required]],
       });
-
       if (this.data && this.data.isEdit) {
         this.form.patchValue({
-            farmName: this.data.farmName,
-            field: this.data.field,
-            acres: this.data.acres,
-            calenderYear: this.data.calenderYear
+            id: this.data.field_id,
+            farm_id : this.data.farm_id,
+            // farm_name : this.data.farm_name,
+            customer_id : this.data.customer_id,
+            name     :  this.data.field_name,
+            acres    : this.data.acres,
+            calendar_year: this.data.calendar_year,
         });
     }
   }
 
   onSubmit(): void {
-    console.warn('Your order has been submitted', this.form.value);
-    this.form.reset();
+    this._customersService.isLoadingCustomerField.next(true);
+    this.createCustomerField(this.form.value);
+    // if (this.data && this.data.cropData.isEdit) {
+    //     this.updateCrop(this.form.value);
+    // } else {
+
+    // }
   }
 
-  saveAndClose(): void
-  {
-      this.matDialogRef.close();
-  }
+  createCustomerField(customerFieldData: any): void {
+    this._customersService.createCustomerField(customerFieldData);
+}
+
+saveAndClose(): void {
+    this._customersService.isLoadingCustomerField.next(false);
+    this.matDialogRef.close();
+}
+
 
 
   discard(): void

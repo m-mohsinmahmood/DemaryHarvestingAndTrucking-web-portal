@@ -13,7 +13,9 @@
             <!-- Search -->
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search Contacts'">
+                <form [formGroup]="searchform">
+                    <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Customer Contacts'" />
+                </form>
             </mat-form-field>
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
@@ -28,23 +30,17 @@
 
         <!-- Products list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="this.customersContact.customer_contacts">
-                <ng-container *ngIf="this.customersContact; else noProducts">
+            <ng-container *ngIf="this.customersContact.customer_contacts.length > 0; else noProducts">
+                <ng-container *ngIf="this.customersContact.customer_contacts">
                     <div class="grid">
                         <!-- Header -->
-                        <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-
-                            <div class="sm:block">First Name</div>
-                            <div class="hidden sm:block">Last Name</div>
-                            <div class="hidden sm:block">Contact Number</div>
-
-                            <div class="hidden sm:block">Position</div>
-                            <div class="hidden sm:block">
-                                Phone Number
-                            </div>
-                            <div class="hidden sm:block">
-                                Email
-                            </div>
+                        <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                            <div mat-sort-header="company_name" class="sm:block">First Name</div>
+                            <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
+                            <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
+                            <div mat-sort-header="position" class="hidden sm:block">Position</div>
+                            <div mat-sort-header="office_number" class="hidden sm:block">Office Number</div>
+                            <div mat-sort-header="email" class="hidden sm:block">Email</div>
                             <div class="sm:block">Details</div>
                         </div>
                         <!-- Rows -->
@@ -88,7 +84,7 @@
 
                                     <!-- Details button -->
                                     <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact.id)">
+                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)">
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
@@ -99,13 +95,13 @@
                         </ng-container>
                     </div>
 
-                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="10" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="this.customersContact.count" [pageIndex]="currentPage" [pageSize]="pageSize"
+                        [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
 
                 </ng-container>
             </ng-container>
             <ng-template #noProducts>
-                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no Contacts!</div>
             </ng-template>
 
         </div>

@@ -22,6 +22,8 @@ import { AlertService } from 'app/core/alert/alert.service';
 import {
     Customers,
     CustomerContacts,
+    CustomerField,
+    CustomerFarm,
     Documents,
     Item,
 } from 'app/modules/admin/apps/customers/customers.types';
@@ -34,7 +36,7 @@ export class CustomersService {
     closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly closeDialog$: Observable<boolean> =
         this.closeDialog.asObservable();
-    //#region Loaders
+    //#region Loaders Customers
     private isLoadingCustomers: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly isLoadingCustomers$: Observable<boolean> =
@@ -47,7 +49,7 @@ export class CustomersService {
         this.isLoadingCustomer.asObservable();
     //#endregion
 
-    //#region Loaders
+    //#region Loaders Customer Contacts
     private isLoadingCustomerContacts: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly isLoadingCustomerContacts$: Observable<boolean> =
@@ -57,6 +59,30 @@ export class CustomersService {
         new BehaviorSubject<boolean>(false);
     readonly isLoadingCustomerContact$: Observable<boolean> =
         this.isLoadingCustomer.asObservable();
+    //#endregion
+
+    //#region Loaders Customer Field
+    private isLoadingCustomerFields: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerFields$: Observable<boolean> =
+        this.isLoadingCustomerFields.asObservable();
+
+    isLoadingCustomerField: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerField$: Observable<boolean> =
+        this.isLoadingCustomerField.asObservable();
+    //#
+
+    //#region Loaders Customer Farm
+    private isLoadingCustomerFarms: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerFarms$: Observable<boolean> =
+        this.isLoadingCustomerFarms.asObservable();
+
+    isLoadingCustomerFarm: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerFarm$: Observable<boolean> =
+        this.isLoadingCustomerFarm.asObservable();
     //#endregion
 
     //#region Observables Customer
@@ -84,6 +110,30 @@ export class CustomersService {
     readonly customerContact$: Observable<CustomerContacts | null> =
         this.customerContact.asObservable();
 
+    //#endregion
+
+    //#region Observables Customer Field
+    private customerFields: BehaviorSubject<CustomerField[] | null> =
+        new BehaviorSubject(null);
+    readonly customerFields$: Observable<CustomerField[] | null> =
+        this.customerFields.asObservable();
+
+    private customerField: BehaviorSubject<CustomerField | null> =
+        new BehaviorSubject(null);
+    readonly customerField$: Observable<CustomerField | null> =
+        this.customerField.asObservable();
+    //#endregion
+
+    //#region Observables Customer Field
+    private customerFarms: BehaviorSubject<CustomerFarm[] | null> =
+        new BehaviorSubject(null);
+    readonly customerFarms$: Observable<CustomerFarm[] | null> =
+        this.customerFarms.asObservable();
+
+    private customerFarm: BehaviorSubject<CustomerFarm | null> =
+        new BehaviorSubject(null);
+    readonly customerFarm$: Observable<CustomerFarm | null> =
+        this.customerFarm.asObservable();
     //#endregion
 
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(
@@ -252,6 +302,8 @@ export class CustomersService {
 
     //#endregion
 
+    //#region Customer Contact API
+
     getCustomerContact(
         id: string,
         page: number = 1,
@@ -350,6 +402,7 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerContact(
+                        customerContactData.customer_id,
                         paginatioData.page,
                         paginatioData.limit,
                         paginatioData.search
@@ -358,7 +411,227 @@ export class CustomersService {
             );
     }
 
-    //#region Customer Contact API
+    //#endregion
+
+    //#region Customer Farm Data Field API
+
+    getCustomerField(
+        customerId: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFields.next(true);
+                    this.customerFields.next(res);
+                    this.isLoadingCustomerFields.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getCustomerFieldById(id: string) {
+        this._httpClient
+            .get(`api-1/customer-field?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerField.next(true);
+                    this.customerField.next(res.crops);
+                    this.isLoadingCustomerField.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    createCustomerField(data: any) {
+        this._httpClient
+            .post(`api-1/customer-field`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerField.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Field',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerField(data.customer_id);
+                }
+            );
+    }
+
+    updateCustomerField(customerFieldData: any, paginatioData: any) {
+        this._httpClient
+            .put(`api-1/customer-field`, customerFieldData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerField.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Field',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerField(
+                        customerFieldData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        paginatioData.search
+                    );
+                }
+            );
+    }
+
+    //#endregion
+
+    //#region Customer Farm Data Farm API
+
+    getCustomerFarm(
+        customerId: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-farm?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarms.next(true);
+                    this.customerFarms.next(res);
+                    this.isLoadingCustomerFarms.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getCustomerFarmById(id: string) {
+        this._httpClient
+            .get(`api-1/customer-farm?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarm.next(true);
+                    this.customerFarm.next(res.crops);
+                    this.isLoadingCustomerFarm.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    createCustomerfarm(data: any) {
+        this._httpClient
+            .post(`api-1/customer-farm`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerFarm.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Farm',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerFarm(data.customer_id);
+                }
+            );
+    }
+
+    updateCustomerFarm(customerFarmData: any, paginatioData: any) {
+        this._httpClient
+            .put(`api-1/customer-farm`, customerFarmData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarm.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Farm',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerFarm(
+                        customerFarmData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        paginatioData.search
+                    );
+                }
+            );
+    }
 
     //#endregion
 

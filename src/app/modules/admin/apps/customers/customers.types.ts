@@ -33,6 +33,20 @@ export interface CustomerContacts {
     avatar: string;
 }
 
+export interface CustomerField {
+    farm_id: string;
+    farm_name: string;
+    field_id: string;
+    field_name: string;
+    acres: string;
+    calendar_year: string;
+}
+
+export interface CustomerFarm {
+    id: string;
+    name: string;
+}
+
 export interface InventoryProduct {
     id: string;
     harvestYear?: string;
