@@ -18,14 +18,68 @@
     </div>
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-8 overflow-y-auto">
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>Farm Name</mat-label>
             <mat-select [disabled]="isEdit" formControlName="farm_id" name="name">
                 <mat-option *ngFor="let farm of this.data.customerFarms.customer_farms" [value]="farm.id">
                     {{ farm.name }}
                 </mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <!-- MAT AUTOCOMPLETE -->
+
+            <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Farm Name</mat-label>
+                    <input
+                        [matAutocomplete]="farms"
+                        (keyup)="farm_search$.next($event.target.value)"
+                        matInput
+                        formControlName="farm_id"
+                        name="name"
+                        placeholder="Farm Name"
+                        required
+                    />
+                </mat-form-field>
+
+                <mat-autocomplete
+                    #farms="matAutocomplete"
+                    [displayWith]="displayFarmForAutoComplete"
+                    (optionSelected)="farmSelect($event.option.value)"
+                >
+                    <div *ngIf="allFarms | withLoading | async as allFarms">
+                        <ng-template [ngIf]="allFarms.value">
+                            <mat-option
+                                *ngFor="let farm of allFarms.value.customer_farms"
+                                [value]="farm"
+                            >
+                                {{ farm.name }}
+                            </mat-option>
+                        </ng-template>
+                        <ng-template [ngIf]="allFarms?.loading">
+                            <mat-option>
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: center;
+                                        text-align: center;
+                                    "
+                                >
+                                    <mat-spinner
+                                        color="accent"
+                                        diameter="25"
+                                    ></mat-spinner>
+                                </div>
+                            </mat-option>
+                        </ng-template>
+
+                        <ng-template [ngIf]="allFarms?.value?.length == 0">
+                            <mat-option disabled> No Farm found </mat-option>
+                        </ng-template>
+                    </div>
+                </mat-autocomplete>
+        <!-- MAT AUTOCOMPLETE -->
+
         <mat-form-field appearance="outline">
             <mat-label>Field</mat-label>
             <input [readonly]="isEdit" matInput formControlName="name" />
