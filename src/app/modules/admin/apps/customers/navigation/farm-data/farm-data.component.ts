@@ -16,6 +16,7 @@ import * as moment from 'moment';
     selector: 'app-farm-data',
     templateUrl: './farm-data.component.html',
     styleUrls: ['./farm-data.component.scss'],
+
 })
 export class FarmDataComponent implements OnInit {
     @Input() destinationData: any;
@@ -112,19 +113,6 @@ export class FarmDataComponent implements OnInit {
     }
 
 
-    openEditCropDialog(): void {
-        const dialogRef = this._matDialog.open(AddCropComponent, {
-            data: {
-                isEdit: 'true',
-                cropName: 'Barley',
-                calenderYear: '2022'
-            }
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
-
     openAddDestinationDialog(): void {
         const dialogRef = this._matDialog.open(AddDestinationComponent,{
             data:{
@@ -147,7 +135,8 @@ export class FarmDataComponent implements OnInit {
                     name: data.destination_name,
                     calenderYear: data.calendar_year,
                     farmId:data.farm_id,
-                    customer_id: this.routeID
+                    customer_id: this.routeID,
+                    destination_id: data.destination_id
 
                 },
                 paginationData: {

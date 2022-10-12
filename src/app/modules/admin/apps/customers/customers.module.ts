@@ -48,6 +48,7 @@ import { GeneralInfoComponent } from './general-info/general-info.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
     declarations: [
@@ -101,6 +102,7 @@ RouterModule.forChild(customersRoutes),
         MatGridListModule,
         MatExpansionModule,
         FuseDrawerModule,
+        MatDatepickerModule,
 
     ]
 })
