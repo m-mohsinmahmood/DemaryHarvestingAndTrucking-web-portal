@@ -239,6 +239,17 @@ export class FarmDataComponent implements OnInit {
             this.searchResult
         );
     }
+    sortData2(sort: any) {
+        console.log('Sort:',sort);
+        this._customersService.getCustomerDestination(
+            this.routeID,
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
+    }
 
     pageChanged(event) {
         this.page = event.pageIndex + 1;

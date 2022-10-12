@@ -14,7 +14,7 @@
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                         <form [formGroup]="searchform">
-                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Farms'" />
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                         </form>
                     </mat-form-field>
                     <!-- Add product button -->
@@ -79,7 +79,7 @@
                         </ng-container>
                         <ng-template #noProducts>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center ">
-                                There are no products!
+                                There are no Farms!
                             </div>
                         </ng-template>
                     </div>
@@ -92,7 +92,7 @@
             <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
-                        Riverview Farms
+                        Riverview Fields
                     </header>
                 </div>
                 <div class="mt-2 flex">
@@ -100,7 +100,7 @@
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                         <form [formGroup]="searchform">
-                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Fields'" />
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                         </form>
                     </mat-form-field>
                     <!-- Add product button -->
@@ -186,7 +186,7 @@
                         </ng-container>
                         <ng-template #noProducts>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center ">
-                                There are no products!
+                                There are no Fields!
                             </div>
                         </ng-template>
                     </div>
@@ -195,7 +195,7 @@
         </mat-tab>
 
         <!--Crops-->
-        <mat-tab label="Crops" class="">
+        <mat-tab label="Crops">
             <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
@@ -207,7 +207,7 @@
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                         <form [formGroup]="searchform">
-                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                         </form>
 
                     </mat-form-field>
@@ -243,8 +243,6 @@
             </div>
             <div class="sm:p-0">
                 <!-- Main -->
-
-                <!-- Main2-->
                 <div class="flex flex-auto overflow-hidden sm:h-90">
 
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
@@ -263,7 +261,8 @@
                                         <div class="">Action</div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container *ngIf="customerCrops$ | async as crops">
+                                 <ng-container   *ngIf="customerCrops$ | async as crops">
+                                    <ng-container *ngFor="(this.customerCrops$ | async)?.count > 0; else noCrops">
                                         <ng-container *ngFor="let data of  crops.customer_crops">
                                             <div class="farm-data-crops grid items-center gap-4 py-4 px-6 md:px-8 border-b">
                                                 <div class="truncate">
@@ -310,16 +309,15 @@
                                             </div> -->
                                         </ng-container>
                                     </ng-container>
+                                </ng-container>
                                 </div>
-
                                 <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="(this.customerCrops$ | async)?.count" [showFirstLastButtons]="true" (page)="pageChanged($event)" [pageIndex]="currentPage"
                                     [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
                             </ng-container>
                         </ng-container>
-
-                        <ng-template #noProducts>
+                        <ng-template #noCrops>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no products!
+                                There are no Crops!
                             </div>
                         </ng-template>
                     </div>
@@ -328,12 +326,11 @@
         </mat-tab>
 
         <!-- Destination -->
-        <mat-tab label="Destination">
+        <mat-tab label="Destination" class="bg-blue-500">
             <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
                         Riverview Destination
-
                     </header>
                 </div>
                 <div class="mt-2 lg:flex">
@@ -342,7 +339,7 @@
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                         <!-- <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'" /> -->
                         <form [formGroup]="searchform">
-                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Destinations'" />
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                         </form>
                     </mat-form-field>
                     <!-- Add product button -->
@@ -377,28 +374,29 @@
                     </mat-menu>
                 </div>
             </div>
+
             <div class="sm:p-0">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden sm:h-90">
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                        <ng-container>
+                        <ng-container >
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div>Farm Name</div>
-                                        <div class="hidden sm:block">Destination Name</div>
-                                        <div class="hidden sm:block">
+                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData2($event)">
+                                        <div mat-sort-header="dst_farm_name">Farm Name</div>
+                                        <div class="hidden sm:block" mat-sort-header="name">Destination Name</div>
+                                        <div class="hidden sm:block" mat-sort-header="dst_status">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block">
+                                        <div class="hidden sm:block" mat-sort-header="dst_year">
                                             Calender Year
                                         </div>
                                         <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container *ngIf="this.destinationData?.customer_destinations">
+                                    <ng-container *ngIf="this.destinationData?.customer_destinations.length > 0; else noDestinations">
                                         <ng-container class="" *ngFor="let data of this.destinationData.customer_destinations; trackBy: trackByFn">
                                             <div class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
                                                 <div class="truncate">
@@ -435,17 +433,16 @@
                                 </div>
                                 <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="this.destinationData?.count" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
-                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="20" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator> -->
                             </ng-container>
                         </ng-container>
-                        <ng-template #noProducts>
+                        <ng-template #noDestinations>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no products!
+                                There are no Destinations!
                             </div>
                         </ng-template>
                     </div>
                 </div>
+
             </div>
             <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999 bg-green-300" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>
                 <div class="flex flex-col w-64 overflow-auto bg-card">
@@ -513,7 +510,7 @@
                     <!-- Search -->
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Farms'" />
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search'" />
                     </mat-form-field>
                     <!-- Add product button -->
                     <button mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
@@ -632,7 +629,7 @@
                     <!-- Search -->
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Crops'" />
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search'" />
                     </mat-form-field>
                     <!-- Add product button -->
                     <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
@@ -744,7 +741,7 @@
                     <!-- Search -->
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'" />
+                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search'" />
                     </mat-form-field>
                     <!-- Add product button -->
                     <button class="mt-2 lg:mt-0 mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
