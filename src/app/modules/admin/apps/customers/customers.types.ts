@@ -134,8 +134,3 @@ export interface Item {
     contents?: string | null;
     description?: string | null;
 }
-
-export interface Food {
-    value: string;
-    viewValue: string;
-  }
