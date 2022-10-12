@@ -187,8 +187,20 @@ export class CustomersService {
             );
     }
 
-    getCustomerById(id: string): Observable<Customers> {
-        return this._httpClient.get<any>(`api-1/customers?id=${id}`).pipe();
+    getCustomerById(id: string){
+        this._httpClient
+            .get(`api-1/customers?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomer.next(true);
+                    this.customer.next(res);
+                    this.isLoadingCustomer.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
     }
 
     createCustomer(data: any) {
@@ -219,7 +231,7 @@ export class CustomersService {
             );
     }
 
-    updateCrop(customerData: any, paginatioData: any) {
+    updateCustomer(customerData: any, paginatioData: any) {
         this._httpClient
             .put(`api-1/customers`, customerData)
             .pipe(take(1))

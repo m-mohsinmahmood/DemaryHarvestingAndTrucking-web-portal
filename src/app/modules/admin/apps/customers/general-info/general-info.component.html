@@ -1,8 +1,13 @@
-<div
-    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 overflow-auto sm:overflow-hidden bg-card dark:bg-transparent">
+<!-- Header -->
+<!-- <div class="flex flex-col  -m-6"> -->
 
-    <!-- Header -->
-    <div
+    <!-- Title -->
+    <!-- <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Contact Data</div>
+    </header> -->
+    <!-- Actions -->
+    <div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 overflow-auto sm:overflow-hidden bg-card dark:bg-transparent" *ngIf="(customer$ | async) as customer">
+         <div
         class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
@@ -11,10 +16,8 @@
         <!-- Title -->
         <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
-            <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
-            
-            <span class="ml-1 capitalize">{{customers.name}} </span>
+            <span class="ml-1 capitalize">{{customer.company_name}} </span>
+            <span class="ml-1 capitalize"> </span>
         </div>
         <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <button
@@ -23,7 +26,7 @@
                 <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                 <span class="ml-2 mr-1">Delete</span>
             </button>
-            <button (click)="openUpdateDialog()"
+            <button (click)="openUpdateDialog(customer)"
                 class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 mat-flat-button [color]="'primary'">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
@@ -32,66 +35,87 @@
         </div>
         <!-- Actions -->
     </div>
-    <div class="overflow-auto">
-        <!-- Main -->
-        <div class="tab bg-white shadow sm:rounded-lg overflow-auto	">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.name}}</dd>
-                            </div>
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.email}}</dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Address</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.alternateName}}
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">State/Province</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.stateProvince}}
-                                </dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Cell Phone</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.contactNo}}
-                                </dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Home Phone</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.contactNo}}
-                                </dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Manager's Name</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                                </dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Customer Type</dt>
-                                <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{customers.customerType}}
-                                </dd>
-                            </div>
-                    
-                            <div class="py-4 sm:py-5 flex items-baseline gap-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-lg font-extrabold text-gray-500">Status</dt>
-                                <div class="hidden lg:block">
-                                    <mat-icon class="{{customers.isActive===1 ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="customers.isActive===1 ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">
-                                        check-circle</mat-icon>
-                    
-                                </div>
-                            </div>
-                        </dl>
-                    </div>
-        </div>
+    <div class="flex flex-col flex-auto sm:p-0 p-6 sm:grid overflow-y-auto p-16">
+
+            <div class="grid sm:gap-2 sm:grid-cols-2 h-4 sm:p-8 grid-cols-1 py-0 sm:pl-0 md:pl-12 pl-2 pr-2 min-h-100">
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Company Name</mat-label>
+                    <mat-label>{{customer.company_name}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Customer Name</mat-label>
+                    <mat-label>{{customer.customer_name}}</mat-label>
+                </div>
+
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Main Contact</mat-label>
+                    <mat-label>{{customer.main_contact}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Position</mat-label>
+                    <mat-label>{{customer.position}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Phone Number</mat-label>
+                    <mat-label>{{customer.phone_number}}</mat-label>
+                </div>
+
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">State</mat-label>
+                    <mat-label>{{customer.state}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Country</mat-label>
+                    <mat-label>{{customer.country}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Email</mat-label>
+                    <mat-label>{{customer.email}}</mat-label>
+                </div>
+
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Customer Type</mat-label>
+                    <mat-label>{{customer.customer_type}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Address</mat-label>
+                    <mat-label>{{customer.address}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Billing Address</mat-label>
+                    <mat-label>{{customer.billing_address}}</mat-label>
+                </div>
+
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Fax</mat-label>
+                    <mat-label>{{customer.fax}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">City</mat-label>
+                    <mat-label>{{customer.city}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Zip Code</mat-label>
+                    <mat-label>{{customer.zip_code}}</mat-label>
+                </div>
+
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Website</mat-label>
+                    <mat-label>{{customer.website}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">LinkedIn</mat-label>
+                    <mat-label>{{customer.linkedin}}</mat-label>
+                </div>
+                <div class="flex sm:flex-row flex-col  sm:items-center  ">
+                    <mat-label class="text-base font-normal text-gray-500 sm:w-{{!isEditMode? '5/12':'4/12' }} ">Status</mat-label>
+                    <mat-icon class="{{customer.status=== true ? 'greenActiveIcon' : 'redInActiveIcon'}}" [svgIcon]="customer.status===true ? 'heroicons_solid:check-circle' : 'heroicons_solid:x-circle'">
+                        check-circle</mat-icon>
+                </div>
+
+                <!-- </div> -->
+            </div>
     </div>
 
-</div>
+    </div>
+<!-- </div> -->

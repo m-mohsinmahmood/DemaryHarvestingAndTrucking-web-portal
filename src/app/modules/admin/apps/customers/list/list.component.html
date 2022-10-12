@@ -119,11 +119,11 @@
                                     <!-- Active -->
                                     <div class="hidden lg:block">
                                         <mat-icon class="{{
-                                                customer.status === 1
+                                                customer.status === true
                                                     ? 'greenActiveIcon'
                                                     : 'redInActiveIcon'
                                             }}" [svgIcon]="
-                                                customer.status === 1
+                                                customer.status === true
                                                     ? 'heroicons_solid:check-circle'
                                                     : 'heroicons_solid:x-circle'
                                             ">check-circle</mat-icon>

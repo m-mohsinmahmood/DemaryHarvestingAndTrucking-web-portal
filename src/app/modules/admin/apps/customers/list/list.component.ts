@@ -174,14 +174,22 @@ export class CustomersListComponent implements OnInit {
                     isEdit: this.isEdit,
                     id: event.id,
                     company_name: event.company_name,
+                    customer_name: event.customer_name,
                     main_contact: event.main_contact,
                     position: event.position,
                     phone_number: event.phone_number,
                     state: event.state,
                     country: event.country,
                     email: event.email,
-                    customer_type: event.customer_type,
+                    customer_type:event.customer_type,
                     status: event.status,
+                    address: event.address,
+                    billing_address: event.billing_address,
+                    fax:event.fax,
+                    city:event.city,
+                    zip_code: event.zip_code,
+                    website: event.website,
+                    linkedin: event.linkedin,
                 },
                 paginationData: {
                     page: this.page,
@@ -237,15 +245,19 @@ export class CustomersListComponent implements OnInit {
 
     // ----------------------------------------------------------------------------------------------
 
-    toggleGeneralInfo(productId: string): void {
+    toggleGeneralInfo(customerId: string): void {
+
+        this._customersService.getCustomerById(customerId);
+        this._router.navigateByUrl('apps/customers/general-information/' + customerId);
+        
         // If the product is already selected...
-        if (this.selectedProduct && this.selectedProduct.id === productId) {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-        // Get the product by id
-        this._customersService.getCustomerById(productId);
+        // if (this.selectedProduct && this.selectedProduct.id === productId) {
+        //     // Close the details
+        //     this.closeDetails();
+        //     return;
+        // }
+        // // Get the product by id
+        // this._customersService.getCustomerById(productId);
         // .subscribe((product) => {
         //     this._router.navigateByUrl('apps/customers/general-information/'+ productId)
         //     // Set the selected product
@@ -270,14 +282,14 @@ export class CustomersListComponent implements OnInit {
      *
      * @param productId
      */
-    toggleDetails(productId: string): void {
-        // Get the Customer by id
-        this.customer$ = this._customersService.getCustomerById(productId);
-        this.customer$.subscribe((data) => {
-            console.log(data.id);
-            this._router.navigateByUrl('apps/customers/details/' + data?.id);
-        });
-    }
+    // toggleDetails(productId: string): void {
+    //     // Get the Customer by id
+    //     this.customer$ = this._customersService.getCustomerById(productId);
+    //     this.customer$.subscribe((data) => {
+    //         console.log(data.id);
+    //         this._router.navigateByUrl('apps/customers/details/' + data?.id);
+    //     });
+    // }
     /**
      * Close the details
      */
