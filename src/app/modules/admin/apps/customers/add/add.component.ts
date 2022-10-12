@@ -2,9 +2,12 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { Customers } from '../customers.types';
+import { boolean } from 'joi';
 
 @Component({
     selector: 'app-add',
@@ -12,94 +15,100 @@ import { MatDialogRef } from '@angular/material/dialog';
     styleUrls: ['./add.component.scss'],
 })
 export class AddCustomer implements OnInit {
+    customer$: Observable<Customers>;
+    isLoadingCustomer$: Observable<boolean>;
+    customers$: Observable<Customers[]>;
+    isLoadingCustomers$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+
     public form: FormGroup;
-    private _customersService: any;
     selectedProduct: any;
     private _changeDetectorRef: any;
     constructor(
+        private _customersService: CustomersService,
         public matDialogRef: MatDialogRef<AddCustomer>,
         private _formBuilder: FormBuilder,
-        private api: CustomersService
+        private api: CustomersService,
+        @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
     ngOnInit(): void {
+        this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
+        this.closeDialog$ = this._customersService.closeDialog$;
+        this._customersService.closeDialog$.subscribe((res) => {
+            if (res) {
+                this.matDialogRef.close();
+                this._customersService.closeDialog.next(false);
+            }
+        });
+
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
-            company_name: ['', [Validators.required]],
-            main_contact: ['', [Validators.required]],
-            position: ['', [Validators.required]],
-            phone_number: ['', [Validators.required]],
-            state: ['', [Validators.required]],
-            country: ['', [Validators.required]],
-            email: ['', [Validators.required]],
-            customer_type: ['', [Validators.required]],
-            status: ['', [Validators.required]],
-
-            alternateName: [''],
-            skipInvoiceMath1: [''],
-            arizonaInvoiceMath: [''],
-            skipInvoiceMath2: [''],
-            stateProvince: [''],
-            isActive: [''],
-            title: [''],
-            type: [''],
-            descripition: [''],
-            contactNo: [''],
-            customerType: [''],
-            commercialTrucking: [''],
-            customFarming: [''],
-            customHarvesting: [''],
-            equipmentLeasing: [''],
-            cdlTestingTraining: [''],
-            farmItemRows: this._formBuilder.array([this.initFarmItemRows()]),
-            cropsItemRows: this._formBuilder.array([this.initCropItemRows()]),
+            customer_name: [''],
+            company_name: [''],
+            main_contact: [''],
+            phone_number: [''],
+            state: [''],
+            country: [''],
+            email: [''],
+            fax: [''],
+            customer_type: [''],
+            status: true,
+            address: [''],
+            billing_address: [''],
+            city: [''],
+            zip_code: [''],
+            position: [''],
+            website: [''],
+            linkedin: [''],
         });
+
+        if (this.data && this.data.customerData.isEdit) {
+            this.form.patchValue({
+                id: this.data.customerData.id,
+                customer_name: this.data.customerData.customer_name,
+                company_name: this.data.customerData.company_name,
+                main_contact: this.data.customerData.main_contact,
+                phone_number: this.data.customerData.phone_number,
+                state: this.data.customerData.state,
+                country: this.data.customerData.country,
+                email: this.data.customerData.email,
+                fax: this.data.customerData.fax,
+                customer_type: this.data.customerData.customer_type,
+                status: this.data.customerData.status,
+                address: this.data.customerData.address,
+                billing_address: this.data.customerData.billing_address,
+                city: this.data.customerData.city,
+                zip_code: this.data.customerData.zip_code,
+                company_position: this.data.customerData.company_position,
+                website: this.data.customerData.website,
+                linkedin: this.data.customerData.linkedin,
+            });
+        }
     }
 
-    get formArr() {
-        return this.form.get('farmItemRows') as FormArray;
+    initApis() {
+        this._customersService.getCustomers();
     }
 
-    get cropArr() {
-        return this.form.get('cropsItemRows') as FormArray;
+    createCustomer(customerData: any): void {
+        this._customersService.createCustomer(customerData);
+    }
+    updateCustomer(customerData: any): void {
+        this._customersService.updateCustomer(
+            customerData,
+            this.data.paginationData
+        );
     }
 
     onSubmit(): void {
-        console.warn('Your order has been submitted', this.form.value);
-        this.form.reset();
-    }
-
-    initFarmItemRows() {
-        return this._formBuilder.group({
-            farmId: [''],
-            farmHarvestYear: [''],
-            farmName: [''],
-            farmTotalAcres: [''],
-        });
-    }
-    initCropItemRows() {
-        return this._formBuilder.group({
-            cropid: [''],
-            cropHarvestYear: [''],
-            cropCrop: [''],
-            cropPoundsPerBushel: [''],
-        });
-    }
-    addNewFarmRow() {
-        this.formArr.push(this.initFarmItemRows());
-    }
-
-    deleteFarmRow(index: number) {
-        this.formArr.removeAt(index);
-    }
-
-    addNewCropRow() {
-        this.cropArr.push(this.initCropItemRows());
-    }
-
-    deleteCropRow(index: number) {
-        this.cropArr.removeAt(index);
+        this._customersService.isLoadingCustomer.next(true);
+        if (this.data && this.data.customerData.isEdit) {
+            this.updateCustomer(this.form.value);
+        } else {
+            this.createCustomer(this.form.value);
+        }
     }
 
     /**
@@ -125,35 +134,35 @@ export class AddCustomer implements OnInit {
      */
     saveAsDraft(): void {}
 
-    createProduct(): void {
-        // Create the product
-        this._customersService.createProduct().subscribe((newProduct) => {
-            // Go to new product
-            this.selectedProduct = newProduct;
+    // createProduct(): void {
+    //     // Create the product
+    //     this._customersService.createProduct().subscribe((newProduct) => {
+    //         // Go to new product
+    //         this.selectedProduct = newProduct;
 
-            // Fill the form
-            this.form.patchValue(this.form.value);
+    //         // Fill the form
+    //         this.form.patchValue(this.form.value);
 
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
+    //         // Mark for check
+    //         this._changeDetectorRef.markForCheck();
+    //     });
+    // }
 
     /**
      * Send the message
      */
-    send(): void {
-        console.log(this.form.controls);
-        this.api.createCustomer(this.form.value);
-        // .subscribe({
-        //     next: (res) => {
-        //         alert('Customer Added Successfully1');
-        //         this.form.reset();
-        //         this.matDialogRef.close('save');
-        //     },
-        //     error: () => {
-        //         alert('Error!');
-        //     },
-        // });
-    }
+    // send(): void {
+    //     console.log(this.form.controls);
+    //     this.api.createCustomer(this.form.value);
+    //     // .subscribe({
+    //     //     next: (res) => {
+    //     //         alert('Customer Added Successfully1');
+    //     //         this.form.reset();
+    //     //         this.matDialogRef.close('save');
+    //     //     },
+    //     //     error: () => {
+    //     //         alert('Error!');
+    //     //     },
+    //     // });
+    // }
 }

@@ -2,6 +2,7 @@ export interface Customers {
     find: any;
     id: string;
     company_name: string;
+    customer_name: string;
     main_contact: string;
     position: string;
     phone_number: string;
@@ -10,6 +11,13 @@ export interface Customers {
     email: string;
     customer_type: string;
     status: boolean;
+    address: string;
+    billing_address:string;
+    fax:string;
+    city:string;
+    zip_code: string;
+    website: string;
+    linkedin: string;
 }
 
 export interface CustomerContacts {

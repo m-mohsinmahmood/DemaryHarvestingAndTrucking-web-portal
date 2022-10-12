@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -90,6 +91,8 @@ export class CustomersListComponent implements OnInit {
     tags: InventoryTag[];
     tagsEditMode: boolean = false;
     vendors: InventoryVendor[];
+    statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
+    country_list = ['Afghanistan','Albania','Algeria','Andorra','Angola','Anguilla','Antigua &amp; Barbuda','Argentina','Armenia','Aruba','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia &amp; Herzegovina','Botswana','Brazil','British Virgin Islands','Brunei','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Cape Verde','Cayman Islands','Chad','Chile','China','Colombia','Congo','Cook Islands','Costa Rica','Cote D Ivoire','Croatia','Cruise Ship','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Estonia','Ethiopia','Falkland Islands','Faroe Islands','Fiji','Finland','France','French Polynesia','French West Indies','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Greenland','Grenada','Guam','Guatemala','Guernsey','Guinea','Guinea Bissau','Guyana','Haiti','Honduras','Hong Kong','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Isle of Man','Israel','Italy','Jamaica','Japan','Jersey','Jordan','Kazakhstan','Kenya','Kuwait','Kyrgyz Republic','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Macau','Macedonia','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Mauritania','Mauritius','Mexico','Moldova','Monaco','Mongolia','Montenegro','Montserrat','Morocco','Mozambique','Namibia','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Norway','Oman','Pakistan','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Reunion','Romania','Russia','Rwanda','Saint Pierre &amp; Miquelon','Samoa','San Marino','Satellite','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','South Africa','South Korea','Spain','Sri Lanka','St Kitts &amp; Nevis','St Lucia','St Vincent','St. Lucia','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor L\'Este','Togo','Tonga','Trinidad &amp; Tobago','Tunisia','Turkey','Turkmenistan','Turks &amp; Caicos','Uganda','Ukraine','United Arab Emirates','United Kingdom','Uruguay','Uzbekistan','Venezuela','Vietnam','Virgin Islands (US)','Yemen','Zambia','Zimbabwe'];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -171,14 +174,22 @@ export class CustomersListComponent implements OnInit {
                     isEdit: this.isEdit,
                     id: event.id,
                     company_name: event.company_name,
+                    customer_name: event.customer_name,
                     main_contact: event.main_contact,
                     position: event.position,
                     phone_number: event.phone_number,
                     state: event.state,
                     country: event.country,
                     email: event.email,
-                    customer_type: event.customer_type,
+                    customer_type:event.customer_type,
                     status: event.status,
+                    address: event.address,
+                    billing_address: event.billing_address,
+                    fax:event.fax,
+                    city:event.city,
+                    zip_code: event.zip_code,
+                    website: event.website,
+                    linkedin: event.linkedin,
                 },
                 paginationData: {
                     page: this.page,
@@ -234,15 +245,18 @@ export class CustomersListComponent implements OnInit {
 
     // ----------------------------------------------------------------------------------------------
 
-    toggleGeneralInfo(productId: string): void {
+    toggleGeneralInfo(customerId: string): void {
+
+        this._customersService.getCustomerById(customerId);
+        this._router.navigateByUrl('apps/customers/general-information/' + customerId);
         // If the product is already selected...
-        if (this.selectedProduct && this.selectedProduct.id === productId) {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-        // Get the product by id
-        this._customersService.getCustomerById(productId);
+        // if (this.selectedProduct && this.selectedProduct.id === productId) {
+        //     // Close the details
+        //     this.closeDetails();
+        //     return;
+        // }
+        // // Get the product by id
+        // this._customersService.getCustomerById(productId);
         // .subscribe((product) => {
         //     this._router.navigateByUrl('apps/customers/general-information/'+ productId)
         //     // Set the selected product
@@ -267,14 +281,14 @@ export class CustomersListComponent implements OnInit {
      *
      * @param productId
      */
-    toggleDetails(productId: string): void {
-        // Get the Customer by id
-        this.customer$ = this._customersService.getCustomerById(productId);
-        this.customer$.subscribe((data) => {
-            console.log(data.id);
-            this._router.navigateByUrl('apps/customers/details/' + data?.id);
-        });
-    }
+    // toggleDetails(productId: string): void {
+    //     // Get the Customer by id
+    //     this.customer$ = this._customersService.getCustomerById(productId);
+    //     this.customer$.subscribe((data) => {
+    //         console.log(data.id);
+    //         this._router.navigateByUrl('apps/customers/details/' + data?.id);
+    //     });
+    // }
     /**
      * Close the details
      */
@@ -287,28 +301,9 @@ export class CustomersListComponent implements OnInit {
      *
      * @param productId
      */
-    toggleContactsDetails(productId: string): void {
-        // If the product is already selected...
-        if (this.selectedProduct && this.selectedProduct.id === productId) {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-        // Get the product by id
-        this._customersService.getCustomerById(productId);
-        // .subscribe((product) => {
-        //     this._router.navigateByUrl(
-        //         'apps/customers/contacts-data/' + productId
-        //     );
-        //     // Set the selected product
-        //     this.selectedProduct = product;
-
-        //     // Fill the form
-        //     this.selectedProductForm.patchValue(product);
-
-        //     // Mark for check
-        //     this._changeDetectorRef.markForCheck();
-        // });
+    toggleContactsDetails(customerId: string): void {
+        this._customersService.getCustomerById(customerId);
+        this._router.navigateByUrl('apps/customers/details/' + customerId);
     }
     /**
      * Track by function for ngFor loops

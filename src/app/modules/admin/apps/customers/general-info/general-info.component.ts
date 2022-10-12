@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CustomersService } from '../customers.service';
+import { CustomerContacts, Customers } from '../customers.types';
+import { AddCustomer } from '../add/add.component';
 
 
 @Component({
@@ -19,7 +21,13 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
 
     isLoading: boolean = false;
     routeID; // URL ID
-    customers:any;
+
+    search: Subscription;
+    customer$: Observable<Customers>;
+    isLoadingCustomer$: Observable<boolean>;
+    customers$: Observable<Customers[]>;
+    isLoadingCustomers$: Observable<boolean>;
+    isEdit: boolean;
 
 
     /**
@@ -27,8 +35,9 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
+        private _customersService: CustomersService,
+        private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         public _customerService: CustomersService,
         private _router: Router,
@@ -46,18 +55,15 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
      */
      ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-          console.log("PARAMS:", params); //log the entire params object
-          this.routeID = params.Id;
-          console.log("object", this.routeID);
-          console.log(params['id']) //log the value of id
+            this.routeID = params.Id;
         });
+      this._customerService.getCustomerById(this.routeID);
+      this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
+      this.customer$ = this._customersService.customer$;
+      this.customer$.subscribe((data)=>{
+        console.log(data);
+      });
 
-
-        // Get the employee by id
-        this._customerService.getCustomerById(this.routeID)
-        // .subscribe((customer) => {
-        //     this.customers = customer
-        // });
       }
 
 
@@ -74,11 +80,36 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    openUpdateDialog(): void
+    openUpdateDialog(event): void
     {
+      this.isEdit = true;
     //Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent,{
-         data:{id: this.routeID}
+        const dialogRef = this._matDialog.open(AddCustomer,{
+         data:{
+
+          customerData: {
+            isEdit: this.isEdit,
+                id: event.id,
+                company_name: event.company_name,
+                customer_name: event.customer_name,
+                main_contact: event.main_contact,
+                position: event.position,
+                phone_number: event.phone_number,
+                state: event.state,
+                country: event.country,
+                email: event.email,
+                customer_type:event.customer_type,
+                status: event.status,
+                address: event.address,
+                billing_address: event.billing_address,
+                fax:event.fax,
+                city:event.city,
+                zip_code: event.zip_code,
+                website: event.website,
+                linkedin: event.linkedin,
+        }
+
+        }
         });
 
 
@@ -92,6 +123,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
     {
         this._router.navigate(["/apps/customers/"])
     }
+
 
 
 
