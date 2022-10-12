@@ -43,6 +43,9 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     isLoadingCustomerContacts$: Observable<boolean>;
     exportCustomerContacts$: Observable<CustomerContacts>;
 
+    customerDestination$: Observable<any>;
+    customerCrops$: Observable<any>;
+
     isEdit: boolean = false;
     pageSize = 10;
     currentPage = 0;
@@ -60,7 +63,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    selectedIndex: string = 'Contact Data';
+    selectedIndex: string = 'Farm Data';
 
     /**
      * Constructor
@@ -95,12 +98,20 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         this.isLoadingCustomerContacts$ =
             this._customerService.isLoadingCustomerContacts$;
         this.isLoadingCustomerContact$ =
-            this._customerService.isLoadingCustomerContact$;
+        this._customerService.isLoadingCustomerContact$;
         this.customerContacts$ = this._customerService.customerContacts$;
-
         console.log('Customer Contact', this.customerContacts$);
 
         this.customerContact$ = this._customerService.customerContact$;
+
+        // Customer Destination
+        this.customerDestination$ = this._customerService.customerDestination$;
+        console.log('Customer Destination', this.customerDestination$);
+
+        // // Customer Crops
+        // this.customerCrops$ = this._customerService.customerCrops$;
+        // console.log('Customer Crops', this.customerCrops$);
+
         // this.search = this.searchform.valueChanges
         //     .pipe(debounceTime(500))
         //     .subscribe((data) => {
@@ -117,6 +128,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
     initApis(id: string) {
         this._customerService.getCustomerContact(id);
+        this._customerService.getCustomerDestination(id);
+        this._customerService.getCustomerCrops(id);
     }
 
     // // Get the employee by id

@@ -47,6 +47,7 @@ import { AddCustomerContact } from './navigation/customer-information/add/add.co
 import { GeneralInfoComponent } from './general-info/general-info.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 @NgModule({
     declarations: [
@@ -98,7 +99,8 @@ RouterModule.forChild(customersRoutes),
         MatDialogModule,
         MatTabsModule,
         MatGridListModule,
-        MatExpansionModule
+        MatExpansionModule,
+        FuseDrawerModule,
 
     ]
 })

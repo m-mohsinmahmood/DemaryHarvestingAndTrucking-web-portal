@@ -38,7 +38,9 @@
             <button type="submit" class="order-first sm:order-last bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'"
+            [class.spinner]="isLoadingDestination$ | async" [disabled]="form.invalid || ((isLoadingDestination$) | async)"
+            (click)="onSubmit()">
                 Save
             </button>
         </div>

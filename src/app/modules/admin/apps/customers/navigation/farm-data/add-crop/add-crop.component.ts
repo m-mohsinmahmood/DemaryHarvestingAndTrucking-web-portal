@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CustomersService } from '../../../customers.service';
 
 interface Calender {
     value: string;
@@ -28,7 +31,9 @@ export class AddCropComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         public matDialogRef: MatDialogRef<AddCropComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        public _customerService: CustomersService,
+
     ) {}
 
     ngOnInit(): void {
@@ -47,8 +52,34 @@ export class AddCropComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.warn('Your order has been submitted', this.form.value);
-        this.form.reset();
+        // console.warn('Your order has been submitted', this.form.value);
+        // this.form.reset();
+        console.log('Mat-Data',this.data);
+        // const a ={
+        //     id: 'ea384f4a-10d5-4042-927b-8b2edf2be3ab',
+        //     customer_id: this.data?.farmdata?.customer_id,
+        //     farm_id: this.data?.farmdata?.farmId,
+        //     name: this.form.value.name,
+        //     calendar_year: '2022/10/10',
+        // };
+        const b ={
+            customer_id: this.data.customer_id,
+            farm_id: '7485bb10-f0d4-4535-acf1-8f70445d967c',
+            crop_id: '2aed9f4a-37ca-45c4-80d1-0c069a6b6fd6',
+            calendar_year: '2020/10/10',
+        };
+        // console.log('Payload Data:',a);
+        console.log('Payload Data:',b);
+
+        if (this.data?.farmdata && this.data?.isEdit) {
+
+            // this.updateDestination(a);
+        } else {
+            this.createCrop(b);
+        }
+    }
+    createCrop(data){
+       this._customerService.createCustomerCrops(data);
     }
 
     saveAndClose(): void {
