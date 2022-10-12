@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -109,6 +110,31 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerContact$: Observable<CustomerContacts | null> =
         this.customerContact.asObservable();
+
+        // API for Destination
+        private customerDestination: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerDestination$: Observable<any[] | null> =
+        this.customerDestination.asObservable();
+
+        // API for Crops
+        private customerCrops: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerCrops$: Observable<any[] | null> =
+        this.customerCrops.asObservable();
+
+        // Loding for destination
+        is_loading_destination: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly is_loading_destination$: Observable<boolean> =
+        this.is_loading_destination.asObservable();
+
+        // Loding for crops
+        is_loading_crops: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+       readonly is_loading_crops$: Observable<boolean> =
+        this.is_loading_crops.asObservable();
+
 
     //#endregion
 
@@ -880,4 +906,63 @@ export class CustomersService {
                 })
             );
     }
+
+    // createDestination(data: any) {
+    //     this._httpClient
+    //         .post(`api-1/crop`, data)
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.closeDialog.next(true);
+    //                 this.is_loading_crop.next(false);
+    //                 //show notification based on message returned from the api
+    //                 this._alertSerice.showAlert({
+    //                     type: 'success',
+    //                     shake: false,
+    //                     slideRight: true,
+    //                     title: 'Create Crop',
+    //                     message: res.message,
+    //                     time: 5000,
+    //                 });
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //                 this.closeDialog.next(false);
+    //             },
+    //             () => {
+    //                 this.getCrops();
+    //             }
+    //         );
+    // }
+
+    // updateDestination(cropData: any, paginatioData: any) {
+    //     this._httpClient
+    //         .put(`api-1/crop`, cropData)
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.is_loading_crop.next(false);
+    //                 this.closeDialog.next(true);
+    //                 this._alertSerice.showAlert({
+    //                     type: 'success',
+    //                     shake: false,
+    //                     slideRight: true,
+    //                     title: 'Update Crop',
+    //                     message: res.message,
+    //                     time: 5000,
+    //                 });
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //                 this.closeDialog.next(false);
+    //             },
+    //             () => {
+    //                 this.getCrops(
+    //                     paginatioData.page,
+    //                     paginatioData.limit,
+    //                     paginatioData.search
+    //                 );
+    //             }
+    //         );
+    // }
 }

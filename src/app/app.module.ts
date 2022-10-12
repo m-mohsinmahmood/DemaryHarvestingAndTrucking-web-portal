@@ -14,6 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from '../app/interceptors/interceptor';
+import {MatNativeDateModule} from '@angular/material/core';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -41,6 +42,7 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
+        MatNativeDateModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },

@@ -16,14 +16,15 @@
             <mat-label>Crop Name </mat-label>
             <input matInput formControlName="cropName" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Calender Year</mat-label>
-            <mat-select formControlName="calenderYear" name="calender">
-                <mat-option *ngFor="let calender of calenderYear" [value]="calender.value">
-                    {{ calender.viewValue }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Year</mat-label>
+            <input matInput [matDatepicker]="dp" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
+              panelClass="example-month-picker">
+            </mat-datepicker>
+          </mat-form-field>
 
 
     </form>
@@ -34,7 +35,9 @@
             <button type="submit" class="order-first sm:order-last bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()"
+            [class.spinner]="isLoadingCrops$ | async" [disabled]="form.invalid || ((isLoadingCrops$) | async)"
+            >
                 Save
             </button>
         </div>

@@ -153,6 +153,9 @@ export class CropService {
     }
 
     updateCrop(cropData: any, paginatioData: any) {
+        console.log('1',cropData);
+        console.log('2',paginatioData);
+
         this._httpClient
             .put(`api-1/crop`, cropData)
             .pipe(take(1))
