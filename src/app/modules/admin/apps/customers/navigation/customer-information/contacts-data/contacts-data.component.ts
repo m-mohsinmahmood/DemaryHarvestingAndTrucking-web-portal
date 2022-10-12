@@ -37,6 +37,7 @@ export class ContactsDataComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
+    imageURL: string;
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
@@ -48,13 +49,13 @@ export class ContactsDataComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.initForm();
         this._customerService.closeDialog$.subscribe((res) => {
             if (res) {
                 this.matDialogRef.close();
                 this._customerService.closeDialog.next(false);
             }
         });
-        this.initForm();
     }
 
     initForm(): void {
@@ -116,6 +117,19 @@ export class ContactsDataComponent implements OnInit {
             this.form.value,
             this.data.paginationData
         );
+    }
+
+    showPreview(event) {
+        const file = (event.target as HTMLInputElement).files[0];
+        // this.form.patchValue({
+        //     avatar: file,
+        // });
+        // File Preview
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.imageURL = reader.result as string;
+        };
+        reader.readAsDataURL(file);
     }
 
     backHandler() {

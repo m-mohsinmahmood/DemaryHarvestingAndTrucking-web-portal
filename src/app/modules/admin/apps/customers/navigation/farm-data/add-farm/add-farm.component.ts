@@ -60,6 +60,7 @@ export class AddFarmComponent implements OnInit {
     selectedValue: string;
     form: FormGroup;
     calendar_year;
+    isEdit: boolean;
 
     calenderYear: Calender[] = [
         { value: '22', viewValue: '2022' },
@@ -78,6 +79,7 @@ export class AddFarmComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+    this.isEdit = this.data.isEdit;
         if (this.data.isEdit) {
             this.calendar_year = new FormControl(this.data.calendar_year);
         } else {
@@ -144,5 +146,12 @@ export class AddFarmComponent implements OnInit {
 
     discard(): void {
         this.matDialogRef.close();
+    }
+    enableEditButton() {
+        this.isEdit = false;
+    }
+
+    disableEditButton() {
+        this.isEdit = true;
     }
 }

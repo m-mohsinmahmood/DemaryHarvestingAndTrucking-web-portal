@@ -114,10 +114,9 @@ export class AddCustomerContact implements OnInit {
 
     showPreview(event) {
         const file = (event.target as HTMLInputElement).files[0];
-        this.form.patchValue({
-            avatar: file,
-        });
-        this.form.get('avatar').updateValueAndValidity();
+        // this.form.patchValue({
+        //     avatar: file,
+        // });
         // File Preview
         const reader = new FileReader();
         reader.onload = () => {

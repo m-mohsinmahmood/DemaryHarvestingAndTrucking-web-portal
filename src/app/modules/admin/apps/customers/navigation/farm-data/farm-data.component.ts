@@ -63,7 +63,8 @@ export class FarmDataComponent implements OnInit {
         const dialogRef = this._matDialog.open(AddFarmComponent,{
             data: {
                 customerFarms: this.customerFarms,
-                id: this.customerId
+                id: this.customerId,
+                isEdit: false
             }
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -74,7 +75,7 @@ export class FarmDataComponent implements OnInit {
         const dialogRef = this._matDialog.open(AddFarmComponent, {
             data: {
                 customerFarms: this.customerFarms,
-                isEdit: 'true',
+                isEdit: true,
                 customer_id: this.customerId,
                 field_name: event.field_name,
                 field_id: event.field_id,
