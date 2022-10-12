@@ -59,10 +59,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     @Input() customersContact: any;
 
     search: Subscription;
-    customerContacts$: Observable<CustomerContacts[]>;
-    isLoadingCustomerContact$: Observable<boolean>;
-    isLoadingCustomerContacts$: Observable<boolean>;
-    exportCustomerContacts$: Observable<CustomerContacts>;
 
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),

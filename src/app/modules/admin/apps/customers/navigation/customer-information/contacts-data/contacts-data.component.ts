@@ -33,7 +33,7 @@ export class ContactsDataComponent implements OnInit {
     @Input() isContactData: boolean = true;
     @Output() toggleCustomerContacts: EventEmitter<any> =
         new EventEmitter<any>();
-    isEdit: boolean = true;
+    isEdit: boolean = false;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
