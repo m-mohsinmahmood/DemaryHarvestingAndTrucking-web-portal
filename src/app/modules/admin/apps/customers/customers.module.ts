@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
@@ -110,6 +111,7 @@ import { AddRealFarmComponent } from './navigation/farm-data/add-real-farm/add-f
         MatNativeDateModule,
         MatMomentDateModule,
         MatAutocompleteModule,
+        MatProgressSpinnerModule,
         FuseDrawerModule,
     ],
 
