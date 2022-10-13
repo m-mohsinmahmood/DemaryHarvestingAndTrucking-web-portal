@@ -45,7 +45,6 @@
                 <mat-autocomplete
                     #farms="matAutocomplete"
                     [displayWith]="displayFarmForAutoComplete"
-                    (optionSelected)="farmSelect($event.option.value)"
                 >
                     <div *ngIf="allFarms | withLoading | async as allFarms">
                         <ng-template [ngIf]="allFarms.value">
@@ -73,7 +72,7 @@
                             </mat-option>
                         </ng-template>
 
-                        <ng-template [ngIf]="allFarms?.value?.length == 0">
+                        <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
                             <mat-option disabled> No Farm found </mat-option>
                         </ng-template>
                     </div>
