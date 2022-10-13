@@ -57,6 +57,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     isLoadingCustomerFarms$: Observable<boolean>;
     exportustomerFarms$: Observable<CustomerFarm>;
 
+    customer$: Observable<any>;
     customerDestination$: Observable<any>;
     customerCrops$: Observable<any>;
 
@@ -105,11 +106,17 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
+        this.customer$ = this._customerService.customer$;
         this.initApis(this.routeID);
         this.initCustomerContactObservables();
         this.initCustomerFieldObservables();
         this.initCustomerFarmObservables();
         this.initCustomerDestinationObservables();
+
+        const infoState = (localStorage.getItem("state"));
+        if(infoState){
+            this.selectedIndex = 'Customer General Information';
+        }
     }
 
     initCustomerContactObservables() {
@@ -142,6 +149,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     }
 
     initApis(id: string) {
+        this._customerService.getCustomerById(id);
         this._customerService.getCustomerContact(id);
         this._customerService.getCustomerField(id);
         this._customerService.getCustomerFarm(id);

@@ -1,26 +1,67 @@
-:host {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.tab .mat-tab-group .mat-tab-body-content {
+    padding: 0px !important;
 }
-// mat-form-field {
-//     width: 100%;
-//   }
 
-// .checkbox {
-//     margin-left: 2rem;
-// }
-// ::ng-deep .mat-form-field-wrapper
-// {
-//     padding-bottom: 0px !important;
-// }
+.tab .mat-tab-group .mat-tab-labels {
+    padding: 12px !important;
+}
 
+.sub-nav-component {
+    width: 100%;
+    height: 78vh;
+}
 
-// @screen sm {
-//     .checkbox-commercial-trucking {
-//         margin-left: 0rem;
-//     }
-// }
-// .checkbox-commercial-trucking {
-//     margin-left: 2rem;
-// }
+.sub-sidenav-content {
+    height: 78vh;
+    width: 100%;
+    overflow-x: clip;
+}
+
+.sub-sidenav {
+    padding: 5px;
+    border-right: none !important;
+    max-width: 270px;
+}
+
+.opacity-8 {
+    opacity: 80%;
+}
+
+.opacity-9 {
+    opacity: 90%;
+}
+
+.subnav-menu-icon {
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 50%;
+    transition: 0.3s;
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.subnav-menu-icon:hover {
+    background-color: #eaedf1;
+}
+
+.crops-grid,
+.farms-grid {
+    grid-template-columns: 18% 18% 18% 18% 18%;
+    @screen sm {
+        grid-template-columns: 18% 18% 18% 18% 18%;
+    }
+    @screen md {
+        grid-template-columns: 18% 18% 18% 18% 18%;
+    }
+    @screen lg {
+        grid-template-columns: 18% 18% 18% 18% 18%;
+    }
+}
+
+mat-grid-tile {
+    background: lightblue;
+}
+
+ ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    padding: 0px !important;
+}

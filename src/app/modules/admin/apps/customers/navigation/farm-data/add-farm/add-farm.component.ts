@@ -19,6 +19,7 @@ import {
 } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
+import { debounceTime, distinctUntilChanged, Observable, Subject, Subscription } from 'rxjs';
 
 const moment = _rollupMoment || _moment;
 
@@ -110,6 +111,12 @@ export class AddFarmComponent implements OnInit {
                 calendar_year: this.data.calendar_year,
             });
         }
+
+        this.farmSearchSubscription = this.farm_search$
+            .pipe(debounceTime(500), distinctUntilChanged())
+            .subscribe((value: string) => {
+                this.allFarms = this._customersService.getCustomerFarmsAll("b2e8e34a-1fa5-46c8-a0b9-5ecfa40e6769", value);
+            });
     }
 
     chosenYearHandler(normalizedYear: Moment, dp: any) {
@@ -154,4 +161,37 @@ export class AddFarmComponent implements OnInit {
     disableEditButton() {
         this.isEdit = true;
     }
+
+    //Auto Complete//
+    //Client//
+    allFarms: Observable<any>;
+    allFarmsSubscription: Subscription;
+    farm_search$ = new Subject();
+    farmSearchSubscription: Subscription;
+
+    // Client Auto Complete Functions //
+    clientClick() {
+        // let value = this.contactForm.controls['clientId'].value;
+        
+        // if(value !=undefined && value != '' && typeof value == 'object') {
+        //     value.name = this.handleApostrophe(value.name);
+        //     this.allFarms = this._.getAllClients(value.name);
+        // } else {
+            // value = this.handleApostrophe(value);
+            // this.allFarms = this._clientService.getAllClients(value);
+        // }
+    }
+
+    farmSelect(client: any) {
+        // this.allFarmsSubscription = this.allFarms.subscribe((res) => {
+        //     this.contactForm.controls["licenseId"].setValue(res.filter((x) => x.uuid == client.uuid)[0].licenseId);
+        // });
+    }
+
+    displayFarmForAutoComplete(farm: any) {
+        return farm ? `${farm.name}` : undefined;
+    }
+    // Client Auto Complete Functions //
+    //Client//
+    //Auto Complete//
 }

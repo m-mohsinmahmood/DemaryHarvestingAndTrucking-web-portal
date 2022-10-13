@@ -1,13 +1,13 @@
 .customer-grid {
     grid-template-columns: 50% 20% 20%;
     @screen sm {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 5% 5% 5% 5%;
+        grid-template-columns: 10% 10% 8% 10% 10% 10% 10% 8% 5%;
     }
     @screen md {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 5% 5% 5% 5%;
+        grid-template-columns: 10% 10% 8% 10% 10% 8% 10% 8% 5% 5%;
     }
     @screen lg {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 5% 5% 5% 5%;
+        grid-template-columns: 10% 10% 8% 10% 5% 8% 10% 8% 5% 5% 5%;
     }
 }
 
@@ -17,4 +17,9 @@
 
 .greenActiveIcon {
     color: #16a34a;
+}
+
+.mat-sort-header-content
+{
+    text-align: left !important;
 }

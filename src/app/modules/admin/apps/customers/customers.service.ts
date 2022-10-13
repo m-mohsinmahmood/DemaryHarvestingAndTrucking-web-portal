@@ -595,6 +595,20 @@ export class CustomersService {
             );
     }
 
+    getCustomerFarmsAll(
+        customerId: string,
+        search: string = ''): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('page', 0);
+        params = params.set('limit', 1000);
+        params = params.set('search', search);
+        params = params.set('sort', 'name');
+        params = params.set('order', 'asc');
+        return this._httpClient.get<any>(`api-1/customer-farm?customerId=${customerId}`, {
+            params
+        });
+    }
+
     getCustomerFarmById(id: string) {
         this._httpClient
             .get(`api-1/customer-farm?id=${id}`)

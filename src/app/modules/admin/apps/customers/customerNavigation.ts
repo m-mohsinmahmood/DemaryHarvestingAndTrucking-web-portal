@@ -1,5 +1,10 @@
 export const customerNavigation = [
     {
+        id: 0,
+        title: 'Customer General Information',
+        icon: 'heroicons_outline:user-circle',
+    },
+    {
         id: 1,
         title: 'Contact Data',
         icon: 'heroicons_outline:identification',
