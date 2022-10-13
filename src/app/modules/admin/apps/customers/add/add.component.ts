@@ -105,6 +105,8 @@ export class AddCustomer implements OnInit {
     onSubmit(): void {
         this._customersService.isLoadingCustomer.next(true);
         if (this.data && this.data.customerData.isEdit) {
+            console.log("this.form.value",this.form.value)
+            this.form.value["customer_type"] = this.form.value["customer_type"].join(", ");
             this.updateCustomer(this.form.value);
         } else {
             this.createCustomer(this.form.value);
