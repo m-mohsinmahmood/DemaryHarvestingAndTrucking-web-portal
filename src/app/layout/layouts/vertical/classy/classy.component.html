@@ -2,13 +2,7 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <!-- Navigation -->
-<fuse-vertical-navigation
-    class="dark bg-gray-900 print:hidden"
-    [mode]="isScreenSmall ? 'over' : 'side'"
-    [name]="'mainNavigation'"
-    [navigation]="navigation.default"
-    [opened]="!isScreenSmall"
->
+<fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center w-full p-4 pl-6">
@@ -25,27 +19,14 @@
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
             <div class="relative w-24 h-24">
-                <img
-                    class="w-full h-full rounded-full"
-                    *ngIf="user.avatar"
-                    [src]="user.avatar"
-                    alt="User avatar"
-                />
-                <mat-icon
-                    class="icon-size-24"
-                    *ngIf="!user.avatar"
-                    [svgIcon]="'heroicons_solid:user-circle'"
-                ></mat-icon>
+                <img class="w-full h-full rounded-full" *ngIf="user.avatar" [src]="user.avatar" alt="User avatar" />
+                <mat-icon class="icon-size-24" *ngIf="!user.avatar" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
             </div>
             <div class="flex flex-col items-center justify-center w-full mt-6">
-                <div
-                    class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium"
-                >
+                <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
                     {{ user.name }}
                 </div>
-                <div
-                    class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary"
-                >
+                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
                     {{ user.email }}
                 </div>
             </div>
@@ -56,9 +37,7 @@
 <!-- Wrapper -->
 <div class="flex flex-col flex-auto w-full min-w-0">
     <!-- Header -->
-    <div
-        class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-0 shadow dark:shadow-none border-b border-gray-300 bg-card dark:bg-transparent print:hidden"
-    >
+    <div class="relative flex flex-0 items-center w-full h-16 px-4  z-0 shadow dark:shadow-none border-b border-gray-300 bg-card dark:bg-transparent print:hidden">
         <!-- Navigation toggle button -->
         <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
@@ -99,12 +78,7 @@
     <div class="flex z-999 absolute justify-end items-end w-full h-full">
         <div class="static pointer-events-auto box-border z-999 flex flex-col justify-end max-w-full max-h-full">
             <div [@shake]="alertInfo.shake" [@slideInRight]="alertInfo.slideInRight">
-                <fuse-alert
-                    [type]="alertInfo.type"
-                    [appearance]="'border'"
-                    [dismissed]="false"
-                    class="mb-2 mr-2 shadow-2xl"
-                >
+                <fuse-alert [type]="alertInfo.type" [appearance]="'border'" [dismissed]="false" class="mb-2 mr-2 shadow-2xl">
                     <span fuseAlertTitle>{{alertInfo.title}}</span>
                     <span>{{alertInfo.message}}</span>
                 </fuse-alert>

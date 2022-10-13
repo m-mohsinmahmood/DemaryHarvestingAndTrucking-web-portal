@@ -129,7 +129,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
-            width: '1200px',
             data: { customerId: this.routeID },
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -189,7 +188,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     toggleContactsDetails(customerContact: string): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
-            width: '1200px',
             data: {
                 customerContact,
                 paginationData: {
