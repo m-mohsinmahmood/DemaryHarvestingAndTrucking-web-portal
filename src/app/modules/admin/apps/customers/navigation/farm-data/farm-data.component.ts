@@ -32,8 +32,11 @@ export class FarmDataComponent implements OnInit {
 
     isEdit: boolean = false;
     pageSize = 10;
+    pageSize2 = 5;
     currentPage = 0;
+    currentPage2 = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
+    pageSizeOptions2: number[] = [5, 25, 50, 100];
     searchResult: string;
     page: number;
     limit: number;
@@ -41,6 +44,9 @@ export class FarmDataComponent implements OnInit {
     isLoading: any;
     customerCrops$: Observable<any>;
     customerCrop: any;
+
+    // summary observables
+    summaryfarms$: Observable<any>;
 
     constructor(
         private _matDialog: MatDialog,
@@ -83,10 +89,11 @@ export class FarmDataComponent implements OnInit {
             });
 
         this.customerCrops$ = this._customersService.customerCrops$;
-        // this.customerCrops$.subscribe((m) => {
-        //     console.log('---', m);
-        //     this.customerCrop = m;
-        // });
+
+        // calling summary observables
+        this.summaryfarms$ = this._customersService.customerSummaryFarms$;
+        console.log('Summary Farms:',this.summaryfarms$);
+
     }
 
     openAddFarmDialog(): void {
@@ -159,9 +166,6 @@ export class FarmDataComponent implements OnInit {
         });
     }
 
-
-
-
     openAddCropDialog(): void {
         this.isEdit = false;
         const dialogRef = this._matDialog.open(AddCropComponent,{
@@ -187,7 +191,6 @@ export class FarmDataComponent implements OnInit {
             console.log('Compose dialog was closed!');
         });
     }
-
 
     openAddDestinationDialog(): void {
         const dialogRef = this._matDialog.open(AddDestinationComponent,{
@@ -268,5 +271,7 @@ export class FarmDataComponent implements OnInit {
             '',
             this.searchResult
         );
+        // for sumary
+        this._customersService.getCustomersummaryFarm(this.routeID,page, limit,'','', this.searchResult);
     }
 }

@@ -156,6 +156,11 @@ export class CustomersService {
     readonly customerFarms$: Observable<CustomerFarm[] | null> =
         this.customerFarms.asObservable();
 
+    private customerSummaryFarms: BehaviorSubject<CustomerFarm[] | null> =
+    new BehaviorSubject(null);
+    readonly customerSummaryFarms$: Observable<CustomerFarm[] | null> =
+    this.customerSummaryFarms.asObservable();
+
     private customerFarm: BehaviorSubject<CustomerFarm | null> =
         new BehaviorSubject(null);
     readonly customerFarm$: Observable<CustomerFarm | null> =
@@ -472,6 +477,36 @@ export class CustomersService {
                 (res: any) => {
                     this.isLoadingCustomerFarms.next(true);
                     this.customerFarms.next(res);
+                    this.isLoadingCustomerFarms.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    getCustomersummaryFarm(
+        customerId: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-farm?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarms.next(true);
+                    this.customerSummaryFarms.next(res);
                     this.isLoadingCustomerFarms.next(false);
                 },
                 (err) => {
@@ -873,7 +908,7 @@ export class CustomersService {
             );
     }
     //#endregion
-    
+
     getItems(folderId: string | null = null): Observable<Item[]> {
         return this._httpClient
             .get<Documents>('api/apps/customers/details', {

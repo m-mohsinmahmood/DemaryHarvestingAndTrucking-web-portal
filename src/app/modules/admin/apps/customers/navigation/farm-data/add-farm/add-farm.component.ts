@@ -172,7 +172,7 @@ export class AddFarmComponent implements OnInit {
     // Client Auto Complete Functions //
     clientClick() {
         // let value = this.contactForm.controls['clientId'].value;
-        
+
         // if(value !=undefined && value != '' && typeof value == 'object') {
         //     value.name = this.handleApostrophe(value.name);
         //     this.allFarms = this._.getAllClients(value.name);
