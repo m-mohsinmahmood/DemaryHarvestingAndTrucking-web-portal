@@ -119,11 +119,6 @@ export class GeneralInfoComponent implements OnInit, OnDestroy
       });
     }
 
-    backHandler(): void
-    {
-        this._router.navigate(["/apps/customers/"])
-    }
-
 
 
 

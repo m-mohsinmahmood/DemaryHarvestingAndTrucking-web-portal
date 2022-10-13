@@ -329,10 +329,8 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomers(
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
+                    this.getCustomerById(
+                        customerData.id
                     );
                 }
             );
