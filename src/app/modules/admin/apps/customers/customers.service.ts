@@ -337,9 +337,7 @@ export class CustomersService {
     }
 
     //#endregion
-
     //#region Customer Contact API
-
     getCustomerContact(
         id: string,
         page: number = 1,
@@ -448,120 +446,7 @@ export class CustomersService {
     }
 
     //#endregion
-
-    //#region Customer Farm Data Field API
-
-    getCustomerField(
-        customerId: string,
-        page: number = 1,
-        limit: number = 10,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingCustomerFields.next(true);
-                    this.customerFields.next(res);
-                    this.isLoadingCustomerFields.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-
-    getCustomerFieldById(id: string) {
-        this._httpClient
-            .get(`api-1/customer-field?id=${id}`)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingCustomerField.next(true);
-                    this.customerField.next(res.crops);
-                    this.isLoadingCustomerField.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-
-    createCustomerField(data: any) {
-        this._httpClient
-            .post(`api-1/customer-field`, data)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingCustomerField.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Create Customer Field',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getCustomerField(data.customer_id);
-                }
-            );
-    }
-
-    updateCustomerField(customerFieldData: any, paginatioData: any) {
-        this._httpClient
-            .put(`api-1/customer-field`, customerFieldData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingCustomerField.next(false);
-                    this.closeDialog.next(true);
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Update Customer Field',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getCustomerField(
-                        customerFieldData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
-                    );
-                }
-            );
-    }
-
-    //#endregion
-
     //#region Customer Farm Data Farm API
-
     getCustomerFarm(
         customerId: string,
         page: number = 1,
@@ -684,10 +569,212 @@ export class CustomersService {
     }
 
     //#endregion
+    //#region Customer Farm Data Field API
+    getCustomerField(
+        customerId: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFields.next(true);
+                    this.customerFields.next(res);
+                    this.isLoadingCustomerFields.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
 
-    //#region Destination and crops
+    getCustomerFieldById(id: string) {
+        this._httpClient
+            .get(`api-1/customer-field?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerField.next(true);
+                    this.customerField.next(res.crops);
+                    this.isLoadingCustomerField.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
 
-    //Destinations functions
+    createCustomerField(data: any) {
+        this._httpClient
+            .post(`api-1/customer-field`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerField.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Field',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerField(data.customer_id);
+                }
+            );
+    }
+
+    updateCustomerField(customerFieldData: any, paginatioData: any) {
+        this._httpClient
+            .put(`api-1/customer-field`, customerFieldData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerField.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Field',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerField(
+                        customerFieldData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        paginatioData.search
+                    );
+                }
+            );
+    }
+
+    //#endregion
+    //#region Customer Farm Data Crop API
+    getCustomerCrops(
+        id: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-crop?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_crops.next(true);
+                    this.customerCrops.next(res);
+                    this.is_loading_crops.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    createCustomerCrops(data: any) {
+        this._httpClient
+            .post(`api-1/customer-crop`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.is_loading_crops.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Crop',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(data.customer_id);
+                }
+            );
+    }
+
+    updateCustomerCrops(customerCropsData: any, paginatioData: any) {
+        console.log('Edited Crops data:', customerCropsData);
+        console.log('Pagination data:', paginatioData);
+        this._httpClient
+            .put(`api-1/customer-destination`, customerCropsData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_crops.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Customer Destination',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(
+                        customerCropsData.customer_id,
+                        paginatioData.page,
+                        paginatioData.limit,
+                        '',
+                        '',
+                        paginatioData.search
+                    );
+                }
+            );
+    }
+    //#endregion
+    //#region Customer Farm Data Destination API
     getCustomerDestination(
         id: string,
         page: number = 1,
@@ -783,104 +870,8 @@ export class CustomersService {
                 }
             );
     }
-
-    // Crop functions
-
-    getCustomerCrops(
-        id: string,
-        page: number = 1,
-        limit: number = 10,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-crop?customerId=${id}`, {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.is_loading_crops.next(true);
-                    this.customerCrops.next(res);
-                    this.is_loading_crops.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-
-    createCustomerCrops(data: any) {
-        this._httpClient
-            .post(`api-1/customer-crop`, data)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.is_loading_crops.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Create Customer Crop',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getCustomerCrops(data.customer_id);
-                }
-            );
-    }
-
-    updateCustomerCrops(customerCropsData: any, paginatioData: any) {
-        console.log('Edited Crops data:', customerCropsData);
-        console.log('Pagination data:', paginatioData);
-        this._httpClient
-            .put(`api-1/customer-destination`, customerCropsData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.is_loading_crops.next(false);
-                    this.closeDialog.next(true);
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Update Customer Destination',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getCustomerCrops(
-                        customerCropsData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        '',
-                        '',
-                        paginatioData.search
-                    );
-                }
-            );
-    }
-
+    //#endregion
+    
     getItems(folderId: string | null = null): Observable<Item[]> {
         return this._httpClient
             .get<Documents>('api/apps/customers/details', {

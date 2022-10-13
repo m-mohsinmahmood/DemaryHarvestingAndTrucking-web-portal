@@ -33,9 +33,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { AddFarmsComponent } from './details/add-farms/add-farms.component';
-import { AddCropsComponent } from './details/add-crops/add-crops.component';
-import { HarvestInfoComponent } from './details/harvest-info/harvest-info.component';
 import { RateDataComponent } from './navigation/rate-data/rate-data.component';
 import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
@@ -62,9 +59,6 @@ import { AddRealFarmComponent } from './navigation/farm-data/add-real-farm/add-f
         AddCustomer,
         CustomerDetailsComponent,
         UpdateComponent,
-        AddFarmsComponent,
-        AddCropsComponent,
-        HarvestInfoComponent,
         RateDataComponent,
         InvoiceComponent,
         JobStatusComponent,
