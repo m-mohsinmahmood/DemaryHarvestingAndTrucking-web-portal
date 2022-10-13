@@ -4,7 +4,7 @@
         grid-template-columns: 10% 10% 15% 15% 15% 20% 10%;
     }
     @screen md {
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
+        grid-template-columns: 12% 12% 12% 12% 12% 12% 5%;
     }
     @screen lg {
         grid-template-columns: 10% 10% 15% 15% 15% 20% 10%;
@@ -17,4 +17,9 @@
 
 .greenActiveIcon {
     color: #16a34a;
+}
+
+.mat-sort-header-content
+{
+    text-align: left !important;
 }

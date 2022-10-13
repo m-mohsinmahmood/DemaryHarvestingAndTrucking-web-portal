@@ -37,7 +37,7 @@
                             <div mat-sort-header="company_name" class="sm:block">First Name</div>
                             <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
                             <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
-                            <div mat-sort-header="position" class="hidden sm:block">Position</div>
+                            <div mat-sort-header="position" class="hidden md:block">Position</div>
                             <div mat-sort-header="office_number" class="hidden sm:block">Office Number</div>
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
                             <div class="sm:block">Actions</div>
@@ -62,22 +62,22 @@
                                     </div>
 
                                     <!-- Last Name -->
-                                    <div class="hidden sm:block items-left">
+                                    <div class="hidden sm:block items-left break-words">
                                         <div class="min-w-4">{{customerContact.cell_number}}</div>
                                     </div>
 
                                     <!-- Position -->
-                                    <div class="hidden sm:block items-center">
+                                    <div class="hidden md:block items-center">
                                         <div class="min-w-4">{{customerContact.position}}</div>
                                     </div>
 
                                     <!-- Phone Number -->
-                                    <div class="hidden sm:block items-left">
+                                    <div class="hidden sm:block items-left break-words">
                                         <div class="min-w-4">{{customerContact.office_number}}</div>
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="hidden sm:block items-center">
+                                    <div class="hidden sm:block items-center break-words">
                                         <div class="min-w-4">{{customerContact.email}}</div>
                                     </div>
 
