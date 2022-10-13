@@ -57,7 +57,7 @@
                             <div mat-sort-header="company_name">Company Name</div>
                             <div mat-sort-header="main_contact" class="hidden sm:block">Main Contact</div>
                             <div mat-sort-header="position" class="hidden lg:block">Position</div>
-                            <div mat-sort-header="phone_number" class="hidden sm:block">Phone Number</div>
+                            <div mat-sort-header="phone_number" class="hidden md:block">Phone Number</div>
                             <div mat-sort-header="state" class="hidden lg:block">State</div>
                             <div mat-sort-header="country" class="hidden sm:block">Country</div>
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
@@ -72,7 +72,7 @@
                                     let customer of customers.customers;
                                     trackBy: trackByFn
                                 ">
-                                <div class="customer-grid grid items-center gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
+                                <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
                                     <!-- Image -->
                                     <!-- <div>
                                         <img *ngIf="customer.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{customer.avatar}}" alt="">
@@ -80,12 +80,12 @@
                                     </div> -->
 
                                     <!-- Company Name -->
-                                    <div class="truncate">
+                                    <div class="truncate break-words">
                                         {{ customer.company_name }}
                                     </div>
 
                                     <!-- Main Contact -->
-                                    <div class="hidden sm:block items-left">
+                                    <div class="hidden sm:block items-left break-words">
                                         <div class="min-w-4">
                                             {{ customer.main_contact }}
                                         </div>
@@ -99,7 +99,7 @@
                                     </div>
 
                                     <!-- Phone No -->
-                                    <div class="hidden sm:block items-left">
+                                    <div class="hidden md:block items-left break-words">
                                         <div class="min-w-4">
                                             {{ customer.phone_number }}
                                         </div>
@@ -119,14 +119,14 @@
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="hidden sm:block items-center">
+                                    <div class="hidden sm:block items-center break-words">
                                         <div class="min-w-4">
                                             {{ customer.email }}
                                         </div>
                                     </div>
 
                                     <!-- Customer Type -->
-                                    <div class="hidden sm:block items-center">
+                                    <div class="hidden sm:block items-center break-words">
                                         {{ customer.customer_type }}
                                     </div>
 

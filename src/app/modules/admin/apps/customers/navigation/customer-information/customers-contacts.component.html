@@ -45,7 +45,7 @@
                         <!-- Rows -->
                         <ng-container *ngIf="this.customersContact.customer_contacts">
                             <ng-container *ngFor="let customerContact of this.customersContact.customer_contacts; trackBy: trackByFn">
-                                <div class="contact-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
+                                <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
                                     <!-- Image -->
                                     <!-- <div>
                                         <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">
