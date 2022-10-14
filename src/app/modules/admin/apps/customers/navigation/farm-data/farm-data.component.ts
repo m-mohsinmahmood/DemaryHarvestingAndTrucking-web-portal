@@ -28,7 +28,11 @@ export class FarmDataComponent implements OnInit {
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+
+
+
     search: Subscription;
+    searchDestination: Subscription;
 
     isEdit: boolean = false;
     pageSize = 10;
@@ -47,6 +51,8 @@ export class FarmDataComponent implements OnInit {
 
     // summary observables
     summaryfarms$: Observable<any>;
+    summaryfields$: Observable<any>;
+    summarydestinations$: Observable<any>;
 
     constructor(
         private _matDialog: MatDialog,
@@ -62,6 +68,7 @@ export class FarmDataComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+            // searching
                 this._customersService.getCustomerField(
                     this.routeID,
                     1,
@@ -86,13 +93,46 @@ export class FarmDataComponent implements OnInit {
                     '',
                     this.searchResult
                 );
+                this._customersService.getCustomerFarm(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomersummaryFarm(
+                    this.routeID,
+                    1,
+                    5,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomerSummaryDestination(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomerSummaryField(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
             });
 
         this.customerCrops$ = this._customersService.customerCrops$;
 
         // calling summary observables
         this.summaryfarms$ = this._customersService.customerSummaryFarms$;
-        console.log('Summary Farms:',this.summaryfarms$);
+        this.summaryfields$ =  this._customersService.customerSummaryFields$;
+        this.summarydestinations$ = this._customersService.customerSummaryDestination$;
 
     }
 
@@ -271,7 +311,10 @@ export class FarmDataComponent implements OnInit {
             '',
             this.searchResult
         );
-        // for sumary
+
+        // for sumary apis's
         this._customersService.getCustomersummaryFarm(this.routeID,page, limit,'','', this.searchResult);
+        this._customersService.getCustomerSummaryField(this.routeID,page, limit,'','', this.searchResult);
+        this._customersService.getCustomerSummaryDestination(this.routeID,page, limit,'','', this.searchResult);
     }
 }

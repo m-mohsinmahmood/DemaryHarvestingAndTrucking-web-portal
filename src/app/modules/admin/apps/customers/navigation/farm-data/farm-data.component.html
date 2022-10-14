@@ -29,10 +29,10 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <!-- <button mat-menu-item>
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -121,10 +121,10 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu1="matMenu">
-                        <button mat-menu-item>
+                        <!-- <button mat-menu-item>
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -228,10 +228,10 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu2="matMenu">
-                        <button mat-menu-item>
+                        <!-- <button mat-menu-item>
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -266,7 +266,7 @@
                                         <div class="hidden sm:block">
                                             Calender Year
                                         </div>
-                                        <div class="">Action</div>
+                                        <div class="">Actions</div>
                                     </div>
                                     <!-- Rows -->
                                  <ng-container   *ngIf="customerCrops$ | async as crops">
@@ -334,7 +334,7 @@
         </mat-tab>
 
         <!-- Destination -->
-        <mat-tab label="Destination" class="bg-blue-500">
+        <mat-tab label="Destination" class="">
             <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
@@ -364,10 +364,10 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu3="matMenu">
-                        <button mat-menu-item (click)="settingsDrawer.toggle()">
+                        <!-- <button mat-menu-item (click)="settingsDrawer.toggle()">
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -507,11 +507,105 @@
         </mat-tab>
 
         <!--Summary -->
-        <mat-tab label="Summary" class="summary-tab">
+        <mat-tab label="Summary" class="summary-tab flex flex-col">
+            <div class="mb-4">
+                <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
+                    <div>
+                        <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                         Farms
+                        </header>
+                    </div>
+                    <div class="mt-2 flex">
+                        <!-- Search -->
+                        <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                            <form [formGroup]="searchform">
+                                <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
+                            </form>
+                        </mat-form-field>
+                        <!-- Add product button -->
+                        <!-- <button mat-flat-button [color]="'primary'" (click)="openAddRealFarmDialog()">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:plus'"
+                            ></mat-icon>
+                            <span class="lg:ml-2">Add Farm</span>
+                        </button> -->
+                        <!-- Import/Export -->
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <!-- <button mat-menu-item>
+                                <mat-icon>filter</mat-icon>
+                                <span>Filters</span>
+                            </button> -->
+                            <button mat-menu-item>
+                                <mat-icon>upload</mat-icon>
+                                <span>Import</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Export</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Download Template</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="sm:p-0">
+                    <!-- Main -->
+                    <div class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="real-farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                                        <div mat-sort-header="farm_name">Farm Name</div>
+                                        <div>Actions</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container *ngIf="(this.summaryfarms$ | async)?.count > 0; else noFarms">
+                                        <ng-container  *ngIf="summaryfarms$ | async as summaryFarm">
+                                            <ng-container *ngFor="let data of summaryFarm.customer_farms">
+                                            <div class="real-farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate ">{{data.name}} </div>
+
+                                                <!-- Action -->
+                                                <!-- <div (click)="openEditRealFarmDialog(summaryFarm)">
+                                                    <mat-icon [svgIcon]=" 'heroicons_solid:pencil-square' "></mat-icon>
+                                                </div> -->
+                                            </div>
+                                        </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <mat-paginator class=" border-b sm:border-t sm:border-b-0  bg-gray-50 dark:bg-transparent"
+                                [ngClass]="{ 'pointer-events-none': isLoading }"
+                                [length]="(summaryfarms$ | async)?.count"
+                                [pageIndex]="currentPage"
+                                [pageSize]="pageSize2"
+                                [pageSizeOptions]="pageSizeOptions2"
+                                (page)="pageChanged($event)"
+                                [showFirstLastButtons]="true"></mat-paginator>
+                            </ng-container>
+                            <ng-template #noFarms>
+                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center ">
+                                    There are no Farms!
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         <div class="mb-4">
             <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
-                     Farmss
+                     Fields
                     </header>
                 </div>
                 <div class="mt-2 flex">
@@ -523,112 +617,21 @@
                         </form>
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button mat-flat-button [color]="'primary'" (click)="openAddRealFarmDialog()">
+                    <!-- <button mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
                         <mat-icon
                             [svgIcon]="'heroicons_outline:plus'"
                         ></mat-icon>
-                        <span class="lg:ml-2">Add Farm</span>
-                    </button>
+                        <span class="lg:ml-2">Add Field</span>
+                    </button> -->
                     <!-- Import/Export -->
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <button mat-icon-button [matMenuTriggerFor]="menu1" aria-label="Example icon-button with a menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                    <mat-menu #menu1="matMenu">
+                        <!-- <button mat-menu-item>
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>upload</mat-icon>
-                            <span>Import</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>download</mat-icon>
-                            <span>Export</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>download</mat-icon>
-                            <span>Download Template</span>
-                        </button>
-                    </mat-menu>
-                </div>
-            </div>
-            <div class="sm:p-0">
-                <!-- Main -->
-                <div class="flex flex-auto overflow-hidden">
-                    <!-- Products list -->
-                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                        <ng-container>
-                            <div class="grid">
-                                <!-- Header -->
-                                <div class="real-farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
-                                    <div mat-sort-header="farm_name">Farm Name</div>
-                                    <div>Actions</div>
-                                </div>
-                                <!-- Rows -->
-                                <ng-container *ngIf="(this.summaryfarms$ | async)?.count > 0; else noCrops">
-                                    <ng-container  *ngIf="summaryfarms$ | async as summaryFarm">
-                                        <ng-container *ngFor="let data of summaryFarm.customer_farms">
-
-
-                                        <div class="real-farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                            <div class="truncate ">{{data.name}} </div>
-
-                                            <!-- Action -->
-                                            <!-- <div (click)="openEditRealFarmDialog(summaryFarm)">
-                                                <mat-icon [svgIcon]=" 'heroicons_solid:pencil-square' "></mat-icon>
-                                            </div> -->
-                                        </div>
-                                    </ng-container>
-                                    </ng-container>
-                                </ng-container>
-                            </div>
-                            <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
-                            [ngClass]="{ 'pointer-events-none': isLoading }"
-                            [length]="(summaryfarms$ | async)?.count"
-                            [pageIndex]="currentPage"
-                            [pageSize]="pageSize2"
-                            [pageSizeOptions]="pageSizeOptions2"
-                            (page)="pageChanged($event)"
-                            [showFirstLastButtons]="true"></mat-paginator>
-                        </ng-container>
-                        <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center ">
-                                There are no Farms!
-                            </div>
-                        </ng-template>
-                    </div>
-                </div>
-            </div>
-
-            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
-                <div>
-                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
-                     Crops
-                    </header>
-                </div>
-                <div class="mt-2 flex">
-                    <!-- Search -->
-                    <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search'" />
-                    </mat-form-field>
-                    <!-- Add product button -->
-                    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddCropDialog()">
-                        <mat-icon
-                            [svgIcon]="'heroicons_outline:plus'"
-                        ></mat-icon>
-                        <span class="lg:ml-2">Add Crops</span>
-                    </button>
-                    <!-- Import/Export -->
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
-                            <mat-icon>filter</mat-icon>
-                            <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -650,70 +653,69 @@
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                         <ng-container>
-                            <ng-container>
-                                <div class="grid">
-                                    <!-- Header -->
-                                    <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div class="">Name</div>
-                                        <div class="hidden sm:block">
-                                            Status
-                                        </div>
-                                        <div class="hidden sm:block">
-                                            Calender Year
-                                        </div>
-                                        <div class="">Action</div>
+                            <div class="grid">
+                                <!-- Header -->
+                                <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                                    <div mat-sort-header="farm_name">Farm Name</div>
+                                    <div mat-sort-header="field_name" class="hidden sm:block">
+                                        Fields
                                     </div>
-                                    <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngFor="
-                                                    let number of [
-                                                        0, 1, 2, 3, 4
-                                                    ]
-                                                " class="farm-data-crops grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Barley
-                                                </div>
-
-                                                <!-- Status -->
-                                                <div class="hidden sm:block items-center">
-                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                            'heroicons_solid:check-circle'
-                                                        "></mat-icon>
-                                                </div>
-                                                <!-- Contact -->
-                                                <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">
-                                                        2022
+                                    <div mat-sort-header="acres" class="hidden sm:block">Acres</div>
+                                    <div class="hidden sm:block">
+                                        Status
+                                    </div>
+                                    <div mat-sort-header="calendar_year" class="hidden sm:block">
+                                        Calender Year
+                                    </div>
+                                    <div>Actions</div>
+                                </div>
+                                <!-- Rows -->
+                                <ng-container *ngIf="(this.summaryfields$ | async)?.count > 0; else noFields">
+                                    <ng-container *ngIf="summaryfields$ | async as summaryfield">
+                                        <ng-container *ngFor="let customerField of summaryfield.customer_fields">
+                                            <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate ">{{customerField.farm_name}} </div>
+                                                <div class="hidden sm:block ">{{customerField.field_name}}</div>
+                                                <div class="hidden sm:block items-center ">
+                                                    <div class="min-w-4 ">
+                                                        {{customerField.acres}}
                                                     </div>
                                                 </div>
-                                                <!-- Active -->
-                                                <!-- Action -->
-                                                <div (click)="
-                                                        openEditCropDialog()
-                                                    ">
-                                                    <mat-icon [svgIcon]="
-                                                            'heroicons_solid:pencil-square'
-                                                        "></mat-icon>
+                                                <div class="hidden sm:block items-center ">
+                                                    <mat-icon class="greenActiveIcon" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
                                                 </div>
+                                                <div class="hidden sm:block items-center ">
+                                                    {{customerField.calendar_year | date: 'YYYY' }}
+                                                </div>
+                                                <!-- Action -->
+                                                <!-- <div (click)="openEditFarmDialog(customerField) ">
+                                                    <mat-icon [svgIcon]=" 'heroicons_solid:pencil-square' "></mat-icon>
+                                                </div> -->
                                             </div>
                                         </ng-container>
                                     </ng-container>
-                                </div>
-                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
-                            </ng-container>
+                                </ng-container>
+                            </div>
+                            <mat-paginator class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }"
+                            [length]="(summaryfields$ | async)?.count"
+                            [pageIndex]="currentPage"
+                            [pageSize]="pageSize2"
+                            [pageSizeOptions]="pageSizeOptions2"
+                          (page)="pageChanged($event)"
+                          [showFirstLastButtons]="true"></mat-paginator>
                         </ng-container>
-                        <ng-template #noProducts>
-                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no products!
+                        <ng-template #noFields>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center ">
+                                There are no Fields!
                             </div>
                         </ng-template>
                     </div>
                 </div>
             </div>
+         </div>
 
-            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-t border-gray-200">
+         <div class="mb-4">
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
                      Destination
@@ -723,24 +725,28 @@
                     <!-- Search -->
                     <mat-form-field class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-64">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search'" />
+                        <!-- <input matInput [formControl]="" [autocomplete]="'off'" [placeholder]="'Search Destination'" /> -->
+                        <form [formGroup]="searchform">
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
+                        </form>
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button class="mt-2 lg:mt-0 mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
+                    <!-- <button class="mt-2 lg:mt-0 mr-4" mat-flat-button [color]="'primary'" (click)="openAddDestinationDialog()">
                         <mat-icon
                             [svgIcon]="'heroicons_outline:plus'"
                         ></mat-icon>
                         <span class="lg:ml-2">Add Destination</span>
-                    </button>
+                    </button> -->
+
                     <!-- Import/Export -->
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <button mat-icon-button [matMenuTriggerFor]="menu3" aria-label="Example icon-button with a menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                    <mat-menu #menu3="matMenu">
+                        <!-- <button mat-menu-item (click)="settingsDrawer.toggle()">
                             <mat-icon>filter</mat-icon>
                             <span>Filters</span>
-                        </button>
+                        </button> -->
                         <button mat-menu-item>
                             <mat-icon>upload</mat-icon>
                             <span>Import</span>
@@ -761,71 +767,80 @@
                 <div class="flex flex-auto overflow-hidden ">
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                        <ng-container>
+                        <ng-container >
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div>Farm Name</div>
-                                        <div class="hidden sm:block">Name</div>
-                                        <div class="hidden sm:block">
+                                    <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData2($event)">
+                                        <div mat-sort-header="dst_farm_name">Farm Name</div>
+                                        <div class="hidden sm:block" mat-sort-header="name">Destination Name</div>
+                                        <div class="hidden sm:block" mat-sort-header="dst_status">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block">
+                                        <div class="hidden sm:block" mat-sort-header="dst_year">
                                             Calender Year
                                         </div>
                                         <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngFor="
-                                                    let number of [
-                                                        0, 1, 2, 3, 4
-                                                    ]
-                                                " class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    Barley
-                                                </div>
-                                                <div class="hidden sm:block">
-                                                    Arizona
-                                                </div>
-                                                <!-- Harvest Year -->
-                                                <div class="hidden sm:block items-center">
-                                                    <mat-icon class="redInActiveIcon" [svgIcon]="
-                                                            'heroicons_solid:check-circle'
-                                                        "></mat-icon>
-                                                </div>
-                                                <!-- Contact -->
-                                                <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">
-                                                        2022
+                                    <ng-container *ngIf="(this.summarydestinations$ | async)?.count > 0; else noDestinations">
+                                        <ng-container class=""*ngIf="summarydestinations$ | async as summarydestination">
+                                            <ng-container *ngFor="let data of summarydestination.customer_fields">
+                                                <div class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
+                                                    <div class="truncate">
+                                                        {{ data.farm_name }}
+                                                    </div>
+                                                    <div class="hidden sm:block">
+                                                        {{ data.destination_name }}
+                                                    </div>
+                                                    <!-- Harvest Year -->
+                                                    <div class="hidden sm:block items-center">
+                                                        <mat-icon class="redInActiveIcon" [svgIcon]="
+                                                                'heroicons_solid:check-circle'
+                                                            "></mat-icon>
+                                                    </div>
+                                                    <!-- Contact -->
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4 ml-2">
+                                                            {{data.calendar_year | date: 'YYYY' }}
+                                                        </div>
+                                                    </div>
+                                                    <!-- Active -->
+                                                    <div (click)="
+                                                            openEditDestinationDialog(
+                                                                data
+                                                            )
+                                                        ">
+                                                        <mat-icon [svgIcon]="
+                                                                'heroicons_solid:pencil-square'
+                                                            "></mat-icon>
                                                     </div>
                                                 </div>
-                                                <!-- Active -->
-                                                <div (click)="
-                                                        openEditDestinationDialog()
-                                                    ">
-                                                    <mat-icon [svgIcon]="
-                                                            'heroicons_solid:pencil-square'
-                                                        "></mat-icon>
-                                                </div>
-                                            </div>
+                                            </ng-container>
                                         </ng-container>
                                     </ng-container>
                                 </div>
-                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                                <mat-paginator class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                [length]="(summarydestinations$ | async)?.count"
+                                [pageIndex]="currentPage"
+                                [pageSize]="pageSize2"
+                                [pageSizeOptions]="pageSizeOptions2"
+                                    (page)="pageChanged($event)"
+                                    [showFirstLastButtons]="true"
+                                    ></mat-paginator>
                             </ng-container>
                         </ng-container>
-                        <ng-template #noProducts>
+                        <ng-template #noDestinations>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no farms!
+                                There are no Destinations!
                             </div>
                         </ng-template>
                     </div>
                 </div>
+
             </div>
+         </div>
+
         </mat-tab>
     </mat-tab-group>
 </div>

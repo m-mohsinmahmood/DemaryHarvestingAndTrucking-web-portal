@@ -159,7 +159,9 @@ export class AddFarmComponent implements OnInit {
     }
 
     disableEditButton() {
-        this.isEdit = true;
+        // this.isEdit = true;
+        this.matDialogRef.close();
+
     }
 
     //Auto Complete//

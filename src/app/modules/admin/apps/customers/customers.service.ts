@@ -117,6 +117,11 @@ export class CustomersService {
     readonly customerDestination$: Observable<any[] | null> =
         this.customerDestination.asObservable();
 
+        private customerSummaryDestination: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerSummaryDestination$: Observable<any[] | null> =
+        this.customerSummaryDestination.asObservable();
+
         // API for Crops
         private customerCrops: BehaviorSubject<any[] | null> =
         new BehaviorSubject(null);
@@ -143,6 +148,11 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerFields$: Observable<CustomerField[] | null> =
         this.customerFields.asObservable();
+
+        private customerSummaryFields: BehaviorSubject<CustomerField[] | null> =
+        new BehaviorSubject(null);
+    readonly customerSummaryFields$: Observable<CustomerField[] | null> =
+        this.customerSummaryFields.asObservable();
 
     private customerField: BehaviorSubject<CustomerField | null> =
         new BehaviorSubject(null);
@@ -487,7 +497,7 @@ export class CustomersService {
     getCustomersummaryFarm(
         customerId: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -630,6 +640,36 @@ export class CustomersService {
                 (res: any) => {
                     this.isLoadingCustomerFields.next(true);
                     this.customerFields.next(res);
+                    this.isLoadingCustomerFields.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    getCustomerSummaryField(
+        customerId: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFields.next(true);
+                    this.customerSummaryFields.next(res);
                     this.isLoadingCustomerFields.next(false);
                 },
                 (err) => {
@@ -816,6 +856,37 @@ export class CustomersService {
         id: string,
         page: number = 1,
         limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-destination?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_destination.next(true);
+                    this.customerDestination.next(res);
+                    this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getCustomerSummaryDestination(
+        id: string,
+        page: number = 1,
+        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
