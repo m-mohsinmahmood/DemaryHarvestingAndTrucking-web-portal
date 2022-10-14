@@ -117,6 +117,11 @@ export class CustomersService {
     readonly customerDestination$: Observable<any[] | null> =
         this.customerDestination.asObservable();
 
+        private customerSummaryDestination: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerSummaryDestination$: Observable<any[] | null> =
+        this.customerSummaryDestination.asObservable();
+
         // API for Crops
         private customerCrops: BehaviorSubject<any[] | null> =
         new BehaviorSubject(null);
@@ -144,6 +149,11 @@ export class CustomersService {
     readonly customerFields$: Observable<CustomerField[] | null> =
         this.customerFields.asObservable();
 
+        private customerSummaryFields: BehaviorSubject<CustomerField[] | null> =
+        new BehaviorSubject(null);
+    readonly customerSummaryFields$: Observable<CustomerField[] | null> =
+        this.customerSummaryFields.asObservable();
+
     private customerField: BehaviorSubject<CustomerField | null> =
         new BehaviorSubject(null);
     readonly customerField$: Observable<CustomerField | null> =
@@ -155,6 +165,11 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerFarms$: Observable<CustomerFarm[] | null> =
         this.customerFarms.asObservable();
+
+    private customerSummaryFarms: BehaviorSubject<CustomerFarm[] | null> =
+    new BehaviorSubject(null);
+    readonly customerSummaryFarms$: Observable<CustomerFarm[] | null> =
+    this.customerSummaryFarms.asObservable();
 
     private customerFarm: BehaviorSubject<CustomerFarm | null> =
         new BehaviorSubject(null);
@@ -477,6 +492,36 @@ export class CustomersService {
                 }
             );
     }
+    getCustomersummaryFarm(
+        customerId: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-farm?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarms.next(true);
+                    this.customerSummaryFarms.next(res);
+                    this.isLoadingCustomerFarms.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
 
     getCustomerFarmsAll(
         customerId: string,
@@ -593,6 +638,36 @@ export class CustomersService {
                 (res: any) => {
                     this.isLoadingCustomerFields.next(true);
                     this.customerFields.next(res);
+                    this.isLoadingCustomerFields.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    getCustomerSummaryField(
+        customerId: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFields.next(true);
+                    this.customerSummaryFields.next(res);
                     this.isLoadingCustomerFields.next(false);
                 },
                 (err) => {
@@ -805,6 +880,37 @@ export class CustomersService {
                 }
             );
     }
+
+    getCustomerSummaryDestination(
+        id: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-destination?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_destination.next(true);
+                    this.customerDestination.next(res);
+                    this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
     updateCustomerDestination(
         customerDestinationData: any,
         paginatioData: any
@@ -871,7 +977,7 @@ export class CustomersService {
             );
     }
     //#endregion
-    
+
     getItems(folderId: string | null = null): Observable<Item[]> {
         return this._httpClient
             .get<Documents>('api/apps/customers/details', {
@@ -884,62 +990,4 @@ export class CustomersService {
             );
     }
 
-    // createDestination(data: any) {
-    //     this._httpClient
-    //         .post(`api-1/crop`, data)
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.closeDialog.next(true);
-    //                 this.is_loading_crop.next(false);
-    //                 //show notification based on message returned from the api
-    //                 this._alertSerice.showAlert({
-    //                     type: 'success',
-    //                     shake: false,
-    //                     slideRight: true,
-    //                     title: 'Create Crop',
-    //                     message: res.message,
-    //                     time: 5000,
-    //                 });
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //                 this.closeDialog.next(false);
-    //             },
-    //             () => {
-    //                 this.getCrops();
-    //             }
-    //         );
-    // }
-
-    // updateDestination(cropData: any, paginatioData: any) {
-    //     this._httpClient
-    //         .put(`api-1/crop`, cropData)
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.is_loading_crop.next(false);
-    //                 this.closeDialog.next(true);
-    //                 this._alertSerice.showAlert({
-    //                     type: 'success',
-    //                     shake: false,
-    //                     slideRight: true,
-    //                     title: 'Update Crop',
-    //                     message: res.message,
-    //                     time: 5000,
-    //                 });
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //                 this.closeDialog.next(false);
-    //             },
-    //             () => {
-    //                 this.getCrops(
-    //                     paginatioData.page,
-    //                     paginatioData.limit,
-    //                     paginatioData.search
-    //                 );
-    //             }
-    //         );
-    // }
 }

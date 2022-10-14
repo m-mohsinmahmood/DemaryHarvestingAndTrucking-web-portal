@@ -81,7 +81,8 @@ export class AddRealFarmComponent implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: this.data.id,
-            name: [''],
+            name:  ['',[Validators.required]]
+
         });
         if (this.data && this.data.isEdit) {
             this.form.patchValue({

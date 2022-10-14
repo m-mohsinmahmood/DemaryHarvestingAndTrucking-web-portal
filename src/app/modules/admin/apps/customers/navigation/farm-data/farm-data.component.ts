@@ -28,12 +28,19 @@ export class FarmDataComponent implements OnInit {
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+
+
+
     search: Subscription;
+    searchDestination: Subscription;
 
     isEdit: boolean = false;
     pageSize = 10;
+    pageSize2 = 5;
     currentPage = 0;
+    currentPage2 = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
+    pageSizeOptions2: number[] = [5, 25, 50, 100];
     searchResult: string;
     page: number;
     limit: number;
@@ -41,6 +48,11 @@ export class FarmDataComponent implements OnInit {
     isLoading: any;
     customerCrops$: Observable<any>;
     customerCrop: any;
+
+    // summary observables
+    summaryfarms$: Observable<any>;
+    summaryfields$: Observable<any>;
+    summarydestinations$: Observable<any>;
 
     constructor(
         private _matDialog: MatDialog,
@@ -56,6 +68,7 @@ export class FarmDataComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+            // searching
                 this._customersService.getCustomerField(
                     this.routeID,
                     1,
@@ -80,13 +93,47 @@ export class FarmDataComponent implements OnInit {
                     '',
                     this.searchResult
                 );
+                this._customersService.getCustomerFarm(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomersummaryFarm(
+                    this.routeID,
+                    1,
+                    5,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomerSummaryDestination(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
+                this._customersService.getCustomerSummaryField(
+                    this.routeID,
+                    1,
+                    3,
+                    '',
+                    '',
+                    this.searchResult
+                );
             });
 
         this.customerCrops$ = this._customersService.customerCrops$;
-        // this.customerCrops$.subscribe((m) => {
-        //     console.log('---', m);
-        //     this.customerCrop = m;
-        // });
+
+        // calling summary observables
+        this.summaryfarms$ = this._customersService.customerSummaryFarms$;
+        this.summaryfields$ =  this._customersService.customerSummaryFields$;
+        this.summarydestinations$ = this._customersService.customerSummaryDestination$;
+
     }
 
     openAddFarmDialog(): void {
@@ -159,9 +206,6 @@ export class FarmDataComponent implements OnInit {
         });
     }
 
-
-
-
     openAddCropDialog(): void {
         this.isEdit = false;
         const dialogRef = this._matDialog.open(AddCropComponent,{
@@ -187,7 +231,6 @@ export class FarmDataComponent implements OnInit {
             console.log('Compose dialog was closed!');
         });
     }
-
 
     openAddDestinationDialog(): void {
         const dialogRef = this._matDialog.open(AddDestinationComponent,{
@@ -239,6 +282,17 @@ export class FarmDataComponent implements OnInit {
             this.searchResult
         );
     }
+    sortData2(sort: any) {
+        console.log('Sort:',sort);
+        this._customersService.getCustomerDestination(
+            this.routeID,
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
+    }
 
     pageChanged(event) {
         this.page = event.pageIndex + 1;
@@ -257,5 +311,10 @@ export class FarmDataComponent implements OnInit {
             '',
             this.searchResult
         );
+
+        // for sumary apis's
+        this._customersService.getCustomersummaryFarm(this.routeID,page, limit,'','', this.searchResult);
+        this._customersService.getCustomerSummaryField(this.routeID,page, limit,'','', this.searchResult);
+        this._customersService.getCustomerSummaryDestination(this.routeID,page, limit,'','', this.searchResult);
     }
 }

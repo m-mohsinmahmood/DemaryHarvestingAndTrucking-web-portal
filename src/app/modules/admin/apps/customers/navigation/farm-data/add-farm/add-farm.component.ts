@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -19,7 +19,14 @@ import {
 } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
-import { debounceTime, distinctUntilChanged, Observable, Subject, Subscription } from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    Observable,
+    Subject,
+    Subscription,
+    takeUntil,
+} from 'rxjs';
 
 const moment = _rollupMoment || _moment;
 
@@ -34,12 +41,6 @@ export const MY_FORMATS = {
         monthYearA11yLabel: 'YYYY',
     },
 };
-
-interface Calender {
-    value: string;
-    viewValue: string;
-}
-
 @Component({
     selector: 'app-add-farm',
     templateUrl: './add-farm.component.html',
@@ -53,24 +54,21 @@ interface Calender {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
-
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     ],
 })
-export class AddFarmComponent implements OnInit {
+export class AddFarmComponent implements OnInit, OnDestroy {
     selectedValue: string;
     form: FormGroup;
     calendar_year;
     isEdit: boolean;
 
-    calenderYear: Calender[] = [
-        { value: '22', viewValue: '2022' },
-        { value: '21', viewValue: '2021' },
-        { value: '20', viewValue: '2020' },
-        { value: '19', viewValue: '2019' },
-        { value: '18', viewValue: '2018' },
-        { value: '17', viewValue: '2017' },
-    ];
+    //#region Auto Complete Farms
+    allFarms: Observable<any>;
+    farm_search$ = new Subject();
+    //#endregion
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -80,18 +78,20 @@ export class AddFarmComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-    this.isEdit = this.data.isEdit;
+        this.isEdit = this.data.isEdit;
         if (this.data.isEdit) {
             this.calendar_year = new FormControl(this.data.calendar_year);
         } else {
             this.calendar_year = new FormControl(moment());
         }
-        this._customersService.closeDialog$.subscribe((res) => {
-            if (res) {
-                this.matDialogRef.close();
-                this._customersService.closeDialog.next(false);
-            }
-        });
+        this._customersService.closeDialog$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res) {
+                    this.matDialogRef.close();
+                    this._customersService.closeDialog.next(false);
+                }
+            });
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
@@ -104,7 +104,7 @@ export class AddFarmComponent implements OnInit {
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
                 id: this.data.field_id,
-                farm_id: this.data.farm_id,
+                farm_id: {id: this.data.farm_id, name: this.data.farm_name},
                 customer_id: this.data.customer_id,
                 name: this.data.field_name,
                 acres: this.data.acres,
@@ -112,10 +112,17 @@ export class AddFarmComponent implements OnInit {
             });
         }
 
-        this.farmSearchSubscription = this.farm_search$
-            .pipe(debounceTime(500), distinctUntilChanged())
+        this.farm_search$
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
             .subscribe((value: string) => {
-                this.allFarms = this._customersService.getCustomerFarmsAll("b2e8e34a-1fa5-46c8-a0b9-5ecfa40e6769", value);
+                this.allFarms = this._customersService.getCustomerFarmsAll(
+                    'b2e8e34a-1fa5-46c8-a0b9-5ecfa40e6769',
+                    value
+                );
             });
     }
 
@@ -129,6 +136,7 @@ export class AddFarmComponent implements OnInit {
 
     onSubmit(): void {
         this._customersService.isLoadingCustomerField.next(true);
+        this.form.value["farm_id"] = this.form.value["farm_id"]?.id;
         if (this.data && this.data.isEdit) {
             this.updateCustomerField(this.form.value);
         } else {
@@ -139,6 +147,7 @@ export class AddFarmComponent implements OnInit {
     createCustomerField(customerFieldData: any): void {
         this._customersService.createCustomerField(customerFieldData);
     }
+
     updateCustomerField(customerFieldData: any): void {
         this._customersService.updateCustomerField(
             customerFieldData,
@@ -159,39 +168,19 @@ export class AddFarmComponent implements OnInit {
     }
 
     disableEditButton() {
-        this.isEdit = true;
+        // this.isEdit = true;
+        this.matDialogRef.close();
+
     }
 
-    //Auto Complete//
-    //Client//
-    allFarms: Observable<any>;
-    allFarmsSubscription: Subscription;
-    farm_search$ = new Subject();
-    farmSearchSubscription: Subscription;
-
-    // Client Auto Complete Functions //
-    clientClick() {
-        // let value = this.contactForm.controls['clientId'].value;
-        
-        // if(value !=undefined && value != '' && typeof value == 'object') {
-        //     value.name = this.handleApostrophe(value.name);
-        //     this.allFarms = this._.getAllClients(value.name);
-        // } else {
-            // value = this.handleApostrophe(value);
-            // this.allFarms = this._clientService.getAllClients(value);
-        // }
-    }
-
-    farmSelect(client: any) {
-        // this.allFarmsSubscription = this.allFarms.subscribe((res) => {
-        //     this.contactForm.controls["licenseId"].setValue(res.filter((x) => x.uuid == client.uuid)[0].licenseId);
-        // });
-    }
-
+    //#region Auto Complete Farms Display Function
     displayFarmForAutoComplete(farm: any) {
         return farm ? `${farm.name}` : undefined;
     }
-    // Client Auto Complete Functions //
-    //Client//
-    //Auto Complete//
+    //#endregion
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
 }
