@@ -23,54 +23,35 @@
 
         <!-- MAT AUTOCOMPLETE -->
 
-            <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Farm Name</mat-label>
-                    <input
-                        [matAutocomplete]="farms"
-                        (keyup)="farm_search$.next($event.target.value)"
-                        matInput
-                        formControlName="farm_id"
-                        name="name"
-                        placeholder="Farm Name"
-                        required
-                    />
-                </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Farm Name</mat-label>
+            <input [matAutocomplete]="farms" (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id" name="name" placeholder="Farm Name" required />
+        </mat-form-field>
 
-                <mat-autocomplete
-                    #farms="matAutocomplete"
-                    [displayWith]="displayFarmForAutoComplete"
-                >
-                    <div *ngIf="allFarms | withLoading | async as allFarms">
-                        <ng-template [ngIf]="allFarms.value">
-                            <mat-option
-                                *ngFor="let farm of allFarms.value.customer_farms"
-                                [value]="farm"
-                            >
-                                {{ farm.name }}
-                            </mat-option>
-                        </ng-template>
-                        <ng-template [ngIf]="allFarms?.loading">
-                            <mat-option>
-                                <div
-                                    style="
+        <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+            <div *ngIf="allFarms | withLoading | async as allFarms">
+                <ng-template [ngIf]="allFarms.value">
+                    <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm">
+                        {{ farm.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.loading">
+                    <mat-option>
+                        <div style="
                                         display: flex;
                                         justify-content: center;
                                         text-align: center;
-                                    "
-                                >
-                                    <mat-spinner
-                                        class="text-primary"
-                                        diameter="25"
-                                    ></mat-spinner>
-                                </div>
-                            </mat-option>
-                        </ng-template>
+                                    ">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
 
-                        <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
-                            <mat-option disabled> No Farm found </mat-option>
-                        </ng-template>
-                    </div>
-                </mat-autocomplete>
+                <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                    <mat-option disabled> No Farm found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
         <!-- MAT AUTOCOMPLETE -->
 
         <mat-form-field appearance="outline">
@@ -82,7 +63,7 @@
             <input matInput formControlName="acres" />
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <input  matInput [matDatepicker]="dp" placeholder="Calender Year" [formControl]="calendar_year" />
+            <input matInput [matDatepicker]="dp" placeholder="Calender Year" [formControl]="calendar_year" />
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)" panelClass="example-month-picker">
             </mat-datepicker>
@@ -95,7 +76,7 @@
         </button>
         <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-            <span class="ml-2 mr-1">Save</span>
+            <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>
 </div>

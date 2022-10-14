@@ -1,7 +1,7 @@
 <div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
-        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Field': 'Add Field'}}</div>
+        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Farm': 'Add Farm'}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
@@ -25,12 +25,12 @@
     </form>
 
     <div class="flex justify-end mr-7 mt-0 mb-4">
-        <button  class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()" >
+        <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
         <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-            <span class="ml-2 mr-1">Save</span>
+            <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>
 </div>

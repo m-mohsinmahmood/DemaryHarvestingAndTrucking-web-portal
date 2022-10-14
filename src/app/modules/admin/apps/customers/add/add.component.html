@@ -3,9 +3,7 @@
 
     <!-- Title -->
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
-        <div *ngIf="!(this.data)" class="text-lg font-medium">Add New Customer</div>
-        <div *ngIf="(this.data)" class="text-lg font-medium">Update Customer</div>
-
+        <div class="text-lg font-medium">{{this.data? "Edit Customer" : "Add New Customer"}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
@@ -13,7 +11,7 @@
     </header>
     <!-- Image-->
     <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
-       
+
 
         <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -24,7 +22,7 @@
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
-                    <mat-label>Customer Type</mat-label>                  
+                    <mat-label>Customer Type</mat-label>
                     <mat-select formControlName="customer_type" multiple>
                         <mat-option value="CF">Custom Farming</mat-option>
                         <mat-option value="CT">Custom Trucking</mat-option>
@@ -141,7 +139,7 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="saveAndClose()">
                 Discard
             </button>
-            <button mat-flat-button color="primary" (click)="onSubmit()">Save</button>
+            <button mat-flat-button color="primary" (click)="onSubmit()">{{this.data? 'Update' : 'Save' }}</button>
         </div>
     </div>
 </div>

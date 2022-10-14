@@ -140,7 +140,7 @@
             <button *ngIf="!isEdit" type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="saveAndClose()">
                 Discard
             </button>
-            <button *ngIf="!isEdit" mat-flat-button color="primary" [class.spinner]="isLoadingCustomerContact$ | async" [disabled]="form.invalid || ((isLoadingCustomerContact$) | async)" (click)="onSubmit()">Save</button>
+            <button *ngIf="!isEdit" mat-flat-button color="primary" [class.spinner]="isLoadingCustomerContact$ | async" [disabled]="form.invalid || ((isLoadingCustomerContact$) | async)" (click)="onSubmit()">Update</button>
         </div>
     </div>
 </div>
