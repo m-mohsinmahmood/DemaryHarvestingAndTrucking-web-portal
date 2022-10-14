@@ -564,7 +564,7 @@
                                     <!-- Header -->
                                     <div class="real-farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                         <div mat-sort-header="farm_name">Farm Name</div>
-                                        <div>Actions</div>
+                                        <!-- <div>Actions</div> -->
                                     </div>
                                     <!-- Rows -->
                                     <ng-container *ngIf="(this.summaryfarms$ | async)?.count > 0; else noFarms">
@@ -667,7 +667,7 @@
                                     <div mat-sort-header="calendar_year" class="hidden sm:block">
                                         Calender Year
                                     </div>
-                                    <div>Actions</div>
+                                    <!-- <div>Actions</div> -->
                                 </div>
                                 <!-- Rows -->
                                 <ng-container *ngIf="(this.summaryfields$ | async)?.count > 0; else noFields">
@@ -780,7 +780,7 @@
                                         <div class="hidden sm:block" mat-sort-header="dst_year">
                                             Calender Year
                                         </div>
-                                        <div>Actions</div>
+                                        <!-- <div>Actions</div> -->
                                     </div>
                                     <!-- Rows -->
                                     <ng-container *ngIf="(this.summarydestinations$ | async)?.count > 0; else noDestinations">
