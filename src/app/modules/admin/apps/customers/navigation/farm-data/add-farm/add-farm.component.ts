@@ -63,6 +63,11 @@ export class AddFarmComponent implements OnInit, OnDestroy {
     calendar_year;
     isEdit: boolean;
 
+    //#region Auto Complete Farms
+    allFarms: Observable<any>;
+    farm_search$ = new Subject();
+    //#endregion
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
@@ -107,7 +112,7 @@ export class AddFarmComponent implements OnInit, OnDestroy {
             });
         }
 
-        this.farmSearchSubscription = this.farm_search$
+        this.farm_search$
             .pipe(
                 debounceTime(500),
                 distinctUntilChanged(),
@@ -163,24 +168,17 @@ export class AddFarmComponent implements OnInit, OnDestroy {
     }
 
     disableEditButton() {
-        this.isEdit = true;
+        // this.isEdit = true;
+        this.matDialogRef.close();
+
     }
 
-    //Auto Complete//
-    //Client//
-    allFarms: Observable<any>;
-    allFarmsSubscription: Subscription;
-    farm_search$ = new Subject();
-    farmSearchSubscription: Subscription;
-
-    // Client Auto Complete Functions //
-
+    //#region Auto Complete Farms Display Function
     displayFarmForAutoComplete(farm: any) {
         return farm ? `${farm.name}` : undefined;
     }
-    // Client Auto Complete Functions //
-    //Client//
-    //Auto Complete//
+    //#endregion
+
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();

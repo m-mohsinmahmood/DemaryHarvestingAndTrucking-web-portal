@@ -10,25 +10,25 @@
         </button>
     </div>
 
-    <div *ngIf="this.data.isEdit" class="flex justify-end mr-12 mt-4">
+    <!-- <div *ngIf="this.data.isEdit" class="flex justify-end mr-12 mt-4">
         <button *ngIf="isEdit" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
             <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
             <span class="ml-2 mr-1">Edit</span>
         </button>
-    </div>
+    </div> -->
     <!-- Compose form -->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-8 overflow-y-auto">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-6 overflow-y-auto">
         <mat-form-field appearance="outline">
             <mat-label>Farm Name</mat-label>
-            <input [readonly]="isEdit" matInput formControlName="name" />
+            <input matInput formControlName="name" />
         </mat-form-field>
     </form>
 
-    <div class="flex justify-end mr-14 mt-1 mb-4">
-        <button *ngIf="!isEdit" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
-            <span class="ml-2 mr-1">Cancel</span>
+    <div class="flex justify-end mr-7 mt-0 mb-4">
+        <button  class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()" >
+            <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button *ngIf="!isEdit" class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="ml-2 mr-1">Save</span>
         </button>
