@@ -247,11 +247,7 @@ export class CustomersListComponent implements OnInit {
     // ----------------------------------------------------------------------------------------------
 
     toggleGeneralInfo(customerId: string, state: string): void {
-
-        this._customersService.getCustomerById(customerId);
         this._router.navigateByUrl('apps/customers/details/' + customerId);
-        localStorage.setItem("state",state);
-        
     }
     /**
      * Close the details

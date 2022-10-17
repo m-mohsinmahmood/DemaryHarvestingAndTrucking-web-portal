@@ -81,7 +81,7 @@ export class AddDestinationComponent implements OnInit {
         // passing year value on page opening/rendering
         this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
 
-        this.isLoadingDestination$ = this._customerService.is_loading_destination$;
+        // this.isLoadingDestination$ = this._customerService.is_loading_destination$;
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$.subscribe((res) => {
             if (res) {

@@ -37,6 +37,7 @@ export class CustomersService {
     closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly closeDialog$: Observable<boolean> =
         this.closeDialog.asObservable();
+
     //#region Loaders Customers
     private isLoadingCustomers: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -48,42 +49,6 @@ export class CustomersService {
     );
     readonly isLoadingCustomer$: Observable<boolean> =
         this.isLoadingCustomer.asObservable();
-    //#endregion
-
-    //#region Loaders Customer Contacts
-    private isLoadingCustomerContacts: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerContacts$: Observable<boolean> =
-        this.isLoadingCustomerContacts.asObservable();
-
-    isLoadingCustomerContact: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerContact$: Observable<boolean> =
-        this.isLoadingCustomer.asObservable();
-    //#endregion
-
-    //#region Loaders Customer Field
-    private isLoadingCustomerFields: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerFields$: Observable<boolean> =
-        this.isLoadingCustomerFields.asObservable();
-
-    isLoadingCustomerField: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerField$: Observable<boolean> =
-        this.isLoadingCustomerField.asObservable();
-    //#
-
-    //#region Loaders Customer Farm
-    private isLoadingCustomerFarms: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerFarms$: Observable<boolean> =
-        this.isLoadingCustomerFarms.asObservable();
-
-    isLoadingCustomerFarm: BehaviorSubject<boolean> =
-        new BehaviorSubject<boolean>(false);
-    readonly isLoadingCustomerFarm$: Observable<boolean> =
-        this.isLoadingCustomerFarm.asObservable();
     //#endregion
 
     //#region Observables Customer
@@ -101,82 +66,131 @@ export class CustomersService {
 
     //#region Observables Customer Contact
 
-    private customerContacts: BehaviorSubject<CustomerContacts[] | null> =
+    // Data
+    private customerContactList: BehaviorSubject<CustomerContacts[] | null> =
         new BehaviorSubject(null);
-    readonly customerContacts$: Observable<CustomerContacts[] | null> =
-        this.customerContacts.asObservable();
+    readonly customerContactList$: Observable<CustomerContacts[] | null> =
+        this.customerContactList.asObservable();
 
     private customerContact: BehaviorSubject<CustomerContacts | null> =
         new BehaviorSubject(null);
     readonly customerContact$: Observable<CustomerContacts | null> =
         this.customerContact.asObservable();
 
-        // API for Destination
-        private customerDestination: BehaviorSubject<any[] | null> =
-        new BehaviorSubject(null);
-    readonly customerDestination$: Observable<any[] | null> =
-        this.customerDestination.asObservable();
-
-        private customerSummaryDestination: BehaviorSubject<any[] | null> =
-        new BehaviorSubject(null);
-    readonly customerSummaryDestination$: Observable<any[] | null> =
-        this.customerSummaryDestination.asObservable();
-
-        // API for Crops
-        private customerCrops: BehaviorSubject<any[] | null> =
-        new BehaviorSubject(null);
-    readonly customerCrops$: Observable<any[] | null> =
-        this.customerCrops.asObservable();
-
-        // Loding for destination
-        is_loading_destination: BehaviorSubject<boolean> =
+    // Loaders
+    private isLoadingCustomerContactList: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
-    readonly is_loading_destination$: Observable<boolean> =
-        this.is_loading_destination.asObservable();
+    readonly isLoadingCustomerContactList$: Observable<boolean> =
+        this.isLoadingCustomerContactList.asObservable();
 
-        // Loding for crops
-        is_loading_crops: BehaviorSubject<boolean> =
+    isLoadingCustomerContact: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
-       readonly is_loading_crops$: Observable<boolean> =
-        this.is_loading_crops.asObservable();
-
+    readonly isLoadingCustomerContact$: Observable<boolean> =
+        this.isLoadingCustomer.asObservable();
 
     //#endregion
 
-    //#region Observables Customer Field
-    private customerFields: BehaviorSubject<CustomerField[] | null> =
+    //#region Observables Customer Farm
+    // Data
+    private customerFarmList: BehaviorSubject<CustomerFarm[] | null> =
         new BehaviorSubject(null);
-    readonly customerFields$: Observable<CustomerField[] | null> =
-        this.customerFields.asObservable();
-
-        private customerSummaryFields: BehaviorSubject<CustomerField[] | null> =
-        new BehaviorSubject(null);
-    readonly customerSummaryFields$: Observable<CustomerField[] | null> =
-        this.customerSummaryFields.asObservable();
-
-    private customerField: BehaviorSubject<CustomerField | null> =
-        new BehaviorSubject(null);
-    readonly customerField$: Observable<CustomerField | null> =
-        this.customerField.asObservable();
-    //#endregion
-
-    //#region Observables Customer Field
-    private customerFarms: BehaviorSubject<CustomerFarm[] | null> =
-        new BehaviorSubject(null);
-    readonly customerFarms$: Observable<CustomerFarm[] | null> =
-        this.customerFarms.asObservable();
-
-    private customerSummaryFarms: BehaviorSubject<CustomerFarm[] | null> =
-    new BehaviorSubject(null);
-    readonly customerSummaryFarms$: Observable<CustomerFarm[] | null> =
-    this.customerSummaryFarms.asObservable();
+    readonly customerFarmList$: Observable<CustomerFarm[] | null> =
+        this.customerFarmList.asObservable();
 
     private customerFarm: BehaviorSubject<CustomerFarm | null> =
         new BehaviorSubject(null);
     readonly customerFarm$: Observable<CustomerFarm | null> =
         this.customerFarm.asObservable();
+    // Loaders
+    private isLoadingCustomerFarmList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerFarmList$: Observable<boolean> =
+        this.isLoadingCustomerFarmList.asObservable();
+
+    isLoadingCustomerFarm: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomerFarm$: Observable<boolean> =
+        this.isLoadingCustomerFarm.asObservable();
     //#endregion
 
+    //#region Observables Customer Field
+    // Data
+    private customerFieldList: BehaviorSubject<CustomerField[] | null> =
+        new BehaviorSubject(null);
+    readonly customerFieldList$: Observable<CustomerField[] | null> =
+        this.customerFieldList.asObservable();
+
+    private customerField: BehaviorSubject<CustomerField | null> =
+        new BehaviorSubject(null);
+    readonly customerField$: Observable<CustomerField | null> =
+        this.customerField.asObservable();
+
+    // Loaders
+    private isLoadingCustomerFieldList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerFieldList$: Observable<boolean> =
+        this.isLoadingCustomerFieldList.asObservable();
+
+    isLoadingCustomerField: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerField$: Observable<boolean> =
+        this.isLoadingCustomerField.asObservable();
+    //#endregion
+
+    //#region Observables Customer Crop
+    // Data
+    private customerCropList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerCropList$: Observable<any[] | null> =
+        this.customerCropList.asObservable();
+
+    private customerCrop: BehaviorSubject<any[] | null> = new BehaviorSubject(
+        null
+    );
+    readonly customerCrop$: Observable<any[] | null> =
+        this.customerCrop.asObservable();
+
+    // Loaders
+    private isLoadingCustomerCropList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerCropList$: Observable<boolean> =
+        this.isLoadingCustomerCropList.asObservable();
+
+    isLoadingCustomerCrop: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerCrop$: Observable<boolean> =
+        this.isLoadingCustomerCrop.asObservable();
+    //#endregion
+
+    //#region Observables Customer Destination
+    // Data
+    private customerDestinationList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerDestinationList$: Observable<any[] | null> =
+        this.customerDestinationList.asObservable();
+
+    private customerDestination: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerDestination$: Observable<any[] | null> =
+        this.customerDestination.asObservable();
+
+    // Loaders
+    private isLoadingCustomerDestinationList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerDestinationList$: Observable<boolean> =
+        this.isLoadingCustomerDestinationList.asObservable();
+
+    isLoadingCustomerDestination: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomerDestination$: Observable<boolean> =
+        this.isLoadingCustomerDestination.asObservable();
+    //#endregion
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(
         null
     );
@@ -203,7 +217,6 @@ export class CustomersService {
     get data$(): Observable<any> {
         return this._data.asObservable();
     }
-
     handleError(error: HttpErrorResponse) {
         let errorMessage = 'Unknown error!';
         if (error.error instanceof ErrorEvent) {
@@ -344,9 +357,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerById(
-                        customerData.id
-                    );
+                    this.getCustomerById(customerData.id);
                 }
             );
     }
@@ -374,9 +385,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingCustomerContacts.next(true);
-                    this.customerContacts.next(res);
-                    this.isLoadingCustomerContacts.next(false);
+                    // this.isLoadingCustomerContactList.next(true);
+                    this.customerContactList.next(res);
+                    // this.isLoadingCustomerContactList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -483,9 +494,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingCustomerFarms.next(true);
-                    this.customerFarms.next(res);
-                    this.isLoadingCustomerFarms.next(false);
+                    this.isLoadingCustomerFarmList.next(true);
+                    this.customerFarmList.next(res);
+                    this.isLoadingCustomerFarmList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -513,9 +524,8 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingCustomerFarms.next(true);
-                    this.customerSummaryFarms.next(res);
-                    this.isLoadingCustomerFarms.next(false);
+                    this.isLoadingCustomerFarmList.next(true);
+                    this.isLoadingCustomerFarmList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -525,16 +535,20 @@ export class CustomersService {
 
     getCustomerFarmsAll(
         customerId: string,
-        search: string = ''): Observable<any> {
+        search: string = ''
+    ): Observable<any> {
         let params = new HttpParams();
         params = params.set('page', 0);
         params = params.set('limit', 1000);
         params = params.set('search', search);
         params = params.set('sort', 'name');
         params = params.set('order', 'asc');
-        return this._httpClient.get<any>(`api-1/customer-farm?customerId=${customerId}`, {
-            params
-        });
+        return this._httpClient.get<any>(
+            `api-1/customer-farm?customerId=${customerId}`,
+            {
+                params,
+            }
+        );
     }
 
     getCustomerFarmById(id: string) {
@@ -636,9 +650,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingCustomerFields.next(true);
-                    this.customerFields.next(res);
-                    this.isLoadingCustomerFields.next(false);
+                    this.isLoadingCustomerFieldList.next(true);
+                    this.customerFieldList.next(res);
+                    this.isLoadingCustomerFieldList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -666,9 +680,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingCustomerFields.next(true);
-                    this.customerSummaryFields.next(res);
-                    this.isLoadingCustomerFields.next(false);
+                    // this.isLoadingCustomerFields.next(true);
+                    // this.customerSummaryFields.next(res);
+                    // this.isLoadingCustomerFields.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -775,9 +789,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_crops.next(true);
-                    this.customerCrops.next(res);
-                    this.is_loading_crops.next(false);
+                    this.isLoadingCustomerCropList.next(true);
+                    this.customerCropList.next(res);
+                    this.isLoadingCustomerCropList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -792,7 +806,6 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
-                    this.is_loading_crops.next(false);
                     //show notification based on message returned from the api
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -821,7 +834,7 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_crops.next(false);
+                    this.isLoadingCustomerCropList.next(false);
                     this.closeDialog.next(true);
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -871,9 +884,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_destination.next(true);
-                    this.customerDestination.next(res);
-                    this.is_loading_destination.next(false);
+                    this.isLoadingCustomerDestinationList.next(true);
+                    this.customerDestinationList.next(res);
+                    this.isLoadingCustomerDestinationList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -902,15 +915,16 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_destination.next(true);
-                    this.customerDestination.next(res);
-                    this.is_loading_destination.next(false);
+                    // this.is_loading_destination.next(true);
+                    // this.customerDestination.next(res);
+                    // this.is_loading_destination.next(false);
                 },
                 (err) => {
                     this.handleError(err);
                 }
             );
     }
+
     updateCustomerDestination(
         customerDestinationData: any,
         paginatioData: any
@@ -922,7 +936,6 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_destination.next(false);
                     this.closeDialog.next(true);
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -956,7 +969,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
-                    this.is_loading_destination.next(false);
+                    this.isLoadingCustomerDestination.next(false);
                     //show notification based on message returned from the api
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -985,9 +998,8 @@ export class CustomersService {
             })
             .pipe(
                 tap((response: any) => {
-                    this._documents.next(response);
+                    // this._documents.next(response);
                 })
             );
     }
-
 }

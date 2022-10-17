@@ -1,11 +1,8 @@
-<div *ngIf="!isContactData" class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
 
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
-        <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-        </div>
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
         <!-- Title -->
         <div class="text-2xl font-extrabold tracking-tight">Contacts</div>
         <!-- Actions -->
@@ -26,87 +23,93 @@
     </div>
 
     <!-- Main -->
-    <div [ngClass]="(this.customersContact.customer_contacts.length > 0)?'flex flex-auto overflow-hidden':'flex flex-auto items-center overflow-hidden'">
-        <!-- Products list -->
-        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="this.customersContact.customer_contacts && this.customersContact.customer_contacts.length > 0; else noProducts">
+    <div class="sm:p-0">
+        <!-- Main -->
+        <div *ngIf="customerContactList$ | async as CustomerContactList" class="flex flex-auto overflow-hidden ">
+            <!-- Products list -->
+            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                 <ng-container>
-                    <div class="grid">
-                        <!-- Header -->
-                        <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="company_name" class="sm:block">First Name</div>
-                            <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
-                            <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
-                            <div mat-sort-header="position" class="hidden md:block">Position</div>
-                            <div mat-sort-header="office_number" class="hidden sm:block">Office Number</div>
-                            <div mat-sort-header="email" class="hidden sm:block">Email</div>
-                            <div class="sm:block">Actions</div>
-                        </div>
-                        <!-- Rows -->
-                        <ng-container *ngIf="this.customersContact.customer_contacts">
-                            <ng-container *ngFor="let customerContact of this.customersContact.customer_contacts; trackBy: trackByFn">
-                                <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(product.id)">
-                                    <!-- Image -->
-                                    <!-- <div>
-                                        <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">
-                                        <div *ngIf="product.avatar ==''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{product.name.charAt(0)}} </div>
-                                    </div> -->
-
-                                    <!-- First Name -->
-                                    <div class="truncate">
-                                        {{customerContact.first_name}}
+                    <ng-container>
+                        <div class="grid">
+                            <!-- Header -->
+                            <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                                <div mat-sort-header="fist_name" class="sm:block">First Name</div>
+                                <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
+                                <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
+                                <div mat-sort-header="position" class="hidden md:block">Position</div>
+                                <div mat-sort-header="office_number" class="hidden sm:block">Office Number</div>
+                                <div mat-sort-header="email" class="hidden sm:block">Email</div>
+                                <div class="sm:block">Actions</div>
+                            </div>
+                            <!-- Rows -->
+                            <ng-container *ngIf="CustomerContactList?.customer_contacts.length > 0">
+                                <ng-container *ngFor="let customerContact of CustomerContactList?.customer_contacts; trackBy: trackByFn">
+                                    <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(customerContact.id)">
+                                        <!-- Image -->
+                                        <!-- <div>
+                                            <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">
+                                            <div *ngIf="product.avatar ==''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{product.name.charAt(0)}} </div>
+                                        </div> -->
+    
+                                        <!-- First Name -->
+                                        <div class="truncate">
+                                            {{customerContact.first_name}}
+                                        </div>
+    
+                                        <div class="hidden sm:block truncate">
+                                            {{customerContact.last_name}}
+                                        </div>
+    
+                                        <!-- Last Name -->
+                                        <div class="hidden sm:block items-left break-words">
+                                            <div class="min-w-4">{{customerContact.cell_number}}</div>
+                                        </div>
+    
+                                        <!-- Position -->
+                                        <div class="hidden md:block items-center">
+                                            <div class="min-w-4">{{customerContact.position}}</div>
+                                        </div>
+    
+                                        <!-- Phone Number -->
+                                        <div class="hidden sm:block items-left break-words">
+                                            <div class="min-w-4">{{customerContact.office_number}}</div>
+                                        </div>
+    
+                                        <!-- Email -->
+                                        <div class="hidden sm:block items-center break-words">
+                                            <div class="min-w-4">{{customerContact.email}}</div>
+                                        </div>
+    
+                                        <!-- Details button -->
+                                        <div>
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)">
+                                                <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="'heroicons_solid:pencil-square'"
+                                                ></mat-icon>
+                                            </button>
+                                        </div>
                                     </div>
-
-                                    <div class="hidden sm:block truncate">
-                                        {{customerContact.last_name}}
-                                    </div>
-
-                                    <!-- Last Name -->
-                                    <div class="hidden sm:block items-left break-words">
-                                        <div class="min-w-4">{{customerContact.cell_number}}</div>
-                                    </div>
-
-                                    <!-- Position -->
-                                    <div class="hidden md:block items-center">
-                                        <div class="min-w-4">{{customerContact.position}}</div>
-                                    </div>
-
-                                    <!-- Phone Number -->
-                                    <div class="hidden sm:block items-left break-words">
-                                        <div class="min-w-4">{{customerContact.office_number}}</div>
-                                    </div>
-
-                                    <!-- Email -->
-                                    <div class="hidden sm:block items-center break-words">
-                                        <div class="min-w-4">{{customerContact.email}}</div>
-                                    </div>
-
-                                    <!-- Details button -->
-                                    <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)">
-                                            <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="'heroicons_solid:pencil-square'"
-                                            ></mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
+                                </ng-container>
                             </ng-container>
-                        </ng-container>
-                    </div>
-                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="this.customersContact.count" [pageIndex]="currentPage" [pageSize]="pageSize"
-                        [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                        </div>
+                        <mat-paginator
+                            *ngIf="customerContactList?.customer_contacts?.length > 0"
+                            class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                            [length]="customerContactList?.count" [pageIndex]="currentPage"
+                            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                            (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
-            <ng-template class="flex" #noProducts>
-                <div class="items-center justify-center p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">There are no Contacts!</div>
-            </ng-template>
-
+                <ng-template #noDestinations>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There are no Destinations!
+                    </div>
+                </ng-template>
+            </div>
         </div>
 
     </div>
-
-
 
 </div>
 

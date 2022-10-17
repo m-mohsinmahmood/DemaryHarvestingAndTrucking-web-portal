@@ -14,52 +14,19 @@ export const customersRoutes: Route[] = [
         children : [
             {
                 path     : '',
-                component: CustomersListComponent,
-                // resolve  : {
-                //     brands    : InventoryBrandsResolver,
-                //     categories: InventoryCategoriesResolver,
-                //     products  : InventoryProductsResolver,
-                //     tags      : InventoryTagsResolver,
-                //     vendors   : InventoryVendorsResolver,
-                //     data      : AnalyticsResolver,
-                // }
+                component: CustomersListComponent
             },
             {
                 path     : 'details/:Id',
-                component: CustomerDetailsComponent,
-                // resolve  : {
-                //     brands    : InventoryBrandsResolver,
-                //     categories: InventoryCategoriesResolver,
-                //     products  : InventoryProductsResolver,
-                //     tags      : InventoryTagsResolver,
-                //     vendors   : InventoryVendorsResolver,
-                //     data      : AnalyticsResolver,
-                //     items: DocumentItemsResolver,
-                // }
+                component: CustomerDetailsComponent
             },
             {
                 path     : 'general-information/:Id',
-                component: GeneralInfoComponent,
-                // resolve  : {
-                //     brands    : InventoryBrandsResolver,
-                //     categories: InventoryCategoriesResolver,
-                //     products  : InventoryProductsResolver,
-                //     tags      : InventoryTagsResolver,
-                //     vendors   : InventoryVendorsResolver,
-                //     data      : AnalyticsResolver,
-                // }
+                component: GeneralInfoComponent
             },
             {
                 path     : 'contacts-data/:Id',
-                component: ContactsDataComponent,
-                // resolve  : {
-                //     brands    : InventoryBrandsResolver,
-                //     categories: InventoryCategoriesResolver,
-                //     products  : InventoryProductsResolver,
-                //     tags      : InventoryTagsResolver,
-                //     vendors   : InventoryVendorsResolver,
-                //     data      : AnalyticsResolver,
-                // }
+                component: ContactsDataComponent
             },
 
         ]

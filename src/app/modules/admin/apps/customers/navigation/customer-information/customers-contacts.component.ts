@@ -56,14 +56,11 @@ import { AddCustomerContact } from './add/add.component';
     animations: fuseAnimations,
 })
 export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
-    @Input() customersContact: any;
-
     search: Subscription;
 
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
-
     isEdit: boolean = false;
     pageSize = 10;
     currentPage = 0;
@@ -72,7 +69,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     page: number;
     limit: number;
 
-    products$: Observable<InventoryProduct[]>;
     // customers: any;
     routeID;
     brands: InventoryBrand[];
@@ -88,7 +84,13 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     tagsEditMode: boolean = false;
     vendors: InventoryVendor[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-    isContactData: boolean = false;
+    // isContactData: boolean = false;
+
+    //#region Observables
+    customerContactList$: Observable<any>;
+    isLoadingCustomerContactList: Observable<boolean>;
+    customerList: any;
+    //#endregion
 
     /**
      * Constructor
@@ -101,20 +103,20 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         public activatedRoute: ActivatedRoute
     ) {}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
+    //#region Lifecycle Functions
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.initObservables();
+        this.initApi();
         this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
+                alert(1);
                 this.searchResult = data.search;
                 this._customersService.getCustomerContact(
                     this.routeID,
@@ -127,6 +129,23 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+    //#region Initialize Observables
+    initObservables() {
+        this.customerContactList$ = this._customersService.customerContactList$;
+        this.customerContactList$.subscribe((data) => {console.log(data.customer_contacts); this.customerList = data});
+    }
+    //#endregion
+    //#region Initialize APIs
+    initApi() {
+        this._customersService.getCustomerContact(this.routeID);
+    }
+    //#endregion
+
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
             data: { customerId: this.routeID },
@@ -134,20 +153,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
         });
-    }
-
-    /**
-     * After view init
-     */
-    ngAfterViewInit(): void {}
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -204,7 +209,8 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
 
     toggleCustomerContacts() {
-        this.isContactData = false;
+        alert(1);
+        // this.isContactData = false;
     }
     /**
      * Close the details

@@ -78,7 +78,7 @@ export class AddCropComponent implements OnInit {
     ngOnInit(): void {
 
 
-        this.isLoadingCrops$ = this._customerService.is_loading_crops$;
+        // this.isLoadingCrops$ = this._customerService.is_loading_crops$;
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$.subscribe((res) => {
             if (res) {

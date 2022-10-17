@@ -1,3 +1,5 @@
+import { routes } from './../../../ui/cards/cards.module';
+import { AfterViewInit } from '@angular/core';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/member-ordering */
 import {
@@ -21,7 +23,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersService } from '../customers.service';
-import { CustomerContacts, CustomerField, CustomerFarm } from '../customers.types';
 
 @Component({
     selector: 'customer-details',
@@ -30,33 +31,14 @@ import { CustomerContacts, CustomerField, CustomerFarm } from '../customers.type
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomerDetailsComponent implements OnInit, OnDestroy {
+export class CustomerDetailsComponent
+    implements OnInit, OnDestroy, AfterViewInit
+{
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    // Customer Contact Observables
-    customerContact$: Observable<CustomerContacts>;
-    isLoadingCustomerContact$: Observable<boolean>;
-    customerContacts$: Observable<CustomerContacts[]>;
-    isLoadingCustomerContacts$: Observable<boolean>;
-    exportCustomerContacts$: Observable<CustomerContacts>;
-
-    // Customer Fields Observables
-    customerField$: Observable<CustomerField>;
-    isLoadingCustomerField$: Observable<boolean>;
-    customerFields$: Observable<CustomerField[]>;
-    isLoadingCustomerFields$: Observable<boolean>;
-    exportustomerFields$: Observable<CustomerField>;
-
-    // Customer Farms Observables
-    customerFarm$: Observable<CustomerFarm>;
-    isLoadingCustomerFarm$: Observable<boolean>;
-    customerFarms$: Observable<CustomerFarm[]>;
-    isLoadingCustomerFarms$: Observable<boolean>;
-    exportustomerFarms$: Observable<CustomerFarm>;
-
+    // Customer Observables
     customer$: Observable<any>;
-    customerDestination$: Observable<any>;
-    customerCrops$: Observable<any>;
+    isLoadingCustomer$: Observable<any>;
 
     search: Subscription;
     isEdit: boolean = false;
@@ -76,7 +58,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    selectedIndex: string = 'Contact Data';
+    selectedIndex: string = 'Customer General Information';
 
     /**
      * Constructor
@@ -91,96 +73,56 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService
     ) {}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
+    //#region Life Cycle Functions
     ngOnInit(): void {
-        this.routes = this._customerService.navigationLabels;
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
-        this.customer$ = this._customerService.customer$;
+    }
+
+    ngAfterViewInit(): void {
         this.initApis(this.routeID);
-        this.initCustomerContactObservables();
-        this.initCustomerFieldObservables();
-        this.initCustomerFarmObservables();
-        this.initCustomerDestinationObservables();
-
-        const infoState = (localStorage.getItem("state"));
-        if(infoState){
-            this.selectedIndex = 'Customer General Information';
-        }
+        this.initObservables();
+        this.initSideNavigation();
     }
 
-    initCustomerContactObservables() {
-        this.isLoadingCustomerContacts$ =
-            this._customerService.isLoadingCustomerContacts$;
-        this.isLoadingCustomerContact$ =
-        this._customerService.isLoadingCustomerContact$;
-        this.customerContacts$ = this._customerService.customerContacts$;
-        this.customerContact$ = this._customerService.customerContact$;
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
     }
-    initCustomerFieldObservables() {
-        this.isLoadingCustomerFields$ =
-            this._customerService.isLoadingCustomerFields$;
-        this.isLoadingCustomerField$ =
-            this._customerService.isLoadingCustomerField$;
-        this.customerFields$ = this._customerService.customerFields$;
-        this.customerField$ = this._customerService.customerField$;
+    //#endregion
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.customer$ = this._customerService.customer$;
+        // Loader
+        this.isLoadingCustomer$ = this._customerService.isLoadingCustomer$;
     }
-    initCustomerFarmObservables() {
-        this.isLoadingCustomerFarms$ =
-            this._customerService.isLoadingCustomerFarms$;
-        this.isLoadingCustomerFarm$ =
-            this._customerService.isLoadingCustomerFarms$;
-        this.customerFarms$ = this._customerService.customerFarms$;
-        this.customerFarm$ = this._customerService.customerFarm$;
-    }
-
-    initCustomerDestinationObservables() {
-        this.customerDestination$ = this._customerService.customerDestination$;
-    }
-
+    //#endregion
+    //#region Initial APIs
     initApis(id: string) {
         this._customerService.getCustomerById(id);
-        this._customerService.getCustomerContact(id);
-        this._customerService.getCustomerField(id);
-        this._customerService.getCustomerFarm(id);
-        this._customerService.getCustomerDestination(id);
-        this._customerService.getCustomerCrops(id);
-
-        //summary api's
-        this._customerService.getCustomersummaryFarm(
-            id,
-            1,
-            5,
-            '',
-            '',
-            this.searchResult
-        );
-        this._customerService.getCustomerSummaryField(
-            id,
-            1,
-            5,
-            '',
-            '',
-            this.searchResult
-        );
-        this._customerService.getCustomerSummaryDestination(
-            id,
-            1,
-            5,
-            '',
-            '',
-            this.searchResult
-        );
-
+    }
+    //#endregion
+    //#region Initialize Side Navigation
+    initSideNavigation() {
+        this.routes = this._customerService.navigationLabels;
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                } else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
+            });
     }
 
+    //#endregion
+    
     // // Get the employee by id
     // this._customerService.getCustomerById(this.routeID)
     // // .subscribe((customer) => {
@@ -197,23 +139,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     // // });
 
     // Subscribe to media changes
-    // this._fuseMediaWatcherService.onMediaChange$
-    // .pipe(takeUntil(this._unsubscribeAll))
-    // .subscribe(({ matchingAliases }) => {
-
-    //   // Set the drawerMode and drawerOpened if the given breakpoint is active
-    //   if (matchingAliases.includes('lg')) {
-    //     this.drawerMode = 'side';
-    //     this.drawerOpened = true;
-    //   }
-    //   else {
-    //     this.drawerMode = 'over';
-    //     this.drawerOpened = false;
-    //   }
-
-    //   // Mark for check
-    //   this._changeDetectorRef.markForCheck();
-    // });
 
     // this._customerService.getItems2().subscribe((i) => {
     //     // console.log('All items', i.folders[0].folderId);
@@ -231,15 +156,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     // this._customerService.getItems2(a).subscribe((b) => {
     //     console.log('Filtered', b);
     // });
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
