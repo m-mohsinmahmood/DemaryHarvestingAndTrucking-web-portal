@@ -166,7 +166,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             });
 
         // search summary field
-        this.search = this.searchformfarm.valueChanges
+        this.search = this.searchformfield.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
@@ -181,7 +181,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             });
 
         // search summary crop
-        this.search = this.searchformfarm.valueChanges
+        this.search = this.searchformcrop.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
