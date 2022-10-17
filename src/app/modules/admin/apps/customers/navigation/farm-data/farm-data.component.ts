@@ -347,7 +347,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         const dialogRef = this._matDialog.open(AddFieldComponent, {
             data: {
                 // customerFarms: this.customerFarms,
-                id: this.routeID,
+                customer_id: this.routeID,
                 isEdit: false,
             },
         });
