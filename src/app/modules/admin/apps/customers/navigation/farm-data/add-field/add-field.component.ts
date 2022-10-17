@@ -122,7 +122,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             )
             .subscribe((value: string) => {
                 this.allFarms = this._customersService.getCustomerFarmsAll(
-                    'b2e8e34a-1fa5-46c8-a0b9-5ecfa40e6769',
+                    this.data.customer_id,
                     value
                 );
             });

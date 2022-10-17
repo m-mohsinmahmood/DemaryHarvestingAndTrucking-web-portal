@@ -82,7 +82,7 @@ export class AddCustomer implements OnInit {
                 billing_address     : customerData.billing_address,
                 city                : customerData.city,
                 zip_code            : customerData.zip_code,
-                company_position    : customerData.company_position,
+                position            : customerData.position,
                 website             : customerData.website,
                 linkedin            : customerData.linkedin,
             });
@@ -105,7 +105,7 @@ export class AddCustomer implements OnInit {
 
     onSubmit(): void {
         this._customersService.isLoadingCustomer.next(true);
-        if (this.data && this.data.customerData.isEdit) {
+        if (this.data && this.data.isEdit) {
             this.form.value["customer_type"] = this.form.value["customer_type"].join(", ");
             this.updateCustomer(this.form.value);
         } else {
