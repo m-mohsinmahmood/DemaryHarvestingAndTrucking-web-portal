@@ -58,7 +58,7 @@ export class CustomerDetailsComponent
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    selectedIndex: string = 'Customer General Information';
+    selectedIndex: string = 'Customer Detail';
 
     /**
      * Constructor

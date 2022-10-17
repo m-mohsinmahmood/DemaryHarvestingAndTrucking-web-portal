@@ -46,7 +46,7 @@ import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.co
 import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
 import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
-import { GeneralInfoComponent } from './general-info/general-info.component';
+import { CustomerDetail } from './navigation/customer-detail/customer-detail.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
@@ -72,7 +72,7 @@ import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.compo
         AddCropComponent,
         AddDestinationComponent,
         AddCustomerContact,
-        GeneralInfoComponent,
+        CustomerDetail,
         DocumentComponent,
         AddRateDataComponent,
         AddFarmComponent
