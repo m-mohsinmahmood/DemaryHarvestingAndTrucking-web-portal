@@ -22,6 +22,13 @@
             <mat-label>Farm Name</mat-label>
             <input matInput formControlName="name" />
         </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value=true>Active</mat-option>
+                <mat-option value=false>In Active</mat-option>
+            </mat-select>
+        </mat-form-field>
     </form>
 
     <div class="flex justify-end mr-7 mt-0 mb-4">

@@ -84,11 +84,13 @@ export class AddCropComponent implements OnInit {
         // Create the form
         this.form = this._formBuilder.group({
             cropName: ['', [Validators.required]],
+            status  : true,
             calendar_year: [],
         });
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
                 cropName: this.data.cropName,
+                status: this.data.status.toString(),
                 calendar_year: this.data.calenderYear,
             });
         }
@@ -116,7 +118,7 @@ export class AddCropComponent implements OnInit {
 
             this.updateCrop(payloadUpdate);
         } else {
-            // this.createCrop(a);
+            this.createCrop(this.form.value);
         }
     }
     createCrop(data){

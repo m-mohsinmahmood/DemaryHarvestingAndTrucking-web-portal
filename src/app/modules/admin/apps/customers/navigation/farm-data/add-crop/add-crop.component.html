@@ -18,6 +18,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value="true">Active</mat-option>
+                <mat-option value="false">In Active</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
             <mat-label>Year</mat-label>
             <input matInput [matDatepicker]="dp" placeholder="Calender Year" [formControl]="calendar_year">
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>

@@ -19,6 +19,7 @@ import {
 } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
+import { boolean } from 'joi';
 
 const moment = _rollupMoment || _moment;
 
@@ -78,7 +79,8 @@ export class AddFarmComponent implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: this.data.id,
-            name:  ['',[Validators.required]]
+            name:  ['',[Validators.required]],
+            status:true,
 
         });
         if (this.data && this.data.isEdit) {
@@ -86,6 +88,7 @@ export class AddFarmComponent implements OnInit {
                 id: this.customerFarmData.id,
                 name: this.customerFarmData.name,
                 customer_id: this.data.customer_id,
+                status: this.data.customerFarmData.status.toString(),
             });
         }
     }

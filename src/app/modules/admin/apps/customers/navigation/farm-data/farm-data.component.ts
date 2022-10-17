@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { AddFarmComponent } from './add-farm/add-farm.component';
+import { boolean } from 'joi';
 
 @Component({
     selector: 'app-farm-data',
@@ -322,6 +323,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 // customerFarms: this.customerFarms,
                 id: this.routeID,
                 isEdit: false,
+                status:true,
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -336,6 +338,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 customerFarmData: {
                     name: farm.name,
                     id: farm.id,
+                    status:farm.status,
                 }
             },
         });
@@ -349,6 +352,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 // customerFarms: this.customerFarms,
                 customer_id: this.routeID,
                 isEdit: false,
+                status:true
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -366,6 +370,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     farm_name: field.farm_name,
                     farm_id: field.farm_id,
                     acres: field.acres,
+                    status: field.status,
                     calendar_year: field.calendar_year,
                 }
             },
@@ -381,6 +386,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                status:true
             },
         });
         dialogRef.afterClosed().subscribe((result) => {

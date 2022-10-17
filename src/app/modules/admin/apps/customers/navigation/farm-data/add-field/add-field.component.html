@@ -59,6 +59,14 @@
             <input matInput formControlName="name" />
         </mat-form-field>
         <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value=true>Active</mat-option>
+                <mat-option value=false>In Active</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
             <mat-label>Acres</mat-label>
             <input matInput formControlName="acres" />
         </mat-form-field>

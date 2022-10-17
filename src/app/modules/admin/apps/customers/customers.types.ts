@@ -48,6 +48,7 @@ export interface CustomerField {
     field_name: string;
     acres: string;
     calendar_year: string;
+    status: boolean;
 }
 
 export interface CustomerFarm {

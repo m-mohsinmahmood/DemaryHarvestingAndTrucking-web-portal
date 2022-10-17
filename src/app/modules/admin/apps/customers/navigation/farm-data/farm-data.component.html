@@ -58,6 +58,9 @@
                                     <div mat-sort-header="name">
                                         Farm Name
                                     </div>
+                                    <div class="sm:block" mat-sort-header="status">
+                                        Status
+                                    </div>
                                     <div>Actions</div>
                                 </div>
                                 <!-- Rows -->
@@ -75,6 +78,19 @@
                                                 {{ customerFarm.name }}
                                             </div>
 
+                                            <div class="hidden sm:block">
+                                                <mat-icon class="{{
+                                                    customerFarm.status === true
+                                                            ? 'greenActiveIcon'
+                                                            : 'redInActiveIcon'
+                                                    }}" [svgIcon]="
+                                                    customerFarm.status === true
+                                                            ? 'heroicons_solid:check-circle'
+                                                            : 'heroicons_solid:x-circle'
+                                                    ">check-circle</mat-icon>
+                                            </div>
+                                            
+
                                             <!-- Action -->
                                             <div (click)="
                                                     openEditFarmDialog(
@@ -85,13 +101,14 @@
                                                         'heroicons_solid:pencil-square'
                                                     "></mat-icon>
                                             </div>
+
                                         </div>
                                     </ng-container>
                                 </ng-container>
                             </div>
-                            <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="
-                                    customerFarmList?.customer_farms?.count
-                                " [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                            <mat-paginator *ngIf=" customerFarmList?.customer_farms?.length > 0;" class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="
+                                customerFarmList?.count
+                            " [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                         </ng-container>
                         <ng-template #noFarms>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
@@ -192,10 +209,16 @@
                                                     {{ customerField.acres }}
                                                 </div>
                                             </div>
-                                            <div class="hidden sm:block items-center">
-                                                <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                        'heroicons_solid:check-circle'
-                                                    "></mat-icon>
+                                            <div class="hidden sm:block">
+                                                <mat-icon class="{{
+                                                    customerField.status === true
+                                                            ? 'greenActiveIcon'
+                                                            : 'redInActiveIcon'
+                                                    }}" [svgIcon]="
+                                                    customerField.status === true
+                                                            ? 'heroicons_solid:check-circle'
+                                                            : 'heroicons_solid:x-circle'
+                                                    ">check-circle</mat-icon>
                                             </div>
                                             <div class="hidden sm:block items-center">
                                                 {{ customerField.calendar_year | date: "YYYY" }}
@@ -297,10 +320,16 @@
                                                 </div>
 
                                                 <!-- Status -->
-                                                <div class="hidden sm:block items-center">
-                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                                'heroicons_solid:check-circle'
-                                                            "></mat-icon>
+                                                <div class="hidden sm:block">
+                                                    <mat-icon class="{{
+                                                        crop.status === true
+                                                                ? 'greenActiveIcon'
+                                                                : 'redInActiveIcon'
+                                                        }}" [svgIcon]="
+                                                        crop.status === true
+                                                                ? 'heroicons_solid:check-circle'
+                                                                : 'heroicons_solid:x-circle'
+                                                        ">check-circle</mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">

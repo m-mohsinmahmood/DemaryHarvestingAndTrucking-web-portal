@@ -62,6 +62,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     form: FormGroup;
     calendar_year;
     isEdit: boolean;
+    status:boolean;
     customerFieldData: any;
 
     //#region Auto Complete Farms
@@ -101,6 +102,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             customer_id: this.data.customer_id,
             name: ['', [Validators.required]],
             acres: ['', [Validators.required]],
+            status : true,
             calendar_year: [moment()],
         });
         if (this.data && this.data.isEdit) {
@@ -110,6 +112,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 farm_id: {id: this.customerFieldData.farm_id, name: this.customerFieldData.farm_name},
                 name: this.customerFieldData.field_name,
                 acres: this.customerFieldData.acres,
+                status: this.customerFieldData.status.toString(),
                 calendar_year: this.customerFieldData.calendar_year,
             });
         }
