@@ -16,18 +16,17 @@ import {
     FormControl,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CustomersService } from '../customers.service';
-import { CustomerContacts, Customers } from '../customers.types';
-import { AddCustomer } from '../add/add.component';
+import { CustomersService } from '../../customers.service';
+import { AddCustomer } from '../../add/add.component';
+import { Customers } from '../../customers.types';
 
 @Component({
-    selector: 'app-general-info',
-    templateUrl: './general-info.component.html',
-    styleUrls: ['./general-info.component.scss'],
+    selector: 'app-customer-detail',
+    templateUrl: './customer-detail.component.html',
+    styleUrls: ['./customer-detail.component.scss'],
 })
-export class GeneralInfoComponent implements OnInit, OnDestroy {
+export class CustomerDetail implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading: boolean = false;
