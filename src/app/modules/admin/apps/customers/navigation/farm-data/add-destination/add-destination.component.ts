@@ -67,7 +67,7 @@ export class AddDestinationComponent implements OnInit {
 
     ngOnInit(): void {
         // passing year value on page opening/rendering
-        this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
+        this.calendar_year = new FormControl(this.data.farmdata.calendarYear);
         this.customerDestination = this.data.customerDestinationData;
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$.subscribe((res) => {
@@ -77,7 +77,7 @@ export class AddDestinationComponent implements OnInit {
             }
         });
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.farmdata?.calenderYear);
+            this.calendar_year = new FormControl(this.data.farmdata?.calendarYear);
         } else {
             this.calendar_year = new FormControl(moment());
         }

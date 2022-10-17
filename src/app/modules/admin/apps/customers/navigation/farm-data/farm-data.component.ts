@@ -409,7 +409,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 customerDestinationData: {
                     farm_name: destination.farm_name,
                     name: destination.destination_name,
-                    calender_year: destination.calendar_year,
+                    calendar_year: destination.calendar_year,
                     farm_id: destination.farm_id,
                     destination_id: destination.destination_id,
                 },

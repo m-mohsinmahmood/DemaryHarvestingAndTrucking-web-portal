@@ -17,10 +17,7 @@ import {
 import moment, { Moment } from 'moment';
 import { Observable } from 'rxjs';
 
-interface Calender {
-    value: string;
-    viewValue: string;
-}
+
 export const MY_FORMATS = {
     parse: {
       dateInput: 'YYYY'
@@ -76,7 +73,7 @@ export class AddCropComponent implements OnInit {
         });
 
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.calenderYear);
+            this.calendar_year = new FormControl(this.data.calendarYear);
         } else {
             this.calendar_year = new FormControl(moment());
         }
@@ -89,7 +86,7 @@ export class AddCropComponent implements OnInit {
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
                 cropName: this.data.cropName,
-                calendar_year: this.data.calenderYear,
+                calendar_year: this.data.calendarYear,
             });
         }
     }
