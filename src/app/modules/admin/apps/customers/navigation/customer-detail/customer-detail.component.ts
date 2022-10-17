@@ -85,8 +85,8 @@ export class CustomerDetail implements OnInit, OnDestroy {
         //Open the dialog
         const dialogRef = this._matDialog.open(AddCustomer, {
             data: {
+                isEdit: this.isEdit,
                 customerData: {
-                    isEdit: this.isEdit,
                     id: event.id,
                     company_name: event.company_name,
                     customer_name: event.customer_name,
