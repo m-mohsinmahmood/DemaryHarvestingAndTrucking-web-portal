@@ -52,6 +52,7 @@ export class AddDestinationComponent implements OnInit {
     form: FormGroup;
     closeDialog$: Observable<boolean>;
     routeID: any;
+    status:boolean;
     isLoadingDestination$: Observable<boolean>;
     date = new FormControl(moment());
     calendar_year;
@@ -67,7 +68,7 @@ export class AddDestinationComponent implements OnInit {
 
     ngOnInit(): void {
         // passing year value on page opening/rendering
-        this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
+        // this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
         this.customerDestination = this.data.customerDestinationData;
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$.subscribe((res) => {
@@ -76,8 +77,8 @@ export class AddDestinationComponent implements OnInit {
                 this._customerService.closeDialog.next(false);
             }
         });
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.farmdata?.calenderYear);
+        if (this.data?.isEdit) {
+            this.calendar_year = new FormControl(this.data?.customerDestinationData?.calendar_year);
         } else {
             this.calendar_year = new FormControl(moment());
         }
@@ -87,13 +88,15 @@ export class AddDestinationComponent implements OnInit {
             farmName     : ['', [Validators.required]],
             name     : ['', [Validators.required]],
             calendar_year: [],
+            status:true,
             // date: ['', []],
           });
-          if (this.data?.farmdata && this.data?.farmdata.isEdit) {
+          if (this.data?.customerDestinationData && this.data?.isEdit) {
             this.form.patchValue({
-                farm_name: this.customerDestination.farm_name,
-                name: this.customerDestination.name,
-                calendar_year: this.customerDestination.calendar_year,
+                farm_name: this.data.customerDestinationData.farm_name,
+                name: this.data.customerDestinationData.name,
+                status:this.data.customerDestinationData.status.toString(),
+                calendar_year: this.data.customerDestinationData.calendar_year,
             });
 
         }
@@ -103,21 +106,26 @@ export class AddDestinationComponent implements OnInit {
       onSubmit(): void {
         const payloadUpdate ={
             customer_id: this.data?.customer_id,
-            id: this.customerDestination?.destination_id,
-            farm_id: this.customerDestination?.farm_id,
+            id: this.data.customerDestinationData?.destination_id,
+            farm_id: this.data.customerDestinationData?.farm_id,
             name: this.form.value.name,
             calendar_year:  moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
-        };
+            status:  this.form.value.status,
+            };
         const payloadCreate ={
             // id: 'ea384f4a-10d5-4042-927b-8b2edf2be3ab',
             customer_id: this.data.customer_id,
-            farm_id: '7485bb10-f0d4-4535-acf1-8f70445d967c',
+            farm_id: '0f2c84e8-7de8-4c22-b6e8-1e42735322a8',
             name: this.form.value.name,
             calendar_year: moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
+            status:  this.form.value.status
         };
         if (this.data && this.data?.isEdit) {
+          console.log(payloadUpdate);
+
             this.updateDestination(payloadUpdate);
         } else {
+          console.log(payloadCreate);
             this.createDestination(payloadCreate);
         }
       }

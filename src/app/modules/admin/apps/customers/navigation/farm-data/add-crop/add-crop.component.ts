@@ -17,10 +17,7 @@ import {
 import moment, { Moment } from 'moment';
 import { Observable } from 'rxjs';
 
-interface Calender {
-    value: string;
-    viewValue: string;
-}
+
 export const MY_FORMATS = {
     parse: {
       dateInput: 'YYYY'
@@ -76,7 +73,7 @@ export class AddCropComponent implements OnInit {
         });
 
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.calenderYear);
+            this.calendar_year = new FormControl(this.data.calendarYear);
         } else {
             this.calendar_year = new FormControl(moment());
         }
@@ -97,35 +94,16 @@ export class AddCropComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.log('Mat-Data',this.data);
-        // const payloadCreate ={
-        //     id: 'ea384f4a-10d5-4042-927b-8b2edf2be3ab',
-        //     customer_id: this.data?.farmdata?.customer_id,
-        //     farm_id: this.data?.farmdata?.farmId,
-        //     name: this.form.value.name,
-        //     calendar_year: '2022/10/10',
-        // };
-        const payloadUpdate ={
+        const payloadCreate ={
             customer_id: this.data.customer_id,
-            farm_id: '7485bb10-f0d4-4535-acf1-8f70445d967c',
             crop_id: '2aed9f4a-37ca-45c4-80d1-0c069a6b6fd6',
             calendar_year: moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
+            status: false
         };
-        // console.log('Payload Data:',a);
-        console.log('Payload Data:',payloadUpdate);
-
-        if (this.data?.farmdata && this.data?.isEdit) {
-
-            this.updateCrop(payloadUpdate);
-        } else {
-            this.createCrop(this.form.value);
-        }
+        this.createCrop(payloadCreate);
     }
     createCrop(data){
        this._customerService.createCustomerCrops(data);
-    }
-    updateCrop(data){
-        this._customerService.updateCustomerCrops(data,this.data.paginationData);
     }
 
     saveAndClose(): void {

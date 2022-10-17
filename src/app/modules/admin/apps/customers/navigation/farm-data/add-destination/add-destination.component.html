@@ -2,7 +2,7 @@
 
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
-        <div class="text-lg font-medium">Add Destination</div>
+        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Destination': 'Add Destination'}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
@@ -20,10 +20,16 @@
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" />
         </mat-form-field>
-
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value=true>Active</mat-option>
+                <mat-option value=false>In Active</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Year</mat-label>
-            <input matInput [matDatepicker]="dp" placeholder="Calender Year" [formControl]="calendar_year">
+            <input matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)" panelClass="example-month-picker">
             </mat-datepicker>

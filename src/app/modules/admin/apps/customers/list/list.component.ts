@@ -64,7 +64,6 @@ export class CustomersListComponent implements OnInit {
     searchResult: string;
     page: number;
     limit: number;
-
     products$: Observable<InventoryProduct[]>;
     isLoading: boolean = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
@@ -140,42 +139,6 @@ export class CustomersListComponent implements OnInit {
             //Call this function only when success is returned from the create API call//
         });
     }
-    // openEditDialog(event): void {
-    //     this.isEdit = true;
-    //     const dialogRef = this._matDialog.open(AddCustomer, {
-    //         data: {
-    //             isEdit: this.isEdit,
-    //             customerData: {
-    //                 id: event.id,
-    //                 company_name: event.company_name,
-    //                 customer_name: event.customer_name,
-    //                 main_contact: event.main_contact,
-    //                 position: event.position,
-    //                 phone_number: event.phone_number,
-    //                 state: event.state,
-    //                 country: event.country,
-    //                 email: event.email,
-    //                 customer_type:event.customer_type,
-    //                 status: event.status,
-    //                 address: event.address,
-    //                 billing_address: event.billing_address,
-    //                 fax:event.fax,
-    //                 city:event.city,
-    //                 zip_code: event.zip_code,
-    //                 website: event.website,
-    //                 linkedin: event.linkedin,
-    //             },
-    //             paginationData: {
-    //                 page: this.page,
-    //                 limit: this.limit,
-    //                 search: this.searchResult,
-    //             },
-    //         },
-    //     });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //         //Call this function only when success is returned from the update API call//
-    //     });
-    // }
 
     sortData(sort: any) {
         this._customersService.getCustomers(

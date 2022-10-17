@@ -184,7 +184,7 @@
                                     </div>
                                     <div class="hidden sm:block">Status</div>
                                     <div mat-sort-header="calendar_year" class="hidden sm:block">
-                                        Calender Year
+                                        Calendar Year
                                     </div>
                                     <div>Actions</div>
                                 </div>
@@ -300,13 +300,13 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                         <div mat-sort-header="crop_name">Name</div>
                                         <div class="hidden sm:block">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block" mat-sort-header="calender_year">
-                                            Calender Year
+                                        <div class="hidden sm:block" mat-sort-header="calendar_year">
+                                            Calendar Year
                                         </div>
                                     </div>
                                     <!-- Rows -->
@@ -419,7 +419,7 @@
                                             Status
                                         </div>
                                         <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                            Calender Year
+                                            Calendar Year
                                         </div>
                                         <div>Actions</div>
                                     </div>
@@ -433,11 +433,17 @@
                                                 <div class="hidden sm:block">
                                                     {{ destination.destination_name }}
                                                 </div>
-                                                <!-- Harvest Year -->
-                                                <div class="hidden sm:block items-center">
-                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                            'heroicons_solid:check-circle'
-                                                        "></mat-icon>
+                                                <!-- Status -->
+                                                <div class="hidden sm:block">
+                                                    <mat-icon class="{{
+                                                        destination.status === true
+                                                                ? 'greenActiveIcon'
+                                                                : 'redInActiveIcon'
+                                                        }}" [svgIcon]="
+                                                        destination.status === true
+                                                                ? 'heroicons_solid:check-circle'
+                                                                : 'heroicons_solid:x-circle'
+                                                        ">check-circle</mat-icon>
                                                 </div>
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
@@ -628,7 +634,7 @@
                                         </div>
                                         <div class="hidden sm:block">Status</div>
                                         <div mat-sort-header="calendar_year" class="hidden sm:block">
-                                            Calender Year
+                                            Calendar Year
                                         </div>
                                         <div>Actions</div>
                                     </div>
@@ -734,13 +740,13 @@
                                 <ng-container>
                                     <div class="grid max-h-72 overflow-y-auto">
                                         <!-- Header -->
-                                        <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                             <div class="" mat-sort-header="crop_name">Name</div>
                                             <div class="hidden sm:block">
                                                 Status
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                                Calender Year
+                                                Calendar Year
                                             </div>
                                             <div class="">Actions</div>
                                         </div>

@@ -817,41 +817,6 @@ export class CustomersService {
             );
     }
 
-    updateCustomerCrops(customerCropsData: any, paginatioData: any) {
-        console.log('Edited Crops data:', customerCropsData);
-        console.log('Pagination data:', paginatioData);
-        this._httpClient
-            .put(`api-1/customer-destination`, customerCropsData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingCustomerCropList.next(false);
-                    this.closeDialog.next(true);
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Update Customer Destination',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getCustomerCrops(
-                        customerCropsData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        '',
-                        '',
-                        paginatioData.search
-                    );
-                }
-            );
-    }
     //#endregion
     //#region Customer Farm Data Destination API
     getCustomerDestination(
