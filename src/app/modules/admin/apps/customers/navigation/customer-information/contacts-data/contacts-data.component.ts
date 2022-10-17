@@ -34,6 +34,7 @@ export class ContactsDataComponent implements OnInit {
     @Output() toggleCustomerContacts: EventEmitter<any> =
         new EventEmitter<any>();
     isEdit: boolean = false;
+    customerContactData: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
@@ -107,16 +108,12 @@ export class ContactsDataComponent implements OnInit {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddCustomerContact);
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 
     onSubmit() {
         this._customerService.isLoadingCustomerContact.next(true);
-        this._customerService.updateCustomerContact(
-            this.form.value,
-            this.data.paginationData
-        );
+        this._customerService.updateCustomerContact(this.form.value);
     }
 
     showPreview(event) {

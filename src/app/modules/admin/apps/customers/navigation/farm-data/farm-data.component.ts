@@ -3,7 +3,7 @@ import { OnDestroy, AfterViewInit } from '@angular/core';
 import { Input, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomersService } from '../../customers.service';
-import { AddFarmComponent } from '../farm-data/add-farm/add-farm.component';
+import { AddFieldComponent } from './add-field/add-field.component';
 import { AddCropComponent } from './add-crop/add-crop.component';
 import { AddDestinationComponent } from './add-destination/add-destination.component';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -11,7 +11,7 @@ import { debounceTime, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Moment } from 'moment';
 import * as moment from 'moment';
-import { AddRealFarmComponent } from './add-real-farm/add-farm.component';
+import { AddFarmComponent } from './add-farm/add-farm.component';
 
 @Component({
     selector: 'app-farm-data',
@@ -184,35 +184,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
     // Farm
-    openAddRealFarmDialog(): void {
-        const dialogRef = this._matDialog.open(AddRealFarmComponent, {
-            data: {
-                // customerFarms: this.customerFarms,
-                id: this.routeID,
-                isEdit: false,
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
-
-    openEditRealFarmDialog(customerFarm): void {
-        console.log(event);
-        const dialogRef = this._matDialog.open(AddRealFarmComponent, {
-            data: {
-                isEdit: true,
-                customer_id: this.routeID,
-                name: customerFarm.name,
-                id: customerFarm.id,
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
-
-    //Field
     openAddFarmDialog(): void {
         const dialogRef = this._matDialog.open(AddFarmComponent, {
             data: {
@@ -222,25 +193,53 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 
-    openEditFarmDialog(field): void {
+    openEditFarmDialog(farm): void {
         const dialogRef = this._matDialog.open(AddFarmComponent, {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
-                field_name: field.field_name,
-                field_id: field.field_id,
-                farm_name: field.farm_name,
-                farm_id: field.farm_id,
-                acres: field.acres,
-                calendar_year: field.calendar_year,
+                customerFarmData: {
+                    name: farm.name,
+                    id: farm.id,
+                }
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
+        });
+    }
+
+    //Field
+    openAddFieldDialog(): void {
+        const dialogRef = this._matDialog.open(AddFieldComponent, {
+            data: {
+                // customerFarms: this.customerFarms,
+                id: this.routeID,
+                isEdit: false,
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+    }
+
+    openEditFieldDialog(field): void {
+        const dialogRef = this._matDialog.open(AddFieldComponent, {
+            data: {
+                isEdit: true,
+                customer_id: this.routeID,
+                customerFieldData: {
+                    field_name: field.field_name,
+                    field_id: field.field_id,
+                    farm_name: field.farm_name,
+                    farm_id: field.farm_id,
+                    acres: field.acres,
+                    calendar_year: field.calendar_year,
+                }
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
         });
     }
 
@@ -270,25 +269,23 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    openEditDestinationDialog(customerDestination): void {
-        console.log('Edit data:', customerDestination);
+    openEditDestinationDialog(destination): void {
         this.isEdit = true;
         const dialogRef = this._matDialog.open(AddDestinationComponent, {
             data: {
-                farmdata: {
-                    isEdit: this.isEdit,
-                    farmName: customerDestination.farm_name,
-                    name: customerDestination.destination_name,
-                    calenderYear: customerDestination.calendar_year,
-                    farmId: customerDestination.farm_id,
-                    customer_id: this.routeID,
-                    destination_id: customerDestination.destination_id,
+                isEdit: this.isEdit,
+                customer_id: this.routeID,
+                customerDestinationData: {
+                    farm_name: destination.farm_name,
+                    name: destination.destination_name,
+                    calender_year: destination.calendar_year,
+                    farm_id: destination.farm_id,
+                    destination_id: destination.destination_id,
                 },
             },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
     //#endregion
@@ -304,7 +301,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     sortData2(sort: any) {
-        console.log('Sort:', sort);
         this._customerService.getCustomerDestination(
             this.routeID,
             this.page,

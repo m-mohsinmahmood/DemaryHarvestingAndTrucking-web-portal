@@ -23,19 +23,19 @@
         grid-template-columns: 20% 20% 30% 10%;
     }
 }
+
 .real-farm-data-grid {
     grid-template-columns: 40% 40%;
     @screen sm {
         grid-template-columns: 40% 40%;
     }
     @screen md {
-        grid-template-columns:40% 40%;
+        grid-template-columns: 40% 40%;
     }
     @screen lg {
-        grid-template-columns: 80% 40%;
+        grid-template-columns: 40% 40%;
     }
 }
-
 
 .farm-data-destination {
     grid-template-columns: 60% 40%;
@@ -49,10 +49,11 @@
         grid-template-columns: 15% 25% 10% 30% 10%;
     }
 }
-::ng-deep .mat-tab-body-wrapper{
-    height: 100% !important;
-}
-::ng-deep .tab_group{
+
+::ng-deep .mat-tab-body-wrapper {
     height: 100% !important;
 }
 
+::ng-deep .tab_group {
+    height: 100% !important;
+}

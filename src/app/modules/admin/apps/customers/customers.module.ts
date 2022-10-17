@@ -42,7 +42,7 @@ import { JobResultComponent } from './navigation/job-result/job-result.component
 import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
-import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.component';
 import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
 import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
@@ -50,7 +50,7 @@ import { GeneralInfoComponent } from './general-info/general-info.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
-import { AddRealFarmComponent } from './navigation/farm-data/add-real-farm/add-farm.component';
+import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
 
 @NgModule({
     declarations: [
@@ -68,14 +68,14 @@ import { AddRealFarmComponent } from './navigation/farm-data/add-real-farm/add-f
         ContactsDataComponent,
         CustomersContactsList,
         AddItemComponent,
-        AddFarmComponent,
+        AddFieldComponent,
         AddCropComponent,
         AddDestinationComponent,
         AddCustomerContact,
         GeneralInfoComponent,
         DocumentComponent,
         AddRateDataComponent,
-        AddRealFarmComponent
+        AddFarmComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),

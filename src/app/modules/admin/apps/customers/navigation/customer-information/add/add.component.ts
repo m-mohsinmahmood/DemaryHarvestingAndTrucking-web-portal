@@ -18,7 +18,6 @@ export class AddCustomerContact implements OnInit {
 
     isLoadingCustomerContact$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
-
     form: FormGroup;
     routeID: string;
     imageURL: string = '';
@@ -63,11 +62,8 @@ export class AddCustomerContact implements OnInit {
         });
     }
 
-    createCustomerContact(cropData: any): void {
-        this._customerService.createCustomerContact(cropData);
-    }
-    updateCustomerContact(cropData: any): void {
-        this._customerService.updateCustomerContact(cropData, this.data.paginationData);
+    createCustomerContact(customerContact: any): void {
+        this._customerService.createCustomerContact(customerContact);
     }
 
     onSubmit(): void {

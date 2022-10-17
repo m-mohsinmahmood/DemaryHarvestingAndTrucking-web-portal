@@ -88,7 +88,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     //#region Observables
     customerContactList$: Observable<any>;
-    isLoadingCustomerContactList: Observable<boolean>;
+    isLoadingCustomerContactList$: Observable<boolean>;
     customerList: any;
     //#endregion
 
@@ -108,11 +108,13 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
+        this.initApi();
+        this.initObservables();
+
     }
 
     ngAfterViewInit(): void {
-        this.initObservables();
-        this.initApi();
+
         this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
@@ -136,8 +138,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
     //#region Initialize Observables
     initObservables() {
+        this.isLoadingCustomerContactList$ = this._customersService.isLoadingCustomerContactList$;
         this.customerContactList$ = this._customersService.customerContactList$;
-        this.customerContactList$.subscribe((data) => {console.log(data.customer_contacts); this.customerList = data});
+        this.customerContactList$.subscribe((data) => {this.customerList = data});
     }
     //#endregion
     //#region Initialize APIs
@@ -151,7 +154,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
             data: { customerId: this.routeID },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 
@@ -173,18 +175,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this.getNextData(this.page.toString(), this.limit.toString());
+        this._customersService.getCustomerContact(this.routeID,this.page,this.limit,'','',this.searchResult);
     }
-    getNextData(page, limit) {
-        this._customersService.getCustomerContact(
-            this.routeID,
-            page,
-            limit,
-            '',
-            '',
-            this.searchResult
-        );
-    }
+
 
     /**
      * Toggle Customer Contacts
@@ -195,16 +188,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
             data: {
                 customerContact,
-                paginationData: {
-                    page: this.page,
-                    limit: this.limit,
-                    search: this.searchResult,
-                },
             },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 

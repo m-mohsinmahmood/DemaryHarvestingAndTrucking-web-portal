@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -19,14 +19,6 @@ import {
 } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    Observable,
-    Subject,
-    Subscription,
-    takeUntil,
-} from 'rxjs';
 
 const moment = _rollupMoment || _moment;
 
@@ -41,6 +33,7 @@ export const MY_FORMATS = {
         monthYearA11yLabel: 'YYYY',
     },
 };
+
 @Component({
     selector: 'app-add-farm',
     templateUrl: './add-farm.component.html',
@@ -54,21 +47,16 @@ export const MY_FORMATS = {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
+
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     ],
 })
-export class AddFarmComponent implements OnInit, OnDestroy {
+export class AddFarmComponent implements OnInit {
     selectedValue: string;
     form: FormGroup;
     calendar_year;
     isEdit: boolean;
-
-    //#region Auto Complete Farms
-    allFarms: Observable<any>;
-    farm_search$ = new Subject();
-    //#endregion
-
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    customerFarmData: any;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -78,85 +66,47 @@ export class AddFarmComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.isEdit = this.data.isEdit;
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.calendar_year);
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
-        this._customersService.closeDialog$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((res) => {
-                if (res) {
-                    this.matDialogRef.close();
-                    this._customersService.closeDialog.next(false);
-                }
-            });
+    this.customerFarmData = this.data.customerFarmData;
+    this.isEdit = this.data.isEdit;
+        this._customersService.closeDialog$.subscribe((res) => {
+            if (res) {
+                this.matDialogRef.close();
+                this._customersService.closeDialog.next(false);
+            }
+        });
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
-            farm_id: [''],
             customer_id: this.data.id,
-            name: ['', [Validators.required]],
-            acres: ['', [Validators.required]],
-            calendar_year: [moment()],
+            name:  ['',[Validators.required]]
+
         });
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
-                id: this.data.field_id,
-                farm_id: {id: this.data.farm_id, name: this.data.farm_name},
+                id: this.customerFarmData.id,
+                name: this.customerFarmData.name,
                 customer_id: this.data.customer_id,
-                name: this.data.field_name,
-                acres: this.data.acres,
-                calendar_year: this.data.calendar_year,
             });
         }
-
-        this.farm_search$
-            .pipe(
-                debounceTime(500),
-                distinctUntilChanged(),
-                takeUntil(this._unsubscribeAll)
-            )
-            .subscribe((value: string) => {
-                this.allFarms = this._customersService.getCustomerFarmsAll(
-                    'b2e8e34a-1fa5-46c8-a0b9-5ecfa40e6769',
-                    value
-                );
-            });
     }
-
-    chosenYearHandler(normalizedYear: Moment, dp: any) {
-        const ctrlValue = moment(this.calendar_year.value);
-        ctrlValue.year(normalizedYear.year());
-        this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
-        dp.close();
-    }
-
     onSubmit(): void {
-        this._customersService.isLoadingCustomerField.next(true);
-        this.form.value["farm_id"] = this.form.value["farm_id"]?.id;
+        this._customersService.isLoadingCustomerFarm.next(true);
         if (this.data && this.data.isEdit) {
-            this.updateCustomerField(this.form.value);
+            this.updateCustomerFarm(this.form.value);
         } else {
-            this.createCustomerField(this.form.value);
+            this.createCustomerFarm(this.form.value);
         }
     }
 
-    createCustomerField(customerFieldData: any): void {
-        this._customersService.createCustomerField(customerFieldData);
+    createCustomerFarm(customerFarmData: any): void {
+        this._customersService.createCustomerFarm(customerFarmData);
     }
-
-    updateCustomerField(customerFieldData: any): void {
-        this._customersService.updateCustomerField(
-            customerFieldData,
-            this.data.paginationData
-        );
+    updateCustomerFarm(customerFarmData: any): void {
+        this._customersService.updateCustomerFarm(customerFarmData);
     }
 
     saveAndClose(): void {
-        this._customersService.isLoadingCustomerField.next(false);
+        this._customersService.isLoadingCustomerFarm.next(false);
         this.matDialogRef.close();
     }
 
@@ -168,19 +118,6 @@ export class AddFarmComponent implements OnInit, OnDestroy {
     }
 
     disableEditButton() {
-        // this.isEdit = true;
-        this.matDialogRef.close();
-
-    }
-
-    //#region Auto Complete Farms Display Function
-    displayFarmForAutoComplete(farm: any) {
-        return farm ? `${farm.name}` : undefined;
-    }
-    //#endregion
-
-    ngOnDestroy(): void {
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
+        this.isEdit = true;
     }
 }

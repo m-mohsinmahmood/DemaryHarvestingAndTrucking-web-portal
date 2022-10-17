@@ -18,10 +18,6 @@ import {
   import { MatDatepicker } from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 
-interface Calender {
-    value: string;
-    viewValue: string;
-  }
   export const MY_FORMATS = {
     parse: {
       dateInput: 'YYYY'
@@ -59,10 +55,7 @@ export class AddDestinationComponent implements OnInit {
     isLoadingDestination$: Observable<boolean>;
     date = new FormControl(moment());
     calendar_year;
-
-
-
-
+    customerDestination: any;
   constructor(
     private _formBuilder: FormBuilder,
     public matDialogRef: MatDialogRef<AddDestinationComponent>,
@@ -73,15 +66,9 @@ export class AddDestinationComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // this.activatedRoute.params.subscribe((params) => {
-        //     console.log('ddddd',params);
-        //     this.routeID = params.Id;
-        // });
-
         // passing year value on page opening/rendering
         this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
-
-        // this.isLoadingDestination$ = this._customerService.is_loading_destination$;
+        this.customerDestination = this.data.customerDestinationData;
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$.subscribe((res) => {
             if (res) {
@@ -89,6 +76,11 @@ export class AddDestinationComponent implements OnInit {
                 this._customerService.closeDialog.next(false);
             }
         });
+        if (this.data.isEdit) {
+            this.calendar_year = new FormControl(this.data.farmdata?.calenderYear);
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
 
         // Create the form
         this.form = this._formBuilder.group({
@@ -99,9 +91,9 @@ export class AddDestinationComponent implements OnInit {
           });
           if (this.data?.farmdata && this.data?.farmdata.isEdit) {
             this.form.patchValue({
-                farmName: this.data.farmdata.farmName,
-                name: this.data.farmdata.name,
-                calendar_year: this.data.farmdata.calendar_year,
+                farm_name: this.customerDestination.farm_name,
+                name: this.customerDestination.name,
+                calendar_year: this.customerDestination.calendar_year,
             });
 
         }
@@ -109,30 +101,24 @@ export class AddDestinationComponent implements OnInit {
       }
 
       onSubmit(): void {
-
-        console.log('sss',this.data);
-        console.log('ddd',this.form.value);
-        const payload_update ={
-            id: this.data?.farmdata?.destination_id,
-            customer_id: this.data?.farmdata?.customer_id,
-            farm_id: this.data?.farmdata?.farmId,
+        const payloadUpdate ={
+            customer_id: this.data?.customer_id,
+            id: this.customerDestination?.destination_id,
+            farm_id: this.customerDestination?.farm_id,
             name: this.form.value.name,
             calendar_year:  moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
         };
-        const payload_create ={
+        const payloadCreate ={
             // id: 'ea384f4a-10d5-4042-927b-8b2edf2be3ab',
             customer_id: this.data.customer_id,
             farm_id: '7485bb10-f0d4-4535-acf1-8f70445d967c',
             name: this.form.value.name,
-            calendar_year: moment(this.date.value).format('YYYY/MM/DD'),
+            calendar_year: moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
         };
-        // console.log('Payload Data:',payload_create);
-        console.log('Payload Data:',payload_create);
-
-        if (this.data?.farmdata && this.data?.farmdata.isEdit) {
-            this.updateDestination(payload_update);
+        if (this.data && this.data?.isEdit) {
+            this.updateDestination(payloadUpdate);
         } else {
-            this.createDestination(payload_create);
+            this.createDestination(payloadCreate);
         }
       }
 
@@ -151,17 +137,15 @@ export class AddDestinationComponent implements OnInit {
         this._customerService.createCustomerDestination(data);
     }
     updateDestination(data: any): void {
-        console.log('UPdated Data:',data);
-        this._customerService.updateCustomerDestination(data, this.data.paginationData);
+        this._customerService.updateCustomerDestination(data);
     }
 
   chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = moment(this.calendar_year.value);
     ctrlValue.year(normalizedYear.year());
     this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
+    this.form.value.calendar_year = ctrlValue;
     datepicker.close();
-
   }
 
 

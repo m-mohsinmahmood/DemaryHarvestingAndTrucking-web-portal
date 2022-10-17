@@ -385,9 +385,9 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    // this.isLoadingCustomerContactList.next(true);
+                    this.isLoadingCustomerContactList.next(true);
                     this.customerContactList.next(res);
-                    // this.isLoadingCustomerContactList.next(false);
+                    this.isLoadingCustomerContactList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -439,7 +439,7 @@ export class CustomersService {
             );
     }
 
-    updateCustomerContact(customerContactData: any, paginatioData: any) {
+    updateCustomerContact(customerContactData: any) {
         this._httpClient
             .put(`api-1/customer-contact`, customerContactData)
             .pipe(take(1))
@@ -462,10 +462,7 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerContact(
-                        customerContactData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
+                        customerContactData.customer_id
                     );
                 }
             );
@@ -595,7 +592,7 @@ export class CustomersService {
             );
     }
 
-    updateCustomerFarm(customerFarmData: any, paginatioData: any) {
+    updateCustomerFarm(customerFarmData: any) {
         this._httpClient
             .put(`api-1/customer-farm`, customerFarmData)
             .pipe(take(1))
@@ -618,10 +615,7 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerFarm(
-                        customerFarmData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
+                        customerFarmData.customer_id
                     );
                 }
             );
@@ -734,7 +728,7 @@ export class CustomersService {
             );
     }
 
-    updateCustomerField(customerFieldData: any, paginatioData: any) {
+    updateCustomerField(customerFieldData: any) {
         this._httpClient
             .put(`api-1/customer-field`, customerFieldData)
             .pipe(take(1))
@@ -757,10 +751,7 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerField(
-                        customerFieldData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
+                        customerFieldData.customer_id
                     );
                 }
             );
@@ -926,11 +917,7 @@ export class CustomersService {
     }
 
     updateCustomerDestination(
-        customerDestinationData: any,
-        paginatioData: any
-    ) {
-        console.log('Edited data:', customerDestinationData);
-        console.log('Pagination data:', paginatioData);
+        customerDestinationData: any,) {
         this._httpClient
             .put(`api-1/customer-destination`, customerDestinationData)
             .pipe(take(1))
@@ -953,11 +940,6 @@ export class CustomersService {
                 () => {
                     this.getCustomerDestination(
                         customerDestinationData.customer_id,
-                        paginatioData.page,
-                        paginatioData.limit,
-                        '',
-                        '',
-                        paginatioData.search
                     );
                 }
             );
