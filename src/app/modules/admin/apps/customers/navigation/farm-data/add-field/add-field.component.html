@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
 <div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
@@ -12,14 +13,6 @@
 
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-8 overflow-y-auto">
-        <!-- <mat-form-field appearance="outline">
-            <mat-label>Farm Name</mat-label>
-            <mat-select [disabled]="isEdit" formControlName="farm_id" name="name">
-                <mat-option *ngFor="let farm of this.data.customerFarms.customer_farms" [value]="farm.id">
-                    {{ farm.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field> -->
 
         <!-- MAT AUTOCOMPLETE -->
 

@@ -816,6 +816,32 @@ export class CustomersService {
                 }
             );
     }
+    updateCustomerCrops(data: any) {
+        this._httpClient
+            .post(`api-1/customer-crop`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Create Customer Crop',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(data.customer_id);
+                }
+            );
+    }
 
     //#endregion
     //#region Customer Farm Data Destination API

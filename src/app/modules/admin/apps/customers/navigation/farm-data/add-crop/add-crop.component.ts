@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Component, OnInit, Inject } from '@angular/core';
@@ -84,38 +85,38 @@ export class AddCropComponent implements OnInit {
         });
 
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.calendarYear);
+            this.calendar_year = new FormControl(this.data.customerCropData.calendar_year);
         } else {
             this.calendar_year = new FormControl(moment());
         }
 
         // Create the form
         this.form = this._formBuilder.group({
-            // cropName: ['', [Validators.required]],
-            // status: true,
-            // calendar_year: [],
-            id: [''],
-            customer_id: ['', [Validators.required]],
+            customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
-            calendar_year: [],
+            calendar_year: [''],
             status: true
         });
+
+        if(this.data && this.data.isEdit){
+            const { customerCropData } = this.data;
+            this.form.patchValue({
+                customer_id: this.data.customer_id,
+                crop_id: {id: customerCropData.crop_id, name: customerCropData.crop_name},
+                calendar_year: customerCropData.calendar_year,
+                status: true
+            });
+        }
         this.cropSearchSubscription();
     }
 
     onSubmit(): void {
-        const payloadCreate = {
-            customer_id: this.data.customer_id,
-            crop_id: '2aed9f4a-37ca-45c4-80d1-0c069a6b6fd6',
-            calendar_year: moment(this.form.value.calendar_year).format(
-                'YYYY/MM/DD'
-            ),
-            status: false,
-        };
-        this.createCrop(payloadCreate);
-    }
-    createCrop(data) {
-        this._customerService.createCustomerCrops(data);
+        this.form.value['crop_id'] = this.form.value['crop_id']?.id;
+        if (this.data && this.data.isEdit) {
+            this._customerService.updateCustomerCrops(this.form.value);
+        } else {
+            this._customerService.createCustomerCrops(this.form.value);
+        }
     }
 
     saveAndClose(): void {

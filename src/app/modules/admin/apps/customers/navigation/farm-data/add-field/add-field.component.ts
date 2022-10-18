@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AfterViewInit } from '@angular/core';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
@@ -63,7 +65,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     form: FormGroup;
     calendar_year;
     isEdit: boolean;
-    status:boolean;
+    status: boolean;
     customerFieldData: any;
 
     //#endregion
@@ -136,7 +138,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         name: ['', [Validators.required]],
         acres: ['', [Validators.required]],
         status : true,
-        calendar_year: [moment()],
+        calendar_year: [''],
     });
     if (this.data && this.data.isEdit) {
         this.form.patchValue({
@@ -160,7 +162,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     onSubmit(): void {
         this._customersService.isLoadingCustomerField.next(true);
-        this.form.value["farm_id"] = this.form.value["farm_id"]?.id;
+        this.form.value['farm_id'] = this.form.value['farm_id']?.id;
         if (this.data && this.data.isEdit) {
             this.updateCustomerField(this.form.value);
         } else {

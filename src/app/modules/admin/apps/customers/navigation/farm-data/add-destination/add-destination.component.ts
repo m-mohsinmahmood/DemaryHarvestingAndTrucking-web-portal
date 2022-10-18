@@ -106,12 +106,14 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
+            customer_id: this.data.customer_id,
             farm_id: ['', [Validators.required]],
-            customer_id: ['', [Validators.required]],
             name: ['', [Validators.required]],
-            calendar_year: [],
+            calendar_year: [''],
             status: true,
         });
+
+        // Update the form
         if (this.data?.customerDestinationData && this.data?.isEdit) {
           const { customerDestinationData } = this.data;
             this.form.patchValue({
@@ -131,11 +133,12 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
+        this.form.value['farm_id'] = this.form.value['farm_id']?.id;
 
         if (this.data && this.data?.isEdit) {
-            this.updateDestination(this.form.value);
+            this._customerService.createCustomerDestination(this.form.value);
         } else {
-            this.createDestination(this.form.value);
+            this._customerService.updateCustomerDestination(this.form.value);
         }
     }
 
@@ -145,13 +148,6 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
 
     discard(): void {
         this.matDialogRef.close();
-    }
-
-    createDestination(data: any): void {
-        this._customerService.createCustomerDestination(data);
-    }
-    updateDestination(data: any): void {
-        this._customerService.updateCustomerDestination(data);
     }
 
     chosenYearHandler(

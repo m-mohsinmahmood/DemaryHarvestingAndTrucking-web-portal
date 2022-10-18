@@ -399,11 +399,30 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
-                status:true
+                status: true
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
         });
+    }
+
+    openEditCropDialog(crop): void{
+        this.isEdit =  true;
+        const dialogRef = this._matDialog.open(AddCropComponent, {
+            data: {
+                customer_id: this.routeID,
+                isEdit: this.isEdit,
+                customerCropData:{
+                    id: crop.customer_crop_id,
+                    crop_id: crop.crop_id,
+                    crop_name: crop.crop_name,
+                    calendar_year: crop.calendar_year
+                }
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+
     }
 
     //Destination
@@ -421,13 +440,14 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     openEditDestinationDialog(destination): void {
+        console.log('Destination Object:',destination);
         this.isEdit = true;
         const dialogRef = this._matDialog.open(AddDestinationComponent, {
             data: {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
                 customerDestinationData: {
-                    id: destination.id,
+                    id: destination.destination_id,
                     farm_name: destination.farm_name,
                     name: destination.destination_name,
                     calendar_year: destination.calendar_year,
