@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { AfterViewInit } from '@angular/core';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
     FormBuilder,
@@ -24,7 +24,6 @@ import {
     distinctUntilChanged,
     Observable,
     Subject,
-    Subscription,
     takeUntil,
 } from 'rxjs';
 
@@ -58,12 +57,16 @@ export const MY_FORMATS = {
     ],
 })
 export class AddFieldComponent implements OnInit, OnDestroy {
+
+    //#region Local Variables
     selectedValue: string;
     form: FormGroup;
     calendar_year;
     isEdit: boolean;
     status:boolean;
     customerFieldData: any;
+
+    //#endregion
 
     //#region Auto Complete Farms
     allFarms: Observable<any>;
@@ -79,9 +82,13 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
+    //#region Lifecycle Functions
+
     ngOnInit(): void {
         this.customerFieldData = this.data.customerFieldData;
         this.isEdit = this.data.isEdit;
+        this.initForm();
+
         if (this.data.isEdit) {
             this.calendar_year = new FormControl(this.customerFieldData.calendar_year);
         } else {
@@ -95,28 +102,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     this._customersService.closeDialog.next(false);
                 }
             });
-        // Create the form
-        this.form = this._formBuilder.group({
-            id: [''],
-            farm_id: [''],
-            customer_id: this.data.customer_id,
-            name: ['', [Validators.required]],
-            acres: ['', [Validators.required]],
-            status : true,
-            calendar_year: [moment()],
-        });
-        if (this.data && this.data.isEdit) {
-            this.form.patchValue({
-                customer_id: this.data.customer_id,
-                id: this.customerFieldData.field_id,
-                farm_id: {id: this.customerFieldData.farm_id, name: this.customerFieldData.farm_name},
-                name: this.customerFieldData.field_name,
-                acres: this.customerFieldData.acres,
-                status: this.customerFieldData.status.toString(),
-                calendar_year: this.customerFieldData.calendar_year,
-            });
-        }
-
         this.farm_search$
             .pipe(
                 debounceTime(500),
@@ -128,9 +113,43 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     this.data.customer_id,
                     value
                 );
-            });
+        });
     }
 
+    AfterViewInit(): void {
+
+    }
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    //#endregion
+
+    initForm() {
+      // Create the form
+    this.form = this._formBuilder.group({
+        id: [''],
+        farm_id: [''],
+        customer_id: this.data.customer_id,
+        name: ['', [Validators.required]],
+        acres: ['', [Validators.required]],
+        status : true,
+        calendar_year: [moment()],
+    });
+    if (this.data && this.data.isEdit) {
+        this.form.patchValue({
+            customer_id: this.data.customer_id,
+            id: this.customerFieldData.field_id,
+            farm_id: {id: this.customerFieldData.farm_id, name: this.customerFieldData.farm_name},
+            name: this.customerFieldData.field_name,
+            acres: this.customerFieldData.acres,
+            status: this.customerFieldData.status.toString(),
+            calendar_year: this.customerFieldData.calendar_year,
+        });
+        }
+    }
     chosenYearHandler(normalizedYear: Moment, dp: any) {
         const ctrlValue = moment(this.calendar_year.value);
         ctrlValue.year(normalizedYear.year());
@@ -165,15 +184,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     discard(): void {
         this.matDialogRef.close();
     }
-    enableEditButton() {
-        this.isEdit = false;
-    }
-
-    disableEditButton() {
-        // this.isEdit = true;
-        this.matDialogRef.close();
-
-    }
 
     //#region Auto Complete Farms Display Function
     displayFarmForAutoComplete(farm: any) {
@@ -181,8 +191,4 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    ngOnDestroy(): void {
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
 }

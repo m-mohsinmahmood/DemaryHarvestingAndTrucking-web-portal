@@ -500,7 +500,7 @@ export class CustomersService {
                 }
             );
     }
-    getCustomersummaryFarm(
+    getCustomerSummaryFarm(
         customerId: string,
         page: number = 1,
         limit: number = 5,

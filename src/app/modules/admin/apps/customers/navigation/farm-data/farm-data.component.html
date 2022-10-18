@@ -89,7 +89,7 @@
                                                             : 'heroicons_solid:x-circle'
                                                     ">check-circle</mat-icon>
                                             </div>
-                                            
+
 
                                             <!-- Action -->
                                             <div (click)="
@@ -481,7 +481,7 @@
 
         <mat-tab label="Summary" class="summary-tab flex flex-col">
             <!--Farms -->
-            <div class="mb-4">
+            <div class="">
                 <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                     <div>
                         <header class="ml-2 text-3xl font-extrabold tracking-tight">
@@ -526,7 +526,7 @@
                         <!-- Farms list -->
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
-                                <div class="grid max-h-72 overflow-y-auto">
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
                                     <!-- Header -->
                                     <div class="real-farm-data-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                         <div mat-sort-header="name">
@@ -535,32 +535,35 @@
                                         <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container *ngIf="
+                                    <div class="rows-wrapper h-72">
+
+                                        <ng-container *ngIf="
                                             customerFarmList.customer_farms.length >
                                                 0;
                                             else noFarms
                                         ">
-                                        <ng-container *ngFor="
+                                            <ng-container *ngFor="
                                                 let customerFarm of this
                                                     .customerFarmList.customer_farms
                                             ">
-                                            <div class="real-farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    {{ customerFarm.name }}
-                                                </div>
-                                                <!-- Action -->
-                                                <div (click)="
+                                                <div class="real-farm-data-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                        {{ customerFarm.name }}
+                                                    </div>
+                                                    <!-- Action -->
+                                                    <div (click)="
                                                         openEditRealFarmDialog(
                                                             customerFarm
                                                         )
                                                     ">
-                                                    <mat-icon [svgIcon]="
+                                                        <mat-icon [svgIcon]="
                                                             'heroicons_solid:pencil-square'
                                                         "></mat-icon>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
                                         </ng-container>
-                                    </ng-container>
+                                    </div>
                                 </div>
                                 <mat-paginator class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFarmList?.count" [pageIndex]="currentPage" [pageSize]="pageSizeSummary" [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
@@ -575,7 +578,7 @@
                 </div>
             </div>
             <!--Fields -->
-            <div class="mb-4">
+            <div class="">
                 <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                     <div>
                         <header class="ml-2 text-3xl font-extrabold tracking-tight">
@@ -620,7 +623,7 @@
                         <!-- Customer Fields List -->
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
-                                <div class="grid max-h-72 overflow-y-auto">
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
                                     <!-- Header -->
                                     <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                         <div mat-sort-header="farm_name">
@@ -639,47 +642,50 @@
                                         <div>Actions</div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container *ngIf="
+                                    <div class="rows-wrapper h-72">
+
+                                        <ng-container *ngIf="
                                         customerFieldList?.customer_fields
                                             ?.length > 0;
                                         else noFields
                                     ">
-                                        <ng-container *ngFor="
+                                            <ng-container *ngFor="
                                             let customerField of customerFieldList?.customer_fields
                                         ">
-                                            <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
-                                                <div class="truncate">
-                                                    {{ customerField.farm_name }}
-                                                </div>
-                                                <div class="hidden sm:block">
-                                                    {{ customerField.field_name }}
-                                                </div>
-                                                <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4">
-                                                        {{ customerField.acres }}
+                                                <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
+                                                    <div class="truncate">
+                                                        {{ customerField.farm_name }}
                                                     </div>
-                                                </div>
-                                                <div class="hidden sm:block items-center">
-                                                    <mat-icon class="greenActiveIcon" [svgIcon]="
+                                                    <div class="hidden sm:block">
+                                                        {{ customerField.field_name }}
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4">
+                                                            {{ customerField.acres }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <mat-icon class="greenActiveIcon" [svgIcon]="
                                                         'heroicons_solid:check-circle'
                                                     "></mat-icon>
-                                                </div>
-                                                <div class="hidden sm:block items-center">
-                                                    {{ customerField.calendar_year | date: "YYYY" }}
-                                                </div>
-                                                <!-- Action -->
-                                                <div (click)="
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        {{ customerField.calendar_year | date: "YYYY" }}
+                                                    </div>
+                                                    <!-- Action -->
+                                                    <div (click)="
                                                     openEditFarmDialog(
                                                         customerField
                                                     )
                                                 ">
-                                                    <mat-icon [svgIcon]="
+                                                        <mat-icon [svgIcon]="
                                                         'heroicons_solid:pencil-square'
                                                     "></mat-icon>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
                                         </ng-container>
-                                    </ng-container>
+                                    </div>
                                 </div>
                                 <mat-paginator *ngIf="
                                     customerFieldList?.customer_fields?.length >
@@ -697,7 +703,7 @@
                 </div>
             </div>
             <!--Crops -->
-            <div class="mb-4">
+            <div class="">
                 <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                     <div>
                         <header class="ml-2 text-3xl font-extrabold tracking-tight">
@@ -738,7 +744,7 @@
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <ng-container>
-                                    <div class="grid max-h-72 overflow-y-auto">
+                                    <div class="grid summary-pg-rows-height overflow-y-auto">
                                         <!-- Header -->
                                         <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
                                             <div class="" mat-sort-header="crop_name">Name</div>
@@ -751,36 +757,39 @@
                                             <div class="">Actions</div>
                                         </div>
                                         <!-- Rows -->
-                                        <ng-container *ngIf="customerCropList?.customer_crops?.length > 0">
-                                            <ng-container *ngFor="
+                                        <div class="rows-wrapper h-72">
+
+                                            <ng-container *ngIf="customerCropList?.customer_crops?.length > 0; else noCrops">
+                                                <ng-container *ngFor="
                                                     let crop of customerCropList?.customer_crops
                                                 ">
-                                                <div class="farm-data-crops grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                                    <div class="truncate">
-                                                        {{ crop.crop_name }}
-                                                    </div>
-                                                    <!-- Status -->
-                                                    <div class="hidden sm:block items-center">
-                                                        <mat-icon class="greenActiveIcon" [svgIcon]="
+                                                    <div class="farm-data-crops grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                        <div class="truncate">
+                                                            {{ crop.crop_name }}
+                                                        </div>
+                                                        <!-- Status -->
+                                                        <div class="hidden sm:block items-center">
+                                                            <mat-icon class="greenActiveIcon" [svgIcon]="
                                                                 'heroicons_solid:check-circle'
                                                             "></mat-icon>
-                                                    </div>
-                                                    <!-- Contact -->
-                                                    <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">
-                                                            {{ crop.calendar_year | date : "YYYY" }}
                                                         </div>
-                                                    </div>
-                                                    <div (click)="
+                                                        <!-- Contact -->
+                                                        <div class="hidden sm:block items-center">
+                                                            <div class="min-w-4 ml-2">
+                                                                {{ crop.calendar_year | date : "YYYY" }}
+                                                            </div>
+                                                        </div>
+                                                        <div (click)="
                                                             openEditCropDialog()
                                                         ">
-                                                        <mat-icon [svgIcon]="
+                                                            <mat-icon [svgIcon]="
                                                                 'heroicons_solid:pencil-square'
                                                             "></mat-icon>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </ng-container>
                                             </ng-container>
-                                        </ng-container>
+                                        </div>
                                     </div>
                                     <mat-paginator *ngIf="customerCropList?.customer_crops?.length > 0" class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerCropList?.count" [showFirstLastButtons]="true" (page)="pageChanged($event)" [pageIndex]="currentPage"
                                         [pageSize]="pageSizeSummary" [pageSizeOptions]="pageSizeOptionsSummary">

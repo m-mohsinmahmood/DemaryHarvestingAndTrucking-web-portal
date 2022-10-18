@@ -96,10 +96,8 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _formBuilder: FormBuilder,
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
-        private _router: Router,
         public activatedRoute: ActivatedRoute
     ) {}
 
@@ -114,7 +112,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
-
         this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {

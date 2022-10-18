@@ -1,6 +1,4 @@
-import { OnDestroy, AfterViewInit } from '@angular/core';
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Input, Component, OnInit } from '@angular/core';
+import { OnDestroy, AfterViewInit,Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomersService } from '../../customers.service';
 import { AddFieldComponent } from './add-field/add-field.component';
@@ -9,17 +7,15 @@ import { AddDestinationComponent } from './add-destination/add-destination.compo
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Moment } from 'moment';
-import * as moment from 'moment';
 import { AddFarmComponent } from './add-farm/add-farm.component';
-import { boolean } from 'joi';
-
 @Component({
     selector: 'app-farm-data',
     templateUrl: './farm-data.component.html',
     styleUrls: ['./farm-data.component.scss'],
 })
 export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    //#region Search form variables
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -32,6 +28,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     searchformcrop: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+
+    //#endregion
 
     //#region Observables
 
@@ -63,16 +61,20 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     customerDestination$: Observable<any[]>;
     isLoadingCustomerDestination$: Observable<boolean>;
 
+     // Summary
+     summaryfarms$: Observable<any>;
+     summaryfields$: Observable<any>;
+     summarydestinations$: Observable<any>;
+
     //#endregion
 
+    //#region  local Variables
     search: Subscription;
     searchDestination: Subscription;
-
     isEdit: boolean = false;
     pageSize = 10;
     pageSizeSummary = 5;
     currentPage = 0;
-    // currentPage2 = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     pageSizeOptionsSummary: number[] = [5, 25, 50, 100];
     searchResult: string;
@@ -80,14 +82,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     limit: number;
     routeID: any;
     isLoading: any;
-    customerCrops$: Observable<any>;
-    customerCrop: any;
     activeTab: any;
+    farmSort: any[] = []
+    fieldSort: string[] = []
+    cropSort: string[] = []
+    destinationationSort: string[] = []
 
-    // summary observables
-    summaryfarms$: Observable<any>;
-    summaryfields$: Observable<any>;
-    summarydestinations$: Observable<any>;
+    //#endregion
 
     constructor(
         private _matDialog: MatDialog,
@@ -131,7 +132,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                         this._customerService.getCustomerCrops(
                             this.routeID,
                             1,
-                            3,
+                            10,
                             '',
                             '',
                             this.searchResult
@@ -268,7 +269,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeTab = 'Farms';
     }
     //#endregion
-    //#region Add/Edit Dialogues
 
     farmTabChange(event) {
         this.activeTab = event.tab.textLabel;
@@ -288,34 +288,25 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             case 'Summary':
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
-                    this.pageSizeSummary,
-                    '',
-                    '',
-                    ''
+                    1,
+                    5,
                 );
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    this.pageSizeSummary,
-                    '',
-                    '',
-                    ''
+                    1,
+                    5,
                 );
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
-                    this.pageSizeSummary,
-                    '',
-                    '',
-                    ''
+                    1,
+                    5,
                 );
                 break;
             default:
         }
     }
 
-    //#region Dialogs
+    //#region Add/Edit Dialogues
     // Farms
     openAddFarmDialog(): void {
         const dialogRef = this._matDialog.open(AddFarmComponent, {
@@ -433,12 +424,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     sortData(sort: any) {
         switch (this.activeTab) {
             case 'Farms':
+            this.farmSort[0] = sort.active, this.farmSort[1] = sort.direction
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
+                    1,
                     this.limit,
-                    sort.active,
-                    sort.direction,
+                    this.farmSort[0],
+                    this.farmSort[1],
                     this.searchResult
                 );
                 break;
@@ -515,12 +507,12 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             this.routeID,
             page,
             limit,
-            '',
-            '',
+            this.farmSort[0],
+            this.farmSort[1],
             this.searchResult
         );
 
-        this._customerService.getCustomersummaryFarm(
+        this._customerService.getCustomerSummaryFarm(
             this.routeID,
             page,
             limit,

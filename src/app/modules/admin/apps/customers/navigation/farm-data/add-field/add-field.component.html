@@ -80,7 +80,7 @@
     </form>
 
     <div class="flex justify-end mr-7 mt-1 mb-4">
-        <button class="ml-4 bg-amber-600 text-white" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
+        <button class="ml-4 bg-amber-600 text-white" mat-flat-button [color]="'warn'" (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
         <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
