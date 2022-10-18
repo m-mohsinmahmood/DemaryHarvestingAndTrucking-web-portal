@@ -7,33 +7,33 @@
         grid-template-columns: 25% 25 25% 25%;
     }
     @screen lg {
-        grid-template-columns: 15% 20% 20% 10% 20% 10%;
+        grid-template-columns: 15% 20% 20% 20% 15% 10%;
     }
 }
 
 .farm-data-crops {
     grid-template-columns: 20% 40%;
     @screen sm {
-        grid-template-columns: 10% 10% 15% 10%;
+        grid-template-columns: 30% 30% 30% 10%;
     }
     @screen md {
-        grid-template-columns: 25% 25 25% 25%;
+        grid-template-columns:30% 30% 30% 10%;
     }
     @screen lg {
-        grid-template-columns: 20% 20% 30% 10%;
+        grid-template-columns: 30% 30% 30% 10%;
     }
 }
 
 .real-farm-data-grid {
-    grid-template-columns: 25% 25% 25%;
+    grid-template-columns: 40% 40% 25%;
     @screen sm {
-        grid-template-columns: 25% 25% 25%;
+        grid-template-columns: 40% 40% 25%;
     }
     @screen md {
-        grid-template-columns: 25% 25% 25%;
+        grid-template-columns: 40% 40% 25%;
     }
     @screen lg {
-        grid-template-columns: 25% 25% 25%;
+        grid-template-columns: 40% 40% 25%;
     }
 }
 
@@ -46,7 +46,7 @@
         grid-template-columns: 25% 25 25% 25%;
     }
     @screen lg {
-        grid-template-columns: 15% 25% 10% 30% 10%;
+        grid-template-columns: 20% 20% 20% 20% 10%;
     }
 }
 
