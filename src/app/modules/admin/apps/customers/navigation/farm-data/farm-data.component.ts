@@ -28,6 +28,9 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     searchformcrop: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+    searchformdestination: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
 
     //#endregion
 
@@ -196,6 +199,20 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.searchResult
                 );
             });
+         // search summary Destination
+         this.search = this.searchformdestination.valueChanges
+         .pipe(debounceTime(500))
+         .subscribe((data) => {
+             this.searchResult = data.search;
+             this._customerService.getCustomerDestination(
+                 this.routeID,
+                 1,
+                 5,
+                 '',
+                 '',
+                 this.searchResult
+             );
+         });
     }
 
     ngAfterViewInit(): void {
@@ -297,6 +314,11 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     5,
                 );
                 this._customerService.getCustomerCrops(
+                    this.routeID,
+                    1,
+                    5,
+                );
+                this._customerService.getCustomerDestination(
                     this.routeID,
                     1,
                     5,
@@ -467,73 +489,152 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.searchResult
                 );
                 break;
-            case 'Summary':
+            default:
+        }
+    }
+
+    sortSummaryData(sort: any , summaryData) {
+        switch (summaryData) {
+            case 'summaryFarm':
+                this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
+                this._customerService.getCustomerFarm(
+                    this.routeID,
+                    1,
+                    5,
+                    this.farmSort[0],
+                    this.farmSort[1],
+                    this.searchResult
+                );
+                break;
+            case 'summaryField':
+                this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
+                this._customerService.getCustomerField(
+                    this.routeID,
+                    1,
+                    this.limit,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
+                    this.searchResult
+                );
+            break;
+            case 'summaryCrop':
+                this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
+                this._customerService.getCustomerCrops(
+                    this.routeID,
+                    1,
+                    this.limit,
+                    this.cropSort[0],
+                    this.cropSort[1],
+                    this.searchResult
+                );
+            break;
+            case 'summaryDestination':
+                this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
+                this._customerService.getCustomerDestination(
+                    this.routeID,
+                    1,
+                    this.limit,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
+                    this.searchResult
+                );
+            break;
+        default:
+        }
+    }
+    //#endregion
+
+    //#region Pagination
+    pageChanged(event, farmData) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        switch (farmData){
+            case 'Farm':
                 this._customerService.getCustomerFarm(
                     this.routeID,
                     this.page,
-                    5,
-                    sort.active,
-                    sort.direction,
+                    this.limit,
+                    this.farmSort[0],
+                    this.farmSort[1],
                     this.searchResult
                 );
-                // this._customerService.getCustomerField(
-                //     this.routeID,
-                //     this.page,
-                //     this.limit,
-                //     sort.active,
-                //     sort.direction,
-                //     this.searchResult
-                // );
-                // this._customerService.getCustomerDestination(
-                //     this.routeID,
-                //     this.page,
-                //     this.limit,
-                //     sort.active,
-                //     sort.direction,
-                //     this.searchResult
-                // );
                 break;
+            case 'Field':
+                this._customerService.getCustomerField(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
+                    this.searchResult
+                );
+                break;
+            case 'Crop':
+                this._customerService.getCustomerCrops(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.cropSort[0],
+                    this.cropSort[1],
+                    this.searchResult
+                );
+                break;
+            case 'Destination':
+                this._customerService.getCustomerDestination(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
+                    this.searchResult
+                );
+                break;
+            case 'summaryFarm':
+                this._customerService.getCustomerFarm(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.farmSort[0],
+                    this.farmSort[1],
+                    this.searchResult
+                );
+            break;
+            case 'summaryField':
+                this._customerService.getCustomerField(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
+                    this.searchResult
+                );
+            break;
+            case 'summaryCrop':
+                this._customerService.getCustomerCrops(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.cropSort[0],
+                    this.cropSort[1],
+                    this.searchResult
+                );
+            break;
+            case 'summaryDestination':
+                this._customerService.getCustomerDestination(
+                    this.routeID,
+                    this.page,
+                    this.limit,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
+                    this.searchResult
+                );
+            break;
             default:
         }
     }
     //#endregion
 
-    pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this.getNextData(this.page.toString(), this.limit.toString());
-    }
-
     getNextData(page, limit) {
-        // for sumary apis's
-        this._customerService.getCustomerFarm(
-            this.routeID,
-            page,
-            limit,
-            this.farmSort[0],
-            this.farmSort[1],
-            this.searchResult
-        );
-
-        this._customerService.getCustomerField(
-            this.routeID,
-            page,
-            limit,
-            this.fieldSort[0],
-            this.fieldSort[1],
-            this.searchResult
-        );
-
-        this._customerService.getCustomerDestination(
-            this.routeID,
-            page,
-            limit,
-            this.destinationSort[0],
-            this.destinationSort[1],
-            this.searchResult
-        );
-
-
         // this._customerService.getCustomerSummaryFarm(
         //     this.routeID,
         //     page,
