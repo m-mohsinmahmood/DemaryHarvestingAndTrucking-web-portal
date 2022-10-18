@@ -1,34 +1,39 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CustomersService } from '../../../customers.service';
 import {
     MomentDateAdapter,
-    MAT_MOMENT_DATE_ADAPTER_OPTIONS
-  } from '@angular/material-moment-adapter';
-  import {
+    MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {
     DateAdapter,
     MAT_DATE_FORMATS,
-    MAT_DATE_LOCALE
-  } from '@angular/material/core';
-  import { MatDatepicker } from '@angular/material/datepicker';
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
-import { Observable } from 'rxjs';
-
+import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
+import { CropService } from 'app/modules/admin/apps/crops/crops.services';
 
 export const MY_FORMATS = {
     parse: {
-      dateInput: 'YYYY'
+        dateInput: 'YYYY',
     },
     display: {
-      dateInput: 'YYYY',
-      monthYearLabel: 'YYYY',
-      dateA11yLabel: 'LL',
-      monthYearA11yLabel: 'MMMM YYYY'
-    }
-  };
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 
 @Component({
     selector: 'app-add-crop',
@@ -39,12 +44,12 @@ export const MY_FORMATS = {
         // application's root module. We provide it at the component level here, due to limitations of
         // our example generation script.
         {
-          provide: DateAdapter,
-          useClass: MomentDateAdapter,
-          deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
-      ]
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
 export class AddCropComponent implements OnInit {
     selectedValue: string;
@@ -54,12 +59,18 @@ export class AddCropComponent implements OnInit {
     closeDialog$: Observable<boolean>;
     calendar_year;
 
+    //#region Auto Complete Farms
+    allCrops: Observable<any>;
+    crop_search$ = new Subject();
+    //#endregion
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+
     constructor(
         private _formBuilder: FormBuilder,
         public matDialogRef: MatDialogRef<AddCropComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public _customerService: CustomersService,
-
+        public _cropService: CropService
     ) {}
 
     ngOnInit(): void {
@@ -80,30 +91,31 @@ export class AddCropComponent implements OnInit {
 
         // Create the form
         this.form = this._formBuilder.group({
-            cropName: ['', [Validators.required]],
-            status  : true,
+            // cropName: ['', [Validators.required]],
+            // status: true,
+            // calendar_year: [],
+            id: [''],
+            customer_id: ['', [Validators.required]],
+            crop_id: ['', [Validators.required]],
             calendar_year: [],
+            status: true
         });
-        if (this.data && this.data.isEdit) {
-            this.form.patchValue({
-                cropName: this.data.cropName,
-                status: this.data.status.toString(),
-                calendar_year: this.data.calenderYear,
-            });
-        }
+        this.cropSearchSubscription();
     }
 
     onSubmit(): void {
-        const payloadCreate ={
+        const payloadCreate = {
             customer_id: this.data.customer_id,
             crop_id: '2aed9f4a-37ca-45c4-80d1-0c069a6b6fd6',
-            calendar_year: moment(this.form.value.calendar_year).format('YYYY/MM/DD'),
-            status: false
+            calendar_year: moment(this.form.value.calendar_year).format(
+                'YYYY/MM/DD'
+            ),
+            status: false,
         };
         this.createCrop(payloadCreate);
     }
-    createCrop(data){
-       this._customerService.createCustomerCrops(data);
+    createCrop(data) {
+        this._customerService.createCustomerCrops(data);
     }
 
     saveAndClose(): void {
@@ -113,11 +125,34 @@ export class AddCropComponent implements OnInit {
     discard(): void {
         this.matDialogRef.close();
     }
-    chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Moment>) {
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
         const ctrlValue = moment(this.calendar_year.value);
         ctrlValue.year(normalizedYear.year());
         this.calendar_year.setValue(ctrlValue);
         this.form.value.calendar_year = ctrlValue;
         datepicker.close();
-      }
+    }
+
+    //#region Auto Complete Crops Display Function
+    displayCropForAutoComplete(crop: any) {
+        return crop ? `${crop.name}` : undefined;
+    }
+
+    cropSearchSubscription() {
+        this.crop_search$
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((value: string) => {
+                this.allCrops = this._cropService.getCropsAll(
+                    value
+                );
+            });
+    }
+    //#endregion
 }

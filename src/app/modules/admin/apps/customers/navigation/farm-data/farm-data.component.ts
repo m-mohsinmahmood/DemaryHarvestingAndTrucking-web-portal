@@ -414,6 +414,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
                 customerDestinationData: {
+                    id: destination.id,
                     farm_name: destination.farm_name,
                     name: destination.destination_name,
                     calendar_year: destination.calendar_year,
@@ -475,27 +476,27 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._customerService.getCustomerFarm(
                     this.routeID,
                     this.page,
-                    this.limit,
+                    5,
                     sort.active,
                     sort.direction,
                     this.searchResult
                 );
-                this._customerService.getCustomerField(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    sort.active,
-                    sort.direction,
-                    this.searchResult
-                );
-                this._customerService.getCustomerDestination(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    sort.active,
-                    sort.direction,
-                    this.searchResult
-                );
+                // this._customerService.getCustomerField(
+                //     this.routeID,
+                //     this.page,
+                //     this.limit,
+                //     sort.active,
+                //     sort.direction,
+                //     this.searchResult
+                // );
+                // this._customerService.getCustomerDestination(
+                //     this.routeID,
+                //     this.page,
+                //     this.limit,
+                //     sort.active,
+                //     sort.direction,
+                //     this.searchResult
+                // );
                 break;
             default:
         }
@@ -503,7 +504,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#endregion
 
     pageChanged(event) {
-        console.log('Page', event);
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this.getNextData(this.page.toString(), this.limit.toString());

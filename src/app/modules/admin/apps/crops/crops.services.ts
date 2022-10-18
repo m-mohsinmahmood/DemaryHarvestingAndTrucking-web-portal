@@ -108,6 +108,20 @@ export class CropService {
             );
     }
 
+    getCropsAll(search: string = ''): Observable<any>
+    {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', 'name');
+        params = params.set('order', 'asc');
+        return this._httpClient.get<any>(
+            `api-1/crop`,
+            {
+                params,
+            }
+        );
+    }
+
     getCropById(id: string) {
         this._httpClient
             .get(`api-1/crop${id}`)
