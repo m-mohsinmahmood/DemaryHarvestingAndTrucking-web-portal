@@ -416,7 +416,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     id: crop.customer_crop_id,
                     crop_id: crop.crop_id,
                     crop_name: crop.crop_name,
-                    calendar_year: crop.calendar_year
+                    calendar_year: crop.calendar_year,
+                    status: crop.status
                 }
             },
         });

@@ -102,10 +102,10 @@ export class AddFarmComponent implements OnInit {
         });
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
+                customer_id: this.data.customer_id,
                 id: this.customerFarmData.id,
                 name: this.customerFarmData.name,
-                customer_id: this.data.customer_id,
-                status: this.data.customerFarmData.status.toString(),
+                status: this.customerFarmData.status.toString(),
             });
         }
     }

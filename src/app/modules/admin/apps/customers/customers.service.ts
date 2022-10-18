@@ -191,12 +191,13 @@ export class CustomersService {
     readonly isLoadingCustomerDestination$: Observable<boolean> =
         this.isLoadingCustomerDestination.asObservable();
     //#endregion
-    private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(
-        null
-    );
-    private _data: BehaviorSubject<any> = new BehaviorSubject(null);
 
+    //#region Behaviour Subject
+    private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
+    private _data: BehaviorSubject<any> = new BehaviorSubject(null);
     private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
+
+    //#endregion
 
     /**
      * Constructor
@@ -818,7 +819,7 @@ export class CustomersService {
     }
     updateCustomerCrops(data: any) {
         this._httpClient
-            .post(`api-1/customer-crop`, data)
+            .put(`api-1/customer-crop`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

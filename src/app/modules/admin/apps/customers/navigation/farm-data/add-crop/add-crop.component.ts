@@ -1,6 +1,3 @@
-/* eslint-disable no-bitwise */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Component, OnInit, Inject } from '@angular/core';
 import {
     FormBuilder,
@@ -53,12 +50,17 @@ export const MY_FORMATS = {
     ],
 })
 export class AddCropComponent implements OnInit {
+
+    //#region  Local Variables
     selectedValue: string;
     form: FormGroup;
     date = new FormControl(moment());
     isLoadingCrops$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
     calendar_year;
+    customerCropData: any;
+
+    //#endregion
 
     //#region Auto Complete Farms
     allCrops: Observable<any>;
@@ -69,29 +71,45 @@ export class AddCropComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         public matDialogRef: MatDialogRef<AddCropComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any,
         public _customerService: CustomersService,
-        public _cropService: CropService
+        public _cropService: CropService,
+        @Inject(MAT_DIALOG_DATA) public data: any,
     ) {}
-
+    //#region Lifecycle Functions
     ngOnInit(): void {
-        // this.isLoadingCrops$ = this._customerService.is_loading_crops$;
+        this.customerCropData = this.data.customerCropData;
+        this.initForm();
+        this.cropSearchSubscription();
         this.closeDialog$ = this._customerService.closeDialog$;
-        this._customerService.closeDialog$.subscribe((res) => {
+        if (this.data.isEdit) {
+            this.calendar_year = new FormControl(this.customerCropData.calendar_year);
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
+
+    }
+
+    ngAfterViewInit(): void {
+        this._customerService.closeDialog$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((res) => {
             if (res) {
                 this.matDialogRef.close();
                 this._customerService.closeDialog.next(false);
             }
         });
 
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.customerCropData.calendar_year);
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
+    }
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
 
-        // Create the form
-        this.form = this._formBuilder.group({
+    //#region Form
+    initForm(): void {
+         // Create the form
+         this.form = this._formBuilder.group({
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
             calendar_year: [''],
@@ -99,20 +117,18 @@ export class AddCropComponent implements OnInit {
         });
 
         if(this.data && this.data.isEdit){
-            const { customerCropData } = this.data;
             this.form.patchValue({
                 customer_id: this.data.customer_id,
-                crop_id: {id: customerCropData.crop_id, name: customerCropData.crop_name},
-                calendar_year: customerCropData.calendar_year,
-                status: true
+                crop_id: {id: this.customerCropData.crop_id, name: this.customerCropData.crop_name},
+                calendar_year: this.customerCropData.calendar_year,
+                status: this.customerCropData.status.toString(),
             });
         }
-        this.cropSearchSubscription();
     }
-
     onSubmit(): void {
         this.form.value['crop_id'] = this.form.value['crop_id']?.id;
         if (this.data && this.data.isEdit) {
+        debugger;
             this._customerService.updateCustomerCrops(this.form.value);
         } else {
             this._customerService.createCustomerCrops(this.form.value);
@@ -126,6 +142,9 @@ export class AddCropComponent implements OnInit {
     discard(): void {
         this.matDialogRef.close();
     }
+    //#endregion
+
+    //#region Calendar Year Function
     chosenYearHandler(
         normalizedYear: Moment,
         datepicker: MatDatepicker<Moment>
@@ -136,6 +155,8 @@ export class AddCropComponent implements OnInit {
         this.form.value.calendar_year = ctrlValue;
         datepicker.close();
     }
+
+    //#endregion
 
     //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
