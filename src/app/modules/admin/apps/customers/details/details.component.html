@@ -11,8 +11,7 @@
                     <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                 </button>
             </div>
-            <div *ngIf="customer$ | async; let customer" (click)="backHandler()"
-                class="flex gap-3 items-center text-2xl font-extrabold tracking-tight">
+            <div *ngIf="customer$ | async; let customer" (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight">
                 <mat-icon w-24 h-24 class="text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
                 <!-- <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
                 <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt=""> -->
@@ -33,7 +32,7 @@
                             route.title === selectedIndex
                                 ? 'opacity-100'
                                 : 'opacity-80'
-                        " mat-button class="my-1 justify-start w-full" (click)="clicked(route)">
+                        " mat-button class="my-1 justify-start w-full" (click)="routeHandler(route)">
                         <mat-icon svgIcon="{{ route.icon }}" class="icon-size-5 text-primary"></mat-icon>
                         <span style="
                                 font-size: 13px;
@@ -48,49 +47,49 @@
                 <div class="w-full h-full">
                     <div class="tab bg-white shadow overflow-auto">
                         <div>
-                            <ng-template [ngIf] = "selectedIndex ==='Customer Detail'">
+                            <ng-template [ngIf]="selectedIndex ==='Customer Detail'">
                                 <app-customer-detail></app-customer-detail>
                             </ng-template>
                         </div>
 
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Contact Data'">
+                            <ng-template [ngIf]="selectedIndex === 'Contact Data'">
                                 <customers-contacts> </customers-contacts>
                             </ng-template>
                         </div>
 
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Farm Data'">
+                            <ng-template [ngIf]="selectedIndex === 'Farm Data'">
                                 <app-farm-data> </app-farm-data>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Rate Data'">
+                            <ng-template [ngIf]="selectedIndex === 'Rate Data'">
                                 <app-rate-data> </app-rate-data>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Job Result'">
+                            <ng-template [ngIf]="selectedIndex === 'Job Result'">
                                 <app-job-result> </app-job-result>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Job Status'">
+                            <ng-template [ngIf]="selectedIndex === 'Job Status'">
                                 <app-job-status> </app-job-status>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Invoice'">
+                            <ng-template [ngIf]="selectedIndex === 'Invoice'">
                                 <app-invoice> </app-invoice>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Resources'">
+                            <ng-template [ngIf]="selectedIndex === 'Resources'">
                                 <app-resources> </app-resources>
                             </ng-template>
                         </div>
                         <div>
-                            <ng-template [ngIf] = "selectedIndex === 'Documentation'">
+                            <ng-template [ngIf]="selectedIndex === 'Documentation'">
                                 <document-list> </document-list>
                             </ng-template>
                         </div>

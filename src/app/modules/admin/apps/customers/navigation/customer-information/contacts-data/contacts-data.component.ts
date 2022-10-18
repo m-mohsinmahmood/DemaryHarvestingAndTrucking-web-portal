@@ -29,19 +29,21 @@ import { AddCustomerContact } from '../add/add.component';
     styleUrls: ['./contacts-data.component.scss'],
 })
 export class ContactsDataComponent implements OnInit {
+
+    //#region Variables
     @Input() customers: any;
     @Input() isContactData: boolean = true;
     @Output() toggleCustomerContacts: EventEmitter<any> =
         new EventEmitter<any>();
     isEdit: boolean = false;
     customerContactData: any;
-
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
     imageURL: string = '';
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
+
+    // Constructor
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _customerService: CustomersService,
         private _matDialog: MatDialog,
@@ -49,16 +51,29 @@ export class ContactsDataComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
+    //#region Lifecycle Function
     ngOnInit(): void {
         this.initForm();
-        this._customerService.closeDialog$.subscribe((res) => {
-            if (res) {
-                this.matDialogRef.close();
-                this._customerService.closeDialog.next(false);
-            }
+        this._customerService.closeDialog$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res) {
+                    this.matDialogRef.close();
+                    this._customerService.closeDialog.next(false);
+                }
         });
     }
 
+    ngAfterViewInit(): void {}
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    //#endregion
+
+    //#region Form
     initForm(): void {
         this.form = this._formBuilder.group({
             id: [''],
@@ -103,45 +118,31 @@ export class ContactsDataComponent implements OnInit {
             avatar: this.data.customerContact.avatar,
         });
     }
-
-    openAddDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(AddCustomerContact);
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-
     onSubmit() {
         this._customerService.isLoadingCustomerContact.next(true);
         this._customerService.updateCustomerContact(this.form.value);
     }
+    discard(): void {
+        this._customerService.isLoadingCustomerContact.next(false);
+        this.matDialogRef.close();
+    }
+    //#endregion
+
+    //#region Add Dialog
+    openAddDialog(): void {
+        const dialogRef = this._matDialog.open(AddCustomerContact);
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+    }
+    //#endregion
 
     showPreview(event) {
-        // const file = (event.target as HTMLInputElement).files[0];
-        // // this.form.patchValue({
-        // //     avatar: file,
-        // // });
-        // // File Preview
-        // const reader = new FileReader();
-        // reader.onload = () => {
-        //     this.imageURL = reader.result as string;
-        // };
-        // reader.readAsDataURL(file);
+        // will use for avatar
     }
 
     backHandler() {
         this.toggleCustomerContacts.emit();
     }
 
-    enableEditButton() {
-        this.isEdit = false;
-    }
 
-    disableEditButton() {
-        this.isEdit = true;
-    }
-    saveAndClose(): void {
-        this._customerService.isLoadingCustomerContact.next(false);
-        this.matDialogRef.close();
-    }
 }

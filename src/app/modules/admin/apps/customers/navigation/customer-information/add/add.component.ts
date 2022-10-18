@@ -6,7 +6,7 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,12 +16,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddCustomerContact implements OnInit {
 
+    //#region Observables
     isLoadingCustomerContact$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
+    //#endregion
+
+    //#region Variables
     form: FormGroup;
     routeID: string;
     imageURL: string = '';
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
+    // Constructor
     constructor(
         public matDialogRef: MatDialogRef<AddCustomerContact>,
         private _formBuilder: FormBuilder,
@@ -30,15 +37,37 @@ export class AddCustomerContact implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
+    //#region Lifecycle Function
     ngOnInit(): void {
-        this.isLoadingCustomerContact$ = this._customerService.isLoadingCustomerContact$;
-        this.closeDialog$ = this._customerService.closeDialog$;
-        this._customerService.closeDialog$.subscribe((res) => {
+        this.initObservables();
+        this.initForm();
+        this._customerService.closeDialog$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
             if (res) {
                 this.matDialogRef.close();
                 this._customerService.closeDialog.next(false);
             }
         });
+    }
+
+    ngAfterViewInit(): void {}
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
+    //#region Initilize Observables
+    initObservables() {
+        this.isLoadingCustomerContact$ = this._customerService.isLoadingCustomerContact$;
+        this.closeDialog$ = this._customerService.closeDialog$;
+    }
+    //#endregion
+
+    //#region Form
+    initForm(){
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: [this.data.customerId],
@@ -71,43 +100,35 @@ export class AddCustomerContact implements OnInit {
         this.createCustomerContact(this.form.value);
     }
 
-    saveAndClose(): void {
+    discard(): void {
         this._customerService.isLoadingCustomerContact.next(false);
         this.matDialogRef.close();
     }
+    //#endregion
 
+    //#region Avatar
     uploadAvatar(fileList: FileList): void {
         // Return if canceled
         if (!fileList.length) {
             return;
         }
-
         const allowedTypes = ['image/jpeg', 'image/png'];
         const file = fileList[0];
-
         // Return if the file is not allowed
         if (!allowedTypes.includes(file.type)) {
             return;
         }
-
-        // Upload the avatar
-        // this._employeeService.uploadAvatar(this.contact.id, file).subscribe();
     }
-
     removeAvatar(): void {
         // Get the form control for 'avatar'
         const avatarFormControl = this.form.get('avatar');
-
         // Set the avatar as null
         avatarFormControl.setValue(null);
-
         // Set the file input value as null
         // this._avatarFileInput.nativeElement.value = null;
-
         // Update the contact
         // this.contact.avatar = null;
     }
-
     showPreview(event) {
         const file = (event.target as HTMLInputElement).files[0];
         // this.form.patchValue({
@@ -120,20 +141,7 @@ export class AddCustomerContact implements OnInit {
         };
         reader.readAsDataURL(file);
     }
-    /**
-     * Discard the message
-     */
-    discard(): void {
-        this.matDialogRef.close();
-    }
 
-    /**
-     * Save the message as a draft
-     */
-    saveAsDraft(): void {}
-
-    /**
-     * Send the message
-     */
+    //#endregion
 
 }

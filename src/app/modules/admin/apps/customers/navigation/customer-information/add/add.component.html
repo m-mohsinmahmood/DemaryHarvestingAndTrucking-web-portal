@@ -3,7 +3,7 @@
     <!-- Title -->
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">Add Contact Data</div>
-        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
                 [svgIcon]="'heroicons_outline:x'"
@@ -145,7 +145,7 @@
     <div class="flex flex-0 items-center justify-end h-16 sm:pr-8 lg:pr-12 pl-6 sm:pl-8 bg-white text-on-primary">
         <div class="flex gap-2 items-center mt-4 sm:mt-0">
             <!-- Discard -->
-            <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="saveAndClose()">
+            <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
             <button mat-flat-button color="primary" [class.spinner]="isLoadingCustomerContact$ | async" [disabled]="form.invalid || (isLoadingCustomerContact$ | async)" (click)="onSubmit()">

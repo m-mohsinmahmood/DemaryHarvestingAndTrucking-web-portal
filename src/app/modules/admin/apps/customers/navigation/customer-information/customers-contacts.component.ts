@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @angular-eslint/component-class-suffix */
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -32,17 +30,7 @@ import {
     takeUntil,
 } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ContactsDataComponent } from './contacts-data/contacts-data.component';
-import {
-    CustomerContacts,
-    InventoryBrand,
-    InventoryCategory,
-    InventoryPagination,
-    InventoryProduct,
-    InventoryTag,
-    InventoryVendor,
-} from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddCustomerContact } from './add/add.component';
@@ -56,11 +44,10 @@ import { AddCustomerContact } from './add/add.component';
     animations: fuseAnimations,
 })
 export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
-    search: Subscription;
 
-    searchform: FormGroup = new FormGroup({
-        search: new FormControl(),
-    });
+    //#region Variables
+    customerList: any;
+
     isEdit: boolean = false;
     pageSize = 10;
     currentPage = 0;
@@ -68,33 +55,24 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     searchResult: string;
     page: number;
     limit: number;
-
-    // customers: any;
     routeID;
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredTags: InventoryTag[];
-    flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: InventoryPagination;
-    searchInputControl: FormControl = new FormControl();
-    selectedProduct: InventoryProduct | null = null;
-    selectedProductForm: FormGroup;
-    tags: InventoryTag[];
-    tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-    // isContactData: boolean = false;
+
+    search: Subscription;
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+
+    //#endregion
 
     //#region Observables
     customerContactList$: Observable<any>;
     isLoadingCustomerContactList$: Observable<boolean>;
-    customerList: any;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+
     //#endregion
 
-    /**
-     * Constructor
-     */
+    // Constructor
     constructor(
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
@@ -133,6 +111,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     //#endregion
+
     //#region Initialize Observables
     initObservables() {
         this.isLoadingCustomerContactList$ = this._customersService.isLoadingCustomerContactList$;
@@ -140,12 +119,14 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         this.customerContactList$.subscribe((data) => {this.customerList = data});
     }
     //#endregion
+
     //#region Initialize APIs
     initApi() {
         this._customersService.getCustomerContact(this.routeID);
     }
     //#endregion
 
+    //#region Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
             data: { customerId: this.routeID },
@@ -154,10 +135,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    //#endregion
 
+    //#region Sort Function
     sortData(sort: any) {
         this._customersService.getCustomerContact(
             this.routeID,
@@ -168,18 +148,17 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
             this.searchResult
         );
     }
+    //#endregion
 
+    //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this._customersService.getCustomerContact(this.routeID,this.page,this.limit,'','',this.searchResult);
     }
+    //#endregion
 
-
-    /**
-     * Toggle Customer Contacts
-     *
-     */
+    //#region Open Detail Page
     toggleContactsDetails(customerContact: string): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
@@ -191,41 +170,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
         });
     }
+    //#endregion
 
-    toggleCustomerContacts() {
-        alert(1);
-        // this.isContactData = false;
-    }
-    /**
-     * Close the details
-     */
-    closeContactsDetails(): void {
-        this.selectedProduct = null;
-    }
-
-    createProduct(data: any): void {
-        // Create the product
-        this._customersService.createCustomer(data);
-        /* subscribe((newProduct) => {
-
-            // Go to new product
-            this.selectedProduct = newProduct;
-
-            // Fill the form
-            this.selectedProductForm.patchValue(newProduct);
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }); */
-    }
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
 }

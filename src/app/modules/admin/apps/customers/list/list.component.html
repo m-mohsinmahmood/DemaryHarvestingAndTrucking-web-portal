@@ -14,7 +14,8 @@
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                 <form [formGroup]="searchform">
                     <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
-                </form>            </mat-form-field>
+                </form>
+            </mat-form-field>
             <!-- Add customer button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
@@ -68,10 +69,7 @@
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="customers$ | async as customers">
-                            <ng-container *ngFor="
-                                    let customer of customers.customers;
-                                    trackBy: trackByFn
-                                ">
+                            <ng-container *ngFor="let customer of customers.customers">
                                 <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
                                     <!-- Image -->
                                     <!-- <div>

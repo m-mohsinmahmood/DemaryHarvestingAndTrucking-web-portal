@@ -56,7 +56,6 @@ export class AddFarmComponent implements OnInit {
     selectedValue: string;
     form: FormGroup;
     calendar_year;
-    isEdit: boolean;
     customerFarmData: any;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
@@ -70,8 +69,8 @@ export class AddFarmComponent implements OnInit {
     //#region Lifecycle Functions
     ngOnInit(): void {
     this.customerFarmData = this.data.customerFarmData;
-    this.isEdit = this.data.isEdit;
     this.initForm();
+    // Dialog Close
     this._customersService.closeDialog$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((res) => {
@@ -80,9 +79,7 @@ export class AddFarmComponent implements OnInit {
                 this._customersService.closeDialog.next(false);
             }
         });
-
     }
-
     ngAfterViewInit(): void {}
 
 
@@ -92,7 +89,7 @@ export class AddFarmComponent implements OnInit {
     }
     //#endregion
 
-    //#region  Initialize Form
+    //#region Form
     initForm(){
         this.form = this._formBuilder.group({
             id: [''],
@@ -109,12 +106,6 @@ export class AddFarmComponent implements OnInit {
             });
         }
     }
-
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
     onSubmit(): void {
         this._customersService.isLoadingCustomerFarm.next(true);
         if (this.data && this.data.isEdit) {
@@ -139,4 +130,6 @@ export class AddFarmComponent implements OnInit {
     discard(): void {
         this.matDialogRef.close();
     }
+
+    //#endregion
 }

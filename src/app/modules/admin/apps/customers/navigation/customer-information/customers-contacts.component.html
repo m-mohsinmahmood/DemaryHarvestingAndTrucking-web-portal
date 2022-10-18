@@ -55,7 +55,7 @@
                             <div class="sm:block">Actions</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngFor="let customerContact of customerContactList?.customer_contacts; trackBy: trackByFn">
+                        <ng-container *ngFor="let customerContact of customerContactList?.customer_contacts">
                             <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(customerContact.id)">
                                 <!-- Image -->
                                 <!-- <div>

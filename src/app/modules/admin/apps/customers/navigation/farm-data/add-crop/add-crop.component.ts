@@ -56,10 +56,12 @@ export class AddCropComponent implements OnInit {
     form: FormGroup;
     date = new FormControl(moment());
     isLoadingCrops$: Observable<boolean>;
-    closeDialog$: Observable<boolean>;
     calendar_year;
     customerCropData: any;
+    //#endregion
 
+    //#region Observables
+    closeDialog$: Observable<boolean>;
     //#endregion
 
     //#region Auto Complete Farms
@@ -80,7 +82,18 @@ export class AddCropComponent implements OnInit {
         this.customerCropData = this.data.customerCropData;
         this.initForm();
         this.cropSearchSubscription();
+
+        // Dialog Close
         this.closeDialog$ = this._customerService.closeDialog$;
+        this._customerService.closeDialog$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res) {
+                    this.matDialogRef.close();
+                    this._customerService.closeDialog.next(false);
+                }
+        });
+        //Calender Year Initilize
         if (this.data.isEdit) {
             this.calendar_year = new FormControl(this.customerCropData.calendar_year);
         } else {
@@ -90,14 +103,7 @@ export class AddCropComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-        this._customerService.closeDialog$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((res) => {
-            if (res) {
-                this.matDialogRef.close();
-                this._customerService.closeDialog.next(false);
-            }
-        });
+
 
     }
     ngOnDestroy(): void {
@@ -106,7 +112,7 @@ export class AddCropComponent implements OnInit {
     }
     //#endregion
 
-    //#region Form
+    //#region  Form
     initForm(): void {
          // Create the form
          this.form = this._formBuilder.group({
@@ -162,7 +168,9 @@ export class AddCropComponent implements OnInit {
     displayCropForAutoComplete(crop: any) {
         return crop ? `${crop.name}` : undefined;
     }
+    //#endregion
 
+    //#region Search Function
     cropSearchSubscription() {
         this.crop_search$
             .pipe(
@@ -177,4 +185,5 @@ export class AddCropComponent implements OnInit {
             });
     }
     //#endregion
+
 }

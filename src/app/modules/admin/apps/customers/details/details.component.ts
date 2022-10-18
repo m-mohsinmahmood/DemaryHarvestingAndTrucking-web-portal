@@ -1,7 +1,3 @@
-import { routes } from './../../../ui/cards/cards.module';
-import { AfterViewInit } from '@angular/core';
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/member-ordering */
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -9,15 +5,12 @@ import {
     OnDestroy,
     OnInit,
     ViewEncapsulation,
-    APP_INITIALIZER,
+    AfterViewInit
 } from '@angular/core';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import {
     FormBuilder,
-    FormGroup,
-    Validators,
-    FormControl,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateComponent } from '../update/update.component';
@@ -32,14 +25,16 @@ import { CustomersService } from '../customers.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomerDetailsComponent
-    implements OnInit, OnDestroy, AfterViewInit
-{
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    implements OnInit, OnDestroy, AfterViewInit{
+
 
     // Customer Observables
     customer$: Observable<any>;
     isLoadingCustomer$: Observable<any>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
+    //#region Variables
     search: Subscription;
     isEdit: boolean = false;
     pageSize = 10;
@@ -48,7 +43,6 @@ export class CustomerDetailsComponent
     searchResult: string;
     page: number;
     limit: number;
-
     isLoading: boolean = false;
     routeID; // URL ID
     customers: any;
@@ -59,10 +53,10 @@ export class CustomerDetailsComponent
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = 'Customer Detail';
+    //#endregion
 
-    /**
-     * Constructor
-     */
+
+    //Constructor
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _matDialog: MatDialog,
@@ -92,6 +86,7 @@ export class CustomerDetailsComponent
         this._unsubscribeAll.complete();
     }
     //#endregion
+
     //#region Initialize Observables
     initObservables() {
         // Data
@@ -100,11 +95,13 @@ export class CustomerDetailsComponent
         this.isLoadingCustomer$ = this._customerService.isLoadingCustomer$;
     }
     //#endregion
+
     //#region Initial APIs
     initApis(id: string) {
         this._customerService.getCustomerById(id);
     }
     //#endregion
+
     //#region Initialize Side Navigation
     initSideNavigation() {
         this.routes = this._customerService.navigationLabels;
@@ -122,45 +119,11 @@ export class CustomerDetailsComponent
     }
 
     //#endregion
-    
-    // // Get the employee by id
-    // this._customerService.getCustomerById(this.routeID)
-    // // .subscribe((customer) => {
-    // //     this.customers = customer;
-    // //     // if(this.customers.customerType == "Commercial Trucking")
-    // //     // {
 
-    // //     //   if(this.routes.find((x)=> x.title = "Farm Data"))
-    // //     //   {
-    // //     //     this.routes.splice(1, 1);
-    // //     //   }
 
-    // //     // }
-    // // });
 
-    // Subscribe to media changes
-
-    // this._customerService.getItems2().subscribe((i) => {
-    //     // console.log('All items', i.folders[0].folderId);
-    //     this.folderId = i.folders[0].folderId;
-
-    // });
-    // this._customerService.items$.subscribe((c)=>{
-    //     console.log('All Document data', c);
-    //     this._customerService.getItems2(c.folders[0].folderId).subscribe((b) => {
-    //         console.log('Filtered', b);
-    //     });
-    // });
-
-    // for first document
-    // this._customerService.getItems2(a).subscribe((b) => {
-    //     console.log('Filtered', b);
-    // });
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-    clicked(index) {
+    //#region Inner Navigation Routing
+    routeHandler(index) {
         const { title } = index;
         if (title === this.selectedIndex) {
             return;
@@ -169,6 +132,12 @@ export class CustomerDetailsComponent
         this.selectedIndex = title;
     }
 
+    toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+    }
+    //#endregion
+
+    //#region Update Dialog
     openUpdateDialog(): void {
         //Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent, {
@@ -179,9 +148,7 @@ export class CustomerDetailsComponent
             console.log('Compose dialog was closed!');
         });
     }
-    toggleDrawer() {
-        this.drawerOpened = !this.drawerOpened;
-    }
+    //#endregion
 
     backHandler(): void {
         this._router.navigate(['/apps/customers/']);

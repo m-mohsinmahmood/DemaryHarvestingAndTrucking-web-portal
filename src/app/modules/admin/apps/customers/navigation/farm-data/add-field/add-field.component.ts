@@ -67,7 +67,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     isEdit: boolean;
     status: boolean;
     customerFieldData: any;
+    //#endregion
 
+    //#region Observables
+    closeDialog$: Observable<boolean>;
     //#endregion
 
     //#region Auto Complete Farms
@@ -88,14 +91,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.customerFieldData = this.data.customerFieldData;
-        this.isEdit = this.data.isEdit;
         this.initForm();
-
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.customerFieldData.calendar_year);
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
+        this.farmSearchSubscription();
+        // Dialog Close
+        this.closeDialog$ = this._customersService.closeDialog$;
         this._customersService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
@@ -103,21 +102,17 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     this.matDialogRef.close();
                     this._customersService.closeDialog.next(false);
                 }
-            });
-        this.farm_search$
-            .pipe(
-                debounceTime(500),
-                distinctUntilChanged(),
-                takeUntil(this._unsubscribeAll)
-            )
-            .subscribe((value: string) => {
-                this.allFarms = this._customersService.getCustomerFarmsAll(
-                    this.data.customer_id,
-                    value
-                );
-        });
-    }
+          });
 
+        //Calender Year Initilize
+        if (this.data.isEdit) {
+            this.calendar_year = new FormControl(this.customerFieldData.calendar_year);
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
+
+
+    }
     AfterViewInit(): void {
 
     }
@@ -129,6 +124,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     //#endregion
 
+    //#region Form
     initForm() {
       // Create the form
     this.form = this._formBuilder.group({
@@ -152,14 +148,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         });
         }
     }
-    chosenYearHandler(normalizedYear: Moment, dp: any) {
-        const ctrlValue = moment(this.calendar_year.value);
-        ctrlValue.year(normalizedYear.year());
-        this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
-        dp.close();
-    }
-
     onSubmit(): void {
         this._customersService.isLoadingCustomerField.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
@@ -182,14 +170,42 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         this._customersService.isLoadingCustomerField.next(false);
         this.matDialogRef.close();
     }
-
     discard(): void {
         this.matDialogRef.close();
     }
 
+    //#endregion
+
+    //#region Calendar Year Function
+    chosenYearHandler(normalizedYear: Moment, dp: any) {
+        const ctrlValue = moment(this.calendar_year.value);
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue);
+        this.form.value.calendar_year = ctrlValue;
+        dp.close();
+    }
+    //#endregion
+
     //#region Auto Complete Farms Display Function
     displayFarmForAutoComplete(farm: any) {
         return farm ? `${farm.name}` : undefined;
+    }
+    //#endregion
+
+    //#region  Search Function
+    farmSearchSubscription() {
+        this.farm_search$
+        .pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            takeUntil(this._unsubscribeAll)
+        )
+        .subscribe((value: string) => {
+            this.allFarms = this._customersService.getCustomerFarmsAll(
+                this.data.customer_id,
+                value
+            );
+        });
     }
     //#endregion
 

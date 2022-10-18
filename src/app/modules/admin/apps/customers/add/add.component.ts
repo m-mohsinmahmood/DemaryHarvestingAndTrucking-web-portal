@@ -5,7 +5,7 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Customers } from '../customers.types';
 import { boolean } from 'joi';
 
@@ -15,15 +15,22 @@ import { boolean } from 'joi';
     styleUrls: ['./add.component.scss'],
 })
 export class AddCustomer implements OnInit {
+
+    //#region Observables
     customer$: Observable<Customers>;
     isLoadingCustomer$: Observable<boolean>;
     customers$: Observable<Customers[]>;
     isLoadingCustomers$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
+    //#region Variables
     public form: FormGroup;
     selectedProduct: any;
-    private _changeDetectorRef: any;
+    //#endregion
+
+    // Constructor
     constructor(
         private _customersService: CustomersService,
         public matDialogRef: MatDialogRef<AddCustomer>,
@@ -32,17 +39,37 @@ export class AddCustomer implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
+    //#region Lifecycle Functions
     ngOnInit(): void {
-        this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
-        this.closeDialog$ = this._customersService.closeDialog$;
-        this._customersService.closeDialog$.subscribe((res) => {
+        this.initObservables();
+        this.initForm();
+        this._customersService.closeDialog$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
             if (res) {
                 this.matDialogRef.close();
                 this._customersService.closeDialog.next(false);
             }
         });
+    }
 
-        // Create the form
+    ngAfterViewInit(): void {}
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
+    //#region Init Observables
+    initObservables() {
+        this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
+        this.closeDialog$ = this._customersService.closeDialog$;
+    }
+    //#endregion
+
+    //#region Form
+    initForm() {
+          // Create the form
         this.form = this._formBuilder.group({
             id              : [''],
             customer_name   : [''],
@@ -63,7 +90,6 @@ export class AddCustomer implements OnInit {
             website         : [''],
             linkedin        : [''],
         });
-
         if (this.data && this.data.isEdit) {
             const { customerData } = this.data;
             this.form.patchValue({
@@ -87,10 +113,7 @@ export class AddCustomer implements OnInit {
                 linkedin            : customerData.linkedin,
             });
         }
-    }
 
-    initApis() {
-        this._customersService.getCustomers();
     }
 
     createCustomer(customerData: any): void {
@@ -102,7 +125,6 @@ export class AddCustomer implements OnInit {
             this.data.paginationData
         );
     }
-
     onSubmit(): void {
         this._customersService.isLoadingCustomer.next(true);
         if (this.data && this.data.isEdit) {
@@ -112,59 +134,9 @@ export class AddCustomer implements OnInit {
             this.createCustomer(this.form.value);
         }
     }
-
-    /**
-     * Save and close
-     */
-    saveAndClose(): void {
-        // Save the message as a draft
-        this.saveAsDraft();
-
-        // Close the dialog
-        this.matDialogRef.close();
-    }
-
-    /**
-     * Discard the message
-     */
     discard(): void {
         this.matDialogRef.close();
     }
+    //#endregion
 
-    /**
-     * Save the message as a draft
-     */
-    saveAsDraft(): void {}
-
-    // createProduct(): void {
-    //     // Create the product
-    //     this._customersService.createProduct().subscribe((newProduct) => {
-    //         // Go to new product
-    //         this.selectedProduct = newProduct;
-
-    //         // Fill the form
-    //         this.form.patchValue(this.form.value);
-
-    //         // Mark for check
-    //         this._changeDetectorRef.markForCheck();
-    //     });
-    // }
-
-    /**
-     * Send the message
-     */
-    // send(): void {
-    //     console.log(this.form.controls);
-    //     this.api.createCustomer(this.form.value);
-    //     // .subscribe({
-    //     //     next: (res) => {
-    //     //         alert('Customer Added Successfully1');
-    //     //         this.form.reset();
-    //     //         this.matDialogRef.close('save');
-    //     //     },
-    //     //     error: () => {
-    //     //         alert('Error!');
-    //     //     },
-    //     // });
-    // }
 }

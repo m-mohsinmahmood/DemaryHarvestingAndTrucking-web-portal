@@ -5,7 +5,7 @@ import { AddFieldComponent } from './add-field/add-field.component';
 import { AddCropComponent } from './add-crop/add-crop.component';
 import { AddDestinationComponent } from './add-destination/add-destination.component';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, Observable, Subscription } from 'rxjs';
+import { debounceTime, Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AddFarmComponent } from './add-farm/add-farm.component';
 @Component({
@@ -69,6 +69,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
      summaryfields$: Observable<any>;
      summarydestinations$: Observable<any>;
 
+     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
     //#endregion
 
     //#region  local Variables
@@ -101,7 +103,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //#region Life Cycle Functions
     ngOnInit(): void {
-        this.activatedRoute.params.subscribe((params) => {
+        this.activatedRoute.params.pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((params) => {
             this.routeID = params.Id;
         });
 
@@ -220,8 +223,10 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.initObservables();
     }
 
-    ngOnDestroy(): void {}
-    //#endregion
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }    //#endregion
 
     //#region Initialize Observables
     initObservables() {
@@ -287,6 +292,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     //#endregion
 
+    //#region Farm Tab Change
     farmTabChange(event) {
         this.activeTab = event.tab.textLabel;
         switch (event.tab.textLabel) {
@@ -327,6 +333,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             default:
         }
     }
+
+    //#endregion
 
     //#region Add/Edit Dialogues
     // Farms
@@ -655,30 +663,4 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     //#endregion
 
-    getNextData(page, limit) {
-        // this._customerService.getCustomerSummaryFarm(
-        //     this.routeID,
-        //     page,
-        //     limit,
-        //     '',
-        //     '',
-        //     this.searchResult
-        // );
-        // this._customerService.getCustomerSummaryField(
-        //     this.routeID,
-        //     page,
-        //     limit,
-        //     '',
-        //     '',
-        //     this.searchResult
-        // );
-        // this._customerService.getCustomerSummaryDestination(
-        //     this.routeID,
-        //     page,
-        //     limit,
-        //     '',
-        //     '',
-        //     this.searchResult
-        // );
-    }
 }
