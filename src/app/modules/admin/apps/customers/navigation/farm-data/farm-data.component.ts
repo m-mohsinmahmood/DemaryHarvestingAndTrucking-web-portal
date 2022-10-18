@@ -84,9 +84,9 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     isLoading: any;
     activeTab: any;
     farmSort: any[] = []
-    fieldSort: string[] = []
-    cropSort: string[] = []
-    destinationationSort: string[] = []
+    fieldSort: any[] = []
+    cropSort: any[] = []
+    destinationSort: any[] = []
 
     //#endregion
 
@@ -424,7 +424,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     sortData(sort: any) {
         switch (this.activeTab) {
             case 'Farms':
-            this.farmSort[0] = sort.active, this.farmSort[1] = sort.direction
+            this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
                 this._customerService.getCustomerFarm(
                     this.routeID,
                     1,
@@ -435,32 +435,35 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 );
                 break;
             case 'Fields':
+                this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
+                    1,
                     this.limit,
-                    sort.active,
-                    sort.direction,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
                     this.searchResult
                 );
                 break;
             case 'Crops':
+                this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
+                    1,
                     this.limit,
-                    sort.active,
-                    sort.direction,
+                    this.cropSort[0],
+                    this.cropSort[1],
                     this.searchResult
                 );
                 break;
             case 'Destinations':
+                this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
+                    1,
                     this.limit,
-                    sort.active,
-                    sort.direction,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
                     this.searchResult
                 );
                 break;
@@ -512,29 +515,48 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             this.searchResult
         );
 
-        this._customerService.getCustomerSummaryFarm(
+        this._customerService.getCustomerField(
             this.routeID,
             page,
             limit,
-            '',
-            '',
+            this.fieldSort[0],
+            this.fieldSort[1],
             this.searchResult
         );
-        this._customerService.getCustomerSummaryField(
+
+        this._customerService.getCustomerDestination(
             this.routeID,
             page,
             limit,
-            '',
-            '',
+            this.destinationSort[0],
+            this.destinationSort[1],
             this.searchResult
         );
-        this._customerService.getCustomerSummaryDestination(
-            this.routeID,
-            page,
-            limit,
-            '',
-            '',
-            this.searchResult
-        );
+
+
+        // this._customerService.getCustomerSummaryFarm(
+        //     this.routeID,
+        //     page,
+        //     limit,
+        //     '',
+        //     '',
+        //     this.searchResult
+        // );
+        // this._customerService.getCustomerSummaryField(
+        //     this.routeID,
+        //     page,
+        //     limit,
+        //     '',
+        //     '',
+        //     this.searchResult
+        // );
+        // this._customerService.getCustomerSummaryDestination(
+        //     this.routeID,
+        //     page,
+        //     limit,
+        //     '',
+        //     '',
+        //     this.searchResult
+        // );
     }
 }
