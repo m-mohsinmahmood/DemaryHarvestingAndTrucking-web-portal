@@ -94,7 +94,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
-                alert(1);
                 this.searchResult = data.search;
                 this._customersService.getCustomerContact(
                     this.routeID,
