@@ -92,8 +92,9 @@ export class CropsListComponent implements OnInit {
         this.search = this.searchform.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
+                this.page = 1;
                 this.searchResult = data.search;
-                this._cropsService.getCrops(1, 10,'','', this.searchResult);
+                this._cropsService.getCrops(this.page, 10,'','', this.searchResult);
             });
     }
 
@@ -138,6 +139,7 @@ export class CropsListComponent implements OnInit {
     sortData(sort: any) {
         this.sortActive = sort.active;
         this.sortDirection = sort.direction;
+        this.page = 1;
         this._cropsService.getCrops(
             this.page,
             this.limit,
