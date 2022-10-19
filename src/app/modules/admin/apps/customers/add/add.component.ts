@@ -9,8 +9,6 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Customers } from '../customers.types';
-import { boolean } from 'joi';
-import { state } from '@angular/animations';
 
 @Component({
     selector: 'app-add',
@@ -27,7 +25,6 @@ export class AddCustomer implements OnInit {
     closeDialog$: Observable<boolean>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
-
     //#region Variables
     public form: FormGroup;
     selectedProduct: any;
@@ -64,14 +61,12 @@ export class AddCustomer implements OnInit {
         this._unsubscribeAll.complete();
     }
     //#endregion
-
     //#region Init Observables
     initObservables() {
         this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
         this.closeDialog$ = this._customersService.closeDialog$;
     }
     //#endregion
-
     //#region Form
     initForm() {
           // Create the form

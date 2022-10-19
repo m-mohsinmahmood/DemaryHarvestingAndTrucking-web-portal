@@ -71,7 +71,6 @@ export class AddCustomerContact implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: [this.data.customerId],
-            company_name: ['', [Validators.required]],
             first_name: ['',[Validators.required]],
             last_name: ['',[Validators.required]],
             website: [''],

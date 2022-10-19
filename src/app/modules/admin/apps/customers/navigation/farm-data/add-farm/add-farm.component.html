@@ -10,12 +10,6 @@
         </button>
     </div>
 
-    <!-- <div *ngIf="this.data.isEdit" class="flex justify-end mr-12 mt-4">
-        <button *ngIf="isEdit" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
-            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-            <span class="ml-2 mr-1">Edit</span>
-        </button>
-    </div> -->
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-6 overflow-y-auto">
         <mat-form-field appearance="outline">

@@ -50,7 +50,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     isEdit: boolean = false;
     pageSize = 10;
-    currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;
@@ -95,9 +94,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+                this.page = 1;
                 this._customersService.getCustomerContact(
                     this.routeID,
-                    1,
+                    this.page,
                     10,
                     '',
                     '',
@@ -141,9 +141,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     sortData(sort: any) {
         this.sortActive = sort.active;
         this.sortDirection = sort.direction;
+        this.page = 1;
         this._customersService.getCustomerContact(
             this.routeID,
-            1,
+            this.page,
             this.pageSize,
             sort.active,
             sort.direction,

@@ -98,6 +98,7 @@ export class CustomersListComponent implements OnInit {
             )
             .subscribe((data) => {
                 this.searchResult = data.search;
+                this.page = 1;
                 this._customersService.getCustomers(
                     1,
                     10,
@@ -133,6 +134,7 @@ export class CustomersListComponent implements OnInit {
 
     //#region Sort Function
     sortData(sort: any) {
+        this.page = 1;
         this._customersService.getCustomers(
             this.page,
             this.limit,

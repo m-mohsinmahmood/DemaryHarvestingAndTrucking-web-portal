@@ -97,7 +97,7 @@
                             </div>
                         </ng-container>
                     </div>
-                    <mat-paginator *ngIf="customerContactList?.customer_contacts?.length > 0" class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerContactList?.count" [pageIndex]="currentPage"
+                    <mat-paginator *ngIf="customerContactList?.customer_contacts?.length > 0" class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerContactList?.count" [pageIndex]="page - 1"
                         [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                 </ng-container>
             </ng-container>

@@ -72,13 +72,11 @@ export class ContactsDataComponent implements OnInit {
     }
 
     //#endregion
-
     //#region Form
     initForm(): void {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: [''],
-            company_name: ['', [Validators.required]],
             first_name: ['',[Validators.required]],
             last_name: ['',[Validators.required]],
             website: ['',[Validators.required]],
@@ -99,7 +97,6 @@ export class ContactsDataComponent implements OnInit {
         this.form.patchValue({
             id: this.data.customerContact.id,
             customer_id: this.data.customerContact.customer_id,
-            company_name: this.data.customerContact.company_name,
             first_name: this.data.customerContact.first_name,
             last_name: this.data.customerContact.last_name,
             website: this.data.customerContact.website,
@@ -127,7 +124,6 @@ export class ContactsDataComponent implements OnInit {
         this.matDialogRef.close();
     }
     //#endregion
-
     //#region Add Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact);
