@@ -108,8 +108,8 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
             id: [''],
             customer_id: this.data.customer_id,
             farm_id: ['', [Validators.required]],
-            name: ['', [Validators.required]],
-            calendar_year: ['2022'],
+            name: [''],
+            calendar_year: [moment()],
             status: true,
         });
 

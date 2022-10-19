@@ -132,9 +132,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         farm_id: [''],
         customer_id: this.data.customer_id,
         name: ['', [Validators.required]],
-        acres: ['', [Validators.required]],
+        acres: [''],
         status : true,
-        calendar_year: ['2022'],
+        calendar_year: [moment()],
     });
     if (this.data && this.data.isEdit) {
         this.form.patchValue({

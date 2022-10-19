@@ -166,10 +166,8 @@ export class CropService {
             );
     }
 
-    updateCrop(cropData: any, paginatioData: any) {
-        console.log('1',cropData);
-        console.log('2',paginatioData);
-
+    updateCrop(cropData: any) {
+      
         this._httpClient
             .put(`api-1/crop`, cropData)
             .pipe(take(1))
@@ -191,11 +189,7 @@ export class CropService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCrops(
-                        paginatioData.page,
-                        paginatioData.limit,
-                        paginatioData.search
-                    );
+                    this.getCrops();
                 }
             );
     }

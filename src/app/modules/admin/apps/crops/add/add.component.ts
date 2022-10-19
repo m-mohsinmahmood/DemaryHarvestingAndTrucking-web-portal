@@ -14,9 +14,11 @@ import { CropService } from '../crops.services';
     styleUrls: ['./add.component.scss'],
 })
 export class AddCropsComponent implements OnInit {
+
+    //#region Observable
     isLoadingCrop$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
-
+    //#endregion
     form: FormGroup;
 
     constructor(
@@ -25,23 +27,36 @@ export class AddCropsComponent implements OnInit {
         public matDialogRef: MatDialogRef<AddCropsComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
-
+    //#region Lifecycle Functions
     ngOnInit(): void {
-        this.isLoadingCrop$ = this._cropsService.is_loading_crop$;
-        this.closeDialog$ = this._cropsService.closeDialog$;
+        this.initObservables();
+        this.initForm()
         this._cropsService.closeDialog$.subscribe((res) => {
             if (res) {
                 this.matDialogRef.close();
                 this._cropsService.closeDialog.next(false);
             }
         });
+    }
+    //#endregion
+
+    //#region Init Observables
+    initObservables() {
+        this.isLoadingCrop$ = this._cropsService.is_loading_crop$;
+        this.closeDialog$ = this._cropsService.closeDialog$;
+    }
+
+    //#endregion
+
+    //#region Form
+    initForm(){
+        // Create the form
         this.form = this._formBuilder.group({
             id: [''],
             name: [''],
             variety: [''],
-            bushel_weight: ['', [Validators.required]],
+            bushel_weight: [, [Validators.required]],
         });
-        // Create the form
         if (this.data && this.data.cropData.isEdit) {
             this.form.patchValue({
                 id: this.data.cropData.id,
@@ -56,7 +71,7 @@ export class AddCropsComponent implements OnInit {
         this._cropsService.createCrop(cropData);
     }
     updateCrop(cropData: any): void {
-        this._cropsService.updateCrop(cropData, this.data.paginationData);
+        this._cropsService.updateCrop(cropData);
     }
 
     onSubmit(): void {
@@ -72,5 +87,6 @@ export class AddCropsComponent implements OnInit {
         this._cropsService.is_loading_crop.next(false);
         this.matDialogRef.close();
     }
-
+    //#endregion
+       
 }
