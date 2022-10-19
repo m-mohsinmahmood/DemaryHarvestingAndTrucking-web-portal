@@ -113,11 +113,12 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+                this.page = 1;
                 switch (this.activeTab) {
                     case 'Farms':
                         this._customerService.getCustomerFarm(
                             this.routeID,
-                            1,
+                            this.page,
                             10,
                             '',
                             '',
@@ -127,7 +128,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     case 'Fields':
                         this._customerService.getCustomerField(
                             this.routeID,
-                            1,
+                            this.page,
                             10,
                             '',
                             '',
@@ -137,7 +138,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     case 'Crops':
                         this._customerService.getCustomerCrops(
                             this.routeID,
-                            1,
+                            this.page,
                             10,
                             '',
                             '',
@@ -147,7 +148,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     case 'Destinations':
                         this._customerService.getCustomerDestination(
                             this.routeID,
-                            1,
+                            this.page,
                             10,
                             '',
                             '',
@@ -163,9 +164,10 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+                this.page = 1;
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                     '',
                     '',
@@ -177,10 +179,11 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.search = this.searchformfield.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
+                this.page = 1;
                 this.searchResult = data.search;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                     '',
                     '',
@@ -193,6 +196,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
+                this.page = 1;
                 this._customerService.getCustomerCrops(
                     this.routeID,
                     1,
@@ -207,9 +211,10 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
          .pipe(debounceTime(500))
          .subscribe((data) => {
              this.searchResult = data.search;
+             this.page = 1;
              this._customerService.getCustomerDestination(
                  this.routeID,
-                 1,
+                 this.page,
                  5,
                  '',
                  '',
@@ -295,6 +300,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#region Farm Tab Change
     farmTabChange(event) {
         this.activeTab = event.tab.textLabel;
+        this.page = 1;
         switch (event.tab.textLabel) {
             case 'Farms':
                 this._customerService.getCustomerFarm(this.routeID);
@@ -311,22 +317,22 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             case 'Summary':
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                 );
                 this._customerService.getCustomerField(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                 );
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                 );
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                 );
                 break;
