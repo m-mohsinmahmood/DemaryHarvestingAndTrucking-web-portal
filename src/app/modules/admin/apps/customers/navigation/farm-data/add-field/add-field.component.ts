@@ -134,7 +134,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         name: ['', [Validators.required]],
         acres: ['', [Validators.required]],
         status : true,
-        calendar_year: [''],
+        calendar_year: ['2022'],
     });
     if (this.data && this.data.isEdit) {
         this.form.patchValue({

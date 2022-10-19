@@ -109,7 +109,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
             customer_id: this.data.customer_id,
             farm_id: ['', [Validators.required]],
             name: ['', [Validators.required]],
-            calendar_year: [''],
+            calendar_year: ['2022'],
             status: true,
         });
 
@@ -122,7 +122,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
               farm_id: {id: customerDestinationData.farm_id, name: customerDestinationData.farm_name},
               name: customerDestinationData.name,
               calendar_year: customerDestinationData.calendar_year,
-              status: customerDestinationData.status
+              status: customerDestinationData.status.toString()
             });
         }
     }
@@ -134,11 +134,10 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
 
     onSubmit(): void {
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
-
         if (this.data && this.data?.isEdit) {
-            this._customerService.createCustomerDestination(this.form.value);
-        } else {
             this._customerService.updateCustomerDestination(this.form.value);
+        } else {
+            this._customerService.createCustomerDestination(this.form.value);
         }
     }
 

@@ -118,7 +118,7 @@ export class AddCropComponent implements OnInit {
          this.form = this._formBuilder.group({
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
-            calendar_year: [''],
+            calendar_year: ['2022'],
             status: true
         });
 
