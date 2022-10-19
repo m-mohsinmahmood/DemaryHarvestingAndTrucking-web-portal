@@ -650,7 +650,7 @@
                                         <div mat-sort-header="acres" class="hidden sm:block">
                                             Acres
                                         </div>
-                                        <div class="hidden sm:block">Status</div>
+                                        <div mat-sort-header="status" class="hidden sm:block">Status</div>
                                         <div mat-sort-header="calendar_year" class="hidden sm:block">
                                             Calendar Year
                                         </div>
@@ -753,7 +753,7 @@
                                         <!-- Header -->
                                         <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortSummaryData($event, 'summaryCrop')">
                                             <div class="" mat-sort-header="crop_name">Name</div>
-                                            <div class="hidden sm:block">
+                                            <div class="hidden sm:block" mat-sort-header="status">
                                                 Status
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="calendar_year">
@@ -789,7 +789,7 @@
                                             </ng-container>
                                         </div>
                                     </div>
-                                    <mat-paginator *ngIf="customerCropList?.customer_crops?.length > 0" class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerCropList?.count" [showFirstLastButtons]="true" (page)="pageChanged($event, 'summaryCrop')"
+                                    <mat-paginator *ngIf="customerCropList?.customer_crops?.length > 0" class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerCropList?.count" [showFirstLastButtons]="true"  (page)="pageChanged($event, 'summaryCrop')"
                                         [pageIndex]="currentPage" [pageSize]="pageSizeSummary" [pageSizeOptions]="pageSizeOptionsSummary">
                                     </mat-paginator>
                                 </ng-container>
@@ -857,10 +857,10 @@
                                 <ng-container>
                                     <div class="grid summary-pg-rows-height overflow-y-auto">
                                         <!-- Header -->
-                                        <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                                        <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortSummaryData($event, 'summaryDestination')">
                                             <div mat-sort-header="farm_name">Farm Name</div>
                                             <div class="hidden sm:block" mat-sort-header="destination_name">Destination Name</div>
-                                            <div class="hidden sm:block">
+                                            <div class="hidden sm:block" mat-sort-header="status">
                                                 Status
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="calendar_year">

@@ -40,6 +40,7 @@ export class ContactsDataComponent implements OnInit {
     form: FormGroup;
     imageURL: string = '';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    state_list =['Alaska', 'Alabama', 'Arkansas', 'American Samoa', 'Arizona', 'California', 'Colorado', 'Connecticut', 'District of Columbia', 'Delaware', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Iowa', 'Idaho', 'Illinois', 'Indiana', 'Kansas', 'Kentucky', 'Louisiana', 'Massachusetts', 'Maryland', 'Maine', 'Michigan', 'Minnesota', 'Missouri', 'Mississippi', 'Montana', 'North Carolina', 'North Dakota', 'Nebraska', 'New Hampshire', 'New Jersey', 'New Mexico', 'Nevada', 'New York', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Virginia', 'Virgin Islands', 'Vermont', 'Washington', 'Wisconsin', 'West Virginia', 'Wyoming'];
     //#endregion
 
     // Constructor
@@ -79,19 +80,19 @@ export class ContactsDataComponent implements OnInit {
             customer_id: [''],
             first_name: ['',[Validators.required]],
             last_name: ['',[Validators.required]],
-            website: ['',[Validators.required]],
-            position: ['',[Validators.required]],
-            address: ['',[Validators.required]],
-            cell_number: ['',[Validators.required]],
-            city: ['',[Validators.required]],
-            office_number: ['',[Validators.required]],
-            state: ['',[Validators.required]],
-            email: ['',[Validators.required]],
-            zip_code: ['',[Validators.required]],
-            fax: ['',[Validators.required]],
-            linkedin: ['',[Validators.required]],
-            note_1: ['',[Validators.required]],
-            note_2: ['',[Validators.required]],
+            website: [''],
+            position: [''],
+            address: [''],
+            cell_number: [''],
+            city: [''],
+            office_number: [''],
+            state: [''],
+            email: ['',[Validators.email]],
+            zip_code: [''],
+            fax: [''],
+            linkedin: [''],
+            note_1: [''],
+            note_2: [''],
             avatar: [[]],
         });
         this.form.patchValue({

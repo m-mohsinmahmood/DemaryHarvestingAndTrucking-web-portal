@@ -83,9 +83,15 @@
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
-                        <mat-label class="text-gray-500 text-gray-500">State</mat-label>
-                        <input [readonly]="isEdit" matInput formControlName="state">
+                    <mat-form-field appearance="outline" class="cat mx-1  w-full ">
+                        <mat-label>Select State</mat-label>
+                        <mat-select  formControlName="state">
+                            <mat-option
+                                *ngFor="let state of state_list"
+                                [value]="state"
+                                >{{ state }}</mat-option
+                            >
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
