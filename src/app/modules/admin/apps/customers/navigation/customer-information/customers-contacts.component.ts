@@ -54,9 +54,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;
-    limit: number;
     routeID;
     isLoading: boolean = false;
+    sortActive:any;
+    sortDirection:any;
 
     search: Subscription;
     searchform: FormGroup = new FormGroup({
@@ -139,10 +140,12 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     //#region Sort Function
     sortData(sort: any) {
+        this.sortActive = sort.active;
+        this.sortDirection = sort.direction;
         this._customersService.getCustomerContact(
             this.routeID,
-            this.page,
-            this.limit,
+            1,
+            this.pageSize,
             sort.active,
             sort.direction,
             this.searchResult
@@ -153,8 +156,8 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this._customersService.getCustomerContact(this.routeID,this.page,this.limit,'','',this.searchResult);
+        this.pageSize = event.pageSize;
+        this._customersService.getCustomerContact(this.routeID,this.page, this.pageSize,this.sortActive,this.sortDirection,this.searchResult);
     }
     //#endregion
 

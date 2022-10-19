@@ -38,15 +38,15 @@
         </div>
     </div>
     <!-- Main -->
-    <div class="flex flex-auto overflow-hidden">
+    <div *ngIf="(customerContactList$ | async) as customerContactList" [ngClass]="(customerContactList.customer_contacts.length > 0)?'flex flex-auto overflow-hidden':'flex flex-auto items-center overflow-hidden'">
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
             <!-- Customer Contacts list -->
             <ng-container *ngIf="(customerContactList$ | async) as customerContactList">
-                <ng-container>
+                <ng-container *ngIf="customerContactList?.customer_contacts.length > 0; else noContacts">
                     <div class="grid">
                         <!-- Header -->
                         <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="fist_name" class="sm:block">First Name</div>
+                            <div mat-sort-header="first_name" class="sm:block">First Name</div>
                             <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
                             <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
                             <div mat-sort-header="position" class="hidden md:block">Position</div>
@@ -101,10 +101,8 @@
                         [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                 </ng-container>
             </ng-container>
-            <ng-template #noDestinations>
-                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                    There are no Customer Contacts!
-                </div>
+            <ng-template class="flex" #noContacts>
+                <div class="items-center justify-center p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">There are no Contacts!</div>
             </ng-template>
         </div>
     </div>
