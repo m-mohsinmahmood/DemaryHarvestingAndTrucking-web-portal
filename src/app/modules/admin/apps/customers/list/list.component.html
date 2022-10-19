@@ -69,6 +69,7 @@
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="customers$ | async as customers">
+                            <ng-container *ngIf="customers.count > 0;else noCustomers">
                             <ng-container *ngFor="let customer of customers.customers">
                                 <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
                                     <!-- Image -->
@@ -78,53 +79,53 @@
                                     </div> -->
 
                                     <!-- Company Name -->
-                                    <div class="truncate break-words">
+                                    <div class="truncate">
                                         {{ customer.company_name }}
                                     </div>
 
                                     <!-- Main Contact -->
-                                    <div class="hidden sm:block items-left break-words">
+                                    <div class="hidden sm:block items-left truncate">
                                         <div class="min-w-4">
                                             {{ customer.main_contact }}
                                         </div>
                                     </div>
 
                                     <!-- Position -->
-                                    <div class="hidden lg:block items-center">
-                                        <div class="min-w-4">
+                                    <div class="hidden lg:block items-center truncate">
+                                        <!-- <div class="min-w-4"> -->
                                             {{ customer.position }}
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
 
                                     <!-- Phone No -->
-                                    <div class="hidden md:block items-left break-words">
-                                        <div class="min-w-4">
+                                    <div class="hidden md:block items-left truncate">
+                                        <!-- <div class="min-w-4"> -->
                                             {{ customer.phone_number }}
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
 
                                     <!-- State -->
-                                    <div class="hidden lg:block items-left">
-                                        <div class="min-w-4">
+                                    <div class="hidden lg:block items-left truncate">
+                                        <!-- <div class="min-w-4"> -->
                                             {{ customer.state }}
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                     <!-- Country -->
-                                    <div class="hidden sm:block items-left">
-                                        <div class="min-w-4">
+                                    <div class="hidden sm:block items-left truncate">
+                                        <!-- <div class="min-w-4"> -->
                                             {{ customer.country }}
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="hidden sm:block items-center break-words">
-                                        <div class="min-w-4">
+                                    <div class="hidden sm:block items-center truncate">
+                                        <!-- <div class="min-w-4"> -->
                                             {{ customer.email }}
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
 
                                     <!-- Customer Type -->
-                                    <div class="hidden sm:block items-center break-words">
+                                    <div class="hidden sm:block items-center truncate">
                                         {{ customer.customer_type }}
                                     </div>
 
@@ -169,6 +170,7 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                        </ng-container>
                     </div>
                     <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customers.count" [pageIndex]="currentPage" [pageSize]="pageSize"
                         [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
@@ -177,9 +179,10 @@
 
             <ng-template #noCustomers>
                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                    There are no products!
+                    There are no customers!
                 </div>
             </ng-template>
+
         </div>
     </div>
     <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999 bg-green-300" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>
