@@ -16,7 +16,7 @@
         <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
-                    <mat-label class="text-gray-500 text-gray-500 sm:w-4/12">Customer Name</mat-label>
+                    <mat-label class="sm:w-4/12">Customer Name</mat-label>
                     <input matInput formControlName="customer_name">
                 </mat-form-field>
             </div>
@@ -33,12 +33,12 @@
                 </mat-form-field>
             </div>
 
-            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+            <!-- <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label class="text-gray-500 text-gray-500 sm:w-4/12">Company Name</mat-label>
                     <input matInput formControlName="company_name">
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
@@ -48,7 +48,7 @@
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
-                    <mat-label class="text-gray-500 text-gray-500">Phone Number</mat-label>
+                    <mat-label>Phone Number</mat-label>
                     <input matInput formControlName="phone_number">
                 </mat-form-field>
             </div>
@@ -139,7 +139,7 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button mat-flat-button color="primary" (click)="onSubmit()">{{this.data? 'Update' : 'Save' }}</button>
+            <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onSubmit()">{{this.data? 'Update' : 'Save' }}</button>
         </div>
     </div>
 </div>
