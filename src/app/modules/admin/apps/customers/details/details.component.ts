@@ -72,6 +72,8 @@ export class CustomerDetailsComponent
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
+        console.log(history.state); // should log out 'bar'
+        this.selectedIndex = history.state?.title;
     }
 
     ngAfterViewInit(): void {

@@ -172,12 +172,12 @@ export class CustomersListComponent implements OnInit {
 
     //  Toggle Customer  Details
     toggleGeneralInfo(customerId: string, state: string): void {
-        this._router.navigateByUrl('apps/customers/details/' + customerId);
+        this._router.navigateByUrl(`apps/customers/details/${customerId}` , { state: { title: 'Customer Detail' } });
     }
     //  Toggle Customer Contacts Details
    toggleContactsDetails(customerId: string): void {
     this._customersService.getCustomerById(customerId);
-    this._router.navigateByUrl('apps/customers/details/' + customerId);
+    this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Contact Data' }});
     }
 
     //#endregion
