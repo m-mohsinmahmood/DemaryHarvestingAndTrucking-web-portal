@@ -123,8 +123,10 @@ export class AddCropComponent implements OnInit {
         });
 
         if(this.data && this.data.isEdit){
+            console.log(this.customerCropData.id);
             this.form.patchValue({
                 customer_id: this.data.customer_id,
+                id: this.customerCropData.id,
                 crop_id: {id: this.customerCropData.crop_id, name: this.customerCropData.crop_name},
                 calendar_year: this.customerCropData.calendar_year,
                 status: this.customerCropData.status.toString(),
@@ -134,7 +136,6 @@ export class AddCropComponent implements OnInit {
     onSubmit(): void {
         this.form.value['crop_id'] = this.form.value['crop_id']?.id;
         if (this.data && this.data.isEdit) {
-        debugger;
             this._customerService.updateCustomerCrops(this.form.value);
         } else {
             this._customerService.createCustomerCrops(this.form.value);
