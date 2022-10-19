@@ -321,7 +321,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -348,7 +348,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Update Customer',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -425,7 +425,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Contact',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -452,7 +452,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Update Customer Contact',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -578,7 +578,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Farm',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -605,7 +605,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Update Customer Farm',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -714,7 +714,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Field',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -741,7 +741,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Update Customer Field',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -803,7 +803,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Crop',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -829,7 +829,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Crop',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -920,7 +920,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Update Customer Destination',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -949,7 +949,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Create Customer Contact',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });

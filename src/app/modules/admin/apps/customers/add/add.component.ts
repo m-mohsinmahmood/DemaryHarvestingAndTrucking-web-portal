@@ -78,7 +78,7 @@ export class AddCustomer implements OnInit {
             phone_number    : ['', [Validators.required]],
             state           : [''],
             country         : [''],
-            email           : [''],
+            email           : ['', [Validators.email]],
             fax             : [''],
             customer_type   : ['', [Validators.required]],
             status          : true,
