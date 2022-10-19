@@ -55,7 +55,7 @@
                     <div class="grid">
                         <!-- Header -->
                         <div class="customer-grid z-10 sticky top-0 grid gap-4 py-4 px-4 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="company_name">Company Name</div>
+                            <div mat-sort-header="customer_name">Customer Name</div>
                             <div mat-sort-header="main_contact" class="hidden sm:block">Main Contact</div>
                             <div mat-sort-header="position" class="hidden lg:block">Position</div>
                             <div mat-sort-header="phone_number" class="hidden md:block">Phone Number</div>
@@ -79,7 +79,7 @@
 
                                     <!-- Company Name -->
                                     <div class="truncate break-words">
-                                        {{ customer.company_name }}
+                                        {{ customer.customer_name }}
                                     </div>
 
                                     <!-- Main Contact -->

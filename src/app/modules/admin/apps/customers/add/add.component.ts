@@ -72,15 +72,15 @@ export class AddCustomer implements OnInit {
           // Create the form
         this.form = this._formBuilder.group({
             id              : [''],
-            customer_name   : [''],
+            customer_name   : ['', [Validators.required]],
             company_name    : [''],
             main_contact    : [''],
-            phone_number    : [''],
+            phone_number    : ['', [Validators.required]],
             state           : [''],
             country         : [''],
             email           : [''],
             fax             : [''],
-            customer_type   : [''],
+            customer_type   : ['', [Validators.required]],
             status          : true,
             address         : [''],
             billing_address : [''],
