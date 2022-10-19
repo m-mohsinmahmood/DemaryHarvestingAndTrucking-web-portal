@@ -14,6 +14,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { customersRoutes } from 'app/modules/admin/apps/customers/customers.routing';
@@ -25,17 +31,26 @@ import { CustomerDetailsComponent } from './details/details.component';
 import { UpdateComponent } from './update/update.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { AddFarmsComponent } from './details/add-farms/add-farms.component';
-import { AddCropsComponent } from './details/add-crops/add-crops.component';
-import { HarvestInfoComponent } from './details/harvest-info/harvest-info.component';
-import { CustomerInformationComponent } from './navigation/customer-information/customer-information.component';
 import { RateDataComponent } from './navigation/rate-data/rate-data.component';
 import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
-import { JobDataComponent } from './navigation/job-data/job-data.component';
+import { JobResultComponent } from './navigation/job-result/job-result.component';
+import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
+import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
+import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
+import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.component';
+import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
+import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
+import { AddCustomerContact } from './navigation/customer-information/add/add.component';
+import { CustomerDetail } from './navigation/customer-detail/customer-detail.component';
+import { DocumentComponent } from './navigation/document/document.component';
+import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
 
 @NgModule({
     declarations: [
@@ -44,18 +59,25 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         AddCustomer,
         CustomerDetailsComponent,
         UpdateComponent,
-        AddFarmsComponent,
-        AddCropsComponent,
-        HarvestInfoComponent,
-        CustomerInformationComponent,
         RateDataComponent,
         InvoiceComponent,
         JobStatusComponent,
         FarmDataComponent,
         ResourcesComponent,
-        JobDataComponent
+        JobResultComponent,
+        ContactsDataComponent,
+        CustomersContactsList,
+        AddItemComponent,
+        AddFieldComponent,
+        AddCropComponent,
+        AddDestinationComponent,
+        AddCustomerContact,
+        CustomerDetail,
+        DocumentComponent,
+        AddRateDataComponent,
+        AddFarmComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
@@ -77,9 +99,15 @@ import { JobDataComponent } from './navigation/job-data/job-data.component';
         SharedModule,
         MatDialogModule,
         MatTabsModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMomentDateModule,
+        MatAutocompleteModule,
+        MatProgressSpinnerModule,
+        FuseDrawerModule,
+    ],
 
-    ]
 })
-export class CustomersModule
-{
-}
+export class CustomersModule {}

@@ -88,9 +88,7 @@ export const appRoutes: Route[] = [
                 {path: 'customers', loadChildren: () => import('app/modules/admin/apps/customers/customers.module').then(m => m.CustomersModule)},
                 {path: 'applicants', loadChildren: () => import('app/modules/admin/apps/applicants/applicants.module').then(m => m.ApplicantsModule)},
                 {path: 'equipment', loadChildren: () => import('app/modules/admin/apps/equipment/equipment.module').then(m => m.EquipmentModule)},
-                // {path: 'vehicle', loadChildren: () => import('app/modules/admin/apps/vehicle/vehicle.module').then(m => m.VehicleModule)},
-                // {path: 'detail', loadChildren: () => import('app/modules/admin/apps/vehicle/details/details.module').then(m => m.DetailsModule)},
-
+                {path: 'crops', loadChildren: () => import('app/modules/admin/apps/crops/crops.module').then(m => m.CropsModule)},
             ]},
 
             // Pages

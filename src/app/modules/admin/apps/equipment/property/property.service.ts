@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/property/property.types';
+import { InventoryProduct, InventoryTag, InventoryVendor } from '../vehicle/vehicle.types';
+import { PropertyBrand, PropertyCategory, PropertyPagination, PropertyProduct, PropertyTag, PropertyVendor } from './property.types';
 
 @Injectable({
     providedIn: 'root'
@@ -9,13 +10,13 @@ import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduc
 export class PropertyService
 {
     // Private
-    private _brands: BehaviorSubject<InventoryBrand[] | null> = new BehaviorSubject(null);
-    private _categories: BehaviorSubject<InventoryCategory[] | null> = new BehaviorSubject(null);
-    private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
-    private _product: BehaviorSubject<InventoryProduct | null> = new BehaviorSubject(null);
-    private _products: BehaviorSubject<InventoryProduct[] | null> = new BehaviorSubject(null);
-    private _tags: BehaviorSubject<InventoryTag[] | null> = new BehaviorSubject(null);
-    private _vendors: BehaviorSubject<InventoryVendor[] | null> = new BehaviorSubject(null);
+    private _brands: BehaviorSubject<PropertyBrand[] | null> = new BehaviorSubject(null);
+    private _categories: BehaviorSubject<PropertyCategory[] | null> = new BehaviorSubject(null);
+    private _pagination: BehaviorSubject<PropertyPagination | null> = new BehaviorSubject(null);
+    private _product: BehaviorSubject<PropertyProduct | null> = new BehaviorSubject(null);
+    private _products: BehaviorSubject<PropertyProduct[] | null> = new BehaviorSubject(null);
+    private _tags: BehaviorSubject<PropertyTag[] | null> = new BehaviorSubject(null);
+    private _vendors: BehaviorSubject<PropertyVendor[] | null> = new BehaviorSubject(null);
 
     /**
      * Constructor
@@ -31,7 +32,7 @@ export class PropertyService
     /**
      * Getter for brands
      */
-    get brands$(): Observable<InventoryBrand[]>
+    get brands$(): Observable<PropertyBrand[]>
     {
         return this._brands.asObservable();
     }
@@ -39,7 +40,7 @@ export class PropertyService
     /**
      * Getter for categories
      */
-    get categories$(): Observable<InventoryCategory[]>
+    get categories$(): Observable<PropertyCategory[]>
     {
         return this._categories.asObservable();
     }
@@ -47,7 +48,7 @@ export class PropertyService
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<InventoryPagination>
+    get pagination$(): Observable<PropertyPagination>
     {
         return this._pagination.asObservable();
     }
@@ -55,7 +56,7 @@ export class PropertyService
     /**
      * Getter for product
      */
-    get product$(): Observable<InventoryProduct>
+    get product$(): Observable<PropertyProduct>
     {
         return this._product.asObservable();
     }
@@ -63,15 +64,17 @@ export class PropertyService
     /**
      * Getter for products
      */
-    get products$(): Observable<InventoryProduct[]>
+    get products$(): Observable<PropertyProduct[]>
     {
+        console.log('first',this._products)
+
         return this._products.asObservable();
     }
 
     /**
      * Getter for tags
      */
-    get tags$(): Observable<InventoryTag[]>
+    get tags$(): Observable<PropertyTag[]>
     {
         return this._tags.asObservable();
     }
@@ -79,7 +82,7 @@ export class PropertyService
     /**
      * Getter for vendors
      */
-    get vendors$(): Observable<InventoryVendor[]>
+    get vendors$(): Observable<PropertyVendor[]>
     {
         return this._vendors.asObservable();
     }
@@ -91,9 +94,9 @@ export class PropertyService
     /**
      * Get brands
      */
-    getBrands(): Observable<InventoryBrand[]>
+    getBrands(): Observable<PropertyBrand[]>
     {
-        return this._httpClient.get<InventoryBrand[]>('api/apps/ecommerce/inventory/brands').pipe(
+        return this._httpClient.get<PropertyBrand[]>('api/apps/ecommerce/inventory/brands').pipe(
             tap((brands) => {
                 this._brands.next(brands);
             })
@@ -103,9 +106,9 @@ export class PropertyService
     /**
      * Get categories
      */
-    getCategories(): Observable<InventoryCategory[]>
+    getCategories(): Observable<PropertyCategory[]>
     {
-        return this._httpClient.get<InventoryCategory[]>('api/apps/ecommerce/inventory/categories').pipe(
+        return this._httpClient.get<PropertyCategory[]>('api/apps/ecommerce/inventory/categories').pipe(
             tap((categories) => {
                 this._categories.next(categories);
             })
@@ -123,9 +126,9 @@ export class PropertyService
      * @param search
      */
     getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
+        Observable<{ pagination: PropertyPagination; products: PropertyProduct[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/equipment/property/products', {
+        return this._httpClient.get<{ pagination: PropertyPagination; products: PropertyProduct[] }>('api/apps/equipment/property/products', {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -145,7 +148,7 @@ export class PropertyService
     /**
      * Get product by id
      */
-    getProductById(id: string): Observable<InventoryProduct>
+    getProductById(id: string): Observable<PropertyProduct>
     {
         return this._products.pipe(
             take(1),
@@ -175,11 +178,11 @@ export class PropertyService
     /**
      * Create product
      */
-    createProduct(): Observable<InventoryProduct>
+    createProduct(): Observable<PropertyProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
+            switchMap(products => this._httpClient.post<PropertyProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
                 map((newProduct) => {
 
                     // Update the products with the new product
@@ -198,11 +201,11 @@ export class PropertyService
      * @param id
      * @param product
      */
-    updateProduct(id: string, product: InventoryProduct): Observable<InventoryProduct>
+    updateProduct(id: string, product: PropertyProduct): Observable<PropertyProduct>
     {
         return this.products$.pipe(
             take(1),
-            switchMap(products => this._httpClient.patch<InventoryProduct>('api/apps/ecommerce/inventory/product', {
+            switchMap(products => this._httpClient.patch<PropertyProduct>('api/apps/ecommerce/inventory/product', {
                 id,
                 product
             }).pipe(

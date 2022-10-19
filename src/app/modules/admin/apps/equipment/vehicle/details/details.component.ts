@@ -97,7 +97,6 @@ export class VehicleDetailComponent implements OnInit, OnDestroy
 
         // Get the employee by id
         this._vehicleService.getVehicleById(this.routeID).subscribe((vehicle) => {
-            console.log('RRRR',vehicle);
             this.vehicleDetails = vehicle;
         });
       }

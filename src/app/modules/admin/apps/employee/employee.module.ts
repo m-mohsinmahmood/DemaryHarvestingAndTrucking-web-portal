@@ -31,6 +31,12 @@ import { AddComponent } from './add/add.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateComponent } from './update/update.component';
 import { UploadDocModal } from './details/details.component';
+import { EmployeeDataComponent } from './navigation/employee-data/employee-data.component';
+import { ProfileDataComponent } from './navigation/profile-data/profile-data.component';
+import { OnboardingComponent } from './navigation/onboarding/onboarding.component';
+import { AccountManagementComponent } from './navigation/account-management/account-management.component';
+import { PayrollComponent } from './navigation/payroll/payroll.component';
+import { DocumentsComponent } from './navigation/documents/documents.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +45,13 @@ import { UploadDocModal } from './details/details.component';
       EmployeeDetailComponent,
       AddComponent,
       UpdateComponent,
-      UploadDocModal
+      UploadDocModal,
+      EmployeeDataComponent,
+      ProfileDataComponent,
+      OnboardingComponent,
+      AccountManagementComponent,
+      PayrollComponent,
+      DocumentsComponent,
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

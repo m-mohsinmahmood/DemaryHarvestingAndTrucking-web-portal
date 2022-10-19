@@ -1,0 +1,211 @@
+<div class="flex sm:flex-row flex-col">
+    <div class="sm:w-7/12 md:w-7/12 m-2 p-2 flex sm:flex-col flex-col">
+        <div class=" pt-2 pb-2">
+            <p class="font-semibold text-2xl">Onboarding</p>
+        </div>
+        <div class="">
+            <p class="font-semibold text-lg">Heading</p>
+        </div>
+        <div class="flex pt-4 pb-4">
+            <div class="relative w-22 sm:h-18 md:h-22 mr-2  shadow rounded-md bg-gray-200" *ngFor="let item of folders">
+                <a
+                    class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer"
+                >
+                    <div class="aspect-w-9 aspect-h-6">
+                        <div class="flex items-center justify-center">
+                            <!-- Icon -->
+                            <mat-icon
+                                class="icon-size-5 text-hint"
+                                [svgIcon]="'iconsmind:folder'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto justify-center text-center text-sm font-medium"
+                    >
+                        <div class="truncate">{{item.folder}}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="bg-gray-200 flex sm:flex-row rounded-md p-4">
+            <div class="w-2/12 flex justify-center items-center">
+                <img class=" h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
+            </div>
+            <div class="w-10/12 flex justify-start items-center">
+                <div class="">
+                    <p class="font-semibold text-xl leading-7">Richardo Copper</p>
+                    <p class="text-base font-sans font-normal leading-6 text-gray-400">Applied for <span class="text-black">Vehicle Operator</span> on August 25, 2020</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex bg-gray-200 rounded-md mt-2 sm:h-auto">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12 sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Password</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-2 pb-7">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full h-10 sm:mt-auto mt-2">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 "> <span>*</span>Country: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="fname" class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full  h-10 sm:mt-auto mt-5">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max"><span>*</span>Number: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="lname">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full  h-10 sm:mt-auto mt-5">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap"><span>*</span>Expiration Date: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 sm:w-40 md:w-full ">
+                            <input matInput formControlName="lname">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="flex bg-gray-200 rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Approval Letter</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-2 pb-7">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full h-10 sm:mt-auto mt-2">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 "> <span>*</span>Date: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="fname" class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full h-10 sm:mt-auto mt-5">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max"><span>*</span>sign: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="lname">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex bg-gray-200 rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Contract</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-2 pb-7">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full h-10 sm:mt-auto mt-2">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 "> <span>*</span>Date: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="fname" class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full h-10 sm:mt-auto mt-5">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max"><span>*</span>sign: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full">
+                            <input matInput formControlName="lname">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex bg-gray-200 rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">I-797B</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-2 pb-7">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full h-10 sm:mt-auto mt-2">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 "> <span>*</span>Number: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 w-full haris">
+                            <input matInput formControlName="fname" class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full h-10 sm:mt-auto mt-5">
+                        <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap"><span>*</span>Expiration Date: </mat-label>
+                        <mat-form-field appearance="outline" class="h-10 sm:w-40 md:w-full">
+                            <input matInput formControlName="lname">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="sm:5/12 md:w-5/12">
+        <div class="h-200 bg-gray-100 rounded mx-2">
+            <div class="flex flex-col py-4 px-2">
+                <div class="flex relative min-h-14" *ngFor="let item of items">
+                    <div class="flex flex-col items-center min-w-12">
+                        <div
+                            class="flex border-2 border-solid border-white rounded-full w-{{
+                                item.status === false ? '4' : '8'
+                            }} h-{{
+                                item.status === false ? '4' : '8'
+                            }} bg-white
+
+                  bg-{{ item.status === 'a' ? 'blue' : 'to-blue-400' }}-400
+                bg-{{ item.status === 'b' ? 'red' : '' }}-400
+                bg-{{ item.status === 'c' ? 'orange' : '' }}-400
+                  bg-{{ item.status === 'd1' ? 'yellow' : '' }}-400
+         bg-{{ item.status === 'e1' ? 'green' : '' }}-400
+
+                bg-{{ item.status === false ? 'blue' : '' }}-400
+                  "
+                        ></div>
+                        <div class="timeline-track"></div>
+                    </div>
+                    <div class="flex-1 flex flex-row px-4">
+                        <div class="w-8/12 flex flex-col">
+                            <ng-template [ngIf]="item.name !== ''">
+                                <span
+                                    class="text-md font-sans font-normal text-gray-400"
+                                    >{{ item.content }}</span
+                                >
+                            </ng-template>
+                            <ng-template [ngIf]="item.name === ''">
+                                <span
+                                    class="text-md font-sans font-normal text-gray-400 mt-2"
+                                    >{{ item.content }}</span
+                                >
+                            </ng-template>
+                            <span class="text-md text-black">{{
+                                item.name === "rejected" ? "" : item.name
+                            }}</span>
+                        </div>
+                        <div class="w-4/12 flex justify-end font-mono text-xs">
+                            {{ item.date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row justify-center items-center mb-5">
+                <button
+                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44"
+                >
+                    <span>Advance to offer</span>
+                </button>
+                <button
+                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28"
+                >
+                    <span>Reject</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
+import { applicantNavigation,applicantNavigation2 } from './applicantnavigation';
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +16,14 @@ export class ApplicantService
     throw new Error('Method not implemented.');
   }
     // Private
-  
+
     private _pagination: BehaviorSubject<ApplicantPagination | null> = new BehaviorSubject(null);
     private _applicantdata: BehaviorSubject<Applicant | null> = new BehaviorSubject(null);
     private _applicantsdata: BehaviorSubject<Applicant[] | null> = new BehaviorSubject(null);
-    
+    public navigationLabels = applicantNavigation;
+    public navigationLabels2 = applicantNavigation2;
+
+
 
     /**
      * Constructor
@@ -50,7 +54,7 @@ export class ApplicantService
     get applicantdata$(): Observable<Applicant[]>
     {
         return this._applicantsdata.asObservable();
-    }  
+    }
 
     /**
      * Get applicants
@@ -208,11 +212,11 @@ export class ApplicantService
         );
     }
 
-    
 
-    
 
-   
 
-    
+
+
+
+
 }

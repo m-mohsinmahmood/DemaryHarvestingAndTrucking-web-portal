@@ -1,5 +1,10 @@
 export const customerNavigation = [
     {
+        id: 0,
+        title: 'Customer Detail',
+        icon: 'heroicons_outline:user-circle',
+    },
+    {
         id: 1,
         title: 'Contact Data',
         icon: 'heroicons_outline:identification',
@@ -16,22 +21,22 @@ export const customerNavigation = [
     },
     {
         id: 4,
-        title: 'Job Data',
+        title: 'Job Result',
         icon: 'mat_outline:checklist',
     },
     {
         id: 5,
-        title: 'Job Status',
-        icon: 'heroicons_outline:chart-pie',
-    },
-    {
-        id: 6,
         title: 'Invoice',
         icon: 'heroicons_outline:calculator',
     },
     {
+        id: 6,
+        title: 'Reporting',
+        icon: 'heroicons_outline:folder',
+    },
+    {
         id: 7,
-        title: 'Resources',
-        icon: 'heroicons_outline:rectangle-group',
+        title: 'Documentation',
+        icon: 'heroicons_outline:document',
     },
 ];

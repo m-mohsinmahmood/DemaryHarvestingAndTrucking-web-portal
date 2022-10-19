@@ -126,7 +126,7 @@ export const products = [
         saleTradeDate   : moment().subtract(5, 'month').hour(18).minute(56).toISOString(),
         saleTradePrice  : 17000,
         documents       : [],
-        groupDocuments  : []    
+        groupDocuments  : []
     },
     {
         id              : '987dd10a-43b1-49f9-bfd9-05bb2dbc7029',
@@ -147,7 +147,7 @@ export const products = [
         saleTradeDate   : moment().subtract(3, 'month').hour(18).minute(56).toISOString(),
         saleTradePrice  : 17000,
         documents       : [],
-        groupDocuments  : []    
+        groupDocuments  : []
     },
     {
         id              : '998b0c07-abfd-4ba3-8de1-7563ef3c4d57',
@@ -168,7 +168,7 @@ export const products = [
         saleTradeDate   : moment().subtract(2, 'month').hour(18).minute(56).toISOString(),
         saleTradePrice  : 17000,
         documents       : [],
-        groupDocuments  : []    
+        groupDocuments  : []
     },
     {
         id              : '05ebb527-d733-46a9-acfb-a4e4ec960024',
@@ -189,7 +189,7 @@ export const products = [
         saleTradeDate   : moment().subtract(4, 'month').hour(18).minute(56).toISOString(),
         saleTradePrice  : 17000,
         documents       : [],
-        groupDocuments  : []    
+        groupDocuments  : []
     },
-    
+
 ];

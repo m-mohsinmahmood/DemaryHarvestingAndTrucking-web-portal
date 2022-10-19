@@ -36,6 +36,11 @@ export const employeeRoutes: Route[] = [
             {
                 path     : 'details/:Id',
                 component: EmployeeDetailComponent,
+                resolve  : {
+                    products  : EmployeesResolver,
+                    countries: ContactsCountriesResolver
+
+                },
             },
         ]
         /*children : [

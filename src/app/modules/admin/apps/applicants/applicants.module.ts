@@ -29,6 +29,13 @@ import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/deta
 import { UpdateComponent } from './update/update.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FilterComponent } from './filter/filter.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
+import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 
 @NgModule({
@@ -38,9 +45,11 @@ import { FilterComponent } from './filter/filter.component';
         ApplicantDetailComponent,
         UpdateComponent,
         FilterComponent,
+        ApplicantdataComponent,
+        RecruiterremarksComponent,
     ],
     imports     : [
-    RouterModule.forChild(applicantsRoutes),
+RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -63,7 +72,31 @@ import { FilterComponent } from './filter/filter.component';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
-        SharedModule
+        SharedModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        // MatButtonModule,
+        // MatCheckboxModule,
+        // MatFormFieldModule,
+        // MatIconModule,
+        // MatInputModule,
+        // MatMenuModule,
+        // MatPaginatorModule,
+        // MatProgressBarModule,
+        // MatRippleModule,
+        // MatSortModule,
+        // MatSelectModule,
+        // MatSlideToggleModule,
+        // MatTooltipModule,
+        MatSidenavModule,
+        MatDividerModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
+        // SharedModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        FuseDrawerModule,
+
     ]
 })
 export class ApplicantsModule

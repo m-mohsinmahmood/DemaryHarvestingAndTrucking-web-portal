@@ -6,8 +6,11 @@ import { MatSort } from '@angular/material/sort';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/equipment/property/property.types';
 import { PropertyService } from 'app/modules/admin/apps/equipment/property/property.service';
+import { PropertyProduct, PropertyBrand, PropertyCategory, PropertyTag, PropertyPagination, PropertyVendor } from '../property.types';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateAddPropertyComponent } from '../update/update-add.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector       : 'property-list',
@@ -23,11 +26,11 @@ import { PropertyService } from 'app/modules/admin/apps/equipment/property/prope
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 50px 192px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 50px 220px 170px 230px 190px 96px 72px;
                 }
             }
         `
@@ -41,20 +44,20 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    products$: Observable<InventoryProduct[]>;
+    products$: Observable<PropertyProduct[]>;
 
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredTags: InventoryTag[];
+    brands: PropertyBrand[];
+    categories: PropertyCategory[];
+    filteredTags: PropertyTag[];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: InventoryPagination;
+    pagination: PropertyPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedProduct: InventoryProduct | null = null;
+    selectedProduct: PropertyProduct | null = null;
     selectedProductForm: FormGroup;
-    tags: InventoryTag[];
+    tags: PropertyTag[];
     tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
+    vendors: PropertyVendor[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -64,7 +67,9 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: PropertyService
+        private _inventoryService: PropertyService,
+        private _matDialog: MatDialog,
+        private _router:Router,
     )
     {
     }
@@ -105,7 +110,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the brands
         this._inventoryService.brands$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: InventoryBrand[]) => {
+            .subscribe((brands: PropertyBrand[]) => {
 
                 // Update the brands
                 this.brands = brands;
@@ -117,7 +122,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the categories
         this._inventoryService.categories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: InventoryCategory[]) => {
+            .subscribe((categories: PropertyCategory[]) => {
 
                 // Update the categories
                 this.categories = categories;
@@ -129,7 +134,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the pagination
         this._inventoryService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: InventoryPagination) => {
+            .subscribe((pagination: PropertyPagination) => {
 
                 // Update the pagination
                 this.pagination = pagination;
@@ -140,11 +145,12 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the products
         this.products$ = this._inventoryService.products$;
+        console.log("PRODUCTS:",this.products$)
 
         // Get the tags
         this._inventoryService.tags$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: InventoryTag[]) => {
+            .subscribe((tags: PropertyTag[]) => {
 
                 // Update the tags
                 this.tags = tags;
@@ -157,7 +163,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
         // Get the vendors
         this._inventoryService.vendors$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: InventoryVendor[]) => {
+            .subscribe((vendors: PropertyVendor[]) => {
 
                 // Update the vendors
                 this.vendors = vendors;
@@ -244,29 +250,10 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param productId
      */
-    toggleDetails(productId: string): void
-    {
-        // If the product is already selected...
-        if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        }
-
-        // Get the product by id
-        this._inventoryService.getProductById(productId)
-            .subscribe((product) => {
-
-                // Set the selected product
-                this.selectedProduct = product;
-
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+     toggleDetails(machineId: string): void {
+        this._router.navigate([
+            `/apps/equipment/property/details/${machineId}`,
+        ]);
     }
 
     /**
@@ -393,7 +380,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param event
      */
-    updateTagTitle(tag: InventoryTag, event): void
+    updateTagTitle(tag: PropertyTag, event): void
     {
         // Update the title on the tag
         tag.title = event.target.value;
@@ -412,7 +399,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    deleteTag(tag: InventoryTag): void
+    deleteTag(tag: PropertyTag): void
     {
         // Delete the tag from the server
         this._inventoryService.deleteTag(tag.id).subscribe();
@@ -426,7 +413,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    addTagToProduct(tag: InventoryTag): void
+    addTagToProduct(tag: PropertyTag): void
     {
         // Add the tag
         this.selectedProduct.tags.unshift(tag.id);
@@ -443,7 +430,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param tag
      */
-    removeTagFromProduct(tag: InventoryTag): void
+    removeTagFromProduct(tag: PropertyTag): void
     {
         // Remove the tag
         this.selectedProduct.tags.splice(this.selectedProduct.tags.findIndex(item => item === tag.id), 1);
@@ -461,7 +448,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param tag
      * @param change
      */
-    toggleProductTag(tag: InventoryTag, change: MatCheckboxChange): void
+    toggleProductTag(tag: PropertyTag, change: MatCheckboxChange): void
     {
         if ( change.checked )
         {
@@ -481,6 +468,19 @@ export class PropertyListComponent implements OnInit, AfterViewInit, OnDestroy
     shouldShowCreateTagButton(inputValue: string): boolean
     {
         return !!!(inputValue === '' || this.tags.findIndex(tag => tag.title.toLowerCase() === inputValue.toLowerCase()) > -1);
+    }
+    openAddDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddPropertyComponent);
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
+
+         dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
     }
 
     /**

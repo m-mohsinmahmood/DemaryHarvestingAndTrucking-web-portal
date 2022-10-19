@@ -128,7 +128,21 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Farming'
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            lName: 'And Darcy',
+            contactsListData: [
+                {
+                contactFirstName:'Lorum Ipsum',
+                contactLastName:'Lorum Ipsum',
+                contactPosition:'Lorum Ipsum',
+                contactPhoneNumber:'Lorum Ipsum',
+                contactEmail:'Lorum Ipsum',
+                contactDetails:'Lorum Ipsum',
+
+                }
+            ]
 
         },
         {
@@ -152,7 +166,11 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
+            customerType: 'P',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            lName: '',
+
 
 
         },
@@ -167,7 +185,7 @@ export const products = [
             skipInvoiceMath2: 1,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -177,7 +195,11 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            lName: 'River',
+
 
 
 
@@ -185,7 +207,7 @@ export const products = [
         {
             id        : '2793',
             harvestYear : '2022 - Segment A - 2022 Harvest Season',
-            name      : 'Art Wilson',
+            name      : 'Art',
             alternateName :  '',
             avatar: "",
 
@@ -194,7 +216,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -204,7 +226,10 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
+            customerType: 'CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            lName: 'Wilson',
 
 
 
@@ -212,7 +237,7 @@ export const products = [
         {
             id        : '2893',
             harvestYear : '2022 - Segment A - 2022 Harvest Season',
-            name      : 'Ceres Tom',
+            name      : 'Ceres',
             alternateName :  '',
             avatar: "",
 
@@ -221,7 +246,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 1,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -231,8 +256,10 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Harvesting',
-
+            customerType: 'CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
+            lName: 'Tom',
 
 
         },
@@ -248,7 +275,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -258,7 +285,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
+            customerType: 'CT',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
         },
@@ -274,7 +303,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -284,7 +313,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Custom Farming'
+            customerType: 'CT, CF',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
 
 
@@ -301,7 +332,7 @@ export const products = [
             skipInvoiceMath2: 0,
             email      : "dht@dht-usa.com",
             isActive     : 0,
-            stateProvince: '',
+            stateProvince: 'New York',
             farmId:  '',
             farmHarvestYear:  '',
             farmName:  '',
@@ -311,8 +342,9 @@ export const products = [
             cropCrop:  'Alberto Durham Seed',
             cropPoundsPerBushel:  '60.00',
             contactNo: '+1(909)-123-1234',
-            customerType: 'Commercial Trucking'
-
+            customerType: 'CT, CF, CH',
+            phoneNo: '+1(909)-123-1234',
+            position:'Position Name',
 
         }];
 
@@ -2283,4 +2315,127 @@ export const project = {
         }
     ]
 };
+
+export const documents = [
+    {
+        id         : '6da8747f-b474-4c9a-9eba-5ef212285500',
+        folderId   : null,
+        name       : 'Photos',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'November 01, 2021',
+        modifiedAt : 'November 01, 2021',
+        size       : '3015 MB',
+        type       : 'folder',
+        contents   : '907 files',
+        description: 'Personal photos; selfies, family, vacation and etc.'
+    },
+    {
+        id         : 'ed58add1-45a7-41db-887d-3ca7ee7f2719',
+        folderId   : null,
+        name       : 'Work',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'May 8, 2020',
+        modifiedAt : 'May 8, 2020',
+        size       : '14 MB',
+        type       : 'folder',
+        contents   : '24 files',
+        description: 'Work related files, mainly documents and paychecks.'
+    },
+    {
+        id         : '5cb66e32-d1ac-4b9a-8c34-5991ce25add2',
+        folderId   : '6da8747f-b474-4c9a-9eba-5ef212285500',
+        name       : 'Contract #123',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'January 14, 2021',
+        modifiedAt : 'January 14, 2021',
+        size       : '1.2 MB',
+        type       : 'PDF',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : '3ffc3d84-8f2d-4929-903a-ef6fc21657a7',
+        folderId   : '6da8747f-b474-4c9a-9eba-5ef212285500',
+        name       : 'Estimated budget',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'December 14, 2020',
+        modifiedAt : 'December 14, 2020',
+        size       : '679 KB',
+        type       : 'XLS',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : '157adb9a-14f8-4559-ac93-8be893c9f80a',
+        folderId   : '6da8747f-b474-4c9a-9eba-5ef212285500',
+        name       : 'DMCA notice #42',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'May 8, 2021',
+        modifiedAt : 'May 8, 2021',
+        size       : '1.5 MB',
+        type       : 'DOC',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : '4f64597a-df7e-461c-ad60-f33e5f7e0747',
+        folderId   : '6da8747f-b474-4c9a-9eba-5ef212285500',
+        name       : 'Invoices',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'January 12, 2020',
+        modifiedAt : 'January 12, 2020',
+        size       : '17.8 MB',
+        type       : 'PDF',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : 'e445c445-57b2-4476-8c62-b068e3774b8e',
+        folderId   : 'ed58add1-45a7-41db-887d-3ca7ee7f2719',
+        name       : 'Crash logs',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'June 8, 2020',
+        modifiedAt : 'June 8, 2020',
+        size       : '11.3 MB',
+        type       : 'TXT',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : 'b482f93e-7847-4614-ad48-b78b78309f81',
+        folderId   : 'ed58add1-45a7-41db-887d-3ca7ee7f2719',
+        name       : 'System logs',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'June 8, 2020',
+        modifiedAt : 'June 8, 2020',
+        size       : '9.3 MB',
+        type       : 'TXT',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : 'ec07a98d-2e5b-422c-a9b2-b5d1c0e263f5',
+        folderId   : 'ed58add1-45a7-41db-887d-3ca7ee7f2719',
+        name       : 'Personal projects',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'March 18, 2020',
+        modifiedAt : 'March 18, 2020',
+        size       : '4.3 MB',
+        type       : 'DOC',
+        contents   : null,
+        description: null
+    },
+    {
+        id         : 'ae908d59-07da-4dd8-aba0-124e50289295',
+        folderId   : 'ed58add1-45a7-41db-887d-3ca7ee7f2719',
+        name       : 'Biometric portrait',
+        createdBy  : 'Brian Hughes',
+        createdAt  : 'August 29, 2020',
+        modifiedAt : 'August 29, 2020',
+        size       : '4.5 MB',
+        type       : 'JPG',
+        contents   : null,
+        description: null
+    }
+];
 

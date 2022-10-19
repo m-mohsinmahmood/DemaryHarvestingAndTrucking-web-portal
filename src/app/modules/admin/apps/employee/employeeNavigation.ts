@@ -1,37 +1,32 @@
 export const employeeNavigation = [
     {
         id: 1,
-        title: 'Contact Data',
+        title: 'Employee Data',
         icon: 'heroicons_outline:identification',
     },
     {
         id: 2,
-        title: 'Farm Data',
+        title: 'Profile Data',
         icon: 'mat_outline:local_shipping',
     },
     {
         id: 3,
-        title: 'Rate Data',
+        title: 'Onboarding',
         icon: 'mat_outline:price_change'
     },
     {
         id: 4,
-        title: 'Job Data',
+        title: 'Account Management',
         icon: 'mat_outline:checklist',
     },
     {
         id: 5,
-        title: 'Job Status',
+        title: 'Payroll',
         icon: 'heroicons_outline:chart-pie',
     },
     {
         id: 6,
-        title: 'Invoice',
+        title: 'Documents',
         icon: 'heroicons_outline:calculator',
-    },
-    {
-        id: 7,
-        title: 'Resources',
-        icon: 'heroicons_outline:rectangle-group',
     },
 ];
