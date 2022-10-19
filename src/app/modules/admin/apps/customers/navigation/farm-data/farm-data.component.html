@@ -112,7 +112,7 @@
                         <ng-template class="flex" #noFarms>
                             <div class="show-centered-notice h-full justify-center items-center flex">
                                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    There are no Farms!
+                                    No Farms Found!
                                 </div>
                             </div>
                         </ng-template>
@@ -246,7 +246,7 @@
                         </ng-container>
                         <ng-template #noFields>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no Fields!
+                                No Fields Found!
                             </div>
                         </ng-template>
                     </div>
@@ -340,8 +340,8 @@
                                                     </div>
                                                 </div>
 
-                                                 <!-- Action -->
-                                                 <div>
+                                                <!-- Action -->
+                                                <div>
                                                     <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="openEditCropDialog(crop)">
                                                         <mat-icon
                                                         class="icon-size-5"
@@ -360,7 +360,7 @@
                         </ng-container>
                         <ng-template #noCrops>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no Crops!
+                                No Crops Found!
                             </div>
                         </ng-template>
                     </div>
@@ -483,7 +483,7 @@
                         </ng-container>
                         <ng-template #noDestinations>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                There are no Destinations!
+                                No Destinations Found!
                             </div>
                         </ng-template>
                     </div>
@@ -585,7 +585,7 @@
                             </ng-container>
                             <ng-template #noFarms>
                                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    There are no Farms!
+                                    No Farms Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -700,7 +700,7 @@
                             </ng-container>
                             <ng-template #noFields>
                                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    There are no Fields!
+                                    No Fields Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -796,7 +796,7 @@
                             </ng-container>
                             <ng-template #noCrops>
                                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    There are no Crops!
+                                    No Crops Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -869,18 +869,18 @@
                                         </div>
                                         <!-- Rows -->
                                         <div class="rows-wrapper h-72">
-                                        <ng-container *ngIf="CustomerDestinationList?.customer_destinations?.length > 0; else noDestinations">
-                                            <ng-container *ngFor="let destination of CustomerDestinationList?.customer_destinations">
-                                                <div class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
-                                                    <div class="truncate">
-                                                        {{ destination.farm_name }}
-                                                    </div>
-                                                    <div class="hidden sm:block">
-                                                        {{ destination.destination_name }}
-                                                    </div>
-                                                    <!-- Status -->
-                                                    <div class="hidden sm:block">
-                                                        <mat-icon class="{{
+                                            <ng-container *ngIf="CustomerDestinationList?.customer_destinations?.length > 0; else noDestinations">
+                                                <ng-container *ngFor="let destination of CustomerDestinationList?.customer_destinations">
+                                                    <div class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b ">
+                                                        <div class="truncate">
+                                                            {{ destination.farm_name }}
+                                                        </div>
+                                                        <div class="hidden sm:block">
+                                                            {{ destination.destination_name }}
+                                                        </div>
+                                                        <!-- Status -->
+                                                        <div class="hidden sm:block">
+                                                            <mat-icon class="{{
                                                         destination.status === true
                                                                 ? 'greenActiveIcon'
                                                                 : 'redInActiveIcon'
@@ -889,18 +889,18 @@
                                                                 ? 'heroicons_solid:check-circle'
                                                                 : 'heroicons_solid:x-circle'
                                                         ">check-circle</mat-icon>
-                                                    </div>
-                                                    <!-- Contact -->
-                                                    <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">
-                                                            {{destination.calendar_year | date: 'YYYY' }}
                                                         </div>
-                                                    </div>
+                                                        <!-- Contact -->
+                                                        <div class="hidden sm:block items-center">
+                                                            <div class="min-w-4 ml-2">
+                                                                {{destination.calendar_year | date: 'YYYY' }}
+                                                            </div>
+                                                        </div>
 
-                                                </div>
+                                                    </div>
+                                                </ng-container>
                                             </ng-container>
-                                        </ng-container>
-                                    </div>
+                                        </div>
                                     </div>
                                     <mat-paginator *ngIf="CustomerDestinationList?.customer_destinations?.length > 0" class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="CustomerDestinationList?.count" [pageIndex]="currentPage" [pageSize]="pageSizeSummary"
                                         [pageSizeOptions]="pageSizeOptionsSummary" (page)="pageChanged($event,'Destination')" [showFirstLastButtons]="true"></mat-paginator>
@@ -908,7 +908,7 @@
                             </ng-container>
                             <ng-template #noDestinations>
                                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    There are no Destinations!
+                                    No Destinations Found!
                                 </div>
                             </ng-template>
                         </div>
