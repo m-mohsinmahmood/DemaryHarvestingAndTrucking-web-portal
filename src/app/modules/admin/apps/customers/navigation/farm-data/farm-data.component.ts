@@ -473,12 +473,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //#region  Sort Data
     sortData(sort: any) {
+        this.page = 1;
         switch (this.activeTab) {
             case 'Farms':
             this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.farmSort[0],
                     this.farmSort[1],
@@ -489,7 +490,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.fieldSort[0],
                     this.fieldSort[1],
@@ -500,7 +501,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.cropSort[0],
                     this.cropSort[1],
@@ -511,7 +512,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.destinationSort[0],
                     this.destinationSort[1],
@@ -523,12 +524,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     sortSummaryData(sort: any , summaryData) {
+        this.page = 1;
         switch (summaryData) {
             case 'summaryFarm':
                 this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    1,
+                    this.page,
                     5,
                     this.farmSort[0],
                     this.farmSort[1],
@@ -539,7 +541,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.fieldSort[0],
                     this.fieldSort[1],
@@ -550,7 +552,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.cropSort[0],
                     this.cropSort[1],
@@ -561,7 +563,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    1,
+                    this.page,
                     this.limit,
                     this.destinationSort[0],
                     this.destinationSort[1],

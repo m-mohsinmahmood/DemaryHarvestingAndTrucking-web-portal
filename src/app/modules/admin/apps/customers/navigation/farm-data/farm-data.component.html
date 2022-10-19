@@ -108,7 +108,7 @@
                             </div>
                             <mat-paginator *ngIf=" customerFarmList?.customer_farms?.length > 0;" class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="
                                 customerFarmList?.count
-                            " [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event,'Farm' )" [showFirstLastButtons]="true"></mat-paginator>
+                            " [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event,'Farm' )" [showFirstLastButtons]="true"></mat-paginator>
                         </ng-container>
                         <ng-template #noFarms>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
