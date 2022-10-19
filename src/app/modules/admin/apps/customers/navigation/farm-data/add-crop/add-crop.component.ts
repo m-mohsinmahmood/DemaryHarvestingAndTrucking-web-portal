@@ -119,7 +119,7 @@ export class AddCropComponent implements OnInit {
             id: [''],
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
-            calendar_year: ['2022'],
+            calendar_year: [moment()],
             status: true
         });
 
@@ -141,10 +141,6 @@ export class AddCropComponent implements OnInit {
         } else {
             this._customerService.createCustomerCrops(this.form.value);
         }
-    }
-
-    saveAndClose(): void {
-        this.matDialogRef.close();
     }
 
     discard(): void {

@@ -77,7 +77,6 @@
             <span class="ml-2 mr-1">Discard</span>
         </button>
         <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
-            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

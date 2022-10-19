@@ -26,7 +26,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Bushel Weight</mat-label>
-            <input matInput formControlName="bushel_weight" />
+            <input type="number" matInput formControlName="bushel_weight" />
         </mat-form-field>
     </form>
 
@@ -36,7 +36,7 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="saveAndClose()">
                 Discard
             </button>
-            <button mat-flat-button color="primary" [class.spinner]="isLoadingCrop$ | async" [disabled]="form.invalid || ((isLoadingCrop$) | async)" (click)="onSubmit()">Save</button>
+            <button mat-flat-button color="primary" [class.spinner]="isLoadingCrop$ | async" [disabled]="form.invalid || ((isLoadingCrop$) | async)" (click)="onSubmit()">{{this.data?.cropData.isEdit? 'Update':'Save'}}</button>
         </div>
     </div>
 </div>

@@ -55,7 +55,7 @@
                     <div class="grid">
                         <!-- Header -->
                         <div class="customer-grid z-10 sticky top-0 grid gap-4 py-4 px-4 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="company_name">Company Name</div>
+                            <div mat-sort-header="customer_name">Customer Name</div>
                             <div mat-sort-header="main_contact" class="hidden sm:block">Main Contact</div>
                             <div mat-sort-header="position" class="hidden lg:block">Position</div>
                             <div mat-sort-header="phone_number" class="hidden md:block">Phone Number</div>
@@ -69,68 +69,69 @@
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="customers$ | async as customers">
-                            <ng-container *ngFor="let customer of customers.customers">
-                                <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
-                                    <!-- Image -->
-                                    <!-- <div>
+                            <ng-container *ngIf="customers.count > 0;else noCustomers">
+                                <ng-container *ngFor="let customer of customers.customers">
+                                    <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
+                                        <!-- Image -->
+                                        <!-- <div>
                                         <img *ngIf="customer.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{customer.avatar}}" alt="">
                                         <div *ngIf="customer.avatar ==''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{customer.name.charAt(0)}} </div>
                                     </div> -->
 
-                                    <!-- Company Name -->
-                                    <div class="truncate break-words">
-                                        {{ customer.company_name }}
-                                    </div>
-
-                                    <!-- Main Contact -->
-                                    <div class="hidden sm:block items-left break-words">
-                                        <div class="min-w-4">
-                                            {{ customer.main_contact }}
+                                        <!-- Company Name -->
+                                        <div class="truncate break-words">
+                                            {{ customer.customer_name }}
                                         </div>
-                                    </div>
 
-                                    <!-- Position -->
-                                    <div class="hidden lg:block items-center">
-                                        <div class="min-w-4">
+                                        <!-- Main Contact -->
+                                        <div class="hidden sm:block items-left truncate">
+                                            <div class="min-w-4">
+                                                {{ customer.main_contact }}
+                                            </div>
+                                        </div>
+
+                                        <!-- Position -->
+                                        <div class="hidden lg:block items-center truncate">
+                                            <!-- <div class="min-w-4"> -->
                                             {{ customer.position }}
+                                            <!-- </div> -->
                                         </div>
-                                    </div>
 
-                                    <!-- Phone No -->
-                                    <div class="hidden md:block items-left break-words">
-                                        <div class="min-w-4">
+                                        <!-- Phone No -->
+                                        <div class="hidden md:block items-left truncate">
+                                            <!-- <div class="min-w-4"> -->
                                             {{ customer.phone_number }}
+                                            <!-- </div> -->
                                         </div>
-                                    </div>
 
-                                    <!-- State -->
-                                    <div class="hidden lg:block items-left">
-                                        <div class="min-w-4">
+                                        <!-- State -->
+                                        <div class="hidden lg:block items-left truncate">
+                                            <!-- <div class="min-w-4"> -->
                                             {{ customer.state }}
+                                            <!-- </div> -->
                                         </div>
-                                    </div>
-                                    <!-- Country -->
-                                    <div class="hidden sm:block items-left">
-                                        <div class="min-w-4">
+                                        <!-- Country -->
+                                        <div class="hidden sm:block items-left truncate">
+                                            <!-- <div class="min-w-4"> -->
                                             {{ customer.country }}
+                                            <!-- </div> -->
                                         </div>
-                                    </div>
 
-                                    <!-- Email -->
-                                    <div class="hidden sm:block items-center break-words">
-                                        <div class="min-w-4">
+                                        <!-- Email -->
+                                        <div class="hidden sm:block items-center truncate">
+                                            <!-- <div class="min-w-4"> -->
                                             {{ customer.email }}
+                                            <!-- </div> -->
                                         </div>
-                                    </div>
 
-                                    <!-- Customer Type -->
-                                    <div class="hidden sm:block items-center break-words">
-                                        {{ customer.customer_type }}
-                                    </div>
+                                        <!-- Customer Type -->
+                                        <div class="hidden sm:block items-center truncate">
+                                            {{ customer.customer_type }}
+                                        </div>
 
-                                    <!-- Active -->
-                                    <div class="hidden sm:block">
-                                        <mat-icon class="{{
+                                        <!-- Active -->
+                                        <div class="hidden sm:block">
+                                            <mat-icon class="{{
                                                 customer.status === true
                                                     ? 'greenActiveIcon'
                                                     : 'redInActiveIcon'
@@ -139,11 +140,11 @@
                                                     ? 'heroicons_solid:check-circle'
                                                     : 'heroicons_solid:x-circle'
                                             ">check-circle</mat-icon>
-                                    </div>
+                                        </div>
 
-                                    <!-- Contacts button -->
-                                    <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)">
+                                        <!-- Contacts button -->
+                                        <div>
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)">
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="
@@ -151,11 +152,11 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                    </div>
+                                        </div>
 
-                                    <!-- Details button -->
-                                    <div>
-                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="
+                                        <!-- Details button -->
+                                        <div>
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="
                                                 toggleGeneralInfo(customer.id, true)
                                             ">
                                             <mat-icon
@@ -165,8 +166,9 @@
                                                 "
                                             ></mat-icon>
                                         </button>
+                                        </div>
                                     </div>
-                                </div>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </div>
@@ -177,9 +179,10 @@
 
             <ng-template #noCustomers>
                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                    There are no products!
+                    No Customers Found!
                 </div>
             </ng-template>
+
         </div>
     </div>
     <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999 bg-green-300" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>

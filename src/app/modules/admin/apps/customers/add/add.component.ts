@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -8,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Customers } from '../customers.types';
 import { boolean } from 'joi';
+import { state } from '@angular/animations';
 
 @Component({
     selector: 'app-add',
@@ -28,6 +31,8 @@ export class AddCustomer implements OnInit {
     //#region Variables
     public form: FormGroup;
     selectedProduct: any;
+    country_list = ['USA'];
+   state_list =['Alaska', 'Alabama', 'Arkansas', 'American Samoa', 'Arizona', 'California', 'Colorado', 'Connecticut', 'District of Columbia', 'Delaware', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Iowa', 'Idaho', 'Illinois', 'Indiana', 'Kansas', 'Kentucky', 'Louisiana', 'Massachusetts', 'Maryland', 'Maine', 'Michigan', 'Minnesota', 'Missouri', 'Mississippi', 'Montana', 'North Carolina', 'North Dakota', 'Nebraska', 'New Hampshire', 'New Jersey', 'New Mexico', 'Nevada', 'New York', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Virginia', 'Virgin Islands', 'Vermont', 'Washington', 'Wisconsin', 'West Virginia', 'Wyoming'];
     //#endregion
 
     // Constructor
@@ -72,15 +77,15 @@ export class AddCustomer implements OnInit {
           // Create the form
         this.form = this._formBuilder.group({
             id              : [''],
-            customer_name   : [''],
+            customer_name   : ['', [Validators.required]],
             company_name    : [''],
             main_contact    : [''],
-            phone_number    : [''],
+            phone_number    : ['', [Validators.required]],
             state           : [''],
             country         : [''],
-            email           : [''],
+            email           : ['', [Validators.email]],
             fax             : [''],
-            customer_type   : [''],
+            customer_type   : ['', [Validators.required]],
             status          : true,
             address         : [''],
             billing_address : [''],
@@ -102,7 +107,7 @@ export class AddCustomer implements OnInit {
                 country             : customerData.country,
                 email               : customerData.email,
                 fax                 : customerData.fax,
-                customer_type       : customerData.customer_type.replace(/\s/g, '').split(","),
+                customer_type       : customerData.customer_type.replace(/\s/g, '').split(','),
                 status              : customerData.status.toString(),
                 address             : customerData.address,
                 billing_address     : customerData.billing_address,
@@ -128,7 +133,7 @@ export class AddCustomer implements OnInit {
     onSubmit(): void {
         this._customersService.isLoadingCustomer.next(true);
         if (this.data && this.data.isEdit) {
-            this.form.value["customer_type"] = this.form.value["customer_type"].join(", ");
+            this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
             this.updateCustomer(this.form.value);
         } else {
             this.createCustomer(this.form.value);
