@@ -354,7 +354,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
         if ( this.filteredTags.length === 0 )
         {
             // Create the tag
-            this.createTag(event.target.value);
+            /* this.createTag(event.target.value); */
 
             // Clear the input
             event.target.value = '';

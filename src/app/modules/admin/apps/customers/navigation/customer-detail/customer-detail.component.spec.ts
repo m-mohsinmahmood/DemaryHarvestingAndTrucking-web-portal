@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HarvestInfoComponent } from './harvest-info.component';
+import { CustomerDetail } from './customer-detail.component';
 
-describe('HarvestInfoComponent', () => {
-  let component: HarvestInfoComponent;
-  let fixture: ComponentFixture<HarvestInfoComponent>;
+describe('GeneralInfoComponent', () => {
+  let component: CustomerDetail;
+  let fixture: ComponentFixture<CustomerDetail>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HarvestInfoComponent ]
+      declarations: [ CustomerDetail ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HarvestInfoComponent);
+    fixture = TestBed.createComponent(CustomerDetail);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -95,9 +95,7 @@
                                     trackBy: trackByFn
                                 "
                             >
-                                <div
-                                    class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b"
-                                >
+                                <div class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
                                 <div>
                                     <img *ngIf="applicant.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{applicant.avatar}}" alt="">
                                     <div *ngIf="applicant.avatar === ''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicant.name.charAt(0)}} </div>

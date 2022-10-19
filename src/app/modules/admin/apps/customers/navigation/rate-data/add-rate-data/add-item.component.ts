@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AddCustomer } from '../../../add/add.component';
 import { CustomersService } from '../../../customers.service';
 
 @Component({
@@ -9,11 +8,11 @@ import { CustomersService } from '../../../customers.service';
   templateUrl: './add-item.component.html',
   styleUrls: ['./add-item.component.scss']
 })
-export class AddItemComponent implements OnInit {
+export class AddRateDataComponent implements OnInit {
 
   public itemForm: FormGroup;
   constructor(
-    public matDialogRef: MatDialogRef<AddItemComponent  >,
+    public matDialogRef: MatDialogRef<AddRateDataComponent>,
     private _formBuilder: FormBuilder,
     private api: CustomersService,
 
@@ -22,12 +21,8 @@ export class AddItemComponent implements OnInit {
   ngOnInit(): void {
   // Create the form
   this.itemForm = this._formBuilder.group({
-    itemListInvoiceModule    : [''],
-    qtyInvoiceModule         : [''],
-    rateInvoiceModule        :[''],
-    amountInvoiceModule      : [''],
-
-
+    rateData    : [''],
+    equipmentType         : [''],
 
 });
   }

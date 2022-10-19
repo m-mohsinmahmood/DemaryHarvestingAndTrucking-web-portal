@@ -74,7 +74,7 @@ export class CropService {
     //#endregion
     //#region Api call functions
     /**
-     * Get products
+     * Get Crops
      *
      *
      * @param page
@@ -92,7 +92,7 @@ export class CropService {
         params = params.set('sort', sort);
         params = params.set('order', order);
        return this._httpClient
-            .get<any>(`api-1/crops`, {
+            .get<any>(`api-1/crop`, {
                 params,
             })
             .pipe(take(1))
@@ -108,9 +108,23 @@ export class CropService {
             );
     }
 
+    getCropsAll(search: string = ''): Observable<any>
+    {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', 'name');
+        params = params.set('order', 'asc');
+        return this._httpClient.get<any>(
+            `api-1/crop`,
+            {
+                params,
+            }
+        );
+    }
+
     getCropById(id: string) {
         this._httpClient
-            .get(`api-1/crops${id}`)
+            .get(`api-1/crop${id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -126,7 +140,7 @@ export class CropService {
 
     createCrop(data: any) {
         this._httpClient
-            .post(`api-1/crops`, data)
+            .post(`api-1/crop`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -153,8 +167,11 @@ export class CropService {
     }
 
     updateCrop(cropData: any, paginatioData: any) {
+        console.log('1',cropData);
+        console.log('2',paginatioData);
+
         this._httpClient
-            .put(`api-1/crops`, cropData)
+            .put(`api-1/crop`, cropData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
