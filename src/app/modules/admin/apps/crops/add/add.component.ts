@@ -53,8 +53,8 @@ export class AddCropsComponent implements OnInit {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
-            name: [''],
-            variety: [''],
+            name: ['',[Validators.required]],
+            variety: ['',[Validators.required]],
             bushel_weight: [, [Validators.required]],
         });
         if (this.data && this.data.cropData.isEdit) {
@@ -88,5 +88,5 @@ export class AddCropsComponent implements OnInit {
         this.matDialogRef.close();
     }
     //#endregion
-       
+
 }
