@@ -2,9 +2,7 @@
     class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
 >
     <!-- Header -->
-    <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-8 px-6 md:px-8 border-b "
-    >
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4 px-6 md:px-8 border-b ">
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -42,14 +40,14 @@
     <!-- Main for Web & Tab -->
     <div class="sm:flex sm:flex-row mb-4 pt-2  sm:visible hidden">
         <div class="w-4/12 h-12 flex justify-start items-center ">
-            <div class="flex" *ngFor="let route of routes;let i = index">
+            <div class="flex" *ngFor="let route of routesLeft;let i = index">
                 <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
                         <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                     </button>
             </div>
         </div>
-        <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center ">
-                <div class="" *ngFor="let route of routes2;let i = index">
+        <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
+                <div class="" *ngFor="let route of routesright;let i = index">
                     <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
                             <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                         </button>
@@ -64,12 +62,12 @@
     </div>
         <!-- Main for Mobile -->
     <div class="flex sm:flex-row mb-4 pt-2 pb-2  sm:hidden visible overflow-x-scroll">
-            <div class="flex" *ngFor="let route of routes;let i = index">
+            <div class="flex" *ngFor="let route of routesLeft;let i = index">
                 <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
                         <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                     </button>
             </div>
-        <div class="flex" *ngFor="let route of routes2;let i = index">
+        <div class="flex" *ngFor="let route of routesright;let i = index">
             <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
                     <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                 </button>
@@ -180,5 +178,4 @@
         </div>
         </div>
     </div>
-
 </div>

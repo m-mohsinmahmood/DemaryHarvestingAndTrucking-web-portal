@@ -18,40 +18,21 @@ import { SettingsComponent } from 'app/layout/common/settings/settings.component
 import { FilterComponent } from './../filter/filter.component';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './list.component.html',
-    styles         : [
-        /* language=SCSS */
-        `
-            .applicant-grid {
-                grid-template-columns: 7% 35% 36% 0% ;
-
-                @screen sm {
-                    grid-template-columns: 4% 10% 25% 19% 20% 0% 0%;
-                }
-                @screen md {
-                    grid-template-columns: 4% 15% 25% 20% 20% 0% 0%;
-                }
-
-                @screen lg {
-                    grid-template-columns: 5% 15% 20% 20% 20% 0% 0%;
-                }
-            }
-
-        `
-    ],
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'app-employee',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    animations     : fuseAnimations
+    animations: fuseAnimations,
 })
-export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
+export class ApplicantsListComponent
+    implements OnInit, AfterViewInit, OnDestroy
 {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    // #region local variables
     applicantsdata$: Observable<Applicant[]>;
-
-
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
     pagination: ApplicantPagination;
@@ -61,10 +42,229 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     tagsEditMode: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     panelOpenState = false;
-    statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
-     country_list = ['Afghanistan','Albania','Algeria','Andorra','Angola','Anguilla','Antigua &amp; Barbuda','Argentina','Armenia','Aruba','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia &amp; Herzegovina','Botswana','Brazil','British Virgin Islands','Brunei','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Cape Verde','Cayman Islands','Chad','Chile','China','Colombia','Congo','Cook Islands','Costa Rica','Cote D Ivoire','Croatia','Cruise Ship','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Estonia','Ethiopia','Falkland Islands','Faroe Islands','Fiji','Finland','France','French Polynesia','French West Indies','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Greenland','Grenada','Guam','Guatemala','Guernsey','Guinea','Guinea Bissau','Guyana','Haiti','Honduras','Hong Kong','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Isle of Man','Israel','Italy','Jamaica','Japan','Jersey','Jordan','Kazakhstan','Kenya','Kuwait','Kyrgyz Republic','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Macau','Macedonia','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Mauritania','Mauritius','Mexico','Moldova','Monaco','Mongolia','Montenegro','Montserrat','Morocco','Mozambique','Namibia','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Norway','Oman','Pakistan','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Reunion','Romania','Russia','Rwanda','Saint Pierre &amp; Miquelon','Samoa','San Marino','Satellite','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','South Africa','South Korea','Spain','Sri Lanka','St Kitts &amp; Nevis','St Lucia','St Vincent','St. Lucia','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor L\'Este','Togo','Tonga','Trinidad &amp; Tobago','Tunisia','Turkey','Turkmenistan','Turks &amp; Caicos','Uganda','Ukraine','United Arab Emirates','United Kingdom','Uruguay','Uzbekistan','Venezuela','Vietnam','Virgin Islands (US)','Yemen','Zambia','Zimbabwe'];
+    statusList: string[] = [
+        'Hired',
+        'Evaluated',
+        'In-Process',
+        'New',
+        'N/A',
+        'Not Being Considered',
+    ];
+    country_list = [
+        'Afghanistan',
+        'Albania',
+        'Algeria',
+        'Andorra',
+        'Angola',
+        'Anguilla',
+        'Antigua &amp; Barbuda',
+        'Argentina',
+        'Armenia',
+        'Aruba',
+        'Australia',
+        'Austria',
+        'Azerbaijan',
+        'Bahamas',
+        'Bahrain',
+        'Bangladesh',
+        'Barbados',
+        'Belarus',
+        'Belgium',
+        'Belize',
+        'Benin',
+        'Bermuda',
+        'Bhutan',
+        'Bolivia',
+        'Bosnia &amp; Herzegovina',
+        'Botswana',
+        'Brazil',
+        'British Virgin Islands',
+        'Brunei',
+        'Bulgaria',
+        'Burkina Faso',
+        'Burundi',
+        'Cambodia',
+        'Cameroon',
+        'Cape Verde',
+        'Cayman Islands',
+        'Chad',
+        'Chile',
+        'China',
+        'Colombia',
+        'Congo',
+        'Cook Islands',
+        'Costa Rica',
+        'Cote D Ivoire',
+        'Croatia',
+        'Cruise Ship',
+        'Cuba',
+        'Cyprus',
+        'Czech Republic',
+        'Denmark',
+        'Djibouti',
+        'Dominica',
+        'Dominican Republic',
+        'Ecuador',
+        'Egypt',
+        'El Salvador',
+        'Equatorial Guinea',
+        'Estonia',
+        'Ethiopia',
+        'Falkland Islands',
+        'Faroe Islands',
+        'Fiji',
+        'Finland',
+        'France',
+        'French Polynesia',
+        'French West Indies',
+        'Gabon',
+        'Gambia',
+        'Georgia',
+        'Germany',
+        'Ghana',
+        'Gibraltar',
+        'Greece',
+        'Greenland',
+        'Grenada',
+        'Guam',
+        'Guatemala',
+        'Guernsey',
+        'Guinea',
+        'Guinea Bissau',
+        'Guyana',
+        'Haiti',
+        'Honduras',
+        'Hong Kong',
+        'Hungary',
+        'Iceland',
+        'India',
+        'Indonesia',
+        'Iran',
+        'Iraq',
+        'Ireland',
+        'Isle of Man',
+        'Israel',
+        'Italy',
+        'Jamaica',
+        'Japan',
+        'Jersey',
+        'Jordan',
+        'Kazakhstan',
+        'Kenya',
+        'Kuwait',
+        'Kyrgyz Republic',
+        'Laos',
+        'Latvia',
+        'Lebanon',
+        'Lesotho',
+        'Liberia',
+        'Libya',
+        'Liechtenstein',
+        'Lithuania',
+        'Luxembourg',
+        'Macau',
+        'Macedonia',
+        'Madagascar',
+        'Malawi',
+        'Malaysia',
+        'Maldives',
+        'Mali',
+        'Malta',
+        'Mauritania',
+        'Mauritius',
+        'Mexico',
+        'Moldova',
+        'Monaco',
+        'Mongolia',
+        'Montenegro',
+        'Montserrat',
+        'Morocco',
+        'Mozambique',
+        'Namibia',
+        'Nepal',
+        'Netherlands',
+        'Netherlands Antilles',
+        'New Caledonia',
+        'New Zealand',
+        'Nicaragua',
+        'Niger',
+        'Nigeria',
+        'Norway',
+        'Oman',
+        'Pakistan',
+        'Palestine',
+        'Panama',
+        'Papua New Guinea',
+        'Paraguay',
+        'Peru',
+        'Philippines',
+        'Poland',
+        'Portugal',
+        'Puerto Rico',
+        'Qatar',
+        'Reunion',
+        'Romania',
+        'Russia',
+        'Rwanda',
+        'Saint Pierre &amp; Miquelon',
+        'Samoa',
+        'San Marino',
+        'Satellite',
+        'Saudi Arabia',
+        'Senegal',
+        'Serbia',
+        'Seychelles',
+        'Sierra Leone',
+        'Singapore',
+        'Slovakia',
+        'Slovenia',
+        'South Africa',
+        'South Korea',
+        'Spain',
+        'Sri Lanka',
+        'St Kitts &amp; Nevis',
+        'St Lucia',
+        'St Vincent',
+        'St. Lucia',
+        'Sudan',
+        'Suriname',
+        'Swaziland',
+        'Sweden',
+        'Switzerland',
+        'Syria',
+        'Taiwan',
+        'Tajikistan',
+        'Tanzania',
+        'Thailand',
+        "Timor L'Este",
+        'Togo',
+        'Tonga',
+        'Trinidad &amp; Tobago',
+        'Tunisia',
+        'Turkey',
+        'Turkmenistan',
+        'Turks &amp; Caicos',
+        'Uganda',
+        'Ukraine',
+        'United Arab Emirates',
+        'United Kingdom',
+        'Uruguay',
+        'Uzbekistan',
+        'Venezuela',
+        'Vietnam',
+        'Virgin Islands (US)',
+        'Yemen',
+        'Zambia',
+        'Zimbabwe',
+    ];
+    page: number;
+    limit: number;
+    pageSize = 10;
+    currentPage = 0;
+    pageSizeOptions: number[] = [5,10, 25, 50];
+    isEdit: boolean;
 
-
+    // #endregion
 
     /**
      * Constructor
@@ -75,10 +275,8 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _applicantService: ApplicantService,
-        private _matDialog: MatDialog,
-    )
-    {
-    }
+        private _matDialog: MatDialog
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -87,14 +285,11 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-
+    ngOnInit(): void {
         // Get the pagination
         this._applicantService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: ApplicantPagination) => {
-
                 // Update the pagination
                 this.pagination = pagination;
 
@@ -104,7 +299,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the employees
         this.applicantsdata$ = this._applicantService.applicantdata$;
-        console.log('PP',this.applicantsdata$);
+        console.log('PP', this.applicantsdata$);
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -114,7 +309,13 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 switchMap((query) => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._applicantService.getApplicants(0, 10, 'name', 'asc', query);
+                    return this._applicantService.getApplicants(
+                        0,
+                        10,
+                        'name',
+                        'asc',
+                        query
+                    );
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -126,15 +327,13 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * After view init
      */
-    ngAfterViewInit(): void
-    {
-        if ( this._sort && this._paginator )
-        {
+    ngAfterViewInit(): void {
+        if (this._sort && this._paginator) {
             // Set the initial sort
             this._sort.sort({
-                id          : 'name',
-                start       : 'asc',
-                disableClear: true
+                id: 'name',
+                start: 'asc',
+                disableClear: true,
             });
 
             // Mark for check
@@ -152,24 +351,30 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
                 });
 
             // Get employees if sort or page changes
-            merge(this._sort.sortChange, this._paginator.page).pipe(
-                switchMap(() => {
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return this._applicantService.getApplicants(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
-            ).subscribe();
+            merge(this._sort.sortChange, this._paginator.page)
+                .pipe(
+                    switchMap(() => {
+                        this.closeDetails();
+                        this.isLoading = true;
+                        return this._applicantService.getApplicants(
+                            this._paginator.pageIndex,
+                            this._paginator.pageSize,
+                            this._sort.active,
+                            this._sort.direction
+                        );
+                    }),
+                    map(() => {
+                        this.isLoading = false;
+                    })
+                )
+                .subscribe();
         }
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
@@ -179,45 +384,35 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-
-
-    openAddDialog(): void
-    {
+    openAddDialog(): void {
+        this.isEdit = false;
         // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent);
-        /* const dialogRef = this._matDialog.open(UpdateComponent,{
-         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
-        }); */
+        const dialogRef = this._matDialog.open(UpdateComponent,{
+            data: this.isEdit,
+        });
 
-        dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
     }
 
-    openFilterDialog(){
+    openFilterDialog() {
         // Open the dialog
-        const dialogRef = this._matDialog.open(FilterComponent,{
-  height: '800px',
-  width: '300px',
-});
-        /* const dialogRef = this._matDialog.open(UpdateComponent,{
-         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
-        }); */
+        const dialogRef = this._matDialog.open(FilterComponent, {
+            height: '800px',
+            width: '300px',
+        });
 
-        dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
-
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
     }
     /**
      * Toggle employee details
      *
      * @param applicantId
      */
-    toggleDetails(applicantId: string): void
-    {
+    toggleDetails(applicantId: string): void {
         // If the product is already selected...
         /* if ( this.selectedProduct && this.selectedProduct.id === productId )
         {
@@ -230,7 +425,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         /* this._applicantService.getProductById(productId)
             .subscribe((product) => {
                 this._router.navigateByUrl('apps/employee/details/'+ productId)  */
-                /* // Set the selected product
+        /* // Set the selected product
                 this.selectedProduct = product;
 
                 // Fill the form
@@ -238,29 +433,23 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck(); */
-            /* }); */
-            this._router.navigate(['/apps/applicants/details/' + applicantId]);
-
+        /* }); */
+        this._router.navigate(['/apps/applicants/details/' + applicantId]);
     }
 
     /**
      * Close the details
      */
-    closeDetails(): void
-    {
+    closeDetails(): void {
         this.selectedProduct = null;
     }
-
-
 
     /**
      * Create employee
      */
-    createEmployee(): void
-    {
+    createEmployee(): void {
         // Create the employee
         this._applicantService.createApplicant().subscribe((newEmployee) => {
-
             // Go to new employee
             this.selectedProduct = newEmployee;
 
@@ -275,8 +464,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Update the selected employee using the form data
      */
-    updateSelectedEmployee(): void
-    {
+    updateSelectedEmployee(): void {
         // Get the employee object
         const employee = this.selectedProductForm.getRawValue();
 
@@ -284,45 +472,44 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
         delete employee.currentImageIndex;
 
         // Update the employee on the server
-        this._applicantService.updateApplicant(employee.id, employee).subscribe(() => {
-
-            // Show a success message
-            this.showFlashMessage('success');
-        });
+        this._applicantService
+            .updateApplicant(employee.id, employee)
+            .subscribe(() => {
+                // Show a success message
+                this.showFlashMessage('success');
+            });
     }
 
     /**
      * Delete the selected employee using the form data
      */
-    deleteSelectedEmployee(): void
-    {
+    deleteSelectedEmployee(): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title  : 'Delete employee',
-            message: 'Are you sure you want to remove this employee? This action cannot be undone!',
+            title: 'Delete employee',
+            message:
+                'Are you sure you want to remove this employee? This action cannot be undone!',
             actions: {
                 confirm: {
-                    label: 'Delete'
-                }
-            }
+                    label: 'Delete',
+                },
+            },
         });
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
-
             // If the confirm button pressed...
-            if ( result === 'confirmed' )
-            {
-
+            if (result === 'confirmed') {
                 // Get the employee object
                 const employee = this.selectedProductForm.getRawValue();
 
                 // Delete the employee on the server
-                this._applicantService.deleteApplicant(employee.id).subscribe(() => {
-
-                    // Close the details
-                    this.closeDetails();
-                });
+                this._applicantService
+                    .deleteApplicant(employee.id)
+                    .subscribe(() => {
+                        // Close the details
+                        this.closeDetails();
+                    });
             }
         });
     }
@@ -330,8 +517,7 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Show flash message
      */
-    showFlashMessage(type: 'success' | 'error'): void
-    {
+    showFlashMessage(type: 'success' | 'error'): void {
         // Show the message
         this.flashMessage = type;
 
@@ -340,7 +526,6 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Hide it after 3 seconds
         setTimeout(() => {
-
             this.flashMessage = null;
 
             // Mark for check
@@ -354,8 +539,24 @@ export class ApplicantsListComponent implements OnInit, AfterViewInit, OnDestroy
      * @param index
      * @param item
      */
-    trackByFn(index: number, item: any): any
-    {
+    trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+    // pageChanged(event){
+    //     console.log(event);
+    //     this.page = event.pageIndex + 1;
+    //     this.limit = event.pageSize;
+    //     this._applicantService.getApplicants(this.page,this.limit,'','','');
+    // }
+    // sortData(sort: any) {
+    //     console.log(sort);
+    //     this.page = 1;
+    //     this._applicantService.getApplicants(
+    //         this.page,
+    //         this.limit,
+    //         sort.active,
+    //         sort.direction,
+    //         ''
+    //     );
+    // }
 }
