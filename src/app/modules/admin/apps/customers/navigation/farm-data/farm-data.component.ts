@@ -101,7 +101,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         public activatedRoute: ActivatedRoute
     ) {}
 
-    //#region Life Cycle Functions
+   //#region Life Cycle Functions
     ngOnInit(): void {
         this.activatedRoute.params.pipe(takeUntil(this._unsubscribeAll))
         .subscribe((params) => {

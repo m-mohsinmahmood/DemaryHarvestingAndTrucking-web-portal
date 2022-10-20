@@ -19,19 +19,6 @@ export const employeeRoutes: Route[] = [
                     countries: ContactsCountriesResolver
 
                 },
-                children : [
-                    // {
-                    // path : 'details/:id',
-                    // component : EmployeeDetailComponent,
-                    // resolve : {
-                    //     product     : InventoryProductResolver
-                    //     }
-                    // },
-                    // {
-                    //     path     : 'details/:Id',
-                    //     component: EmployeeDetailComponent,
-                    // },
-                ]
 
             },
             {
@@ -45,26 +32,5 @@ export const employeeRoutes: Route[] = [
                 },
             },
         ]
-        /*children : [
-            {
-                path     : '',
-                component: ContactsListComponent,
-                resolve  : {
-                    tasks    : ContactsResolver,
-                    countries: ContactsCountriesResolver
-                },
-                children : [
-                    {
-                        path         : ':id',
-                        component    : ContactsDetailsComponent,
-                        resolve      : {
-                            task     : ContactsContactResolver,
-                            countries: ContactsCountriesResolver
-                        },
-                        canDeactivate: [CanDeactivateContactsDetails]
-                    }
-                ]
-            }
-        ]*/
     }
 ];

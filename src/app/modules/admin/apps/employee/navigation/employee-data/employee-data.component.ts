@@ -20,7 +20,6 @@ export class EmployeeDataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('employee-data');
      // Create the selected product form
      this.selectedProductForm = this._formBuilder.group({
       fname               : [''],
@@ -59,11 +58,6 @@ export class EmployeeDataComponent implements OnInit {
 
   });
   }
-//   saveAndClose(): void
-//   {
-//       // Close the dialog
-//       this.matDialogRef.close();
-//   }
 
 enableEditButton(): void
   {

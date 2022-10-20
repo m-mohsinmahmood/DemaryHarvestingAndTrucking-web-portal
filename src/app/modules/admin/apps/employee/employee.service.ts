@@ -110,11 +110,9 @@ export class EmployeeService
      */
     getEmployeeById(id: string): Observable<Employee>
     {
-        console.log('ID::',id);
         return this._employeesdata.pipe(
             take(1),
             map((employees) => {
-                console.log('first',employees);
                 // Find the employee
                 const employee = employees.find(item => item.id === id) || null;
 
