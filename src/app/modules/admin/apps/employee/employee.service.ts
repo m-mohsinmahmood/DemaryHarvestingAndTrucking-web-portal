@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { EmployeePagination, Employee , Country } from 'app/modules/admin/apps/employee/employee.types';
+import { EmployeePagination, Employee , Country, Documents,Item } from 'app/modules/admin/apps/employee/employee.types';
 import { employeeNavigation } from './employeeNavigation';
 
 
@@ -12,11 +12,14 @@ export class EmployeeService
 {
     // Private
 
-    private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
+    public navigationLabels = employeeNavigation;
     public _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
+    private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
     private _employeesdata: BehaviorSubject<Employee[] | null> = new BehaviorSubject(null);
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
-    public navigationLabels = employeeNavigation;
+    private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
+    private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
+
 
 
 
@@ -58,6 +61,22 @@ export class EmployeeService
     }
 
     /**
+     * Getter for items
+     */
+     get documents$(): Observable<Documents>
+     {
+         return this._documents.asObservable();
+     }
+
+     /**
+      * Getter for item
+      */
+     get item$(): Observable<Item>
+     {
+         return this._item.asObservable();
+     }
+
+    /**
      * Get employees
      *
      *
@@ -91,11 +110,11 @@ export class EmployeeService
      */
     getEmployeeById(id: string): Observable<Employee>
     {
-        console.log('ID::',id)
+        console.log('ID::',id);
         return this._employeesdata.pipe(
             take(1),
             map((employees) => {
-                console.log('first',employees)
+                console.log('first',employees);
                 // Find the employee
                 const employee = employees.find(item => item.id === id) || null;
 
@@ -118,8 +137,8 @@ export class EmployeeService
     }
 
      /**
-     * Get countries
-     */
+      * Get countries
+      */
       getCountries(): Observable<Country[]>
       {
           return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
@@ -220,7 +239,44 @@ export class EmployeeService
             ))
         );
     }
+    getItems(folderId: string | null = null): Observable<Item[]>
+    {
+        return this._httpClient.get<Documents>('api/apps/employee/details', {params: {folderId}}).pipe(
+            tap((response: any) => {
+                this._documents.next(response);
+            })
+        );
+    }
 
+    /**
+     * Get item by id
+     */
+    getItemById(id: string): Observable<Item>
+    {
+        return this._documents.pipe(
+            take(1),
+            map((documents) => {
+
+                // Find within the folders and files
+                const item = [...documents.folders, ...documents.files].find(value => value.id === id) || null;
+
+                // Update the item
+                this._item.next(item);
+
+                // Return the item
+                return item;
+            }),
+            switchMap((item) => {
+
+                if ( !item )
+                {
+                    return throwError('Could not found the item with id of ' + id + '!');
+                }
+
+                return of(item);
+            })
+        );
+    }
 
 
 
