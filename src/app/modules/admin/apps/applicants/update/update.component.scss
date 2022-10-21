@@ -6,12 +6,15 @@
 
 .interview-results-form {
     min-width: 150px;
-    max-width: 1000px;
-    width: 100%;
+    max-height: 430px;
+    overflow-y: scroll;
 }
 
 .personal-info-form {
     min-width: 150px;
+    max-height: 432px;
+    overflow-y: scroll;
+    background-color: aqua;
 }
 
 .example-full-width {

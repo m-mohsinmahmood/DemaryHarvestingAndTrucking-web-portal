@@ -1,4 +1,6 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+>
     <!-- Header -->
     <div
         class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4 px-6 md:px-8 border-b"
@@ -8,7 +10,7 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Applicants</div>
+        <div class="text-2xl font-extrabold tracking-tight">Applicants</div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -30,7 +32,7 @@
 
             <!-- Add product button -->
             <button
-                class="ml-4"
+                class="ml-4 mr-2"
                 mat-flat-button
                 [color]="'primary'"
                 (click)="openAddDialog()"
@@ -39,8 +41,12 @@
                 <span class="lg:ml-2">Add</span>
             </button>
 
-              <!-- FILTER BUTTON -->
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <!-- FILTER BUTTON -->
+            <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+            >
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -63,8 +69,6 @@
             </mat-menu>
         </div>
     </div>
-
-
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
         <div
@@ -83,9 +87,21 @@
                             <div mat-sort-header="lname">Last Name</div>
                             <div mat-sort-header="email">Email</div>
                             <div class="hidden sm:block">Country</div>
-                            <div mat-sort-header="cellPhone" class="hidden sm:block">Phone Number</div>
-                            <div mat-sort-header="" class="hidden sm:block">Calender Year</div>
-                            <div mat-sort-header="status" class="hidden sm:block">Status</div>
+                            <div
+                                mat-sort-header="cellPhone"
+                                class="hidden sm:block"
+                            >
+                                Phone Number
+                            </div>
+                            <div mat-sort-header="" class="hidden sm:block">
+                                Calender Year
+                            </div>
+                            <div
+                                mat-sort-header="status"
+                                class="hidden sm:block"
+                            >
+                                Status
+                            </div>
                             <div class="hidden sm:block">Details</div>
                         </div>
                         <!-- Rows -->
@@ -98,26 +114,41 @@
                                     trackBy: trackByFn
                                 "
                             >
-                                <div class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                <!-- <div>
+                                <div
+                                    class="applicant-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b"
+                                >
+                                    <!-- <div>
                                     <img *ngIf="applicant.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{applicant.avatar}}" alt="">
                                     <div *ngIf="applicant.avatar === ''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicant.name.charAt(0)}} </div>
                                 </div> -->
                                     <!-- First Name -->
-                                    <div class="truncate">{{ applicant.fname }}</div>
+                                    <div class="truncate">
+                                        {{ applicant.fname }}
+                                    </div>
                                     <!-- Last Name -->
-                                    <div class="truncate">{{ applicant.lname }}</div>
+                                    <div class="truncate">
+                                        {{ applicant.lname }}
+                                    </div>
                                     <!-- Email -->
                                     <div class="hidden sm:block truncate">
                                         {{ applicant.email }}
                                     </div>
-                                       <!-- Role -->
-                                       <div class="hidden sm:block truncate">{{ applicant.job }}</div>
-                                        <!-- US Phone number -->
-                                        <div class="capitalize hidden sm:block truncate">{{ applicant.cellPhone }}</div>
-                                        <!-- Foreign Phone number -->
-                                        <div class="capitalize hidden sm:block truncate">{{ "2022" }}</div>
-
+                                    <!-- Role -->
+                                    <div class="hidden sm:block truncate">
+                                        {{ applicant.country }}
+                                    </div>
+                                    <!-- US Phone number -->
+                                    <div
+                                        class="capitalize hidden sm:block truncate"
+                                    >
+                                        {{ applicant.cellPhone }}
+                                    </div>
+                                    <!-- Foreign Phone number -->
+                                    <div
+                                        class="capitalize hidden sm:block truncate"
+                                    >
+                                        {{ "2022" }}
+                                    </div>
 
                                     <!-- Status -->
                                     <div class="hidden sm:block">
@@ -151,8 +182,7 @@
                                                     : ''
                                             }}-400
                                      bg-{{
-                                                applicant.status ===
-                                                'Rejected'
+                                                applicant.status === 'Rejected'
                                                     ? 'red'
                                                     : ''
                                             }}-400
@@ -167,7 +197,10 @@
                                         <button
                                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                             mat-stroked-button
-                                            [routerLink]="['/apps/applicants/details/', applicant.id]"
+                                            [routerLink]="[
+                                                '/apps/applicants/details/',
+                                                applicant.id
+                                            ]"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -222,38 +255,47 @@
             </ng-template>
         </div>
     </div>
-
-    <fuse-drawer
+</div>
+<fuse-drawer
     class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300"
     fixed
     [mode]="'over'"
     [name]="'settingsDrawer'"
     [position]="'right'"
-    #settingsDrawer>
+    #settingsDrawer
+>
     <div class="flex flex-col w-100 overflow-auto bg-card">
-        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary ">
-                <mat-icon
-                    class="icon-size-7 text-current"
-                    [svgIcon]="'heroicons_outline:filter'"
-                    ></mat-icon>
-            <div class="ml-3 text-2xl font-semibold tracking-tight"
-            >Filters</div>
+        <div
+            class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary"
+        >
+            <mat-icon
+                class="icon-size-7 text-current"
+                [svgIcon]="'heroicons_outline:filter'"
+            ></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
+            </div>
             <button
                 class="ml-auto"
                 mat-icon-button
-                mat-icon-button (click)="settingsDrawer.close()()"
-              >
+                mat-icon-button
+                (click)="settingsDrawer.close()()"
+            >
                 <mat-icon
                     class="text-current"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    [svgIcon]="'heroicons_outline:x'"
+                ></mat-icon>
             </button>
         </div>
         <div class="flex flex-col justify-center items-center md:h-screen">
             <div class="sm:h-200 md:h-5/6 h-160 w-80">
-                <div class="w-inherit  flex  flex-col">
-                    <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full ">
+                <div class="w-inherit flex flex-col">
+                    <mat-form-field
+                        appearance="outline"
+                        class="cat mx-1 mt-2 w-full"
+                    >
                         <mat-label>Select Country</mat-label>
-                        <mat-select multiple >
+                        <mat-select>
                             <mat-option
                                 *ngFor="let country of country_list"
                                 [value]="country"
@@ -261,37 +303,44 @@
                             >
                         </mat-select>
                     </mat-form-field>
-                        <mat-form-field appearance="outline" class="mx-1 mt-2 w-full">
-                            <mat-label>Select status</mat-label>
-                            <mat-select multiple>
-                                <mat-option
-                                    *ngFor="let status of statusList"
-                                    [value]="status"
-                                    >{{ status }}</mat-option
-                                >
-                            </mat-select>
-                        </mat-form-field>
-
-
-
+                    <mat-form-field
+                        appearance="outline"
+                        class="mx-1 mt-2 w-full"
+                    >
+                        <mat-label>Select status</mat-label>
+                        <mat-select>
+                            <mat-option
+                                *ngFor="let status of statusList"
+                                [value]="status"
+                                >{{ status }}</mat-option
+                            >
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
-            <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                <button class="" mat-flat-button [color]="'primary'">
-                    <span class="" >Apply filters</span>
-                </button>
-            </div>
-            <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                <button class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                    <mat-icon
-                    class="m-0 icon-size-4"
-                    color="warn"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                    <span>Remove filters</span>
-                  </button>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div
+                    class="w-inherit flex justify-center items-center mt-1 mb-1"
+                >
+                    <button class="" mat-flat-button [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
+                </div>
+                <div
+                    class="w-inherit flex justify-center items-center mt-1 mb-1"
+                >
+                    <button
+                        class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center"
+                    >
+                        <mat-icon
+                            class="m-0 icon-size-4"
+                            color="warn"
+                            [svgIcon]="'heroicons_outline:x'"
+                        ></mat-icon>
+                        <span>Remove filters</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
 </fuse-drawer>
-</div>

@@ -12,12 +12,12 @@
             (click)="backHandler()"
             class="flex sm:flex-row flex-col  gap-3 items-center text-4xl font-extrabold tracking-tigh w-full"
         >
-        <div class="flex items-center sm:w-5/12 lg:w-4/12 w-full">
+        <div class="flex items-center">
             <mat-icon
                 class="icon-size-6 text-secondary"
                 [svgIcon]="'heroicons_solid:arrow-circle-left'"
             ></mat-icon>
-            <span class="ml-1 capitalize"
+            <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight"
                 >{{ applicants.fname }} {{ applicants.lname }}
             </span>
         </div>
@@ -81,7 +81,7 @@
     </div>
 
     <div class="flex sm:flex-row flex-col ">
-        <div class="md:w-8/12">
+        <div class="sm:w-8/12 md:w-8/12">
             <div>
                 <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
                     <app-applicantdata>
@@ -95,24 +95,24 @@
                 </ng-template>
             </div>
             <div>
-                <ng-template [ngIf]="selectedIndex === 'Old Submitted Application'">
+                <ng-template [ngIf]="selectedIndex === 'Prior Application'">
                     <app-applicantdata>
                     </app-applicantdata>
                 </ng-template>
             </div>
 
         </div>
-        <div class="md:w-4/12">
-            <div class="h-180 bg-gray-100 rounded mx-2  ">
+        <div class="sm:w-4/12 md:w-4/12">
+            <div class="h-180 bg-gray-100 rounded mx-2 my-2">
             <div class="flex flex-col   py-4 px-2">
-                <div class="flex relative min-h-14" *ngFor="let item of items">
+                <div class="flex relative min-h-14 {{item.active? 'opacity-100':'opacity-50'}}" *ngFor="let item of items" >
                    <div class="flex flex-col items-center min-w-12">
-                    <div class="flex border-2 border-solid border-white rounded-full w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
+                    <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
 
                       bg-{{
                         item.status === 'a'
                             ? 'blue'
-                            : 'to-blue-400'
+                            : ''
                     }}-400
                     bg-{{
                         item.status === 'b'
@@ -133,17 +133,23 @@
                         item.status ===
                         'e1'
                             ? 'green'
-                            : ''
+                            : 'red'
                     }}-400
 
                     bg-{{
                         item.status ===
                         false
-                            ? 'blue'
+                            ? 'indigo'
                             : ''
                     }}-400
                       "
-                      ></div>
+                      >
+                      <mat-icon
+                        class="{{item.active? 'visible': 'invisible'}}"
+                         [svgIcon]="'heroicons_outline:check'"
+                         [ngStyle]="{'color':'white'}"
+                         ></mat-icon>
+                        </div>
                     <div class="timeline-track"></div>
                      </div>
                    <div class="flex-1 flex flex-row px-4">

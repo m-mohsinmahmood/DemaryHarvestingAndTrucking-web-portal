@@ -55,6 +55,7 @@ export class UpdateComponent implements OnInit {
     fourthFormGroup: FormGroup;
     fifthFormGroup: FormGroup;
     sixthFormGroup: FormGroup;
+    seventhFormGroup: FormGroup;
     isSubmit = false;
     isBack = false;
     imageURL: string = '';
@@ -140,24 +141,33 @@ export class UpdateComponent implements OnInit {
             e_secondQuestion: ['', ''],
             e_thirdQuestion: ['', ''],
         });
+        this.seventhFormGroup = this._formBuilder.group({
+            degree: ['', ''],
+            institution: ['', ''],
+            education: ['', ''],
+        });
+
         // #endregion
         // #region populating farms
         // Get the employee by id
         if (this.data !== null) {
             this._applicantService
-                .getApplicantById(this.data.id)
+                .getApplicantById(this.data?.id)
                 .subscribe((employee) => {
                     console.log('Applicant:', employee);
                     // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
 
-                    //  this.firstFormGroup = this._formBuilder.group({
-                    //    fname: employee.firstEmail,
-                    //    lname: moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-                    //    email: employee.secondEmail,
+                     this.firstFormGroup = this._formBuilder.group({
+                       fname: employee.firstEmail,
+                       lname: moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
+                       email: employee.secondEmail,
+                       cellNumber: employee.cellPhone,
+                       homeNumber:employee.cellPhone,
+                       languages:employee.status,
                     //    secondSentDate: moment( employee.secondSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
                     //    applicationDate: moment( employee.applicationDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
 
-                    //  });
+                     });
                     this.secondFormGroup.patchValue({
                         fullName: employee.name,
                         lastNameFirstName: employee.name,
@@ -201,6 +211,11 @@ export class UpdateComponent implements OnInit {
                         e_firstQuestion: employee.e_firstQuestion,
                         e_secondQuestion: employee.e_secondQuestion,
                         e_thirdQuestion: employee.e_thirdQuestion,
+                    });
+                    this.seventhFormGroup.patchValue({
+                        degree: employee.name,
+                        institution: employee.name,
+                        education: employee.name,
                     });
                     this._changeDetectorRef.markForCheck();
                 });

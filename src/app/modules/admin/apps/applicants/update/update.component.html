@@ -1,5 +1,5 @@
-<div class="flex flex-col h-screen 2xl:max-h-screen md:min-w-160 -m-6">
-    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+<div class="flex flex-col h-screen 2xl:max-h-screen  -m-6 relative">
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
         <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
             <mat-icon
@@ -8,15 +8,15 @@
         </button>
     </header>
     <main class="mb-auto">
-        <div class="modal-body relative p-4">
+        <div class="modal-body  p-4">
             <ng-container [ngSwitch]="stepperOrientation | async">
                 <div *ngSwitchCase="'horizontal'"></div>
                 <div *ngSwitchCase="'vertical'"></div>
             </ng-container>
             <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
                 <mat-step [stepControl]="firstFormGroup" [editable]="true">
-                    <form [formGroup]="firstFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
-                        <ng-template matStepLabel>Personal Information</ng-template>
+                    <form [formGroup]="firstFormGroup" class=" mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
+                        <ng-template matStepLabel>General Form</ng-template>
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
 
                             <div>
@@ -61,8 +61,8 @@
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
-                    <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
-                        <ng-template matStepLabel>Personal Information</ng-template>
+                    <form [formGroup]="fourthFormGroup" class="personal-info-form mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full p-3">
+                        <ng-template matStepLabel>Personal Form</ng-template>
 
                         <div class="py-3 center mx-auto flex justify-center items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
@@ -81,7 +81,7 @@
                                      </label>
                             </div>
                         </div>
-                        <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 ">
 
                             <div>
                                 <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
@@ -193,7 +193,7 @@
                 </mat-step>
                 <mat-step [stepControl]="fifthFormGroup" [editable]="true">
                     <form [formGroup]="fifthFormGroup" class="interview-results-form">
-                        <ng-template matStepLabel>Work Information</ng-template>
+                        <ng-template matStepLabel>Work Form</ng-template>
                         <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With 5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-96">
@@ -282,26 +282,26 @@
                         </div>
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="" [editable]="true">
-                    <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
-                        <ng-template matStepLabel>Education Information</ng-template>
+                <mat-step [stepControl]="seventhFormGroup" [editable]="true">
+                    <form [formGroup]="seventhFormGroup" class=" mt-1">
+                        <ng-template matStepLabel>Education Form</ng-template>
                             <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
                                 <div>
                                     <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
                                         <mat-label>Degree Name</mat-label>
-                                        <input matInput type="text" formControlName="fname">
+                                        <input matInput type="text" formControlName="degree">
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
                                         <mat-label>Institution Name</mat-label>
-                                        <input matInput type="text" formControlName="lname">
+                                        <input matInput type="text" formControlName="institution">
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
                                         <mat-label>Education</mat-label>
-                                        <input matInput type="email" formControlName="email">
+                                        <input matInput type="email" formControlName="education">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -355,7 +355,7 @@
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
                     <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
-                        <mat-icon color="primary"  class="icon-size-18 sm:icon-size-24 bg-blue-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
+                        <mat-icon  [ngStyle]="{'color':'green'}"  class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
                          [svgIcon]="'heroicons_outline:check'"></mat-icon>
                             <p class="flex justify-center items-center ">You have successfully updated the applicants details. Please click on submit button to complete update process.</p>
                     </div>
@@ -376,4 +376,3 @@
           </button>
     </header>
 </div>
-

@@ -389,6 +389,8 @@ export class ApplicantsListComponent
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent,{
             data: this.isEdit,
+            // height: '800px',
+            // width: '900px',
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -396,17 +398,17 @@ export class ApplicantsListComponent
         });
     }
 
-    openFilterDialog() {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(FilterComponent, {
-            height: '800px',
-            width: '300px',
-        });
+    // openFilterDialog() {
+    //     // Open the dialog
+    //     const dialogRef = this._matDialog.open(FilterComponent, {
+    //         height: '800px',
+    //         width: '300px',
+    //     });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //         console.log('Compose dialog was closed!');
+    //     });
+    // }
     /**
      * Toggle employee details
      *
