@@ -15,7 +15,7 @@
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
             <mat-form-field
-                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
+                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded sm:min-w-64 min-w-50"
             >
                 <mat-icon
                     class="icon-size-5"
@@ -32,7 +32,7 @@
 
             <!-- Add product button -->
             <button
-                class="ml-4 mr-2"
+                class="ml-4 mr-0"
                 mat-flat-button
                 [color]="'primary'"
                 (click)="openAddDialog()"
@@ -85,7 +85,7 @@
                         >
                             <div mat-sort-header="fname">First Name</div>
                             <div mat-sort-header="lname">Last Name</div>
-                            <div mat-sort-header="email">Email</div>
+                            <div mat-sort-header="email" class="hidden sm:block">Email</div>
                             <div class="hidden sm:block">Country</div>
                             <div
                                 mat-sort-header="cellPhone"
@@ -93,7 +93,7 @@
                             >
                                 Phone Number
                             </div>
-                            <div mat-sort-header="" class="hidden sm:block">
+                            <div class="hidden sm:block">
                                 Calender Year
                             </div>
                             <div
@@ -102,7 +102,7 @@
                             >
                                 Status
                             </div>
-                            <div class="hidden sm:block">Details</div>
+                            <div class="">Details</div>
                         </div>
                         <!-- Rows -->
                         <ng-container
@@ -297,7 +297,7 @@
                         <mat-label>Select Country</mat-label>
                         <mat-select>
                             <mat-option
-                                *ngFor="let country of country_list"
+                                *ngFor="let country of countries"
                                 [value]="country"
                                 >{{ country }}</mat-option
                             >

@@ -16,6 +16,7 @@ import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.s
 import { UpdateComponent } from '../update/update.component';
 import { SettingsComponent } from 'app/layout/common/settings/settings.component';
 import { FilterComponent } from './../filter/filter.component';
+import { countryList } from './../../../../../../JSON/country';
 
 @Component({
     selector: 'app-employee',
@@ -50,213 +51,7 @@ export class ApplicantsListComponent
         'N/A',
         'Not Being Considered',
     ];
-    country_list = [
-        'Afghanistan',
-        'Albania',
-        'Algeria',
-        'Andorra',
-        'Angola',
-        'Anguilla',
-        'Antigua &amp; Barbuda',
-        'Argentina',
-        'Armenia',
-        'Aruba',
-        'Australia',
-        'Austria',
-        'Azerbaijan',
-        'Bahamas',
-        'Bahrain',
-        'Bangladesh',
-        'Barbados',
-        'Belarus',
-        'Belgium',
-        'Belize',
-        'Benin',
-        'Bermuda',
-        'Bhutan',
-        'Bolivia',
-        'Bosnia &amp; Herzegovina',
-        'Botswana',
-        'Brazil',
-        'British Virgin Islands',
-        'Brunei',
-        'Bulgaria',
-        'Burkina Faso',
-        'Burundi',
-        'Cambodia',
-        'Cameroon',
-        'Cape Verde',
-        'Cayman Islands',
-        'Chad',
-        'Chile',
-        'China',
-        'Colombia',
-        'Congo',
-        'Cook Islands',
-        'Costa Rica',
-        'Cote D Ivoire',
-        'Croatia',
-        'Cruise Ship',
-        'Cuba',
-        'Cyprus',
-        'Czech Republic',
-        'Denmark',
-        'Djibouti',
-        'Dominica',
-        'Dominican Republic',
-        'Ecuador',
-        'Egypt',
-        'El Salvador',
-        'Equatorial Guinea',
-        'Estonia',
-        'Ethiopia',
-        'Falkland Islands',
-        'Faroe Islands',
-        'Fiji',
-        'Finland',
-        'France',
-        'French Polynesia',
-        'French West Indies',
-        'Gabon',
-        'Gambia',
-        'Georgia',
-        'Germany',
-        'Ghana',
-        'Gibraltar',
-        'Greece',
-        'Greenland',
-        'Grenada',
-        'Guam',
-        'Guatemala',
-        'Guernsey',
-        'Guinea',
-        'Guinea Bissau',
-        'Guyana',
-        'Haiti',
-        'Honduras',
-        'Hong Kong',
-        'Hungary',
-        'Iceland',
-        'India',
-        'Indonesia',
-        'Iran',
-        'Iraq',
-        'Ireland',
-        'Isle of Man',
-        'Israel',
-        'Italy',
-        'Jamaica',
-        'Japan',
-        'Jersey',
-        'Jordan',
-        'Kazakhstan',
-        'Kenya',
-        'Kuwait',
-        'Kyrgyz Republic',
-        'Laos',
-        'Latvia',
-        'Lebanon',
-        'Lesotho',
-        'Liberia',
-        'Libya',
-        'Liechtenstein',
-        'Lithuania',
-        'Luxembourg',
-        'Macau',
-        'Macedonia',
-        'Madagascar',
-        'Malawi',
-        'Malaysia',
-        'Maldives',
-        'Mali',
-        'Malta',
-        'Mauritania',
-        'Mauritius',
-        'Mexico',
-        'Moldova',
-        'Monaco',
-        'Mongolia',
-        'Montenegro',
-        'Montserrat',
-        'Morocco',
-        'Mozambique',
-        'Namibia',
-        'Nepal',
-        'Netherlands',
-        'Netherlands Antilles',
-        'New Caledonia',
-        'New Zealand',
-        'Nicaragua',
-        'Niger',
-        'Nigeria',
-        'Norway',
-        'Oman',
-        'Pakistan',
-        'Palestine',
-        'Panama',
-        'Papua New Guinea',
-        'Paraguay',
-        'Peru',
-        'Philippines',
-        'Poland',
-        'Portugal',
-        'Puerto Rico',
-        'Qatar',
-        'Reunion',
-        'Romania',
-        'Russia',
-        'Rwanda',
-        'Saint Pierre &amp; Miquelon',
-        'Samoa',
-        'San Marino',
-        'Satellite',
-        'Saudi Arabia',
-        'Senegal',
-        'Serbia',
-        'Seychelles',
-        'Sierra Leone',
-        'Singapore',
-        'Slovakia',
-        'Slovenia',
-        'South Africa',
-        'South Korea',
-        'Spain',
-        'Sri Lanka',
-        'St Kitts &amp; Nevis',
-        'St Lucia',
-        'St Vincent',
-        'St. Lucia',
-        'Sudan',
-        'Suriname',
-        'Swaziland',
-        'Sweden',
-        'Switzerland',
-        'Syria',
-        'Taiwan',
-        'Tajikistan',
-        'Tanzania',
-        'Thailand',
-        "Timor L'Este",
-        'Togo',
-        'Tonga',
-        'Trinidad &amp; Tobago',
-        'Tunisia',
-        'Turkey',
-        'Turkmenistan',
-        'Turks &amp; Caicos',
-        'Uganda',
-        'Ukraine',
-        'United Arab Emirates',
-        'United Kingdom',
-        'Uruguay',
-        'Uzbekistan',
-        'Venezuela',
-        'Vietnam',
-        'Virgin Islands (US)',
-        'Yemen',
-        'Zambia',
-        'Zimbabwe',
-    ];
+    countries: string[] =[];
     page: number;
     limit: number;
     pageSize = 10;
@@ -282,10 +77,10 @@ export class ApplicantsListComponent
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * On init
-     */
+    //#region life-cycle methods
     ngOnInit(): void {
+        // passing country array
+        this.countries = countryList;
         // Get the pagination
         this._applicantService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -324,9 +119,6 @@ export class ApplicantsListComponent
             .subscribe();
     }
 
-    /**
-     * After view init
-     */
     ngAfterViewInit(): void {
         if (this._sort && this._paginator) {
             // Set the initial sort
@@ -371,14 +163,12 @@ export class ApplicantsListComponent
         }
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -409,11 +199,7 @@ export class ApplicantsListComponent
     //         console.log('Compose dialog was closed!');
     //     });
     // }
-    /**
-     * Toggle employee details
-     *
-     * @param applicantId
-     */
+
     toggleDetails(applicantId: string): void {
         // If the product is already selected...
         /* if ( this.selectedProduct && this.selectedProduct.id === productId )
@@ -439,16 +225,10 @@ export class ApplicantsListComponent
         this._router.navigate(['/apps/applicants/details/' + applicantId]);
     }
 
-    /**
-     * Close the details
-     */
     closeDetails(): void {
         this.selectedProduct = null;
     }
 
-    /**
-     * Create employee
-     */
     createEmployee(): void {
         // Create the employee
         this._applicantService.createApplicant().subscribe((newEmployee) => {
@@ -463,97 +243,16 @@ export class ApplicantsListComponent
         });
     }
 
-    /**
-     * Update the selected employee using the form data
-     */
-    updateSelectedEmployee(): void {
-        // Get the employee object
-        const employee = this.selectedProductForm.getRawValue();
-
-        // Remove the currentImageIndex field
-        delete employee.currentImageIndex;
-
-        // Update the employee on the server
-        this._applicantService
-            .updateApplicant(employee.id, employee)
-            .subscribe(() => {
-                // Show a success message
-                this.showFlashMessage('success');
-            });
-    }
-
-    /**
-     * Delete the selected employee using the form data
-     */
-    deleteSelectedEmployee(): void {
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete employee',
-            message:
-                'Are you sure you want to remove this employee? This action cannot be undone!',
-            actions: {
-                confirm: {
-                    label: 'Delete',
-                },
-            },
-        });
-
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-                // Get the employee object
-                const employee = this.selectedProductForm.getRawValue();
-
-                // Delete the employee on the server
-                this._applicantService
-                    .deleteApplicant(employee.id)
-                    .subscribe(() => {
-                        // Close the details
-                        this.closeDetails();
-                    });
-            }
-        });
-    }
-
-    /**
-     * Show flash message
-     */
-    showFlashMessage(type: 'success' | 'error'): void {
-        // Show the message
-        this.flashMessage = type;
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-
-        // Hide it after 3 seconds
-        setTimeout(() => {
-            this.flashMessage = null;
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }, 3000);
-    }
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
     // pageChanged(event){
     //     console.log(event);
     //     this.page = event.pageIndex + 1;
     //     this.limit = event.pageSize;
-    //     this._applicantService.getApplicants(this.page,this.limit,'','','');
+    //     this._applicantService.getApplicantDummy(this.page,this.limit,'','','');
     // }
     // sortData(sort: any) {
     //     console.log(sort);
     //     this.page = 1;
-    //     this._applicantService.getApplicants(
+    //     this._applicantService.getApplicantDummy(
     //         this.page,
     //         this.limit,
     //         sort.active,
