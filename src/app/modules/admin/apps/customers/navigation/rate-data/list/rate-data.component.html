@@ -67,7 +67,7 @@
                 <div class="sm:p-0">
                     <div  *ngIf="combiningRateList$ | async as combiningRateList " class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <div class="grid summary-pg-rows-height overflow-y-auto">
                                     <!-- Header -->
@@ -75,13 +75,13 @@
                                         matSort 
                                         matSortDisableClear
                                         (matSortChange)="sortData($event, 'Combining')">
-                                        <div mat-sort-header="name" class="">
+                                        <div mat-sort-header="crop_name" >
                                             Crop
                                         </div>
-                                        <div mat-sort-header="bushel_weight" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="bushel_weight" class="hidden sm:block">
                                             Bushel Weight
                                         </div>
-                                        <div mat-sort-header="combining_rate" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="combining_rate" class="hidden sm:block">
                                             Combining Rate
                                             <mat-hint>(Per Acre)</mat-hint>
                                         </div>
@@ -216,7 +216,7 @@
                 <div class="sm:p-0">
                     <div *ngIf="haulingRateList$ | async as haulingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <div class="grid summary-pg-rows-height overflow-y-auto">
                                     <!-- Header -->
@@ -227,10 +227,10 @@
                                         <div mat-sort-header="rate_type">
                                             Rate Type
                                         </div>
-                                        <div mat-sort-header="rate" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="rate" class="hidden sm:block">
                                             Rate
                                         </div>
-                                        <div mat-sort-header="base_rate" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="base_rate" class="hidden sm:block ">
                                             Base Rate
                                             <mat-hint>(Per Tons)</mat-hint>
                                         </div>
@@ -251,15 +251,11 @@
                                                 <div class="hidden sm:block">
                                                     {{haulingRate.rate}}
                                                 </div>
-                                                <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">
-                                                        {{haulingRate.base_rate}}
-                                                    </div>
+                                                <div class="hidden sm:block">
+                                                    {{haulingRate.base_rate}}
                                                 </div>
-                                                <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">
-                                                        {{haulingRate.premium_rate}} 
-                                                    </div>
+                                                <div class="hidden sm:block">
+                                                    {{haulingRate.premium_rate}} 
                                                 </div>
                                                 <!-- Action -->
                                                 <div>
@@ -363,7 +359,7 @@
                 <div class="sm:p-0">
                     <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -493,7 +489,7 @@
                 <div class="sm:p-0">
                     <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -613,7 +609,7 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div class="flex flex-auto overflow-hidden">
+                    <div  *ngIf="combiningRateList$ | async as combiningRateList " class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
@@ -622,14 +618,14 @@
                                     <div class="combining-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
                                         matSort 
                                         matSortDisableClear
-                                        (matSortChange)="sortData($event, 'summaryCombining')">
-                                        <div mat-sort-header="crop">
+                                        (matSortChange)="sortData($event, 'Combining')">
+                                        <div mat-sort-header="crop_name">
                                             Crop
                                         </div>
                                         <div mat-sort-header="bushel_weight">
                                             Bushel Weight
                                         </div>
-                                        <div mat-sort-header="combining_rate" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="combining_rate" class="hidden sm:block ">
                                             Combining Rate
                                             <mat-hint>(Per Acre)</mat-hint>
                                         </div>
@@ -644,23 +640,23 @@
                                     </div>
                                     <!-- Rows -->
                                     <div class="rows-wrapper"> 
-                                        <ng-container>
-                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                        <ng-container *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
+                                            <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
                                                 <div class="combining-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                     <div class="truncate">
-                                                        "Corn"
+                                                        {{combiningRate.crop_name}}
                                                     </div>
                                                     <div>
-                                                        "56 Pounds"
+                                                        {{combiningRate.bushel_weight}}
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                        {{combiningRate.combining_rate}}     
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                        {{combiningRate.base_bushels}}
                                                     </div>
-                                                    <div class="hidden sm:block">
-                                                        <div class="min-w-4 ml-2">"Per Bushel" </div>
+                                                    <div class="hidden sm:block"> 
+                                                        {{combiningRate.premium_rate}}     
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -670,7 +666,7 @@
                                 <mat-paginator
                                     class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
-                                    [length]="10"
+                                    [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
                                     [pageSize]="10"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
@@ -678,7 +674,7 @@
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
-                            <ng-template class="flex" #noCombiningRate>
+                            <ng-template class="flex" #noCombiningRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         No Combining Rate(s) Found!
@@ -741,23 +737,23 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div class="flex flex-auto overflow-hidden">
+                    <div *ngIf="haulingRateList$ | async as haulingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto">
                             <ng-container>
                                 <div class="grid summary-pg-rows-height overflow-y-auto">
                                     <!-- Header -->
                                     <div class="hauling-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
                                         matSort 
                                         matSortDisableClear
-                                        (matSortChange)="sortData($event, 'summaryHauling')">
+                                        (matSortChange)="sortData($event, 'Hauling')">
                                         <div mat-sort-header="rate_type">
                                             Rate Type
                                         </div>
                                         <div mat-sort-header="rate">
                                             Rate
                                         </div>
-                                        <div mat-sort-header="base_rate" class="hidden sm:block pl-2">
+                                        <div mat-sort-header="base_rate" class="hidden sm:block ">
                                             Base Rate
                                             <mat-hint>(Per Tons)</mat-hint>
                                         </div>
@@ -768,20 +764,20 @@
                                     </div>
                                     <!-- Rows -->
                                     <div class="rows-wrapper h-72">
-                                        <ng-container>
-                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                        <ng-container *ngIf="haulingRateList.hauling_rates.length > 0 else noHaulingRateList">
+                                            <ng-container *ngFor="let haulingRate of haulingRateList.hauling_rates">
                                                 <div class="hauling-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                     <div class="truncate">
-                                                        "Corn"
+                                                        {{haulingRate.rate_type}}
                                                     </div>
                                                     <div>
-                                                        "56 Pounds"
+                                                        {{haulingRate.rate}}
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                        {{haulingRate.base_rate}}
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                        {{haulingRate.premium_rate}} 
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -791,7 +787,7 @@
                                 <mat-paginator
                                     class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
-                                    [length]="10"
+                                    [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
                                     [pageSize]="10"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
@@ -799,7 +795,7 @@
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
-                            <ng-template class="flex" #noCombiningRate>
+                            <ng-template class="flex" #noHaulingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         No Hauling Rate(s) Found!
@@ -862,7 +858,7 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div class="flex flex-auto overflow-hidden">
+                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
@@ -871,7 +867,7 @@
                                     <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
                                         matSort 
                                         matSortDisableClear
-                                        (matSortChange)="sortData($event, 'summaryTrucking')">
+                                        (matSortChange)="sortData($event, 'Trucking')">
                                         <div mat-sort-header="rate_type">
                                            Rate Type
                                         </div>
@@ -881,14 +877,14 @@
                                     </div>
                                     <!-- Rows -->
                                     <div class="rows-wrapper h-72">
-                                        <ng-container>
-                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                        <ng-container *ngIf="truckingRateList?.trucking_rates.length > 0 else noTruckingRateList">
+                                            <ng-container *ngFor="let truckingRate of truckingRateList?.trucking_rates">
                                                 <div class="commercial-trucking-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                     <div class="truncate">
-                                                        "Corn"
+                                                        {{truckingRate.rate_type}}
                                                     </div>
-                                                    <div class="truncate">
-                                                        "56 Pounds"
+                                                    <div>
+                                                        {{truckingRate.rate}}
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -898,7 +894,7 @@
                                 <mat-paginator
                                     class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
-                                    [length]="10"
+                                    [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
                                     [pageSize]="10"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
@@ -906,7 +902,7 @@
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
-                            <ng-template class="flex" #noCombiningRate>
+                            <ng-template class="flex" #noTruckingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         No Commercial Trucking Rate(s) Found!
@@ -969,7 +965,7 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div class="flex flex-auto overflow-hidden">
+                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto overflow-hidden">
                         <!-- Products list -->
                         <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                             <ng-container>
@@ -978,7 +974,7 @@
                                     <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
                                         matSort 
                                         matSortDisableClear
-                                        (matSortChange)="sortData($event, 'summaryFarming')">
+                                        (matSortChange)="sortData($event, 'Farming')">
                                         <div mat-sort-header="equipment_type">
                                            Equipment Type
                                         </div>
@@ -988,14 +984,14 @@
                                     </div>
                                     <!-- Rows -->
                                     <div class="rows-wrapper h-72">
-                                        <ng-container>
-                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                        <ng-container *ngIf="farmingRateList?.farming_rates.length > 0 else nofarmingRateList">
+                                            <ng-container *ngFor="let farmingRate of farmingRateList.farming_rates">
                                                 <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                     <div class="truncate">
-                                                        "Corn"
+                                                        {{farmingRate.equipment_type}}
                                                     </div>
-                                                    <div class="truncate">
-                                                        "56 Pounds"
+                                                    <div>
+                                                        {{farmingRate.rate}}
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -1005,7 +1001,7 @@
                                 <mat-paginator
                                     class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
-                                    [length]="10"
+                                    [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"
                                     [pageSize]="10"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
@@ -1013,7 +1009,7 @@
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
-                            <ng-template class="flex" #noCombiningRate>
+                            <ng-template class="flex" #nofarmingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         No Custom Farming Rate(s) Found!

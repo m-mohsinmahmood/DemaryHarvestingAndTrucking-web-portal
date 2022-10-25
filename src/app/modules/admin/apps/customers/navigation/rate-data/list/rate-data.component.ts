@@ -232,9 +232,6 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   initApis() {
     this._customerService.getCombiningRate(this.routeID);
     this._customerService.getHaulingRate(this.routeID);
-    this._customerService.getTruckingRate(this.routeID);
-    this._customerService.getFarmingRate(this.routeID);
-
     // for sorting
     this.activeTab = 'Hauling';
   }
@@ -251,34 +248,34 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
         case 'Hauling':
             this._customerService.getHaulingRate(this.routeID);
             break;
-        case 'Trucking':
+        case 'Commercial Trucking':
             this._customerService.getTruckingRate(this.routeID);
             break;
-        case 'Farming':
+        case 'Custom Farming':
             this._customerService.getFarmingRate(this.routeID);
             break;
-        // case 'Summary':
-            // this._customerService.getCustomerFarm(
-            //     this.routeID,
-            //     this.page,
-            //     5,
-            // );
-            // this._customerService.getCustomerField(
-            //     this.routeID,
-            //     this.page,
-            //     5,
-            // );
-            // this._customerService.getCustomerCrops(
-            //     this.routeID,
-            //     this.page,
-            //     5,
-            // );
-            // this._customerService.getCustomerDestination(
-            //     this.routeID,
-            //     this.page,
-            //     5,
-            // );
-            // break;
+        case 'Summary':
+            this._customerService.getCombiningRate(
+                this.routeID,
+                this.page,
+                5,
+            );
+            this._customerService.getHaulingRate(
+                this.routeID,
+                this.page,
+                5,
+            );
+            this._customerService.getTruckingRate(
+                this.routeID,
+                this.page,
+                5,
+            );
+            this._customerService.getFarmingRate(
+                this.routeID,
+                this.page,
+                5,
+            );
+            break;
         default:
     }
   }
@@ -373,7 +370,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
     this.page = 1;
     switch (rateData) {
         case 'Combining':
-        this.combiningSort[0] = sort.active; this.combiningSort[1] = sort.direction;
+            this.combiningSort[0] = sort.active; this.combiningSort[1] = sort.direction;
             this._customerService.getCombiningRate(
                 this.routeID,
                 this.page,
