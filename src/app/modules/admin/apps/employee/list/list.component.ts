@@ -39,6 +39,7 @@ import { AddComponent } from '../add/add.component';
 import { read, utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
+import { countryList } from './../../../../../../JSON/country';
 
 @Component({
     selector: 'app-employee',
@@ -47,17 +48,18 @@ import * as Joi from 'joi';
         /* language=SCSS */
         `
             .employee-grid {
-                grid-template-columns: 10% 50% 30%;
+                grid-template-columns: 35% 35% 36% ;
 
-                @screen sm {
-                    grid-template-columns: 3% 20% 25% 30% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 25% 30% 25% 10%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 25% 30% 25% 10%;
-                }
+        @screen sm {
+            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
+        }
+        @screen md {
+            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
+        }
+
+        @screen lg {
+            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
+        }
             }
         `,
     ],
@@ -78,6 +80,15 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     isFileError: boolean = false;
     fileHeaders: any[] = [];
     importFileData: any;
+    countries: string[] =[];
+    statusList: string[] = [
+        'Hired',
+        'Evaluated',
+        'In-Process',
+        'New',
+        'N/A',
+        'Not Being Considered',
+    ];
 
     importSchema = Joi.object({
         fullName: Joi.string().min(3).max(30).required(),
@@ -124,6 +135,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // passing country array
+        this.countries = countryList;
+
+
         // Get the pagination
         this._employeeService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -137,6 +152,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Get the employees
         this.employeesdata$ = this._employeeService.employeedata$;
+        console.log('Employee',this.employeesdata$);
+
         this.employeesdata$.subscribe((value) => {
             this.employeeList = value;
         });
@@ -228,17 +245,17 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.file = event.target.files[0];
     }
     upload() {
-        let fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = async (e) => {
             this.arrayBuffer = fileReader.result;
-            var data = new Uint8Array(this.arrayBuffer);
-            var arr = new Array();
-            for (var i = 0; i != data.length; ++i)
-                arr[i] = String.fromCharCode(data[i]);
-            var bstr = arr.join('');
-            var workbook = XLSX.read(bstr, { type: 'binary' });
-            var first_sheet_name = workbook.SheetNames[0];
-            var worksheet = workbook.Sheets[first_sheet_name];
+            const data = new Uint8Array(this.arrayBuffer);
+            const arr = new Array();
+            for (let i = 0; i != data.length; ++i)
+                {arr[i] = String.fromCharCode(data[i]);}
+            const bstr = arr.join('');
+            const workbook = XLSX.read(bstr, { type: 'binary' });
+            const first_sheet_name = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[first_sheet_name];
             this.importEmployeeList = XLSX.utils.sheet_to_json(worksheet, {});
             this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
                 header: 1,

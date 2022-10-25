@@ -6,7 +6,7 @@
         <div class="text-lg font-medium">Contact Data</div>
     </header> -->
     <!-- Actions -->
-    <div class="overflow-y-auto">
+    <div class="overflow-y-auto h-auto">
         <div class="flex justify-between items-center ml-6 my-4">
             <p class="font-semibold text-2xl ml-2">Contact Data</p>
         </div>
@@ -20,119 +20,121 @@
         </div>
         <form [formGroup]="selectedProductForm" class="sm:p-0 p-6  ">
             <div class="py-0 sm:pl-6  md:pl-12 pl-2 pr-2 min-h-128">
-            <div class="flex flex-row  sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col  sm:items-center w-6/12 h-10 mr-4 ">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Language Spoken: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10  w-full">
-                        <input matInput formControlName="fname" class="">
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Language Spoken: </mat-label>
+                        <input matInput  class="">
                     </mat-form-field>
                 </div>
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12  h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>DOB: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="lname">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="flex flex-row  sm:mb-3 mb-9 ">
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10 mr-4">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 "><span>*</span>Age: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
-                    </mat-form-field>
-                </div>
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Marital Status: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>DOB: </mat-label>
+                        <input matInput >
                     </mat-form-field>
                 </div>
             </div>
-            <div class="flex flex-row  sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10 mr-4">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Tractor License: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Age: </mat-label>
+                        <input matInput  class="">
                     </mat-form-field>
                 </div>
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Commercial Driver's License: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="flex sm:flex-row sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10 mr-4">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Education Degree Level: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
-                    </mat-form-field>
-                </div>
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Education Degre Name: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Marital Status: </mat-label>
+                        <input matInput >
                     </mat-form-field>
                 </div>
             </div>
-            <div class="flex sm:flex-row sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10 mr-4">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>US Citizen: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Tractor License: </mat-label>
+                        <input matInput  class="">
                     </mat-form-field>
                 </div>
-                <div class="flex sm:flex-row flex-col sm:items-center w-6/12 h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Blood Type(If Known): </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Commercial Driver's License: </mat-label>
+                        <input matInput >
                     </mat-form-field>
                 </div>
             </div>
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Education Degree Level: </mat-label>
+                        <input matInput  class="">
+                    </mat-form-field>
+                </div>
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Education Degre Name: </mat-label>
+                        <input matInput >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>US Citizen: </mat-label>
+                        <input matInput class="">
+                    </mat-form-field>
+                </div>
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Blood Type(If Known): </mat-label>
+                        <input matInput >
+                    </mat-form-field>
+                </div>
+            </div>
+
             <p class="font-semibold text-lg my-8">Self Ranking</p>
-            <div class="flex sm:flex-row flex-col sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10 mr-4 sm:mb-0 mb-9">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Operating Farm Equipment: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Rank Operating Farm Equipment: </mat-label>
+                        <input matInput  class="">
                     </mat-form-field>
                 </div>
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Operating Harvest Equipment: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="flex sm:flex-row flex-col sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10 mr-4 sm:mb-0 mb-9">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Driving Trucks ability: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
-                    </mat-form-field>
-                </div>
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Welding Ability: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Rank Operating Harvest Equipment: </mat-label>
+                        <input matInput >
                     </mat-form-field>
                 </div>
             </div>
-            <div class="flex sm:flex-row flex-col sm:mb-3 mb-9">
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10 mr-4 sm:mb-0 mb-9">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Mechanical Ability: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="email" class="">
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Rank Driving Trucks ability: </mat-label>
+                        <input matInput  class="">
                     </mat-form-field>
                 </div>
-                <div class="flex sm:flex-row flex-col sm:items-center sm:w-6/12 w-full h-10">
-                    <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"><span>*</span>Rank Speaking English: </mat-label>
-                    <mat-form-field appearance="outline" class="h-10 w-full">
-                        <input matInput formControlName="cellnumber" class="">
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Rank Welding Ability: </mat-label>
+                        <input matInput >
                     </mat-form-field>
                 </div>
             </div>
+            <div class="flex sm:flex-row flex-col  sm:mb-3 mb-6">
+                <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 whitespace-nowrap"> <span>*</span>Rank Mechanical Ability: </mat-label>
+                        <input matInput  class="">
+                    </mat-form-field>
+                </div>
+                <div class="sm:w-6/12 w-full h-10 sm:m-2">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label class="text-base font-normal mr-1 text-gray-500 w-max"><span>*</span>Rank Speaking English: </mat-label>
+                        <input matInput >
+                    </mat-form-field>
+                </div>
+            </div>
+
 
                 <!-- </div> -->
             </div>

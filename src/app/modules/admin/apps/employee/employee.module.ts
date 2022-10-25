@@ -20,7 +20,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SharedModule } from 'app/shared/shared.module';
 import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
 import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
@@ -37,6 +37,9 @@ import { OnboardingComponent } from './navigation/onboarding/onboarding.componen
 import { AccountManagementComponent } from './navigation/account-management/account-management.component';
 import { PayrollComponent } from './navigation/payroll/payroll.component';
 import { DocumentsComponent } from './navigation/documents/documents.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { MailboxComposeComponent } from './navigation/onboarding/compose/compose.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
     declarations: [
@@ -52,6 +55,7 @@ import { DocumentsComponent } from './navigation/documents/documents.component';
       AccountManagementComponent,
       PayrollComponent,
       DocumentsComponent,
+      MailboxComposeComponent,
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),
@@ -78,7 +82,9 @@ import { DocumentsComponent } from './navigation/documents/documents.component';
         MatMomentDateModule,
         MatToolbarModule,
         MatChipsModule,
-        SharedModule
+        SharedModule,
+        FuseDrawerModule,
+        QuillModule,
     ]
 })
 export class EmployeeModule
