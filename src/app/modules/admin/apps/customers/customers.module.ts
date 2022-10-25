@@ -39,8 +39,8 @@ import { JobStatusComponent } from './navigation/job-status/job-status.component
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobResultComponent } from './navigation/job-result/job-result.component';
-import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
-import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
+import { ContactsDataComponent } from './navigation/customer-information/edit/contacts-data.component';
+import { CustomersContactsList } from './navigation/customer-information/list/customers-contacts.component';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
 import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.component';
 import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
