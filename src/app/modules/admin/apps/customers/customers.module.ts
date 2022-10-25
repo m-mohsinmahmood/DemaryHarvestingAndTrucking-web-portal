@@ -33,7 +33,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { RateDataComponent } from './navigation/rate-data/rate-data.component';
+import { RateDataComponent } from './navigation/rate-data/list/rate-data.component';
 import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
@@ -48,9 +48,12 @@ import { AddDestinationComponent } from './navigation/farm-data/add-destination/
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
 import { CustomerDetail } from './navigation/customer-detail/customer-detail.component';
 import { DocumentComponent } from './navigation/document/document.component';
-import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddCommercialTruckingRateComponent } from './navigation/rate-data/add-commercial-trucking-rate/add-commercial-trucking-rate.component';
+import { AddCustomFarmingRateComponent } from './navigation/rate-data/add-custom-farming-rate/add-custom-farming-rate.component';
+import { AddCombiningRateComponent } from './navigation/rate-data/add-combining-rate/add-combining-rate.component';
+import { AddHaulingRateComponent } from './navigation/rate-data/add-hauling-rate/add-hauling-rate.component';
 
 @NgModule({
     declarations: [
@@ -74,8 +77,11 @@ import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.compo
         AddCustomerContact,
         CustomerDetail,
         DocumentComponent,
-        AddRateDataComponent,
-        AddFarmComponent
+        AddFarmComponent,
+        AddCommercialTruckingRateComponent,
+        AddCustomFarmingRateComponent,
+        AddCombiningRateComponent,
+        AddHaulingRateComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),

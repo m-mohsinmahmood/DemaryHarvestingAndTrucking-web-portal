@@ -1,0 +1,1028 @@
+<!--Resources Nested Tabs-->
+<div class="sm:rounded-lg overflow-auto sm:absolute sm:inset-0 sm:overflow-hidden bg-card dark:bg-transparent">   
+    <mat-tab-group mat-align-tabs="start" 
+        class="tab_group" 
+        (selectedTabChange)="rateTabChanged($event)">
+        <!-- Custom Harvesting-->
+        <mat-tab label="Custom Harvesting">
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Combining
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchCombiningForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                  <!-- Add Rate button -->
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="openAddCombiningDialog()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="lg:ml-2">Add</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div  *ngIf="combiningRateList$ | async as combiningRateList " class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="combining-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'Combining')">
+                                        <div mat-sort-header="name" class="">
+                                            Crop
+                                        </div>
+                                        <div mat-sort-header="bushel_weight" class="hidden sm:block pl-2">
+                                            Bushel Weight
+                                        </div>
+                                        <div mat-sort-header="combining_rate" class="hidden sm:block pl-2">
+                                            Combining Rate
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="base_bushels" class="hidden sm:block">
+                                            Base Bushels
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="premium_rate" class="hidden sm:block">
+                                            Premium Rate
+                                            <mat-hint>(Per Bushel)</mat-hint>
+                                        </div>
+                                        <div>Actions</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper">
+
+                                    <ng-container *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
+                                        <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
+                                            <div class="combining-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    {{combiningRate.crop_name}}
+                                                </div>
+                                                <div class="hidden sm:block">
+                                                    {{combiningRate.bushel_weight}}
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    {{combiningRate.combining_rate}}     
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    {{combiningRate.base_bushels}}
+                                                </div>
+                                                <div class="hidden sm:block"> 
+                                                    {{combiningRate.premium_rate}}     
+                                                </div>
+                                                <!-- Action -->
+                                                <div>
+                                                    <button
+                                                        class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditCombiningDialog(combiningRate)">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="combiningRateList?.count"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'Combining')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noCombiningRateList>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Combining Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            <!-- Hauling -->
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Hauling
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchHaulingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                  <!-- Add Rate button -->
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="openAddHaulingDialog()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="lg:ml-2">Add</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div *ngIf="haulingRateList$ | async as haulingRateList" class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="hauling-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'Hauling')">
+                                        <div mat-sort-header="rate_type">
+                                            Rate Type
+                                        </div>
+                                        <div mat-sort-header="rate" class="hidden sm:block pl-2">
+                                            Rate
+                                        </div>
+                                        <div mat-sort-header="base_rate" class="hidden sm:block pl-2">
+                                            Base Rate
+                                            <mat-hint>(Per Tons)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="premium_rate" class="hidden sm:block">
+                                            Premium Rate
+                                            <mat-hint>(Per Mile)</mat-hint>
+                                        </div>
+                                        <div>Actions</div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper">
+                                    <ng-container *ngIf="haulingRateList.hauling_rates.length > 0 else noHaulingRateList">
+                                        <ng-container *ngFor="let haulingRate of haulingRateList.hauling_rates">
+                                            <div class="hauling-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    {{haulingRate.rate_type}}
+                                                </div>
+                                                <div class="hidden sm:block">
+                                                    {{haulingRate.rate}}
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{haulingRate.base_rate}}
+                                                    </div>
+                                                </div>
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{haulingRate.premium_rate}} 
+                                                    </div>
+                                                </div>
+                                                <!-- Action -->
+                                                <div>
+                                                    <button
+                                                        class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditHaulingDialog(haulingRate)">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="haulingRateList?.count"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="pageSize"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'Hauling')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noHaulingRateList>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Hauling Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+        </mat-tab>
+        <!--Commercial Trucking -->
+        <mat-tab label="Commercial Trucking">  
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Commercial Trucking
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchTruckingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                    <!-- Add Rate button -->
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="openAddTruckingDialog()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="lg:ml-2">Add</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+                </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event , 'Trucking')">
+                                        <div mat-sort-header="rate_type">
+                                           Rate Type
+                                        </div>
+                                        <div mat-sort-header="rate" class="hidden sm:block">
+                                            Rate
+                                        </div>
+                                        <div>
+                                            Actions
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container *ngIf="truckingRateList?.trucking_rates.length > 0 else noTruckingRateList">
+                                        <ng-container *ngFor="let truckingRate of truckingRateList?.trucking_rates">
+                                            <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    {{truckingRate.rate_type}}
+                                                </div>
+                                                <div class="hidden sm:block">
+                                                    {{truckingRate.rate}}
+                                                </div>
+                                                <!-- Action -->
+                                                <div>
+                                                    <button
+                                                        class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditTruckingDialog(truckingRate)">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'">
+                                                        </mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <mat-paginator
+                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="truckingRateList?.count"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptions"
+                                    (page)="pageChanged($event, 'Trucking')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noTruckingRateList>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Commercial Trucking Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+        </mat-tab>
+        <!--Custom Farming-->   
+        <mat-tab label="Custom Farming">
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Custom Farming
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchCustomFarmingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                <!-- Add Rate button -->
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="openAddFarmingDialog()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="lg:ml-2">Add</span>
+                    </button>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event , 'Farming')">
+                                        <div mat-sort-header="equipment_type">
+                                           Equipment Type
+                                        </div>
+                                        <div mat-sort-header="rate" class="hidden sm:block">
+                                            Rate
+                                        </div>
+                                        <div>
+                                            Actions
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container *ngIf="farmingRateList?.farming_rates.length > 0 else nofarmingRateList">
+                                        <ng-container *ngFor="let farmingRate of farmingRateList.farming_rates">
+                                            <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                   {{farmingRate.equipment_type}}
+                                                </div>
+                                                <div class="hidden sm:block">
+                                                    {{farmingRate.rate}}
+                                                </div>
+                                                <!-- Action -->
+                                                <div>
+                                                    <button
+                                                        class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditFarmingDialog(farmingRate)">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <mat-paginator
+                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="farmingRateList.count"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptions"
+                                    (page)="pageChanged($event, 'Farming')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #nofarmingRateList>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Custom Farming Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+        </mat-tab>
+        <!-- Summary -->
+        <mat-tab label="Summary" class="summary-tab flex flex-col">
+             <!-- Custom Harvesting-->
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Combining
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchCombiningForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="combining-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'summaryCombining')">
+                                        <div mat-sort-header="crop">
+                                            Crop
+                                        </div>
+                                        <div mat-sort-header="bushel_weight">
+                                            Bushel Weight
+                                        </div>
+                                        <div mat-sort-header="combining_rate" class="hidden sm:block pl-2">
+                                            Combining Rate
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="base_bushels" class="hidden sm:block">
+                                            Base Bushels
+                                            <mat-hint>(Per Acre)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="premium_rate" class="hidden sm:block">
+                                            Premium Rate
+                                            <mat-hint>(Per Bushel)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper"> 
+                                        <ng-container>
+                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                                <div class="combining-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                        "Corn"
+                                                    </div>
+                                                    <div>
+                                                        "56 Pounds"
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                    </div>
+                                                    <div class="hidden sm:block">
+                                                        <div class="min-w-4 ml-2">"Per Bushel" </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="10"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'SummaryCombining')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noCombiningRate>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Combining Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            <!-- Hauling -->
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Hauling
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchHaulingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="hauling-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'summaryHauling')">
+                                        <div mat-sort-header="rate_type">
+                                            Rate Type
+                                        </div>
+                                        <div mat-sort-header="rate">
+                                            Rate
+                                        </div>
+                                        <div mat-sort-header="base_rate" class="hidden sm:block pl-2">
+                                            Base Rate
+                                            <mat-hint>(Per Tons)</mat-hint>
+                                        </div>
+                                        <div mat-sort-header="premium_rate" class="hidden sm:block">
+                                            Premium Rate
+                                            <mat-hint>(Per Mile)</mat-hint>
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper h-72">
+                                        <ng-container>
+                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                                <div class="hauling-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                        "Corn"
+                                                    </div>
+                                                    <div>
+                                                        "56 Pounds"
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4 ml-2">"Combining Rate" </div>
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4 ml-2">"Per Acre" </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="10"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'SummaryHauling')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noCombiningRate>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Hauling Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            <!--Commercial Trucking -->
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Commercial Trucking
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchTruckingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'summaryTrucking')">
+                                        <div mat-sort-header="rate_type">
+                                           Rate Type
+                                        </div>
+                                        <div mat-sort-header="rate">
+                                            Rate
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper h-72">
+                                        <ng-container>
+                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                                <div class="commercial-trucking-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                        "Corn"
+                                                    </div>
+                                                    <div class="truncate">
+                                                        "56 Pounds"
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="10"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'SummaryTrucking')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noCombiningRate>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Commercial Trucking Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            <!--Custom Farming-->
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">                
+                <div>
+                    <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                        Custom Farming
+                    </header>
+                </div>
+                <div class="mt-2 flex">
+                    <!-- Search -->
+                    <mat-form-field
+                        class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <form [formGroup]="searchCustomFarmingForm">
+                            <input
+                                matInput
+                                formControlName="search"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Search'"/>
+                        </form>
+                    </mat-form-field>
+                    <!-- Import/Export -->
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>
+                            <mat-icon>filter</mat-icon>
+                            <span>Filters</span>
+                        </button> -->
+                        <button mat-menu-item>
+                            <mat-icon>upload</mat-icon>
+                            <span>Import</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>download</mat-icon>
+                            <span>Download Template</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+                <!-- Main -->
+                <div class="sm:p-0">
+                    <div class="flex flex-auto overflow-hidden">
+                        <!-- Products list -->
+                        <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                            <ng-container>
+                                <div class="grid summary-pg-rows-height overflow-y-auto">
+                                    <!-- Header -->
+                                    <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" 
+                                        matSort 
+                                        matSortDisableClear
+                                        (matSortChange)="sortData($event, 'summaryFarming')">
+                                        <div mat-sort-header="equipment_type">
+                                           Equipment Type
+                                        </div>
+                                        <div mat-sort-header="rate">
+                                            Rate
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <div class="rows-wrapper h-72">
+                                        <ng-container>
+                                            <ng-container *ngFor="let number of [0,1,2,3,4]">
+                                                <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                        "Corn"
+                                                    </div>
+                                                    <div class="truncate">
+                                                        "56 Pounds"
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <mat-paginator
+                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }"
+                                    [length]="10"
+                                    [pageIndex]="page - 1"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="pageSizeOptionsSummary"
+                                    (page)="pageChanged($event, 'SummaryFarming')"
+                                    [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </ng-container>
+                            <ng-template class="flex" #noCombiningRate>
+                                <div class="show-centered-notice h-full justify-center items-center flex">
+                                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                                        No Custom Farming Rate(s) Found!
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
