@@ -30,10 +30,10 @@ import {
     takeUntil,
 } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { ContactsDataComponent } from './contacts-data/contacts-data.component';
+import { ContactsDataComponent } from '../edit/contacts-data.component';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddCustomerContact } from './add/add.component';
+import { AddCustomerContact } from '../add/add.component';
 
 @Component({
     selector: 'customers-contacts',
