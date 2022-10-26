@@ -73,3 +73,11 @@
 .rows-wrapper {
     height: 16.9rem !important;
 }
+
+$mobile: 600px;
+
+.rows-wrapper {
+    @media screen and (max-width: $mobile) {
+        height: 14.4rem !important;
+    }
+}

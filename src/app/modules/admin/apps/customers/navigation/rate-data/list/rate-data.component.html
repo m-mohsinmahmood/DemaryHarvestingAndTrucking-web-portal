@@ -1,5 +1,5 @@
 <!--Resources Nested Tabs-->
-<div class="sm:rounded-lg overflow-auto sm:absolute sm:inset-0 sm:overflow-hidden bg-card dark:bg-transparent">   
+<div class="h-full rounded-lg overflow-auto absolute inset-0 overflow-hidden bg-card dark:bg-transparent">   
     <mat-tab-group mat-align-tabs="start" 
         class="tab_group" 
         (selectedTabChange)="rateTabChanged($event)">
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
@@ -274,7 +274,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -404,7 +404,7 @@
                                     </ng-container>
                                 </div>
                                 <mat-paginator
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute sm:inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -533,7 +533,7 @@
                                     </ng-container>
                                 </div>
                                 <mat-paginator
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"
@@ -639,7 +639,7 @@
                                         </div>
                                     </div>
                                     <!-- Rows -->
-                                    <div class="rows-wrapper"> 
+                                    <div class="rows-wrapper-summary"> 
                                         <ng-container *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
                                             <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
                                                 <div class="combining-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -664,7 +664,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
@@ -763,7 +763,7 @@
                                         </div>
                                     </div>
                                     <!-- Rows -->
-                                    <div class="rows-wrapper h-72">
+                                    <div class="rows-wrapper-summary">
                                         <ng-container *ngIf="haulingRateList.hauling_rates.length > 0 else noHaulingRateList">
                                             <ng-container *ngFor="let haulingRate of haulingRateList.hauling_rates">
                                                 <div class="hauling-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -785,7 +785,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -876,7 +876,7 @@
                                         </div>
                                     </div>
                                     <!-- Rows -->
-                                    <div class="rows-wrapper h-72">
+                                    <div class="rows-wrapper-summary h-72">
                                         <ng-container *ngIf="truckingRateList?.trucking_rates.length > 0 else noTruckingRateList">
                                             <ng-container *ngFor="let truckingRate of truckingRateList?.trucking_rates">
                                                 <div class="commercial-trucking-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -892,7 +892,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -983,7 +983,7 @@
                                         </div>
                                     </div>
                                     <!-- Rows -->
-                                    <div class="rows-wrapper h-72">
+                                    <div class="rows-wrapper-summary h-72">
                                         <ng-container *ngIf="farmingRateList?.farming_rates.length > 0 else nofarmingRateList">
                                             <ng-container *ngFor="let farmingRate of farmingRateList.farming_rates">
                                                 <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -999,7 +999,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"

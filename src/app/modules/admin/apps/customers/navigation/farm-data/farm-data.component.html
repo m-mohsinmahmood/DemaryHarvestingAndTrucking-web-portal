@@ -1,6 +1,6 @@
 <!--Resources Nested Tabs-->
 <div
-    class="sm:rounded-lg overflow-auto sm:absolute sm:inset-0 sm:overflow-hidden bg-card dark:bg-transparent"
+    class="rounded-lg overflow-auto absolute inset-0 overflow-hidden bg-card dark:bg-transparent"
 >
     <mat-tab-group
         mat-align-tabs="start"
@@ -170,7 +170,7 @@
                                 *ngIf="
                                     customerFarmList?.customer_farms?.length > 0
                                 "
-                                class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                 [ngClass]="{ 'pointer-events-none': isLoading }"
                                 [length]="customerFarmList?.count"
                                 [pageIndex]="page - 1"
@@ -394,7 +394,7 @@
                                     customerFieldList?.customer_fields?.length >
                                     0
                                 "
-                                class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                 [ngClass]="{ 'pointer-events-none': isLoading }"
                                 [length]="customerFieldList?.count"
                                 [pageIndex]="page - 1"
@@ -591,7 +591,7 @@
                                         customerCropList?.customer_crops
                                             ?.length > 0
                                     "
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [length]="customerCropList?.count"
                                     [showFirstLastButtons]="true"
                                     (page)="pageChanged($event, 'Crop')"
@@ -812,7 +812,7 @@
                                         CustomerDestinationList
                                             ?.customer_destinations?.length > 0
                                     "
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [length]="CustomerDestinationList?.count"
                                     [pageIndex]="page - 1"
                                     [pageSize]="pageSize"
@@ -981,7 +981,7 @@
                                         customerFarmList?.customer_farms
                                             ?.length > 0
                                     "
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
                                     }"
@@ -1184,7 +1184,7 @@
                                         customerFieldList?.customer_fields
                                             ?.length > 0
                                     "
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
                                     }"
@@ -1363,7 +1363,7 @@
                                             customerCropList?.customer_crops
                                                 ?.length > 0
                                         "
-                                        class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                        class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                         [length]="customerCropList?.count"
                                         [showFirstLastButtons]="true"
                                         (page)="
@@ -1578,7 +1578,7 @@
                                                 ?.customer_destinations
                                                 ?.length > 0
                                         "
-                                        class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                        class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                         [length]="
                                             CustomerDestinationList?.count
                                         "
