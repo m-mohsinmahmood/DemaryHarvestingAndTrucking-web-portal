@@ -14,8 +14,6 @@
             <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
         </div>
     </div>
-
-
     <div>
         <mat-drawer-container class=" w-full min-h-140 bg-card divide-x" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
@@ -27,9 +25,9 @@
                 </div>
             </mat-drawer>
 
-            <div class=" flex  bg-light ">
+            <div class="flex  bg-light">
                 <div class="w-full">
-                    <div class="tab overflow-auto	">
+                    <div class="tab overflow-auto">
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Employee Data'">
                             <app-employee-data></app-employee-data>

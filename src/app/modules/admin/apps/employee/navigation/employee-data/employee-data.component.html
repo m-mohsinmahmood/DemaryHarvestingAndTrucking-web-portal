@@ -1,8 +1,8 @@
 
     <!-- Actions -->
     <div class="overflow-y-auto">
-        <div class="flex sm:justify-between justify-around items-center sm:mr-12 mt-4">
-            <p class="font-semibold text-2xl ml-2">Employee Data</p>
+        <div class="flex sm:justify-between justify-around items-center sm:mr-12 p-2 border-b">
+            <p class=" text-black ml-2 text-2xl font-extrabold tracking-tight">Employee Data</p>
             <button *ngIf="!isEditMode" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                 <span class="">Edit</span>
