@@ -13,23 +13,11 @@
             <img *ngIf="employees.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
             <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
         </div>
-        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
-                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1">Delete</span>
-            </button>
-            <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
-                [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-                <span class="ml-2 mr-1">Update</span>
-            </button>
-        </div>
-        <!-- Actions -->
     </div>
 
 
     <div>
-        <mat-drawer-container class=" w-full h-screen bg-card divide-x" autosize>
+        <mat-drawer-container class=" w-full min-h-140 bg-card divide-x" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
                     <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="navigationHandler(route)">
