@@ -1,5 +1,5 @@
 <!--Resources Nested Tabs-->
-<div class="sm:rounded-lg overflow-auto sm:absolute sm:inset-0 sm:overflow-hidden bg-card dark:bg-transparent">   
+<div class="h-full rounded-lg overflow-auto absolute inset-0 overflow-hidden bg-card dark:bg-transparent">   
     <mat-tab-group mat-align-tabs="start" 
         class="tab_group" 
         (selectedTabChange)="rateTabChanged($event)">
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
@@ -274,7 +274,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -404,7 +404,7 @@
                                     </ng-container>
                                 </div>
                                 <mat-paginator
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute sm:inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -533,7 +533,7 @@
                                     </ng-container>
                                 </div>
                                 <mat-paginator
-                                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"
@@ -664,7 +664,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
@@ -785,7 +785,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -892,7 +892,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
@@ -999,7 +999,7 @@
                                     </div>
                                 </div>
                                 <mat-paginator
-                                    class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"
