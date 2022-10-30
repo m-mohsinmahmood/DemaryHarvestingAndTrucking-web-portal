@@ -6,7 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CustomersService } from '../../../customers.service';
+import { CustomersService } from '../../../../customers.service';
 import {
     MomentDateAdapter,
     MAT_MOMENT_DATE_ADAPTER_OPTIONS,

@@ -42,15 +42,19 @@ import { JobResultComponent } from './navigation/job-result/job-result.component
 import { ContactsDataComponent } from './navigation/customer-information/edit/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/list/customers-contacts.component';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
-import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.component';
-import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
-import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
+import { AddFieldComponent } from './navigation/farm-data/fields/add-field/add-field.component';
+import { AddCropComponent } from './navigation/farm-data/crops/add-crop/add-crop.component';
+import { AddDestinationComponent } from './navigation/farm-data/destinations/add-destination/add-destination.component';
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
 import { CustomerDetail } from './navigation/customer-detail/customer-detail.component';
 import { DocumentComponent } from './navigation/document/document.component';
 import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
-import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddFarmComponent } from './navigation/farm-data/farms/add-farm/add-farm.component';
+import { ListFieldComponent } from './navigation/farm-data/fields/list/list.component';
+import { ListFarmComponent } from './navigation/farm-data/farms/list/list.component';
+import { ListCropComponent } from './navigation/farm-data/crops/list/list.component';
+import { ListDestinationComponent } from './navigation/farm-data/destinations/list/list.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +79,11 @@ import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.compo
         CustomerDetail,
         DocumentComponent,
         AddRateDataComponent,
-        AddFarmComponent
+        AddFarmComponent,
+        ListFarmComponent,
+        ListFieldComponent,
+        ListCropComponent,
+        ListDestinationComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),
