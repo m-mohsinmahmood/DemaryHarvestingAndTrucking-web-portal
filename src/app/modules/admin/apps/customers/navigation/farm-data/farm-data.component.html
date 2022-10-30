@@ -122,7 +122,8 @@
                                 <mat-paginator *ngIf="
                                         customerFarmList?.customer_farms
                                             ?.length > 0
-                                    " class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    "
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
                                     }" [length]="customerFarmList?.count" [pageIndex]="page - 1"
@@ -131,8 +132,10 @@
                                 </mat-paginator>
                             </ng-container>
                             <ng-template #noFarms>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    No Farms Found!
+                                <div
+                                    class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                                >
+                                    No Farm(s) Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -263,7 +266,8 @@
                                 <mat-paginator *ngIf="
                                         customerFieldList?.customer_fields
                                             ?.length > 0
-                                    " class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                    "
+                                    class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
                                     }" [length]="customerFieldList?.count" [pageIndex]="page - 1"
@@ -272,8 +276,10 @@
                                 </mat-paginator>
                             </ng-container>
                             <ng-template #noFields>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    No Fields Found!
+                                <div
+                                    class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                                >
+                                    No Field(s) Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -386,8 +392,10 @@
                                             customerCropList?.customer_crops
                                                 ?.length > 0
                                         "
-                                        class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
-                                        [length]="customerCropList?.count" [showFirstLastButtons]="true" (page)="
+                                        class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                        [length]="customerCropList?.count"
+                                        [showFirstLastButtons]="true"
+                                        (page)="
                                             pageChanged($event, 'summaryCrop')
                                         " [pageIndex]="page - 1" [pageSize]="pageSizeSummary" [pageSizeOptions]="
                                             pageSizeOptionsSummary
@@ -396,8 +404,10 @@
                                 </ng-container>
                             </ng-container>
                             <ng-template #noCrops>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    No Crops Found!
+                                <div
+                                    class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                                >
+                                    No Crop(s) Found!
                                 </div>
                             </ng-template>
                         </div>
@@ -540,7 +550,7 @@
                                                 ?.customer_destinations
                                                 ?.length > 0
                                         "
-                                        class="border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                                        class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                         [length]="
                                             CustomerDestinationList?.count
                                         " [pageIndex]="page - 1" [pageSize]="pageSizeSummary" [pageSizeOptions]="
@@ -551,8 +561,10 @@
                                 </ng-container>
                             </ng-container>
                             <ng-template #noDestinations>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                                    No Destinations Found!
+                                <div
+                                    class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                                >
+                                    No Destination(s) Found!
                                 </div>
                             </ng-template>
                         </div>

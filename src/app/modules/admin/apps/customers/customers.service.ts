@@ -192,6 +192,111 @@ export class CustomersService {
         this.isLoadingCustomerDestination.asObservable();
     //#endregion
 
+    //#region Observables Combining Rate
+    // Data
+    private combiningRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly combiningRateList$: Observable<any[] | null> =
+        this.combiningRateList.asObservable();
+
+    private combiningRate: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly combiningRate$: Observable<any[] | null> =
+        this.combiningRate.asObservable();
+
+    // Loaders
+    private isLoadingCombiningRateList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCombiningRateList$: Observable<boolean> =
+        this.isLoadingCombiningRateList.asObservable();
+
+    isLoadingCombiningRate: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCombiningRate$: Observable<boolean> =
+        this.isLoadingCombiningRate.asObservable();
+    //#endregion
+
+    //#region Observables Hauling Rate
+    // Data
+    private haulingRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly haulingRateList$: Observable<any[] | null> =
+        this.haulingRateList.asObservable();
+
+    private haulingRate: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly haulingRate$: Observable<any[] | null> =
+        this.haulingRate.asObservable();
+
+    // Loaders
+    private isLoadingHaulingRateList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingHaulingRateList$: Observable<boolean> =
+        this.isLoadingHaulingRateList.asObservable();
+
+    isLoadingHaulingRate: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingHaulingRate$: Observable<boolean> =
+        this.isLoadingHaulingRate.asObservable();
+    //#endregion
+
+    //#region Observables Trucking Rate
+    // Data
+    private truckingRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly truckingRateList$: Observable<any[] | null> =
+        this.truckingRateList.asObservable();
+
+    private truckingRate: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly truckingRate$: Observable<any[] | null> =
+        this.truckingRate.asObservable();
+
+    // Loaders
+    private isLoadingTruckingRateList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingTruckingRateList$: Observable<boolean> =
+        this.isLoadingTruckingRateList.asObservable();
+
+    isLoadingTruckingRate: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingTruckingRate$: Observable<boolean> =
+        this.isLoadingTruckingRate.asObservable();
+    //#endregion
+
+    //#region Observables Farming Rate
+    // Data
+    private farmingRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly farmingRateList$: Observable<any[] | null> =
+        this.farmingRateList.asObservable();
+
+    private farmingRate: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly farmingRate$: Observable<any[] | null> =
+        this.farmingRate.asObservable();
+
+    // Loaders
+    private isLoadingFarmingRateList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingFarmingRateList$: Observable<boolean> =
+        this.isLoadingFarmingRateList.asObservable();
+
+    isLoadingFarmingRate: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingFarmingRate$: Observable<boolean> =
+        this.isLoadingFarmingRate.asObservable();
+    //#endregion
+
+
     //#region Behaviour Subject
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -205,7 +310,7 @@ export class CustomersService {
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
-    ) {}
+    ) { }
 
     get documents$(): Observable<Documents> {
         return this._documents.asObservable();
@@ -218,6 +323,8 @@ export class CustomersService {
     get data$(): Observable<any> {
         return this._data.asObservable();
     }
+
+    //#region Error Function
     handleError(error: HttpErrorResponse) {
         let errorMessage = 'Unknown error!';
         if (error.error instanceof ErrorEvent) {
@@ -245,6 +352,8 @@ export class CustomersService {
         }
         return throwError(errorMessage);
     }
+
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -960,6 +1069,484 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerDestination(data.customer_id);
+                }
+            );
+    }
+    //#endregion
+    //#region Customer Rate Data Combining API
+     getCombiningRate(
+        id: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-combining-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCombiningRateList.next(true);
+                    this.combiningRateList.next(res);
+                    this.isLoadingCombiningRateList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    // getHaulingRateSummary(
+    //     id: string,
+    //     page: number = 1,
+    //     limit: number = 5,
+    //     sort: string = '',
+    //     order: 'asc' | 'desc' | '' = '',
+    //     search: string = ''
+    // ) {
+    //     let params = new HttpParams();
+    //     params = params.set('page', page);
+    //     params = params.set('limit', limit);
+    //     params = params.set('search', search);
+    //     params = params.set('sort', sort);
+    //     params = params.set('order', order);
+    //     return this._httpClient
+    //         .get<any>(`api-1/customer-destination?customerId=${id}`, {
+    //             params,
+    //         })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 // this.is_loading_destination.next(true);
+    //                 // this.customerDestination.next(res);
+    //                 // this.is_loading_destination.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+    updateCombiningRate(
+        combiningRateData: any,) {
+        this._httpClient
+            .put(`api-1/customer-combining-rate`, combiningRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCombiningRate.next(false);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerDestination(
+                        combiningRateData.customer_id,
+                    );
+                }
+            );
+    }
+    createCombiningRate(combiningRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-combining-rate`, combiningRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCombiningRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCombiningRate(combiningRateData.customer_id);
+                }
+            );
+    }
+    //#endregion
+    //#region Customer Rate Data Hauling API
+    getHaulingRate(
+        id: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-hauling-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingHaulingRateList.next(true);
+                    this.haulingRateList.next(res);
+                    this.isLoadingHaulingRateList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getHaulingRateSummary(
+        id: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-hauling-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    // this.is_loading_destination.next(true);
+                    // this.customerDestination.next(res);
+                    // this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    updateHaulingRate(
+        haulingRateData: any,) {
+        this._httpClient
+            .put(`api-1/customer-hauling-rate`, haulingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingHaulingRate.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getHaulingRate(
+                        haulingRateData.customer_id,
+                    );
+                }
+            );
+    }
+    createHaulingRate(haulingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-hauling-rate`, haulingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingHaulingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getHaulingRate(haulingRateData.customer_id);
+                }
+            );
+    }
+    //#endregion
+    //#region Customer Rate Data Trucking API
+      getTruckingRate(
+        id: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-trucking-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingTruckingRateList.next(true);
+                    this.truckingRateList.next(res);
+                    this.isLoadingTruckingRateList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getTruckingRateSummary(
+        id: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-trucking-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    // this.is_loading_destination.next(true);
+                    // this.customerDestination.next(res);
+                    // this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    updateTruckingRate(
+        truckingRateData: any,) {
+        this._httpClient
+            .put(`api-1/customer-trucking-rate`, truckingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getTruckingRate(
+                        truckingRateData.customer_id,
+                    );
+                }
+            );
+    }
+    createTruckingRate(truckingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-trucking-rate`, truckingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingTruckingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getTruckingRate(truckingRateData.customer_id);
+                }
+            );
+    }
+    //#endregion
+    //#region Customer Rate Data Farming API
+    getFarmingRate(
+        id: string,
+        page: number = 1,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-farming-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingFarmingRateList.next(true);
+                    this.farmingRateList.next(res);
+                    this.isLoadingFarmingRateList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getFarmingRateSummary(
+        id: string,
+        page: number = 1,
+        limit: number = 5,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = ''
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-1/customer-farming-rate?customerId=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    // this.is_loading_destination.next(true);
+                    // this.customerDestination.next(res);
+                    // this.is_loading_destination.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    updateFarmingRate(
+        farmingRateData: any,) {
+        this._httpClient
+            .put(`api-1/customer-farming-rate`, farmingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getFarmingRate(
+                        farmingRateData.customer_id,
+                    );
+                }
+            );
+    }
+    createFarmingRate(farmingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-farming-rate`, farmingRateData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingFarmingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getFarmingRate(farmingRateData.customer_id);
                 }
             );
     }
