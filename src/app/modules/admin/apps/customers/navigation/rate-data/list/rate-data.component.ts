@@ -76,7 +76,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   pageSizeSummary = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  pageSizeOptionsSummary: number[] = [5, 25, 50, 100];
+  pageSizeOptionsSummary: number[] = [5, 10, 25, 50,100];
   page: number;
   limit: number;
   routeID: any;

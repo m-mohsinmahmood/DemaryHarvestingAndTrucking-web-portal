@@ -14,7 +14,8 @@ export class AddHaulingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  haulingRateData: any;
+  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat Rate','Loaded Miles','Mile','Ton Mile'];
+
   //#endregion
 
   //#region Observables
@@ -78,7 +79,7 @@ initObservables(){
         customer_id: customer_id,
         id: haulingRate.id,
         crop_id: haulingRate.crop_id,
-        rate_type: haulingRate.rate_type,
+        rate_type: haulingRate.rate_type.toString(),
         rate: haulingRate.rate,
         base_rate: haulingRate.base_rate,
         premium_rate: haulingRate.premium_rate,

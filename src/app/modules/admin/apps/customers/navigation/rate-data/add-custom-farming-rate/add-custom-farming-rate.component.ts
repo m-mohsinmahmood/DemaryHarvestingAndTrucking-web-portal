@@ -14,7 +14,7 @@ export class AddCustomFarmingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  farmingData: any;
+  equipmentTypes = ['Ripper','Offset Disking','Drilling','Offset Disking & Crumbler','Listing','Tiger',"Swathing - 35 Draper","Swathing - 15 Draper"];
   //#endregion
 
   //#region Observables
@@ -74,7 +74,7 @@ export class AddCustomFarmingRateComponent implements OnInit {
       this.form.patchValue({
         customer_id: customerId,
         id: farmingRate.id,
-        equipment_type: farmingRate.equipment_type,
+        equipment_type: farmingRate.equipment_type.toString(),
         rate: farmingRate.rate,
       });
     }

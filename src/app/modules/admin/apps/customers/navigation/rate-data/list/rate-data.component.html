@@ -252,10 +252,10 @@
                                                     {{haulingRate.rate}}
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    {{haulingRate.base_rate}}
+                                                    {{haulingRate.base_rate == 0? '-' : haulingRate.base_rate}}
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    {{haulingRate.premium_rate}} 
+                                                    {{haulingRate.premium_rate == 0? '-' : haulingRate.premium_rate}} 
                                                 </div>
                                                 <!-- Action -->
                                                 <div>
@@ -653,6 +653,7 @@
                                                         {{combiningRate.combining_rate}}     
                                                     </div>
                                                     <div class="hidden sm:block items-center">
+                                                        
                                                         {{combiningRate.base_bushels}}
                                                     </div>
                                                     <div class="hidden sm:block"> 
@@ -774,10 +775,11 @@
                                                         {{haulingRate.rate}}
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        {{haulingRate.base_rate}}
+                                                        {{haulingRate.base_rate == 0? '-' : haulingRate.base_rate}}
+
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        {{haulingRate.premium_rate}} 
+                                                        {{haulingRate.premium_rate == 0? '-' : haulingRate.premium_rate}}
                                                     </div>
                                                 </div>
                                             </ng-container>
