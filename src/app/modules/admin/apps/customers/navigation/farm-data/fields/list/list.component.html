@@ -130,8 +130,8 @@
                 </div>
                 <mat-paginator *ngIf="
                     customerFieldList?.customer_fields?.length >
-                    0
-                " class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                    0" 
+                    class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFieldList?.count"
                     [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
