@@ -159,6 +159,7 @@ export class CropService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.is_loading_crop.next(false);
                 },
                 () => {
                     this.getCrops();
@@ -187,6 +188,7 @@ export class CropService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.is_loading_crop.next(false);
                 },
                 () => {
                     this.getCrops();

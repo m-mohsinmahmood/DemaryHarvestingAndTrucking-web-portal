@@ -694,6 +694,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerFarm.next(false);
                 },
                 () => {
                     this.getCustomerFarm(data.customer_id);
@@ -721,6 +722,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerFarm.next(false);
                 },
                 () => {
                     this.getCustomerFarm(
@@ -830,6 +832,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerField.next(false);
                 },
                 () => {
                     this.getCustomerField(data.customer_id);
@@ -857,6 +860,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerField.next(false);
                 },
                 () => {
                     this.getCustomerField(
@@ -920,6 +924,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerCrop.next(false);
                 },
                 () => {
                     this.getCustomerCrops(data.customer_id);
@@ -947,6 +952,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerCrop.next(false);
                 },
                 () => {
                     this.getCustomerCrops(data.customer_id);
@@ -1039,6 +1045,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerDestination.next(false);
                 },
                 () => {
                     this.getCustomerDestination(
@@ -1068,6 +1075,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerDestination.next(false);
                 },
                 () => {
                     this.getCustomerDestination(data.customer_id);
@@ -1159,6 +1167,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCombiningRate.next(false);
                 },
                 () => {
                     this.getCombiningRate(
@@ -1188,6 +1197,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCombiningRate.next(false);
                 },
                 () => {
                     this.getCombiningRate(combiningRateData.customer_id);
@@ -1265,8 +1275,8 @@ export class CustomersService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingHaulingRate.next(false);
                     this.closeDialog.next(true);
+                    this.isLoadingHaulingRate.next(false);
                     this._alertSerice.showAlert({
                         type: 'success',
                         shake: false,
@@ -1279,6 +1289,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingHaulingRate.next(false);
                 },
                 () => {
                     this.getHaulingRate(
@@ -1308,6 +1319,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingHaulingRate.next(false);
                 },
                 () => {
                     this.getHaulingRate(haulingRateData.customer_id);
@@ -1386,6 +1398,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
+                    this.isLoadingTruckingRate.next(false);
                     this._alertSerice.showAlert({
                         type: 'success',
                         shake: false,
@@ -1398,6 +1411,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingTruckingRate.next(false);
                 },
                 () => {
                     this.getTruckingRate(
@@ -1427,6 +1441,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingTruckingRate.next(false);
                 },
                 () => {
                     this.getTruckingRate(truckingRateData.customer_id);
@@ -1518,6 +1533,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingFarmingRate.next(false);
                 },
                 () => {
                     this.getFarmingRate(
@@ -1547,6 +1563,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingFarmingRate.next(false);
                 },
                 () => {
                     this.getFarmingRate(farmingRateData.customer_id);
