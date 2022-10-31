@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/naming-convention */
-import { AfterViewInit } from '@angular/core';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, AfterViewInit } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -60,6 +57,11 @@ export const MY_FORMATS = {
 })
 export class AddFieldComponent implements OnInit, OnDestroy {
 
+    //#region Observables
+    isLoadingCustomerField$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+    //#endregion
+
     //#region Local Variables
     selectedValue: string;
     form: FormGroup;
@@ -67,10 +69,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     isEdit: boolean;
     status: boolean;
     customerFieldData: any;
-    //#endregion
-
-    //#region Observables
-    closeDialog$: Observable<boolean>;
     //#endregion
 
     //#region Auto Complete Farms
@@ -85,16 +83,15 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         private _customersService: CustomersService,
         public matDialogRef: MatDialogRef<AddFieldComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
-    ) {}
+    ) { }
 
     //#region Lifecycle Functions
 
     ngOnInit(): void {
-        this.customerFieldData = this.data.customerFieldData;
+        this.initObservables();
         this.initForm();
         this.farmSearchSubscription();
         // Dialog Close
-        this.closeDialog$ = this._customersService.closeDialog$;
         this._customersService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
@@ -102,11 +99,11 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     this.matDialogRef.close();
                     this._customersService.closeDialog.next(false);
                 }
-          });
+            });
 
         //Calender Year Initilize
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.customerFieldData.calendar_year);
+            this.calendar_year = new FormControl(this.data.customerFieldData.calendar_year);
         } else {
             this.calendar_year = new FormControl(moment());
         }
@@ -124,53 +121,51 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     //#endregion
 
+    //#region Init Observables 
+    initObservables() {
+        this.isLoadingCustomerField$ = this._customersService.isLoadingCustomerField$
+        this.closeDialog$ = this._customersService.closeDialog$;
+    }
+    //#endregion
+
     //#region Form
     initForm() {
-      // Create the form
-    this.form = this._formBuilder.group({
-        id: [''],
-        farm_id: [''],
-        customer_id: this.data.customer_id,
-        name: ['', [Validators.required]],
-        acres: [''],
-        status : true,
-        calendar_year: [moment()],
-    });
-    if (this.data && this.data.isEdit) {
-        this.form.patchValue({
+        // Create the form
+        this.form = this._formBuilder.group({
+            id: [''],
+            farm_id: [''],
             customer_id: this.data.customer_id,
-            id: this.customerFieldData.field_id,
-            farm_id: {id: this.customerFieldData.farm_id, name: this.customerFieldData.farm_name},
-            name: this.customerFieldData.field_name,
-            acres: this.customerFieldData.acres,
-            status: this.customerFieldData.status.toString(),
-            calendar_year: this.customerFieldData.calendar_year,
+            name: ['', [Validators.required]],
+            acres: [''],
+            status: true,
+            calendar_year: [moment()],
         });
+        if (this.data && this.data.isEdit) {
+            const { customerFieldData, customer_id } = this.data;
+            this.form.patchValue({
+                customer_id: customer_id,
+                id: customerFieldData.field_id,
+                farm_id: { id: customerFieldData.farm_id, name: customerFieldData.farm_name },
+                name: customerFieldData.field_name,
+                acres: customerFieldData.acres,
+                status: customerFieldData.status.toString(),
+                calendar_year: customerFieldData.calendar_year,
+            });
         }
     }
     onSubmit(): void {
         this._customersService.isLoadingCustomerField.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
         if (this.data && this.data.isEdit) {
-            this.updateCustomerField(this.form.value);
+            this._customersService.updateCustomerField(this.form.value);
+
         } else {
-            this.createCustomerField(this.form.value);
+            this._customersService.createCustomerField(this.form.value);
         }
     }
 
-    createCustomerField(customerFieldData: any): void {
-        this._customersService.createCustomerField(customerFieldData);
-    }
-
-    updateCustomerField(customerFieldData: any): void {
-        this._customersService.updateCustomerField(customerFieldData);
-    }
-
-    saveAndClose(): void {
-        this._customersService.isLoadingCustomerField.next(false);
-        this.matDialogRef.close();
-    }
     discard(): void {
+        this._customersService.isLoadingCustomerField.next(false);
         this.matDialogRef.close();
     }
 
@@ -195,17 +190,17 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     //#region  Search Function
     farmSearchSubscription() {
         this.farm_search$
-        .pipe(
-            debounceTime(500),
-            distinctUntilChanged(),
-            takeUntil(this._unsubscribeAll)
-        )
-        .subscribe((value: string) => {
-            this.allFarms = this._customersService.getCustomerFarmsAll(
-                this.data.customer_id,
-                value
-            );
-        });
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((value: string) => {
+                this.allFarms = this._customersService.getCustomerFarmsAll(
+                    this.data.customer_id,
+                    value
+                );
+            });
     }
     //#endregion
 

@@ -46,6 +46,11 @@
     height: 100% !important;
 }
 
+::ng-deep .mat-sort-header-content {
+    text-align: start !important;
+
+}
+
 .summary-pg-rows-height {
     max-height: 22rem !important;
 }

@@ -20,15 +20,15 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Mile'" appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Miles'" appearance="outline">
             <mat-label>Rate</mat-label>
             <input type='number' matInput formControlName="rate" />
         </mat-form-field>
-        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Mile'" appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles'" appearance="outline">
             <mat-label>Base Rate</mat-label>
             <input type='number' matInput formControlName="base_rate" />
         </mat-form-field>
-        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Mile'" appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles'" appearance="outline">
             <mat-label>Premium Rate</mat-label>
             <input type='number' matInput formControlName="premium_rate" />
         </mat-form-field>
