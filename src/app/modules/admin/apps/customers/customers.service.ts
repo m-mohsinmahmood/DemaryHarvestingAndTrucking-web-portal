@@ -296,7 +296,6 @@ export class CustomersService {
         this.isLoadingFarmingRate.asObservable();
     //#endregion
 
-
     //#region Behaviour Subject
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -907,6 +906,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
+                    this.isLoadingCustomerCrop.next(false);
                     //show notification based on message returned from the api
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -933,6 +933,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
+                    this.isLoadingCustomerCrop.next(false);
                     //show notification based on message returned from the api
                     this._alertSerice.showAlert({
                         type: 'success',
@@ -1025,6 +1026,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
+                    this.isLoadingCustomerDestination.next(false);
                     this._alertSerice.showAlert({
                         type: 'success',
                         shake: false,

@@ -2,7 +2,7 @@
     <!-- Header -->
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Farm': 'Add Farm'}}</div>
-        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
             <mat-icon
                 class="text-current"
                 [svgIcon]="'heroicons_outline:x'"
@@ -29,7 +29,10 @@
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
+        <button class="ml-4" mat-flat-button [color]="'primary'" 
+            [class.spinner]="isLoadingCustomerFarm$ | async" 
+            [disabled]="form.invalid || ((isLoadingCustomerFarm$) | async)" 
+            (click)="onSubmit()">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

@@ -90,7 +90,7 @@ export class RateDataComponent implements OnInit {
   haulingSort: any[] = []
   truckingSort: any[] = []
   farmingSort: any[] = []
-
+  customerTypes: any[] = []
   //#endregion
 
   // Constructor
@@ -176,6 +176,7 @@ export class RateDataComponent implements OnInit {
 
   ngOnChanges(changes){
     if(changes.customer){
+      this.customerTypes = changes.customer.currentValue.customer_type.split(',')
     }
   }
 

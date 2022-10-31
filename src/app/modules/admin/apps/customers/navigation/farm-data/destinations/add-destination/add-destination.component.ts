@@ -59,15 +59,21 @@ export const MY_FORMATS = {
     ],
 })
 export class AddDestinationComponent implements OnInit, OnDestroy {
+
+    //#region Observables
+    isLoadingCustomerDestination$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+    //#endregion
+
+    //#region variables
     selectedValue: string;
     form: FormGroup;
-    closeDialog$: Observable<boolean>;
     routeID: any;
     status: boolean;
-    isLoadingDestination$: Observable<boolean>;
     date = new FormControl(moment());
     calendar_year;
     customerDestination: any;
+    //#endregion
 
     //#region Auto Complete Farms
     allFarms: Observable<any>;
@@ -81,13 +87,13 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: any,
         public _customerService: CustomersService,
         public activatedRoute: ActivatedRoute
-    ) {}
+    ) { }
 
+    //#region LifeCycle Functions
     ngOnInit(): void {
         // passing year value on page opening/rendering
-        // this.calendar_year = new FormControl(this.data.farmdata.calenderYear);
-        this.customerDestination = this.data.customerDestinationData;
-        this.closeDialog$ = this._customerService.closeDialog$;
+        this.initObservables();
+        this.initForm();
         this.farmSearchSubscription();
         this._customerService.closeDialog$.subscribe((res) => {
             if (res) {
@@ -102,7 +108,23 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         } else {
             this.calendar_year = new FormControl(moment());
         }
+    }
 
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
+    //#region Init Observables 
+    initObservables() {
+        this.isLoadingCustomerDestination$ = this._customerService.isLoadingCustomerDestination$
+        this.closeDialog$ = this._customerService.closeDialog$;
+    }
+    //#endregion
+
+    //#region Form
+    initForm() {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
@@ -115,24 +137,19 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
 
         // Update the form
         if (this.data?.customerDestinationData && this.data?.isEdit) {
-          const { customerDestinationData } = this.data;
+            const { customerDestinationData , customer_id } = this.data;
             this.form.patchValue({
-              id: customerDestinationData.id,
-              customer_id: this.data.customer_id,
-              farm_id: {id: customerDestinationData.farm_id, name: customerDestinationData.farm_name},
-              name: customerDestinationData.name,
-              calendar_year: customerDestinationData.calendar_year,
-              status: customerDestinationData.status.toString()
+                id: customerDestinationData.id,
+                customer_id: customer_id,
+                farm_id: { id: customerDestinationData.farm_id, name: customerDestinationData.farm_name },
+                name: customerDestinationData.name,
+                calendar_year: customerDestinationData.calendar_year,
+                status: customerDestinationData.status.toString()
             });
         }
     }
-
-    ngOnDestroy(): void {
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
-
     onSubmit(): void {
+        this._customerService.isLoadingCustomerDestination.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
         if (this.data && this.data?.isEdit) {
             this._customerService.updateCustomerDestination(this.form.value);
@@ -140,14 +157,11 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
             this._customerService.createCustomerDestination(this.form.value);
         }
     }
-
-    saveAndClose(): void {
-        this.matDialogRef.close();
-    }
-
     discard(): void {
+        this._customerService.isLoadingCustomerDestination.next(false);
         this.matDialogRef.close();
     }
+    //#endregion
 
     chosenYearHandler(
         normalizedYear: Moment,

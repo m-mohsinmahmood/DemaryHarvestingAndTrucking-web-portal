@@ -45,7 +45,6 @@ export class AddCombiningRateComponent implements OnInit {
       this.initObservables();
       this.initForm();
       this.cropSearchSubscription();
-      this.closeDialog$ = this._customerService.closeDialog$;
       this._customerService.closeDialog$
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe((res) => {
@@ -67,6 +66,7 @@ export class AddCombiningRateComponent implements OnInit {
   //#region Init Observables 
     initObservables(){
       this.isLoadingCombiningRate$ = this._customerService.isLoadingCombiningRate$      
+      this.closeDialog$ = this._customerService.closeDialog$;
     }
   //#endregion
 
