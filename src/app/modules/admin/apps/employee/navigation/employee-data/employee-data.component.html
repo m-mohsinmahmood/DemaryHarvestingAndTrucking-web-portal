@@ -1,7 +1,7 @@
 
     <!-- Actions -->
     <div class="overflow-y-auto">
-        <div class="flex sm:justify-between justify-around items-center sm:mr-12 p-2 border-b">
+        <div class="flex sm:justify-between justify-around items-center sm:mr-12 p-2">
             <p class=" text-black ml-2 text-2xl font-extrabold tracking-tight">Employee Data</p>
             <button *ngIf="!isEditMode" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
@@ -9,7 +9,7 @@
             </button>
         </div>
         <!-- Image-->
-        <div class="flex sm:justify-start justify-center py-2">
+        <div class="flex sm:justify-start justify-center py-2 border-t">
             <img class="inline-block h-24 w-24 rounded-full sm:ml-20" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
         </div>
         <form [formGroup]="selectedProductForm" class="flex flex-col flex-auto sm:p-0 p-6 sm:grid overflow-y-auto ">
