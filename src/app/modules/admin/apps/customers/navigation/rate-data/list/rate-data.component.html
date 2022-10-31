@@ -137,7 +137,7 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="10"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'Combining')"
                                     [showFirstLastButtons]="true">
@@ -278,7 +278,7 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="pageSize"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'Hauling')"
                                     [showFirstLastButtons]="true">
@@ -668,9 +668,9 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="10"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
-                                    (page)="pageChanged($event, 'SummaryCombining')"
+                                    (page)="pageChanged($event, 'summaryCombining')"
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
@@ -789,9 +789,9 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="10"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
-                                    (page)="pageChanged($event, 'SummaryHauling')"
+                                    (page)="pageChanged($event, 'summaryHauling')"
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
@@ -896,9 +896,9 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="10"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
-                                    (page)="pageChanged($event, 'SummaryTrucking')"
+                                    (page)="pageChanged($event, 'summaryTrucking')"
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
@@ -1003,9 +1003,9 @@
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
                                     [pageIndex]="page - 1"
-                                    [pageSize]="10"
+                                    [pageSize]="5"
                                     [pageSizeOptions]="pageSizeOptionsSummary"
-                                    (page)="pageChanged($event, 'SummaryFarming')"
+                                    (page)="pageChanged($event, 'summaryFarming')"
                                     [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>

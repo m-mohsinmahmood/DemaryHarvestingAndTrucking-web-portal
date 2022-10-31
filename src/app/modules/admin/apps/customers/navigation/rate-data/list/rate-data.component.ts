@@ -464,7 +464,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
             );
             break;
         case 'summaryCombining':
-            this._customerService.getCustomerFarm(
+            this._customerService.getCombiningRate(
                 this.routeID,
                 this.page,
                 this.limit,
@@ -474,7 +474,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
             );
         break;
         case 'summaryHauling':
-            this._customerService.getCustomerField(
+            this._customerService.getHaulingRate(
                 this.routeID,
                 this.page,
                 this.limit,
@@ -484,7 +484,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
             );
         break;
         case 'summaryTrucking':
-            this._customerService.getCustomerCrops(
+            this._customerService.getTruckingRate(
                 this.routeID,
                 this.page,
                 this.limit,
@@ -494,7 +494,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
             );
         break;
         case 'summaryFarming':
-            this._customerService.getCustomerDestination(
+            this._customerService.getFarmingRate(
                 this.routeID,
                 this.page,
                 this.limit,
