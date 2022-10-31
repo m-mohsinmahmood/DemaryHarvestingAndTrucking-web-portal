@@ -429,94 +429,94 @@ export class RateDataComponent implements OnInit {
   //#endregion
 
   //#region Pagination
-  pageChanged(event, rateData) {
-    this.page = event.pageIndex + 1;
-    this.limit = event.pageSize;
-    switch (rateData) {
-      case 'Combining':
-        this._customerService.getCombiningRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.combiningSort[0],
-          this.combiningSort[1],
-          this.searchResult
-        );
-        break;
-      case 'Hauling':
-        this._customerService.getHaulingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.haulingSort[0],
-          this.haulingSort[1],
-          this.searchResult
-        );
-        break;
-      case 'Trucking':
-        this._customerService.getTruckingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.truckingSort[0],
-          this.truckingSort[1],
-          this.searchResult
-        );
-        break;
-      case 'Farming':
-        this._customerService.getFarmingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.farmingSort[0],
-          this.farmingSort[1],
-          this.searchResult
-        );
-        break;
-      case 'summaryCombining':
-        this._customerService.getCombiningRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.combiningSort[0],
-          this.combiningSort[1],
-          this.searchResult
-        );
-        break;
-      case 'summaryHauling':
-        this._customerService.getHaulingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.haulingSort[0],
-          this.haulingSort[1],
-          this.searchResult
-        );
-        break;
-      case 'summaryTrucking':
-        this._customerService.getTruckingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.truckingSort[0],
-          this.truckingSort[1],
-          this.searchResult
-        );
-        break;
-      case 'summaryFarming':
-        this._customerService.getFarmingRate(
-          this.routeID,
-          this.page,
-          this.limit,
-          this.farmingSort[0],
-          this.farmingSort[1],
-          this.searchResult
-        );
-        break;
-      default:
-    }
+  // pageChanged(event, rateData) {
+  //   this.page = event.pageIndex + 1;
+  //   this.limit = event.pageSize;
+  //   switch (rateData) {
+  //     case 'Combining':
+  //       this._customerService.getCombiningRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.combiningSort[0],
+  //         this.combiningSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'Hauling':
+  //       this._customerService.getHaulingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.haulingSort[0],
+  //         this.haulingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'Trucking':
+  //       this._customerService.getTruckingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.truckingSort[0],
+  //         this.truckingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'Farming':
+  //       this._customerService.getFarmingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.farmingSort[0],
+  //         this.farmingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'summaryCombining':
+  //       this._customerService.getCombiningRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.combiningSort[0],
+  //         this.combiningSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'summaryHauling':
+  //       this._customerService.getHaulingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.haulingSort[0],
+  //         this.haulingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'summaryTrucking':
+  //       this._customerService.getTruckingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.truckingSort[0],
+  //         this.truckingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     case 'summaryFarming':
+  //       this._customerService.getFarmingRate(
+  //         this.routeID,
+  //         this.page,
+  //         this.limit,
+  //         this.farmingSort[0],
+  //         this.farmingSort[1],
+  //         this.searchResult
+  //       );
+  //       break;
+  //     default:
+  //   }
 
-  }
+  // }
 
   //#endregion
 
