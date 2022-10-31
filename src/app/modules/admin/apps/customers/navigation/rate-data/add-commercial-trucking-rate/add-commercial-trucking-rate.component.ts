@@ -19,8 +19,7 @@ export class AddCommercialTruckingRateComponent implements OnInit {
   
   //#region  Local Variables
   form: FormGroup;
-  haulingRateData: any;
-  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat Rate','Loaded Miles'];
+  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat','Loaded Miles','Hours','Tons'];
   //#endregion
  
 
@@ -66,8 +65,8 @@ export class AddCommercialTruckingRateComponent implements OnInit {
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customerId,
-      rate_type: [''],
-      rate: [''],
+      rate_type: ['',[Validators.required]],
+      rate: ['', [Validators.required]],
   });
     if(this.data && this.data.isEdit){
       const { truckingRate , customerId } = this.data

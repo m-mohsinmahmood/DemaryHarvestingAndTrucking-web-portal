@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, Observable, Subject, Subscription, takeUntil } from 'rxjs';
@@ -15,8 +15,12 @@ import { AddCustomFarmingRateComponent } from '../add-custom-farming-rate/add-cu
   styleUrls: ['./rate-data.component.scss'],
 })
 export class RateDataComponent implements OnInit {
-    
-//#region Search form variables
+
+  //#region Input
+  @Input() customer: Observable<any>
+  //#endregion
+
+  //#region Search form variables
   searchForm: FormGroup = new FormGroup({
     search: new FormControl(),
   });
@@ -27,46 +31,46 @@ export class RateDataComponent implements OnInit {
     search: new FormControl(),
   });
   searchTruckingForm: FormGroup = new FormGroup({
-    search: new FormControl(),  
+    search: new FormControl(),
   });
   searchCustomFarmingForm: FormGroup = new FormGroup({
     search: new FormControl(),
   });
-//#endregion
+  //#endregion
 
-//#region Observables
- // Customer Combining Rate Listing
- combiningRateList$: Observable<any[]>;
- isLoadingCombiningRateList$: Observable<boolean>;
- // Customer Combining Rate By ID
- combiningRate$: Observable<any>;
- isLoadingCombiningRate$: Observable<boolean>;
+  //#region Observables
+  // Customer Combining Rate Listing
+  combiningRateList$: Observable<any[]>;
+  isLoadingCombiningRateList$: Observable<boolean>;
+  // Customer Combining Rate By ID
+  combiningRate$: Observable<any>;
+  isLoadingCombiningRate$: Observable<boolean>;
 
- // Customer Hauling Rate Listing
- haulingRateList$: Observable<any[]>;
- isLoadingHaulingRateList$: Observable<boolean>;
- // Customer Hauling Rate By ID
- haulingRate$: Observable<any>;
- isLoadingHaulingRate$: Observable<boolean>;
+  // Customer Hauling Rate Listing
+  haulingRateList$: Observable<any[]>;
+  isLoadingHaulingRateList$: Observable<boolean>;
+  // Customer Hauling Rate By ID
+  haulingRate$: Observable<any>;
+  isLoadingHaulingRate$: Observable<boolean>;
 
- // Customer Trucking Rate Listing
- truckingRateList$: Observable<any[]>;
- isLoadingTruckingRateList$: Observable<boolean>;
- // Customer Trucking Rate By ID
- truckingRate$: Observable<any>;
- isLoadingTruckingRate$: Observable<boolean>;
+  // Customer Trucking Rate Listing
+  truckingRateList$: Observable<any[]>;
+  isLoadingTruckingRateList$: Observable<boolean>;
+  // Customer Trucking Rate By ID
+  truckingRate$: Observable<any>;
+  isLoadingTruckingRate$: Observable<boolean>;
 
- // Customer Farming Rate Listing
- farmingRateList$: Observable<any[]>;
- isLoadingFarmingRateList$: Observable<boolean>;
- // Customer Farming Rate By ID
- farmingRate$: Observable<any>;
- isLoadingFarmingRate$: Observable<boolean>;
+  // Customer Farming Rate Listing
+  farmingRateList$: Observable<any[]>;
+  isLoadingFarmingRateList$: Observable<boolean>;
+  // Customer Farming Rate By ID
+  farmingRate$: Observable<any>;
+  isLoadingFarmingRate$: Observable<boolean>;
 
-private _unsubscribeAll: Subject<any> = new Subject<any>();
-//#endregion
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  //#endregion
 
-//#region  local Variables
+  //#region  local Variables
   search: Subscription;
   searchCombining: Subscription;
   searchHauling: Subscription;
@@ -76,7 +80,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   pageSizeSummary = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  pageSizeOptionsSummary: number[] = [5, 25, 50, 100];
+  pageSizeOptionsSummary: number[] = [5, 10, 25, 50, 100];
   page: number;
   limit: number;
   routeID: any;
@@ -87,98 +91,103 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   truckingSort: any[] = []
   farmingSort: any[] = []
 
-//#endregion
+  //#endregion
 
-// Constructor
+  // Constructor
   constructor(
     private _matDialog: MatDialog,
     private _customerService: CustomersService,
     public activatedRoute: ActivatedRoute
   ) { }
-//#region Life Cycle Functions
+  //#region Life Cycle Functions
   ngOnInit(): void {
     this.activatedRoute.params
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((params) => {
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((params) => {
         this.routeID = params.Id;
-    });
+      });
 
     // Searching Combining
     this.searchCombining = this.searchCombiningForm.valueChanges
-    .pipe(takeUntil(this._unsubscribeAll),
-     debounceTime(500))
-    .subscribe((data) => {
-      this.searchResult = data.search;
-      this.page = 1;
-      this._customerService.getCombiningRate(
-        this.routeID,
-        this.page,
-        10,
-        '',
-        '',
-        this.searchResult
-      );
-    });
+      .pipe(takeUntil(this._unsubscribeAll),
+        debounceTime(500))
+      .subscribe((data) => {
+        this.searchResult = data.search;
+        this.page = 1;
+        this._customerService.getCombiningRate(
+          this.routeID,
+          this.page,
+          10,
+          '',
+          '',
+          this.searchResult
+        );
+      });
 
     // Searching Hauling
     this.searchHauling = this.searchHaulingForm.valueChanges
-    .pipe(takeUntil(this._unsubscribeAll),
-     debounceTime(500))
-    .subscribe((data) => {
-      this.searchResult = data.search;
-      this.page = 1;
-      this._customerService.getHaulingRate(
-        this.routeID,
-        this.page,
-        10,
-        '',
-        '',
-        this.searchResult
-      );
-    })
-    
+      .pipe(takeUntil(this._unsubscribeAll),
+        debounceTime(500))
+      .subscribe((data) => {
+        this.searchResult = data.search;
+        this.page = 1;
+        this._customerService.getHaulingRate(
+          this.routeID,
+          this.page,
+          10,
+          '',
+          '',
+          this.searchResult
+        );
+      })
+
     // searching in tabs
-     this.search = this.searchForm.valueChanges
-     .pipe(takeUntil(this._unsubscribeAll),
-      debounceTime(500))
-     .subscribe((data) => {
-         this.searchResult = data.search;
-         this.page = 1;
-         switch (this.activeTab) {
-             case 'Trucking':
-                 this._customerService.getTruckingRate(
-                     this.routeID,
-                     this.page,
-                     10,
-                     '',
-                     '',
-                     this.searchResult
-                 );
-                 break;
-             case 'Farming':
-                 this._customerService.getFarmingRate(
-                     this.routeID,
-                     this.page,
-                     10,
-                     '',
-                     '',
-                     this.searchResult
-                 );
-                 break;
-             default:
-         }
-     });
+    this.search = this.searchForm.valueChanges
+      .pipe(takeUntil(this._unsubscribeAll),
+        debounceTime(500))
+      .subscribe((data) => {
+        this.searchResult = data.search;
+        this.page = 1;
+        switch (this.activeTab) {
+          case 'Trucking':
+            this._customerService.getTruckingRate(
+              this.routeID,
+              this.page,
+              10,
+              '',
+              '',
+              this.searchResult
+            );
+            break;
+          case 'Farming':
+            this._customerService.getFarmingRate(
+              this.routeID,
+              this.page,
+              10,
+              '',
+              '',
+              this.searchResult
+            );
+            break;
+          default:
+        }
+      });
+  }
+
+  ngOnChanges(changes){
+    if(changes.customer){
+    }
   }
 
   ngAfterViewInit(): void {
     this.initApis();
     this.initObservables();
-}
+  }
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
-  }   
+  }
 
   //#endregion
 
@@ -190,7 +199,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
     this.initFarmingRateObservables();
   }
 
-  initCombiningRateObservables(){
+  initCombiningRateObservables() {
     // Data
     this.combiningRateList$ = this._customerService.combiningRateList$;
     this.combiningRate$ = this._customerService.combiningRate$
@@ -208,7 +217,7 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
     this.isLoadingHaulingRateList$ = this._customerService.isLoadingHaulingRateList$;
     this.isLoadingCombiningRate$ = this._customerService.isLoadingHaulingRate$
   }
-  initTruckingRateObservables(){
+  initTruckingRateObservables() {
     // Data
     this.truckingRateList$ = this._customerService.truckingRateList$;
     this.truckingRate$ = this._customerService.truckingRate$;
@@ -242,41 +251,41 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
     this.activeTab = event.tab.textLabel;
     this.page = 1;
     switch (event.tab.textLabel) {
-        case 'Combining':
-            this._customerService.getCombiningRate(this.routeID);
-            break;
-        case 'Hauling':
-            this._customerService.getHaulingRate(this.routeID);
-            break;
-        case 'Commercial Trucking':
-            this._customerService.getTruckingRate(this.routeID);
-            break;
-        case 'Custom Farming':
-            this._customerService.getFarmingRate(this.routeID);
-            break;
-        case 'Summary':
-            this._customerService.getCombiningRate(
-                this.routeID,
-                this.page,
-                5,
-            );
-            this._customerService.getHaulingRate(
-                this.routeID,
-                this.page,
-                5,
-            );
-            this._customerService.getTruckingRate(
-                this.routeID,
-                this.page,
-                5,
-            );
-            this._customerService.getFarmingRate(
-                this.routeID,
-                this.page,
-                5,
-            );
-            break;
-        default:
+      case 'Combining':
+        this._customerService.getCombiningRate(this.routeID);
+        break;
+      case 'Hauling':
+        this._customerService.getHaulingRate(this.routeID);
+        break;
+      case 'Commercial Trucking':
+        this._customerService.getTruckingRate(this.routeID);
+        break;
+      case 'Custom Farming':
+        this._customerService.getFarmingRate(this.routeID);
+        break;
+      case 'Summary':
+        this._customerService.getCombiningRate(
+          this.routeID,
+          this.page,
+          5,
+        );
+        this._customerService.getHaulingRate(
+          this.routeID,
+          this.page,
+          5,
+        );
+        this._customerService.getTruckingRate(
+          this.routeID,
+          this.page,
+          5,
+        );
+        this._customerService.getFarmingRate(
+          this.routeID,
+          this.page,
+          5,
+        );
+        break;
+      default:
     }
   }
 
@@ -284,136 +293,136 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   openAddCombiningDialog() {
     const dialogRef = this._matDialog.open(AddCombiningRateComponent, {
       data: {
-          customer_id: this.routeID,
-          isEdit: false,
+        customer_id: this.routeID,
+        isEdit: false,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
   openEditCombiningDialog(combiningRate) {
     const dialogRef = this._matDialog.open(AddCombiningRateComponent, {
       data: {
-          customer_id: this.routeID,
-          isEdit: true,
-          combiningRate:combiningRate
+        customer_id: this.routeID,
+        isEdit: true,
+        combiningRate: combiningRate
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   openAddHaulingDialog() {
     const dialogRef = this._matDialog.open(AddHaulingRateComponent, {
       data: {
-          customer_id: this.routeID,
-          isEdit: false,
+        customer_id: this.routeID,
+        isEdit: false,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   openEditHaulingDialog(haulingRate) {
     const dialogRef = this._matDialog.open(AddHaulingRateComponent, {
       data: {
-          customer_id: this.routeID,
-          isEdit: true,
-          haulingRate: haulingRate,
+        customer_id: this.routeID,
+        isEdit: true,
+        haulingRate: haulingRate,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
 
   }
   openAddTruckingDialog() {
     const dialogRef = this._matDialog.open(AddCommercialTruckingRateComponent, {
       data: {
-          customerId: this.routeID,
-          isEdit: false,
+        customerId: this.routeID,
+        isEdit: false,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
   openEditTruckingDialog(truckingRate) {
     const dialogRef = this._matDialog.open(AddCommercialTruckingRateComponent, {
       data: {
-          isEdit: true,
-          customerId: this.routeID,
-          truckingRate: truckingRate
+        isEdit: true,
+        customerId: this.routeID,
+        truckingRate: truckingRate
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
-  } 
+    dialogRef.afterClosed().subscribe((result) => { });
+  }
 
   openAddFarmingDialog() {
     const dialogRef = this._matDialog.open(AddCustomFarmingRateComponent, {
       data: {
-          customerId: this.routeID,
-          isEdit: false,
+        customerId: this.routeID,
+        isEdit: false,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   openEditFarmingDialog(farmingRate) {
     const dialogRef = this._matDialog.open(AddCustomFarmingRateComponent, {
       data: {
-          isEdit: true,
-          customerId: this.routeID,
-          farmingRate: farmingRate
+        isEdit: true,
+        customerId: this.routeID,
+        farmingRate: farmingRate
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
 
   }
   //#endregion
 
   //#region Sort Data
-  sortData(sort: any , rateData) {
+  sortData(sort: any, rateData) {
     this.page = 1;
     switch (rateData) {
-        case 'Combining':
-            this.combiningSort[0] = sort.active; this.combiningSort[1] = sort.direction;
-            this._customerService.getCombiningRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.combiningSort[0],
-                this.combiningSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Hauling':
-            this.haulingSort[0] = sort.active; this.haulingSort[1] = sort.direction;
-            this._customerService.getHaulingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.haulingSort[0],
-                this.haulingSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Trucking':
-            this.truckingSort[0] = sort.active; this.truckingSort[1] = sort.direction;
-            this._customerService.getTruckingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.truckingSort[0],
-                this.truckingSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Farming':
-            this.farmingSort[0] = sort.active; this.farmingSort[1] = sort.direction;
-            this._customerService.getFarmingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.farmingSort[0],
-                this.farmingSort[1],
-                this.searchResult
-            );
-            break;
-        default:
+      case 'Combining':
+        this.combiningSort[0] = sort.active; this.combiningSort[1] = sort.direction;
+        this._customerService.getCombiningRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.combiningSort[0],
+          this.combiningSort[1],
+          this.searchResult
+        );
+        break;
+      case 'Hauling':
+        this.haulingSort[0] = sort.active; this.haulingSort[1] = sort.direction;
+        this._customerService.getHaulingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.haulingSort[0],
+          this.haulingSort[1],
+          this.searchResult
+        );
+        break;
+      case 'Trucking':
+        this.truckingSort[0] = sort.active; this.truckingSort[1] = sort.direction;
+        this._customerService.getTruckingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.truckingSort[0],
+          this.truckingSort[1],
+          this.searchResult
+        );
+        break;
+      case 'Farming':
+        this.farmingSort[0] = sort.active; this.farmingSort[1] = sort.direction;
+        this._customerService.getFarmingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.farmingSort[0],
+          this.farmingSort[1],
+          this.searchResult
+        );
+        break;
+      default:
     }
   }
   //#endregion
@@ -422,88 +431,88 @@ private _unsubscribeAll: Subject<any> = new Subject<any>();
   pageChanged(event, rateData) {
     this.page = event.pageIndex + 1;
     this.limit = event.pageSize;
-    switch (rateData){
-        case 'Combining':
-            this._customerService.getCombiningRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.combiningSort[0],
-                this.combiningSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Hauling':
-            this._customerService.getHaulingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.haulingSort[0],
-                this.haulingSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Trucking':
-            this._customerService.getTruckingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.truckingSort[0],
-                this.truckingSort[1],
-                this.searchResult
-            );
-            break;
-        case 'Farming':
-            this._customerService.getFarmingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.farmingSort[0],
-                this.farmingSort[1],
-                this.searchResult
-            );
-            break;
-        case 'summaryCombining':
-            this._customerService.getCombiningRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.combiningSort[0],
-                this.combiningSort[1],
-                this.searchResult
-            );
+    switch (rateData) {
+      case 'Combining':
+        this._customerService.getCombiningRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.combiningSort[0],
+          this.combiningSort[1],
+          this.searchResult
+        );
         break;
-        case 'summaryHauling':
-            this._customerService.getHaulingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.haulingSort[0],
-                this.haulingSort[1],
-                this.searchResult
-            );
+      case 'Hauling':
+        this._customerService.getHaulingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.haulingSort[0],
+          this.haulingSort[1],
+          this.searchResult
+        );
         break;
-        case 'summaryTrucking':
-            this._customerService.getTruckingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.truckingSort[0],
-                this.truckingSort[1],
-                this.searchResult
-            );
+      case 'Trucking':
+        this._customerService.getTruckingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.truckingSort[0],
+          this.truckingSort[1],
+          this.searchResult
+        );
         break;
-        case 'summaryFarming':
-            this._customerService.getFarmingRate(
-                this.routeID,
-                this.page,
-                this.limit,
-                this.farmingSort[0],
-                this.farmingSort[1],
-                this.searchResult
-            );
+      case 'Farming':
+        this._customerService.getFarmingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.farmingSort[0],
+          this.farmingSort[1],
+          this.searchResult
+        );
         break;
-        default:
+      case 'summaryCombining':
+        this._customerService.getCombiningRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.combiningSort[0],
+          this.combiningSort[1],
+          this.searchResult
+        );
+        break;
+      case 'summaryHauling':
+        this._customerService.getHaulingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.haulingSort[0],
+          this.haulingSort[1],
+          this.searchResult
+        );
+        break;
+      case 'summaryTrucking':
+        this._customerService.getTruckingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.truckingSort[0],
+          this.truckingSort[1],
+          this.searchResult
+        );
+        break;
+      case 'summaryFarming':
+        this._customerService.getFarmingRate(
+          this.routeID,
+          this.page,
+          this.limit,
+          this.farmingSort[0],
+          this.farmingSort[1],
+          this.searchResult
+        );
+        break;
+      default:
     }
 
   }

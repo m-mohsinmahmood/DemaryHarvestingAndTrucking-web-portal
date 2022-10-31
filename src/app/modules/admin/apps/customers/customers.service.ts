@@ -1077,7 +1077,7 @@ export class CustomersService {
      getCombiningRate(
         id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -1159,7 +1159,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerDestination(
+                    this.getCombiningRate(
                         combiningRateData.customer_id,
                     );
                 }
@@ -1197,7 +1197,7 @@ export class CustomersService {
     getHaulingRate(
         id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -1503,6 +1503,7 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.closeDialog.next(true);
+                    this.isLoadingFarmingRate.next(false);
                     this._alertSerice.showAlert({
                         type: 'success',
                         shake: false,

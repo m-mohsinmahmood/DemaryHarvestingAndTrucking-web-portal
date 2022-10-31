@@ -14,7 +14,8 @@ export class AddHaulingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  haulingRateData: any;
+  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat Rate','Loaded Miles','Mile','Ton Mile'];
+
   //#endregion
 
   //#region Observables
@@ -66,8 +67,7 @@ initObservables(){
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customer_id,
-      crop_id: ['1f578693-794a-420e-8f0b-f0f5912f1af9'],
-      rate_type: [''],
+      rate_type: ['',[Validators.required]],
       rate: [''],
       base_rate: [''],
       premium_rate: [''],
@@ -77,8 +77,7 @@ initObservables(){
       this.form.patchValue({
         customer_id: customer_id,
         id: haulingRate.id,
-        crop_id: haulingRate.crop_id,
-        rate_type: haulingRate.rate_type,
+        rate_type: haulingRate.rate_type.toString(),
         rate: haulingRate.rate,
         base_rate: haulingRate.base_rate,
         premium_rate: haulingRate.premium_rate,
@@ -88,6 +87,13 @@ initObservables(){
 onSubmit(): void {
   this._customerService.isLoadingHaulingRate.next(true);
   if (this.data && this.data.isEdit) {
+    if (this.form.value.rate_type != 'Ton Mile'){
+      this.form.value.base_rate = 0;
+      this.form.value.premium_rate = 0;
+    }
+    if(this.form.value.rate_type == 'Ton Mile'){
+      this.form.value.rate = 0;
+    }
     this._customerService.updateHaulingRate(this.form.value);
   } else{
     this._customerService.createHaulingRate(this.form.value);

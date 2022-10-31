@@ -77,15 +77,15 @@ export class AddCombiningRateComponent implements OnInit {
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],   
             combining_rate: ['',[Validators.required]],
-            base_bushels: [''],
-            premium_rate: [''],
+            base_bushels: ['', [Validators.required]],
+            premium_rate: ['', [Validators.required]],
         });
         if (this.data && this.data.isEdit) {
           const {combiningRate , customer_id } = this.data;
           this.form.patchValue({
             id: combiningRate.id,
             customer_id: customer_id,
-            crop_id: {id: combiningRate.id, name: combiningRate.name},
+            crop_id: {id: combiningRate.crop_id, name: combiningRate.crop_name},
             combining_rate: combiningRate.combining_rate,
             base_bushels: combiningRate.base_bushels,
             premium_rate: combiningRate.premium_rate,
