@@ -87,6 +87,13 @@ initObservables(){
 onSubmit(): void {
   this._customerService.isLoadingHaulingRate.next(true);
   if (this.data && this.data.isEdit) {
+    if (this.form.value.rate_type != 'Ton Mile'){
+      this.form.value.base_rate = 0;
+      this.form.value.premium_rate = 0;
+    }
+    if(this.form.value.rate_type == 'Ton Mile'){
+      this.form.value.rate = 0;
+    }
     this._customerService.updateHaulingRate(this.form.value);
   } else{
     this._customerService.createHaulingRate(this.form.value);

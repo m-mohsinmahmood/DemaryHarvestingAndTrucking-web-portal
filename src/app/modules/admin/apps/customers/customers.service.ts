@@ -1159,7 +1159,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerDestination(
+                    this.getCombiningRate(
                         combiningRateData.customer_id,
                     );
                 }
