@@ -111,10 +111,10 @@
                                                     {{combiningRate.combining_rate}}     
                                                 </div>
                                                 <div class="hidden sm:block items-center">
-                                                    {{combiningRate.base_bushels}}
+                                                    {{combiningRate.base_bushels == null ? '-': combiningRate.base_bushels }}
                                                 </div>
                                                 <div class="hidden sm:block"> 
-                                                    {{combiningRate.premium_rate}}     
+                                                    {{combiningRate.premium_rate == 0 ? '-' : combiningRate.premium_rate }}     
                                                 </div>
                                                 <!-- Action -->
                                                 <div>
@@ -357,9 +357,9 @@
                 </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto overflow-hidden">
+                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto sm:mb-18">
+                        <div class="flex flex-col flex-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -487,9 +487,9 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto overflow-hidden">
+                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto sm:mb-18">
+                        <div class="flex flex-col flex-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -653,11 +653,10 @@
                                                         {{combiningRate.combining_rate}}     
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        
-                                                        {{combiningRate.base_bushels}}
+                                                        {{combiningRate.base_bushels == null ? '-': combiningRate.base_bushels }}
                                                     </div>
                                                     <div class="hidden sm:block"> 
-                                                        {{combiningRate.premium_rate}}     
+                                                        {{combiningRate.premium_rate == 0 ? '-' : combiningRate.premium_rate }}     
                                                     </div>
                                                 </div>
                                             </ng-container>
