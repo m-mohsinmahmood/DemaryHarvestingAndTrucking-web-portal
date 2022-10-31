@@ -15,7 +15,6 @@ export class ProfileDataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('profile-data');
     // Create the selected product form
     this.selectedProductForm = this._formBuilder.group({
      fname               : [''],

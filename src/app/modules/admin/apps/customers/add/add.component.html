@@ -84,7 +84,7 @@
                     <input matInput formControlName="billing_address" />
                 </mat-form-field>
             </div>
-           
+
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline" class="cat mx-1 w-full ">
                     <mat-label>Select Country</mat-label>
@@ -103,7 +103,7 @@
                     <mat-label>Select State</mat-label>
                     <mat-select  formControlName="state">
                         <mat-option
-                            *ngFor="let state of state_list"
+                            *ngFor="let state of states"
                             [value]="state"
                             >{{ state }}</mat-option
                         >

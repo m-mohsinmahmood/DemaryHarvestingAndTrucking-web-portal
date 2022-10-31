@@ -1,13 +1,9 @@
 import { OnDestroy, AfterViewInit,Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomersService } from '../../customers.service';
-import { AddFieldComponent } from './add-field/add-field.component';
-import { AddCropComponent } from './add-crop/add-crop.component';
-import { AddDestinationComponent } from './add-destination/add-destination.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { AddFarmComponent } from './add-farm/add-farm.component';
 @Component({
     selector: 'app-farm-data',
     templateUrl: './farm-data.component.html',
@@ -16,9 +12,6 @@ import { AddFarmComponent } from './add-farm/add-farm.component';
 export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //#region Search form variables
-    searchform: FormGroup = new FormGroup({
-        search: new FormControl(),
-    });
     searchformfarm: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -96,68 +89,16 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#endregion
 
     constructor(
-        private _matDialog: MatDialog,
         private _customerService: CustomersService,
         public activatedRoute: ActivatedRoute
     ) {}
 
-    //#region Life Cycle Functions
+   //#region Life Cycle Functions
     ngOnInit(): void {
         this.activatedRoute.params.pipe(takeUntil(this._unsubscribeAll))
         .subscribe((params) => {
             this.routeID = params.Id;
         });
-
-        // searching in tabs
-        this.search = this.searchform.valueChanges
-            .pipe(debounceTime(500))
-            .subscribe((data) => {
-                this.searchResult = data.search;
-                this.page = 1;
-                switch (this.activeTab) {
-                    case 'Farms':
-                        this._customerService.getCustomerFarm(
-                            this.routeID,
-                            this.page,
-                            10,
-                            '',
-                            '',
-                            this.searchResult
-                        );
-                        break;
-                    case 'Fields':
-                        this._customerService.getCustomerField(
-                            this.routeID,
-                            this.page,
-                            10,
-                            '',
-                            '',
-                            this.searchResult
-                        );
-                        break;
-                    case 'Crops':
-                        this._customerService.getCustomerCrops(
-                            this.routeID,
-                            this.page,
-                            10,
-                            '',
-                            '',
-                            this.searchResult
-                        );
-                        break;
-                    case 'Destinations':
-                        this._customerService.getCustomerDestination(
-                            this.routeID,
-                            this.page,
-                            10,
-                            '',
-                            '',
-                            this.searchResult
-                        );
-                        break;
-                    default:
-                }
-            });
 
         // search summary farm
         this.search = this.searchformfarm.valueChanges
@@ -231,7 +172,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
-    }    //#endregion
+    }    
+    //#endregion
 
     //#region Initialize Observables
     initObservables() {
@@ -291,7 +233,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#region Initial APIs
     initApis() {
         this._customerService.getCustomerFarm(this.routeID);
-
         // for sorting
         this.activeTab = 'Farms';
     }
@@ -341,194 +282,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     //#endregion
-
-    //#region Add/Edit Dialogues
-    // Farms
-    openAddFarmDialog(): void {
-        const dialogRef = this._matDialog.open(AddFarmComponent, {
-            data: {
-                // customerFarms: this.customerFarms,
-                id: this.routeID,
-                isEdit: false,
-                status:true,
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-
-    openEditFarmDialog(farm): void {
-        const dialogRef = this._matDialog.open(AddFarmComponent, {
-            data: {
-                isEdit: true,
-                customer_id: this.routeID,
-                customerFarmData: {
-                    name: farm.name,
-                    id: farm.id,
-                    status:farm.status,
-                }
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-    // Field Dialog
-    openAddFieldDialog(): void {
-        const dialogRef = this._matDialog.open(AddFieldComponent, {
-            data: {
-                // customerFarms: this.customerFarms,
-                customer_id: this.routeID,
-                isEdit: false,
-                status:true
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-
-    openEditFieldDialog(field): void {
-        const dialogRef = this._matDialog.open(AddFieldComponent, {
-            data: {
-                isEdit: true,
-                customer_id: this.routeID,
-                customerFieldData: {
-                    field_name: field.field_name,
-                    field_id: field.field_id,
-                    farm_name: field.farm_name,
-                    farm_id: field.farm_id,
-                    acres: field.acres,
-                    status: field.status,
-                    calendar_year: field.calendar_year,
-                }
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-
-    // Crop
-    openAddCropDialog(): void {
-        this.isEdit = false;
-        const dialogRef = this._matDialog.open(AddCropComponent, {
-            data: {
-                customer_id: this.routeID,
-                isEdit: this.isEdit,
-                status: true
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-    }
-
-    openEditCropDialog(crop): void{
-        this.isEdit =  true;
-        const dialogRef = this._matDialog.open(AddCropComponent, {
-            data: {
-                customer_id: this.routeID,
-                isEdit: this.isEdit,
-                customerCropData:{
-                    id: crop.customer_crop_id,
-                    crop_id: crop.crop_id,
-                    crop_name: crop.crop_name,
-                    calendar_year: crop.calendar_year,
-                    status: crop.status
-                }
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-
-    }
-
-    //Destination
-    openAddDestinationDialog(): void {
-        this.isEdit = false;
-        const dialogRef = this._matDialog.open(AddDestinationComponent, {
-            data: {
-                customer_id: this.routeID,
-                isEdit: this.isEdit,
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
-
-    openEditDestinationDialog(destination): void {
-        console.log('Destination Object:',destination);
-        this.isEdit = true;
-        const dialogRef = this._matDialog.open(AddDestinationComponent, {
-            data: {
-                isEdit: this.isEdit,
-                customer_id: this.routeID,
-                customerDestinationData: {
-                    id: destination.destination_id,
-                    farm_name: destination.farm_name,
-                    name: destination.destination_name,
-                    calendar_year: destination.calendar_year,
-                    farm_id: destination.farm_id,
-                    destination_id: destination.destination_id,
-                    status: destination.status,
-                },
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-   }
-    //#endregion
-
-    //#region  Sort Data
-    sortData(sort: any) {
-        this.page = 1;
-        switch (this.activeTab) {
-            case 'Farms':
-            this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
-                this._customerService.getCustomerFarm(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.farmSort[0],
-                    this.farmSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Fields':
-                this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
-                this._customerService.getCustomerField(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.fieldSort[0],
-                    this.fieldSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Crops':
-                this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
-                this._customerService.getCustomerCrops(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.cropSort[0],
-                    this.cropSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Destinations':
-                this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
-                this._customerService.getCustomerDestination(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.destinationSort[0],
-                    this.destinationSort[1],
-                    this.searchResult
-                );
-                break;
-            default:
-        }
-    }
-
+    //#region Summary Sort
     sortSummaryData(sort: any , summaryData) {
         this.page = 1;
         switch (summaryData) {
@@ -586,46 +340,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         switch (farmData){
-            case 'Farm':
-                this._customerService.getCustomerFarm(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.farmSort[0],
-                    this.farmSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Field':
-                this._customerService.getCustomerField(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.fieldSort[0],
-                    this.fieldSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Crop':
-                this._customerService.getCustomerCrops(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.cropSort[0],
-                    this.cropSort[1],
-                    this.searchResult
-                );
-                break;
-            case 'Destination':
-                this._customerService.getCustomerDestination(
-                    this.routeID,
-                    this.page,
-                    this.limit,
-                    this.destinationSort[0],
-                    this.destinationSort[1],
-                    this.searchResult
-                );
-                break;
             case 'summaryFarm':
                 this._customerService.getCustomerFarm(
                     this.routeID,

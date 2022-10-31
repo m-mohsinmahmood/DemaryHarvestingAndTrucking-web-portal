@@ -1,0 +1,24 @@
+.farm-data-farms {
+    grid-template-columns: 35% 45% 45%;
+    @screen sm {
+        grid-template-columns: 10% 15% 15% 8% 13% 10% 13% 10%;
+    }
+    @screen md {
+        grid-template-columns: 10% 15% 15% 8% 13% 10% 13% 10%;
+    }
+    @screen lg {
+        grid-template-columns: 10% 15% 15% 8% 13% 10% 13% 10%;
+    }
+}
+.farm-data-farms2 {
+    grid-template-columns: 45% 35% 45%;
+    @screen sm {
+        grid-template-columns: 15% 15% 20% 20% 15% 10%;;
+    }
+    @screen md {
+        grid-template-columns: 15% 15% 20% 20% 15% 10%;;
+    }
+    @screen lg {
+        grid-template-columns: 15% 15% 20% 20% 15% 10%;
+    }
+}

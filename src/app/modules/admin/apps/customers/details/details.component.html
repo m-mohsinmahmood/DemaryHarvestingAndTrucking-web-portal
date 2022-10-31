@@ -24,21 +24,11 @@
         <mat-drawer-container class="sub-nav-component bg-card divide-x" style="height: 100%" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes; let i = index">
-                    <button style="padding: 15px" [style.background-color]="
-                            route.title === selectedIndex
-                                ? '#d4d7dd'
-                                : 'transparent'
-                        " [ngClass]="
-                            route.title === selectedIndex
-                                ? 'opacity-100'
-                                : 'opacity-80'
-                        " mat-button class="my-1 justify-start w-full" (click)="routeHandler(route)">
+                    <button style="padding: 15px" [style.background-color]="route.title === selectedIndex? '#d4d7dd': 'transparent'"
+                    [ngClass]="route.title === selectedIndex? 'opacity-100': 'opacity-80'" mat-button class="my-1 justify-start w-full"
+                    (click)="routeHandler(route)">
                         <mat-icon svgIcon="{{ route.icon }}" class="icon-size-5 text-primary"></mat-icon>
-                        <span style="
-                                font-size: 13px;
-                                font-weight: bold;
-                                margin-left: 10px;
-                            "></span>
+                        <span style="font-size: 13px;font-weight: bold;margin-left: 10px;"></span>
                     </button>
                 </div>
             </mat-drawer>

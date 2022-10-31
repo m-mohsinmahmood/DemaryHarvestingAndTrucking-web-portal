@@ -1,4 +1,4 @@
-export const applicantNavigation = [
+export const applicantNavigationLeft = [
     {
         id: 1,
         title: 'Applicant Data',
@@ -8,9 +8,9 @@ export const applicantNavigation = [
         title: 'Recruiter Data',
     },
 ];
-export const applicantNavigation2 = [
+export const applicantNavigationRight = [
     {
         id: 1,
-        title: 'Old Submitted Application',
+        title: 'Prior Application',
     },
 ];

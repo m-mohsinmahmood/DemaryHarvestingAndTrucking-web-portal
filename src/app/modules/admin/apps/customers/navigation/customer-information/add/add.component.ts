@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { states } from './../../../../../../../../JSON/state';
 
 @Component({
     selector: 'app-add',
@@ -20,7 +21,7 @@ export class AddCustomerContact implements OnInit {
     isLoadingCustomerContact$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
     country_list = ['USA'];
-    state_list =['Alaska', 'Alabama', 'Arkansas', 'American Samoa', 'Arizona', 'California', 'Colorado', 'Connecticut', 'District of Columbia', 'Delaware', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Iowa', 'Idaho', 'Illinois', 'Indiana', 'Kansas', 'Kentucky', 'Louisiana', 'Massachusetts', 'Maryland', 'Maine', 'Michigan', 'Minnesota', 'Missouri', 'Mississippi', 'Montana', 'North Carolina', 'North Dakota', 'Nebraska', 'New Hampshire', 'New Jersey', 'New Mexico', 'Nevada', 'New York', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Virginia', 'Virgin Islands', 'Vermont', 'Washington', 'Wisconsin', 'West Virginia', 'Wyoming'];
+    states: string[] =[];
     //#endregion
 
     //#region Variables
@@ -51,6 +52,9 @@ export class AddCustomerContact implements OnInit {
                 this._customerService.closeDialog.next(false);
             }
         });
+
+        // passing U.S. states
+        this.states = states;
     }
 
     ngAfterViewInit(): void {}
