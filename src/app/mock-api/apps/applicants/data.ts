@@ -710,6 +710,225 @@ export const applicants = [
       e_secondQuestion: "2",
       e_thirdQuestion: "2",
   },
+  {
+
+    id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "dylon@gmail.com",
+    email2: "dylon@gmail.com",
+    active: true,
+
+    status: "Rejected",
+
+
+     // contact info
+     name: "Dylon James",
+    fname: "Dylon",
+    lname: "James",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "dylon@gmail.com",
+
+
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Single",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+
+    id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "dylon@gmail.com",
+    email2: "dylon@gmail.com",
+    active: true,
+
+    status: "Rejected",
+
+
+     // contact info
+     name: "Dylon James",
+    fname: "Dylon",
+    lname: "James",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "dylon@gmail.com",
+
+
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Single",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
+  {
+
+    id: "7eb7c859-1347-4317-96b6-9476656sss56565ddd8974543439999a7ec",
+    applicantID: "3221",
+    email1: "dylon@gmail.com",
+    email2: "dylon@gmail.com",
+    active: true,
+
+    status: "Rejected",
+
+
+     // contact info
+     name: "Dylon James",
+    fname: "Dylon",
+    lname: "James",
+     cellPhone: "+13399333666",
+     homePhone: "+13399333666",
+     email: "dylon@gmail.com",
+
+
+    // personal info
+    dob: "22-04-2022",
+    martialStatus: "Single",
+    address1: "California Streets",
+    address2: "California Streets",
+    town: "California Town Central",
+    state: "California",
+    postalCode: "9999",
+    country: "U.S.",
+    citizenStatus: "Yes",
+    tractorStatus: "No",
+    passport: "No",
+    avatar: "",
+
+
+    // interviwe results
+    firstPhoneCall: false,
+    firstInterviewResult: "Passed for next round",
+    firstRanking: "2",
+    refreePhoneCall: false,
+    refreeInterviewResult: "Passed for next round",
+    refreeRanking: "1",
+    secondPhoneCall: true,
+    secondInterviewResult: "Passed for next round",
+    secondRanking: "2",
+    thirdPhoneCall: true,
+    thirdInterviewResult: "Passed for next round",
+    thirdRanking: "2",
+
+    // work experience
+    fifthQuestion: "1",
+    firstQuestion: "2",
+    fourthQuestion: "1",
+    job: "Truck Driver",
+    secondQuestion: "2",
+    supervisor: "Mack",
+    supervisorContact: "399989898",
+    thirdQuestion: "2",
+    workExperience: "Dummy",
+
+    // other
+      firstEmail: false,
+      firstSentDate: "Fri Aug 26 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+      secondEmail: false,
+      secondSentDate: "8/27/2022",
+      applicationDate: "Fri Aug 19 2022 00:00:00 GMT+0500 (Pakistan Standard Time)",
+
+
+      // education
+      e_firstQuestion: "1",
+      e_secondQuestion: "2",
+      e_thirdQuestion: "2",
+  },
 
 
 ];
