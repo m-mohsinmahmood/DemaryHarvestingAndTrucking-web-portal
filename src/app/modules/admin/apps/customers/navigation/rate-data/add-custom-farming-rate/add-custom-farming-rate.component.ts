@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CustomersService } from '../../../customers.service';
-import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -66,8 +66,8 @@ export class AddCustomFarmingRateComponent implements OnInit {
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customerId,
-      equipment_type: [''],
-      rate: [''],
+      equipment_type: ['',[Validators.required]],
+      rate: ['', [Validators.required]],
     });
     if (this.data && this.data.isEdit) {
       const { customerId , farmingRate } = this.data;

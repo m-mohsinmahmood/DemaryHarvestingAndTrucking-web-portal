@@ -67,8 +67,7 @@ initObservables(){
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customer_id,
-      crop_id: ['1f578693-794a-420e-8f0b-f0f5912f1af9'],
-      rate_type: [''],
+      rate_type: ['',[Validators.required]],
       rate: [''],
       base_rate: [''],
       premium_rate: [''],
@@ -78,7 +77,6 @@ initObservables(){
       this.form.patchValue({
         customer_id: customer_id,
         id: haulingRate.id,
-        crop_id: haulingRate.crop_id,
         rate_type: haulingRate.rate_type.toString(),
         rate: haulingRate.rate,
         base_rate: haulingRate.base_rate,

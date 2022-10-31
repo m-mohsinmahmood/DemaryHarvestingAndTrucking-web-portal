@@ -77,8 +77,8 @@ export class AddCombiningRateComponent implements OnInit {
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],   
             combining_rate: ['',[Validators.required]],
-            base_bushels: [''],
-            premium_rate: [''],
+            base_bushels: ['', [Validators.required]],
+            premium_rate: ['', [Validators.required]],
         });
         if (this.data && this.data.isEdit) {
           const {combiningRate , customer_id } = this.data;

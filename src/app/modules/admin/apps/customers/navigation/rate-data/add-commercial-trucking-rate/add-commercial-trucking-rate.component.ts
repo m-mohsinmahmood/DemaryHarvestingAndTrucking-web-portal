@@ -65,8 +65,8 @@ export class AddCommercialTruckingRateComponent implements OnInit {
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customerId,
-      rate_type: [''],
-      rate: [''],
+      rate_type: ['',[Validators.required]],
+      rate: ['', [Validators.required]],
   });
     if(this.data && this.data.isEdit){
       const { truckingRate , customerId } = this.data

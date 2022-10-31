@@ -20,7 +20,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Mile'" appearance="outline">
             <mat-label>Rate</mat-label>
             <input type='number' matInput formControlName="rate" />
         </mat-form-field>
