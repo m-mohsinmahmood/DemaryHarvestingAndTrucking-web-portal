@@ -19,8 +19,7 @@ export class AddCommercialTruckingRateComponent implements OnInit {
   
   //#region  Local Variables
   form: FormGroup;
-  haulingRateData: any;
-  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat Rate','Loaded Miles'];
+  rateTypes = ['Hundred Weight','Pounds','Bushels','Flat Rate','Loaded Miles','Mile','Ton Mile'];
   //#endregion
  
 
