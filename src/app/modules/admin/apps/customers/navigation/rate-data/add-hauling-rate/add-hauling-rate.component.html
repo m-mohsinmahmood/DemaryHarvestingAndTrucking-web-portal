@@ -13,19 +13,24 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-6 overflow-y-auto">
         <mat-form-field appearance="outline">
             <mat-label>Rate Type</mat-label>
-            <input matInput formControlName="rate_type" />
+            <mat-select formControlName="rate_type" >
+                <mat-option
+                    *ngFor="let rateType of rateTypes"
+                    [value]="rateType">{{ rateType }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Miles'" appearance="outline">
             <mat-label>Rate</mat-label>
-            <input matInput formControlName="rate" />
+            <input type='number' matInput formControlName="rate" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles'" appearance="outline">
             <mat-label>Base Rate</mat-label>
-            <input matInput formControlName="base_rate" />
+            <input type='number' matInput formControlName="base_rate" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles'" appearance="outline">
             <mat-label>Premium Rate</mat-label>
-            <input matInput formControlName="premium_rate" />
+            <input type='number' matInput formControlName="premium_rate" />
         </mat-form-field>
     </form>
     <div class="flex justify-end mr-7 mt-0 mb-4">

@@ -70,7 +70,10 @@
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
+        <button class="ml-4" mat-flat-button [color]="'primary'" 
+        [class.spinner]="isLoadingCustomerCrop$ | async" 
+        [disabled]="form.invalid || ((isLoadingCustomerCrop$) | async)"
+        (click)="onSubmit()">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

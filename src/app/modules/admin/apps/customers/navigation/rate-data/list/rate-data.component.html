@@ -111,10 +111,10 @@
                                                     {{combiningRate.combining_rate}}     
                                                 </div>
                                                 <div class="hidden sm:block items-center">
-                                                    {{combiningRate.base_bushels}}
+                                                    {{combiningRate.base_bushels == null ? '-': combiningRate.base_bushels }}
                                                 </div>
                                                 <div class="hidden sm:block"> 
-                                                    {{combiningRate.premium_rate}}     
+                                                    {{combiningRate.premium_rate == 0 ? '-' : combiningRate.premium_rate }}     
                                                 </div>
                                                 <!-- Action -->
                                                 <div>
@@ -132,7 +132,7 @@
                                     </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
@@ -141,7 +141,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'Combining')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noCombiningRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -249,13 +249,13 @@
                                                     {{haulingRate.rate_type}}
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    {{haulingRate.rate}}
+                                                    {{haulingRate.rate == 0? '-' : haulingRate.rate}}
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    {{haulingRate.base_rate}}
+                                                    {{haulingRate.base_rate == 0? '-' : haulingRate.base_rate}}
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    {{haulingRate.premium_rate}} 
+                                                    {{haulingRate.premium_rate == 0? '-' : haulingRate.premium_rate}} 
                                                 </div>
                                                 <!-- Action -->
                                                 <div>
@@ -273,7 +273,7 @@
                                     </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
@@ -282,7 +282,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'Hauling')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noHaulingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -357,9 +357,9 @@
                 </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto overflow-hidden">
+                    <div *ngIf="truckingRateList$ | async as truckingRateList" class="flex flex-auto">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto sm:mb-18">
+                        <div class="flex flex-col flex-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -403,7 +403,7 @@
                                         </ng-container>
                                     </ng-container>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="absolute sm:inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
@@ -412,7 +412,7 @@
                                     [pageSizeOptions]="pageSizeOptions"
                                     (page)="pageChanged($event, 'Trucking')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noTruckingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -487,9 +487,9 @@
             </div>
                 <!-- Main -->
                 <div class="sm:p-0">
-                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto overflow-hidden">
+                    <div *ngIf="farmingRateList$ | async as farmingRateList" class="flex flex-auto">
                         <!-- Products list -->
-                        <div class="flex flex-col flex-auto  overflow-hidden sm:overflow-y-auto sm:mb-18">
+                        <div class="flex flex-col flex-auto">
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
@@ -533,8 +533,7 @@
                                         </ng-container>
                                     </ng-container>
                                 </div>
-                                </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
@@ -543,7 +542,7 @@
                                     [pageSizeOptions]="pageSizeOptions"
                                     (page)="pageChanged($event, 'Farming')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #nofarmingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -655,17 +654,17 @@
                                                         {{combiningRate.combining_rate}}     
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        {{combiningRate.base_bushels}}
+                                                        {{combiningRate.base_bushels == null ? '-': combiningRate.base_bushels }}
                                                     </div>
                                                     <div class="hidden sm:block"> 
-                                                        {{combiningRate.premium_rate}}     
+                                                        {{combiningRate.premium_rate == 0 ? '-' : combiningRate.premium_rate }}     
                                                     </div>
                                                 </div>
                                             </ng-container>
                                         </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="combiningRateList?.count"
@@ -674,7 +673,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryCombining')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noCombiningRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -773,20 +772,21 @@
                                                         {{haulingRate.rate_type}}
                                                     </div>
                                                     <div>
-                                                        {{haulingRate.rate}}
+                                                        {{haulingRate.rate == 0? '-' : haulingRate.rate}}
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        {{haulingRate.base_rate}}
+                                                        {{haulingRate.base_rate == 0? '-' : haulingRate.base_rate}}
+
                                                     </div>
                                                     <div class="hidden sm:block items-center">
-                                                        {{haulingRate.premium_rate}} 
+                                                        {{haulingRate.premium_rate == 0? '-' : haulingRate.premium_rate}}
                                                     </div>
                                                 </div>
                                             </ng-container>
                                         </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="haulingRateList?.count"
@@ -795,7 +795,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryHauling')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noHaulingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -893,7 +893,7 @@
                                         </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="truckingRateList?.count"
@@ -902,7 +902,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryTrucking')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #noTruckingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">
@@ -1000,7 +1000,7 @@
                                         </ng-container>
                                     </div>
                                 </div>
-                                <mat-paginator
+                                <!-- <mat-paginator
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{ 'pointer-events-none': isLoading }"
                                     [length]="farmingRateList.count"
@@ -1009,7 +1009,7 @@
                                     [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryFarming')"
                                     [showFirstLastButtons]="true">
-                                </mat-paginator>
+                                </mat-paginator> -->
                             </ng-container>
                             <ng-template class="flex" #nofarmingRateList>
                                 <div class="show-centered-notice h-full justify-center items-center flex">

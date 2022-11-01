@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CustomersService } from '../../../customers.service';
-import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class AddCustomFarmingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  farmingData: any;
+  equipmentTypes = ['Ripper','Offset Disking','Drilling','Offset Disking & Crumbler','Listing','Tiger',"Swathing - 35 Draper","Swathing - 15 Draper"];
   //#endregion
 
   //#region Observables
@@ -66,15 +66,15 @@ export class AddCustomFarmingRateComponent implements OnInit {
     this.form = this._formBuilder.group({
       id: [''],
       customer_id: this.data.customerId,
-      equipment_type: [''],
-      rate: [''],
+      equipment_type: ['',[Validators.required]],
+      rate: ['', [Validators.required]],
     });
     if (this.data && this.data.isEdit) {
       const { customerId , farmingRate } = this.data;
       this.form.patchValue({
         customer_id: customerId,
         id: farmingRate.id,
-        equipment_type: farmingRate.equipment_type,
+        equipment_type: farmingRate.equipment_type.toString(),
         rate: farmingRate.rate,
       });
     }

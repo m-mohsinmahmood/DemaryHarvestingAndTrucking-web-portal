@@ -51,17 +51,17 @@ export const MY_FORMATS = {
 })
 export class AddCropComponent implements OnInit {
 
+    //#region Observables
+    isLoadingCustomerCrop$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+    //#endregion
+
     //#region  Local Variables
     selectedValue: string;
     form: FormGroup;
     date = new FormControl(moment());
-    isLoadingCrops$: Observable<boolean>;
     calendar_year;
     customerCropData: any;
-    //#endregion
-
-    //#region Observables
-    closeDialog$: Observable<boolean>;
     //#endregion
 
     //#region Auto Complete Farms
@@ -76,13 +76,12 @@ export class AddCropComponent implements OnInit {
         public _customerService: CustomersService,
         public _cropService: CropService,
         @Inject(MAT_DIALOG_DATA) public data: any,
-    ) {}
+    ) { }
     //#region Lifecycle Functions
     ngOnInit(): void {
-        this.customerCropData = this.data.customerCropData;
+        this.initObservables();
         this.initForm();
         this.cropSearchSubscription();
-
         // Dialog Close
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$
@@ -92,10 +91,10 @@ export class AddCropComponent implements OnInit {
                     this.matDialogRef.close();
                     this._customerService.closeDialog.next(false);
                 }
-        });
+            });
         //Calender Year Initilize
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.customerCropData.calendar_year);
+            this.calendar_year = new FormControl(this.data.customerCropData.calendar_year);
         } else {
             this.calendar_year = new FormControl(moment());
         }
@@ -112,10 +111,17 @@ export class AddCropComponent implements OnInit {
     }
     //#endregion
 
+    //#region Init Observables 
+    initObservables() {
+        this.isLoadingCustomerCrop$ = this._customerService.isLoadingCustomerCrop$
+        this.closeDialog$ = this._customerService.closeDialog$;
+    }
+    //#endregion
+
     //#region  Form
     initForm(): void {
-         // Create the form
-         this.form = this._formBuilder.group({
+        // Create the form
+        this.form = this._formBuilder.group({
             id: [''],
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
@@ -123,18 +129,19 @@ export class AddCropComponent implements OnInit {
             status: ['',[Validators.required]]
         });
 
-        if(this.data && this.data.isEdit){
-            console.log(this.customerCropData.id);
+        if (this.data && this.data.isEdit) {
+            const { customer_id, customerCropData } = this.data
             this.form.patchValue({
-                customer_id: this.data.customer_id,
-                id: this.customerCropData.id,
-                crop_id: {id: this.customerCropData.crop_id, name: this.customerCropData.crop_name},
-                calendar_year: this.customerCropData.calendar_year,
-                status: this.customerCropData.status.toString(),
+                customer_id: customer_id,
+                id: customerCropData.id,
+                crop_id: { id: customerCropData.crop_id, name: customerCropData.crop_name },
+                calendar_year: customerCropData.calendar_year,
+                status: customerCropData.status.toString(),
             });
         }
     }
     onSubmit(): void {
+        this._customerService.isLoadingCustomerCrop.next(true);
         this.form.value['crop_id'] = this.form.value['crop_id']?.id;
         if (this.data && this.data.isEdit) {
             this._customerService.updateCustomerCrops(this.form.value);
@@ -146,6 +153,7 @@ export class AddCropComponent implements OnInit {
     }
 
     discard(): void {
+        this._customerService.isLoadingCustomerCrop.next(true);
         this.matDialogRef.close();
     }
     //#endregion

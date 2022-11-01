@@ -18,45 +18,45 @@ export const defaultNavigation: FuseNavigationItem[] = [
     ],
   },
 
-  {
-    id: "entities",
-    title: "Entities",
-    type: "group",
-    icon: "heroicons_outline:home",
-    children: [
-      {
-        id: "apps.ecommerce",
-        title: "Employees",
-        type: "collapsable",
-        icon: "heroicons_outline:user",
-        children: [
-          {
-            id: "apps.employee",
-            title: "Employee List",
-            type: "basic",
-            icon: "heroicons_outline:user-group",
-            link: "/apps/employee",
-          },
-          {
-            id: "apps.file-manager",
-            title: "Employee Docs",
-            type: "basic",
-            icon: "heroicons_outline:document",
-            link: "/apps/file-manager",
-          },
+  // {
+  //   id: "entities",
+  //   title: "Entities",
+  //   type: "group",
+  //   icon: "heroicons_outline:home",
+  //   children: [
+  //     {
+  //       id: "apps.ecommerce",
+  //       title: "Employees",
+  //       type: "collapsable",
+  //       icon: "heroicons_outline:user",
+  //       children: [
   //         {
-  //   id: "applicants",
-  //   title: "Applicants",
-  //   type: "basic",
-  //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/applicants",
+  //           id: "apps.employee",
+  //           title: "Employee List",
+  //           type: "basic",
+  //           icon: "heroicons_outline:user-group",
+  //           link: "/apps/employee",
+  //         },
+  //         {
+  //           id: "apps.file-manager",
+  //           title: "Employee Docs",
+  //           type: "basic",
+  //           icon: "heroicons_outline:document",
+  //           link: "/apps/file-manager",
+  //         },
+  // //         {
+  // //   id: "applicants",
+  // //   title: "Applicants",
+  // //   type: "basic",
+  // //   icon: "heroicons_outline:user-circle",
+  // //   link: "/apps/applicants",
+  // // },
+  //       ],
+
+
+  //     },
+  //   ],
   // },
-        ],
-
-
-      },
-    ],
-  },
   {
     id: "customers",
     title: "Customers",
@@ -64,13 +64,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:user",
     link: "/apps/customers",
   },
-  {
-    id: "applicants",
-    title: "Applicants",
-    type: "basic",
-    icon: "heroicons_outline:user-circle",
-    link: "/apps/applicants",
-  },
+  // {
+  //   id: "applicants",
+  //   title: "Applicants",
+  //   type: "basic",
+  //   icon: "heroicons_outline:user-circle",
+  //   link: "/apps/applicants",
+  // },
   {
     id: "crops",
     title: "Crops",

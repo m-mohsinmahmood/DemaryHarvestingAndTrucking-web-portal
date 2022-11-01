@@ -57,7 +57,7 @@
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Rate Data'">
-                                <app-rate-data> </app-rate-data>
+                                <app-rate-data  [customer]="(customer$ | async)"> </app-rate-data>
                             </ng-template>
                         </div>
                         <div>
