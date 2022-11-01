@@ -137,7 +137,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             customer_id: this.data.customer_id,
             name: ['', [Validators.required]],
             acres: [''],
-            status: true,
+            status: ['',[Validators.required]],
             calendar_year: [moment()],
         });
         if (this.data && this.data.isEdit) {
@@ -161,7 +161,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
         } else {
             this._customersService.createCustomerField(this.form.value);
-        }
+        } 
+        this.form.reset();
+  
     }
 
     discard(): void {

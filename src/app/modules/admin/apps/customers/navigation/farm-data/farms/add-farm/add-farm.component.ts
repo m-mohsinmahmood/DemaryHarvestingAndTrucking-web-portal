@@ -106,8 +106,8 @@ export class AddFarmComponent implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: this.data.id,
-            name: ['', [Validators.required]],
-            status: true,
+            name:  ['',[Validators.required]],
+            status: ['',[Validators.required]]
         });
         if (this.data && this.data.isEdit) {
             const {customerFarmData , customer_id} = this.data
@@ -126,9 +126,23 @@ export class AddFarmComponent implements OnInit {
         } else {
             this._customersService.createCustomerFarm(this.form.value);
         }
+        this.form.reset();
+
     }
-    discard(): void {
+
+    createCustomerFarm(customerFarmData: any): void {
+        this._customersService.createCustomerFarm(customerFarmData);
+    }
+    updateCustomerFarm(customerFarmData: any): void {
+        this._customersService.updateCustomerFarm(customerFarmData);
+    }
+
+    saveAndClose(): void {
         this._customersService.isLoadingCustomerFarm.next(false);
+        this.matDialogRef.close();
+    }
+
+    discard(): void {
         this.matDialogRef.close();
     }
 

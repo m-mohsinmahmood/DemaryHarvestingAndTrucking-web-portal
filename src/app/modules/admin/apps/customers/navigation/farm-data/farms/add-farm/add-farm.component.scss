@@ -19,3 +19,9 @@
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
 }
+::ng-deep .mat-select-panel
+{
+    min-width: calc(100% + 17px) !important;
+    margin-left: 7px !important;
+
+}

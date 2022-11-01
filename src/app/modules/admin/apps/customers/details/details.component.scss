@@ -57,3 +57,19 @@
         grid-template-columns: 18% 18% 18% 18% 18%;
     }
 }
+.mat-drawer-inner-container div:nth-child(5),
+.mat-drawer-inner-container div:nth-child(6),
+.mat-drawer-inner-container div:nth-child(7),
+.mat-drawer-inner-container div:nth-child(8)
+
+{
+    pointer-events: none;
+
+
+}
+::ng-deep .mat-select-panel
+{
+    min-width: calc(100% + 17px) !important;
+    margin-left: 7px !important;
+
+}

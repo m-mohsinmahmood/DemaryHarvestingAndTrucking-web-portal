@@ -132,7 +132,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
             farm_id: ['', [Validators.required]],
             name: [''],
             calendar_year: [moment()],
-            status: true,
+            status: ['',[Validators.required]]
         });
 
         // Update the form
@@ -156,6 +156,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         } else {
             this._customerService.createCustomerDestination(this.form.value);
         }
+        this.form.reset();
     }
     discard(): void {
         this._customerService.isLoadingCustomerDestination.next(false);
