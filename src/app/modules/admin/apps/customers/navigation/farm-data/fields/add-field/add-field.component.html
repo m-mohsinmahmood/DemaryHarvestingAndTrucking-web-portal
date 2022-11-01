@@ -25,7 +25,7 @@
             <div *ngIf="allFarms | withLoading | async as allFarms">
                 <ng-template [ngIf]="allFarms.value">
                     <div *ngFor="let farm of allFarms.value.customer_farms" [value]="farm">
-                        <mat-option *ngIf = "farm.status === true" class="hide-false-farms">{{ farm.name }}</mat-option>
+                        <mat-option *ngIf = "farm.status === true" class="hide-false-farms" [value]="farm">{{ farm.name }}</mat-option>
                     </div>
                 </ng-template>
                 <ng-template [ngIf]="allFarms?.loading">
