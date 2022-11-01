@@ -508,6 +508,7 @@
                                         </div>
                                     </div>
                                     <!-- Rows -->
+                                    <div class="rows-wrapper-custom-farming overflow-y-auto">
                                     <ng-container *ngIf="farmingRateList?.farming_rates.length > 0 else nofarmingRateList">
                                         <ng-container *ngFor="let farmingRate of farmingRateList.farming_rates">
                                             <div class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -531,6 +532,7 @@
                                             </div>
                                         </ng-container>
                                     </ng-container>
+                                </div>
                                 </div>
                                 <mat-paginator
                                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"

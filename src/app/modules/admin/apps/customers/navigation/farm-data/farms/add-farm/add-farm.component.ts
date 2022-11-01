@@ -95,7 +95,7 @@ export class AddFarmComponent implements OnInit {
             id: [''],
             customer_id: this.data.id,
             name:  ['',[Validators.required]],
-            status:true,
+            status: ['',[Validators.required]]
         });
         if (this.data && this.data.isEdit) {
             this.form.patchValue({
@@ -113,6 +113,8 @@ export class AddFarmComponent implements OnInit {
         } else {
             this.createCustomerFarm(this.form.value);
         }
+        this.form.reset();
+
     }
 
     createCustomerFarm(customerFarmData: any): void {
