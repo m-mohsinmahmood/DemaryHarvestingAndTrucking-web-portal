@@ -91,7 +91,7 @@ export class ContactsDataComponent implements OnInit {
             city: [''],
             office_number: [''],
             state: [''],
-            email : ['',[Validators.required], [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             zip_code: [''],
             fax: [''],
             linkedin: [''],
