@@ -85,9 +85,9 @@
                                 <div class="hidden sm:block items-center break-words">
                                     <div class="min-w-4">{{customerContact.email}}</div>
                                 </div>
-                                <!-- Details button -->
+                                <!-- Edit button -->
                                 <div>
-                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)">
+                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)" matTooltip= "Edit" matTooltipPosition="right" >
                                                 <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="'heroicons_solid:pencil-square'"

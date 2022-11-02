@@ -79,7 +79,7 @@
                                     </div> -->
 
                                         <!-- Company Name -->
-                                        <div class="truncate break-words">
+                                        <div class="truncate break-words" matTooltip= "{{ customer.customer_name }}" matTooltipPosition="above" >
                                             {{ customer.customer_name }}
                                         </div>
 
@@ -91,34 +91,34 @@
                                         </div>
 
                                         <!-- Position -->
-                                        <div class="hidden lg:block items-center truncate">
+                                        <div class="hidden lg:block items-center truncate"  matTooltip= "{{ customer.position }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.position }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- Phone No -->
-                                        <div class="hidden md:block items-left truncate">
+                                        <div class="hidden md:block items-left truncate" matTooltip= "{{ customer.phone_number }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.phone_number }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- State -->
-                                        <div class="hidden lg:block items-left truncate">
+                                        <div class="hidden lg:block items-left truncate" matTooltip= "{{ customer.state }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.state }}
                                             <!-- </div> -->
                                         </div>
                                         <!-- Country -->
-                                        <div class="hidden sm:block items-left truncate">
+                                        <div class="hidden sm:block items-left truncate" matTooltip= "{{ customer.country }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.country }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- Email -->
-                                        <div class="hidden sm:block items-center truncate">
+                                        <div class="hidden sm:block items-center truncate" matTooltip= "{{ customer.email }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.email }}
                                             <!-- </div> -->
@@ -144,7 +144,7 @@
 
                                         <!-- Contacts button -->
                                         <div>
-                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)">
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)"  matTooltip= "Contacts" matTooltipPosition="right" >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="
@@ -158,7 +158,7 @@
                                         <div>
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="
                                                 toggleGeneralInfo(customer.id, true)
-                                            ">
+                                            " matTooltip= "Details" matTooltipPosition="right" >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="
