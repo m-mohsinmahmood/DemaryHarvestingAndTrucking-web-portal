@@ -27,6 +27,6 @@ export class AlertService {
         setTimeout(()=>{                           // <<<---using ()=> syntax
             this.show_alert.next(false);
             this.alert_info.next(null);
-        }, 10000000);
+        }, _alert_info.time);
     }
 }
