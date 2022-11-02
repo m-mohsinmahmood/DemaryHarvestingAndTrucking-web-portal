@@ -4,10 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { CustomersService } from '../../../customers.service';
 import { ActivatedRoute } from '@angular/router';
-import { AddCombiningRateComponent } from '../add-combining-rate/add-combining-rate.component';
-import { AddHaulingRateComponent } from '../add-hauling-rate/add-hauling-rate.component';
-import { AddCommercialTruckingRateComponent } from '../add-commercial-trucking-rate/add-commercial-trucking-rate.component';
-import { AddCustomFarmingRateComponent } from '../add-custom-farming-rate/add-custom-farming-rate.component';
 
 @Component({
   selector: 'app-rate-data',
@@ -95,7 +91,6 @@ export class RateDataComponent implements OnInit {
 
   // Constructor
   constructor(
-    private _matDialog: MatDialog,
     private _customerService: CustomersService,
     public activatedRoute: ActivatedRoute
   ) { }
@@ -116,8 +111,6 @@ export class RateDataComponent implements OnInit {
         this.page = 1;
         this._customerService.getCombiningRate(
           this.routeID,
-          this.page,
-          10,
           '',
           '',
           this.searchResult
@@ -133,8 +126,6 @@ export class RateDataComponent implements OnInit {
         this.page = 1;
         this._customerService.getHaulingRate(
           this.routeID,
-          this.page,
-          10,
           '',
           '',
           this.searchResult
@@ -152,8 +143,6 @@ export class RateDataComponent implements OnInit {
           case 'Trucking':
             this._customerService.getTruckingRate(
               this.routeID,
-              this.page,
-              10,
               '',
               '',
               this.searchResult
@@ -162,8 +151,6 @@ export class RateDataComponent implements OnInit {
           case 'Farming':
             this._customerService.getFarmingRate(
               this.routeID,
-              this.page,
-              10,
               '',
               '',
               this.searchResult
@@ -267,113 +254,20 @@ export class RateDataComponent implements OnInit {
       case 'Summary':
         this._customerService.getCombiningRate(
           this.routeID,
-          this.page,
-          5,
         );
         this._customerService.getHaulingRate(
           this.routeID,
-          this.page,
-          5,
         );
         this._customerService.getTruckingRate(
           this.routeID,
-          this.page,
-          5,
         );
         this._customerService.getFarmingRate(
           this.routeID,
-          this.page,
-          5,
         );
         break;
       default:
     }
   }
-
-  //#region Add/Edit Dialogues
-  openAddCombiningDialog() {
-    const dialogRef = this._matDialog.open(AddCombiningRateComponent, {
-      data: {
-        customer_id: this.routeID,
-        isEdit: false,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-  openEditCombiningDialog(combiningRate) {
-    const dialogRef = this._matDialog.open(AddCombiningRateComponent, {
-      data: {
-        customer_id: this.routeID,
-        isEdit: true,
-        combiningRate: combiningRate
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-
-  openAddHaulingDialog() {
-    const dialogRef = this._matDialog.open(AddHaulingRateComponent, {
-      data: {
-        customer_id: this.routeID,
-        isEdit: false,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-
-  openEditHaulingDialog(haulingRate) {
-    const dialogRef = this._matDialog.open(AddHaulingRateComponent, {
-      data: {
-        customer_id: this.routeID,
-        isEdit: true,
-        haulingRate: haulingRate,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-
-  }
-  openAddTruckingDialog() {
-    const dialogRef = this._matDialog.open(AddCommercialTruckingRateComponent, {
-      data: {
-        customerId: this.routeID,
-        isEdit: false,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-  openEditTruckingDialog(truckingRate) {
-    const dialogRef = this._matDialog.open(AddCommercialTruckingRateComponent, {
-      data: {
-        isEdit: true,
-        customerId: this.routeID,
-        truckingRate: truckingRate
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-
-  openAddFarmingDialog() {
-    const dialogRef = this._matDialog.open(AddCustomFarmingRateComponent, {
-      data: {
-        customerId: this.routeID,
-        isEdit: false,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-  }
-
-  openEditFarmingDialog(farmingRate) {
-    const dialogRef = this._matDialog.open(AddCustomFarmingRateComponent, {
-      data: {
-        isEdit: true,
-        customerId: this.routeID,
-        farmingRate: farmingRate
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => { });
-
-  }
-  //#endregion
 
   //#region Sort Data
   sortData(sort: any, rateData) {
@@ -383,8 +277,6 @@ export class RateDataComponent implements OnInit {
         this.combiningSort[0] = sort.active; this.combiningSort[1] = sort.direction;
         this._customerService.getCombiningRate(
           this.routeID,
-          this.page,
-          this.limit,
           this.combiningSort[0],
           this.combiningSort[1],
           this.searchResult
@@ -394,8 +286,6 @@ export class RateDataComponent implements OnInit {
         this.haulingSort[0] = sort.active; this.haulingSort[1] = sort.direction;
         this._customerService.getHaulingRate(
           this.routeID,
-          this.page,
-          this.limit,
           this.haulingSort[0],
           this.haulingSort[1],
           this.searchResult
@@ -405,8 +295,6 @@ export class RateDataComponent implements OnInit {
         this.truckingSort[0] = sort.active; this.truckingSort[1] = sort.direction;
         this._customerService.getTruckingRate(
           this.routeID,
-          this.page,
-          this.limit,
           this.truckingSort[0],
           this.truckingSort[1],
           this.searchResult
@@ -416,8 +304,6 @@ export class RateDataComponent implements OnInit {
         this.farmingSort[0] = sort.active; this.farmingSort[1] = sort.direction;
         this._customerService.getFarmingRate(
           this.routeID,
-          this.page,
-          this.limit,
           this.farmingSort[0],
           this.farmingSort[1],
           this.searchResult
@@ -426,98 +312,6 @@ export class RateDataComponent implements OnInit {
       default:
     }
   }
-  //#endregion
-
-  //#region Pagination
-  // pageChanged(event, rateData) {
-  //   this.page = event.pageIndex + 1;
-  //   this.limit = event.pageSize;
-  //   switch (rateData) {
-  //     case 'Combining':
-  //       this._customerService.getCombiningRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.combiningSort[0],
-  //         this.combiningSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'Hauling':
-  //       this._customerService.getHaulingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.haulingSort[0],
-  //         this.haulingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'Trucking':
-  //       this._customerService.getTruckingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.truckingSort[0],
-  //         this.truckingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'Farming':
-  //       this._customerService.getFarmingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.farmingSort[0],
-  //         this.farmingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'summaryCombining':
-  //       this._customerService.getCombiningRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.combiningSort[0],
-  //         this.combiningSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'summaryHauling':
-  //       this._customerService.getHaulingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.haulingSort[0],
-  //         this.haulingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'summaryTrucking':
-  //       this._customerService.getTruckingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.truckingSort[0],
-  //         this.truckingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     case 'summaryFarming':
-  //       this._customerService.getFarmingRate(
-  //         this.routeID,
-  //         this.page,
-  //         this.limit,
-  //         this.farmingSort[0],
-  //         this.farmingSort[1],
-  //         this.searchResult
-  //       );
-  //       break;
-  //     default:
-  //   }
-
-  // }
-
   //#endregion
 
 }

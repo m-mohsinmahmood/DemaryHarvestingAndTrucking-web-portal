@@ -1,0 +1,39 @@
+.commercial-trucking-grid {
+    grid-template-columns: 60% 40%;
+    @screen sm {
+        grid-template-columns: 45% 45% 5%;
+    }
+    @screen md {
+        grid-template-columns: 25% 25 25% 25%;
+    }
+    @screen lg {
+        grid-template-columns: 45% 45% 5%;
+    }
+}
+
+
+::ng-deep .mat-tab-body-wrapper {
+    height: 100% !important;
+}
+
+::ng-deep .tab_group {
+    height: 100% !important;
+}
+
+::ng-deep .mat-sort-header-content {
+    text-align: start !important;
+
+}
+
+.summary-pg-rows-height {
+    max-height: 22rem !important;
+}
+
+.rows-wrapper {
+    height: 16.9rem !important;
+}
+
+.rows-wrapper-summary
+{
+    height: 14.4rem !important;
+}

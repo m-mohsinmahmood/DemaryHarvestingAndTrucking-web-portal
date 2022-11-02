@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder,FormControl,FormGroup,Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CustomersService } from '../../../customers.service';
+import { CustomersService } from '../../../../customers.service';
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 
 
@@ -98,6 +98,7 @@ onSubmit(): void {
   } else{
     this._customerService.createHaulingRate(this.form.value);
   }
+  this.form.reset();
 }
 
 discard(): void {
