@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CropService } from 'app/modules/admin/apps/crops/crops.services';
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
-import { CustomersService } from '../../../customers.service';
+import { CustomersService } from '../../../../customers.service';
 
 @Component({
   selector: 'app-add-combining-rate',
@@ -101,6 +101,7 @@ export class AddCombiningRateComponent implements OnInit {
       } else {
           this._customerService.createCombiningRate(this.form.value);
       }
+      this.form.reset();
     }
 
     discard(): void {

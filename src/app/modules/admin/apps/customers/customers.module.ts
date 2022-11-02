@@ -54,10 +54,14 @@ import { ListFieldComponent } from './navigation/farm-data/fields/list/list.comp
 import { ListFarmComponent } from './navigation/farm-data/farms/list/list.component';
 import { ListCropComponent } from './navigation/farm-data/crops/list/list.component';
 import { ListDestinationComponent } from './navigation/farm-data/destinations/list/list.component';
-import { AddCommercialTruckingRateComponent } from './navigation/rate-data/add-commercial-trucking-rate/add-commercial-trucking-rate.component';
-import { AddCustomFarmingRateComponent } from './navigation/rate-data/add-custom-farming-rate/add-custom-farming-rate.component';
-import { AddCombiningRateComponent } from './navigation/rate-data/add-combining-rate/add-combining-rate.component';
-import { AddHaulingRateComponent } from './navigation/rate-data/add-hauling-rate/add-hauling-rate.component';
+import { AddCommercialTruckingRateComponent } from './navigation/rate-data/trucking-rate/add-commercial-trucking-rate/add-commercial-trucking-rate.component';
+import { AddCustomFarmingRateComponent } from './navigation/rate-data/farming-rate/add-custom-farming-rate/add-custom-farming-rate.component';
+import { AddCombiningRateComponent } from './navigation/rate-data/combining-rate/add-combining-rate/add-combining-rate.component';
+import { AddHaulingRateComponent } from './navigation/rate-data/hauling-rate/add-hauling-rate/add-hauling-rate.component';
+import { ListCombiningRateComponent } from './navigation/rate-data/combining-rate/list-combining-rate/list-combining-rate.component';
+import { ListHaulingRateComponent } from './navigation/rate-data/hauling-rate/list-hauling-rate/list-hauling-rate.component';
+import { ListTruckingRateComponent } from './navigation/rate-data/trucking-rate/list-trucking-rate/list-trucking-rate.component';
+import { ListFarmingRateComponent } from './navigation/rate-data/farming-rate/list-farming-rate/list-farming-rate.component';
 
 @NgModule({
     declarations: [
@@ -91,7 +95,11 @@ import { AddHaulingRateComponent } from './navigation/rate-data/add-hauling-rate
         AddCommercialTruckingRateComponent,
         AddCustomFarmingRateComponent,
         AddCombiningRateComponent,
-        AddHaulingRateComponent
+        AddHaulingRateComponent,
+        ListCombiningRateComponent,
+        ListHaulingRateComponent,
+        ListTruckingRateComponent,
+        ListFarmingRateComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),

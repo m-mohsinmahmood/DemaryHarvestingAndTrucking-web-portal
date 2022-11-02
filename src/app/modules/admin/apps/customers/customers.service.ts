@@ -1084,17 +1084,13 @@ export class CustomersService {
     }
     //#endregion
     //#region Customer Rate Data Combining API
-     getCombiningRate(
+    getCombiningRate(
         id: string,
-        page: number = 1,
-        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
     ) {
         let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
@@ -1114,37 +1110,6 @@ export class CustomersService {
                 }
             );
     }
-
-    // getHaulingRateSummary(
-    //     id: string,
-    //     page: number = 1,
-    //     limit: number = 5,
-    //     sort: string = '',
-    //     order: 'asc' | 'desc' | '' = '',
-    //     search: string = ''
-    // ) {
-    //     let params = new HttpParams();
-    //     params = params.set('page', page);
-    //     params = params.set('limit', limit);
-    //     params = params.set('search', search);
-    //     params = params.set('sort', sort);
-    //     params = params.set('order', order);
-    //     return this._httpClient
-    //         .get<any>(`api-1/customer-destination?customerId=${id}`, {
-    //             params,
-    //         })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 // this.is_loading_destination.next(true);
-    //                 // this.customerDestination.next(res);
-    //                 // this.is_loading_destination.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
 
     updateCombiningRate(
         combiningRateData: any,) {
@@ -1208,15 +1173,11 @@ export class CustomersService {
     //#region Customer Rate Data Hauling API
     getHaulingRate(
         id: string,
-        page: number = 1,
-        limit: number = 5,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
     ) {
         let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
@@ -1237,33 +1198,31 @@ export class CustomersService {
             );
     }
 
-    getHaulingRateSummary(
-        id: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-hauling-rate?customerId=${id}`, {
-                params,
-            })
+    createHaulingRate(haulingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-hauling-rate`, haulingRateData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    // this.is_loading_destination.next(true);
-                    // this.customerDestination.next(res);
-                    // this.is_loading_destination.next(false);
+                    this.closeDialog.next(true);
+                    this.isLoadingHaulingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingHaulingRate.next(false);
+                },
+                () => {
+                    this.getHaulingRate(haulingRateData.customer_id);
                 }
             );
     }
@@ -1298,47 +1257,16 @@ export class CustomersService {
                 }
             );
     }
-    createHaulingRate(haulingRateData: any) {
-        this._httpClient
-            .post(`api-1/customer-hauling-rate`, haulingRateData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingHaulingRate.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingHaulingRate.next(false);
-                },
-                () => {
-                    this.getHaulingRate(haulingRateData.customer_id);
-                }
-            );
-    }
+
     //#endregion
     //#region Customer Rate Data Trucking API
-      getTruckingRate(
+    getTruckingRate(
         id: string,
-        page: number = 1,
-        limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
     ) {
         let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
@@ -1359,33 +1287,31 @@ export class CustomersService {
             );
     }
 
-    getTruckingRateSummary(
-        id: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-trucking-rate?customerId=${id}`, {
-                params,
-            })
+    createTruckingRate(truckingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-trucking-rate`, truckingRateData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    // this.is_loading_destination.next(true);
-                    // this.customerDestination.next(res);
-                    // this.is_loading_destination.next(false);
+                    this.closeDialog.next(true);
+                    this.isLoadingTruckingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingTruckingRate.next(false);
+                },
+                () => {
+                    this.getTruckingRate(truckingRateData.customer_id);
                 }
             );
     }
@@ -1420,47 +1346,15 @@ export class CustomersService {
                 }
             );
     }
-    createTruckingRate(truckingRateData: any) {
-        this._httpClient
-            .post(`api-1/customer-trucking-rate`, truckingRateData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingTruckingRate.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingTruckingRate.next(false);
-                },
-                () => {
-                    this.getTruckingRate(truckingRateData.customer_id);
-                }
-            );
-    }
     //#endregion
     //#region Customer Rate Data Farming API
     getFarmingRate(
         id: string,
-        page: number = 1,
-        limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
     ) {
         let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
@@ -1481,33 +1375,31 @@ export class CustomersService {
             );
     }
 
-    getFarmingRateSummary(
-        id: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-farming-rate?customerId=${id}`, {
-                params,
-            })
+    createFarmingRate(farmingRateData: any) {
+        this._httpClient
+            .post(`api-1/customer-farming-rate`, farmingRateData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    // this.is_loading_destination.next(true);
-                    // this.customerDestination.next(res);
-                    // this.is_loading_destination.next(false);
+                    this.closeDialog.next(true);
+                    this.isLoadingFarmingRate.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingFarmingRate.next(false);
+                },
+                () => {
+                    this.getFarmingRate(farmingRateData.customer_id);
                 }
             );
     }
@@ -1539,34 +1431,6 @@ export class CustomersService {
                     this.getFarmingRate(
                         farmingRateData.customer_id,
                     );
-                }
-            );
-    }
-    createFarmingRate(farmingRateData: any) {
-        this._httpClient
-            .post(`api-1/customer-farming-rate`, farmingRateData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingFarmingRate.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingFarmingRate.next(false);
-                },
-                () => {
-                    this.getFarmingRate(farmingRateData.customer_id);
                 }
             );
     }
