@@ -201,21 +201,23 @@
                                                 'summaryField'
                                             )
                                         ">
+                                        <div mat-sort-header="acres" class="hidden sm:block">
+                                            Acres
+                                        </div>
+                                        <div mat-sort-header="calendar_year" class="hidden sm:block">
+                                            Calendar Year
+                                        </div>
                                         <div mat-sort-header="farm_name">
                                             Farm Name
                                         </div>
                                         <div mat-sort-header="field_name" class="hidden sm:block">
                                             Fields
                                         </div>
-                                        <div mat-sort-header="acres" class="hidden sm:block">
-                                            Acres
-                                        </div>
+                                        
                                         <div mat-sort-header="status" class="hidden sm:block">
                                             Status
                                         </div>
-                                        <div mat-sort-header="calendar_year" class="hidden sm:block">
-                                            Calendar Year
-                                        </div>
+                                        
                                     </div>
                                     <!-- Rows -->
                                     <div class="rows-wrapper h-72">
@@ -230,6 +232,19 @@
                                                 ">
                                                 <div
                                                     class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="hidden sm:block items-center">
+                                                        <div class="min-w-4">
+                                                            {{
+                                                            customerField.acres
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="hidden sm:block items-center">
+                                                        {{
+                                                        customerField.calendar_year
+                                                        | date: "YYYY"
+                                                        }}
+                                                    </div>
                                                     <div class="truncate">
                                                         {{
                                                         customerField.farm_name
@@ -240,24 +255,13 @@
                                                         customerField.field_name
                                                         }}
                                                     </div>
-                                                    <div class="hidden sm:block items-center">
-                                                        <div class="min-w-4">
-                                                            {{
-                                                            customerField.acres
-                                                            }}
-                                                        </div>
-                                                    </div>
+                                                   
                                                     <div class="hidden sm:block items-center">
                                                         <mat-icon class="greenActiveIcon" [svgIcon]="
                                                                 'heroicons_solid:check-circle'
                                                             "></mat-icon>
                                                     </div>
-                                                    <div class="hidden sm:block items-center">
-                                                        {{
-                                                        customerField.calendar_year
-                                                        | date: "YYYY"
-                                                        }}
-                                                    </div>
+                                                    
                                                 </div>
                                             </ng-container>
                                         </ng-container>
@@ -341,15 +345,16 @@
                                                     'summaryCrop'
                                                 )
                                             ">
+                                            <div class="hidden sm:block" mat-sort-header="calendar_year">
+                                                Calendar Year
+                                            </div>
                                             <div class="" mat-sort-header="crop_name">
                                                 Name
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="status">
                                                 Status
                                             </div>
-                                            <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                                Calendar Year
-                                            </div>
+                                           
                                         </div>
                                         <!-- Rows -->
                                         <div class="rows-wrapper h-72">
@@ -364,6 +369,15 @@
                                                     ">
                                                     <div
                                                         class="farm-data-crops grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                        <div class="hidden sm:block items-center">
+                                                            <div class="min-w-4 ml-2">
+                                                                {{
+                                                                crop.calendar_year
+                                                                | date
+                                                                : "YYYY"
+                                                                }}
+                                                            </div>
+                                                        </div>
                                                         <div class="truncate">
                                                             {{ crop.crop_name }}
                                                         </div>
@@ -374,15 +388,7 @@
                                                                 "></mat-icon>
                                                         </div>
                                                         <!-- Contact -->
-                                                        <div class="hidden sm:block items-center">
-                                                            <div class="min-w-4 ml-2">
-                                                                {{
-                                                                crop.calendar_year
-                                                                | date
-                                                                : "YYYY"
-                                                                }}
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </ng-container>
                                             </ng-container>
@@ -480,18 +486,20 @@
                                                     'summaryDestination'
                                                 )
                                             ">
-                                            <div mat-sort-header="farm_name">
-                                                Farm Name
+                                            <div class="hidden sm:block" mat-sort-header="calendar_year">
+                                                Calendar Year
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="destination_name">
                                                 Destination Name
                                             </div>
+                                            <div mat-sort-header="farm_name">
+                                                Farm Name
+                                            </div>
+                                           
                                             <div class="hidden sm:block" mat-sort-header="status">
                                                 Status
                                             </div>
-                                            <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                                Calendar Year
-                                            </div>
+                                            
                                         </div>
                                         <!-- Rows -->
                                         <div class="rows-wrapper h-72">
@@ -506,16 +514,28 @@
                                                     ">
                                                     <div
                                                         class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                        <div class="truncate">
-                                                            {{
-                                                            destination.farm_name
-                                                            }}
+                                                        <div class="hidden sm:block items-center">
+                                                            <div class="min-w-4 ml-2">
+                                                                {{
+                                                                destination.calendar_year
+                                                                | date
+                                                                : "YYYY"
+                                                                }}
+                                                            </div>
                                                         </div>
+                                                        
                                                         <div class="hidden sm:block">
                                                             {{
                                                             destination.destination_name
                                                             }}
                                                         </div>
+
+                                                        <div class="truncate">
+                                                            {{
+                                                            destination.farm_name
+                                                            }}
+                                                        </div>
+                                                        
                                                         <!-- Status -->
                                                         <div class="hidden sm:block">
                                                             <mat-icon class="{{
@@ -531,15 +551,7 @@
                                                                 ">check-circle</mat-icon>
                                                         </div>
                                                         <!-- Contact -->
-                                                        <div class="hidden sm:block items-center">
-                                                            <div class="min-w-4 ml-2">
-                                                                {{
-                                                                destination.calendar_year
-                                                                | date
-                                                                : "YYYY"
-                                                                }}
-                                                            </div>
-                                                        </div>
+                                                       
                                                     </div>
                                                 </ng-container>
                                             </ng-container>

@@ -54,7 +54,7 @@ export class AddCropsComponent implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             name: ['',[Validators.required]],
-            variety: ['',[Validators.required]],
+            variety: [''],
             bushel_weight: [, [Validators.required]],
         });
         if (this.data && this.data.cropData.isEdit) {
