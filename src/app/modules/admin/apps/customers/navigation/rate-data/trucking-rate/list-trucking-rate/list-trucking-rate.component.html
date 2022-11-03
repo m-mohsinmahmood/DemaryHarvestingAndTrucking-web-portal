@@ -62,12 +62,13 @@
                         <!-- Header -->
                         <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="rate_type">
-                                Rate Type
-                            </div>
                             <div mat-sort-header="rate" class="hidden sm:block">
                                 Rate
                             </div>
+                            <div mat-sort-header="rate_type">
+                                Rate Type
+                            </div>
+                            
                             <div>
                                 Actions
                             </div>
@@ -77,12 +78,13 @@
                             <ng-container *ngFor="let truckingRate of truckingRateList?.trucking_rates">
                                 <div
                                     class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                    <div class="truncate">
-                                        {{truckingRate.rate_type}}
-                                    </div>
                                     <div class="hidden sm:block">
                                         {{truckingRate.rate}}
                                     </div>
+                                    <div class="truncate">
+                                        {{truckingRate.rate_type}}
+                                    </div>
+                                 
                                     <!-- Action -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
