@@ -82,3 +82,8 @@ $mobile: 600px;
     }
 }
 
+.fuse-alert-container
+{
+    z-index: 99999 !important;
+    position: relative !important;
+}

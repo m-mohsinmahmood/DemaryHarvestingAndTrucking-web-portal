@@ -162,7 +162,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         } else {
             this._customersService.createCustomerField(this.form.value);
         } 
-        this.form.reset();
+        if (this.form.valid) {
+            this.form.reset();
+          }
   
     }
 

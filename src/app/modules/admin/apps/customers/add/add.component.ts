@@ -82,7 +82,7 @@ export class AddCustomer implements OnInit {
             phone_number    : ['', [Validators.required]],
             state           : [''],
             country         : [''],
-            email           : ['', [Validators.required],[Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email           : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             fax             : [''],
             customer_type   : ['', [Validators.required]],
             status: ['',[Validators.required]],
