@@ -47,16 +47,15 @@
                         <!-- Header -->
                         <div class="farm-data-crops z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                Calendar Year
-                            </div>
                             <div mat-sort-header="crop_name">
                                 Crop Name
                             </div>
                             <div mat-sort-header="status" class="hidden sm:block">
                                 Status
                             </div>
-                            
+                            <div class="hidden sm:block" mat-sort-header="calendar_year">
+                                Calendar Year
+                            </div>
                             <div>Actions</div>
                         </div>
                         <!-- Rows -->
@@ -69,15 +68,6 @@
                                 let crop of customerCropList?.customer_crops
                             ">
                                 <div class="farm-data-crops grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                    <div class="hidden sm:block items-center">
-                                        <div class="min-w-4 ml-2">
-                                            {{
-                                            crop.calendar_year
-                                            | date: "YYYY"
-                                            }}
-                                        </div>
-                                    </div>
-
                                     <div class="truncate">
                                         {{ crop.crop_name }}
                                     </div>
@@ -95,7 +85,15 @@
                                         ">check-circle</mat-icon>
                                     </div>
                                     <!-- Contact -->
-                                    
+                                    <div class="hidden sm:block items-center">
+                                        <div class="min-w-4 ml-2">
+                                            {{
+                                            crop.calendar_year
+                                            | date: "YYYY"
+                                            }}
+                                        </div>
+                                    </div>
+
                                     <!-- Action -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"

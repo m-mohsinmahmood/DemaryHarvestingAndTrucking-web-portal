@@ -53,23 +53,21 @@
                     <!-- Header -->
                     <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                         matSort matSortDisableClear (matSortChange)="sortData($event)">
-                        <div mat-sort-header="acres" class="hidden sm:block">
-                            Acres
-                        </div>
-                        <div mat-sort-header="calendar_year" class="hidden sm:block">
-                            Calendar Year
-                        </div>
                         <div mat-sort-header="farm_name">
                             Farm Name
                         </div>
                         <div mat-sort-header="field_name" class="hidden sm:block">
                             Field Name
                         </div>
-                       
+                        <div mat-sort-header="acres" class="hidden sm:block">
+                            Acres
+                        </div>
                         <div class="hidden sm:block" mat-sort-header="status">
                             Status
                         </div>
-                        
+                        <div mat-sort-header="calendar_year" class="hidden sm:block">
+                            Calendar Year
+                        </div>
                         <div>Actions</div>
                     </div>
                     <!-- Rows -->
@@ -83,25 +81,16 @@
                         ">
                             <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                 <div class="truncate">
-                                    <div class="hidden sm:block items-center">
-                                        <div class="min-w-4">
-                                            {{ customerField.acres }}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="hidden sm:block items-center">
-                                        {{
-                                        customerField.calendar_year
-                                        | date: "YYYY"
-                                        }}
-                                    </div>
-
                                     {{ customerField.farm_name }}
                                 </div>
                                 <div class="hidden sm:block">
                                     {{ customerField.field_name }}
                                 </div>
-                                
+                                <div class="hidden sm:block items-center">
+                                    <div class="min-w-4">
+                                        {{ customerField.acres }}
+                                    </div>
+                                </div>
                                 <div class="hidden sm:block">
                                     <mat-icon class="{{
                                         customerField.status ===
@@ -115,7 +104,12 @@
                                             : 'heroicons_solid:x-circle'
                                     ">check-circle</mat-icon>
                                 </div>
-                                
+                                <div class="hidden sm:block items-center">
+                                    {{
+                                    customerField.calendar_year
+                                    | date: "YYYY"
+                                    }}
+                                </div>
                                 <!-- Action -->
 
                                 <div>
