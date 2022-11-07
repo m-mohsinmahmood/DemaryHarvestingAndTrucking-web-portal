@@ -69,6 +69,12 @@ export class ListHaulingRateComponent implements OnInit {
   }
   //#endregion
 
+  //#region Delete Hauling Rate
+  deleteHaulingRate(id: string) {
+    this._customerService.deleteHaulingRate(id, this.routeID)
+  }
+  //#endregion
+
   //#region Sorting
   sortData(sort: any) {
     this.haulingRateSort[0] = sort.active; this.haulingRateSort[1] = sort.direction;

@@ -114,14 +114,14 @@
 
                                 <div>
                                     <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button
-                                        (click)="
-                                        openEditFieldDialog(
-                                            customerField
-                                        )
-                                    "  matTooltip= "Edit" matTooltipPosition="right">
-                                        <mat-icon class="icon-size-5" [svgIcon]="
-                                            'heroicons_solid:pencil-square'
-                                        "></mat-icon>
+                                        (click)="  openEditFieldDialog(customerField)" matTooltip="Edit"
+                                        matTooltipPosition="right">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square' ">
+                                        </mat-icon>
+                                    </button>
+                                    <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                        (click)="deleteCustomerField(customerField.field_id)">
+                                        <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                                     </button>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                 </div>
                 <mat-paginator *ngIf="
                     customerFieldList?.customer_fields?.length >
-                    0" 
+                    0"
                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFieldList?.count"
                     [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"

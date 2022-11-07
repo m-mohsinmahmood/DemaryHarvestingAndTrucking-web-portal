@@ -1,10 +1,10 @@
 .contact-grid {
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
     @screen sm {
         grid-template-columns: 10% 10% 15% 15% 15% 20% 10%;
     }
     @screen md {
-        grid-template-columns: 12% 12% 12% 12% 12% 12% 5%;
+        grid-template-columns: 12% 12% 12% 12% 12% 12% 10%;
     }
     @screen lg {
         grid-template-columns: 10% 10% 15% 15% 15% 20% 10%;

@@ -1,13 +1,13 @@
 .commercial-trucking-grid {
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
     @screen sm {
-        grid-template-columns: 45% 45% 5%;
+        grid-template-columns: 45% 35% 15%;
     }
     @screen md {
-        grid-template-columns: 25% 25 25% 25%;
+        grid-template-columns: 40% 40% 20%;
     }
     @screen lg {
-        grid-template-columns: 45% 45% 5%;
+        grid-template-columns: 45% 30% 10%;
     }
 }
 

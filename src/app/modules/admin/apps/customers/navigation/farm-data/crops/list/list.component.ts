@@ -84,7 +84,7 @@ export class ListCropComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
     });
   }
-  
+
   openEditCropDialog(crop): void {
     this.isEdit = true;
     const dialogRef = this._matDialog.open(AddCropComponent, {
@@ -103,6 +103,12 @@ export class ListCropComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
     });
 
+  }
+  //#endregion
+
+  //#region Delete Crop
+  deleteCustomerCrop(id: string) {
+    this._customerService.deleteCustomerCrop(id, this.routeID)
   }
   //#endregion
 

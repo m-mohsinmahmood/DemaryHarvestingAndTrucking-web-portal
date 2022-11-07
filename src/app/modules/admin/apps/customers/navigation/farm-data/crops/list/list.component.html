@@ -97,14 +97,14 @@
                                     <!-- Action -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                            mat-stroked-button (click)="
-                                            openEditCropDialog(
-                                                crop
-                                            )
-                                        " matTooltip= "Edit" matTooltipPosition="right">
-                                            <mat-icon class="icon-size-5" [svgIcon]="
-                                                'heroicons_solid:pencil-square'
-                                            "></mat-icon>
+                                            mat-stroked-button (click)="openEditCropDialog(crop)" matTooltip="Edit"
+                                            matTooltipPosition="right">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'">
+                                            </mat-icon>
+                                        </button>
+                                        <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                            (click)="deleteCustomerCrop(crop.customer_crop_id)">
+                                            <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                                         </button>
                                     </div>
                                 </div>

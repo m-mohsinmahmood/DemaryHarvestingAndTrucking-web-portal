@@ -1,7 +1,7 @@
 .farm-data-farms {
     grid-template-columns: 60% 40%;
     @screen sm {
-        grid-template-columns: 15% 15% 20% 10% 15% 10%;
+        grid-template-columns: 15% 20% 10% 15% 15%;
     }
     @screen md {
         grid-template-columns: 25% 25 25% 25%;

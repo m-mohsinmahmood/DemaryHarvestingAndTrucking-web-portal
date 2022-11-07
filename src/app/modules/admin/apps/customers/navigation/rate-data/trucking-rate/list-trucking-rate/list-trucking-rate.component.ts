@@ -63,8 +63,12 @@ export class ListTruckingRateComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => { });
   }
+  //#endregion
 
-
+  //#region Delete Trucking Rate
+  deleteTruckingRate(id: string) {
+    this._customerService.deleteTruckingRate(id, this.routeID)
+  }
   //#endregion
 
   //#region Sorting

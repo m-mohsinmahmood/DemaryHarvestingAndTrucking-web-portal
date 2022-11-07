@@ -105,6 +105,11 @@ export class ListDestinationComponent implements OnInit {
   }
   //#endregion
 
+  //#region Delete Destination
+  deleteCustomerDestination(id: string) {
+    this._customerService.deleteCustomerDestination(id, this.routeID)
+  }
+  //#endregion
 
   //#region  Sort Data
   sortData(sort: any) {

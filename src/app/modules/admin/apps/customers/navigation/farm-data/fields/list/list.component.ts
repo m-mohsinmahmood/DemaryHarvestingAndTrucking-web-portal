@@ -100,6 +100,12 @@ export class ListFieldComponent implements OnInit {
   }
   //#endregion
 
+  //#region Delete Field
+  deleteCustomerField(id: string) {
+    this._customerService.deleteCustomerField(id, this.routeID)
+  }
+  //#endregion
+
   //#region Sort Data
   sortData(sort: any) {
     this.page = 1;

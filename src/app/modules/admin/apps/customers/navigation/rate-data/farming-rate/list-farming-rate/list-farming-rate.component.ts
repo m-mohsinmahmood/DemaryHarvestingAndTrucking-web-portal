@@ -67,6 +67,12 @@ export class ListFarmingRateComponent implements OnInit {
   }
   //#endregion
 
+  //#region Delete Farming Rate
+  deleteFarmingRate(id: string) {
+    this._customerService.deleteFarmingRate(id, this.routeID)
+  }
+  //#endregion
+
   //#region Sorting
   sortData(sort: any) {
     this.farmingRateSort[0] = sort.active; this.farmingRateSort[1] = sort.direction;

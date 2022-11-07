@@ -62,13 +62,12 @@
                         <!-- Header -->
                         <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="rate" class="hidden sm:block">
-                                Rate
-                            </div>
                             <div mat-sort-header="rate_type">
                                 Rate Type
                             </div>
-                            
+                            <div mat-sort-header="rate" class="hidden sm:block">
+                                Rate
+                            </div>
                             <div>
                                 Actions
                             </div>
@@ -78,19 +77,24 @@
                             <ng-container *ngFor="let truckingRate of truckingRateList?.trucking_rates">
                                 <div
                                     class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                    <div class="hidden sm:block">
-                                        {{truckingRate.rate}}
-                                    </div>
                                     <div class="truncate">
                                         {{truckingRate.rate_type}}
                                     </div>
-                                 
+
+                                    <div class="hidden sm:block">
+                                        {{truckingRate.rate}}
+                                    </div>
+                                   
                                     <!-- Action -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
                                             mat-stroked-button (click)="openEditTruckingDialog(truckingRate)">
                                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'">
                                             </mat-icon>
+                                        </button>
+                                        <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                            (click)="deleteTruckingRate(truckingRate.id)">
+                                            <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                                         </button>
                                     </div>
                                 </div>

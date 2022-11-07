@@ -192,15 +192,14 @@ export class CropService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.is_loading_crop.next(true);
-                    this.crop.next(res.crops);
-                    this.is_loading_crop.next(false);
+                    this.is_loading_crop.next(true);                   
                 },
                 (err) => {
                     this.handleError(err);
                 },
                 () => {
                     this.getCrops();
+                    this.is_loading_crop.next(false);
                 }
             );
 
