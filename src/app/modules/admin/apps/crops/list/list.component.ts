@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable arrow-body-style */
-/* eslint-disable @angular-eslint/use-lifecycle-interface */
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import {
     AfterViewInit,
     ElementRef,
@@ -155,6 +151,12 @@ export class CropsListComponent implements OnInit {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this._cropsService.getCrops(this.page, this.limit,this.sortActive,this.sortDirection, this.searchResult);
+    }
+    //#endregion
+
+    //#region Delete Crop
+    deleteCrop(id: string){
+        this._cropsService.deleteCrop(id);
     }
     //#endregion
 
