@@ -1,0 +1,92 @@
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Add Customer</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 sm:grid overflow-y-auto">
+
+        <!-- <mat-form-field appearance="outline">
+            <mat-label>ID</mat-label>
+            <input matInput formControlName="id">
+        </mat-form-field> -->
+        <tr class="mb-6 font-bold grid-cols-2 flex items-center justify-between	" >
+            <td class="float-left">General Information</td>
+            <td></td>
+        </tr>
+        <tr class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+
+        </tr>
+        <tr class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <mat-form-field appearance="outline">
+                <mat-label>Alternative Name</mat-label>
+                <input matInput formControlName="alternateName">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+                <mat-label>State/Province</mat-label>
+                <input matInput formControlName="stateProvince">
+            </mat-form-field>
+
+        </tr>
+        <tr class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <mat-form-field appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input matInput formControlName="contactNo">
+            </mat-form-field>
+            
+            <!-- <mat-form-field appearance="outline">
+                <mat-label>State/Province</mat-label>
+                <input matInput formControlName="stateProvince">
+            </mat-form-field> -->
+
+        </tr>
+        <tr class="my-6 font-bold grid-cols-2 flex items-center justify-between	" >
+            <td class="float-left">Customer Type</td>
+            <td></td>
+        </tr>
+        <div class="mt-2 checkBoxes Customer-type flex flex-col lg:block">
+            <mat-checkbox formControlName="commercialTrucking" class="checkbox-commercial-trucking">Commercial Trucking</mat-checkbox>
+            <mat-checkbox formControlName="customFarming" class="checkbox lg:ml-8">Custom Farming</mat-checkbox>
+            <mat-checkbox formControlName="customHarvesting" class="checkbox lg:ml-8">custom Harvesting</mat-checkbox>
+            <mat-checkbox formControlName="equipmentLeasing" class="checkbox lg:ml-8">Equipment Leasing</mat-checkbox>  
+            <mat-checkbox formControlName="cdlTestingTraining" class="checkbox lg:ml-8">CDL Testing Training</mat-checkbox>   
+ 
+        </div>
+        <!-- Actions -->
+        <div class="mt-2 checkBoxes Customer-type flex flex-col lg:block">
+            <mat-checkbox formControlName="salary">Salary</mat-checkbox>
+            <mat-checkbox formControlName="currentEmployee" class="checkbox lg:ml-8">Current Employee</mat-checkbox>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-end mt-4 sm:mt-6">
+            
+        </div>
+    </form>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 text-on-primary">
+        <div class="flex items-center mt-4 sm:mt-0  gap-x-4">
+            <button class="ml-auto sm:ml-0" mat-flat-button [color]="'primary'" (click)="discard()">
+                Discard
+            </button>
+           
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="send()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

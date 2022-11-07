@@ -1,0 +1,82 @@
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Add Farms</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 sm:grid overflow-y-auto">
+
+        <!-- Farm Row -->
+        <div class="row">
+            <div class="grid table-responsive" formArrayName="farmItemRows">
+              <table class="table">
+                <thead>
+                    <tr class="mb-0.5 font-bold grid-cols-2 flex items-center justify-between" >
+                        <td class="float-left">Farms</td>
+                        <td> <button type="button" mat-flat-button [color]="'primary'" (click)="addNewFarmRow()" class="btn not-italic btn-primary my-4 float-right">
+                            <i class="fa fa-plus-circle not-italic" aria-hidden="true">Add
+                          </i></button></td>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr class="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-between gap-x-6" *ngFor="let itemrow of form.controls.farmItemRows['controls']; let i=index"  [formGroupName]="i">
+                    
+                <!-- <td>
+                        <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
+                        <mat-label>Farm ID</mat-label>
+                        <input id="farmId{{i}}" matInput formControlName="farmId" class="form-control">
+                    </mat-form-field>
+                </td> -->
+                <td>
+                    <mat-form-field class="form-farm-field block" appearance="outline">
+                        <mat-label>Farm Harvest Year</mat-label>
+                        <input id="farmHarvestYear{{i}}" matInput formControlName="farmHarvestYear">
+                    </mat-form-field>
+                </td>
+                <td>
+
+                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
+                        <mat-label>Farm Name</mat-label>
+                        <input id="farmName{{i}}" matInput formControlName="farmName" class="form-control reset">
+                    </mat-form-field>
+                </td>
+                <td>
+
+                    <mat-form-field class="form-farm-field block" appearance="outline"> <span class="required-field"></span>
+                        <mat-label>Farm Total Acres</mat-label>
+                        <input id="farmTotalAcres{{i}}" matInput formControlName="farmTotalAcres" class="form-control reset">
+                    </mat-form-field>
+                </td>
+                    <td> <button class='bg-red-800 text-white font-bold p-4 w-4	h-4 rounded-full flex items-center justify-center m-0.5' *ngIf="form.controls.farmItemRows.controls.length > 1" (click)="deleteFarmRow(i)"><mat-icon style="color:#fff">delete</mat-icon></button></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr></tr>
+                </tfoot>
+              </table>
+          </div>
+        </div>
+
+
+
+        <!-- Actions -->
+    </form>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 text-on-primary">
+        <div class="flex items-center mt-4 sm:mt-0  gap-x-4">
+            <button class="ml-auto sm:ml-0" mat-flat-button [color]="'primary'" (click)="discard()">
+                Discard
+            </button>
+           
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="send()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
