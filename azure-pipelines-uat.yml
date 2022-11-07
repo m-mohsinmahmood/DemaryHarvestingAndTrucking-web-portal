@@ -26,4 +26,4 @@ steps:
     config_file_location: '/'
     skip_app_build: true
     skip_api_build: true
-    azure_static_web_apps_api_token: $(dht-dev-admin-token)
+    azure_static_web_apps_api_token: '304ab93ca947e38af9ede16ef0ea1839dc47ec08f3b33b6b8bd38fa46ac5ddd72-8e26d7e1-4e6e-4c18-957c-af0df21e2253010144222'
