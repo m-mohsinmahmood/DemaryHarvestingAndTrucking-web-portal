@@ -297,6 +297,40 @@ export class CustomersService {
         this.isLoadingFarmingRate.asObservable();
     //#endregion
 
+    //#region Observables Dropdowns
+    // Data
+    // private dropdownCustomerCrops: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerCrops$: Observable<any[] | null> =
+    //     this.dropdownCustomerCrops.asObservable();
+
+    // private dropdownCustomerFarms: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerFarms$: Observable<any[] | null> =
+    //     this.dropdownCustomerFarms.asObservable();
+    
+    // private dropdownCustomerCropsAll: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerCropsAll$: Observable<any[] | null> =
+    //     this.dropdownCustomerCropsAll.asObservable();
+
+    // // Loaders
+    // private isLoadingDropdownCustomerCrops: BehaviorSubject<boolean> =
+    //     new BehaviorSubject<boolean>(false);
+    // readonly isLoadingDropdownCustomerCrops$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerCrops.asObservable();
+
+    // private isLoadingDropdownCustomerFarms: BehaviorSubject<boolean> =
+    //     new BehaviorSubject(false);
+    // readonly isLoadingDropdownCustomerFarms$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerFarms.asObservable();
+
+    // private isLoadingDropdownCustomerCropsAll: BehaviorSubject<boolean> =
+    //     new BehaviorSubject(false);
+    // readonly isLoadingDropdownCustomerCropsAll$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerCropsAll.asObservable();
+    //#endregion
+
     //#region Behaviour Subject
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -360,6 +394,43 @@ export class CustomersService {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+
+    //#region Drop down API's
+    getDropdownCustomerCrops(customerId: string) {
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=customerCrops&customerId=${customerId}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    // this.isLoadingDropdownCustomerCrops.next(true);
+                    // this.dropdownCustomerCrops.next(res);
+                    // this.isLoadingDropdownCustomerCrops.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getDropdownCustomerFarms(customerId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=customerFarms&customerId=${customerId}`, {params})
+            .pipe(take(1))
+    }
+
+    getDropdownCustomerCropsAll(search: string = ''): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=allCrops`,{params})
+            .pipe(take(1))
+    }
+
+    //#endregion
+
 
     /**
      * Get Customers
@@ -473,7 +544,7 @@ export class CustomersService {
                 }
             );
     }
-    deleteCustomer(id: any){
+    deleteCustomer(id: any) {
         this._httpClient
             .delete(`api-1/customers?id=${id}`)
             .pipe(take(1))

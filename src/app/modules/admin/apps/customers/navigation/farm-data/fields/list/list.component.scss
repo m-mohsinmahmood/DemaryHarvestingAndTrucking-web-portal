@@ -1,13 +1,13 @@
-.farm-data-farms {
-    grid-template-columns: 60% 40%;
+.farm-data-fields {
+    grid-template-columns: 50% 50%;
     @screen sm {
         grid-template-columns: 15% 15% 15% 10% 15% 15%;
     }
     @screen md {
-        grid-template-columns: 25% 25 25% 25%;
+        grid-template-columns: 15% 10% 15% 15% 15% 15%;
     }
     @screen lg {
-        grid-template-columns: 15% 20% 20% 20% 15% 10%;
+        grid-template-columns: 15% 15% 15% 15% 15% 15%;
     }
 }
 
@@ -33,4 +33,14 @@
 
 .rows-wrapper {
     height: 16.9rem !important;
+}
+
+.mat-filter {
+    background-color: #f1f5f9 !important;
+    color: #94a3b8 !important;
+}
+
+.mat-filter-applied {
+    background-color: green;
+    color: #fff;
 }

@@ -162,6 +162,10 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         this._customerService.isLoadingCustomerDestination.next(false);
         this.matDialogRef.close();
     }
+
+    getDropdownFarms() {
+        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id,'');
+    }
     //#endregion
 
     chosenYearHandler(
@@ -188,11 +192,12 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value: string) => {
-                this.allFarms = this._customerService.getCustomerFarmsAll(
+                this.allFarms = this._customerService.getDropdownCustomerFarms(
                     this.data.customer_id,
                     value
                 );
             });
+         
     }
     //#endregion
 }

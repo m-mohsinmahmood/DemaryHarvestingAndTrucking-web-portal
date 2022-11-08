@@ -82,6 +82,7 @@ export class AddCropComponent implements OnInit {
         this.initObservables();
         this.initForm();
         this.cropSearchSubscription();
+        this.initCalendar();
         // Dialog Close
         this.closeDialog$ = this._customerService.closeDialog$;
         this._customerService.closeDialog$
@@ -92,13 +93,6 @@ export class AddCropComponent implements OnInit {
                     this._customerService.closeDialog.next(false);
                 }
             });
-        //Calender Year Initilize
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.customerCropData.calendar_year);
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
-
     }
 
     ngAfterViewInit(): void {
@@ -118,6 +112,17 @@ export class AddCropComponent implements OnInit {
     }
     //#endregion
 
+    //#region Init Calendar
+    initCalendar() {
+        //Calender Year Initilize
+        if (this.data.isEdit) {
+            this.calendar_year = new FormControl(this.data.customerCropData.calendar_year);
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
+    }
+    //#endregion
+
     //#region  Form
     initForm(): void {
         // Create the form
@@ -126,7 +131,7 @@ export class AddCropComponent implements OnInit {
             customer_id: this.data.customer_id,
             crop_id: ['', [Validators.required]],
             calendar_year: [moment()],
-            status: ['',[Validators.required]]
+            status: ['', [Validators.required]]
         });
 
         if (this.data && this.data.isEdit) {
@@ -155,6 +160,10 @@ export class AddCropComponent implements OnInit {
     discard(): void {
         this._customerService.isLoadingCustomerCrop.next(true);
         this.matDialogRef.close();
+    }
+
+    getDropdownCrops() {
+        this.allCrops = this._customerService.getDropdownCustomerCropsAll('');
     }
     //#endregion
 
@@ -187,7 +196,7 @@ export class AddCropComponent implements OnInit {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value: string) => {
-                this.allCrops = this._cropService.getCropsAll(
+                this.allCrops = this._customerService.getDropdownCustomerCropsAll(
                     value
                 );
             });
