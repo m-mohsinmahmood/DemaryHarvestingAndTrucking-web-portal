@@ -211,8 +211,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         this._customersService.isLoadingCustomerField.next(false);
         this.matDialogRef.close();
     }
+    
     getDropdownFarms() {
-        this.allFarms = this._customersService.getDropdownCustomerFarms(this.data.customer_id, '');
+        let value = this.form.controls['farm_id'].value;
+        this.allFarms = this._customersService.getDropdownCustomerFarms(this.data.customer_id, value);
     }
     //#endregion
 

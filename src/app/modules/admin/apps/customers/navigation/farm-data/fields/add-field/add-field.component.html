@@ -20,7 +20,7 @@
         <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
             <div *ngIf="allFarms | withLoading | async as allFarms">
                 <ng-template [ngIf]="allFarms.value">
-                    <mat-option *ngFor="let farm of allFarms.value.farms" [value]="farm" [value]="farm">{{ farm.name }}
+                    <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm" [value]="farm">{{ farm.name }}
                     </mat-option>
                 </ng-template>
                 <ng-template [ngIf]="allFarms?.loading">
