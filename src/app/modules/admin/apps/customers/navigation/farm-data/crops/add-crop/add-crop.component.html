@@ -18,7 +18,7 @@
 
         <mat-form-field appearance="outline" fxFlex>
             <mat-label>Crop Name</mat-label>
-            <input (click)="getDropdownCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
         </mat-form-field>
 
         <mat-autocomplete  #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
@@ -68,7 +68,7 @@
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid">
+        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid || this.formValid || ((isLoadingCustomerCrop$) | async)">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

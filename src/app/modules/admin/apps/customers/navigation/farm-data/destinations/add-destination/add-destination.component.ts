@@ -73,6 +73,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
     date = new FormControl(moment());
     calendar_year;
     customerDestination: any;
+    formValid: boolean = true;
     //#endregion
 
     //#region Auto Complete Farms
@@ -132,12 +133,12 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
             farm_id: ['', [Validators.required]],
             name: [''],
             calendar_year: [moment()],
-            status: ['',[Validators.required]]
+            status: ['', [Validators.required]]
         });
 
         // Update the form
         if (this.data?.customerDestinationData && this.data?.isEdit) {
-            const { customerDestinationData , customer_id } = this.data;
+            const { customerDestinationData, customer_id } = this.data;
             this.form.patchValue({
                 id: customerDestinationData.id,
                 customer_id: customer_id,
@@ -163,8 +164,9 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
     }
 
     getDropdownFarms() {
-        let value = this.form.controls['farm_id'].value;
-        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id,value);
+        let value;
+        typeof this.form.controls['farm_id'].value === 'object' ? (value = this.form.controls['farm_id'].value.name) : (value = this.form.controls['farm_id'].value);
+        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id, value);
     }
     //#endregion
 
@@ -197,7 +199,13 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
                     value
                 );
             });
-         
+
+    }
+    //#endregion
+
+    //#region Validation
+    formValidation(e) {
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
     }
     //#endregion
 }

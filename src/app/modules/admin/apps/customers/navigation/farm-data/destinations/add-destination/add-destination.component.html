@@ -4,9 +4,7 @@
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Destination': 'Add Destination'}}</div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </div>
 
@@ -20,14 +18,9 @@
         <!-- FARM AUTOCOMPLETE -->
         <mat-form-field appearance="outline" fxFlex>
             <mat-label>Farm Name</mat-label>
-            <input 
-                (click)="getDropdownFarms()"
-                [matAutocomplete]="farms" 
-                (keyup)="farm_search$.next($event.target.value)" 
-                #trigger="matAutocompleteTrigger"
-                matInput formControlName="farm_id" 
-                name="name" 
-                placeholder="Farm Name" required />
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownFarms()" [matAutocomplete]="farms"
+                (keyup)="farm_search$.next($event.target.value)" #trigger="matAutocompleteTrigger" matInput
+                formControlName="farm_id" name="name" placeholder="Farm Name" required />
         </mat-form-field>
         <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
             <div *ngIf="allFarms | withLoading | async as allFarms">
@@ -69,7 +62,8 @@
             <mat-label>Year</mat-label>
             <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)" panelClass="example-month-picker">
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
+                panelClass="example-month-picker">
             </mat-datepicker>
         </mat-form-field>
 
@@ -80,10 +74,8 @@
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button class="ml-4" mat-flat-button [color]="'primary'"
-        [class.spinner]="isLoadingCustomerDestination$ | async" 
-        [disabled]="form.invalid || ((isLoadingCustomerDestination$) | async)" 
-         (click)="onSubmit()">
+        <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingCustomerDestination$ | async"
+            [disabled]="form.invalid || this.formValid || ((isLoadingCustomerDestination$) | async)" (click)="onSubmit()">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

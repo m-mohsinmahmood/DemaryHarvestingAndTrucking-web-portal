@@ -13,7 +13,7 @@
         <!-- MAT AUTOCOMPLETE -->
         <mat-form-field appearance="outline" fxFlex>
             <mat-label>Farm Name</mat-label>
-            <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownFarms()" [matAutocomplete]="farms"
                 (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id" name="name"
                 placeholder="Farm Name" required />
         </mat-form-field>
@@ -42,7 +42,7 @@
         <ng-container
             *ngFor="let field of form.get('fields')['controls']; let i = index; let first = first; let last = last;">
             <div class="flex items-center justify-between">
-                <div class="flex items-center ml-1 text-lg font-bold">Field {{i+1}}
+                <div *ngIf="!this.data.isEdit" class="flex items-center ml-1 text-lg font-bold">Field {{i+1}}
                     <ng-container *ngIf="!(first && last)">
                         <div class="flex items-center w-10 pl-2">
                             <button class="w-8 h-8 min-h-8" mat-icon-button (click)="removeField(i)"
@@ -54,8 +54,8 @@
 
                 </div>
                 <!-- Remove email -->
-                <div class="">
-                    <button *ngIf="(first)" type="button" mat-flat-button [color]="'primary'" (click)="addField()"
+                <div *ngIf="!this.data.isEdit">
+                    <button  *ngIf="(first)" type="button" mat-flat-button [color]="'primary'" (click)="addField()"
                         class="btn not-italic btn-primary my-4 float-right">
                         <i class="fa fa-plus-circle not-italic" aria-hidden="true">Add Field</i>
                     </button>
@@ -96,7 +96,7 @@
             <span class="ml-2 mr-1">Discard</span>
         </button>
         <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingCustomerField$ | async"
-            [disabled]="form.invalid || ((isLoadingCustomerField$) | async)" (click)="onSubmit()">
+            [disabled]="form.invalid || this.formValid || ((isLoadingCustomerField$) | async)" (click)="onSubmit()">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

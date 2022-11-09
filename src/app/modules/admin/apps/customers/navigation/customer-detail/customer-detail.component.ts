@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersService } from '../../customers.service';
 import { AddCustomer } from '../../add/add.component';
 import { Customers } from '../../customers.types';
-import { ConfirmDialogModel, ConfirmationDialogComponent } from '../../../../ui/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../../../ui/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -116,10 +116,10 @@ export class CustomerDetail implements OnInit, OnDestroy {
     confirmDialog(customerId: string): void {
         const message = `Are you sure you want to do this?`;
     
-        const dialogData = new ConfirmDialogModel("Delete Customer", message);
+        //const dialogData = new ConfirmDialogModel("Delete Customer", message);
     
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-          data: dialogData
+        //   data: dialogData
         });
     
         dialogRef.afterClosed().subscribe(dialogResult => {

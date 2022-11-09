@@ -62,6 +62,7 @@ export class AddCropComponent implements OnInit {
     date = new FormControl(moment());
     calendar_year;
     customerCropData: any;
+    formValid: boolean = true;
     //#endregion
 
     //#region Auto Complete Farms
@@ -161,7 +162,8 @@ export class AddCropComponent implements OnInit {
     }
 
     getDropdownCrops() {
-        let value = this.form.controls['crop_id'].value;
+        let value;
+        typeof this.form.controls['crop_id'].value === 'object' ? (value = this.form.controls['crop_id'].value.name) : (value = this.form.controls['crop_id'].value);
         this.allCrops = this._customerService.getDropdownCustomerCropsAll(value);
     }
     //#endregion
@@ -199,6 +201,12 @@ export class AddCropComponent implements OnInit {
                     value
                 );
             });
+    }
+    //#endregion
+
+    //#region Validation
+    formValidation(e) {
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
     }
     //#endregion
 

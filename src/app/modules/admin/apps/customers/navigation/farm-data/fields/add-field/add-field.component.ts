@@ -70,6 +70,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     isEdit: boolean;
     status: boolean;
     customerFieldData: any;
+    formValid: boolean = true;
     //#endregion
 
     //#region Auto Complete Farms
@@ -122,19 +123,21 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     //#region init Field Form
     initFieldFormGroup() {
-        const fieldFormGroup = [];
-        fieldFormGroup.push(
-            this._formBuilder.group({
-                name: ['All Fields'],
-                acres: [''],
-                calendar_year: [moment()],
-                status: ['']
+        if (this.data && !this.data.isEdit) {
+            const fieldFormGroup = [];
+            fieldFormGroup.push(
+                this._formBuilder.group({
+                    name: ['All Fields'],
+                    acres: [''],
+                    calendar_year: [moment()],
+                    status: ['']
 
-            })
-        );
-        fieldFormGroup.forEach((fieldFormGroup) => {
-            (this.form.get('fields') as FormArray).push(fieldFormGroup);
-        });
+                })
+            );
+            fieldFormGroup.forEach((fieldFormGroup) => {
+                (this.form.get('fields') as FormArray).push(fieldFormGroup);
+            });
+        }
     }
     //#endregion
 
@@ -163,7 +166,20 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 customer_id: customer_id,
                 id: customerFieldData.field_id,
                 farm_id: { id: customerFieldData.farm_id, name: customerFieldData.farm_name },
-                //fields: customerFieldData.field_name,
+            });
+
+            const fieldFormGroup = [];
+            fieldFormGroup.push(
+                this._formBuilder.group({
+                    name: [customerFieldData.field_name],
+                    acres: [customerFieldData.acres],
+                    calendar_year: [customerFieldData.calendar_year],
+                    status: [customerFieldData.status.toString()]
+
+                })
+            );
+            fieldFormGroup.forEach((fieldFormGroup) => {
+                (this.form.get('fields') as FormArray).push(fieldFormGroup);
             });
         }
     }
@@ -207,15 +223,16 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         this._customersService.isLoadingCustomerField.next(false);
         this.matDialogRef.close();
     }
-    
+
     getDropdownFarms() {
-        let value = this.form.controls['farm_id'].value;
+        let value;
+        typeof this.form.controls['farm_id'].value === 'object' ? (value = this.form.controls['farm_id'].value.name) : value = this.form.controls['farm_id'].value;
         this.allFarms = this._customersService.getDropdownCustomerFarms(this.data.customer_id, value);
     }
     //#endregion
 
     //#region Calendar Year Function
-    chosenYearHandler(normalizedYear: Moment, dp: any , index: number) {
+    chosenYearHandler(normalizedYear: Moment, dp: any, index: number) {
         const ctrlValue = moment(this.calendar_year.value);
         ctrlValue.year(normalizedYear.year());
         this.calendar_year.setValue(ctrlValue);
@@ -244,6 +261,12 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     value
                 );
             });
+    }
+    //#endregion
+
+    //#region Validation
+    formValidation(e) {
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
     }
     //#endregion
 
