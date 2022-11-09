@@ -87,3 +87,8 @@ $mobile: 600px;
     z-index: 99999 !important;
     position: relative !important;
 }
+
+// to make it look under filter (was occuring specifically in mobile)
+::ng-deep .mat-tab-header {
+    z-index: 0 !important;
+}

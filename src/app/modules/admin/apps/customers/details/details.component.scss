@@ -21,8 +21,13 @@
     padding: 5px;
     border-right: none !important;
     max-width: 270px;
+    // z-index: 0;
 }
 
+// to make it look under filter
+.mat-drawer.mat-drawer-side {
+    z-index: 0 !important;
+}
 .opacity-8 {
     opacity: 80%;
 }
