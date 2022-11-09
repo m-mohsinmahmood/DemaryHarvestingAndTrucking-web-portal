@@ -120,11 +120,9 @@ export class CustomerDetail implements OnInit, OnDestroy {
 
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
           data: {
-            message: 'Are you sure you want to delete this entity?',
+            message: 'Are you sure you want to delete this Customer?',
             title: 'Customer',
           },
-        //   height: '400px',
-        //   width: '800px',
 
         });
 
