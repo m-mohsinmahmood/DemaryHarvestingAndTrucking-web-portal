@@ -1,0 +1,63 @@
+<!-- Header -->
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+    <!-- Title -->
+    <header
+        class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary"
+    >
+        <div class="text-lg font-medium">
+                Delete {{title}}
+        </div>
+        <button mat-icon-button (click)="onClose()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"
+            ></mat-icon>
+        </button>
+    </header>
+    <!-- <div class="flex justify-between items-center font-normal text-2xl h-30"> -->
+        <div class="flex justify-center items-center h-30 ">
+            <div class="w-4/12  flex justify-center items-center">
+                <!-- <div class="border-r-2 border-black-200 "> -->
+                    <!-- <div class="rounded-full shadow-lg w-15 h-15 flex justify-center items-center mr-8">
+                        <mat-icon
+                        [svgIcon]="'heroicons_outline:trash'"
+                        [ngStyle]="{'color':'red'}"
+                        class="icon-size-18 sm:icon-size-6 "
+                        ></mat-icon>
+                    </div> -->
+                    <div class=" flex justify-center items-center mr-8">
+                        <mat-icon
+                        [svgIcon]="'heroicons_outline:trash'"
+                        [ngStyle]="{'color':'red'}"
+                        class="icon-size-18 sm:icon-size-6 "
+                        ></mat-icon>
+                    </div>
+                <!-- </div> -->
+
+            </div>
+        <p class="w-8/12 flex justify-start items-center px-2">{{message}}</p>
+    </div>
+    <div
+        class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary"
+    >
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+            <!-- Discard -->
+            <button
+                type="submit"
+                class="bg-amber-600"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="onClose()"
+            >
+                Discard
+            </button>
+            <button
+                mat-flat-button
+                color="primary"
+                (click)="onSubmit()"
+            >
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
