@@ -1,8 +1,7 @@
 <div
     class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
     <div>
-        <header class="ml-2 text-3xl font-extrabold tracking-tight">
-            Fields
+        <header class="ml-2 text-3xl font-extrabold tracking-tight flex items-center">Fields <mat-hint *ngIf="formFilters.value.farm_id || formFilters.value.status" class="text-sm ml-2 mt-1">(Filters Applied)</mat-hint>
         </header>
     </div>
     <div class="mt-2 flex">
@@ -21,7 +20,8 @@
         </button>
         <!-- Filters -->
         <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
-            <mat-icon [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <mat-icon *ngIf="formFilters.value.farm_id || formFilters.value.status " [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+            <mat-icon *ngIf="!formFilters.value.farm_id && !formFilters.value.status" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
         </button>
         <!-- Import/Export -->
         <button mat-icon-button [matMenuTriggerFor]="menu1" aria-label="Example icon-button with a menu">
@@ -119,7 +119,7 @@
                                         </mat-icon>
                                     </button>
                                     <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                        mat-stroked-button (click)="deleteCustomerField(customerField.field_id)"
+                                        mat-stroked-button (click)="confirmDeleteDialog(customerField.field_id)"
                                         matTooltip="Delete" matTooltipPosition="above">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                     </button>
@@ -145,7 +145,7 @@
     </div>
 </div>
 
-<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-9999 bg-green-300" fixed [mode]="'over'"
     [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
     <div class="flex flex-col w-100 overflow-auto bg-card">
         <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
@@ -157,27 +157,60 @@
                 <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </button>
         </div>
-        <div class="flex flex-col justify-center items-center md:h-screen">
-            <div class="sm:h-200 md:h-5/6 h-160 w-80">
+        <div class="flex flex-col justify-center items-center h-screen">
+            <div class="h-5/6 w-96">
                 <div class="w-inherit flex flex-col">
-                    <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
-                        <mat-label>Select Farm</mat-label>
-                        <mat-select>
-                            <mat-option></mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <form [formGroup]="formFilters" (ngSubmit)="applyFilters()"
+                        class="flex flex-col flex-auto p-6 sm:p-8">
+                        <!-- MAT AUTOCOMPLETE -->
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Farm Name</mat-label>
+                            <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
+                                (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id"
+                                name="name" placeholder="Farm Name"/>
+                        </mat-form-field>
+                        <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+                            <div *ngIf="allFarms | withLoading | async as allFarms">
+                                <ng-template [ngIf]="allFarms.value">
+                                    <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm"> 
+                                        {{ farm.name }}
+                                    </mat-option>
+                                </ng-template>
+                                <ng-template [ngIf]="allFarms?.loading">
+                                    <mat-option>
+                                        <div style="display: flex;
+                                                    justify-content: center;
+                                                    text-align: center;">
+                                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                        </div>
+                                    </mat-option>
+                                </ng-template>
+
+                                <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                                    <mat-option disabled> No Farm(s) found </mat-option>
+                                </ng-template>
+                            </div>
+                        </mat-autocomplete>
+                        <!-- MAT AUTOCOMPLETE -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value=true>Active</mat-option>
+                                <mat-option value=false>In Active</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
                 </div>
             </div>
             <div class="flex flex-row justify-evenly items-center w-80">
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button class="" mat-flat-button [color]="'primary'">
+                    <button [disabled]="!formFilters.value.farm_id && !formFilters.value.status" (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                        [color]="'primary'">
                         <span class="">Apply filters</span>
                     </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button
-                        class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                        <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    <button [disabled]="!formFilters.value.farm_id && !formFilters.value.status" (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
                         <span>Remove filters</span>
                     </button>
                 </div>

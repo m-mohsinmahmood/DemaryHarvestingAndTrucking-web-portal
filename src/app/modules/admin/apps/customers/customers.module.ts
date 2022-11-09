@@ -18,7 +18,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -62,6 +62,10 @@ import { ListCombiningRateComponent } from './navigation/rate-data/combining-rat
 import { ListHaulingRateComponent } from './navigation/rate-data/hauling-rate/list-hauling-rate/list-hauling-rate.component';
 import { ListTruckingRateComponent } from './navigation/rate-data/trucking-rate/list-trucking-rate/list-trucking-rate.component';
 import { ListFarmingRateComponent } from './navigation/rate-data/farming-rate/list-farming-rate/list-farming-rate.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
     declarations: [
@@ -99,10 +103,11 @@ import { ListFarmingRateComponent } from './navigation/rate-data/farming-rate/li
         ListCombiningRateComponent,
         ListHaulingRateComponent,
         ListTruckingRateComponent,
-        ListFarmingRateComponent
+        ListFarmingRateComponent,
+        ConfirmationDialogComponent,
     ],
     imports: [
-        RouterModule.forChild(customersRoutes),
+    RouterModule.forChild(customersRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -131,6 +136,35 @@ import { ListFarmingRateComponent } from './navigation/rate-data/farming-rate/li
         MatAutocompleteModule,
         MatProgressSpinnerModule,
         FuseDrawerModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatRadioModule,
+        MatStepperModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatRippleModule,
+        MatSortModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMomentDateModule,
+        MatTabsModule,
+        MatExpansionModule,
+        SharedModule,
+        MatSidenavModule,
+        MatDividerModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
+        FuseDrawerModule,
+
     ],
 
 })

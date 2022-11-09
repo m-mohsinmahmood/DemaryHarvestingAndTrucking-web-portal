@@ -27,6 +27,8 @@ import {
     CustomerFarm,
     Documents,
     Item,
+    customerFilters,
+    fieldFilters
 } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
 import { Router } from '@angular/router';
@@ -441,7 +443,8 @@ export class CustomersService {
         limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
-        search: string = ''
+        search: string = '',
+        filters: customerFilters = {type: '' , status: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -449,6 +452,8 @@ export class CustomersService {
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('type', filters.type);
+        params = params.set('status', filters.status)
         return this._httpClient
             .get<any>('api-1/customers', {
                 params,
@@ -543,6 +548,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomer.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
 
@@ -668,6 +681,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerContact.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -811,6 +832,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerFarm.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -826,12 +855,13 @@ export class CustomersService {
     //#endregion
     //#region Customer Farm Data Field API
     getCustomerField(
-        customerId: string,
+        customer_id: string,
         page: number = 1,
         limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
-        search: string = ''
+        search: string = '',
+        filters: fieldFilters = {farm_id: '' , status: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -839,8 +869,10 @@ export class CustomersService {
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status)
         return this._httpClient
-            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
+            .get<any>(`api-1/customer-field?customerId=${customer_id}`, {
                 params,
             })
             .pipe(take(1))
@@ -938,6 +970,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerField.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1045,6 +1085,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerCrop.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1155,6 +1203,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerDestination.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1261,6 +1317,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCombiningRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1368,6 +1432,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingHaulingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1475,6 +1547,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingTruckingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1582,6 +1662,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingFarmingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);

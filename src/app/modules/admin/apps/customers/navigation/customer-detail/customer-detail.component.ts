@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersService } from '../../customers.service';
 import { AddCustomer } from '../../add/add.component';
 import { Customers } from '../../customers.types';
+import { ConfirmationDialogComponent } from '../../../../ui/confirmation-dialog/confirmation-dialog.component';
+
 
 @Component({
     selector: 'app-customer-detail',
@@ -22,6 +24,7 @@ export class CustomerDetail implements OnInit, OnDestroy {
     isLoading: boolean = false;
     isEdit: boolean;
     routeID;
+    result: string = '';
     //#endregion
 
     //#region Observables
@@ -102,10 +105,20 @@ export class CustomerDetail implements OnInit, OnDestroy {
     }
     //#endregion
 
-    //#region Delete Customer 
+    //#region Confirmation Customer Delete Dialog
+    confirmDeleteDialog(customerId: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+          data: {
+            message: 'Are you sure you want to delete this Customer?',
+            title: 'Customer',
+          },
 
-    deleteCustomer(id: string){
-        this._customerService.deleteCustomer(id)
-    }
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if(dialogResult)
+            this._customerService.deleteCustomer(customerId);
+        });
+      }
     //#endregion
 }

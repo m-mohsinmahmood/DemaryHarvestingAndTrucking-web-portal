@@ -22,6 +22,7 @@ export class AddCombiningRateComponent implements OnInit {
     form: FormGroup;
     routeID: string;
     imageURL: string = '';
+    formValid: boolean = true;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
@@ -105,7 +106,8 @@ export class AddCombiningRateComponent implements OnInit {
     }
 
     getDropdownCustomerCrops() {
-      let value = this.form.controls['crop_id'].value;
+      let value;
+      typeof this.form.controls['crop_id'].value  === 'object' ? (value = this.form.controls['crop_id'].value.crop_name) : (value = this.form.controls['crop_id'].value);
       this.allCrops = this._customerService.getDropdownCustomerCrops(this.data.customer_id,value);
     }
 
@@ -135,6 +137,12 @@ export class AddCombiningRateComponent implements OnInit {
                 value
             );
         });
+}
+//#endregion
+
+//#region Validation
+formValidation(e){
+  typeof(e) == 'string' ? (this.formValid = true) : (this.formValid = false)
 }
 //#endregion
 

@@ -7,7 +7,7 @@
             </div>
             <!-- Title -->
             <div>
-                <button mat-icon-button (click)="toggleDrawer()">
+                <button mat-icon-button (click)="toggleDrawer()" class="z-0">
                     <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                 </button>
             </div>
@@ -26,7 +26,7 @@
                 <div class="flex" *ngFor="let route of routes; let i = index">
                     <button style="padding: 15px" [style.background-color]="route.title === selectedIndex? '#d4d7dd': 'transparent'"  matTooltip=
                     "{{ route.title }}"
-                        matTooltipPosition="right" 
+                        matTooltipPosition="right"
                     [ngClass]="route.title === selectedIndex? 'opacity-100': 'opacity-80'" mat-button class="my-1 justify-start w-full"
                     (click)="routeHandler(route)">
                         <mat-icon svgIcon="{{ route.icon }}" class="icon-size-5 text-primary"></mat-icon>

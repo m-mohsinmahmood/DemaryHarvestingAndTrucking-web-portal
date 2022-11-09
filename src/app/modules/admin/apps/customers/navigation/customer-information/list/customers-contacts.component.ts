@@ -34,6 +34,7 @@ import { ContactsDataComponent } from '../edit/contacts-data.component';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddCustomerContact } from '../add/add.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'customers-contacts',
@@ -44,7 +45,6 @@ import { AddCustomerContact } from '../add/add.component';
     animations: fuseAnimations,
 })
 export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
-
     //#region Variables
     customerList: any;
 
@@ -55,8 +55,8 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     page: number;
     routeID;
     isLoading: boolean = false;
-    sortActive:any;
-    sortDirection:any;
+    sortActive: any;
+    sortDirection: any;
 
     search: Subscription;
     searchform: FormGroup = new FormGroup({
@@ -86,7 +86,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         });
         this.initApi();
         this.initObservables();
-
     }
 
     ngAfterViewInit(): void {
@@ -114,9 +113,12 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
 
     //#region Initialize Observables
     initObservables() {
-        this.isLoadingCustomerContactList$ = this._customersService.isLoadingCustomerContactList$;
+        this.isLoadingCustomerContactList$ =
+            this._customersService.isLoadingCustomerContactList$;
         this.customerContactList$ = this._customersService.customerContactList$;
-        this.customerContactList$.subscribe((data) => {this.customerList = data});
+        this.customerContactList$.subscribe((data) => {
+            this.customerList = data;
+        });
     }
     //#endregion
 
@@ -131,8 +133,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
             data: { customerId: this.routeID },
         });
-        dialogRef.afterClosed().subscribe((result) => {
-        });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
     //#endregion
@@ -157,7 +158,14 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.pageSize = event.pageSize;
-        this._customersService.getCustomerContact(this.routeID,this.page, this.pageSize,this.sortActive,this.sortDirection,this.searchResult);
+        this._customersService.getCustomerContact(
+            this.routeID,
+            this.page,
+            this.pageSize,
+            this.sortActive,
+            this.sortDirection,
+            this.searchResult
+        );
     }
     //#endregion
 
@@ -170,15 +178,23 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result) => {});
+    }
+    //#endregion
+
+    //#region Confirmation Customer Field Delete Dialog
+    confirmDeleteDialog(id: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Contact?',
+                title: 'Customer Contact',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._customersService.deleteCustomerContact(id, this.routeID);
         });
     }
     //#endregion
-
-    //#region Delete Contact Detail
-    deleteContact(id: string){
-        this._customersService.deleteCustomerContact(id, this.routeID);
-    }
-    //#endregion
-
 }

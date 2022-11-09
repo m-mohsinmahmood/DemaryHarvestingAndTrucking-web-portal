@@ -9,6 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
+    FormBuilder,
     FormControl,
     FormGroup,
 } from '@angular/forms';
@@ -66,22 +67,25 @@ export class CustomersListComponent implements OnInit {
     limit: number;
     isLoading: boolean = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
-    country_list = ['Afghanistan','Albania','Algeria','Andorra','Angola','Anguilla','Antigua &amp; Barbuda','Argentina','Armenia','Aruba','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia &amp; Herzegovina','Botswana','Brazil','British Virgin Islands','Brunei','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Cape Verde','Cayman Islands','Chad','Chile','China','Colombia','Congo','Cook Islands','Costa Rica','Cote D Ivoire','Croatia','Cruise Ship','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Estonia','Ethiopia','Falkland Islands','Faroe Islands','Fiji','Finland','France','French Polynesia','French West Indies','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Greenland','Grenada','Guam','Guatemala','Guernsey','Guinea','Guinea Bissau','Guyana','Haiti','Honduras','Hong Kong','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Isle of Man','Israel','Italy','Jamaica','Japan','Jersey','Jordan','Kazakhstan','Kenya','Kuwait','Kyrgyz Republic','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Macau','Macedonia','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Mauritania','Mauritius','Mexico','Moldova','Monaco','Mongolia','Montenegro','Montserrat','Morocco','Mozambique','Namibia','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Norway','Oman','Pakistan','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Reunion','Romania','Russia','Rwanda','Saint Pierre &amp; Miquelon','Samoa','San Marino','Satellite','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','South Africa','South Korea','Spain','Sri Lanka','St Kitts &amp; Nevis','St Lucia','St Vincent','St. Lucia','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor L\'Este','Togo','Tonga','Trinidad &amp; Tobago','Tunisia','Turkey','Turkmenistan','Turks &amp; Caicos','Uganda','Ukraine','United Arab Emirates','United Kingdom','Uruguay','Uzbekistan','Venezuela','Vietnam','Virgin Islands (US)','Yemen','Zambia','Zimbabwe'];
+    country_list = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+    formFilters: FormGroup;
     //#endregion
 
     //Constructor
     constructor(
+        private _formBuilder: FormBuilder,
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
         private _router: Router
-    ) {}
+    ) { }
 
     //#region Lifecycle Functions
     ngOnInit(): void {
         this.initApis();
+        this.initFiltersForm();
         this.initObservables();
         localStorage.removeItem("state");
     }
@@ -104,7 +108,8 @@ export class CustomersListComponent implements OnInit {
                     10,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResult,
+                    this.formFilters.value
                 );
             });
     }
@@ -112,7 +117,7 @@ export class CustomersListComponent implements OnInit {
     initApis() {
         this._customersService.getCustomers();
     }
-    ngAfterViewInit(): void {}
+    ngAfterViewInit(): void { }
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -121,7 +126,7 @@ export class CustomersListComponent implements OnInit {
     }
     //#endregion
 
-   //#region Add Dialog
+    //#region Add Dialog
 
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomer);
@@ -140,7 +145,8 @@ export class CustomersListComponent implements OnInit {
             this.limit,
             sort.active,
             sort.direction,
-            this.searchResult
+            this.searchResult,
+            this.formFilters.value
         );
     }
     //#endregion
@@ -149,8 +155,7 @@ export class CustomersListComponent implements OnInit {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._customersService.getCustomers(this.page,this.limit,'','',this.searchResult
-        );
+        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult,this.formFilters.value);
     }
     //#endregion
 
@@ -174,14 +179,36 @@ export class CustomersListComponent implements OnInit {
 
     //  Toggle Customer  Details
     toggleGeneralInfo(customerId: string, state: string): void {
-        this._router.navigateByUrl(`apps/customers/details/${customerId}` , { state: { title: 'Customer Detail' } });
+        this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Customer Detail' } });
     }
     //  Toggle Customer Contacts Details
-   toggleContactsDetails(customerId: string): void {
-    this._customersService.getCustomerById(customerId);
-    this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Contact Data' }});
+    toggleContactsDetails(customerId: string): void {
+        this._customersService.getCustomerById(customerId);
+        this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Contact Data' } });
     }
 
+    //#endregion
+
+    //#region Filters 
+    applyFilters() {
+        !this.formFilters.value.type ? (this.formFilters.value.type = '') : ('');
+        !this.formFilters.value.status ? (this.formFilters.value.status = '') : ('');
+        this._customersService.getCustomers(this.page, 10, '', '', this.searchResult, this.formFilters.value)
+    }
+
+    removeFilters() {
+        this.formFilters.reset();
+        this.formFilters.value.type = '';
+        this.formFilters.value.status = '';
+        this._customersService.getCustomers( this.page, 10, '', '', this.searchResult, this.formFilters.value)
+    }
+
+    initFiltersForm() {
+        this.formFilters = this._formBuilder.group({
+            type: [''],
+            status: [''],
+        });
+    }
     //#endregion
 
 }

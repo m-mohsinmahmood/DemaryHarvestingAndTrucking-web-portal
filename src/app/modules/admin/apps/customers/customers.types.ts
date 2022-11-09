@@ -20,6 +20,16 @@ export interface Customers {
     linkedin: string;
 }
 
+export interface fieldFilters {
+    farm_id: string;
+    status: string;
+}
+
+export interface customerFilters {
+    type: string;
+    status: string;
+}
+
 export interface CustomerContacts {
     customer_id: string;
     company_name: string;

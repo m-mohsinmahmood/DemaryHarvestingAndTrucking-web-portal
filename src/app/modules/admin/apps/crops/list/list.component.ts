@@ -30,6 +30,7 @@ import { Crops } from '../crops.types';
 import { read, utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-list',
@@ -154,12 +155,6 @@ export class CropsListComponent implements OnInit {
     }
     //#endregion
 
-    //#region Delete Crop
-    deleteCrop(id: string){
-        this._cropsService.deleteCrop(id);
-    }
-    //#endregion
-
    //#region Export Function
     handleExport() {
         const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
@@ -172,6 +167,22 @@ export class CropsListComponent implements OnInit {
         // });
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Crops Data.xlsx');
+    }
+    //#endregion
+
+    //#region Confirmation Customer Crops Delete Dialog
+    confirmDeleteDialog(cropId: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Crop?',
+                title: 'Crop',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._cropsService.deleteCrop(cropId);
+        });
     }
     //#endregion
 }
