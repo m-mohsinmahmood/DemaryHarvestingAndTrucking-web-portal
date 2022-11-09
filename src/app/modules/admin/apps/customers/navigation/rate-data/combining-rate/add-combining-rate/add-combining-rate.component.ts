@@ -116,7 +116,7 @@ export class AddCombiningRateComponent implements OnInit {
 
   //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
-      return crop ? `${crop.name}` : undefined;
+      return crop ? `${crop.crop_name}` : undefined;
     }
   //#endregion
 
