@@ -7,7 +7,7 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-2xl font-extrabold tracking-tight">Customers</div>
+        <div class="text-2xl font-extrabold tracking-tight flex items-center">Customers <mat-hint *ngIf="formFilters.value.type || formFilters.value.status " class="text-sm ml-2 mt-1">(Filters Applied)</mat-hint></div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -24,7 +24,7 @@
             </button>
             <!-- Filters -->
             <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
-                <mat-icon *ngIf="formFilters.value.type || formFilters.value.status "
+                <mat-icon  *ngIf="formFilters.value.type || formFilters.value.status "
                     [svgIcon]="'heroicons_solid:filter'"></mat-icon>
                 <mat-icon *ngIf="!formFilters.value.type && !formFilters.value.status"
                     [svgIcon]="'heroicons_outline:filter'"></mat-icon>
@@ -84,7 +84,7 @@
                                     </div> -->
 
                                         <!-- Company Name -->
-                                        <div class="truncate break-words" matTooltip="{{ customer.customer_name }}"
+                                        <div (click)="toggleGeneralInfo(customer.id, true)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600" matTooltip="{{ customer.customer_name }}"
                                             matTooltipPosition="above">
                                             {{ customer.customer_name }}
                                         </div>
