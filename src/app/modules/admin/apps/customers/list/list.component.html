@@ -1,6 +1,7 @@
 <div class="absolute inset-0 flex flex-col flex-auto min-w-0 overflow-hidden bg-card dark:bg-transparent">
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoadingCustomer$ | async">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -10,26 +11,28 @@
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                 <form [formGroup]="searchform">
                     <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                 </form>
             </mat-form-field>
             <!-- Add customer button -->
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+            <button class="ml-2 mr-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="lg:ml-2 mr-1">Add</span>
             </button>
-            <!-- FILTER BUTTON -->
+            <!-- Filters -->
+            <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+                <mat-icon *ngIf="formFilters.value.type || formFilters.value.status "
+                    [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+                <mat-icon *ngIf="!formFilters.value.type && !formFilters.value.status"
+                    [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            </button>
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="settingsDrawer.toggle()">
-                    <mat-icon>filter</mat-icon>
-                    <span>Filters</span>
-                </button>
                 <button mat-menu-item>
                     <mat-icon>upload</mat-icon>
                     <span>Import</span>
@@ -54,7 +57,8 @@
                 <ng-container>
                     <div class="grid h-full sm:h-auto">
                         <!-- Header -->
-                        <div class="customer-grid z-10 sticky top-0 grid gap-4 py-4 px-4 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                        <div class="customer-grid z-10 sticky top-0 grid gap-4 py-4 px-4 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="customer_name">Customer Name</div>
                             <div mat-sort-header="main_contact" class="hidden sm:block">Main Contact</div>
                             <div mat-sort-header="position" class="hidden lg:block">Position</div>
@@ -71,7 +75,8 @@
                         <ng-container *ngIf="customers$ | async as customers">
                             <ng-container *ngIf="customers.count > 0;else noCustomers">
                                 <ng-container *ngFor="let customer of customers.customers">
-                                    <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b" ng-click="toggleContactsDetails(customer.id)">
+                                    <div class="customer-grid grid items-start gap-4 py-3 px-4 border-b"
+                                        ng-click="toggleContactsDetails(customer.id)">
                                         <!-- Image -->
                                         <!-- <div>
                                         <img *ngIf="customer.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{customer.avatar}}" alt="">
@@ -79,7 +84,8 @@
                                     </div> -->
 
                                         <!-- Company Name -->
-                                        <div class="truncate break-words" matTooltip= "{{ customer.customer_name }}" matTooltipPosition="above" >
+                                        <div class="truncate break-words" matTooltip="{{ customer.customer_name }}"
+                                            matTooltipPosition="above">
                                             {{ customer.customer_name }}
                                         </div>
 
@@ -91,34 +97,39 @@
                                         </div>
 
                                         <!-- Position -->
-                                        <div class="hidden lg:block items-center truncate"  matTooltip= "{{ customer.position }}" matTooltipPosition="right">
+                                        <div class="hidden lg:block items-center truncate"
+                                            matTooltip="{{ customer.position }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.position }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- Phone No -->
-                                        <div class="hidden md:block items-left truncate" matTooltip= "{{ customer.phone_number }}" matTooltipPosition="right">
+                                        <div class="hidden md:block items-left truncate"
+                                            matTooltip="{{ customer.phone_number }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.phone_number }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- State -->
-                                        <div class="hidden lg:block items-left truncate" matTooltip= "{{ customer.state }}" matTooltipPosition="right">
+                                        <div class="hidden lg:block items-left truncate"
+                                            matTooltip="{{ customer.state }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.state }}
                                             <!-- </div> -->
                                         </div>
                                         <!-- Country -->
-                                        <div class="hidden sm:block items-left truncate" matTooltip= "{{ customer.country }}" matTooltipPosition="right">
+                                        <div class="hidden sm:block items-left truncate"
+                                            matTooltip="{{ customer.country }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.country }}
                                             <!-- </div> -->
                                         </div>
 
                                         <!-- Email -->
-                                        <div class="hidden sm:block items-center truncate" matTooltip= "{{ customer.email }}" matTooltipPosition="right">
+                                        <div class="hidden sm:block items-center truncate"
+                                            matTooltip="{{ customer.email }}" matTooltipPosition="right">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.email }}
                                             <!-- </div> -->
@@ -144,38 +155,38 @@
 
                                         <!-- Details button -->
                                         <div>
-                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                                (click)="
                                                 toggleGeneralInfo(customer.id, true)
-                                            " matTooltip= "Details" matTooltipPosition="right" >
-                                            <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="
+                                            " matTooltip="Details" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-5" [svgIcon]="
                                                     'heroicons_solid:chevron-right'
-                                                "
-                                            ></mat-icon>
-                                        </button>
+                                                "></mat-icon>
+                                            </button>
                                         </div>
 
                                         <!-- Contacts button -->
                                         <div>
-                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)"  matTooltip= "Contacts" matTooltipPosition="right" >
-                                            <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                                (click)="toggleContactsDetails(customer.id)" matTooltip="Contacts"
+                                                matTooltipPosition="right">
+                                                <mat-icon class="icon-size-5" [svgIcon]="
                                                     'heroicons_solid:chevron-right'
-                                                "
-                                            ></mat-icon>
-                                        </button>
+                                                "></mat-icon>
+                                            </button>
                                         </div>
 
-                                        
+
                                     </div>
                                 </ng-container>
                             </ng-container>
                         </ng-container>
                     </div>
-                    <mat-paginator class="absolute inset-x-0 bottom-0 border-b border-t border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customers.count" [pageIndex]="page - 1" [pageSize]="pageSize"
-                        [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator
+                        class="absolute inset-x-0 bottom-0 border-b border-t border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customers.count"
+                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                 </ng-container>
             </ng-container>
 
@@ -187,54 +198,60 @@
 
         </div>
     </div>
-    <fuse-drawer class="w-64 min-w-64 sm:w-64 sm:min-w-64 z-999 bg-green-300" fixed [mode]="'over'" [name]="'settingsDrawer'" [position]="'right'" #settingsDrawer>
-        <div class="flex flex-col w-64 overflow-auto bg-card ">
-            <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+</div>
 
-                <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
-                <div class="ml-3 text-2xl font-semibold tracking-tight">Filters</div>
-                <button class="ml-auto" mat-icon-button mat-icon-button (click)="settingsDrawer.close()()">
-                <mat-icon
-                    class="text-current"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-            </button>
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+    [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
+    <div class="flex flex-col w-100 overflow-auto bg-card">
+        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+            <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
             </div>
-            <div class="flex flex-col justify-center items-center md:h-screen">
-                <div class="sm:h-200 md:h-5/6 h-160">
-                    <div class="w-inherit  flex  flex-col">
-                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full ">
-                            <mat-label>Select Country</mat-label>
-                            <mat-select multiple>
-                                <mat-option *ngFor="let country of country_list" [value]="country">{{ country }}</mat-option>
+            <button class="ml-auto" mat-icon-button mat-icon-button (click)="filtersDrawer.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center items-center h-screen">
+            <div class="h-5/6 w-96">
+                <div class="w-inherit flex flex-col">
+                    <form [formGroup]="formFilters" (ngSubmit)="applyFilters()"
+                        class="flex flex-col flex-auto p-6 sm:p-8">
+                        <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Customer Type</mat-label>
+                                <mat-select formControlName="type" multiple>
+                                    <mat-option value="CF">Custom Farming</mat-option>
+                                    <mat-option value="CT">Custom Trucking</mat-option>
+                                    <mat-option value="CH">Custom Harvesting</mat-option>
+                                    <mat-option value="CDL-F">CDL-Future</mat-option>
+                                    <mat-option value="CDL-L">CDL-Leasing</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value=true>Active</mat-option>
+                                <mat-option value=false>In Active</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="mx-1 mt-2 w-full">
-                            <mat-label>Select Status</mat-label>
-                            <mat-select multiple>
-                                <mat-option *ngFor="let status of statusList" [value]="status">{{ status }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-
-
-                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="!formFilters.value.type && !formFilters.value.status" (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                        [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button class="" mat-flat-button [color]="'primary'">
-                    <span class="" >Apply filters</span>
-                </button>
-                </div>
-                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                    <mat-icon
-                    class="m-0 icon-size-4"
-                    color="warn"
-                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                    <span>Remove filters</span>
-                  </button>
+                    <button [disabled]="!formFilters.value.type && !formFilters.value.status" (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
+                        <span>Remove filters</span>
+                    </button>
                 </div>
             </div>
         </div>
-
-    </fuse-drawer>
-</div>
+    </div>
+</fuse-drawer>
