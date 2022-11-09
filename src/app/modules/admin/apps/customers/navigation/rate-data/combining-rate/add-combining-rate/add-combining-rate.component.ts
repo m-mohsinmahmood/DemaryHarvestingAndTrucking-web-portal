@@ -95,7 +95,8 @@ export class AddCombiningRateComponent implements OnInit {
   
     onSubmit(): void {
       this._customerService.isLoadingCombiningRate.next(true);
-      this.form.value['crop_id'] = this.form.value['crop_id']?.id;
+      this.form.value['crop_id'] = this.form.value['crop_id']?.crop_id;
+      console.log('crop_id', this.form.value['crop_id']);
       if (this.data && this.data.isEdit) {
           this._customerService.updateCombiningRate(this.form.value);
       } else {
