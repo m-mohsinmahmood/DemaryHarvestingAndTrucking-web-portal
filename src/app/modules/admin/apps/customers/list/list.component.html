@@ -64,8 +64,8 @@
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
                             <div mat-sort-header="customer_type" class="hidden sm:block">Customer Type</div>
                             <div mat-sort-header="status" class="hidden sm:block">Status</div>
-                            <div class="sm:block">Contacts</div>
                             <div class="sm:block">Details</div>
+                            <div class="sm:block">Contacts</div>
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="customers$ | async as customers">
@@ -142,18 +142,6 @@
                                             ">check-circle</mat-icon>
                                         </div>
 
-                                        <!-- Contacts button -->
-                                        <div>
-                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)"  matTooltip= "Contacts" matTooltipPosition="right" >
-                                            <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="
-                                                    'heroicons_solid:chevron-right'
-                                                "
-                                            ></mat-icon>
-                                        </button>
-                                        </div>
-
                                         <!-- Details button -->
                                         <div>
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="
@@ -167,6 +155,20 @@
                                             ></mat-icon>
                                         </button>
                                         </div>
+
+                                        <!-- Contacts button -->
+                                        <div>
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="toggleContactsDetails(customer.id)"  matTooltip= "Contacts" matTooltipPosition="right" >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:chevron-right'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        </div>
+
+                                        
                                     </div>
                                 </ng-container>
                             </ng-container>

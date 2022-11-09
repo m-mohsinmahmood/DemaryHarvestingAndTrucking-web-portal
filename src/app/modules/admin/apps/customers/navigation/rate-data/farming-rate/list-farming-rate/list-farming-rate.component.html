@@ -60,7 +60,7 @@
                 <ng-container>
                     <div class="grid">
                         <!-- Header -->
-                        <div class="commercial-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                        <div class="farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="equipment_type">
                                 Equipment Type
@@ -76,8 +76,7 @@
                         <div class="rows-wrapper-custom-farming overflow-y-auto">
                             <ng-container *ngIf="farmingRateList?.farming_rates.length > 0 else nofarmingRateList">
                                 <ng-container *ngFor="let farmingRate of farmingRateList?.farming_rates">
-                                    <div
-                                        class="commercial-trucking-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                    <div class="farming-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                         <div class="truncate">
                                             {{farmingRate.equipment_type}}
                                         </div>
@@ -87,9 +86,16 @@
                                         <!-- Action -->
                                         <div>
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                                mat-stroked-button (click)="openEditFarmingDialog(farmingRate)">
+                                                mat-stroked-button (click)="openEditFarmingDialog(farmingRate)"
+                                                matTooltip="Edit" matTooltipPosition="above">
                                                 <mat-icon class="icon-size-5"
                                                     [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                            </button>
+                                            <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                mat-stroked-button (click)="deleteFarmingRate(farmingRate.id)"
+                                                matTooltip="Delete" matTooltipPosition="above">
+                                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
+                                                </mat-icon>
                                             </button>
                                         </div>
                                     </div>

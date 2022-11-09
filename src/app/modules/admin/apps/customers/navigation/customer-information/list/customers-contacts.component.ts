@@ -175,4 +175,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+    //#region Delete Contact Detail
+    deleteContact(id: string){
+        this._customersService.deleteCustomerContact(id, this.routeID);
+    }
+    //#endregion
+
 }

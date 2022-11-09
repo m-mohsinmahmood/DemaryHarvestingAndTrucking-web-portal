@@ -68,10 +68,16 @@ export class ListCombiningRateComponent implements OnInit {
 
   //#endregion
 
+  //#region Delete Combining Rate
+  deleteCombiningRate(id: string) {
+    this._customerService.deleteCombiningRate(id, this.routeID)
+  }
+  //#endregion
+
   //#region Sorting
   sortData(sort: any) {
     this.combiningRateSort[0] = sort.active; this.combiningRateSort[1] = sort.direction;
-    this._customerService.getCombiningRate(this.routeID,this.combiningRateSort[0], this.combiningRateSort[1], this.searchResult);
+    this._customerService.getCombiningRate(this.routeID, this.combiningRateSort[0], this.combiningRateSort[1], this.searchResult);
   }
   //#endregion
 

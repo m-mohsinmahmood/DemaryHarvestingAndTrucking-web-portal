@@ -156,11 +156,15 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         } else {
             this._customerService.createCustomerDestination(this.form.value);
         }
-        this.form.reset();
     }
     discard(): void {
         this._customerService.isLoadingCustomerDestination.next(false);
         this.matDialogRef.close();
+    }
+
+    getDropdownFarms() {
+        let value = this.form.controls['farm_id'].value;
+        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id,value);
     }
     //#endregion
 
@@ -188,11 +192,12 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value: string) => {
-                this.allFarms = this._customerService.getCustomerFarmsAll(
+                this.allFarms = this._customerService.getDropdownCustomerFarms(
                     this.data.customer_id,
                     value
                 );
             });
+         
     }
     //#endregion
 }

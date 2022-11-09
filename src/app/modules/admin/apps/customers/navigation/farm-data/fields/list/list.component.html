@@ -15,19 +15,19 @@
             </form>
         </mat-form-field>
         <!-- Add product button -->
-        <button mat-flat-button [color]="'primary'" (click)="openAddFieldDialog()">
+        <button class="mr-2" mat-flat-button [color]="'primary'" (click)="openAddFieldDialog()">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="lg:ml-2">Add</span>
+        </button>
+        <!-- Filters -->
+        <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+            <mat-icon [svgIcon]="'heroicons_outline:filter'"></mat-icon>
         </button>
         <!-- Import/Export -->
         <button mat-icon-button [matMenuTriggerFor]="menu1" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu1="matMenu">
-            <!-- <button mat-menu-item>
-    <mat-icon>filter</mat-icon>
-    <span>Filters</span>
-</button> -->
             <button mat-menu-item>
                 <mat-icon>upload</mat-icon>
                 <span>Import</span>
@@ -51,12 +51,12 @@
             <ng-container>
                 <div class="grid">
                     <!-- Header -->
-                    <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                    <div class="farm-data-fields z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                         matSort matSortDisableClear (matSortChange)="sortData($event)">
-                        <div mat-sort-header="farm_name">
+                        <div mat-sort-header="farm_name" class="hidden sm:block">
                             Farm Name
                         </div>
-                        <div mat-sort-header="field_name" class="hidden sm:block">
+                        <div mat-sort-header="field_name">
                             Field Name
                         </div>
                         <div mat-sort-header="acres" class="hidden sm:block">
@@ -79,11 +79,11 @@
                         <ng-container *ngFor="
                             let customerField of customerFieldList?.customer_fields
                         ">
-                            <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                <div class="truncate">
+                            <div class="farm-data-fields grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                <div class="truncate hidden sm:block">
                                     {{ customerField.farm_name }}
                                 </div>
-                                <div class="hidden sm:block">
+                                <div class="truncate">
                                     {{ customerField.field_name }}
                                 </div>
                                 <div class="hidden sm:block items-center">
@@ -111,17 +111,17 @@
                                     }}
                                 </div>
                                 <!-- Action -->
-
                                 <div>
                                     <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button
-                                        (click)="
-                                        openEditFieldDialog(
-                                            customerField
-                                        )
-                                    "  matTooltip= "Edit" matTooltipPosition="right">
-                                        <mat-icon class="icon-size-5" [svgIcon]="
-                                            'heroicons_solid:pencil-square'
-                                        "></mat-icon>
+                                        (click)="  openEditFieldDialog(customerField)" matTooltip="Edit"
+                                        matTooltipPosition="above">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square' ">
+                                        </mat-icon>
+                                    </button>
+                                    <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                        mat-stroked-button (click)="deleteCustomerField(customerField.field_id)"
+                                        matTooltip="Delete" matTooltipPosition="above">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                     </button>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                 </div>
                 <mat-paginator *ngIf="
                     customerFieldList?.customer_fields?.length >
-                    0" 
+                    0"
                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFieldList?.count"
                     [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
@@ -144,3 +144,44 @@
         </div>
     </div>
 </div>
+
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+    [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
+    <div class="flex flex-col w-100 overflow-auto bg-card">
+        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+            <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
+            </div>
+            <button class="ml-auto" mat-icon-button mat-icon-button (click)="filtersDrawer.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center items-center md:h-screen">
+            <div class="sm:h-200 md:h-5/6 h-160 w-80">
+                <div class="w-inherit flex flex-col">
+                    <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                        <mat-label>Select Farm</mat-label>
+                        <mat-select>
+                            <mat-option></mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button class="" mat-flat-button [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
+                </div>
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button
+                        class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                        <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                        <span>Remove filters</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</fuse-drawer>

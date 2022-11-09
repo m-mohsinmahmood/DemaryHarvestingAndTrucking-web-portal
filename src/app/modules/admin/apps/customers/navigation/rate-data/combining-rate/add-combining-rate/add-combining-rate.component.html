@@ -14,13 +14,13 @@
          <!-- Crop AUTOCOMPLETE -->
          <mat-form-field appearance="outline" fxFlex>
             <mat-label>Crop Name</mat-label>
-            <input [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
+            <input (click)="getDropdownCustomerCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
         </mat-form-field>
         <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
             <div *ngIf="allCrops | withLoading | async as allCrops">
                 <ng-template [ngIf]="allCrops.value">
-                    <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
-                        {{ crop.name }}
+                    <mat-option *ngFor="let crop of allCrops.value.customer_crops" [value]="crop">
+                        {{ crop.crop_name }}
                     </mat-option>
                 </ng-template>
                 <ng-template [ngIf]="allCrops?.loading">
@@ -30,7 +30,7 @@
                         </div>
                     </mat-option>
                 </ng-template>
-                <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
+                <ng-template [ngIf]="allCrops?.value?.customer_crops?.length == 0">
                     <mat-option disabled> No Crop(s) found </mat-option>
                 </ng-template>
             </div>

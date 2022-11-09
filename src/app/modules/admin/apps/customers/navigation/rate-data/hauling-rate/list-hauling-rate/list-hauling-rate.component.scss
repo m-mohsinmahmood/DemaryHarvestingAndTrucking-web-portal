@@ -1,13 +1,13 @@
 .hauling-grid {
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
     @screen sm {
-        grid-template-columns: 15%  15% 15% 40% 5% ;
+        grid-template-columns: 15%  15% 15% 25% 15% ;
     }
     @screen md {
         grid-template-columns: 25% 25 25% 25%;
     }
     @screen lg {
-        grid-template-columns: 15%  15% 15% 40% 5% ;
+        grid-template-columns: 15%  15% 15% 30% 10% ;
     }
 }
 

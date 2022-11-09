@@ -46,9 +46,9 @@
 </div>
 <div class="sm:p-0">
     <!-- Main -->
-    <div *ngIf="customerDestinationList" class="flex flex-auto">
+    <div *ngIf="customerDestinationList" class="flex flex-auto overflow-hidden">
         <!-- Products list -->
-        <div class="flex flex-col flex-auto sm:mb-18">
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
             <ng-container>
                 <ng-container>
                     <div class="grid">
@@ -109,14 +109,17 @@
                                     <!-- Active -->
                                     <div>
                                         <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                            mat-stroked-button (click)="
-                                            openEditDestinationDialog(
-                                                destination
-                                            )
-                                        "  matTooltip= "Edit" matTooltipPosition="right">
-                                            <mat-icon class="icon-size-5" [svgIcon]="
-                                                'heroicons_solid:pencil-square'
-                                            "></mat-icon>
+                                            mat-stroked-button (click)="openEditDestinationDialog(destination)"
+                                            matTooltip="Edit" matTooltipPosition="above">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'">
+                                            </mat-icon>
+                                        </button>
+                                        <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                            mat-stroked-button
+                                            (click)="deleteCustomerDestination(destination.destination_id)"
+                                            matTooltip="Delete" matTooltipPosition="above">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
+                                            </mat-icon>
                                         </button>
                                     </div>
                                 </div>

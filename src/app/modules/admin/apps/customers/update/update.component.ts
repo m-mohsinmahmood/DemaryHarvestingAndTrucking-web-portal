@@ -114,7 +114,6 @@ export class UpdateComponent implements OnInit {
 
   onSubmit(): void {
     console.warn('Your order has been submitted', this.form.value);
-    this.form.reset();
   }
 
   saveAndClose(): void

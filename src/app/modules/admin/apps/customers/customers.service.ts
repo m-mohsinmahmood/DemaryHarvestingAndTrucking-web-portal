@@ -29,6 +29,7 @@ import {
     Item,
 } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
+import { Router } from '@angular/router';
 @Injectable({
     providedIn: 'root',
 })
@@ -296,6 +297,40 @@ export class CustomersService {
         this.isLoadingFarmingRate.asObservable();
     //#endregion
 
+    //#region Observables Dropdowns
+    // Data
+    // private dropdownCustomerCrops: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerCrops$: Observable<any[] | null> =
+    //     this.dropdownCustomerCrops.asObservable();
+
+    // private dropdownCustomerFarms: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerFarms$: Observable<any[] | null> =
+    //     this.dropdownCustomerFarms.asObservable();
+    
+    // private dropdownCustomerCropsAll: BehaviorSubject<any[] | null> =
+    //     new BehaviorSubject(null);
+    // readonly dropdownCustomerCropsAll$: Observable<any[] | null> =
+    //     this.dropdownCustomerCropsAll.asObservable();
+
+    // // Loaders
+    // private isLoadingDropdownCustomerCrops: BehaviorSubject<boolean> =
+    //     new BehaviorSubject<boolean>(false);
+    // readonly isLoadingDropdownCustomerCrops$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerCrops.asObservable();
+
+    // private isLoadingDropdownCustomerFarms: BehaviorSubject<boolean> =
+    //     new BehaviorSubject(false);
+    // readonly isLoadingDropdownCustomerFarms$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerFarms.asObservable();
+
+    // private isLoadingDropdownCustomerCropsAll: BehaviorSubject<boolean> =
+    //     new BehaviorSubject(false);
+    // readonly isLoadingDropdownCustomerCropsAll$: Observable<boolean> =
+    //     this.isLoadingDropdownCustomerCropsAll.asObservable();
+    //#endregion
+
     //#region Behaviour Subject
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -308,7 +343,9 @@ export class CustomersService {
      */
     constructor(
         private _httpClient: HttpClient,
-        private _alertSerice: AlertService
+        private _alertSerice: AlertService,
+        private _router: Router,
+
     ) { }
 
     get documents$(): Observable<Documents> {
@@ -357,6 +394,35 @@ export class CustomersService {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+
+    //#region Drop down API's
+    getDropdownCustomerCrops(customerId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=customerCrops&customerId=${customerId}`, {params})
+            .pipe(take(1))
+    }
+
+    getDropdownCustomerFarms(customerId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=customerFarms&customerId=${customerId}`, {params})
+            .pipe(take(1))
+    }
+
+    getDropdownCustomerCropsAll(search: string = ''): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=allCrops`,{params})
+            .pipe(take(1))
+    }
+
+    //#endregion
+
 
     /**
      * Get Customers
@@ -470,6 +536,24 @@ export class CustomersService {
                 }
             );
     }
+    deleteCustomer(id: any) {
+        this._httpClient
+            .delete(`api-1/customers?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomer.next(true);
+                },
+                (err) => {
+
+                },
+                () => {
+                    this._router.navigate(['/apps/customers']);
+                    this.isLoadingCustomer.next(false);
+
+                }
+            );
+    }
 
     //#endregion
     //#region Customer Contact API
@@ -577,6 +661,24 @@ export class CustomersService {
             );
     }
 
+    deleteCustomerContact(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-contact?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerContact.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCustomerContact(customerID);
+                    this.isLoadingCustomerContact.next(false);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Farm Data Farm API
     getCustomerFarm(
@@ -609,36 +711,6 @@ export class CustomersService {
                 }
             );
     }
-    getCustomerSummaryFarm(
-        customerId: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-farm?customerId=${customerId}`, {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingCustomerFarmList.next(true);
-                    this.isLoadingCustomerFarmList.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-
     getCustomerFarmsAll(
         customerId: string,
         search: string = ''
@@ -732,6 +804,25 @@ export class CustomersService {
             );
     }
 
+    deleteCustomerFarm(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-farm?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerFarm.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCustomerFarm(customerID);
+                    this.isLoadingCustomerFarm.next(false);
+                }
+            );
+    }
+
+
     //#endregion
     //#region Customer Farm Data Field API
     getCustomerField(
@@ -758,36 +849,6 @@ export class CustomersService {
                     this.isLoadingCustomerFieldList.next(true);
                     this.customerFieldList.next(res);
                     this.isLoadingCustomerFieldList.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-    getCustomerSummaryField(
-        customerId: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-field?customerId=${customerId}`, {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    // this.isLoadingCustomerFields.next(true);
-                    // this.customerSummaryFields.next(res);
-                    // this.isLoadingCustomerFields.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -866,6 +927,24 @@ export class CustomersService {
                     this.getCustomerField(
                         customerFieldData.customer_id
                     );
+                }
+            );
+    }
+
+    deleteCustomerField(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-field?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerField.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCustomerField(customerID);
+                    this.isLoadingCustomerField.next(false);
                 }
             );
     }
@@ -959,6 +1038,23 @@ export class CustomersService {
                 }
             );
     }
+    deleteCustomerCrop(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-crop?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerCrop.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCustomerCrops(customerID);
+                    this.isLoadingCustomerCrop.next(false);
+                }
+            );
+    }
 
     //#endregion
     //#region Customer Farm Data Destination API
@@ -986,37 +1082,6 @@ export class CustomersService {
                     this.isLoadingCustomerDestinationList.next(true);
                     this.customerDestinationList.next(res);
                     this.isLoadingCustomerDestinationList.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-
-    getCustomerSummaryDestination(
-        id: string,
-        page: number = 1,
-        limit: number = 5,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>(`api-1/customer-destination?customerId=${id}`, {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    // this.is_loading_destination.next(true);
-                    // this.customerDestination.next(res);
-                    // this.is_loading_destination.next(false);
                 },
                 (err) => {
                     this.handleError(err);
@@ -1082,6 +1147,25 @@ export class CustomersService {
                 }
             );
     }
+
+    deleteCustomerDestination(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-destination?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomerDestination.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCustomerDestination(customerID);
+                    this.isLoadingCustomerDestination.next(false);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Rate Data Combining API
     getCombiningRate(
@@ -1169,6 +1253,25 @@ export class CustomersService {
                 }
             );
     }
+
+    deleteCombiningRate(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-combining-rate?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCombiningRate.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCombiningRate(customerID);
+                    this.isLoadingCombiningRate.next(false);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Rate Data Hauling API
     getHaulingRate(
@@ -1254,6 +1357,24 @@ export class CustomersService {
                     this.getHaulingRate(
                         haulingRateData.customer_id,
                     );
+                }
+            );
+    }
+
+    deleteHaulingRate(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-hauling-rate?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingHaulingRate.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getHaulingRate(customerID);
+                    this.isLoadingHaulingRate.next(false);
                 }
             );
     }
@@ -1346,6 +1467,25 @@ export class CustomersService {
                 }
             );
     }
+
+    deleteTruckingRate(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-trucking-rate?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingTruckingRate.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getTruckingRate(customerID);
+                    this.isLoadingTruckingRate.next(false);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Rate Data Farming API
     getFarmingRate(
@@ -1431,6 +1571,24 @@ export class CustomersService {
                     this.getFarmingRate(
                         farmingRateData.customer_id,
                     );
+                }
+            );
+    }
+
+    deleteFarmingRate(id: string, customerID: string) {
+        this._httpClient
+            .delete(`api-1/customer-farming-rate?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingFarmingRate.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getFarmingRate(customerID);
+                    this.isLoadingFarmingRate.next(false);
                 }
             );
     }

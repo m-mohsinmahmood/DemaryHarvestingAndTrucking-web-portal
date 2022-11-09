@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy, AfterViewInit } from '@angular/core';
 import {
+    FormArray,
     FormBuilder,
     FormControl,
     FormGroup,
@@ -91,6 +92,8 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         this.initObservables();
         this.initForm();
         this.farmSearchSubscription();
+        this.initCalendar();
+        this.initFieldFormGroup();
         // Dialog Close
         this._customersService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -100,19 +103,8 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                     this._customersService.closeDialog.next(false);
                 }
             });
-
-        //Calender Year Initilize
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.customerFieldData.calendar_year);
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
-
-
     }
-    AfterViewInit(): void {
-
-    }
+    AfterViewInit(): void { }
 
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
@@ -128,6 +120,34 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
+    //#region init Field Form
+    initFieldFormGroup() {
+        const fieldFormGroup = [];
+        fieldFormGroup.push(
+            this._formBuilder.group({
+                name: ['All Fields'],
+                acres: [''],
+                calendar_year: [moment()],
+                status: ['']
+
+            })
+        );
+        fieldFormGroup.forEach((fieldFormGroup) => {
+            (this.form.get('fields') as FormArray).push(fieldFormGroup);
+        });
+    }
+    //#endregion
+
+    //#region Initilize Calendar
+    initCalendar() {
+        if (this.data.isEdit) {
+            this.calendar_year = new FormControl(this.data.customerFieldData.calendar_year);
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
+    }
+    //#endregion
+
     //#region Form
     initForm() {
         // Create the form
@@ -135,10 +155,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             id: [''],
             farm_id: [''],
             customer_id: this.data.customer_id,
-            name: ['', [Validators.required]],
-            acres: [''],
-            status: ['',[Validators.required]],
-            calendar_year: [moment()],
+            fields: this._formBuilder.array([]),
         });
         if (this.data && this.data.isEdit) {
             const { customerFieldData, customer_id } = this.data;
@@ -146,13 +163,35 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 customer_id: customer_id,
                 id: customerFieldData.field_id,
                 farm_id: { id: customerFieldData.farm_id, name: customerFieldData.farm_name },
-                name: customerFieldData.field_name,
-                acres: customerFieldData.acres,
-                status: customerFieldData.status.toString(),
-                calendar_year: customerFieldData.calendar_year,
+                //fields: customerFieldData.field_name,
             });
         }
     }
+    addField(): void {
+        const fieldGroup = this._formBuilder.group({
+            name: ['All Fields'],
+            acres: [''],
+            calendar_year: [moment()],
+            status: ['']
+        });
+
+        (this.form.get('fields') as FormArray).push(fieldGroup);
+    }
+
+    /**
+     * Remove the email field
+     *
+     * @param index
+     */
+    removeField(index: number): void {
+        // Get form array for emails
+        const fieldFormArray = this.form.get('fields') as FormArray;
+
+        // Remove the email field
+        fieldFormArray.removeAt(index);
+
+    }
+
     onSubmit(): void {
         this._customersService.isLoadingCustomerField.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
@@ -161,26 +200,26 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
         } else {
             this._customersService.createCustomerField(this.form.value);
-        } 
-        if (this.form.valid) {
-            this.form.reset();
-          }
-  
+        }
     }
 
     discard(): void {
         this._customersService.isLoadingCustomerField.next(false);
         this.matDialogRef.close();
     }
-
+    
+    getDropdownFarms() {
+        let value = this.form.controls['farm_id'].value;
+        this.allFarms = this._customersService.getDropdownCustomerFarms(this.data.customer_id, value);
+    }
     //#endregion
 
     //#region Calendar Year Function
-    chosenYearHandler(normalizedYear: Moment, dp: any) {
+    chosenYearHandler(normalizedYear: Moment, dp: any , index: number) {
         const ctrlValue = moment(this.calendar_year.value);
         ctrlValue.year(normalizedYear.year());
         this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
+        this.form.value.fields[index].calendar_year = ctrlValue;
         dp.close();
     }
     //#endregion
@@ -200,7 +239,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value: string) => {
-                this.allFarms = this._customersService.getCustomerFarmsAll(
+                this.allFarms = this._customersService.getDropdownCustomerFarms(
                     this.data.customer_id,
                     value
                 );

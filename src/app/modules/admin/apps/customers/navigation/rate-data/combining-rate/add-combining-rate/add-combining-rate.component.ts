@@ -101,7 +101,11 @@ export class AddCombiningRateComponent implements OnInit {
       } else {
           this._customerService.createCombiningRate(this.form.value);
       }
-      this.form.reset();
+    }
+
+    getDropdownCustomerCrops() {
+      let value = this.form.controls['crop_id'].value;
+      this.allCrops = this._customerService.getDropdownCustomerCrops(this.data.customer_id,value);
     }
 
     discard(): void {
@@ -112,7 +116,7 @@ export class AddCombiningRateComponent implements OnInit {
 
   //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
-      return crop ? `${crop.name}` : undefined;
+      return crop ? `${crop.crop_name}` : undefined;
     }
   //#endregion
 
@@ -125,7 +129,8 @@ export class AddCombiningRateComponent implements OnInit {
             takeUntil(this._unsubscribeAll)
         )
         .subscribe((value: string) => {
-            this.allCrops = this._cropService.getCropsAll(
+            this.allCrops = this._customerService.getDropdownCustomerCrops(
+              this.data.customer_id,
                 value
             );
         });

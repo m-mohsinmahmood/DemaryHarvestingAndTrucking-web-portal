@@ -1,6 +1,7 @@
 <div class="absolute inset-0 flex flex-col flex-auto min-w-0 overflow-hidden bg-card dark:bg-transparent">
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-b">
         <!-- Title -->
         <div class="text-2xl font-extrabold tracking-tight">Contacts</div>
         <!-- Actions -->
@@ -9,7 +10,8 @@
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                 <form [formGroup]="searchform">
-                    <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" cdkFocusInitial/>
+                    <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'"
+                        cdkFocusInitial />
                 </form>
             </mat-form-field>
             <!-- Add customer button -->
@@ -38,14 +40,16 @@
         </div>
     </div>
     <!-- Main -->
-    <div *ngIf="(customerContactList$ | async) as customerContactList" [ngClass]="(customerContactList.customer_contacts.length > 0)?'flex flex-auto overflow-hidden':'flex flex-auto items-center overflow-hidden'">
+    <div *ngIf="(customerContactList$ | async) as customerContactList"
+        [ngClass]="(customerContactList.customer_contacts.length > 0)?'flex flex-auto overflow-hidden':'flex flex-auto items-center overflow-hidden'">
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
             <!-- Customer Contacts list -->
             <ng-container *ngIf="(customerContactList$ | async) as customerContactList">
                 <ng-container *ngIf="customerContactList?.customer_contacts.length > 0; else noContacts">
                     <div class="grid">
                         <!-- Header -->
-                        <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear (matSortChange)="sortData($event)">
+                        <div class="contact-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="first_name" class="sm:block">First Name</div>
                             <div mat-sort-header="last_name" class="hidden sm:block">Last Name</div>
                             <div mat-sort-header="cell_number" class="hidden sm:block">Cell Number</div>
@@ -56,7 +60,8 @@
                         </div>
                         <!-- Rows -->
                         <ng-container *ngFor="let customerContact of customerContactList?.customer_contacts">
-                            <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b" ng-click="toggleContactsDetails(customerContact.id)">
+                            <div class="contact-grid grid items-start gap-4 py-3 px-6 md:px-8 border-b"
+                                ng-click="toggleContactsDetails(customerContact.id)">
                                 <!-- Image -->
                                 <!-- <div>
                                             <img *ngIf="product.avatar" class="max-w-none flex items-center justify-center h-8 w-8 rounded-full" src="{{product.avatar}}" alt="">
@@ -87,22 +92,30 @@
                                 </div>
                                 <!-- Edit button -->
                                 <div>
-                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button (click)="toggleContactsDetails(customerContact)" matTooltip= "Edit" matTooltipPosition="right" >
-                                                <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="'heroicons_solid:pencil-square'"
-                                                ></mat-icon>
-                                            </button>
+                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button
+                                        (click)="toggleContactsDetails(customerContact)" matTooltip="Edit"
+                                        matTooltipPosition="right">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'">
+                                        </mat-icon>
+                                    </button>
+                                    <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                        (click)="deleteContact(customerContact.id)">
+                                        <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
+                                    </button>
                                 </div>
                             </div>
                         </ng-container>
                     </div>
-                    <mat-paginator *ngIf="customerContactList?.customer_contacts?.length > 0" class="absolute inset-x-0 bottom-0 border-b border-t border-b-0 z-10 bg-gray-50 dark:bg-transparent" [length]="customerContactList?.count" [pageIndex]="page - 1"
-                        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator *ngIf="customerContactList?.customer_contacts?.length > 0"
+                        class="absolute inset-x-0 bottom-0 border-b border-t border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [length]="customerContactList?.count" [pageIndex]="page - 1" [pageSize]="pageSize"
+                        [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true">
+                    </mat-paginator>
                 </ng-container>
             </ng-container>
             <ng-template class="flex" #noContacts>
-                <div class="items-center justify-center p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">No Contact(s) Found!</div>
+                <div class="items-center justify-center p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+                    No Contact(s) Found!</div>
             </ng-template>
         </div>
     </div>
