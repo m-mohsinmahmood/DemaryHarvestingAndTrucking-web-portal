@@ -548,6 +548,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomer.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
 
@@ -673,6 +681,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerContact.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -816,6 +832,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerFarm.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -946,6 +970,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerField.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1053,6 +1085,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerCrop.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1163,6 +1203,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCustomerDestination.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1269,6 +1317,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingCombiningRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1376,6 +1432,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingHaulingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1483,6 +1547,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingTruckingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
@@ -1590,6 +1662,14 @@ export class CustomersService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingFarmingRate.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);

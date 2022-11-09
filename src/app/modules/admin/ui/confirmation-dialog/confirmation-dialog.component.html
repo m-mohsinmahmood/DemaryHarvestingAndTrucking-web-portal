@@ -24,7 +24,7 @@
                         ></mat-icon>
                     </div>
             </div>
-        <p class="w-11/12 flex justify-start items-center px-2">{{message}}</p>
+        <p class="w-11/12 flex justify-start items-center px-2 text-lg">{{message}}</p>
     </div>
     <div
         class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary"
@@ -42,7 +42,7 @@
             </button>
             <button
                 mat-flat-button
-                color="primary"
+                [color]="'warn'"
                 (click)="onSubmit()"
             >
                 Delete

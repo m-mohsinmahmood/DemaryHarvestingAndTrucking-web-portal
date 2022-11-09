@@ -18,7 +18,6 @@ export class ConfirmationDialogComponent implements OnInit {
 
     ) {
         // Update view with given values
-        console.log('dddd',data);
         this.title = data.title;
         this.message = data.message;
     }
@@ -34,7 +33,7 @@ export class ConfirmationDialogComponent implements OnInit {
 
     onClose(): void {
         // Close the dialog, return true
-        this.dialogRef.close(true);
+        this.dialogRef.close(false);
     }
 
     onDismiss(): void {
@@ -42,7 +41,7 @@ export class ConfirmationDialogComponent implements OnInit {
         this.dialogRef.close(false);
     }
     onSubmit(): void{
-        console.log('object');
+        this.dialogRef.close(true);   
     }
 }
 export class ConfirmDialogModel {

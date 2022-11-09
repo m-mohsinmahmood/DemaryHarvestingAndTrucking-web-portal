@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddCombiningRateComponent } from '../add-combining-rate/add-combining-rate.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-list-combining-rate',
@@ -68,16 +69,27 @@ export class ListCombiningRateComponent implements OnInit {
 
   //#endregion
 
-  //#region Delete Combining Rate
-  deleteCombiningRate(id: string) {
-    this._customerService.deleteCombiningRate(id, this.routeID)
-  }
-  //#endregion
-
   //#region Sorting
   sortData(sort: any) {
     this.combiningRateSort[0] = sort.active; this.combiningRateSort[1] = sort.direction;
     this._customerService.getCombiningRate(this.routeID, this.combiningRateSort[0], this.combiningRateSort[1], this.searchResult);
+  }
+  //#endregion
+
+  //#region Confirmation Customer Combining Rate Dialog
+  confirmDeleteDialog(id: string): void {
+    const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure you want to delete this Combining Rate?',
+        title: 'Combining Rate',
+      },
+
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult)
+      this._customerService.deleteCombiningRate(id, this.routeID)
+    });
   }
   //#endregion
 

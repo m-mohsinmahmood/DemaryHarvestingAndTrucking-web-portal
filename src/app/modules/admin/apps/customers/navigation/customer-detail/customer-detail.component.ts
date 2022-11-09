@@ -105,19 +105,8 @@ export class CustomerDetail implements OnInit, OnDestroy {
     }
     //#endregion
 
-    //#region Delete Customer
-
-    deleteCustomer(id: string){
-        this._customerService.deleteCustomer(id)
-    }
-    //#endregion
-
-    //#region Confirmation Dialog
-    confirmDialog(customerId: string): void {
-        // const message = `Are you sure you want to do this?`;
-
-        // const dialogData = new ConfirmDialogModel("Delete Customer", message);
-
+    //#region Confirmation Customer Delete Dialog
+    confirmDeleteDialog(customerId: string): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
           data: {
             message: 'Are you sure you want to delete this Customer?',
@@ -127,7 +116,8 @@ export class CustomerDetail implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
+          if(dialogResult)
+            this._customerService.deleteCustomer(customerId);
         });
       }
     //#endregion
