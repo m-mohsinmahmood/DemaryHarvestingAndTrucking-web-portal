@@ -1,75 +1,48 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
-    selector       : 'confirmation',
-    templateUrl    : './confirmation-dialog.component.html',
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'confirmation',
+    templateUrl: './confirmation-dialog.component.html',
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfirmationDialogComponent implements OnInit
-{
-    configForm: FormGroup;
+export class ConfirmationDialogComponent implements OnInit {
+    title: string;
+    message: string;
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private _formBuilder: FormBuilder,
-        private _fuseConfirmationService: FuseConfirmationService
-    )
-    {
+    constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
+        // Update view with given values
+        this.title = data.title;
+        this.message = data.message;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    //#region Lifecycle functions
+    ngOnInit(): void {
 
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
-        // Build the config form
-        this.configForm = this._formBuilder.group({
-            title      : 'Remove contact',
-            message    : 'Are you sure you want to remove this contact permanently? <span class="font-medium">This action cannot be undone!</span>',
-            icon       : this._formBuilder.group({
-                show : true,
-                name : 'heroicons_outline:exclamation',
-                color: 'warn'
-            }),
-            actions    : this._formBuilder.group({
-                confirm: this._formBuilder.group({
-                    show : true,
-                    label: 'Remove',
-                    color: 'warn'
-                }),
-                cancel : this._formBuilder.group({
-                    show : true,
-                    label: 'Cancel'
-                })
-            }),
-            dismissible: true
-        });
     }
+
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Open confirmation dialog
-     */
-    openConfirmationDialog(): void
-    {
-        // Open the dialog and save the reference of it
-        const dialogRef = this._fuseConfirmationService.open(this.configForm.value);
 
-        // Subscribe to afterClosed from the dialog reference
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
-        });
+    onConfirm(): void {
+        // Close the dialog, return true
+        this.dialogRef.close(true);
+    }
+
+    onDismiss(): void {
+        // Close the dialog, return false
+        this.dialogRef.close(false);
     }
 }
+export class ConfirmDialogModel {
+
+    constructor(public title: string, public message: string) {
+    }
+  }
