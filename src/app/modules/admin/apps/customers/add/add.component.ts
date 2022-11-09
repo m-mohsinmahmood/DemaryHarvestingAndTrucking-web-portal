@@ -137,8 +137,6 @@ export class AddCustomer implements OnInit {
         } else {
             this.createCustomer(this.form.value);
         }
-        this.form.reset();
-
     }
     discard(): void {
         this.matDialogRef.close();

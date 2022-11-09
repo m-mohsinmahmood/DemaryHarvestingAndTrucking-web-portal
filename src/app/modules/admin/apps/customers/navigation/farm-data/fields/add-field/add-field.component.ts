@@ -101,7 +101,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 if (res) {
                     this.matDialogRef.close();
                     this._customersService.closeDialog.next(false);
-                    this.form.reset();
                 }
             });
     }
@@ -126,7 +125,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         const fieldFormGroup = [];
         fieldFormGroup.push(
             this._formBuilder.group({
-                name: [''],
+                name: ['All Fields'],
                 acres: [''],
                 calendar_year: [moment()],
                 status: ['']
@@ -170,7 +169,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     }
     addField(): void {
         const fieldGroup = this._formBuilder.group({
-            name: [''],
+            name: ['All Fields'],
             acres: [''],
             calendar_year: [moment()],
             status: ['']

@@ -153,8 +153,6 @@ export class AddCropComponent implements OnInit {
         } else {
             this._customerService.createCustomerCrops(this.form.value);
         }
-        this.form.reset();
-
     }
 
     discard(): void {
@@ -163,7 +161,8 @@ export class AddCropComponent implements OnInit {
     }
 
     getDropdownCrops() {
-        this.allCrops = this._customerService.getDropdownCustomerCropsAll('');
+        let value = this.form.controls['crop_id'].value;
+        this.allCrops = this._customerService.getDropdownCustomerCropsAll(value);
     }
     //#endregion
 

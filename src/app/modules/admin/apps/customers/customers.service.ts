@@ -397,20 +397,12 @@ export class CustomersService {
 
 
     //#region Drop down API's
-    getDropdownCustomerCrops(customerId: string) {
+    getDropdownCustomerCrops(customerId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
         return this._httpClient
-            .get<any>(`api-1/dropdowns?entity=customerCrops&customerId=${customerId}`)
+            .get<any>(`api-1/dropdowns?entity=customerCrops&customerId=${customerId}`, {params})
             .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    // this.isLoadingDropdownCustomerCrops.next(true);
-                    // this.dropdownCustomerCrops.next(res);
-                    // this.isLoadingDropdownCustomerCrops.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
     }
 
     getDropdownCustomerFarms(customerId: string, search: string): Observable<any> {

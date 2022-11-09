@@ -86,7 +86,6 @@ export class AddCustomFarmingRateComponent implements OnInit {
     } else {
       this._customerService.createFarmingRate(this.form.value);
     }
-    this.form.reset();
   }
 
   discard(): void {

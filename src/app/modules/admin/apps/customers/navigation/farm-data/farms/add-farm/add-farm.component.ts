@@ -126,8 +126,6 @@ export class AddFarmComponent implements OnInit {
         } else {
             this._customersService.createCustomerFarm(this.form.value);
         }
-        this.form.reset();
-
     }
 
     createCustomerFarm(customerFarmData: any): void {

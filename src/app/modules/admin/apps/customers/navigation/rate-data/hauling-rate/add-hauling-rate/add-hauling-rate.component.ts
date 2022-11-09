@@ -98,7 +98,6 @@ onSubmit(): void {
   } else{
     this._customerService.createHaulingRate(this.form.value);
   }
-  this.form.reset();
 }
 
 discard(): void {

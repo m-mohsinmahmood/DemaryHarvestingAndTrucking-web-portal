@@ -81,7 +81,6 @@ export class AddCropsComponent implements OnInit {
         } else {
             this.createCrop(this.form.value);
         }
-        this.form.reset();
     }
 
     saveAndClose(): void {

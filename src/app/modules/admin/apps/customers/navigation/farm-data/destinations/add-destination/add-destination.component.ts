@@ -156,7 +156,6 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         } else {
             this._customerService.createCustomerDestination(this.form.value);
         }
-        this.form.reset();
     }
     discard(): void {
         this._customerService.isLoadingCustomerDestination.next(false);
@@ -164,7 +163,8 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
     }
 
     getDropdownFarms() {
-        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id,'');
+        let value = this.form.controls['farm_id'].value;
+        this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id,value);
     }
     //#endregion
 

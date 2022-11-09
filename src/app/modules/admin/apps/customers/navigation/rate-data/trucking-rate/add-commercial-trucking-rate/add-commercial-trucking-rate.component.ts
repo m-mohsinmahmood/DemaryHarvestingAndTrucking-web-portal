@@ -86,7 +86,6 @@ export class AddCommercialTruckingRateComponent implements OnInit {
     } else {
       this._customerService.createTruckingRate(this.form.value);
     }
-    this.form.reset();
   }
 
   discard(): void {
