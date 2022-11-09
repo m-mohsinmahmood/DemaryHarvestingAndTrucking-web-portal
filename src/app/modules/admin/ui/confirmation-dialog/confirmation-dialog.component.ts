@@ -6,23 +6,25 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     selector: 'confirmation',
     templateUrl: './confirmation-dialog.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationDialogComponent implements OnInit {
     title: string;
     message: string;
 
-    constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
+    constructor(
+        public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel
+
+    ) {
         // Update view with given values
+        console.log('dddd',data);
         this.title = data.title;
         this.message = data.message;
     }
 
     //#region Lifecycle functions
-    ngOnInit(): void {
-
-    }
+    ngOnInit(): void {}
 
     //#endregion
 
@@ -30,8 +32,7 @@ export class ConfirmationDialogComponent implements OnInit {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-
-    onConfirm(): void {
+    onClose(): void {
         // Close the dialog, return true
         this.dialogRef.close(true);
     }
@@ -40,9 +41,13 @@ export class ConfirmationDialogComponent implements OnInit {
         // Close the dialog, return false
         this.dialogRef.close(false);
     }
+    onSubmit(): void{
+        console.log('object');
+    }
 }
 export class ConfirmDialogModel {
 
     constructor(public title: string, public message: string) {
     }
+
   }
