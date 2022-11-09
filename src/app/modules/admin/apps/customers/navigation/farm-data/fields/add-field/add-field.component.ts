@@ -101,6 +101,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 if (res) {
                     this.matDialogRef.close();
                     this._customersService.closeDialog.next(false);
+                    this.form.reset();
                 }
             });
     }
@@ -201,10 +202,6 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         } else {
             this._customersService.createCustomerField(this.form.value);
         }
-        if (this.form.valid) {
-            this.form.reset();
-        }
-
     }
 
     discard(): void {
