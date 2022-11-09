@@ -33,24 +33,35 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { RateDataComponent } from './navigation/rate-data/rate-data.component';
+import { RateDataComponent } from './navigation/rate-data/list/rate-data.component';
 import { InvoiceComponent } from './navigation/invoice/invoice.component';
 import { JobStatusComponent } from './navigation/job-status/job-status.component';
 import { FarmDataComponent } from './navigation/farm-data/farm-data.component';
 import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobResultComponent } from './navigation/job-result/job-result.component';
-import { ContactsDataComponent } from './navigation/customer-information/contacts-data/contacts-data.component';
-import { CustomersContactsList } from './navigation/customer-information/customers-contacts.component';
+import { ContactsDataComponent } from './navigation/customer-information/edit/contacts-data.component';
+import { CustomersContactsList } from './navigation/customer-information/list/customers-contacts.component';
 import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
-import { AddFieldComponent } from './navigation/farm-data/add-field/add-field.component';
-import { AddCropComponent } from './navigation/farm-data/add-crop/add-crop.component';
-import { AddDestinationComponent } from './navigation/farm-data/add-destination/add-destination.component';
+import { AddFieldComponent } from './navigation/farm-data/fields/add-field/add-field.component';
+import { AddCropComponent } from './navigation/farm-data/crops/add-crop/add-crop.component';
+import { AddDestinationComponent } from './navigation/farm-data/destinations/add-destination/add-destination.component';
 import { AddCustomerContact } from './navigation/customer-information/add/add.component';
 import { CustomerDetail } from './navigation/customer-detail/customer-detail.component';
 import { DocumentComponent } from './navigation/document/document.component';
-import { AddRateDataComponent } from './navigation/rate-data/add-rate-data/add-item.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
-import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.component';
+import { AddFarmComponent } from './navigation/farm-data/farms/add-farm/add-farm.component';
+import { ListFieldComponent } from './navigation/farm-data/fields/list/list.component';
+import { ListFarmComponent } from './navigation/farm-data/farms/list/list.component';
+import { ListCropComponent } from './navigation/farm-data/crops/list/list.component';
+import { ListDestinationComponent } from './navigation/farm-data/destinations/list/list.component';
+import { AddCommercialTruckingRateComponent } from './navigation/rate-data/trucking-rate/add-commercial-trucking-rate/add-commercial-trucking-rate.component';
+import { AddCustomFarmingRateComponent } from './navigation/rate-data/farming-rate/add-custom-farming-rate/add-custom-farming-rate.component';
+import { AddCombiningRateComponent } from './navigation/rate-data/combining-rate/add-combining-rate/add-combining-rate.component';
+import { AddHaulingRateComponent } from './navigation/rate-data/hauling-rate/add-hauling-rate/add-hauling-rate.component';
+import { ListCombiningRateComponent } from './navigation/rate-data/combining-rate/list-combining-rate/list-combining-rate.component';
+import { ListHaulingRateComponent } from './navigation/rate-data/hauling-rate/list-hauling-rate/list-hauling-rate.component';
+import { ListTruckingRateComponent } from './navigation/rate-data/trucking-rate/list-trucking-rate/list-trucking-rate.component';
+import { ListFarmingRateComponent } from './navigation/rate-data/farming-rate/list-farming-rate/list-farming-rate.component';
 
 @NgModule({
     declarations: [
@@ -74,8 +85,21 @@ import { AddFarmComponent } from './navigation/farm-data/add-farm/add-farm.compo
         AddCustomerContact,
         CustomerDetail,
         DocumentComponent,
-        AddRateDataComponent,
-        AddFarmComponent
+        RateDataComponent,
+        AddFarmComponent,
+        ListFarmComponent,
+        ListFieldComponent,
+        ListCropComponent,
+        ListDestinationComponent,
+        AddFarmComponent,
+        AddCommercialTruckingRateComponent,
+        AddCustomFarmingRateComponent,
+        AddCombiningRateComponent,
+        AddHaulingRateComponent,
+        ListCombiningRateComponent,
+        ListHaulingRateComponent,
+        ListTruckingRateComponent,
+        ListFarmingRateComponent
     ],
     imports: [
         RouterModule.forChild(customersRoutes),

@@ -1,8 +1,4 @@
-/* eslint-disable quotes */
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     HttpClient,
     HttpErrorResponse,
@@ -41,7 +37,7 @@ export class CropService {
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
-    ) {}
+    ) { }
 
     //#region Error handling
     handleError(error: HttpErrorResponse) {
@@ -83,15 +79,14 @@ export class CropService {
      * @param order
      * @param search
      */
-    getCrops(page: number = 1,limit: number = 10,sort: string = '',order: 'asc' | 'desc' | '' = '',search: string = '')
-    {
+    getCrops(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
-       return this._httpClient
+        return this._httpClient
             .get<any>(`api-1/crop`, {
                 params,
             })
@@ -108,8 +103,7 @@ export class CropService {
             );
     }
 
-    getCropsAll(search: string = ''): Observable<any>
-    {
+    getCropsAll(search: string = ''): Observable<any> {
         let params = new HttpParams();
         params = params.set('search', search);
         params = params.set('sort', 'name');
@@ -137,7 +131,6 @@ export class CropService {
                 }
             );
     }
-
     createCrop(data: any) {
         this._httpClient
             .post(`api-1/crop`, data)
@@ -159,15 +152,14 @@ export class CropService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.is_loading_crop.next(false);
                 },
                 () => {
                     this.getCrops();
                 }
             );
     }
-
     updateCrop(cropData: any) {
-      
         this._httpClient
             .put(`api-1/crop`, cropData)
             .pipe(take(1))
@@ -187,27 +179,29 @@ export class CropService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.is_loading_crop.next(false);
                 },
                 () => {
                     this.getCrops();
                 }
             );
     }
+    deleteCrop(id: string) {
+        this._httpClient
+            .delete(`api-1/crop?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.is_loading_crop.next(true);                   
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getCrops();
+                    this.is_loading_crop.next(false);
+                }
+            );
 
-    // searchCrops(data: any) {
-    //     this._httpClient
-    //         .get(`api-1/crops?search=${data.search}`)
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.is_loading_crops.next(true);
-    //                 this.crops.next(res.crops);
-    //                 this.is_loading_crops.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-    //#endregion
+    }
 }

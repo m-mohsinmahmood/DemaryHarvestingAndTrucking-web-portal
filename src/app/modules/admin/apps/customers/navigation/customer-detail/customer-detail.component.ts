@@ -101,4 +101,11 @@ export class CustomerDetail implements OnInit, OnDestroy {
         });
     }
     //#endregion
+
+    //#region Delete Customer 
+
+    deleteCustomer(id: string){
+        this._customerService.deleteCustomer(id)
+    }
+    //#endregion
 }

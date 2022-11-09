@@ -17,11 +17,9 @@
     <!-- Image-->
     <form
         [formGroup]="form"
-        class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto"
-    >
+        class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
         <div
-            class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0"
-        >
+            class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Customer Name</mat-label>
@@ -99,7 +97,7 @@
             </div>
 
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline" class="cat mx-1  w-full ">
+                <mat-form-field appearance="outline" class="cat w-full ">
                     <mat-label>Select State</mat-label>
                     <mat-select  formControlName="state">
                         <mat-option

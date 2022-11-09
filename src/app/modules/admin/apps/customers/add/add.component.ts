@@ -82,10 +82,10 @@ export class AddCustomer implements OnInit {
             phone_number    : ['', [Validators.required]],
             state           : [''],
             country         : [''],
-            email           : ['', [Validators.email]],
+            email           : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             fax             : [''],
             customer_type   : ['', [Validators.required]],
-            status          : true,
+            status: ['',[Validators.required]],
             address         : [''],
             billing_address : [''],
             city            : [''],
@@ -137,6 +137,8 @@ export class AddCustomer implements OnInit {
         } else {
             this.createCustomer(this.form.value);
         }
+        this.form.reset();
+
     }
     discard(): void {
         this.matDialogRef.close();
