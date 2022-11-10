@@ -53,7 +53,7 @@
                     </ng-container>
 
                 </div>
-                <!-- Remove email -->
+                
                 <div *ngIf="!this.data.isEdit">
                     <button  *ngIf="(first)" type="button" mat-flat-button [color]="'primary'" (click)="addField()"
                         class="btn not-italic btn-primary my-4 float-right">
@@ -82,7 +82,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Year</mat-label>
                 <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
-                    [formControl]="field.get('calendar_year')" />
+                    [formControl]="calendar_year[i]" />
                 <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                 <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp, i)"
                     panelClass="example-month-picker">

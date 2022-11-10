@@ -178,6 +178,8 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         ctrlValue.year(normalizedYear.year());
         this.calendar_year.setValue(ctrlValue);
         this.form.value.calendar_year = ctrlValue;
+        console.log("CUSTOMER DESTINATION", ctrlValue);
+        console.log("CUSTOMER DESTINATION", this.form.value.calendar_year);
         datepicker.close();
     }
 

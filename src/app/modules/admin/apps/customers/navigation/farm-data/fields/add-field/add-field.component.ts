@@ -66,7 +66,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     //#region Local Variables
     selectedValue: string;
     form: FormGroup;
-    calendar_year;
+    calendar_year:any[] = <any>[];
     isEdit: boolean;
     status: boolean;
     customerFieldData: any;
@@ -144,9 +144,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     //#region Initilize Calendar
     initCalendar() {
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.customerFieldData.calendar_year);
+            this.calendar_year[0] = new FormControl(this.data.customerFieldData.calendar_year);
         } else {
-            this.calendar_year = new FormControl(moment());
+            this.calendar_year[0] = new FormControl(moment());
         }
     }
     //#endregion
@@ -183,6 +183,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             });
         }
     }
+
     addField(): void {
         const fieldGroup = this._formBuilder.group({
             name: ['All Fields'],
@@ -192,13 +193,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         });
 
         (this.form.get('fields') as FormArray).push(fieldGroup);
+        this.calendar_year[this.form.get('fields')['controls'].length - 1] = new FormControl(moment());
     }
 
-    /**
-     * Remove the email field
-     *
-     * @param index
-     */
     removeField(index: number): void {
         // Get form array for emails
         const fieldFormArray = this.form.get('fields') as FormArray;
@@ -233,9 +230,9 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     //#region Calendar Year Function
     chosenYearHandler(normalizedYear: Moment, dp: any, index: number) {
-        const ctrlValue = moment(this.calendar_year.value);
+        const ctrlValue = moment(this.calendar_year[index].value);
         ctrlValue.year(normalizedYear.year());
-        this.calendar_year.setValue(ctrlValue);
+        this.calendar_year[index].setValue(ctrlValue);
         this.form.value.fields[index].calendar_year = ctrlValue;
         dp.close();
     }

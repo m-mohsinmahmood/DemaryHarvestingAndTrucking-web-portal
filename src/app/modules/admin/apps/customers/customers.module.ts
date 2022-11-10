@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -108,6 +109,7 @@ import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/conf
     ],
     imports: [
     RouterModule.forChild(customersRoutes),
+        CommonModule,
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
