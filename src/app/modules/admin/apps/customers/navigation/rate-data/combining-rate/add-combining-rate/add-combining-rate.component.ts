@@ -86,7 +86,7 @@ export class AddCombiningRateComponent implements OnInit {
           this.form.patchValue({
             id: combiningRate.id,
             customer_id: customer_id,
-            crop_id: {id: combiningRate.crop_id, name: combiningRate.crop_name},
+            crop_id: {crop_id: combiningRate.crop_id, name: combiningRate.crop_name},
             combining_rate: combiningRate.combining_rate,
             base_bushels: combiningRate.base_bushels,
             premium_rate: combiningRate.premium_rate,
