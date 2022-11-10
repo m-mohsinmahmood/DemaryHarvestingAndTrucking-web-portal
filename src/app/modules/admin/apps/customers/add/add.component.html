@@ -1,25 +1,17 @@
 <!-- Header -->
 <div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
     <!-- Title -->
-    <header
-        class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary"
-    >
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">
             {{ this.data ? "Edit Customer" : "Add New Customer" }}
         </div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"
-            ></mat-icon>
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </header>
     <!-- Image-->
-    <form
-        [formGroup]="form"
-        class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
-        <div
-            class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+    <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Customer Name</mat-label>
@@ -47,11 +39,7 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label>Phone Number</mat-label>
-                    <input
-                        type="number"
-                        matInput
-                        formControlName="phone_number"
-                    />
+                    <input type="number" matInput formControlName="phone_number" />
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -86,12 +74,8 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline" class="cat mx-1 w-full ">
                     <mat-label>Select Country</mat-label>
-                    <mat-select  formControlName="country">
-                        <mat-option
-                            *ngFor="let country of country_list"
-                            [value]="country"
-                            >{{ country }}</mat-option
-                        >
+                    <mat-select formControlName="country">
+                        <mat-option *ngFor="let country of country_list" [value]="country">{{ country }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -99,12 +83,8 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline" class="cat w-full ">
                     <mat-label>Select State</mat-label>
-                    <mat-select  formControlName="state">
-                        <mat-option
-                            *ngFor="let state of states"
-                            [value]="state"
-                            >{{ state }}</mat-option
-                        >
+                    <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -147,26 +127,15 @@
             <!-- </div> -->
         </div>
     </form>
-    <div
-        class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary"
-    >
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
         <div class="flex gap-2 items-center mt-4 sm:mt-0">
             <!-- Discard -->
-            <button
-                type="submit"
-                class="bg-amber-600"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="discard()"
-            >
+            <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button
-                mat-flat-button
-                color="primary"
-                [disabled]="form.invalid"
-                (click)="onSubmit()"
-            >
+            <button [class.spinner]="isLoadingCustomer$ | async"
+                [disabled]="form.invalid || ((isLoadingCustomer$) | async)" mat-flat-button color="primary"
+                (click)="onSubmit()">
                 {{ this.data ? "Update" : "Save" }}
             </button>
         </div>

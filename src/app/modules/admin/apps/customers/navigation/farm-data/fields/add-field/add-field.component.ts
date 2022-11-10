@@ -70,7 +70,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     isEdit: boolean;
     status: boolean;
     customerFieldData: any;
-    formValid: boolean = true;
+    formValid: boolean;
     //#endregion
 
     //#region Auto Complete Farms
