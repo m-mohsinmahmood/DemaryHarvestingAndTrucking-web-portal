@@ -26,7 +26,6 @@ export class FilterComponent implements OnInit {
 
       // Close the dialog
       this.matDialogRef.close();
-      console.log('first');
   }
 
 }

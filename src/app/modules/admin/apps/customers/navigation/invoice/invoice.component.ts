@@ -65,11 +65,9 @@ export class InvoiceComponent implements OnInit {
     {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddItemComponent);
-        console.log('open dialog!');
 
         dialogRef.afterClosed()
                  .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
                  });
     }
 

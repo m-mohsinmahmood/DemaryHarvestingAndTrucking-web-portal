@@ -85,7 +85,6 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
 
        // Get the applicant by id
         this._applicantService.getApplicantById(this.routeID).subscribe((applicant) => {
-            console.log('firsttt',applicant);
             this.applicants = applicant;
         });
 
@@ -141,7 +140,6 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
 
         dialogRef.afterClosed()
                  .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
       });
     }
 

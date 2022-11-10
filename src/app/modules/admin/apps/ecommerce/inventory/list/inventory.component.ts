@@ -249,7 +249,6 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
 
         dialogRef.afterClosed()
                  .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
                  });
     }
     /**

@@ -162,15 +162,15 @@ export class ApplicantService {
      * Get applicant by id
      */
     getApplicantById(id: string): Observable<Applicant> {
-        console.log('ID::', id);
+        
         return this._applicantsdata.pipe(
             take(1),
             map((applicants) => {
-                console.log('first', applicants);
+                
                 // Find the applicant
                 const applicant =
                     applicants.find((item) => item.id === id) || null;
-                console.log('d', applicant);
+                
                 // Update the applicant
                 this._applicantdata.next(applicant);
 
@@ -221,7 +221,7 @@ export class ApplicantService {
      * @param applicant
      */
     updateApplicant(id: string, applicant: Applicant): Observable<Applicant> {
-        console.log('app--', applicant, id);
+        
         return this.applicantdata$.pipe(
             take(1),
             switchMap((applicants) =>
@@ -232,7 +232,6 @@ export class ApplicantService {
                     })
                     .pipe(
                         map((updatedApplicant) => {
-                            console.log('updated-product:', updatedApplicant);
 
                             // Find the index of the updated applicant
                             const index = applicants.findIndex(
@@ -246,7 +245,6 @@ export class ApplicantService {
                             this._applicantsdata.next(applicants);
 
                             // Return the updated applicant
-                            console.log('updated-product:', updatedApplicant);
                             return updatedApplicant;
                         }),
                         switchMap((updatedApplicant) =>

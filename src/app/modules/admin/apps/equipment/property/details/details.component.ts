@@ -92,16 +92,12 @@ export class PropertyDetailComponent implements OnInit, OnDestroy
      */
      ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-          console.log('PARAMS:', params); //log the entire params object
           this.routeID = params.Id;
-          console.log('object', this.routeID);
-          console.log(params['id']); //log the value of id
         });
 
 
         // Get the employee by id
         this._machineService.getProductById(this.routeID).subscribe((vehicle) => {
-            console.log('EEE',vehicle);
             this.vehicleDetails = vehicle;
         });
       }
@@ -130,7 +126,6 @@ export class PropertyDetailComponent implements OnInit, OnDestroy
 
          dialogRef.afterClosed()
                   .subscribe((result) => {
-                      console.log('Compose dialog was closed!');
        });
     }
 

@@ -87,7 +87,6 @@ export class ListDestinationComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 

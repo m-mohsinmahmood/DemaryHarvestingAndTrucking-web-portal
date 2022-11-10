@@ -146,7 +146,6 @@ export class CustomerDetailsComponent
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
     //#endregion

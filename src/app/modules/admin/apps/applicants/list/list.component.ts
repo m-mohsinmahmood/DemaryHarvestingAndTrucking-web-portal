@@ -94,7 +94,6 @@ export class ApplicantsListComponent
 
         // Get the employees
         this.applicantsdata$ = this._applicantService.applicantdata$;
-        console.log('PP', this.applicantsdata$);
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -184,7 +183,6 @@ export class ApplicantsListComponent
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
         });
     }
 

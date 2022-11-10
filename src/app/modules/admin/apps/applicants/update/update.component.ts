@@ -82,7 +82,6 @@ export class UpdateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('DD',this.data);
         this.initfarmGroups();
         this.isEdit = this.data.isEdit;
     }
@@ -154,7 +153,6 @@ export class UpdateComponent implements OnInit {
             this._applicantService
                 .getApplicantById(this.data?.id)
                 .subscribe((employee) => {
-                    console.log('Applicant:', employee);
                     // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
 
                      this.firstFormGroup = this._formBuilder.group({
@@ -220,7 +218,6 @@ export class UpdateComponent implements OnInit {
                     this._changeDetectorRef.markForCheck();
                 });
         } else {
-            console.log('Else Called');
         }
         // #endregion
     }
@@ -268,7 +265,6 @@ export class UpdateComponent implements OnInit {
      */
     send(): void {}
     selectionChange(event) {
-        console.log('dddddd', event);
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {

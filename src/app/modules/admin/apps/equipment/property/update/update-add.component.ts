@@ -122,7 +122,6 @@ this.sixthFormGroup = this._formBuilder.group({
    // Get the employee by id
 if(this.data !== null){
     this._applicantService.getApplicantById(this.data.id).subscribe((employee) => {
-     console.log('Applicant:',employee);
      // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
 
      this.firstFormGroup = this._formBuilder.group({
