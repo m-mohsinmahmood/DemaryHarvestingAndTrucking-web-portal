@@ -101,7 +101,7 @@
                                                     <div class="truncate">
                                                         {{ customerFarm.name }}
                                                     </div>
-                                                    <div class="hidden sm:block">
+                                                    <div class="sm:block">
                                                         <mat-icon class="{{
                                                                 customerFarm.status ===
                                                                 true
@@ -201,16 +201,16 @@
                                                 'summaryField'
                                             )
                                         ">
-                                        <div mat-sort-header="farm_name">
+                                        <div class="hidden sm:block" mat-sort-header="farm_name">
                                             Farm Name
                                         </div>
-                                        <div mat-sort-header="field_name" class="hidden sm:block">
+                                        <div mat-sort-header="field_name" >
                                             Fields
                                         </div>
                                         <div mat-sort-header="acres" class="hidden sm:block">
                                             Acres
                                         </div>
-                                        <div mat-sort-header="status" class="hidden sm:block">
+                                        <div mat-sort-header="status">
                                             Status
                                         </div>
                                         <div mat-sort-header="calendar_year" class="hidden sm:block">
@@ -230,12 +230,12 @@
                                                 ">
                                                 <div
                                                     class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                    <div class="truncate">
+                                                    <div class="hidden sm:block truncate">
                                                         {{
                                                         customerField.farm_name
                                                         }}
                                                     </div>
-                                                    <div class="hidden sm:block">
+                                                    <div class="truncate">
                                                         {{
                                                         customerField.field_name
                                                         }}
@@ -247,10 +247,18 @@
                                                             }}
                                                         </div>
                                                     </div>
-                                                    <div class="hidden sm:block items-center">
-                                                        <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                                'heroicons_solid:check-circle'
-                                                            "></mat-icon>
+                                                    <div class="items-center">
+                                                        <mat-icon class="{{
+                                                            customerField.status ===
+                                                            true
+                                                                ? 'greenActiveIcon'
+                                                                : 'redInActiveIcon'
+                                                        }}" [svgIcon]="
+                                                            customerField.status ===
+                                                            true
+                                                                ? 'heroicons_solid:check-circle'
+                                                                : 'heroicons_solid:x-circle'
+                                                        ">check-circle</mat-icon>
                                                     </div>
                                                     <div class="hidden sm:block items-center">
                                                         {{
@@ -342,9 +350,9 @@
                                                 )
                                             ">
                                             <div class="" mat-sort-header="crop_name">
-                                                Name
+                                                Crop Name
                                             </div>
-                                            <div class="hidden sm:block" mat-sort-header="status">
+                                            <div class="" mat-sort-header="status">
                                                 Status
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="calendar_year">
@@ -368,10 +376,16 @@
                                                             {{ crop.crop_name }}
                                                         </div>
                                                         <!-- Status -->
-                                                        <div class="hidden sm:block items-center">
-                                                            <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                                    'heroicons_solid:check-circle'
-                                                                "></mat-icon>
+                                                        <div class=" items-center">
+                                                            <mat-icon class="{{
+                                                                crop.status === true
+                                                                    ? 'greenActiveIcon'
+                                                                    : 'redInActiveIcon'
+                                                            }}" [svgIcon]="
+                                                                crop.status === true
+                                                                    ? 'heroicons_solid:check-circle'
+                                                                    : 'heroicons_solid:x-circle'
+                                                            ">check-circle</mat-icon>
                                                         </div>
                                                         <!-- Contact -->
                                                         <div class="hidden sm:block items-center">
@@ -480,13 +494,13 @@
                                                     'summaryDestination'
                                                 )
                                             ">
-                                            <div mat-sort-header="farm_name">
+                                            <div class="hidden sm:block" mat-sort-header="farm_name">
                                                 Farm Name
                                             </div>
-                                            <div class="hidden sm:block" mat-sort-header="destination_name">
+                                            <div  mat-sort-header="destination_name">
                                                 Destination Name
                                             </div>
-                                            <div class="hidden sm:block" mat-sort-header="status">
+                                            <div  mat-sort-header="status">
                                                 Status
                                             </div>
                                             <div class="hidden sm:block" mat-sort-header="calendar_year">
@@ -506,18 +520,18 @@
                                                     ">
                                                     <div
                                                         class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                        <div class="truncate">
+                                                        <div class="hidden sm:block truncate">
                                                             {{
                                                             destination.farm_name
                                                             }}
                                                         </div>
-                                                        <div class="hidden sm:block">
+                                                        <div class="truncate">
                                                             {{
                                                             destination.destination_name
                                                             }}
                                                         </div>
                                                         <!-- Status -->
-                                                        <div class="hidden sm:block">
+                                                        <div>
                                                             <mat-icon class="{{
                                                                     destination.status ===
                                                                     true

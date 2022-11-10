@@ -52,7 +52,7 @@ export class CustomerDetailsComponent
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    selectedIndex: string = 'Customer Detail';
+    selectedIndex: string = 'Customer Information';
     //#endregion
 
 
@@ -72,7 +72,7 @@ export class CustomerDetailsComponent
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         });
-        this.selectedIndex = history.state?.title ? history.state?.title : 'Customer Detail';
+        this.selectedIndex = history.state?.title ? history.state?.title : 'Customer Information';
     }
 
     ngAfterViewInit(): void {
