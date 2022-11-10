@@ -1,0 +1,209 @@
+<div class="flex sm:flex-row flex-col">
+    <div class="sm:w-7/12 md:w-7/12 m-2 px-2 flex sm:flex-col flex-col">
+        <div class=" pt-0 pb-2 border-b">
+            <p class=" text-2xl font-extrabold tracking-tight">Onboarding</p>
+        </div>
+        <div class="">
+            <p class="font-semibold text-lg">Heading</p>
+        </div>
+        <div class="flex flex-wrap -m-2 my-2">
+            <div class="w-22 sm:h-18 md:h-22 mr-2 my-1  shadow rounded-md background-grey" *ngFor="let item of folders">
+                <a
+                    class=" inset-0 flex flex-col p-4 cursor-pointer"
+                >
+                    <div class="aspect-w-9 aspect-h-6">
+                        <div class="flex items-center justify-center">
+                            <!-- Icon -->
+                            <mat-icon
+                                class="icon-size-5 text-hint"
+                                [svgIcon]="'iconsmind:folder'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto justify-center text-center text-sm font-medium"
+                    >
+                        <div class="truncate">{{item.folder}}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="background-grey flex sm:flex-row rounded-md p-4">
+            <div class="w-2/12 flex justify-center items-center">
+                <img class=" h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
+            </div>
+            <div class="w-10/12 flex justify-start items-center">
+                <div class="">
+                    <p class="font-semibold text-xl leading-7">Richardo Copper</p>
+                    <p class="text-base font-sans font-normal leading-6 text-gray-400">Applied for <span class="text-black">Vehicle Operator</span> on August 25, 2020</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex background-grey rounded-md mt-2 sm:h-auto">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12 sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Password</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-0 ">
+                <div class="flex flex-col p-2">
+                    <div class="w-full  sm:mt-auto">
+                        <mat-form-field appearance="outline" class=" w-full">
+                            <mat-label class="text-sm font-normal text-gray-500 "> Country: </mat-label>
+                            <input matInput  class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class=" w-full">
+                            <mat-label class="text-sm font-normal text-gray-500 w-max">Number: </mat-label>
+                            <input matInput >
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full ">
+                            <mat-label class="text-sm font-normal text-gray-500 w-max whitespace-nowrap">Expiration Date: </mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex background-grey rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Approval Letter</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-0 pb-0 ">
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
+                            <input matInput  class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">sign: </mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex background-grey rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">Contract</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-0 pb-0">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
+                            <input matInput  class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">sign: </mat-label>
+                            <input matInput >
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex background-grey rounded-md mt-2">
+            <div class="flex justify-center items-center sm:6/12 md:w-4/12  sm:px-2 px-1">
+                <div>
+                    <p class="font-semibold text-xl text-blue-600">I-797B</p>
+                    <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+            </div>
+            <div class="sm:w-6/12 md:w-8/12 sm:pr-3 ">
+                <div class="flex flex-col p-2 sm:pb-0 pb-0">
+                    <div class="flex sm:flex-row flex-col  sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Number: </mat-label>
+                            <input matInput  class="">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex sm:flex-row flex-col sm:items-center w-full sm:mt-auto">
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Expiration Date: </mat-label>
+                            <input matInput >
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="sm:5/12 md:w-5/12 ">
+        <div class="h-auto background-grey rounded m-2 p-1">
+            <div class="flex flex-col py-4 px-2">
+                <div class="flex relative min-h-14" *ngFor="let item of items">
+                    <div class="flex flex-col items-center min-w-12">
+                        <div
+                            class="flex border-2 border-solid border-white rounded-full w-{{
+                                item.status === false ? '4' : '8'
+                            }} h-{{
+                                item.status === false ? '4' : '8'
+                            }} bg-white
+                           bg-{{ item.status === 'a' ? 'blue' : 'to-blue-400' }}-400
+                           bg-{{ item.status === 'b' ? 'red' : '' }}-400
+                           bg-{{ item.status === 'c' ? 'orange' : '' }}-400
+                           bg-{{ item.status === 'd1' ? 'yellow' : '' }}-400
+                           bg-{{ item.status === 'e1' ? 'green' : '' }}-400
+                           bg-{{ item.status === false ? 'blue' : '' }}-400
+                           "
+                        ></div>
+                        <div class="timeline-track"></div>
+                    </div>
+                    <div class="flex-1 flex flex-row px-4">
+                        <div class="w-8/12 flex flex-col">
+                            <ng-template [ngIf]="item.name !== ''">
+                                <span
+                                    class="text-md font-sans font-normal text-gray-400"
+                                    >{{ item.content }}</span
+                                >
+                            </ng-template>
+                            <ng-template [ngIf]="item.name === ''">
+                                <span class="text-md font-sans font-normal text-gray-400 mt-2">{{ item.content }}</span>
+                            </ng-template>
+                            <span class="text-md text-black">{{
+                                item.name === "rejected" ? "" : item.name
+                            }}</span>
+
+                            <button class="bg-white w-36 h-7 rounded-full text-sm" *ngIf="item.status === 'a'" (click)="openComposeDialog()">
+                                <mat-icon [svgIcon]="'heroicons_outline:pencil'" class="icon-size-3 mr-2" ></mat-icon>
+                                Send email
+                                <mat-icon [svgIcon]="'heroicons_outline:chevron-right'" class="icon-size-3 ml-2" ></mat-icon>
+                            </button>
+                        </div>
+                        <div class="w-4/12 flex justify-end font-mono text-xs">
+                            {{ item.date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row justify-center items-center mb-5">
+                <button
+                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44"
+                >
+                    <span>Advance to offer</span>
+                </button>
+                <button
+                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28"
+                >
+                    <span>Reject</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

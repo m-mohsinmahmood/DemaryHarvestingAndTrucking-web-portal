@@ -1,272 +1,187 @@
-<div class=" sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
-
+<div
+    class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+>
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4 px-6 md:px-8 border-b ">
         <!-- Loader -->
         <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
-            <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <div>
-                <img *ngIf="applicants.avatar" class="max-w-none flex items-center justify-center h-14 w-14 rounded-full" src="{{applicants.avatar}}" alt="">
-                <div *ngIf="applicants.avatar === ''" class="flex items-center justify-center h-12 w-14 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicants.name.charAt(0)}} </div>
-            </div>
-            <span class="ml-1 capitalize">{{applicants.fname}} {{applicants.lname}}   </span>
-
-            <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="" class="ml-5
-                bg-{{applicants.status === 'In-Process'? 'green' : ''}}-400
-                bg-{{applicants.status === 'Hired'? 'green' : ''}}-700
-                bg-{{applicants.status === 'New'? 'yellow' : ''}}-400
-                bg-{{applicants.status === 'Pre-Interview'? 'orange' : ''}}-400
-                bg-{{applicants.status === 'Evaluated'? 'blue' : ''}}-400
-                bg-{{applicants.status === 'Rejeted'? 'red' : ''}}-400" selected>{{applicants.status}} </mat-chip>
-            </mat-chip-list>
+        <div
+            (click)="backHandler()"
+            class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full"
+        >
+        <div class="flex items-center">
+            <mat-icon
+                class="icon-size-6 text-secondary"
+                [svgIcon]="'heroicons_solid:arrow-circle-left'"
+            ></mat-icon>
+            <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight"
+                >{{ applicants.fname }} {{ applicants.lname }}
+            </span>
         </div>
-        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button (click)="deleteApplicant()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"  mat-flat-button [color]="'warn'">
-                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1" >Delete</span>
-            </button>
-            <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
-                [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-                <span class="ml-2 mr-1">Update</span>
-            </button>
+            <div class="sm:w-auto lg:w-auto w-full">
+                <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
+                    <p class="text-lg text-gray-300	font-normal ">(Recruiter decision made)</p>
+                </ng-template>
+                <ng-template [ngIf]="selectedIndex === 'Recruiter Data'">
+                    <p class="text-lg text-blue-300	font-normal">(Advance to Pre-employment Process)</p>
+                </ng-template>
+                <ng-template [ngIf]="selectedIndex === 'Old Submitted Application'">
+                    <p class="text-lg text-red-400	font-normal">(Offer Accepted)</p>
+                </ng-template>
+            </div>
+
         </div>
         <!-- Actions -->
     </div>
 
-    <!-- Main -->
-    <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
-        <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="General Information">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.fname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.lname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email}}</dd>
-                        </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Cell Phone</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.cellPhone}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Home Phone</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.homePhone}}</dd>
-                        </div>
-                    </dl>
+    <!-- Main for Web & Tab -->
+    <div class="sm:flex sm:flex-row mb-4 pt-2  sm:visible hidden">
+        <div class="w-4/12 h-12 flex justify-start items-center ">
+            <div class="flex" *ngFor="let route of routesLeft;let i = index">
+                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
+                        <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                    </button>
+            </div>
+        </div>
+        <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
+                <div class="" *ngFor="let route of routesright;let i = index">
+                    <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
+                            <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                        </button>
                 </div>
-            </mat-tab>
-            <mat-tab label="Personal Information">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y lg:divide-y sm:divide-gray-200">
-                        <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.fname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Last Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.lname}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email}}</dd>
-                        </div>
+            <button mat-stroked-button   class="my-1 ml-2" (click)="openUpdateDialog()">
+                <span style="font-size: 13px;"> Update Profile </span>
+            </button>
+            <button mat-stroked-button   class="my-1 ml-2">
+                <span style="font-size: 13px"> Download/Print Profile </span>
+            </button>
+        </div>
+    </div>
+        <!-- Main for Mobile -->
+    <div class="flex sm:flex-row mb-4 pt-2 pb-2  sm:hidden visible overflow-x-scroll">
+            <div class="flex" *ngFor="let route of routesLeft;let i = index">
+                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
+                        <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                    </button>
+            </div>
+        <div class="flex" *ngFor="let route of routesright;let i = index">
+            <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
+                    <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                </button>
+        </div>
+            <button mat-stroked-button   class="my-1 ml-2 min-w-40" (click)="openUpdateDialog()">
+                <span style="font-size: 13px;"> Update Profile </span>
+            </button>
+            <button mat-stroked-button   class="my-1 ml-2 min-w-48">
+                <span style="font-size: 13px"> Download/Print Profile </span>
+            </button>
+    </div>
 
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Status</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.status}}</dd>
+    <div class="flex sm:flex-row flex-col ">
+        <div class="sm:w-8/12 md:w-8/12">
+            <div>
+                <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
+                    <app-applicantdata>
+                    </app-applicantdata>
+                </ng-template>
+            </div>
+            <div>
+                <ng-template [ngIf]="selectedIndex === 'Recruiter Data'">
+                    <app-recruiterremarks>
+                    </app-recruiterremarks>
+                </ng-template>
+            </div>
+            <div>
+                <ng-template [ngIf]="selectedIndex === 'Prior Application'">
+                    <app-applicantdata>
+                    </app-applicantdata>
+                </ng-template>
+            </div>
+
+        </div>
+        <div class="sm:w-4/12 md:w-4/12">
+            <div class="h-180 bg-gray-100 rounded mx-2 my-2">
+            <div class="flex flex-col   py-4 px-2">
+                <div class="flex relative min-h-14 {{item.active? 'opacity-100':'opacity-50'}}" *ngFor="let item of items" >
+                   <div class="flex flex-col items-center min-w-12">
+                    <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
+
+                      bg-{{
+                        item.status === 'a'
+                            ? 'blue'
+                            : ''
+                    }}-400
+                    bg-{{
+                        item.status === 'b'
+                            ? 'red'
+                            : ''
+                    }}-400
+                    bg-{{
+                        item.status === 'c'
+                            ? 'orange'
+                            : ''
+                    }}-400
+                      bg-{{
+                        item.status === 'd1'
+                            ? 'yellow'
+                            : ''
+                    }}-400
+             bg-{{
+                        item.status ===
+                        'e1'
+                            ? 'green'
+                            : 'red'
+                    }}-400
+
+                    bg-{{
+                        item.status ===
+                        false
+                            ? 'indigo'
+                            : ''
+                    }}-400
+                      "
+                      >
+                      <mat-icon
+                        class="{{item.active? 'visible': 'invisible'}}"
+                         [svgIcon]="'heroicons_outline:check'"
+                         [ngStyle]="{'color':'white'}"
+                         ></mat-icon>
                         </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email1</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email1}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Email2</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.email2}}</dd>
-                        </div> -->
-                        <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.status}}</dd>
-                        </div> -->
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">DOB</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.dob}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Marital Status</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.martialStatus}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Address 1</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.address1}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Address 2</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.address2}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Town/City</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.town}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Postal Code</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.postalCode}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Country</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.country}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">US Citizen</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.citizenStatus}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Tractor License</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.tractorStatus}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Passport</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.passport}}</dd>
-                        </div>
-                    </dl>
+                    <div class="timeline-track"></div>
+                     </div>
+                   <div class="flex-1 flex flex-row px-4">
+                    <div class="w-8/12 flex flex-col">
+                        <ng-template [ngIf]="item.name !== ''">
+                            <span class="text-md font-sans font-normal text-gray-400">{{item.content}}</span>
+                        </ng-template>
+                        <ng-template [ngIf]="item.name === ''">
+                            <span class="text-md font-sans font-normal text-gray-400 mt-2">{{item.content}}</span>
+                        </ng-template>
+                        <span class=" text-md text-black">{{item.name === 'rejected'? "": item.name}}</span>
+                    </div>
+                    <div class=" w-4/12 flex justify-end font-mono text-xs">
+                        {{item.date}}
+                    </div>
+                   </div>
                 </div>
-            </mat-tab>
-            <mat-tab label="Interview Results">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Phone Call</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstPhoneCall}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First Interview Result </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstInterviewResult}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">First ranking</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstRanking}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Referee Phone Call</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreePhoneCall}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Referee Interview Result </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreeInterviewResult}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Referee Ranking</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.refreeRanking}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second Phone Call</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondPhoneCall}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second Interview Result </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondInterviewResult}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Second Ranking</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondRanking}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third Phone Call</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdPhoneCall}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third Interview Result </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdInterviewResult}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Third Ranking</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdRanking}}</dd>
-                        </div>
+            </div>
 
-                    </dl>
-                </div>
-            </mat-tab>
-            <mat-tab label="Work Experience">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Operating Farm Equipment (ie. Tractors)                            </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.firstQuestion}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Operating Harvesting Equipment (ie. Combines)</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.secondQuestion}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Driving Trucks (ie. Artic and/or Semi's)</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.thirdQuestion}}</dd>
-                        </div>
-
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Welding Experience</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.fourthQuestion}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Mechanical Experience</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.fifthQuestion}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Description</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.workExperience}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Job</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.job}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Supervisor Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.supervisor}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Supervisor Contact</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{applicants.supervisorContact}}</dd>
-                        </div>
-                    </dl>
-                </div>
-            </mat-tab>
-            <mat-tab label="Educational Background">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Education</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"College"}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Reason For Applying</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Travel"}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">How Did You Hear About Us?</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{"Newspaper"}}</dd>
-                        </div>
-                    </dl>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-
-
-
+            <div class="flex flex-row justify-center items-center mb-5">
+                <button
+                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44"
+                >
+                    <span>Advance to offer</span>
+                </button>
+                <button
+                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28"
+                >
+                    <span>Reject</span>
+                </button>
+            </div>
+        </div>
+        </div>
     </div>
 </div>

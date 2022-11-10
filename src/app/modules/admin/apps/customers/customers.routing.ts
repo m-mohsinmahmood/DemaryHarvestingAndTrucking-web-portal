@@ -2,7 +2,9 @@ import { Route } from '@angular/router';
 import { CustomerDetailsComponent } from './details/details.component';
 import { CustomersComponent } from 'app/modules/admin/apps/customers/customers.component';
 import { CustomersListComponent } from 'app/modules/admin/apps/customers/list/list.component';
-import { InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryTagsResolver, InventoryVendorsResolver } from 'app/modules/admin/apps/customers/customers.resolvers';
+import { ContactsDataComponent } from './navigation/customer-information/edit/contacts-data.component';
+import { CustomersContactsList } from './navigation/customer-information/list/customers-contacts.component';
+//import { DocumentItemsResolver, InventoryBrandsResolver, InventoryCategoriesResolver, InventoryProductsResolver, InventoryTagsResolver, InventoryVendorsResolver, AnalyticsResolver } from 'app/modules/admin/apps/customers/customers.resolvers';
 
 export const customersRoutes: Route[] = [
     {
@@ -11,28 +13,17 @@ export const customersRoutes: Route[] = [
         children : [
             {
                 path     : '',
-                component: CustomersListComponent,
-                resolve  : {
-                    brands    : InventoryBrandsResolver,
-                    categories: InventoryCategoriesResolver,
-                    products  : InventoryProductsResolver,
-                    tags      : InventoryTagsResolver,
-                    vendors   : InventoryVendorsResolver
-                }
-                // children : [
-                //     {
-                //         path         : 'details/:id',
-                //         component    : FileManagerDetailsComponent,
-                //         resolve      : {
-                //             item: FileManagerItemResolver
-                //         },
-                //     }
-                // ]
+                component: CustomersListComponent
             },
             {
                 path     : 'details/:Id',
-                component: CustomerDetailsComponent,
+                component: CustomerDetailsComponent
             },
+            {
+                path     : 'contacts-data/:Id',
+                component: ContactsDataComponent
+            },
+
         ]
     }
 ];

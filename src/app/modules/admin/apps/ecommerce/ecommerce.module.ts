@@ -17,11 +17,15 @@ import { SharedModule } from 'app/shared/shared.module';
 import { InventoryComponent } from 'app/modules/admin/apps/ecommerce/inventory/inventory.component';
 import { InventoryListComponent } from 'app/modules/admin/apps/ecommerce/inventory/list/inventory.component';
 import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.routing';
+import { AddModalComponent } from './inventory/add-modal/add-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
     declarations: [
         InventoryComponent,
-        InventoryListComponent
+        InventoryListComponent,
+        AddModalComponent
     ],
     imports     : [
         RouterModule.forChild(ecommerceRoutes),
@@ -30,6 +34,7 @@ import { ecommerceRoutes } from 'app/modules/admin/apps/ecommerce/ecommerce.rout
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatDialogModule,
         MatMenuModule,
         MatPaginatorModule,
         MatProgressBarModule,

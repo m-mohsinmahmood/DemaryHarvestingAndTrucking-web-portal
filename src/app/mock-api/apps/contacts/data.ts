@@ -286,7 +286,7 @@ export const contacts = [
     },
     {
         id          : '1eaa3213-ece2-4ba6-8e15-eb36ca388f50',
-        avatar      : 'assets/images/avatars/female-03.jpg',
+        avatar      : 'assets/images/avatars/male-02.jpg',
         background  : 'assets/images/cards/21-640x480.jpg',
         name        : 'Trudy Berg',
         emails      : [
@@ -1490,7 +1490,7 @@ export const contacts = [
     },
     {
         id          : '8b69fe2d-d7cc-4a3d-983d-559173e37d37',
-        avatar      : 'assets/images/avatars/female-03.jpg',
+        avatar      : 'assets/images/avatars/male-02.jpg',
         background  : 'assets/images/cards/28-640x480.jpg',
         name        : 'Misty Ramsey',
         emails      : [
@@ -2486,7 +2486,7 @@ export const contacts = [
     },
     {
         id          : '8b1befd2-66a7-4981-ae52-77f01b382d18',
-        avatar      : 'assets/images/avatars/female-03.jpg',
+        avatar      : 'assets/images/avatars/male-02.jpg',
         background  : 'assets/images/cards/29-640x480.jpg',
         name        : 'Jeannette Stanton',
         emails      : [

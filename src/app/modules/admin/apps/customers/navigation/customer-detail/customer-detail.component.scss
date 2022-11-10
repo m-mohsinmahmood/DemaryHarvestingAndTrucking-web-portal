@@ -1,0 +1,15 @@
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+$mobile: 600px;
+
+.customer-detail-height {
+    @media screen and (max-width: $mobile) {
+        height:45rem !important;
+        margin-bottom: 2rem;}
+}

@@ -315,7 +315,7 @@ export const project = {
         },
         {
             id    : '8b69fe2d-d7cc-4a3d-983d-559173e37d37',
-            avatar: 'assets/images/avatars/female-03.jpg',
+            avatar: 'assets/images/avatars/male-02.jpg',
             name  : 'Misty Ramsey',
             email : 'mistyramsey@mail.us',
             phone : '+1-990-457-2106',

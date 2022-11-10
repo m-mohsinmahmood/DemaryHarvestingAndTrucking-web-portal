@@ -1,0 +1,75 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Crops': 'Add Crops'}}</div>
+
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
+        <!-- Crop AUTOCOMPLETE -->
+
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Crop Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
+        </mat-form-field>
+
+        <mat-autocomplete  #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+            <div *ngIf="allCrops | withLoading | async as allCrops">
+                <ng-template [ngIf]="allCrops.value">
+                    <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
+                        {{ crop.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allCrops?.loading">
+                    <mat-option>
+                        <div style="display: flex;
+                                    justify-content: center;
+                                    text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+
+                <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
+                    <mat-option disabled> No Crop(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- Crop AUTOCOMPLETE -->
+
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value=true>Active</mat-option>
+                <mat-option value=false>In Active</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Year</mat-label>
+            <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)" panelClass="example-month-picker">
+            </mat-datepicker>
+        </mat-form-field>
+
+
+    </form>
+
+    <div class="flex justify-end mr-7 mt-0 mb-4">
+        <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
+            <span class="ml-2 mr-1">Discard</span>
+        </button>
+        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid || this.formValid || ((isLoadingCustomerCrop$) | async)">
+            <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
+        </button>
+    </div>
+</div>

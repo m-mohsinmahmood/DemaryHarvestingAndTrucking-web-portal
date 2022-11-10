@@ -3,12 +3,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
 import { InventoryService } from 'app/modules/admin/apps/ecommerce/inventory/inventory.service';
-
+import { AddModalComponent } from '../add-modal/add-modal.component'
 @Component({
     selector       : 'inventory-list',
     templateUrl    : './inventory.component.html',
@@ -64,7 +65,8 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: InventoryService
+        private _inventoryService: InventoryService,
+        private _matDialog: MatDialog,
     )
     {
     }
@@ -239,6 +241,16 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+
+    openAddDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(AddModalComponent);
+
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                 });
+    }
     /**
      * Toggle product details
      *
@@ -341,7 +353,7 @@ export class InventoryListComponent implements OnInit, AfterViewInit, OnDestroy
         if ( this.filteredTags.length === 0 )
         {
             // Create the tag
-            this.createTag(event.target.value);
+            /* this.createTag(event.target.value); */
 
             // Clear the input
             event.target.value = '';

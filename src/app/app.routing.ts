@@ -83,7 +83,12 @@ export const appRoutes: Route[] = [
             // Apps
             {path: 'apps', children: [
                 {path: 'ecommerce', loadChildren: () => import('app/modules/admin/apps/ecommerce/ecommerce.module').then(m => m.ECommerceModule)},
-                {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)}
+                {path: 'employee', loadChildren: () => import('app/modules/admin/apps/employee/employee.module').then(m => m.EmployeeModule)},
+                {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)},
+                {path: 'customers', loadChildren: () => import('app/modules/admin/apps/customers/customers.module').then(m => m.CustomersModule)},
+                {path: 'applicants', loadChildren: () => import('app/modules/admin/apps/applicants/applicants.module').then(m => m.ApplicantsModule)},
+                {path: 'equipment', loadChildren: () => import('app/modules/admin/apps/equipment/equipment.module').then(m => m.EquipmentModule)},
+                {path: 'crops', loadChildren: () => import('app/modules/admin/apps/crops/crops.module').then(m => m.CropsModule)},
             ]},
 
             // Pages
@@ -158,7 +163,7 @@ export const appRoutes: Route[] = [
                 {path: 'colors', loadChildren: () => import('app/modules/admin/ui/colors/colors.module').then(m => m.ColorsModule)},
 
                 // Confirmation Dialog
-                {path: 'confirmation-dialog', loadChildren: () => import('app/modules/admin/ui/confirmation-dialog/confirmation-dialog.module').then(m => m.ConfirmationDialogModule)},
+                //{path: 'confirmation-dialog', loadChildren: () => import('app/modules/admin/ui/confirmation-dialog/confirmation-dialog.module').then(m => m.ConfirmationDialogModule)},
 
                 // Datatable
                 {path: 'datatable', loadChildren: () => import('app/modules/admin/ui/datatable/datatable.module').then(m => m.DatatableModule)},

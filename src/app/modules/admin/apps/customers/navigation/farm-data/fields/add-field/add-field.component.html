@@ -1,0 +1,103 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Field': 'Add Field'}}</div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-8 overflow-y-auto">
+        <!-- MAT AUTOCOMPLETE -->
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Farm Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownFarms()" [matAutocomplete]="farms"
+                (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id" name="name"
+                placeholder="Farm Name" required />
+        </mat-form-field>
+        <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+            <div *ngIf="allFarms | withLoading | async as allFarms">
+                <ng-template [ngIf]="allFarms.value">
+                    <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm" [value]="farm">{{ farm.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.loading">
+                    <mat-option>
+                        <div style="display: flex;
+                                    justify-content: center;
+                                    text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+
+                <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                    <mat-option disabled> No Farm(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- MAT AUTOCOMPLETE -->
+        <ng-container
+            *ngFor="let field of form.get('fields')['controls']; let i = index; let first = first; let last = last;">
+            <div class="flex items-center justify-between">
+                <div *ngIf="!this.data.isEdit" class="flex items-center ml-1 text-lg font-bold">Field {{i+1}}
+                    <ng-container *ngIf="!(first && last)">
+                        <div class="flex items-center w-10 pl-2">
+                            <button class="w-8 h-8 min-h-8" mat-icon-button (click)="removeField(i)"
+                                matTooltip="Remove">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:trash'"></mat-icon>
+                            </button>
+                        </div>
+                    </ng-container>
+
+                </div>
+                
+                <div *ngIf="!this.data.isEdit">
+                    <button  *ngIf="(first)" type="button" mat-flat-button [color]="'primary'" (click)="addField()"
+                        class="btn not-italic btn-primary my-4 float-right">
+                        <i class="fa fa-plus-circle not-italic" aria-hidden="true">Add Field</i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>Field Name</mat-label>
+                    <input matInput [formControl]="field.get('name')">
+                </mat-form-field>
+
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select [formControl]="field.get('status')">
+                    <mat-option value=true>Active</mat-option>
+                    <mat-option value=false>In Active</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Acres</mat-label>
+                <input matInput [formControl]="field.get('acres')" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Year</mat-label>
+                <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
+                    [formControl]="calendar_year[i]" />
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp, i)"
+                    panelClass="example-month-picker">
+                </mat-datepicker>
+            </mat-form-field>
+        </ng-container>
+    </form>
+
+    <div class="flex justify-end mr-7 mt-1 mb-4">
+        <button class="ml-4 bg-amber-600 text-white" mat-flat-button [color]="'warn'" (click)="discard()">
+            <span class="ml-2 mr-1">Discard</span>
+        </button>
+        <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingCustomerField$ | async"
+            [disabled]="form.invalid || this.formValid || ((isLoadingCustomerField$) | async)" (click)="onSubmit()">
+            <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
+        </button>
+    </div>
+</div>

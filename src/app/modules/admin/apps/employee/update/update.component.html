@@ -17,10 +17,10 @@
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                 </div>
-                <div class="mb-4" *ngIf="imageURL =='' && avatar ">
+                <div class="mb-4" *ngIf="imageURL ==='' && avatar ">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt=" " />
                 </div>
-                <div class="mb-4" *ngIf="imageURL =='' && avatar == ''">
+                <div class="mb-4" *ngIf="imageURL ==='' && avatar === ''">
                     <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
                 </div>
                 <label class="cursor-pointer mt-6">

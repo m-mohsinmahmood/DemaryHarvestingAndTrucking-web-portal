@@ -1,0 +1,150 @@
+<div>
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
+        <div>
+            <header class="ml-2 text-3xl font-extrabold tracking-tight">
+                Combining
+            </header>
+        </div>
+        <div class="mt-2 flex">
+            <!-- Search -->
+            <!-- <mat-form-field
+            class="mr-4 fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
+            <mat-icon
+                class="icon-size-5"
+                matPrefix
+                [svgIcon]="'heroicons_solid:search'"
+            ></mat-icon>
+            <form [formGroup]="searchCombiningForm">
+                <input
+                    matInput
+                    formControlName="search"
+                    [autocomplete]="'off'"
+                    [placeholder]="'Search'"/>
+            </form>
+        </mat-form-field> -->
+            <!-- Add Rate button -->
+            <button mat-flat-button [color]="'primary'" (click)="openAddCombiningDialog()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="lg:ml-2">Add</span>
+            </button>
+            <!-- Import/Export -->
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <!-- <button mat-menu-item>
+                <mat-icon>filter</mat-icon>
+                <span>Filters</span>
+            </button> -->
+                <button mat-menu-item>
+                    <mat-icon>upload</mat-icon>
+                    <span>Import</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>download</mat-icon>
+                    <span>Export</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>download</mat-icon>
+                    <span>Download Template</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="sm:p-0">
+        <div *ngIf="combiningRateList" class="flex flex-auto overflow-hidden">
+            <!-- Products list -->
+            <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                <ng-container>
+                    <div class="grid summary-pg-rows-height overflow-y-auto">
+                        <!-- Header -->
+                        <div class="combining-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort matSortDisableClear (matSortChange)="sortData($event)">
+                            <div mat-sort-header="crop_name">
+                                Crop
+                            </div>
+                            <div mat-sort-header="bushel_weight" class="hidden sm:block">
+                                Bushel Weight
+                            </div>
+                            <div mat-sort-header="combining_rate" class="hidden sm:block">
+                                Combining Rate
+                                <mat-hint>(Per Acre)</mat-hint>
+                            </div>
+                            <div mat-sort-header="base_bushels" class="hidden sm:block">
+                                Base Bushels
+                                <mat-hint>(Per Acre)</mat-hint>
+                            </div>
+                            <div mat-sort-header="premium_rate" class="hidden sm:block">
+                                Premium Rate
+                                <mat-hint>(Per Bushel)</mat-hint>
+                            </div>
+                            <div>Actions</div>
+                        </div>
+                        <!-- Rows -->
+                        <div class="rows-wrapper">
+
+                            <ng-container
+                                *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
+                                <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
+                                    <div class="combining-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate">
+                                            {{combiningRate.crop_name}}
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            {{combiningRate.bushel_weight}}
+                                        </div>
+                                        <div class="hidden sm:block items-center">
+                                            {{combiningRate.combining_rate}}
+                                        </div>
+                                        <div class="hidden sm:block items-center">
+                                            {{combiningRate.base_bushels == null ? '-':
+                                            combiningRate.base_bushels }}
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            {{combiningRate.premium_rate == 0 ? '-' : combiningRate.premium_rate
+                                            }}
+                                        </div>
+                                        <!-- Action -->
+                                        <div>
+                                            <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                mat-stroked-button (click)="openEditCombiningDialog(combiningRate)"
+                                                matTooltip="Edit" matTooltipPosition="above">
+                                                <mat-icon class="icon-size-5"
+                                                    [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                            </button>
+                                            <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                mat-stroked-button (click)="confirmDeleteDialog(combiningRate.id)"
+                                                matTooltip="Delete" matTooltipPosition="above">
+                                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
+                                                </mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!-- <mat-paginator
+                        class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{ 'pointer-events-none': isLoading }"
+                        [length]="combiningRateList?.count"
+                        [pageIndex]="page - 1"
+                        [pageSize]="5"
+                        [pageSizeOptions]="pageSizeOptionsSummary"
+                        (page)="pageChanged($event, 'Combining')"
+                        [showFirstLastButtons]="true">
+                    </mat-paginator> -->
+                </ng-container>
+                <ng-template class="flex" #noCombiningRateList>
+                    <div class="show-centered-notice h-full justify-center items-center flex">
+                        <div class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+                            No Combining Rate(s) Found!
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

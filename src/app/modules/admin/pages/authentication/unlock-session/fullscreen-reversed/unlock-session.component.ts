@@ -17,7 +17,7 @@ export class UnlockSessionFullscreenReversedComponent implements OnInit
         type   : 'success',
         message: ''
     };
-    name: string = 'Brian Hughes';
+    name: string = 'Bill Demaray';
     showAlert: boolean = false;
     unlockSessionForm: FormGroup;
 
