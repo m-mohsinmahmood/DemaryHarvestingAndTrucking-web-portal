@@ -1,8 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @angular-eslint/component-class-suffix */
-/* eslint-disable @typescript-eslint/member-ordering */
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -139,6 +134,7 @@ export class AddCustomer implements OnInit {
         }
     }
     discard(): void {
+        this._customersService.isLoadingCustomer.next(false);
         this.matDialogRef.close();
     }
     //#endregion

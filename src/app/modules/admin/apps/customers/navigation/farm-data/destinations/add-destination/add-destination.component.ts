@@ -73,7 +73,7 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
     date = new FormControl(moment());
     calendar_year;
     customerDestination: any;
-    formValid: boolean = true;
+    formValid: boolean;
     //#endregion
 
     //#region Auto Complete Farms

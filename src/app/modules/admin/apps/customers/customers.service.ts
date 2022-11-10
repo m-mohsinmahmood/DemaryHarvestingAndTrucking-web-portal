@@ -89,7 +89,7 @@ export class CustomersService {
     isLoadingCustomerContact: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly isLoadingCustomerContact$: Observable<boolean> =
-        this.isLoadingCustomer.asObservable();
+        this.isLoadingCustomerContact.asObservable();
 
     //#endregion
 
@@ -508,6 +508,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomer.next(false);
                 },
                 () => {
                     this.getCustomers();
@@ -535,6 +536,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomer.next(false);
                 },
                 () => {
                     this.getCustomerById(customerData.id);
@@ -638,6 +640,7 @@ export class CustomersService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingCustomerContact.next(false);
                 },
                 () => {
                     this.getCustomerContact(data.customer_id);

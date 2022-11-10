@@ -95,14 +95,10 @@ export class AddCustomerContact implements OnInit {
             avatar: [[]],
         });
     }
-
-    createCustomerContact(customerContact: any): void {
-        this._customerService.createCustomerContact(customerContact);
-    }
-
+    
     onSubmit(): void {
         this._customerService.isLoadingCustomerContact.next(true);
-        this.createCustomerContact(this.form.value);
+        this._customerService.createCustomerContact(this.form.value);
     }
 
     discard(): void {

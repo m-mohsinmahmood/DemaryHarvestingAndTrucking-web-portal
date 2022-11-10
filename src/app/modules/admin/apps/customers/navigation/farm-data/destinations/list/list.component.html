@@ -55,10 +55,10 @@
                         <!-- Header -->
                         <div class="farm-data-destination z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
-                            <div mat-sort-header="farm_name">
+                            <div class="hidden sm:block" mat-sort-header="farm_name">
                                 Farm Name
                             </div>
-                            <div class="hidden sm:block" mat-sort-header="destination_name">
+                            <div  mat-sort-header="destination_name">
                                 Destination Name
                             </div>
                             <div class="hidden sm:block" mat-sort-header="status">
@@ -75,10 +75,10 @@
                             <ng-container *ngFor="
                                 let destination of customerDestinationList?.customer_destinations">
                                 <div class="farm-data-destination grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                    <div class="truncate">
+                                    <div class="hidden sm:block truncate">
                                         {{ destination.farm_name }}
                                     </div>
-                                    <div class="hidden sm:block">
+                                    <div class="truncate">
                                         {{
                                         destination.destination_name
                                         }}

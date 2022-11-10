@@ -6,9 +6,7 @@
         <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Crops': 'Add Crops'}}</div>
 
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </div>
 
@@ -18,10 +16,12 @@
 
         <mat-form-field appearance="outline" fxFlex>
             <mat-label>Crop Name</mat-label>
-            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops"
+                (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name"
+                placeholder="Crop Name" required />
         </mat-form-field>
 
-        <mat-autocomplete  #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+        <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
             <div *ngIf="allCrops | withLoading | async as allCrops">
                 <ng-template [ngIf]="allCrops.value">
                     <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
@@ -57,7 +57,8 @@
             <mat-label>Year</mat-label>
             <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)" panelClass="example-month-picker">
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
+                panelClass="example-month-picker">
             </mat-datepicker>
         </mat-form-field>
 
@@ -68,7 +69,8 @@
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">Discard</span>
         </button>
-        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="onSubmit()" [disabled]="form.invalid || this.formValid || ((isLoadingCustomerCrop$) | async)">
+        <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingCustomerCrop$ | async"
+            (click)="onSubmit()" [disabled]="form.invalid || this.formValid || ((isLoadingCustomerCrop$) | async)">
             <span class=" mr-1">{{this.data.isEdit? 'Update': 'Save'}}</span>
         </button>
     </div>

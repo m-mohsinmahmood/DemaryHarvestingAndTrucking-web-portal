@@ -22,7 +22,7 @@ export class AddCombiningRateComponent implements OnInit {
     form: FormGroup;
     routeID: string;
     imageURL: string = '';
-    formValid: boolean = true;
+    formValid: boolean;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
@@ -86,7 +86,7 @@ export class AddCombiningRateComponent implements OnInit {
           this.form.patchValue({
             id: combiningRate.id,
             customer_id: customer_id,
-            crop_id: {id: combiningRate.crop_id, name: combiningRate.crop_name},
+            crop_id: {crop_id: combiningRate.crop_id, name: combiningRate.crop_name},
             combining_rate: combiningRate.combining_rate,
             base_bushels: combiningRate.base_bushels,
             premium_rate: combiningRate.premium_rate,
@@ -118,7 +118,7 @@ export class AddCombiningRateComponent implements OnInit {
 
   //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
-      return crop ? `${crop.crop_name}` : undefined;
+      return crop ? `${crop.name}` : undefined;
     }
   //#endregion
 

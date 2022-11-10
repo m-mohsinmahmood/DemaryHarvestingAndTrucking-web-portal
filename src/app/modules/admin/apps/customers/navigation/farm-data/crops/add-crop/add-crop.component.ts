@@ -62,7 +62,7 @@ export class AddCropComponent implements OnInit {
     date = new FormControl(moment());
     calendar_year;
     customerCropData: any;
-    formValid: boolean = true;
+    formValid: boolean;
     //#endregion
 
     //#region Auto Complete Farms
@@ -157,7 +157,7 @@ export class AddCropComponent implements OnInit {
     }
 
     discard(): void {
-        this._customerService.isLoadingCustomerCrop.next(true);
+        this._customerService.isLoadingCustomerCrop.next(false);
         this.matDialogRef.close();
     }
 
