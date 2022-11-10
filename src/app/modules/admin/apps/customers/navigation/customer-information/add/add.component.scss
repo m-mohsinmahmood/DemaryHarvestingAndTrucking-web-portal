@@ -87,3 +87,10 @@ mat-grid-tile {
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
 }
+
+::ng-deep .phone-number-outline .mat-form-field-outline-start {
+    width: 28px !important;
+}
+::ng-deep .mat-form-field-flex {
+    align-items: center !important;
+}

@@ -70,16 +70,18 @@
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field class="phone-number-outline" appearance="outline">
                         <mat-label class="">Cell Number</mat-label>
-                        <input type="number" matInput formControlName="cell_number" />
+                        <span matPrefix>+1 &nbsp;</span>
+                        <input appPhoneMask type="text" matInput formControlName="cell_number" />
                     </mat-form-field>
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field class="phone-number-outline" appearance="outline">
                         <mat-label>Office Number</mat-label>
-                        <input type="number" matInput formControlName="office_number" />
+                        <span matPrefix>+1 &nbsp;</span>
+                        <input appPhoneMask type="text" matInput formControlName="office_number" />
                     </mat-form-field>
                 </div>
 
