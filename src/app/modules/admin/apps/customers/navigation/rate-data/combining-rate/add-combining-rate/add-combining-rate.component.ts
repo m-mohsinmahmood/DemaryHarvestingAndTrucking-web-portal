@@ -22,7 +22,7 @@ export class AddCombiningRateComponent implements OnInit {
     form: FormGroup;
     routeID: string;
     imageURL: string = '';
-    formValid: boolean = true;
+    formValid: boolean;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
@@ -118,7 +118,7 @@ export class AddCombiningRateComponent implements OnInit {
 
   //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
-      return crop ? `${crop.crop_name}` : undefined;
+      return crop ? `${crop.name}` : undefined;
     }
   //#endregion
 

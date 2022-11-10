@@ -98,7 +98,7 @@
 
                                         <!-- Position -->
                                         <div class="hidden lg:block items-center truncate"
-                                            matTooltip="{{ customer.position }}" matTooltipPosition="right">
+                                            matTooltip="{{ customer.position }}" matTooltipPosition="above">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.position }}
                                             <!-- </div> -->
@@ -106,7 +106,7 @@
 
                                         <!-- Phone No -->
                                         <div class="hidden md:block items-left truncate"
-                                            matTooltip="{{ customer.phone_number }}" matTooltipPosition="right">
+                                            matTooltip="{{ customer.phone_number }}" matTooltipPosition="above">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.phone_number }}
                                             <!-- </div> -->
@@ -114,14 +114,14 @@
 
                                         <!-- State -->
                                         <div class="hidden lg:block items-left truncate"
-                                            matTooltip="{{ customer.state }}" matTooltipPosition="right">
+                                            matTooltip="{{ customer.state }}" matTooltipPosition="above">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.state }}
                                             <!-- </div> -->
                                         </div>
                                         <!-- Country -->
                                         <div class="hidden sm:block items-left truncate"
-                                            matTooltip="{{ customer.country }}" matTooltipPosition="right">
+                                            matTooltip="{{ customer.country }}" matTooltipPosition="above">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.country }}
                                             <!-- </div> -->
@@ -129,7 +129,7 @@
 
                                         <!-- Email -->
                                         <div class="hidden sm:block items-center truncate"
-                                            matTooltip="{{ customer.email }}" matTooltipPosition="right">
+                                            matTooltip="{{ customer.email }}" matTooltipPosition="above">
                                             <!-- <div class="min-w-4"> -->
                                             {{ customer.email }}
                                             <!-- </div> -->
@@ -158,7 +158,7 @@
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
                                                 (click)="
                                                 toggleGeneralInfo(customer.id, true)
-                                            " matTooltip="Details" matTooltipPosition="right">
+                                            " matTooltip="Details" matTooltipPosition="above">
                                                 <mat-icon class="icon-size-5" [svgIcon]="
                                                     'heroicons_solid:chevron-right'
                                                 "></mat-icon>
@@ -169,7 +169,7 @@
                                         <div>
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
                                                 (click)="toggleContactsDetails(customer.id)" matTooltip="Contacts"
-                                                matTooltipPosition="right">
+                                                matTooltipPosition="above">
                                                 <mat-icon class="icon-size-5" [svgIcon]="
                                                     'heroicons_solid:chevron-right'
                                                 "></mat-icon>

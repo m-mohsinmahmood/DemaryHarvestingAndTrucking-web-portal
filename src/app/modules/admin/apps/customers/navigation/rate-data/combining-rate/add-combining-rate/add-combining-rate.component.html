@@ -20,7 +20,7 @@
             <div *ngIf="allCrops | withLoading | async as allCrops">
                 <ng-template [ngIf]="allCrops.value">
                     <mat-option *ngFor="let crop of allCrops.value.customer_crops" [value]="crop">
-                        {{ crop.crop_name }}
+                        {{ crop.name }}
                     </mat-option>
                 </ng-template>
                 <ng-template [ngIf]="allCrops?.loading">
