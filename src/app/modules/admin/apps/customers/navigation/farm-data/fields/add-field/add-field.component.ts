@@ -127,10 +127,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             const fieldFormGroup = [];
             fieldFormGroup.push(
                 this._formBuilder.group({
-                    name: ['All Fields'],
-                    acres: [''],
+                    name: ['All Fields',[Validators.required]],
+                    acres: ['', [Validators.required]],
                     calendar_year: [moment()],
-                    status: ['']
+                    status: ['', [Validators.required]]
 
                 })
             );
@@ -186,10 +186,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
 
     addField(): void {
         const fieldGroup = this._formBuilder.group({
-            name: ['All Fields'],
-            acres: [''],
+            name: ['All Fields',[Validators.required]],
+            acres: ['',[Validators.required]],
             calendar_year: [moment()],
-            status: ['']
+            status: ['',[Validators.required]]
         });
 
         (this.form.get('fields') as FormArray).push(fieldGroup);

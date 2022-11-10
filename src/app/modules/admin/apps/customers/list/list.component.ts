@@ -179,7 +179,7 @@ export class CustomersListComponent implements OnInit {
 
     //  Toggle Customer  Details
     toggleGeneralInfo(customerId: string, state: string): void {
-        this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Customer Detail' } });
+        this._router.navigateByUrl(`apps/customers/details/${customerId}`, { state: { title: 'Customer Information' } });
     }
     //  Toggle Customer Contacts Details
     toggleContactsDetails(customerId: string): void {
