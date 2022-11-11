@@ -99,34 +99,53 @@ export class ContactsDataComponent implements OnInit {
             note_2: [''],
             avatar: [[]],
         });
+        const { customerContact } = this.data;
+        // Remove +1 from phone number
+        customerContact.cell_number = this.removeCountryCode(customerContact.cell_number);
+        customerContact.office_number = this.removeCountryCode(customerContact.office_number);
+        // Patch Value
         this.form.patchValue({
-            id: this.data.customerContact.id,
-            customer_id: this.data.customerContact.customer_id,
-            first_name: this.data.customerContact.first_name,
-            last_name: this.data.customerContact.last_name,
-            website: this.data.customerContact.website,
-            position: this.data.customerContact.position,
-            address: this.data.customerContact.address,
-            cell_number: this.data.customerContact.cell_number,
-            city: this.data.customerContact.city,
-            office_number: this.data.customerContact.office_number,
-            state: this.data.customerContact.state,
-            email: this.data.customerContact.email,
-            zip_code: this.data.customerContact.zip_code,
-            fax: this.data.customerContact.fax,
-            linkedin: this.data.customerContact.linkedin,
-            note_1: this.data.customerContact.note_1,
-            note_2: this.data.customerContact.note_2,
-            avatar: this.data.customerContact.avatar,
+            id: customerContact.id,
+            customer_id: customerContact.customer_id,
+            first_name: customerContact.first_name,
+            last_name: customerContact.last_name,
+            website: customerContact.website,
+            position: customerContact.position,
+            address: customerContact.address,
+            cell_number: customerContact.cell_number,
+            office_number: customerContact.office_number,
+            city: customerContact.city,
+            state: customerContact.state,
+            email: customerContact.email,
+            zip_code: customerContact.zip_code,
+            fax: customerContact.fax,
+            linkedin: customerContact.linkedin,
+            note_1: customerContact.note_1,
+            note_2: customerContact.note_2,
+            avatar: customerContact.avatar,
         });
     }
-    onSubmit() {
+    onSubmit() { 
+        // Add +1 in phone number
+        this.addCountryCode('cell_number');
+        this.addCountryCode('office_number'); 
         this._customerService.isLoadingCustomerContact.next(true);
         this._customerService.updateCustomerContact(this.form.value);
     }
     discard(): void {
         this._customerService.isLoadingCustomerContact.next(false);
         this.matDialogRef.close();
+    }
+    addCountryCode(phoneNumber){
+         let numberFormat = this.form.value[phoneNumber].split('');
+        numberFormat.unshift('+1');
+        this.form.value[phoneNumber] =  numberFormat.join('');
+    }
+    removeCountryCode(phoneNumber){
+        let numberFormat = phoneNumber.split('');
+        numberFormat.splice(0,2);
+        phoneNumber = numberFormat.join('');
+        return phoneNumber;
     }
     //#endregion
     //#region Add Dialog

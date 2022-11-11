@@ -92,6 +92,10 @@ export class AddCustomer implements OnInit {
         });
         if (this.data && this.data.isEdit) {
             const { customerData } = this.data;
+            //remove +1 from phone number
+            let numberFormat = customerData.phone_number.split('');
+            numberFormat.splice(0,2);
+            customerData.phone_number = numberFormat.join('');
             this.form.patchValue({
                 id                  : customerData.id,
                 customer_name       : customerData.customer_name,
@@ -126,6 +130,10 @@ export class AddCustomer implements OnInit {
         );
     }
     onSubmit(): void {
+        //Add +1 in phone Number
+        let numberFormat = this.form.value['phone_number'].split('');
+        numberFormat.unshift('+1');
+        this.form.value['phone_number'] =  numberFormat.join('');
         this._customersService.isLoadingCustomer.next(true);
         if (this.data && this.data.isEdit) {
             this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
