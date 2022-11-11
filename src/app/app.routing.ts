@@ -102,6 +102,12 @@ export const appRoutes: Route[] = [
 
                 // Coming Soon
                 {path: 'coming-soon', loadChildren: () => import('app/modules/admin/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)},
+                //landing page
+                {path: 'landing-page', loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+                //landing page
+                {path: 'applicant-page', loadChildren: () => import('app/modules/admin/pages/applicant-page/applicant-page.module').then(m => m.ApplicantPageModule)},
+
 
                 // Error
                 {path: 'error', children: [
