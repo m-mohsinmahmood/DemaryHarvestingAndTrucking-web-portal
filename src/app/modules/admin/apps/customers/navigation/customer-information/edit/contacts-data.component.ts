@@ -87,7 +87,7 @@ export class ContactsDataComponent implements OnInit {
             website: [''],
             position: [''],
             address: [''],
-            cell_number: [''],
+            cell_number: ['',[Validators.required]],
             city: [''],
             office_number: [''],
             state: [''],
@@ -100,10 +100,7 @@ export class ContactsDataComponent implements OnInit {
             avatar: [[]],
         });
         const { customerContact } = this.data;
-        // Remove +1 from phone number
-        customerContact.cell_number = this.removeCountryCode(customerContact.cell_number);
-        customerContact.office_number = this.removeCountryCode(customerContact.office_number);
-        // Patch Value
+     
         this.form.patchValue({
             id: customerContact.id,
             customer_id: customerContact.customer_id,
@@ -126,26 +123,12 @@ export class ContactsDataComponent implements OnInit {
         });
     }
     onSubmit() { 
-        // Add +1 in phone number
-        this.addCountryCode('cell_number');
-        this.addCountryCode('office_number'); 
         this._customerService.isLoadingCustomerContact.next(true);
         this._customerService.updateCustomerContact(this.form.value);
     }
     discard(): void {
         this._customerService.isLoadingCustomerContact.next(false);
         this.matDialogRef.close();
-    }
-    addCountryCode(phoneNumber){
-         let numberFormat = this.form.value[phoneNumber].split('');
-        numberFormat.unshift('+1');
-        this.form.value[phoneNumber] =  numberFormat.join('');
-    }
-    removeCountryCode(phoneNumber){
-        let numberFormat = phoneNumber.split('');
-        numberFormat.splice(0,2);
-        phoneNumber = numberFormat.join('');
-        return phoneNumber;
     }
     //#endregion
     //#region Add Dialog
