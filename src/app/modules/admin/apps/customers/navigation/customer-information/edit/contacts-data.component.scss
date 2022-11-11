@@ -62,6 +62,16 @@ mat-grid-tile {
     background: lightblue;
 }
 
- ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
     padding: 0px !important;
+}
+
+::ng-deep .phone-number-outline .mat-form-field-outline-start {
+    width: 28px !important;
+}
+::ng-deep .phone-number-outline .mat-form-field-infix input {
+    margin-bottom: 2px !important;
+}
+::ng-deep .mat-form-field-flex {
+    align-items: center !important;
 }
