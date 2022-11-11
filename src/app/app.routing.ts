@@ -105,9 +105,9 @@ export const appRoutes: Route[] = [
                 //landing page
                 {path: 'landing-page', loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
 
-                //landing page
-                {path: 'applicant-page', loadChildren: () => import('app/modules/admin/pages/applicant-page/applicant-page.module').then(m => m.ApplicantPageModule)},
+                //applicant page
 
+                {path:'applicant',loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
                 // Error
                 {path: 'error', children: [

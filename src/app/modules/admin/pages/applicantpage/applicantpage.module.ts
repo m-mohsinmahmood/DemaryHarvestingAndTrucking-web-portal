@@ -9,7 +9,6 @@ import { FuseCardModule } from '@fuse/components/card';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { ApplicantPageFullscreenComponent } from './fullscreen/applicant-page.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
@@ -32,24 +31,25 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import { ApplicantpageComponent } from './applicantpage.component';
+import { activitiesRoutes } from './applicantpage.routing';
 
 
 
-const routes: Routes = [
-    
-    {
-        path     : '',
-        component: ApplicantPageFullscreenComponent
-    }
-];
+// const routes: Routes = [
+//     {
+//         path     : '',
+//         component: ApplicantpageComponent
+//     }
+// ];
 
 @NgModule({
     declarations: [
-        ApplicantPageFullscreenComponent
+        ApplicantpageComponent
 
     ],
     imports     : [
-        RouterModule.forChild(routes),
+RouterModule.forChild(activitiesRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,

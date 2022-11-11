@@ -1,3 +1,19 @@
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'app-applicantpage',
+//   templateUrl: './applicantpage.component.html',
+//   styleUrls: ['./applicantpage.component.scss']
+// })
+// export class ApplicantpageComponent implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit(): void {
+//   }
+
+// }
+
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
@@ -14,12 +30,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import moment from 'moment';
 
 @Component({
-    selector     : 'applicant-page',
-    templateUrl  : './applicant-page.component.html',
+    selector: 'app-applicantpage',
+      templateUrl: './applicantpage.component.html',
+      styleUrls: ['./applicantpage.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ApplicantPageFullscreenComponent implements OnInit
+export class ApplicantpageComponent implements OnInit
 {
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
@@ -42,7 +59,8 @@ export class ApplicantPageFullscreenComponent implements OnInit
     //   avatar: string = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
     routeID: string;
     avatar: string = '';
-    isEdit: boolean;
+    isEdit: boolean = true;
+    data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
      //#endregion
 
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
@@ -61,7 +79,7 @@ export class ApplicantPageFullscreenComponent implements OnInit
         // public matDialogRef: MatDialogRef<UpdateComponent>,
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
-        @Inject(MAT_DIALOG_DATA) public data: any,
+        // @Inject(MAT_DIALOG_DATA) public data: any,
 
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
@@ -71,7 +89,7 @@ export class ApplicantPageFullscreenComponent implements OnInit
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-        this.routeID = data ? data.id : '';
+        // this.routeID = data ? data.id : '';
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -84,7 +102,7 @@ export class ApplicantPageFullscreenComponent implements OnInit
     ngOnInit(): void
     {
         this.initfarmGroups();
-        this.isEdit = this.data.isEdit;
+        // this.isEdit = this.data.isEdit;
     }
     initfarmGroups() {
         // #region initializing forms
@@ -152,7 +170,7 @@ export class ApplicantPageFullscreenComponent implements OnInit
         // Get the employee by id
         if (this.data !== null) {
             this._applicantService
-                .getApplicantById(this.data?.id)
+                .getApplicantById('a9beac0d-1ea0-42af-bc36-ca839f27271f')
                 .subscribe((employee) => {
                     // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
 

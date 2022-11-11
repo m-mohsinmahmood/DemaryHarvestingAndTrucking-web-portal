@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'landing-page-classic',
@@ -26,7 +27,8 @@ export class LandingPageFullscreenComponent implements OnInit
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private router: Router
     )
     {
     }
@@ -45,7 +47,9 @@ export class LandingPageFullscreenComponent implements OnInit
         //     email: ['', [Validators.required, Validators.email]]
         // });
     }
-
+  navigate(){
+ this.router.navigateByUrl('pages/applicant');
+  }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
