@@ -110,3 +110,7 @@
     color: white;
     text-align: center;
 }
+:ng-deep fuse-vertical-navigation.fuse-vertical-navigation-position-left.fuse-vertical-navigation-mode-side.fuse-vertical-navigation-opened
+{
+    display: none !important;
+}
