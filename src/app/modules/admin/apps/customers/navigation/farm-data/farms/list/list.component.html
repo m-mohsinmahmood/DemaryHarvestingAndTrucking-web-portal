@@ -15,7 +15,7 @@
             </form>
         </mat-form-field>
         <!-- Add product button -->
-        <button mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
+        <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddFarmDialog()">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="lg:ml-2">Add</span>
         </button>
@@ -24,10 +24,6 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <!-- <button mat-menu-item>
-            <mat-icon>filter</mat-icon>
-            <span>Filters</span>
-        </button> -->
             <button mat-menu-item>
                 <mat-icon>upload</mat-icon>
                 <span>Import</span>

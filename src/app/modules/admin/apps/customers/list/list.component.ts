@@ -191,16 +191,18 @@ export class CustomersListComponent implements OnInit {
 
     //#region Filters 
     applyFilters() {
+        this.page = 1;
         !this.formFilters.value.type ? (this.formFilters.value.type = '') : ('');
         !this.formFilters.value.status ? (this.formFilters.value.status = '') : ('');
-        this._customersService.getCustomers(this.page, 10, '', '', this.searchResult, this.formFilters.value)
+        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.formFilters.value)
     }
 
     removeFilters() {
+        this.page = 1;
         this.formFilters.reset();
         this.formFilters.value.type = '';
         this.formFilters.value.status = '';
-        this._customersService.getCustomers( this.page, 10, '', '', this.searchResult, this.formFilters.value)
+        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.formFilters.value)
     }
 
     initFiltersForm() {

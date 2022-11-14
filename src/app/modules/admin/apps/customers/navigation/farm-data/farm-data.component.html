@@ -11,7 +11,7 @@
         </mat-tab>
         <!--Crops-->
         <mat-tab label="Crops">
-            <app-list-crops [customerCropList]="(customerCropList$ | async)"></app-list-crops>
+            <app-list-crops [customerCropList]="(customerCropList$ | async)" [cropFilters] = "cropFilters" ></app-list-crops>
         </mat-tab>
         <!-- Destination -->
         <mat-tab label="Destinations" >

@@ -1,0 +1,38 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full bg-white">
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <div class="top-navigation-menu flex flex-row columns-2 w-9/12 m-auto">
+            <div class="col-1 w-1/2"> 
+                <img src="assets\images\pages\top-navigation-assets\DemaryHarvesting.png" class="py-8 w-64 h-auto">
+            </div>
+            <div class="col-2 w-1/2 flex item-center justify-start font-bold gap-2 py-8">
+                <button class="min-w-16 py-4 font-bold text-xl"  (click)="navigateHome()" mat-button>Home</button>
+                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Trucking</button>
+                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Farming</button>
+                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Employment</button>
+                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn" mat-flat-button type="button" [color]="'primary'" (click)="navigate()">
+                    Join Us
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
+                </button>
+
+                <!-- <button mat-button [matMenuTriggerFor]="home">Home</button> -->
+                <!-- <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item>Item 2</button>
+                </mat-menu> -->
+
+            </div>
+        </div>
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <router-outlet *ngIf="true"></router-outlet>
+
+
+    </div>
+
+</div>

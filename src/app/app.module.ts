@@ -15,6 +15,7 @@ import { appRoutes } from 'app/app.routing';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from '../app/interceptors/interceptor';
 import {MatNativeDateModule} from '@angular/material/core';
+import { ApplicantpageComponent } from './modules/admin/pages/applicantpage/applicantpage.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
