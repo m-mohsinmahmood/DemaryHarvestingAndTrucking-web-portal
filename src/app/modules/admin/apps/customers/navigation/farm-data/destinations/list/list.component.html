@@ -3,8 +3,9 @@
     <div>
         <header class="ml-2 text-3xl font-extrabold tracking-tight">
             Destinations <mat-hint
-            *ngIf="destinationFilters.value.farm_id || destinationFilters.value.status || destinationFilters.value.calendar_year" class="text-sm ml-2 mt-1">(Filters
-            Applied)</mat-hint>
+                *ngIf="destinationFilters.value.farm_id || destinationFilters.value.status || destinationFilters.value.calendar_year"
+                class="text-sm ml-2 mt-1">(Filters
+                Applied)</mat-hint>
         </header>
     </div>
     <div class="mt-2 lg:flex">
@@ -21,11 +22,13 @@
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="lg:ml-2">Add </span>
         </button>
-          <!-- Filters -->
-          <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
-            <mat-icon *ngIf="destinationFilters.value.farm_id || destinationFilters.value.status || destinationFilters.value.calendar_year "
+        <!-- Filters Button -->
+        <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+            <mat-icon
+                *ngIf="destinationFilters.value.farm_id || destinationFilters.value.status || destinationFilters.value.calendar_year "
                 [svgIcon]="'heroicons_solid:filter'"></mat-icon>
-            <mat-icon *ngIf="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
+            <mat-icon
+                *ngIf="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
                 [svgIcon]="'heroicons_outline:filter'"></mat-icon>
         </button>
         <!-- Import/Export -->
@@ -62,7 +65,7 @@
                             <div class="hidden sm:block" mat-sort-header="farm_name">
                                 Farm Name
                             </div>
-                            <div  mat-sort-header="destination_name">
+                            <div mat-sort-header="destination_name">
                                 Destination Name
                             </div>
                             <div class="hidden sm:block" mat-sort-header="status">
@@ -119,8 +122,7 @@
                                             </mat-icon>
                                         </button>
                                         <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                            mat-stroked-button
-                                            (click)="confirmDeleteDialog(destination.destination_id)"
+                                            mat-stroked-button (click)="confirmDeleteDialog(destination.destination_id)"
                                             matTooltip="Delete" matTooltipPosition="above">
                                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
                                             </mat-icon>
@@ -201,8 +203,9 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline">
-                            <mat-label>Year</mat-label>
-                            <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
+                            <mat-label>Calendar Year</mat-label>
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
+                                [formControl]="calendar_year">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
                                 panelClass="example-month-picker">
@@ -213,13 +216,15 @@
             </div>
             <div class="flex flex-row justify-evenly items-center w-80">
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button [disabled]="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
+                    <button
+                        [disabled]="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
                         (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button [color]="'primary'">
                         <span class="">Apply filters</span>
                     </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button [disabled]="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
+                    <button
+                        [disabled]="!destinationFilters.value.farm_id && !destinationFilters.value.status && !destinationFilters.value.calendar_year"
                         (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
                         <span>Remove filters</span>
                     </button>

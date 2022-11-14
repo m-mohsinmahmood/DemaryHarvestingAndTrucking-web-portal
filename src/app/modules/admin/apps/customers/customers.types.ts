@@ -23,9 +23,12 @@ export interface customerFilters {
     type: string;
     status: string;
 }
-
 export interface fieldFilters {
     farm_id: string;
+    status: string;
+    calendar_year: string;
+}
+export interface cropFilters {
     status: string;
     calendar_year: string;
 }

@@ -15,6 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddCropComponent } from '../add-crop/add-crop.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
+import moment from 'moment';
 
 export const MY_FORMATS = {
     parse: {
@@ -43,6 +46,7 @@ export const MY_FORMATS = {
 export class ListCropComponent implements OnInit {
     //#region Input
     @Input() customerCropList: Observable<any>;
+    @Input() cropFilters: any;
     //#endregion
 
     //#region Search form variables
@@ -63,6 +67,7 @@ export class ListCropComponent implements OnInit {
     limit: number;
     cropSort: any[] = [];
     isEdit: boolean;
+    calendar_year;
     //#endregion
 
     constructor(
@@ -73,6 +78,7 @@ export class ListCropComponent implements OnInit {
 
     //#region Lifecycle hooks
     ngOnInit(): void {
+        this.initCalendar();
         // get Activated Route
         this.activatedRoute.params
             .pipe(takeUntil(this._unsubscribeAll))
@@ -92,7 +98,8 @@ export class ListCropComponent implements OnInit {
                     10,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResult,
+                    this.cropFilters.value
                 );
             });
     }
@@ -111,6 +118,7 @@ export class ListCropComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
                 status: true,
+                filters: this.cropFilters.value
             },
         });
         dialogRef.afterClosed().subscribe((result) => {});
@@ -122,6 +130,7 @@ export class ListCropComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                filters: this.cropFilters.value,
                 customerCropData: {
                     id: crop.customer_crop_id,
                     crop_id: crop.crop_id,
@@ -146,7 +155,8 @@ export class ListCropComponent implements OnInit {
             this.limit,
             this.cropSort[0],
             this.cropSort[1],
-            this.searchResult
+            this.searchResult,
+            this.cropFilters.value
         );
     }
     //#endregion
@@ -161,7 +171,8 @@ export class ListCropComponent implements OnInit {
             this.limit,
             this.cropSort[0],
             this.cropSort[1],
-            this.searchResult
+            this.searchResult,
+            this.cropFilters.value
         );
     }
     //#endregion
@@ -177,8 +188,62 @@ export class ListCropComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult)
-                this._customerService.deleteCustomerCrop(cropId, this.routeID);
+                this.page = 1;
+                this._customerService.deleteCustomerCrop(cropId, this.routeID,this.cropFilters.value);
         });
+    }
+    //#endregion
+
+    //#region Filters
+     applyFilters() {  
+        this.page = 1;
+        !this.cropFilters.value.status
+            ? (this.cropFilters.value.status = '')
+            : '';
+        !this.cropFilters.value.calendar_year
+            ? (this.cropFilters.value.calendar_year = '')
+            : '';
+        this.calendar_year.value ? (this.cropFilters.value.calendar_year = this.calendar_year.value) : ''
+        this._customerService.getCustomerCrops(
+            this.routeID,
+            1,
+            10,
+            '',
+            '',
+            this.searchResult,
+            this.cropFilters.value
+        );
+    }
+    removeFilters() {
+        this.page = 1;
+        this.cropFilters.reset();
+        this.cropFilters.value.status = '';
+        this.cropFilters.value.calendar_year = '';
+        this.calendar_year.setValue('');
+        this._customerService.getCustomerCrops(
+            this.routeID,
+            1,
+            10,
+            '',
+            '',
+            this.searchResult,
+            this.cropFilters.value
+        );
+    }
+
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue.format('YYYY'));
+        this.cropFilters.value.calendar_year = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
+    initCalendar() {
+        //Calender Year Initilize
+        this.calendar_year = new FormControl();
     }
     //#endregion
 }

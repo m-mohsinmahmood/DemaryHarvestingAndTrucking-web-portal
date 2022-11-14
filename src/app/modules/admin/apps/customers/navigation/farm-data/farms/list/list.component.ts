@@ -143,8 +143,11 @@ export class ListFarmComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
+            if (dialogResult){
+                this.page = 1
                 this._customerService.deleteCustomerFarm(farmId, this.routeID);
+            }
+               
         });
     }
     //#endregion

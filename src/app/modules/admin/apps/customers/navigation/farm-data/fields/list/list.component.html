@@ -16,7 +16,7 @@
             </form>
         </mat-form-field>
         <!-- Add product button -->
-        <button class="mr-2" mat-flat-button [color]="'primary'" (click)="openAddFieldDialog()">
+        <button class="mr-4" mat-flat-button [color]="'primary'" (click)="openAddFieldDialog()">
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="lg:ml-2">Add</span>
         </button>
@@ -204,7 +204,7 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline">
-                            <mat-label>Year</mat-label>
+                            <mat-label>Calendar Year</mat-label>
                             <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year" [formControl]="calendar_year">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"

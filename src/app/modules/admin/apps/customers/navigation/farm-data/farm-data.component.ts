@@ -87,6 +87,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     destinationSort: any[] = []
     fieldFilters: FormGroup;
     destinationFilters: FormGroup;
+    cropFilters: FormGroup;
     //#endregion
 
     constructor(
@@ -99,6 +100,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
         this.initFieldFiltersForm();
         this.initDestinationFiltersForm();
+        this.initCropFiltersForm();
         this.activatedRoute.params.pipe(takeUntil(this._unsubscribeAll))
             .subscribe((params) => {
                 this.routeID = params.Id;
@@ -198,6 +200,15 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     //#endregion
 
+     //#region Init Crop Filters Form
+     initCropFiltersForm() {
+        this.cropFilters = this._formBuilder.group({
+            status: [''],
+            calendar_year: [''],
+        });
+    }
+    //#endregion
+
     //#region Initialize Observables
     initObservables() {
         this.initCustomerFarmObservables();
@@ -270,13 +281,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._customerService.getCustomerFarm(this.routeID);
                 break;
             case 'Fields':
-                this._customerService.getCustomerField(this.routeID, 1, 10, '', '', '', this.fieldFilters.value);
+                this._customerService.getCustomerField(this.routeID);
                 break;
             case 'Crops':
                 this._customerService.getCustomerCrops(this.routeID);
                 break;
             case 'Destinations':
-                this._customerService.getCustomerDestination(this.routeID,1, 10, '', '', '', this.destinationFilters.value);
+                this._customerService.getCustomerDestination(this.routeID);
                 break;
             case 'Summary':
                 this._customerService.getCustomerFarm(
