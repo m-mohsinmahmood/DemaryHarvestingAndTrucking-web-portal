@@ -489,7 +489,7 @@ export class CustomersService {
             );
     }
 
-    createCustomer(data: any) {
+    createCustomer(data: any, filters: customerFilters) {
         this._httpClient
             .post(`api-1/customers`, data)
             .pipe(take(1))
@@ -513,7 +513,7 @@ export class CustomersService {
                     this.isLoadingCustomer.next(false);
                 },
                 () => {
-                    this.getCustomers();
+                    this.getCustomers(1,10,'','','',filters);
                 }
             );
     }

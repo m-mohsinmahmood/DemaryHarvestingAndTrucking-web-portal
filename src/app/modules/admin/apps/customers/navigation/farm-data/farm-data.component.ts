@@ -281,13 +281,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._customerService.getCustomerFarm(this.routeID);
                 break;
             case 'Fields':
-                this._customerService.getCustomerField(this.routeID);
+                this._customerService.getCustomerField(this.routeID, 1, 10, '', '', '', this.fieldFilters.value);
                 break;
             case 'Crops':
-                this._customerService.getCustomerCrops(this.routeID);
+                this._customerService.getCustomerCrops(this.routeID, 1, 10, '', '', '', this.cropFilters.value);
                 break;
             case 'Destinations':
-                this._customerService.getCustomerDestination(this.routeID);
+                this._customerService.getCustomerDestination(this.routeID, 1, 10, '', '', '', this.destinationFilters.value);
                 break;
             case 'Summary':
                 this._customerService.getCustomerFarm(

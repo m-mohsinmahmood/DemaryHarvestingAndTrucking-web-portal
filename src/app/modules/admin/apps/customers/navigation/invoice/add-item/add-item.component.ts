@@ -112,7 +112,7 @@ export class AddItemComponent implements OnInit {
      */
     send(): void
     {
-      this.api.createCustomer(this.itemForm.value);
+     // this.api.createCustomer(this.itemForm.value);
     //   .subscribe({
     //     next:(res)=>{
     //       alert("Customer Added Successfully1")
