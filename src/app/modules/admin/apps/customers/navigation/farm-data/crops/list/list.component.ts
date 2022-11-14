@@ -196,6 +196,7 @@ export class ListCropComponent implements OnInit {
 
     //#region Filters
      applyFilters() {  
+        this.page = 1;
         !this.cropFilters.value.status
             ? (this.cropFilters.value.status = '')
             : '';
@@ -214,6 +215,7 @@ export class ListCropComponent implements OnInit {
         );
     }
     removeFilters() {
+        this.page = 1;
         this.cropFilters.reset();
         this.cropFilters.value.status = '';
         this.cropFilters.value.calendar_year = '';

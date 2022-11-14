@@ -182,6 +182,7 @@ export class ListFieldComponent implements OnInit {
 
     //#region Filters
     applyFilters() {
+        this.page = 1;
         this.fieldFilters.value.farm_id?.id
             ? (this.fieldFilters.value.farm_id =
                 this.fieldFilters.value.farm_id?.id)
@@ -208,6 +209,7 @@ export class ListFieldComponent implements OnInit {
     }
 
     removeFilters() {
+        this.page = 1;
         this.fieldFilters.reset();
         this.fieldFilters.value.farm_id = '';
         this.fieldFilters.value.status = '';

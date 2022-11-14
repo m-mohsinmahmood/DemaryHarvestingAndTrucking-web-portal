@@ -204,6 +204,7 @@ export class ListDestinationComponent implements OnInit {
 
     //#region Filters
     applyFilters() {
+        this.page = 1;
         this.destinationFilters.value.farm_id?.id
             ? (this.destinationFilters.value.farm_id =
                 this.destinationFilters.value.farm_id?.id)
@@ -230,6 +231,7 @@ export class ListDestinationComponent implements OnInit {
     }
 
     removeFilters() {
+        this.page = 1;
         this.destinationFilters.reset();
         this.destinationFilters.value.farm_id = '';
         this.destinationFilters.value.status = '';
