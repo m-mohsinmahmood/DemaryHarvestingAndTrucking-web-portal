@@ -2,15 +2,43 @@ import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import {
+    MomentDateAdapter,
+    MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {
+    DateAdapter,
+    MAT_DATE_FORMATS,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddCropComponent } from '../add-crop/add-crop.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 @Component({
     selector: 'app-list-crops',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
 export class ListCropComponent implements OnInit {
     //#region Input

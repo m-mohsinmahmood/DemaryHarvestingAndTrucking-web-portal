@@ -5,22 +5,47 @@ import {
     Subject,
     takeUntil,
 } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddFieldComponent } from '../add-field/add-field.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import moment, { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateAdapter,MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 
 @Component({
     selector: 'app-list-fields',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
 export class ListFieldComponent implements OnInit {
     //#region Input
     @Input() customerFieldList: Observable<any>;
+    @Input() fieldFilters: any;
     //#endregion
 
     //#region Search form variables
@@ -45,19 +70,18 @@ export class ListFieldComponent implements OnInit {
     pageSizeOptions: number[] = [10, 25, 50, 100];
     limit: number;
     fieldSort: any[] = [];
-    formFilters: FormGroup;
+    calendar_year;
     //#endregion
 
     constructor(
-        private _formBuilder: FormBuilder,
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         private _customerService: CustomersService
-    ) {}
+    ) { }
 
     //#region Lifecycle hooks
     ngOnInit(): void {
-        this.initFiltersForm();
+        this.initCalendar();
         this.farmSearchSubscription();
         // get Activated Route
         this.activatedRoute.params
@@ -78,7 +102,7 @@ export class ListFieldComponent implements OnInit {
                     '',
                     '',
                     this.searchResult,
-                    this.formFilters.value
+                    this.fieldFilters.value
                 );
             });
     }
@@ -98,7 +122,7 @@ export class ListFieldComponent implements OnInit {
                 status: true,
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
 
     openEditFieldDialog(field): void {
@@ -117,7 +141,7 @@ export class ListFieldComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
     //#endregion
 
@@ -133,7 +157,7 @@ export class ListFieldComponent implements OnInit {
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
-            this.formFilters.value
+            this.fieldFilters.value
         );
     }
     //#endregion
@@ -149,22 +173,25 @@ export class ListFieldComponent implements OnInit {
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
-            this.formFilters.value
+            this.fieldFilters.value
         );
     }
     //#endregion
 
     //#region Filters
     applyFilters() {
-        this.formFilters.value.farm_id?.id
-            ? (this.formFilters.value.farm_id =
-                  this.formFilters.value.farm_id?.id)
+        this.fieldFilters.value.farm_id?.id
+            ? (this.fieldFilters.value.farm_id =
+                this.fieldFilters.value.farm_id?.id)
             : '';
-        !this.formFilters.value.farm_id
-            ? (this.formFilters.value.farm_id = '')
+        !this.fieldFilters.value.farm_id
+            ? (this.fieldFilters.value.farm_id = '')
             : '';
-        !this.formFilters.value.status
-            ? (this.formFilters.value.status = '')
+        !this.fieldFilters.value.status
+            ? (this.fieldFilters.value.status = '')
+            : '';
+        !this.fieldFilters.value.calendar_year
+            ? (this.fieldFilters.value.calendar_year = '')
             : '';
         this._customerService.getCustomerField(
             this.routeID,
@@ -173,14 +200,16 @@ export class ListFieldComponent implements OnInit {
             '',
             '',
             this.searchResult,
-            this.formFilters.value
+            this.fieldFilters.value
         );
     }
 
     removeFilters() {
-        this.formFilters.reset();
-        this.formFilters.value.farm_id = '';
-        this.formFilters.value.status = '';
+        this.fieldFilters.reset();
+        this.fieldFilters.value.farm_id = '';
+        this.fieldFilters.value.status = '';
+        this.fieldFilters.value.calendar_year = '';
+        this.calendar_year.setValue('');
         this._customerService.getCustomerField(
             this.routeID,
             this.page,
@@ -188,19 +217,27 @@ export class ListFieldComponent implements OnInit {
             '',
             '',
             this.searchResult,
-            this.formFilters.value
+            this.fieldFilters.value
         );
     }
 
-    initFiltersForm() {
-        this.formFilters = this._formBuilder.group({
-            farm_id: [''],
-            status: [''],
-        });
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue.format('YYYY'));
+        this.fieldFilters.value.calendar_year = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
+    initCalendar() {
+        //Calender Year Initilize
+        this.calendar_year = new FormControl();
     }
 
     getDropdownFarms() {
-        let value = this.formFilters.controls['farm_id'].value;
+        let value = this.fieldFilters.controls['farm_id'].value;
         this.allFarms = this._customerService.getDropdownCustomerFarms(
             this.routeID,
             value != null ? value : ''
