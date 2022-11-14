@@ -28,7 +28,8 @@ import {
     Documents,
     Item,
     customerFilters,
-    fieldFilters
+    fieldFilters,
+    destinationFilters
 } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
 import { Router } from '@angular/router';
@@ -864,7 +865,7 @@ export class CustomersService {
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
-        filters: fieldFilters = {farm_id: '' , status: ''},
+        filters: fieldFilters = {farm_id: '' , status: '', calendar_year: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -873,7 +874,8 @@ export class CustomersService {
         params = params.set('sort', sort);
         params = params.set('order', order);
         params = params.set('farmId', filters.farm_id);
-        params = params.set('status', filters.status)
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
         return this._httpClient
             .get<any>(`api-1/customer-field?customerId=${customer_id}`, {
                 params,
@@ -1110,12 +1112,13 @@ export class CustomersService {
     //#endregion
     //#region Customer Farm Data Destination API
     getCustomerDestination(
-        id: string,
+        customer_id: string,
         page: number = 1,
         limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
-        search: string = ''
+        search: string = '',
+        filters: destinationFilters = {farm_id: '' , status: '', calendar_year: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -1123,8 +1126,11 @@ export class CustomersService {
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
         return this._httpClient
-            .get<any>(`api-1/customer-destination?customerId=${id}`, {
+            .get<any>(`api-1/customer-destination?customerId=${customer_id}`, {
                 params,
             })
             .pipe(take(1))

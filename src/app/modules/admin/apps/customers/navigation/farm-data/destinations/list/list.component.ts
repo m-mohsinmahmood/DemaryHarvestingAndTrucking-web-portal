@@ -1,4 +1,4 @@
-import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,21 +6,50 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddDestinationComponent } from '../add-destination/add-destination.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import moment, { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateAdapter,MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
 
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 @Component({
     selector: 'app-list-destinations',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
 export class ListDestinationComponent implements OnInit {
     //#region Input
     @Input() customerDestinationList: Observable<any>;
+    @Input() destinationFilters: any;
     //#endregion
 
     //#region Search form variables
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
+    //#endregion
+
+    //#region Auto Complete Farms
+    allFarms: Observable<any>;
+    farm_search$ = new Subject();
     //#endregion
 
     //#region Variables
@@ -35,16 +64,19 @@ export class ListDestinationComponent implements OnInit {
     limit: number;
     destinationSort: any[] = [];
     isEdit: boolean;
+    calendar_year;
     //#endregion
 
     constructor(
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         private _customerService: CustomersService
-    ) {}
+    ) { }
 
     //#region Lifecycle hooks
     ngOnInit(): void {
+        this.initCalendar();
+        this.farmSearchSubscription();
         // get Activated Route
         this.activatedRoute.params
             .pipe(takeUntil(this._unsubscribeAll))
@@ -64,7 +96,8 @@ export class ListDestinationComponent implements OnInit {
                     10,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResult,
+                    this.destinationFilters.value
                 );
             });
     }
@@ -107,7 +140,7 @@ export class ListDestinationComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
     //#endregion
 
@@ -122,7 +155,8 @@ export class ListDestinationComponent implements OnInit {
             this.limit,
             this.destinationSort[0],
             this.destinationSort[1],
-            this.searchResult
+            this.searchResult,
+            this.destinationFilters.value
         );
     }
     //#endregion
@@ -137,7 +171,8 @@ export class ListDestinationComponent implements OnInit {
             this.limit,
             this.destinationSort[0],
             this.destinationSort[1],
-            this.searchResult
+            this.searchResult,
+            this.destinationFilters.value
         );
     }
     //#endregion
@@ -158,6 +193,92 @@ export class ListDestinationComponent implements OnInit {
                     this.routeID
                 );
         });
+    }
+    //#endregion
+
+    //#region Filters
+    applyFilters() {
+        this.destinationFilters.value.farm_id?.id
+            ? (this.destinationFilters.value.farm_id =
+                this.destinationFilters.value.farm_id?.id)
+            : '';
+        !this.destinationFilters.value.farm_id
+            ? (this.destinationFilters.value.farm_id = '')
+            : '';
+        !this.destinationFilters.value.status
+            ? (this.destinationFilters.value.status = '')
+            : '';
+        !this.destinationFilters.value.calendar_year
+            ? (this.destinationFilters.value.calendar_year = '')
+            : '';
+        this._customerService.getCustomerDestination(
+            this.routeID,
+            this.page,
+            10,
+            '',
+            '',
+            this.searchResult,
+            this.destinationFilters.value
+        );
+    }
+
+    removeFilters() {
+        this.destinationFilters.reset();
+        this.destinationFilters.value.farm_id = '';
+        this.destinationFilters.value.status = '';
+        this.destinationFilters.value.calendar_year = '';
+        this.calendar_year.setValue('');
+        this._customerService.getCustomerDestination(
+            this.routeID,
+            this.page,
+            10,
+            '',
+            '',
+            this.searchResult,
+            this.destinationFilters.value
+        );
+    }
+
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue.format('YYYY'));
+        this.destinationFilters.value.calendar_year = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
+    initCalendar() {
+        //Calender Year Initilize
+        this.calendar_year = new FormControl();
+    }
+
+    getDropdownFarms() {
+        let value = this.destinationFilters.controls['farm_id'].value;
+        this.allFarms = this._customerService.getDropdownCustomerFarms(
+            this.routeID,
+            value != null ? value : ''
+        );
+    }
+    //Auto Complete Farms Display Function
+    displayFarmForAutoComplete(farm: any) {
+        return farm ? `${farm.name}` : undefined;
+    }
+    //Search Function
+    farmSearchSubscription() {
+        this.farm_search$
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((value: string) => {
+                this.allFarms = this._customerService.getDropdownCustomerFarms(
+                    this.routeID,
+                    value
+                );
+            });
     }
     //#endregion
 }

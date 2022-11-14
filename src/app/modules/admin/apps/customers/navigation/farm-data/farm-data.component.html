@@ -7,7 +7,7 @@
         </mat-tab>
         <!-- Fields -->
         <mat-tab label="Fields">
-            <app-list-fields [customerFieldList]="(customerFieldList$ | async)"></app-list-fields>
+            <app-list-fields [customerFieldList]="(customerFieldList$ | async)" [fieldFilters] = "fieldFilters"></app-list-fields>
         </mat-tab>
         <!--Crops-->
         <mat-tab label="Crops">
@@ -15,7 +15,7 @@
         </mat-tab>
         <!-- Destination -->
         <mat-tab label="Destinations" >
-            <app-list-destinations [customerDestinationList]="(customerDestinationList$ | async)"></app-list-destinations>
+            <app-list-destinations [customerDestinationList]="(customerDestinationList$ | async)" [destinationFilters] = "destinationFilters"></app-list-destinations>
         </mat-tab>
         <!-- Summmary -->
         <mat-tab label="Summary" class="summary-tab flex flex-col">

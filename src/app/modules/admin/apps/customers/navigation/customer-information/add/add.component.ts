@@ -97,9 +97,7 @@ export class AddCustomerContact implements OnInit {
     }
     
     onSubmit(): void {
-        // Add +1 in phone number
-        this.addCountryCode('cell_number');
-        this.addCountryCode('office_number'); 
+   
         this._customerService.isLoadingCustomerContact.next(true);
         this._customerService.createCustomerContact(this.form.value);
     }
@@ -108,11 +106,7 @@ export class AddCustomerContact implements OnInit {
         this._customerService.isLoadingCustomerContact.next(false);
         this.matDialogRef.close();
     }
-    addCountryCode(phoneNumber){
-        let numberFormat = this.form.value[phoneNumber].split('');
-        numberFormat.unshift('+1');
-        this.form.value[phoneNumber] =  numberFormat.join('');
-    }
+   
     //#endregion
 
     //#region Avatar

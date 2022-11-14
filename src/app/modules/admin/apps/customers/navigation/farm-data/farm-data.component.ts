@@ -1,9 +1,9 @@
-import { OnDestroy, AfterViewInit,Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { OnDestroy, AfterViewInit, Component, OnInit } from '@angular/core';
 import { CustomersService } from '../../customers.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+
 @Component({
     selector: 'app-farm-data',
     templateUrl: './farm-data.component.html',
@@ -57,12 +57,12 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     customerDestination$: Observable<any[]>;
     isLoadingCustomerDestination$: Observable<boolean>;
 
-     // Summary
-     summaryfarms$: Observable<any>;
-     summaryfields$: Observable<any>;
-     summarydestinations$: Observable<any>;
+    // Summary
+    summaryfarms$: Observable<any>;
+    summaryfields$: Observable<any>;
+    summarydestinations$: Observable<any>;
 
-     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     //#endregion
 
@@ -85,20 +85,24 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     fieldSort: any[] = []
     cropSort: any[] = []
     destinationSort: any[] = []
-
+    fieldFilters: FormGroup;
+    destinationFilters: FormGroup;
     //#endregion
 
     constructor(
+        private _formBuilder: FormBuilder,
         private _customerService: CustomersService,
         public activatedRoute: ActivatedRoute
-    ) {}
+    ) { }
 
-   //#region Life Cycle Functions
+    //#region Life Cycle Functions
     ngOnInit(): void {
+        this.initFieldFiltersForm();
+        this.initDestinationFiltersForm();
         this.activatedRoute.params.pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((params) => {
-            this.routeID = params.Id;
-        });
+            .subscribe((params) => {
+                this.routeID = params.Id;
+            });
 
         // search summary farm
         this.search = this.searchformfarm.valueChanges
@@ -147,21 +151,21 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.searchResult
                 );
             });
-         // search summary Destination
-         this.search = this.searchformdestination.valueChanges
-         .pipe(debounceTime(500))
-         .subscribe((data) => {
-             this.searchResult = data.search;
-             this.page = 1;
-             this._customerService.getCustomerDestination(
-                 this.routeID,
-                 this.page,
-                 5,
-                 '',
-                 '',
-                 this.searchResult
-             );
-         });
+        // search summary Destination
+        this.search = this.searchformdestination.valueChanges
+            .pipe(debounceTime(500))
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._customerService.getCustomerDestination(
+                    this.routeID,
+                    this.page,
+                    5,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
     }
 
     ngAfterViewInit(): void {
@@ -172,7 +176,26 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
-    }    
+    }
+    //#endregion
+
+    //#region Init Field Filters Form
+    initFieldFiltersForm() {
+        this.fieldFilters = this._formBuilder.group({
+            farm_id: [''],
+            status: [''],
+            calendar_year: [''],
+        });
+    }
+    //#endregion
+    //#region Init Destination Filters Form
+    initDestinationFiltersForm() {
+        this.destinationFilters = this._formBuilder.group({
+            farm_id: [''],
+            status: [''],
+            calendar_year: [''],
+        });
+    }
     //#endregion
 
     //#region Initialize Observables
@@ -247,13 +270,13 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._customerService.getCustomerFarm(this.routeID);
                 break;
             case 'Fields':
-                this._customerService.getCustomerField(this.routeID);
+                this._customerService.getCustomerField(this.routeID, 1, 10, '', '', '', this.fieldFilters.value);
                 break;
             case 'Crops':
                 this._customerService.getCustomerCrops(this.routeID);
                 break;
             case 'Destinations':
-                this._customerService.getCustomerDestination(this.routeID);
+                this._customerService.getCustomerDestination(this.routeID,1, 10, '', '', '', this.destinationFilters.value);
                 break;
             case 'Summary':
                 this._customerService.getCustomerFarm(
@@ -283,7 +306,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //#endregion
     //#region Summary Sort
-    sortSummaryData(sort: any , summaryData) {
+    sortSummaryData(sort: any, summaryData) {
         this.page = 1;
         switch (summaryData) {
             case 'summaryFarm':
@@ -307,7 +330,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.fieldSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             case 'summaryCrop':
                 this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
                 this._customerService.getCustomerCrops(
@@ -318,7 +341,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.cropSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             case 'summaryDestination':
                 this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
                 this._customerService.getCustomerDestination(
@@ -329,8 +352,8 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.destinationSort[1],
                     this.searchResult
                 );
-            break;
-        default:
+                break;
+            default:
         }
     }
     //#endregion
@@ -339,7 +362,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     pageChanged(event, farmData) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        switch (farmData){
+        switch (farmData) {
             case 'summaryFarm':
                 this._customerService.getCustomerFarm(
                     this.routeID,
@@ -349,7 +372,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.farmSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             case 'summaryField':
                 this._customerService.getCustomerField(
                     this.routeID,
@@ -359,7 +382,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.fieldSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             case 'summaryCrop':
                 this._customerService.getCustomerCrops(
                     this.routeID,
@@ -369,7 +392,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.cropSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             case 'summaryDestination':
                 this._customerService.getCustomerDestination(
                     this.routeID,
@@ -379,7 +402,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.destinationSort[1],
                     this.searchResult
                 );
-            break;
+                break;
             default:
         }
     }

@@ -19,15 +19,21 @@ export interface Customers {
     website: string;
     linkedin: string;
 }
+export interface customerFilters {
+    type: string;
+    status: string;
+}
 
 export interface fieldFilters {
     farm_id: string;
     status: string;
+    calendar_year: string;
 }
 
-export interface customerFilters {
-    type: string;
+export interface destinationFilters {
+    farm_id: string;
     status: string;
+    calendar_year: string;
 }
 
 export interface CustomerContacts {
