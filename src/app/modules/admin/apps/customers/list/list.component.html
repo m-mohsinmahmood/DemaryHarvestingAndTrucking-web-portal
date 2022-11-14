@@ -90,7 +90,7 @@
                                         </div>
 
                                         <!-- Main Contact -->
-                                        <div class="hidden sm:block items-left truncate">
+                                        <div (click)="toggleContactsDetails(customer.id)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600 hidden sm:block items-left truncate">
                                             <div class="min-w-4">
                                                 {{ customer.main_contact }}
                                             </div>
@@ -199,7 +199,7 @@
         </div>
     </div>
 </div>
-
+<!-- Filters -->
 <fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
     [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
     <div class="flex flex-col w-100 overflow-auto bg-card">
