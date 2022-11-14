@@ -29,6 +29,7 @@ import {
     Item,
     customerFilters,
     fieldFilters,
+    cropFilters,
     destinationFilters
 } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
@@ -909,7 +910,7 @@ export class CustomersService {
             );
     }
 
-    createCustomerField(data: any) {
+    createCustomerField(data: any, filters: fieldFilters) {
         this._httpClient
             .post(`api-1/customer-field`, data)
             .pipe(take(1))
@@ -933,12 +934,12 @@ export class CustomersService {
                     this.isLoadingCustomerField.next(false);
                 },
                 () => {
-                    this.getCustomerField(data.customer_id);
+                    this.getCustomerField(data.customer_id,1,10,'','','',filters);
                 }
             );
     }
 
-    updateCustomerField(customerFieldData: any) {
+    updateCustomerField(customerFieldData: any, filters: fieldFilters) {
         this._httpClient
             .put(`api-1/customer-field`, customerFieldData)
             .pipe(take(1))
@@ -962,13 +963,13 @@ export class CustomersService {
                 },
                 () => {
                     this.getCustomerField(
-                        customerFieldData.customer_id
+                        customerFieldData.customer_id,1,10,'','','',filters
                     );
                 }
             );
     }
 
-    deleteCustomerField(id: string, customerID: string) {
+    deleteCustomerField(id: string, customerID: string, filters: fieldFilters) {
         this._httpClient
             .delete(`api-1/customer-field?id=${id}`)
             .pipe(take(1))
@@ -988,7 +989,7 @@ export class CustomersService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getCustomerField(customerID);
+                    this.getCustomerField(customerID,1,10,'','','',filters);
                     this.isLoadingCustomerField.next(false);
                 }
             );
@@ -997,12 +998,14 @@ export class CustomersService {
     //#endregion
     //#region Customer Farm Data Crop API
     getCustomerCrops(
-        id: string,
+        customer_id: string,
         page: number = 1,
         limit: number = 10,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
-        search: string = ''
+        search: string = '',
+        filters: cropFilters = { status: '', calendar_year: ''},
+
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -1010,8 +1013,10 @@ export class CustomersService {
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
         return this._httpClient
-            .get<any>(`api-1/customer-crop?customerId=${id}`, {
+            .get<any>(`api-1/customer-crop?customerId=${customer_id}`, {
                 params,
             })
             .pipe(take(1))
@@ -1027,7 +1032,7 @@ export class CustomersService {
             );
     }
 
-    createCustomerCrops(data: any) {
+    createCustomerCrops(data: any, filters: cropFilters) {
         this._httpClient
             .post(`api-1/customer-crop`, data)
             .pipe(take(1))
@@ -1051,11 +1056,11 @@ export class CustomersService {
                     this.isLoadingCustomerCrop.next(false);
                 },
                 () => {
-                    this.getCustomerCrops(data.customer_id);
+                    this.getCustomerCrops(data.customer_id,1,10,'','','',filters);
                 }
             );
     }
-    updateCustomerCrops(data: any) {
+    updateCustomerCrops(data: any, filters: cropFilters) {
         this._httpClient
             .put(`api-1/customer-crop`, data)
             .pipe(take(1))
@@ -1079,11 +1084,11 @@ export class CustomersService {
                     this.isLoadingCustomerCrop.next(false);
                 },
                 () => {
-                    this.getCustomerCrops(data.customer_id);
+                    this.getCustomerCrops(data.customer_id,1,10,'','','',filters);
                 }
             );
     }
-    deleteCustomerCrop(id: string, customerID: string) {
+    deleteCustomerCrop(id: string, customerID: string, filters: cropFilters) {
         this._httpClient
             .delete(`api-1/customer-crop?id=${id}`)
             .pipe(take(1))
@@ -1103,7 +1108,7 @@ export class CustomersService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getCustomerCrops(customerID);
+                    this.getCustomerCrops(customerID,1,10,'','','',filters);
                     this.isLoadingCustomerCrop.next(false);
                 }
             );
@@ -1147,7 +1152,7 @@ export class CustomersService {
     }
 
     updateCustomerDestination(
-        customerDestinationData: any,) {
+        customerDestinationData: any, filters: destinationFilters) {
         this._httpClient
             .put(`api-1/customer-destination`, customerDestinationData)
             .pipe(take(1))
@@ -1170,13 +1175,11 @@ export class CustomersService {
                     this.isLoadingCustomerDestination.next(false);
                 },
                 () => {
-                    this.getCustomerDestination(
-                        customerDestinationData.customer_id,
-                    );
+                    this.getCustomerDestination(customerDestinationData.customer_id,1,10,'','','',filters);
                 }
             );
     }
-    createCustomerDestination(data: any) {
+    createCustomerDestination(data: any, filters: destinationFilters) {
         this._httpClient
             .post(`api-1/customer-destination`, data)
             .pipe(take(1))
@@ -1200,12 +1203,12 @@ export class CustomersService {
                     this.isLoadingCustomerDestination.next(false);
                 },
                 () => {
-                    this.getCustomerDestination(data.customer_id);
+                    this.getCustomerDestination(data.customer_id,1,10,'','','',filters);
                 }
             );
     }
 
-    deleteCustomerDestination(id: string, customerID: string) {
+    deleteCustomerDestination(id: string, customerID: string, filters: destinationFilters) {
         this._httpClient
             .delete(`api-1/customer-destination?id=${id}`)
             .pipe(take(1))
@@ -1225,7 +1228,7 @@ export class CustomersService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getCustomerDestination(customerID);
+                    this.getCustomerDestination(customerID,1,10,'','','',filters);
                     this.isLoadingCustomerDestination.next(false);
                 }
             );

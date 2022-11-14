@@ -8,8 +8,8 @@ import { AddDestinationComponent } from '../add-destination/add-destination.comp
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateAdapter,MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const MY_FORMATS = {
     parse: {
@@ -117,6 +117,7 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                filters: this.destinationFilters.value,
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -129,6 +130,7 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
+                filters: this.destinationFilters.value,
                 customerDestinationData: {
                     id: destination.destination_id,
                     farm_name: destination.farm_name,
@@ -187,11 +189,15 @@ export class ListDestinationComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
+            if (dialogResult) {
+                this.page = 1
                 this._customerService.deleteCustomerDestination(
                     destinationId,
-                    this.routeID
+                    this.routeID,
+                    this.destinationFilters.value
                 );
+            }
+
         });
     }
     //#endregion
@@ -211,9 +217,10 @@ export class ListDestinationComponent implements OnInit {
         !this.destinationFilters.value.calendar_year
             ? (this.destinationFilters.value.calendar_year = '')
             : '';
+        this.calendar_year.value ? (this.destinationFilters.value.calendar_year = this.calendar_year.value) : ''
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
+            1,
             10,
             '',
             '',
@@ -230,7 +237,7 @@ export class ListDestinationComponent implements OnInit {
         this.calendar_year.setValue('');
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
+            1,
             10,
             '',
             '',

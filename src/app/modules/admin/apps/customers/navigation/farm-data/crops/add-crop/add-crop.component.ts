@@ -150,9 +150,9 @@ export class AddCropComponent implements OnInit {
         this._customerService.isLoadingCustomerCrop.next(true);
         this.form.value['crop_id'] = this.form.value['crop_id']?.id;
         if (this.data && this.data.isEdit) {
-            this._customerService.updateCustomerCrops(this.form.value);
+            this._customerService.updateCustomerCrops(this.form.value, this.data?.filters);
         } else {
-            this._customerService.createCustomerCrops(this.form.value);
+            this._customerService.createCustomerCrops(this.form.value, this.data?.filters);
         }
     }
 

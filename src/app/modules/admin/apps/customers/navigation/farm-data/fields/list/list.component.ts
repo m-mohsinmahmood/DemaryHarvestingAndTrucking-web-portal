@@ -120,6 +120,7 @@ export class ListFieldComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: false,
                 status: true,
+                filters: this.fieldFilters.value,
             },
         });
         dialogRef.afterClosed().subscribe((result) => { });
@@ -130,6 +131,7 @@ export class ListFieldComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
+                filters: this.fieldFilters.value,
                 customerFieldData: {
                     field_name: field.field_name,
                     field_id: field.field_id,
@@ -193,9 +195,10 @@ export class ListFieldComponent implements OnInit {
         !this.fieldFilters.value.calendar_year
             ? (this.fieldFilters.value.calendar_year = '')
             : '';
+        this.calendar_year.value ? (this.fieldFilters.value.calendar_year = this.calendar_year.value) : ''
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
+            1,
             10,
             '',
             '',
@@ -212,7 +215,7 @@ export class ListFieldComponent implements OnInit {
         this.calendar_year.setValue('');
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
+            1,
             10,
             '',
             '',
@@ -274,10 +277,12 @@ export class ListFieldComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
+            if (dialogResult)   
+                this.page = 1;
                 this._customerService.deleteCustomerField(
                     fieldId,
-                    this.routeID
+                    this.routeID,
+                    this.fieldFilters.value
                 );
         });
     }

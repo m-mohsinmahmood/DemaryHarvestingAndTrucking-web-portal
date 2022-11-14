@@ -192,8 +192,10 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
+            if (dialogResult){
+                this.page = 1
                 this._customersService.deleteCustomerContact(id, this.routeID);
+            }
         });
     }
     //#endregion
