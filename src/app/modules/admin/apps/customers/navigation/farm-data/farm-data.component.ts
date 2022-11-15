@@ -328,7 +328,6 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._customerService.getCustomerDestination(this.routeID, this.destinationPage, this.destinationPageSize, '', '', '', this.destinationFilters.value);
                 break;
             case 'Summary':
-                debugger;
                 this.searchformfarm.controls['search']?.setValue('');
                 this.searchformfield.controls['search']?.setValue('');
                 this.searchformcrop.controls['search']?.setValue('');
