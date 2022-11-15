@@ -32,7 +32,6 @@ export class ListFarmComponent implements OnInit {
     pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     farmSort: any[] = [];
     //#endregion
 
@@ -59,9 +58,9 @@ export class ListFarmComponent implements OnInit {
                 this._customerService.getCustomerFarm(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.farmSort[0],
+                    this.farmSort[1],
                     this.searchResult
                 );
             });
@@ -81,9 +80,15 @@ export class ListFarmComponent implements OnInit {
                 id: this.routeID,
                 isEdit: false,
                 status: true,
+                pageSize: this.pageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
 
     openEditFarmDialog(farm): void {
@@ -91,6 +96,10 @@ export class ListFarmComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
+                pageSize: this.pageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult,
                 customerFarmData: {
                     name: farm.name,
                     id: farm.id,
@@ -98,7 +107,9 @@ export class ListFarmComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
     //#endregion
 
@@ -110,7 +121,7 @@ export class ListFarmComponent implements OnInit {
         this._customerService.getCustomerFarm(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.farmSort[0],
             this.farmSort[1],
             this.searchResult
@@ -121,11 +132,11 @@ export class ListFarmComponent implements OnInit {
     //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.pageSize = event.pageSize;
         this._customerService.getCustomerFarm(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.farmSort[0],
             this.farmSort[1],
             this.searchResult
@@ -145,7 +156,14 @@ export class ListFarmComponent implements OnInit {
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult){
                 this.page = 1
-                this._customerService.deleteCustomerFarm(farmId, this.routeID);
+                this._customerService.deleteCustomerFarm(
+                    farmId, 
+                    this.routeID,
+                    this.pageSize,
+                    this.farmSort[0],
+                    this.farmSort[1],
+                    this.searchResult
+                );
             }
                
         });

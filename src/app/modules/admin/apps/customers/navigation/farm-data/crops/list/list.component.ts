@@ -64,7 +64,6 @@ export class ListCropComponent implements OnInit {
     pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     cropSort: any[] = [];
     isEdit: boolean;
     calendar_year;
@@ -95,9 +94,9 @@ export class ListCropComponent implements OnInit {
                 this._customerService.getCustomerCrops(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.cropSort[0],
+                    this.cropSort[1],
                     this.searchResult,
                     this.cropFilters.value
                 );
@@ -118,10 +117,16 @@ export class ListCropComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
                 status: true,
-                filters: this.cropFilters.value
+                pageSize: this.pageSize,
+                sort: this.cropSort[0],
+                order: this.cropSort[1],
+                search: this.searchResult,
+                filters: this.cropFilters.value,
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
 
     openEditCropDialog(crop): void {
@@ -130,6 +135,10 @@ export class ListCropComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                pageSize: this.pageSize,
+                sort: this.cropSort[0],
+                order: this.cropSort[1],
+                search: this.searchResult,
                 filters: this.cropFilters.value,
                 customerCropData: {
                     id: crop.customer_crop_id,
@@ -140,7 +149,9 @@ export class ListCropComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
     //#endregion
 
@@ -152,7 +163,7 @@ export class ListCropComponent implements OnInit {
         this._customerService.getCustomerCrops(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -164,11 +175,11 @@ export class ListCropComponent implements OnInit {
     //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.pageSize = event.pageSize;
         this._customerService.getCustomerCrops(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -187,9 +198,16 @@ export class ListCropComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
+            if (dialogResult){
                 this.page = 1;
-                this._customerService.deleteCustomerCrop(cropId, this.routeID,this.cropFilters.value);
+                this._customerService.deleteCustomerCrop(cropId, this.routeID,
+                    this.pageSize,
+                    this.cropSort[0],
+                    this.cropSort[1],
+                    this.searchResult,
+                    this.cropFilters.value
+                );
+            }
         });
     }
     //#endregion
@@ -207,9 +225,9 @@ export class ListCropComponent implements OnInit {
         this._customerService.getCustomerCrops(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.cropSort[0],
+            this.cropSort[1],
             this.searchResult,
             this.cropFilters.value
         );
@@ -223,9 +241,9 @@ export class ListCropComponent implements OnInit {
         this._customerService.getCustomerCrops(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.cropSort[0],
+            this.cropSort[1],
             this.searchResult,
             this.cropFilters.value
         );

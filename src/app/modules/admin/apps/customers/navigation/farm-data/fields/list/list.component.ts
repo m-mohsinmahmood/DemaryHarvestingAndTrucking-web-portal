@@ -68,7 +68,6 @@ export class ListFieldComponent implements OnInit {
     pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     fieldSort: any[] = [];
     calendar_year;
     //#endregion
@@ -98,9 +97,9 @@ export class ListFieldComponent implements OnInit {
                 this._customerService.getCustomerField(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
                     this.searchResult,
                     this.fieldFilters.value
                 );
@@ -120,10 +119,16 @@ export class ListFieldComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: false,
                 status: true,
+                pageSize: this.pageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
                 filters: this.fieldFilters.value,
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+         });
     }
 
     openEditFieldDialog(field): void {
@@ -131,6 +136,10 @@ export class ListFieldComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
+                pageSize: this.pageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
                 filters: this.fieldFilters.value,
                 customerFieldData: {
                     field_name: field.field_name,
@@ -143,7 +152,9 @@ export class ListFieldComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+         });
     }
     //#endregion
 
@@ -155,7 +166,7 @@ export class ListFieldComponent implements OnInit {
         this._customerService.getCustomerField(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -167,11 +178,11 @@ export class ListFieldComponent implements OnInit {
     //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.pageSize = event.pageSize;
         this._customerService.getCustomerField(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -200,9 +211,9 @@ export class ListFieldComponent implements OnInit {
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.fieldSort[0],
+            this.fieldSort[1],
             this.searchResult,
             this.fieldFilters.value
         );
@@ -218,9 +229,9 @@ export class ListFieldComponent implements OnInit {
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.fieldSort[0],
+            this.fieldSort[1],
             this.searchResult,
             this.fieldFilters.value
         );
@@ -279,13 +290,19 @@ export class ListFieldComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)   
+            if (dialogResult){
                 this.page = 1;
                 this._customerService.deleteCustomerField(
                     fieldId,
                     this.routeID,
+                    this.pageSize,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
+                    this.searchResult,
                     this.fieldFilters.value
                 );
+            }
+               
         });
     }
     //#endregion

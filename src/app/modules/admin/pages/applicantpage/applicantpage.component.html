@@ -1,4 +1,5 @@
-<div class="flex flex-col w-full h-full relative">
+<div class="flex flex-col w-full h-full relative bg-white">
+    <h1 class="text-6xl font-bold pl-4 pt-4 ">Application Form</h1>
     <!-- <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
         <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
@@ -13,7 +14,8 @@
                 <div *ngSwitchCase="'horizontal'"></div>
                 <div *ngSwitchCase="'vertical'"></div>
             </ng-container>
-            <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper (selectionChange)="selectionChange($event)">
+            <mat-horizontal-stepper labelPosition="bottom" [orientation]="(stepperOrientation | async)!" linear #stepper
+                (selectionChange)="selectionChange($event)">
                 <mat-step [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="firstFormGroup" class=" mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full">
                         <ng-template matStepLabel>General Form</ng-template>
@@ -49,36 +51,43 @@
                                     <input matInput type="tel" formControlName="homeNumber">
                                 </mat-form-field>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
                                     <mat-label> Languages</mat-label>
                                     <input matInput type="text" formControlName="languages">
                                 </mat-form-field>
-                            </div>
+                            </div> -->
 
 
                         </div>
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="fourthFormGroup" [editable]="true">
-                    <form [formGroup]="fourthFormGroup" class="personal-info-form h-full mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full sm:p-3 p-1">
+                    <form [formGroup]="fourthFormGroup"
+                        class="personal-info-form h-full mt-1 sm:max-w-lg md:max-w-lg lg:max-w-full sm:p-3 p-1">
                         <ng-template matStepLabel>Personal Form</ng-template>
 
                         <div class="py-3 center mx-auto flex md:justify-center sm:justify-start items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
                                 <div class="imagePreview mb-4" *ngIf="imageURL && imageURL !== ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                        [src]="imageURL">
                                 </div>
                                 <div class="mb-4" *ngIf="imageURL ==='' && fourthFormGroup.get('avatar').value ">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{fourthFormGroup.get('avatar').value}}" alt=" " />
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                        src="{{fourthFormGroup.get('avatar').value}}" alt=" " />
                                 </div>
                                 <div class="mb-4" *ngIf="imageURL ==='' && fourthFormGroup.get('avatar').value === ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                        src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                        alt="Avatar Upload" />
                                 </div>
                                 <label class="cursor-pointer mt-6">
-                                        <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>
-                                        <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
-                                     </label>
+                                    <span
+                                        class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full">Upload
+                                        Photo</span>
+                                    <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                </label>
                             </div>
                         </div>
                         <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
@@ -86,7 +95,8 @@
                             <div>
                                 <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full block" appearance="outline">
                                     <mat-label>Date Of Birth</mat-label>
-                                    <input id="date" name="date" formControlName="dob" matInput [matDatepicker]="picker4">
+                                    <input id="date" name="date" formControlName="dob" matInput
+                                        [matDatepicker]="picker4">
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
                                 </mat-form-field>
@@ -104,43 +114,49 @@
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full block">
                                     <mat-label>Address 1</mat-label>
-                                    <textarea matInput type="text" id="Address 1" formControlName="address1" placeholder="Address 1"> </textarea>
+                                    <textarea matInput type="text" id="Address 1" formControlName="address1"
+                                        placeholder="Address 1"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full block">
                                     <mat-label>Address 2</mat-label>
-                                    <textarea matInput type="text" id="Address 2" formControlName="address2" placeholder="Address 2"> </textarea>
+                                    <textarea matInput type="text" id="Address 2" formControlName="address2"
+                                        placeholder="Address 2"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 block">
                                     <mat-label> Town/City</mat-label>
-                                    <input matInput type="text" id="city" name="city" formControlName="city" placeholder="Town/City" value="city">
+                                    <input matInput type="text" id="city" name="city" formControlName="city"
+                                        placeholder="Town/City" value="city">
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 block">
                                     <mat-label> Province/State</mat-label>
-                                    <input matInput type="text" id="province" name="province" formControlName="province" placeholder="Province/State">
+                                    <input matInput type="text" id="province" name="province" formControlName="province"
+                                        placeholder="Province/State">
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 block">
                                     <mat-label> Postal Code</mat-label>
-                                    <input matInput type="number" id="postal-code" name="postal-code" formControlName="postalCode" placeholder="Postal Code">
+                                    <input matInput type="number" id="postal-code" name="postal-code"
+                                        formControlName="postalCode" placeholder="Postal Code">
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2 block">
                                     <mat-label> Country</mat-label>
-                                    <input matInput type="text" id="country" name="country" formControlName="country" placeholder="Country">
+                                    <input matInput type="text" id="country" name="country" formControlName="country"
+                                        placeholder="Country">
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full block">
                                     <mat-label>Languages</mat-label>
-                                    <mat-select >
+                                    <mat-select>
                                         <mat-option value="english"> English</mat-option>
                                         <mat-option value="spanih">Spanish</mat-option>
                                         <mat-option value="chinese">Chinese</mat-option>
@@ -151,7 +167,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full block">
                                     <mat-label>Self Rating</mat-label>
-                                    <mat-select >
+                                    <mat-select>
                                         <mat-option value="fluent"> Fluent</mat-option>
                                         <mat-option value="native">Native speaker</mat-option>
                                         <mat-option value="average">Average</mat-option>
@@ -194,7 +210,8 @@
                 <mat-step [stepControl]="fifthFormGroup" [editable]="true">
                     <form [formGroup]="fifthFormGroup" class="interview-results-form">
                         <ng-template matStepLabel>Work Form</ng-template>
-                        <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With 5 being the highest.</h3>
+                        <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With
+                            5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-auto md:w-8/12 lg:w-96">
                                 <label>Operating Farm Equipment (ie. Tractors): </label>
@@ -257,7 +274,8 @@
                         </div>
                         <mat-form-field class="sm:w-6/12 md:w-8/12 lg:w-full" appearance="outline">
                             <mat-label>Brief Description of work experience</mat-label>
-                            <textarea matInput type="text" id="Address 2" formControlName="workExperience" placeholder="Brief Description of work experience"> </textarea>
+                            <textarea matInput type="text" id="Address 2" formControlName="workExperience"
+                                placeholder="Brief Description of work experience"> </textarea>
                         </mat-form-field>
                         <div>
                             <h4 class="text-xl font-bold"> Most Recent Job</h4>
@@ -271,13 +289,15 @@
                         <div>
                             <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
                                 <mat-label>Supervisor</mat-label>
-                                <input matInput type="text" id="Supervisor" name="Supervisor" formControlName="supervisor" placeholder="Supervisor">
+                                <input matInput type="text" id="Supervisor" name="Supervisor"
+                                    formControlName="supervisor" placeholder="Supervisor">
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full mt-2">
                                 <mat-label>Supervisor Contact #</mat-label>
-                                <input matInput type="number" id="supervisorContact" name="postal-code" formControlName="supervisorContact" placeholder="Supervisor Contact #">
+                                <input matInput type="number" id="supervisorContact" name="postal-code"
+                                    formControlName="supervisorContact" placeholder="Supervisor Contact #">
                             </mat-form-field>
                         </div>
                     </form>
@@ -285,26 +305,26 @@
                 <mat-step [stepControl]="seventhFormGroup" [editable]="true">
                     <form [formGroup]="seventhFormGroup" class=" mt-1">
                         <ng-template matStepLabel>Education Form</ng-template>
-                            <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
-                                <div>
-                                    <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
-                                        <mat-label>Degree Name</mat-label>
-                                        <input matInput type="text" formControlName="degree">
-                                    </mat-form-field>
-                                </div>
-                                <div>
-                                    <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
-                                        <mat-label>Institution Name</mat-label>
-                                        <input matInput type="text" formControlName="institution">
-                                    </mat-form-field>
-                                </div>
-                                <div>
-                                    <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
-                                        <mat-label>Education</mat-label>
-                                        <input matInput type="email" formControlName="education">
-                                    </mat-form-field>
-                                </div>
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-x-12">
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                    <mat-label>Degree Name</mat-label>
+                                    <input matInput type="text" formControlName="degree">
+                                </mat-form-field>
                             </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                    <mat-label>Institution Name</mat-label>
+                                    <input matInput type="text" formControlName="institution">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
+                                    <mat-label>Education</mat-label>
+                                    <input matInput type="email" formControlName="education">
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="sixthFormGroup" [editable]="true">
@@ -320,23 +340,29 @@
                                 <mat-radio-button class="m-1" value="b+">B+</mat-radio-button>
                                 <mat-radio-button class="m-1" value="b-">B-</mat-radio-button>
                                 <mat-radio-button class="m-1" value="ab+">AB+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="ab-">AB-</mat-radio-button>
                                 <mat-radio-button class="m-1" value="o+">O+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="o-">O-</mat-radio-button>
+
                             </mat-radio-group>
                         </div>
                         <div class=" my-1.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
-                                <label class="font-bold text-lg">Reasons for applying </label></div>
+                                <label class="font-bold text-lg">Reasons for applying </label>
+                            </div>
                             <mat-radio-group class="example-radio-group" formControlName="e_secondQuestion">
                                 <mat-radio-button class="m-1" value="1">See the United States</mat-radio-button>
                                 <mat-radio-button class="m-1" value="2">Travel</mat-radio-button>
-                                <mat-radio-button class="m-1 whitespace-normal	" value="3">Learn more about harvesting in the U.S.</mat-radio-button>
+                                <mat-radio-button class="m-1 whitespace-normal	" value="3">Learn more about harvesting
+                                    in the U.S.</mat-radio-button>
                                 <mat-radio-button class="m-1" value="4">Financial</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Other</mat-radio-button>
                             </mat-radio-group>
                         </div>
                         <div class="my-1.5">
                             <div class="sm:w-auto md:w-8/12 lg:w-6/12">
-                                <label class="font-bold text-lg">How did you hear about Demaray Harvesting and Trucking? </label>
+                                <label class="font-bold text-lg">How did you hear about Demaray Harvesting and Trucking?
+                                </label>
                             </div>
                             <mat-radio-group class="example-radio-group" formControlName="e_thirdQuestion">
                                 <mat-radio-button class="m-1" value="1">Done Deal</mat-radio-button>
@@ -345,7 +371,8 @@
                                 <mat-radio-button class="m-1" value="4">Facebook</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">From a friend</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Internet Search</mat-radio-button>
-                                <mat-radio-button class="m-1 whitespace-normal" value="5">Farmers weekly(Ireland,New Zealand,England)</mat-radio-button>
+                                <mat-radio-button class="m-1 whitespace-normal" value="5">Farmers weekly(Ireland,New
+                                    Zealand,England)</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Trademe.co.nz</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Other</mat-radio-button>
                             </mat-radio-group>
@@ -354,10 +381,12 @@
                 </mat-step>
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
-                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
-                        <mat-icon  [ngStyle]="{'color':'green'}"  class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
-                         [svgIcon]="'heroicons_outline:check'"></mat-icon>
-                            <p class="flex justify-center items-center ">You have successfully updated the applicants details. Please click on submit button to complete update process.</p>
+                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 flex flex-col justify-center items-center m-auto">
+                        <mat-icon [ngStyle]="{'color':'green'}"
+                            class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full justify-center items-center m-auto"
+                            [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <p class="flex justify-center items-center font-bold text-2xl">You have successfully added the applicants
+                            details. Please click on submit button to complete the application process.</p>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
@@ -365,14 +394,17 @@
     </main>
 
     <header class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
-        <button *ngIf="isBack" class="ml-4 " mat-flat-button class="bg-amber-600 text-white" data-bs-dismiss="modal" (click)="saveAndClose()">
+        <button *ngIf="isBack" class="ml-4 " mat-flat-button class="bg-amber-600 text-white" data-bs-dismiss="modal"
+            (click)="saveAndClose()" >
             Discard
-          </button>
-        <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="stepper.next()">
-          Next
         </button>
-        <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+        <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+            (click)="stepper.next()">
+            Next
+        </button>
+        <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+            (click)="submit()" [class.spinner]="isLoading">
             Save
-          </button>
+        </button>
     </header>
 </div>

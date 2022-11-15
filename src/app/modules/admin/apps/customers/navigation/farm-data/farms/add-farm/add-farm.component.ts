@@ -122,17 +122,10 @@ export class AddFarmComponent implements OnInit {
     onSubmit(): void {
         this._customersService.isLoadingCustomerFarm.next(true);
         if (this.data && this.data.isEdit) {
-            this._customersService.updateCustomerFarm(this.form.value);
+            this._customersService.updateCustomerFarm(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search);
         } else {
-            this._customersService.createCustomerFarm(this.form.value);
+            this._customersService.createCustomerFarm(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search);
         }
-    }
-
-    createCustomerFarm(customerFarmData: any): void {
-        this._customersService.createCustomerFarm(customerFarmData);
-    }
-    updateCustomerFarm(customerFarmData: any): void {
-        this._customersService.updateCustomerFarm(customerFarmData);
     }
 
     saveAndClose(): void {

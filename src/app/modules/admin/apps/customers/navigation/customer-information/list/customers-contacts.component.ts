@@ -57,7 +57,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     isLoading: boolean = false;
     sortActive: any;
     sortDirection: any;
-
     search: Subscription;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -97,9 +96,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
                 this._customersService.getCustomerContact(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.sortActive,
+                    this.sortDirection,
                     this.searchResult
                 );
             });
@@ -131,9 +130,17 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     //#region Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
-            data: { customerId: this.routeID },
+            data: { 
+                customerId: this.routeID,
+                pageSize: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
+            },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
 
     //#endregion
@@ -175,10 +182,16 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
             data: {
                 customerContact,
+                pageSize: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
     //#endregion
 
@@ -194,7 +207,12 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult){
                 this.page = 1
-                this._customersService.deleteCustomerContact(id, this.routeID);
+                this._customersService.deleteCustomerContact(id, 
+                    this.routeID,
+                    this.pageSize,
+                    this.sortActive,
+                    this.sortDirection,
+                    this.searchResult);
             }
         });
     }
