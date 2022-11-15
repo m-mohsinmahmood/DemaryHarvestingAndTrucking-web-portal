@@ -1,4 +1,5 @@
 <div class="flex flex-col w-full h-full relative bg-white">
+    <h1 class="text-6xl font-bold pl-4 pt-4 ">Application Form</h1>
     <!-- <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
         <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
@@ -50,12 +51,12 @@
                                     <input matInput type="tel" formControlName="homeNumber">
                                 </mat-form-field>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <mat-form-field appearance="outline" class="sm:w-6/12 md:w-8/12 lg:w-full">
                                     <mat-label> Languages</mat-label>
                                     <input matInput type="text" formControlName="languages">
                                 </mat-form-field>
-                            </div>
+                            </div> -->
 
 
                         </div>
@@ -339,7 +340,10 @@
                                 <mat-radio-button class="m-1" value="b+">B+</mat-radio-button>
                                 <mat-radio-button class="m-1" value="b-">B-</mat-radio-button>
                                 <mat-radio-button class="m-1" value="ab+">AB+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="ab-">AB-</mat-radio-button>
                                 <mat-radio-button class="m-1" value="o+">O+</mat-radio-button>
+                                <mat-radio-button class="m-1" value="o-">O-</mat-radio-button>
+
                             </mat-radio-group>
                         </div>
                         <div class=" my-1.5">
@@ -377,12 +381,12 @@
                 </mat-step>
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
-                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
+                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 flex flex-col justify-center items-center m-auto">
                         <mat-icon [ngStyle]="{'color':'green'}"
-                            class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
+                            class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full justify-center items-center m-auto"
                             [svgIcon]="'heroicons_outline:check'"></mat-icon>
-                        <p class="flex justify-center items-center ">You have successfully updated the applicants
-                            details. Please click on submit button to complete update process.</p>
+                        <p class="flex justify-center items-center font-bold text-2xl">You have successfully added the applicants
+                            details. Please click on submit button to complete the application process.</p>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
@@ -399,7 +403,7 @@
             Next
         </button>
         <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-            (click)="submit()">
+            (click)="submit()" [class.spinner]="isLoading">
             Save
         </button>
     </header>

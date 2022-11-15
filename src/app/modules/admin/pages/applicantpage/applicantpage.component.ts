@@ -61,6 +61,7 @@ export class ApplicantpageComponent implements OnInit
     avatar: string = '';
     isEdit: boolean = true;
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
+    isLoading:boolean = false;
      //#endregion
 
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
@@ -239,7 +240,12 @@ export class ApplicantpageComponent implements OnInit
         } else {
         }
         // #endregion
-    }submit(): void {
+    }
+    submit(): void {
+        this.isLoading = true;
+        this._router.navigateByUrl("/pages/landing-page")
+
+
 
     }
 
