@@ -61,7 +61,6 @@ export class ListDestinationComponent implements OnInit {
     pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     destinationSort: any[] = [];
     isEdit: boolean;
     calendar_year;
@@ -93,9 +92,9 @@ export class ListDestinationComponent implements OnInit {
                 this._customerService.getCustomerDestination(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
                     this.searchResult,
                     this.destinationFilters.value
                 );
@@ -117,10 +116,15 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                pageSize: this.pageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
                 filters: this.destinationFilters.value,
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
         });
     }
 
@@ -130,6 +134,10 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
+                pageSize: this.pageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
                 filters: this.destinationFilters.value,
                 customerDestinationData: {
                     id: destination.destination_id,
@@ -142,7 +150,9 @@ export class ListDestinationComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+         });
     }
     //#endregion
 
@@ -154,7 +164,7 @@ export class ListDestinationComponent implements OnInit {
         this._customerService.getCustomerDestination(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -166,11 +176,11 @@ export class ListDestinationComponent implements OnInit {
     //#region Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.pageSize = event.pageSize;
         this._customerService.getCustomerDestination(
             this.routeID,
             this.page,
-            this.limit,
+            this.pageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -194,6 +204,10 @@ export class ListDestinationComponent implements OnInit {
                 this._customerService.deleteCustomerDestination(
                     destinationId,
                     this.routeID,
+                    this.pageSize,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
+                    this.searchResult,
                     this.destinationFilters.value
                 );
             }
@@ -222,9 +236,9 @@ export class ListDestinationComponent implements OnInit {
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.destinationSort[0],
+            this.destinationSort[1],
             this.searchResult,
             this.destinationFilters.value
         );
@@ -240,9 +254,9 @@ export class ListDestinationComponent implements OnInit {
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.pageSize,
+            this.destinationSort[0],
+            this.destinationSort[1],
             this.searchResult,
             this.destinationFilters.value
         );

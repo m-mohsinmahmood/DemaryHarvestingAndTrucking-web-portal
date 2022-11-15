@@ -153,9 +153,9 @@ export class AddDestinationComponent implements OnInit, OnDestroy {
         this._customerService.isLoadingCustomerDestination.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
         if (this.data && this.data?.isEdit) {
-            this._customerService.updateCustomerDestination(this.form.value,this.data?.filters);
+            this._customerService.updateCustomerDestination(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search,this.data?.filters);
         } else {
-            this._customerService.createCustomerDestination(this.form.value,this.data?.filters);
+            this._customerService.createCustomerDestination(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search,this.data?.filters);
         }
     }
     discard(): void {

@@ -124,7 +124,7 @@ export class ContactsDataComponent implements OnInit {
     }
     onSubmit() { 
         this._customerService.isLoadingCustomerContact.next(true);
-        this._customerService.updateCustomerContact(this.form.value);
+        this._customerService.updateCustomerContact(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search);
     }
     discard(): void {
         this._customerService.isLoadingCustomerContact.next(false);
