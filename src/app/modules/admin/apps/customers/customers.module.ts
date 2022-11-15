@@ -67,7 +67,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/confirmation-dialog.component';
-import { PhoneMaskDirective } from './phone-mask.directive';
+import { PhoneMaskDirective } from '../../../../shared/phone-mask-directive/phone-mask.directive';
 
 
 @NgModule({

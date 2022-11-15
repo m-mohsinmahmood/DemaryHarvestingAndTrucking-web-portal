@@ -49,7 +49,7 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
         RecruiterremarksComponent,
     ],
     imports     : [
-RouterModule.forChild(applicantsRoutes),
+    RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -97,7 +97,7 @@ RouterModule.forChild(applicantsRoutes),
         // MatTabsModule,
         FuseDrawerModule,
 
-    ]
+    ],
 })
 export class ApplicantsModule
 {

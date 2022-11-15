@@ -37,8 +37,7 @@
 }
 
  ::ng-deep .mat-form-field .mat-input-element {
-    color: slategray;
-    font-size: large;
+   
 }
 
  ::ng-deep .mat-form-field .mat-form-field-label {
@@ -110,3 +109,33 @@
     color: white;
     text-align: center;
 }
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}
+::ng-deep .phone-number-outline .mat-form-field-outline-start {
+    width: 28px !important;
+}
+
+::ng-deep .phone-number-outline .mat-form-field-infix input {
+    margin-bottom: 2px !important;
+}
+

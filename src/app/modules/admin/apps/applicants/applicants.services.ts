@@ -63,6 +63,22 @@ export class ApplicantService {
         this.isLoadingApplicant.asObservable();
     // #endregion
 
+    // #region Applicants & Applicant
+    // Data
+    // private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    // readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
+
+    // private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    // readonly applicant$: Observable<any | null> = this.applicant.asObservable();
+
+    // // Loaders
+    // private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
+
+    // private isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
+    // #endregion
+
     /**
      * Constructor
      */
