@@ -72,15 +72,26 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     isEdit: boolean = false;
     pageSize = 10;
     pageSizeSummary = 5;
+    pageSizeSummaryFarm = 5;
+    pageSizeSummaryField = 5;
+    pageSizeSummaryCrop = 5;
+    pageSummaryFarm: number;
+    pageSummaryField: number;
+    pageSummaryCrop: number;
+    pageSummaryDestination: number;
+    pageSizeSummaryDestination = 5;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     pageSizeOptionsSummary: number[] = [5, 25, 50, 100];
-    searchResult: string;
     page: number;
     limit: number;
     routeID: any;
     isLoading: any;
     activeTab: any;
+    searchResultFarm: string;
+    searchResultField: string;
+    searchResultCrop: string;
+    searchResultDestination: string;
     farmSort: any[] = []
     fieldSort: any[] = []
     cropSort: any[] = []
@@ -88,6 +99,14 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     fieldFilters: FormGroup;
     destinationFilters: FormGroup;
     cropFilters: FormGroup;
+    farmPage: number = 1;
+    farmPageSize: number = 10;
+    fieldPage: number = 1;
+    fieldPageSize: number = 10;
+    cropPage: number = 1;
+    cropPageSize: number = 10;
+    destinationPage: number = 1;
+    destinationPageSize: number = 10;
     //#endregion
 
     constructor(
@@ -110,15 +129,15 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.search = this.searchformfarm.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
-                this.searchResult = data.search;
+                this.searchResultFarm = data.search;
                 this.page = 1;
                 this._customerService.getCustomerFarm(
                     this.routeID,
                     this.page,
-                    5,
+                    this.pageSizeSummaryFarm,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResultFarm
                 );
             });
 
@@ -127,14 +146,14 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.page = 1;
-                this.searchResult = data.search;
+                this.searchResultField = data.search;
                 this._customerService.getCustomerField(
                     this.routeID,
                     this.page,
-                    5,
+                    this.pageSizeSummaryField,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResultField
                 );
             });
 
@@ -142,30 +161,30 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
         this.search = this.searchformcrop.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
-                this.searchResult = data.search;
+                this.searchResultCrop = data.search;
                 this.page = 1;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    1,
-                    5,
+                    this.page,
+                    this.pageSizeSummaryCrop,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResultCrop
                 );
             });
         // search summary Destination
         this.search = this.searchformdestination.valueChanges
             .pipe(debounceTime(500))
             .subscribe((data) => {
-                this.searchResult = data.search;
+                this.searchResultDestination = data.search;
                 this.page = 1;
                 this._customerService.getCustomerDestination(
                     this.routeID,
                     this.page,
-                    5,
+                    this.pageSizeSummaryDestination,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResultDestination
                 );
             });
     }
@@ -272,43 +291,66 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     //#endregion
 
+    //#region set Farm data page and page size
+    setFarmPage(page: any, pageSize: any):void {
+        this.farmPageSize = pageSize.farmPageSizeChild;
+        this.farmPage = page.farmPageChild;
+    }
+    setFieldPage(page: any, pageSize: any):void {
+        this.fieldPageSize = pageSize.fieldPageSizeChild;
+        this.fieldPage = page.fieldPageChild;
+    }
+    setCropPage(page: any, pageSize: any):void {
+        this.cropPageSize = pageSize.cropPageSizeChild;
+        this.cropPage = page.cropPageChild;
+    }
+    setDestinationPage(page: any, pageSize: any):void {
+        this.destinationPageSize = pageSize.destinationPageSizeChild;
+        this.destinationPage = page.destinationPageChild;
+    }
+
+    //#endregion
+
     //#region Farm Tab Change
     farmTabChange(event) {
         this.activeTab = event.tab.textLabel;
-        this.page = 1;
         switch (event.tab.textLabel) {
             case 'Farms':
-                this._customerService.getCustomerFarm(this.routeID);
+                this._customerService.getCustomerFarm(this.routeID,this.farmPage,this.farmPageSize,'','','');
                 break;
             case 'Fields':
-                this._customerService.getCustomerField(this.routeID, 1, 10, '', '', '', this.fieldFilters.value);
+                this._customerService.getCustomerField(this.routeID,this.fieldPage, this.fieldPageSize, '', '', '', this.fieldFilters.value);
                 break;
             case 'Crops':
-                this._customerService.getCustomerCrops(this.routeID, 1, 10, '', '', '', this.cropFilters.value);
+                this._customerService.getCustomerCrops(this.routeID, this.cropPage, this.cropPageSize, '', '', '', this.cropFilters.value);
                 break;
             case 'Destinations':
-                this._customerService.getCustomerDestination(this.routeID, 1, 10, '', '', '', this.destinationFilters.value);
+                this._customerService.getCustomerDestination(this.routeID, this.destinationPage, this.destinationPageSize, '', '', '', this.destinationFilters.value);
                 break;
             case 'Summary':
+                this.searchformfarm.controls['search']?.setValue('');
+                this.searchformfield.controls['search']?.setValue('');
+                this.searchformcrop.controls['search']?.setValue('');
+                this.searchformdestination.controls['search']?.setValue('');
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
-                    5,
+                    this.pageSummaryFarm,
+                    this.pageSizeSummaryFarm,
                 );
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    5,
+                    this.pageSummaryField,
+                    this.pageSizeSummaryField,
                 );
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
-                    5,
+                    this.pageSummaryCrop,
+                    this.pageSizeSummaryCrop,
                 );
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
-                    5,
+                    this.pageSummaryDestination,
+                    this.pageSizeSummaryDestination,
                 );
                 break;
             default:
@@ -318,50 +360,53 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#endregion
     //#region Summary Sort
     sortSummaryData(sort: any, summaryData) {
-        this.page = 1;
         switch (summaryData) {
             case 'summaryFarm':
                 this.farmSort[0] = sort.active; this.farmSort[1] = sort.direction;
+                this.pageSummaryFarm = 1;
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
-                    5,
+                    this.pageSummaryFarm,
+                    this.pageSizeSummaryFarm,
                     this.farmSort[0],
                     this.farmSort[1],
-                    this.searchResult
+                    this.searchResultFarm
                 );
                 break;
             case 'summaryField':
                 this.fieldSort[0] = sort.active; this.fieldSort[1] = sort.direction;
+                this.pageSummaryField = 1;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryField,
+                    this.pageSizeSummaryField,
                     this.fieldSort[0],
                     this.fieldSort[1],
-                    this.searchResult
+                    this.searchResultField
                 );
                 break;
             case 'summaryCrop':
                 this.cropSort[0] = sort.active; this.cropSort[1] = sort.direction;
+                this.pageSummaryCrop = 1;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryCrop,
+                    this.pageSizeSummaryCrop,
                     this.cropSort[0],
                     this.cropSort[1],
-                    this.searchResult
+                    this.searchResultCrop
                 );
                 break;
             case 'summaryDestination':
                 this.destinationSort[0] = sort.active; this.destinationSort[1] = sort.direction;
+                this.pageSummaryDestination = 1;
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryDestination,
+                    this.pageSizeSummaryDestination,
                     this.destinationSort[0],
                     this.destinationSort[1],
-                    this.searchResult
+                    this.searchResultDestination
                 );
                 break;
             default:
@@ -372,46 +417,53 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     //#region Pagination
     pageChanged(event, farmData) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
         switch (farmData) {
             case 'summaryFarm':
+                this.pageSizeSummaryFarm = event.pageSize;
+                this.pageSummaryFarm = event.pageIndex + 1;
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryFarm,
+                    this.pageSizeSummaryFarm,
                     this.farmSort[0],
                     this.farmSort[1],
-                    this.searchResult
+                    this.searchResultFarm
                 );
                 break;
             case 'summaryField':
+                this.pageSizeSummaryField = event.pageSize;
+                this.pageSummaryField = event.pageIndex + 1;
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryField,
+                    this.pageSizeSummaryField,
                     this.fieldSort[0],
                     this.fieldSort[1],
-                    this.searchResult
+                    this.searchResultField
                 );
                 break;
             case 'summaryCrop':
+                this.pageSizeSummaryCrop = event.pageSize;
+                this.pageSummaryCrop = event.pageIndex + 1;
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryCrop,
+                    this.pageSizeSummaryCrop,
                     this.cropSort[0],
                     this.cropSort[1],
-                    this.searchResult
+                    this.searchResultCrop
                 );
                 break;
             case 'summaryDestination':
+                this.pageSizeSummaryDestination = event.pageSize;
+                this.pageSummaryDestination = event.pageIndex + 1;
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
-                    this.limit,
+                    this.pageSummaryDestination,
+                    this.pageSizeSummaryDestination,
                     this.destinationSort[0],
                     this.destinationSort[1],
-                    this.searchResult
+                    this.searchResultDestination
                 );
                 break;
             default:

@@ -134,7 +134,7 @@
                     </div>
                     <mat-paginator *ngIf="customerDestinationList?.customer_destinations?.length > 0"
                         class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
-                        [length]="customerDestinationList?.count" [pageIndex]="page - 1" [pageSize]="pageSize"
+                        [length]="customerDestinationList?.count" [pageIndex]="destinationPage - 1" [pageSize]="destinationPageSize"
                         [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" [showFirstLastButtons]="true">
                     </mat-paginator>
                 </ng-container>

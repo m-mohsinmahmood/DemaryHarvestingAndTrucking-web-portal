@@ -1,5 +1,5 @@
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -38,7 +38,13 @@ export const MY_FORMATS = {
 export class ListDestinationComponent implements OnInit {
     //#region Input
     @Input() customerDestinationList: Observable<any>;
+    @Input() destinationPage: number;
+    @Input() destinationPageSize: number;
     @Input() destinationFilters: any;
+    //#endregion
+
+    //#region Output
+    @Output() destinationPageChanged = new EventEmitter<{ destinationPageChild: number, destinationPageSizeChild: number }>();
     //#endregion
 
     //#region Search form variables
@@ -57,8 +63,6 @@ export class ListDestinationComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     destinationSort: any[] = [];
@@ -88,11 +92,12 @@ export class ListDestinationComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.destinationPage = 1;
+                this.emitDestinationPageChanged();
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
-                    this.pageSize,
+                    this.destinationPage,
+                    this.destinationPageSize,
                     this.destinationSort[0],
                     this.destinationSort[1],
                     this.searchResult,
@@ -116,7 +121,7 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
-                pageSize: this.pageSize,
+                pageSize: this.destinationPageSize,
                 sort: this.destinationSort[0],
                 order: this.destinationSort[1],
                 search: this.searchResult,
@@ -124,7 +129,8 @@ export class ListDestinationComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.destinationPage = 1;
+            this.emitDestinationPageChanged();
         });
     }
 
@@ -134,7 +140,7 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
-                pageSize: this.pageSize,
+                pageSize: this.destinationPageSize,
                 sort: this.destinationSort[0],
                 order: this.destinationSort[1],
                 search: this.searchResult,
@@ -151,20 +157,22 @@ export class ListDestinationComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.destinationPage = 1;
+            this.emitDestinationPageChanged();
          });
     }
     //#endregion
 
     //#region  Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationSort[0] = sort.active;
         this.destinationSort[1] = sort.direction;
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.destinationPage,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -175,12 +183,13 @@ export class ListDestinationComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.pageSize = event.pageSize;
+        this.destinationPage = event.pageIndex + 1;
+        this.destinationPageSize = event.pageSize;
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.destinationPage,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -200,11 +209,12 @@ export class ListDestinationComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult) {
-                this.page = 1
+                this.destinationPage = 1
+                this.emitDestinationPageChanged();
                 this._customerService.deleteCustomerDestination(
                     destinationId,
                     this.routeID,
-                    this.pageSize,
+                    this.destinationPageSize,
                     this.destinationSort[0],
                     this.destinationSort[1],
                     this.searchResult,
@@ -218,7 +228,7 @@ export class ListDestinationComponent implements OnInit {
 
     //#region Filters
     applyFilters() {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationFilters.value.farm_id?.id
             ? (this.destinationFilters.value.farm_id =
                 this.destinationFilters.value.farm_id?.id)
@@ -233,10 +243,11 @@ export class ListDestinationComponent implements OnInit {
             ? (this.destinationFilters.value.calendar_year = '')
             : '';
         this.calendar_year.value ? (this.destinationFilters.value.calendar_year = this.calendar_year.value) : ''
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            this.pageSize,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -245,16 +256,17 @@ export class ListDestinationComponent implements OnInit {
     }
 
     removeFilters() {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationFilters.reset();
         this.destinationFilters.value.farm_id = '';
         this.destinationFilters.value.status = '';
         this.destinationFilters.value.calendar_year = '';
         this.calendar_year.setValue('');
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            this.pageSize,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -302,6 +314,12 @@ export class ListDestinationComponent implements OnInit {
                     value
                 );
             });
+    }
+    //#endregion
+
+    //#region emit farm page changed
+      emitDestinationPageChanged() {
+        this.destinationPageChanged.emit({ destinationPageChild: this.destinationPage, destinationPageSizeChild: this.destinationPageSize });
     }
     //#endregion
 }
