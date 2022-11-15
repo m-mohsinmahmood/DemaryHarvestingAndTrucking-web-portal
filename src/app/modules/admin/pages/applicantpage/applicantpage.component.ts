@@ -261,6 +261,7 @@ export class ApplicantpageComponent implements OnInit
 
     saveAndClose(): void {
         // Save the message as a draft
+        this._router.navigateByUrl("/pages/landing-page")
         this.saveAsDraft();
 
         // Close the dialog
