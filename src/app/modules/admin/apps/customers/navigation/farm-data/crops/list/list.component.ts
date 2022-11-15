@@ -1,5 +1,5 @@
 import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -46,7 +46,13 @@ export const MY_FORMATS = {
 export class ListCropComponent implements OnInit {
     //#region Input
     @Input() customerCropList: Observable<any>;
+    @Input() cropPage: number;
+    @Input() cropPageSize: number;
     @Input() cropFilters: any;
+    //#endregion
+
+    //#region Output
+    @Output() cropPageChanged = new EventEmitter<{ cropPageChild: number, cropPageSizeChild: number }>();
     //#endregion
 
     //#region Search form variables
@@ -60,8 +66,6 @@ export class ListCropComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     cropSort: any[] = [];
@@ -73,7 +77,7 @@ export class ListCropComponent implements OnInit {
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         private _customerService: CustomersService
-    ) {}
+    ) { }
 
     //#region Lifecycle hooks
     ngOnInit(): void {
@@ -90,11 +94,12 @@ export class ListCropComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.cropPage = 1;
+                this.emitCropPageChanged();
                 this._customerService.getCustomerCrops(
                     this.routeID,
-                    this.page,
-                    this.pageSize,
+                    this.cropPage,
+                    this.cropPageSize,
                     this.cropSort[0],
                     this.cropSort[1],
                     this.searchResult,
@@ -117,7 +122,7 @@ export class ListCropComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
                 status: true,
-                pageSize: this.pageSize,
+                pageSize: this.cropPageSize,
                 sort: this.cropSort[0],
                 order: this.cropSort[1],
                 search: this.searchResult,
@@ -125,7 +130,8 @@ export class ListCropComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.cropPage = 1;
+            this.emitCropPageChanged();
         });
     }
 
@@ -135,7 +141,7 @@ export class ListCropComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
-                pageSize: this.pageSize,
+                pageSize: this.cropPageSize,
                 sort: this.cropSort[0],
                 order: this.cropSort[1],
                 search: this.searchResult,
@@ -150,20 +156,22 @@ export class ListCropComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.cropPage = 1;
+            this.emitCropPageChanged();
         });
     }
     //#endregion
 
     //#region  Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.cropPage = 1;
         this.cropSort[0] = sort.active;
         this.cropSort[1] = sort.direction;
+        this.emitCropPageChanged();
         this._customerService.getCustomerCrops(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.cropPage,
+            this.cropPageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -174,12 +182,13 @@ export class ListCropComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.pageSize = event.pageSize;
+        this.cropPage = event.pageIndex + 1;
+        this.cropPageSize = event.pageSize;
+        this.emitCropPageChanged();
         this._customerService.getCustomerCrops(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.cropPage,
+            this.cropPageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -198,10 +207,11 @@ export class ListCropComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult){
-                this.page = 1;
+            if (dialogResult) {
+                this.cropPage = 1;
+                this.emitCropPageChanged();
                 this._customerService.deleteCustomerCrop(cropId, this.routeID,
-                    this.pageSize,
+                    this.cropPageSize,
                     this.cropSort[0],
                     this.cropSort[1],
                     this.searchResult,
@@ -213,8 +223,8 @@ export class ListCropComponent implements OnInit {
     //#endregion
 
     //#region Filters
-     applyFilters() {  
-        this.page = 1;
+    applyFilters() {
+        this.cropPage = 1;
         !this.cropFilters.value.status
             ? (this.cropFilters.value.status = '')
             : '';
@@ -222,10 +232,11 @@ export class ListCropComponent implements OnInit {
             ? (this.cropFilters.value.calendar_year = '')
             : '';
         this.calendar_year.value ? (this.cropFilters.value.calendar_year = this.calendar_year.value) : ''
+        this.emitCropPageChanged();
         this._customerService.getCustomerCrops(
             this.routeID,
             1,
-            this.pageSize,
+            this.cropPageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -233,15 +244,16 @@ export class ListCropComponent implements OnInit {
         );
     }
     removeFilters() {
-        this.page = 1;
+        this.cropPage = 1;
         this.cropFilters.reset();
         this.cropFilters.value.status = '';
         this.cropFilters.value.calendar_year = '';
         this.calendar_year.setValue('');
+        this.emitCropPageChanged();
         this._customerService.getCustomerCrops(
             this.routeID,
             1,
-            this.pageSize,
+            this.cropPageSize,
             this.cropSort[0],
             this.cropSort[1],
             this.searchResult,
@@ -262,6 +274,12 @@ export class ListCropComponent implements OnInit {
     initCalendar() {
         //Calender Year Initilize
         this.calendar_year = new FormControl();
+    }
+    //#endregion
+
+    //#region emit farm page changed
+    emitCropPageChanged() {
+        this.cropPageChanged.emit({ cropPageChild: this.cropPage, cropPageSizeChild: this.cropPageSize });
     }
     //#endregion
 }

@@ -45,7 +45,13 @@ export const MY_FORMATS = {
 export class ListFieldComponent implements OnInit {
     //#region Input
     @Input() customerFieldList: Observable<any>;
+    @Input() fieldPage: number;
+    @Input() fieldPageSize: number;
     @Input() fieldFilters: any;
+    //#endregion
+
+    //#region Output
+    @Output() fieldPageChanged = new EventEmitter<{ fieldPageChild: number, fieldPageSizeChild: number }>();
     //#endregion
 
     //#region Search form variables
@@ -64,8 +70,8 @@ export class ListFieldComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
+    // page: number;
+    // pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     fieldSort: any[] = [];
@@ -93,11 +99,12 @@ export class ListFieldComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.fieldPage = 1;
+                this.emitFieldPageChanged();
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    this.pageSize,
+                    this.fieldPage,
+                    this.fieldPageSize,
                     this.fieldSort[0],
                     this.fieldSort[1],
                     this.searchResult,
@@ -119,7 +126,7 @@ export class ListFieldComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: false,
                 status: true,
-                pageSize: this.pageSize,
+                pageSize: this.fieldPageSize,
                 sort: this.fieldSort[0],
                 order: this.fieldSort[1],
                 search: this.searchResult,
@@ -127,7 +134,8 @@ export class ListFieldComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.fieldPage = 1;
+            this.emitFieldPageChanged();
          });
     }
 
@@ -136,7 +144,7 @@ export class ListFieldComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
-                pageSize: this.pageSize,
+                pageSize: this.fieldPageSize,
                 sort: this.fieldSort[0],
                 order: this.fieldSort[1],
                 search: this.searchResult,
@@ -153,20 +161,22 @@ export class ListFieldComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            this.page = 1;
+            this.fieldPage = 1;
+            this.emitFieldPageChanged();
          });
     }
     //#endregion
 
     //#region Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldSort[0] = sort.active;
         this.fieldSort[1] = sort.direction;
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.fieldPage,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -177,12 +187,13 @@ export class ListFieldComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.pageSize = event.pageSize;
+        this.fieldPage = event.pageIndex + 1;
+        this.fieldPageSize = event.pageSize;
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
-            this.pageSize,
+            this.fieldPage,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -191,9 +202,15 @@ export class ListFieldComponent implements OnInit {
     }
     //#endregion
 
+    //#region emit field page changed
+    emitFieldPageChanged(){
+        this.fieldPageChanged.emit({ fieldPageChild: this.fieldPage, fieldPageSizeChild: this.fieldPageSize });
+    }
+    //#endregion 
+
     //#region Filters
     applyFilters() {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldFilters.value.farm_id?.id
             ? (this.fieldFilters.value.farm_id =
                 this.fieldFilters.value.farm_id?.id)
@@ -208,10 +225,11 @@ export class ListFieldComponent implements OnInit {
             ? (this.fieldFilters.value.calendar_year = '')
             : '';
         this.calendar_year.value ? (this.fieldFilters.value.calendar_year = this.calendar_year.value) : ''
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            this.pageSize,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -220,16 +238,17 @@ export class ListFieldComponent implements OnInit {
     }
 
     removeFilters() {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldFilters.reset();
         this.fieldFilters.value.farm_id = '';
         this.fieldFilters.value.status = '';
         this.fieldFilters.value.calendar_year = '';
         this.calendar_year.setValue('');
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            this.pageSize,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -291,11 +310,12 @@ export class ListFieldComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult){
-                this.page = 1;
+                this.fieldPage = 1;
+                this.emitFieldPageChanged();
                 this._customerService.deleteCustomerField(
                     fieldId,
                     this.routeID,
-                    this.pageSize,
+                    this.fieldPageSize,
                     this.fieldSort[0],
                     this.fieldSort[1],
                     this.searchResult,

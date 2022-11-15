@@ -107,7 +107,7 @@
                     customerFarmList?.customer_farms?.length > 0"
                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFarmList?.count"
-                    [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    [pageIndex]="farmPage - 1" [pageSize]="farmPageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
             </ng-container>
             <ng-template class="flex" #noFarms>

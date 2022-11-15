@@ -137,7 +137,7 @@
                     0"
                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFieldList?.count"
-                    [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    [pageIndex]=" fieldPage - 1" [pageSize]="fieldPageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
             </ng-container>
             <ng-template #noFields>

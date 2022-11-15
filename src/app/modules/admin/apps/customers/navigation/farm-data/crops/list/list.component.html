@@ -129,7 +129,7 @@
                     <mat-paginator *ngIf="customerCropList?.customer_crops?.length > 0"
                         class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [length]="customerCropList?.count" [showFirstLastButtons]="true" (page)="pageChanged($event)"
-                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+                        [pageIndex]="cropPage - 1" [pageSize]="cropPageSize" [pageSizeOptions]="pageSizeOptions">
                     </mat-paginator>
                 </ng-container>
             </ng-container>
