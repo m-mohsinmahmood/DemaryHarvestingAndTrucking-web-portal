@@ -71,7 +71,7 @@ export class CustomersListComponent implements OnInit {
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
-    formFilters: FormGroup;
+    customerFiltersForm: FormGroup;
     //#endregion
 
     //Constructor
@@ -109,7 +109,7 @@ export class CustomersListComponent implements OnInit {
                     '',
                     '',
                     this.searchResult,
-                    this.formFilters.value
+                    this.customerFiltersForm.value
                 );
             });
     }
@@ -129,7 +129,11 @@ export class CustomersListComponent implements OnInit {
     //#region Add Dialog
 
     openAddDialog(): void {
-        const dialogRef = this._matDialog.open(AddCustomer);
+        const dialogRef = this._matDialog.open(AddCustomer,{
+            data: {
+                filters: this.customerFiltersForm.value,
+            },
+        });
         dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
             //Call this function only when success is returned from the create API call//
         });
@@ -146,7 +150,7 @@ export class CustomersListComponent implements OnInit {
             sort.active,
             sort.direction,
             this.searchResult,
-            this.formFilters.value
+            this.customerFiltersForm.value
         );
     }
     //#endregion
@@ -155,7 +159,7 @@ export class CustomersListComponent implements OnInit {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult,this.formFilters.value);
+        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult,this.customerFiltersForm.value);
     }
     //#endregion
 
@@ -191,20 +195,22 @@ export class CustomersListComponent implements OnInit {
 
     //#region Filters 
     applyFilters() {
-        !this.formFilters.value.type ? (this.formFilters.value.type = '') : ('');
-        !this.formFilters.value.status ? (this.formFilters.value.status = '') : ('');
-        this._customersService.getCustomers(this.page, 10, '', '', this.searchResult, this.formFilters.value)
+        this.page = 1;
+        !this.customerFiltersForm.value.type ? (this.customerFiltersForm.value.type = '') : ('');
+        !this.customerFiltersForm.value.status ? (this.customerFiltersForm.value.status = '') : ('');
+        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.customerFiltersForm.value)
     }
 
     removeFilters() {
-        this.formFilters.reset();
-        this.formFilters.value.type = '';
-        this.formFilters.value.status = '';
-        this._customersService.getCustomers( this.page, 10, '', '', this.searchResult, this.formFilters.value)
+        this.page = 1;
+        this.customerFiltersForm.reset();
+        this.customerFiltersForm.value.type = '';
+        this.customerFiltersForm.value.status = '';
+        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.customerFiltersForm.value)
     }
 
     initFiltersForm() {
-        this.formFilters = this._formBuilder.group({
+        this.customerFiltersForm = this._formBuilder.group({
             type: [''],
             status: [''],
         });

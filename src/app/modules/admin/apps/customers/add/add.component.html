@@ -37,9 +37,10 @@
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="phone-number-outline" appearance="outline">
                     <mat-label>Phone Number</mat-label>
-                    <input type="number" matInput formControlName="phone_number" />
+                    <span matPrefix>+1 &nbsp;</span>
+                    <input maxlength="14" appPhoneMask type="text" matInput formControlName="phone_number" />
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">

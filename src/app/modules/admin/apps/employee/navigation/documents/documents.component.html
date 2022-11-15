@@ -19,16 +19,9 @@
 
             <!-- Main -->
             <div class="flex flex-col flex-auto">
-
-                <!-- Header -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-4 md:px-4 border-b bg-card dark:bg-transparent">
-                    <!-- Title -->
-                    <div>
-                        <div class="leading-none text-2xl font-extrabold tracking-tight">Documents</div>
-                        <div class="flex items-center mt-0.5 font-medium text-secondary">
-                        </div>
-                    </div>
-                </div>
+                <p class="text-black  py-3 border-b mb-2 text-2xl mx-3 font-extrabold tracking-tight">
+                    Documents
+                </p>
 
                 <!-- Documents list -->
                 <ng-container *ngIf="documents && (documents.folders.length > 0 || documents.files.length > 0); else noDocuments">
@@ -36,7 +29,7 @@
                         <!-- Folders -->
                         <ng-container *ngIf="documents.folders.length > 0">
                             <div>
-                                <div class="font-medium">Folders</div>
+                                <div class="font-bold">Folders</div>
                                 <div
                                     class="flex flex-wrap -m-2 mt-2">
                                     <ng-container *ngFor="let folder of documents.folders; trackBy:trackByFn">
@@ -72,7 +65,7 @@
                         <!-- Files -->
                         <ng-container *ngIf="documents.files.length > 0">
                             <div>
-                                <div class="font-medium">Files</div>
+                                <div class="font-bold">Files</div>
                                 <div
                                     class="flex flex-wrap -m-2 mt-2">
                                     <ng-container *ngFor="let file of documents.files; trackBy:trackByFn">

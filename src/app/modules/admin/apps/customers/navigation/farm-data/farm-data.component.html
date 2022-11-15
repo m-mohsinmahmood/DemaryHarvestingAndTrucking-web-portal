@@ -3,19 +3,19 @@
     <mat-tab-group mat-align-tabs="start" class="tab_group" (selectedTabChange)="farmTabChange($event)">
         <!-- Farms -->
         <mat-tab label="Farms">
-            <app-list-farms [customerFarmList]="(customerFarmList$ | async)"></app-list-farms>
+            <app-list-farms (farmPageChanged)="setFarmPage($event, $event)" [customerFarmList]="(customerFarmList$ | async)" [farmPage] = "farmPage" [farmPageSize] = "farmPageSize" ></app-list-farms>
         </mat-tab>
         <!-- Fields -->
         <mat-tab label="Fields">
-            <app-list-fields [customerFieldList]="(customerFieldList$ | async)"></app-list-fields>
+            <app-list-fields (fieldPageChanged)="setFieldPage($event, $event)" [customerFieldList]="(customerFieldList$ | async)" [fieldFilters] = "fieldFilters"></app-list-fields>
         </mat-tab>
         <!--Crops-->
         <mat-tab label="Crops">
-            <app-list-crops [customerCropList]="(customerCropList$ | async)"></app-list-crops>
+            <app-list-crops (cropPageChanged)="setCropPage($event, $event)" [customerCropList]="(customerCropList$ | async)" [cropFilters] = "cropFilters" ></app-list-crops>
         </mat-tab>
         <!-- Destination -->
         <mat-tab label="Destinations" >
-            <app-list-destinations [customerDestinationList]="(customerDestinationList$ | async)"></app-list-destinations>
+            <app-list-destinations (destinationPageChanged)="setDestinationPage($event, $event)" [customerDestinationList]="(customerDestinationList$ | async)" [destinationFilters] = "destinationFilters"></app-list-destinations>
         </mat-tab>
         <!-- Summmary -->
         <mat-tab label="Summary" class="summary-tab flex flex-col">
@@ -126,8 +126,8 @@
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
-                                    }" [length]="customerFarmList?.count" [pageIndex]="page - 1"
-                                    [pageSize]="pageSizeSummary" [pageSizeOptions]="pageSizeOptionsSummary"
+                                    }" [length]="customerFarmList?.count" [pageIndex]="pageSummaryFarm - 1"
+                                    [pageSize]="pageSizeSummaryFarm" [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryFarm')" [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
@@ -278,8 +278,8 @@
                                     class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                     [ngClass]="{
                                         'pointer-events-none': isLoading
-                                    }" [length]="customerFieldList?.count" [pageIndex]="page - 1"
-                                    [pageSize]="pageSizeSummary" [pageSizeOptions]="pageSizeOptionsSummary"
+                                    }" [length]="customerFieldList?.count" [pageIndex]="pageSummaryField - 1"
+                                    [pageSize]="pageSizeSummaryField" [pageSizeOptions]="pageSizeOptionsSummary"
                                     (page)="pageChanged($event, 'summaryField')" [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </ng-container>
@@ -411,7 +411,7 @@
                                         [showFirstLastButtons]="true"
                                         (page)="
                                             pageChanged($event, 'summaryCrop')
-                                        " [pageIndex]="page - 1" [pageSize]="pageSizeSummary" [pageSizeOptions]="
+                                        " [pageIndex]="pageSummaryCrop - 1" [pageSize]="pageSizeSummaryCrop" [pageSizeOptions]="
                                             pageSizeOptionsSummary
                                         ">
                                     </mat-paginator>
@@ -567,7 +567,7 @@
                                         class="border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                         [length]="
                                             CustomerDestinationList?.count
-                                        " [pageIndex]="page - 1" [pageSize]="pageSizeSummary" [pageSizeOptions]="
+                                        " [pageIndex]="pageSummaryDestination - 1" [pageSize]="pageSizeSummaryDestination" [pageSizeOptions]="
                                             pageSizeOptionsSummary
                                         " (page)="
                                             pageChanged($event, 'summaryDestination')

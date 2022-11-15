@@ -64,24 +64,19 @@
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field class="phone-number-outline" appearance="outline">
                         <mat-label class="text-gray-500 text-gray-500">Cell Number </mat-label>
-                        <input [readonly]="isEdit" matInput formControlName="cell_number">
+                        <span matPrefix>+1 &nbsp;</span>
+                        <input maxlength="14" appPhoneMask type="text" [readonly]="isEdit" matInput formControlName="cell_number">
                     </mat-form-field>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
-                        <mat-label class="text-gray-500 text-gray-500">City</mat-label>
-                        <input [readonly]="isEdit" matInput formControlName="city">
-                    </mat-form-field>
-                </div>
-                <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field class="phone-number-outline" appearance="outline">
                         <mat-label class="text-gray-500 text-gray-500">Office Number</mat-label>
-                        <input [readonly]="isEdit" matInput formControlName="office_number">
+                        <span matPrefix>+1 &nbsp;</span>
+                        <input maxlength="14" appPhoneMask type="text" [readonly]="isEdit" matInput formControlName="office_number">
                     </mat-form-field>
                 </div>
-
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline" class="cat w-full ">
                         <mat-label>Select State</mat-label>
@@ -92,6 +87,12 @@
                                 >{{ state }}</mat-option
                             >
                         </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label class="text-gray-500 text-gray-500">City</mat-label>
+                        <input [readonly]="isEdit" matInput formControlName="city">
                     </mat-form-field>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">

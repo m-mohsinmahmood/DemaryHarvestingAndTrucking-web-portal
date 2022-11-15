@@ -1,5 +1,5 @@
 import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -15,8 +15,13 @@ import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-d
 export class ListFarmComponent implements OnInit {
     //#region Input
     @Input() customerFarmList: Observable<any>;
+    @Input() farmPage: number;
+    @Input() farmPageSize: number;
     //#endregion
 
+    //#region Output
+    @Output() farmPageChanged = new EventEmitter<{ farmPageChild: number, farmPageSizeChild: number }>();
+    //#endregion
     //#region Search form variables
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -28,11 +33,10 @@ export class ListFarmComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
+    // page: number;
+    // pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     farmSort: any[] = [];
     //#endregion
 
@@ -40,7 +44,7 @@ export class ListFarmComponent implements OnInit {
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         private _customerService: CustomersService
-    ) {}
+    ) { }
 
     //#region Lifecycle hooks
     ngOnInit(): void {
@@ -55,13 +59,14 @@ export class ListFarmComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.farmPage = 1;
+                this.emitFarmPageChanged();
                 this._customerService.getCustomerFarm(
                     this.routeID,
-                    this.page,
-                    10,
-                    '',
-                    '',
+                    this.farmPage,
+                    this.farmPageSize,
+                    this.farmSort[0],
+                    this.farmSort[1],
                     this.searchResult
                 );
             });
@@ -81,9 +86,16 @@ export class ListFarmComponent implements OnInit {
                 id: this.routeID,
                 isEdit: false,
                 status: true,
+                pageSize: this.farmPageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.farmPage = 1;
+            this.emitFarmPageChanged();
+        });
     }
 
     openEditFarmDialog(farm): void {
@@ -91,6 +103,10 @@ export class ListFarmComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
+                pageSize: this.farmPageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult,
                 customerFarmData: {
                     name: farm.name,
                     id: farm.id,
@@ -98,19 +114,23 @@ export class ListFarmComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.farmPage = 1;
+            this.emitFarmPageChanged();
+        });
     }
     //#endregion
 
     //#region  Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.farmPage = 1;
         this.farmSort[0] = sort.active;
         this.farmSort[1] = sort.direction;
+        this.emitFarmPageChanged();
         this._customerService.getCustomerFarm(
             this.routeID,
-            this.page,
-            this.limit,
+            this.farmPage,
+            this.farmPageSize,
             this.farmSort[0],
             this.farmSort[1],
             this.searchResult
@@ -120,12 +140,13 @@ export class ListFarmComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.farmPage = event.pageIndex + 1;
+        this.farmPageSize = event.pageSize;
+        this.emitFarmPageChanged();
         this._customerService.getCustomerFarm(
             this.routeID,
-            this.page,
-            this.limit,
+            this.farmPage,
+            this.farmPageSize,
             this.farmSort[0],
             this.farmSort[1],
             this.searchResult
@@ -143,9 +164,26 @@ export class ListFarmComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
-                this._customerService.deleteCustomerFarm(farmId, this.routeID);
+            if (dialogResult) {
+                this.farmPage = 1
+                this.emitFarmPageChanged();
+                this._customerService.deleteCustomerFarm(
+                    farmId,
+                    this.routeID,
+                    this.farmPageSize,
+                    this.farmSort[0],
+                    this.farmSort[1],
+                    this.searchResult
+                );
+            }
+
         });
+    }
+    //#endregion
+    
+    //#region emit farm page changed
+    emitFarmPageChanged() {
+        this.farmPageChanged.emit({ farmPageChild: this.farmPage, farmPageSizeChild: this.farmPageSize });
     }
     //#endregion
 }

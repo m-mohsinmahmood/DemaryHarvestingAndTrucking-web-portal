@@ -67,6 +67,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/confirmation-dialog.component';
+import { PhoneMaskDirective } from './phone-mask.directive';
+
 
 @NgModule({
     declarations: [
@@ -106,6 +108,7 @@ import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/conf
         ListTruckingRateComponent,
         ListFarmingRateComponent,
         ConfirmationDialogComponent,
+        PhoneMaskDirective
     ],
     imports: [
     RouterModule.forChild(customersRoutes),
@@ -167,6 +170,9 @@ import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/conf
         MatButtonToggleModule,
         FuseDrawerModule,
 
+    ],
+    exports: [
+        PhoneMaskDirective
     ],
 
 })

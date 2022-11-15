@@ -115,9 +115,6 @@ export class AddCustomer implements OnInit {
 
     }
 
-    createCustomer(customerData: any): void {
-        this._customersService.createCustomer(customerData);
-    }
     updateCustomer(customerData: any): void {
         this._customersService.updateCustomer(
             customerData,
@@ -130,7 +127,7 @@ export class AddCustomer implements OnInit {
             this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
             this.updateCustomer(this.form.value);
         } else {
-            this.createCustomer(this.form.value);
+            this._customersService.createCustomer(this.form.value,this.data?.filters);
         }
     }
     discard(): void {

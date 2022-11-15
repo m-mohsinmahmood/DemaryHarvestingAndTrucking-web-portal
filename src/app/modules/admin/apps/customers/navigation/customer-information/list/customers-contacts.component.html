@@ -41,7 +41,7 @@
     </div>
     <!-- Main -->
     <div *ngIf="(customerContactList$ | async) as customerContactList"
-        [ngClass]="(customerContactList.customer_contacts.length > 0)?'flex flex-auto overflow-hidden':'flex flex-auto items-center overflow-hidden'">
+        class="flex flex-auto overflow-hidden">
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
             <!-- Customer Contacts list -->
             <ng-container *ngIf="(customerContactList$ | async) as customerContactList">
@@ -76,7 +76,7 @@
                                 </div>
                                 <!-- Last Name -->
                                 <div class="hidden sm:block items-left break-words">
-                                    <div class="min-w-4">{{customerContact.cell_number}}</div>
+                                    <div class="min-w-4">+1 {{customerContact.cell_number}}</div>
                                 </div>
                                 <!-- Position -->
                                 <div class="hidden md:block items-center">
@@ -84,7 +84,7 @@
                                 </div>
                                 <!-- Phone Number -->
                                 <div class="hidden sm:block items-left break-words">
-                                    <div class="min-w-4">{{customerContact.office_number}}</div>
+                                    <div *ngIf="customerContact?.office_number" class="min-w-4">+1 {{customerContact.office_number}}</div>
                                 </div>
                                 <!-- Email -->
                                 <div class="hidden sm:block items-center break-words">

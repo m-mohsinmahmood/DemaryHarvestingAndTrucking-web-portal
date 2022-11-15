@@ -98,13 +98,14 @@ export class AddCustomerContact implements OnInit {
     
     onSubmit(): void {
         this._customerService.isLoadingCustomerContact.next(true);
-        this._customerService.createCustomerContact(this.form.value);
+        this._customerService.createCustomerContact(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search);
     }
 
     discard(): void {
         this._customerService.isLoadingCustomerContact.next(false);
         this.matDialogRef.close();
     }
+   
     //#endregion
 
     //#region Avatar

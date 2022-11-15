@@ -102,6 +102,16 @@ export const appRoutes: Route[] = [
 
                 // Coming Soon
                 {path: 'coming-soon', loadChildren: () => import('app/modules/admin/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)},
+                //landing page
+                {path: 'landing-page', data: {
+                    layout: 'top-navigation'
+                },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+                //applicant page
+                {path:'applicant', data: {
+                    layout: 'empty'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
                 // Error
                 {path: 'error', children: [
@@ -199,5 +209,35 @@ export const appRoutes: Route[] = [
             {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.module').then(m => m.Error404Module)},
             {path: '**', redirectTo: '404-not-found'}
         ]
-    }
+    },
+
+    //plain-pages
+     // Admin routes
+    //  {
+    //     path       : '',
+    //     canActivate: [AuthGuard],
+    //     canActivateChild: [AuthGuard],
+    //     component  : LayoutComponent,
+    //     data: {
+    //         layout: 'empty'
+    //     },
+    //     resolve    : {
+    //         initialData: InitialDataResolver,
+    //     },
+    //     children   : [
+
+    //         // Pages
+    //         {path: 'pages', children: [
+    //              //landing page
+    //             {path: 'landing-page', loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+    //             //applicant page
+    //             {path:'applicant',
+    //             loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+    //         ]},
+
+           
+           
+    //     ]
+    // }
 ];

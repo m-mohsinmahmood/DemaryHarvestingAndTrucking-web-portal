@@ -209,10 +209,10 @@ export class AddFieldComponent implements OnInit, OnDestroy {
         this._customersService.isLoadingCustomerField.next(true);
         this.form.value['farm_id'] = this.form.value['farm_id']?.id;
         if (this.data && this.data.isEdit) {
-            this._customersService.updateCustomerField(this.form.value);
+            this._customersService.updateCustomerField(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search,this.data?.filters);
 
         } else {
-            this._customersService.createCustomerField(this.form.value);
+            this._customersService.createCustomerField(this.form.value,this.data?.pageSize,this.data?.sort,this.data?.order,this.data?.search,this.data?.filters);
         }
     }
 
