@@ -14,8 +14,9 @@ import { AddFieldComponent } from '../add-field/add-field.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateAdapter,MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { read, utils, writeFile } from 'xlsx';
 
 export const MY_FORMATS = {
     parse: {
@@ -43,14 +44,12 @@ export const MY_FORMATS = {
     ],
 })
 export class ListFieldComponent implements OnInit {
-    //#region Input
+
+    //#region Input/Output Variables
     @Input() customerFieldList: Observable<any>;
     @Input() fieldPage: number;
     @Input() fieldPageSize: number;
     @Input() fieldFilters: any;
-    //#endregion
-
-    //#region Output
     @Output() fieldPageChanged = new EventEmitter<{ fieldPageChild: number, fieldPageSizeChild: number }>();
     //#endregion
 
@@ -136,7 +135,7 @@ export class ListFieldComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             this.fieldPage = 1;
             this.emitFieldPageChanged();
-         });
+        });
     }
 
     openEditFieldDialog(field): void {
@@ -163,7 +162,7 @@ export class ListFieldComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             this.fieldPage = 1;
             this.emitFieldPageChanged();
-         });
+        });
     }
     //#endregion
 
@@ -202,8 +201,45 @@ export class ListFieldComponent implements OnInit {
     }
     //#endregion
 
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerField;
+        this._customerService
+            .getCustomerFieldExport(this.routeID, this.fieldSort[0], this.fieldSort[1], this.searchResult, this.fieldFilters.value)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomerField = value;
+                const headings = [['Farm Name', 'Field Name', 'Acres', 'Status', 'Calendar Year']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomerField, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Field Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
+        const headings = [['Farm Name', 'Field Name', 'Acres', 'Status', 'Calendar Year']];
+        const wb = utils.book_new();
+        const ws: any = utils.json_to_sheet([]);
+        utils.sheet_add_aoa(ws, headings);
+        utils.book_append_sheet(wb, ws, 'Report');
+        writeFile(wb, 'Customer Field Data.xlsx');
+    }
+    //#endregion
+
+
     //#region emit field page changed
-    emitFieldPageChanged(){
+    emitFieldPageChanged() {
         this.fieldPageChanged.emit({ fieldPageChild: this.fieldPage, fieldPageSizeChild: this.fieldPageSize });
     }
     //#endregion 
@@ -309,7 +345,7 @@ export class ListFieldComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult){
+            if (dialogResult) {
                 this.fieldPage = 1;
                 this.emitFieldPageChanged();
                 this._customerService.deleteCustomerField(
@@ -322,7 +358,7 @@ export class ListFieldComponent implements OnInit {
                     this.fieldFilters.value
                 );
             }
-               
+
         });
     }
     //#endregion

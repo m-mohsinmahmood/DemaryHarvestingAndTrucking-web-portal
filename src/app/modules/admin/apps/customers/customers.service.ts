@@ -63,6 +63,9 @@ export class CustomersService {
     );
     readonly customer$: Observable<Customers | null> =
         this.customer.asObservable();
+
+    private customerExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerExport$: Observable<Customers | null> = this.customerExport.asObservable();
     //#endregion
 
     //#region Observables Customer Contact
@@ -77,6 +80,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerContact$: Observable<CustomerContacts | null> =
         this.customerContact.asObservable();
+
+    private customerContactExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerContactExport$: Observable<Customers | null> = this.customerContactExport.asObservable();
 
     // Loaders
     private isLoadingCustomerContactList: BehaviorSubject<boolean> =
@@ -102,6 +108,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerFarm$: Observable<CustomerFarm | null> =
         this.customerFarm.asObservable();
+
+    private customerFarmExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerFarmExport$: Observable<Customers | null> = this.customerFarmExport.asObservable();
     // Loaders
     private isLoadingCustomerFarmList: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -125,6 +134,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerField$: Observable<CustomerField | null> =
         this.customerField.asObservable();
+
+    private customerFieldExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerFieldExport$: Observable<Customers | null> = this.customerFieldExport.asObservable();
 
     // Loaders
     private isLoadingCustomerFieldList: BehaviorSubject<boolean> =
@@ -153,6 +165,9 @@ export class CustomersService {
     readonly customerCrop$: Observable<any[] | null> =
         this.customerCrop.asObservable();
 
+    private customerCropExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerCropExport$: Observable<Customers | null> = this.customerCropExport.asObservable();
+
     // Loaders
     private isLoadingCustomerCropList: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -178,6 +193,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerDestination$: Observable<any[] | null> =
         this.customerDestination.asObservable();
+
+    private customerDestinationExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerDestinationExport$: Observable<Customers | null> = this.customerDestinationExport.asObservable();
 
     // Loaders
     private isLoadingCustomerDestinationList: BehaviorSubject<boolean> =
@@ -568,6 +586,16 @@ export class CustomersService {
             );
     }
 
+    getCustomerExport(
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: customerFilters = { type: '', status: '' },) {
+        return this._httpClient
+            .get<any>('api-2/customer')
+            .pipe(take(1))
+    }
+
     //#endregion
     //#region Customer Contact API
     getCustomerContact(
@@ -715,6 +743,19 @@ export class CustomersService {
                     this.isLoadingCustomerContact.next(false);
                 }
             );
+    }
+    getCustomerContactExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/customer-contact?customerId=${customerID}`, { params })
+            .pipe(take(1))
     }
 
     //#endregion
@@ -884,6 +925,20 @@ export class CustomersService {
             );
     }
 
+    getCustomerFarmExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/customer-farm?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+
 
     //#endregion
     //#region Customer Farm Data Field API
@@ -1036,6 +1091,24 @@ export class CustomersService {
             );
     }
 
+    getCustomerFieldExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: fieldFilters = { farm_id: '', status: '', calendar_year: '' }) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-field?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+
     //#endregion
     //#region Customer Farm Data Crop API
     getCustomerCrops(
@@ -1046,7 +1119,6 @@ export class CustomersService {
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
         filters: cropFilters = { status: '', calendar_year: '' },
-
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -1168,6 +1240,23 @@ export class CustomersService {
                     this.isLoadingCustomerCrop.next(false);
                 }
             );
+    }
+
+    getCustomerCropExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: cropFilters = { status: '', calendar_year: '' },){
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-crop?customerId=${customerID}`, { params })
+            .pipe(take(1))
     }
 
     //#endregion
@@ -1303,6 +1392,24 @@ export class CustomersService {
                     this.isLoadingCustomerDestination.next(false);
                 }
             );
+    }
+    getCustomerDestinationExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: destinationFilters = { farm_id: '', status: '', calendar_year: '' },
+    ) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-destination?customerId=${customerID}`, { params })
+            .pipe(take(1))
     }
 
     //#endregion
