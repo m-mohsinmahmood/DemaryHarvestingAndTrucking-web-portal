@@ -42,12 +42,14 @@
                         <mat-label class="sm:w-4/12">First Name</mat-label>
                         <input matInput formControlName="first_name" />
                     </mat-form-field>
+                    <mat-hint *ngIf="this.form.get('first_name').hasError('required')" class="text-xs text-red-500">First Name is required</mat-hint>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
                         <mat-label class="sm:w-4/12">Last Name</mat-label>
                         <input matInput formControlName="last_name" />
                     </mat-form-field>
+                    <mat-hint *ngIf="this.form.get('last_name').hasError('required')" class="text-xs text-red-500">Last Name is required</mat-hint>
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -75,6 +77,7 @@
                         <span matPrefix>+1 &nbsp;</span>
                         <input  maxlength="14" appPhoneMask type="text" matInput formControlName="cell_number" />
                     </mat-form-field>
+                    <mat-hint *ngIf="this.form.get('cell_number').hasError('required')" class="text-xs text-red-500">Cell Number is required</mat-hint>
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -109,6 +112,8 @@
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="email" />
                     </mat-form-field>
+                    <mat-hint *ngIf="this.form.get('email').hasError('required')" class="text-xs text-red-500">Email is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('email').hasError('pattern')" class="text-xs text-red-500">Please provide a valid email address</mat-hint>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">

@@ -3,7 +3,7 @@
     <!-- Title -->
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">
-            {{ this.data ? "Edit Customer" : "Add New Customer" }}
+            {{ this.data.isEdit ? "Edit Customer" : "Add New Customer" }}
         </div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
             <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
@@ -16,6 +16,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Customer Name</mat-label>
                     <input matInput formControlName="customer_name" />
+                    <mat-hint *ngIf="this.form.get('customer_name').hasError('required')" class="text-xs text-red-500">Customer Name is required</mat-hint>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -28,6 +29,7 @@
                         <mat-option value="CDL-F">CDL-Future</mat-option>
                         <mat-option value="CDL-L">CDL-Leasing</mat-option>
                     </mat-select>
+                    <mat-hint *ngIf="this.form.get('customer_type').hasError('required')" class="text-xs text-red-500">Customer Type is required</mat-hint>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -41,6 +43,7 @@
                     <mat-label>Phone Number</mat-label>
                     <span matPrefix>+1 &nbsp;</span>
                     <input maxlength="14" appPhoneMask type="text" matInput formControlName="phone_number" />
+                    <mat-hint *ngIf="this.form.get('phone_number').hasError('required')" class="text-xs text-red-500">Phone Number is required</mat-hint>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -50,6 +53,7 @@
                         <mat-option value="true">Active</mat-option>
                         <mat-option value="false">In Active</mat-option>
                     </mat-select>
+                    <mat-hint *ngIf="this.form.get('status').hasError('required')" class="text-xs text-red-500">Status is required</mat-hint>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -98,13 +102,16 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label>Zip Code</mat-label>
-                    <input type="number" matInput formControlName="zip_code" />
+                    <input type="number" matInput formControlName="zip_code" /> 
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input type="email" matInput formControlName="email" />
+                        <mat-hint *ngIf="this.form.get('email').hasError('required')" class="text-xs text-red-500">Email is required</mat-hint>
+                        <!--question mark(?) is a safe navigation operator-->
+                        <mat-hint *ngIf="this.form.get('email').hasError('pattern')" class="text-xs text-red-500">Please provide a valid email address</mat-hint>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -137,7 +144,7 @@
             <button [class.spinner]="isLoadingCustomer$ | async"
                 [disabled]="form.invalid || ((isLoadingCustomer$) | async)" mat-flat-button color="primary"
                 (click)="onSubmit()">
-                {{ this.data ? "Update" : "Save" }}
+                {{ this.data.isEdit ? "Update" : "Save" }}
             </button>
         </div>
     </div>

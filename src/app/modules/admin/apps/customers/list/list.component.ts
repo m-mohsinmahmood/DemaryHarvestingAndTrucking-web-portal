@@ -131,6 +131,7 @@ export class CustomersListComponent implements OnInit {
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomer,{
             data: {
+                isEdit: this.isEdit,
                 filters: this.customerFiltersForm.value,
             },
         });
