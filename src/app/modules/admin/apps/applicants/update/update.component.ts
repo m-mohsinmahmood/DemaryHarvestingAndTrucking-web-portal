@@ -65,7 +65,6 @@ export class UpdateComponent implements OnInit {
         public _router: Router,
         @Inject(MAT_DIALOG_DATA) public data: any,
         breakpointObserver: BreakpointObserver
-
     ) {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
@@ -79,24 +78,33 @@ export class UpdateComponent implements OnInit {
         this.initCalendar();
 
         this.isEdit = this.data.isEdit;
-        this._applicantService.closeDialog$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
-            if (res) {
-                this.matDialogRef.close();
-                this._applicantService.closeDialog.next(false);
-            }
-        });
+        this._applicantService.closeDialog$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res) {
+                    this.matDialogRef.close();
+                    this._applicantService.closeDialog.next(false);
+                }
+            });
     }
     // #region initializing forms
     initApplicantForm() {
         this.firstFormGroup = this._formBuilder.group({
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern(
+                        '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+                    ),
+                ],
+            ],
             cell_phone_number: ['', [Validators.required]],
             home_phone_number: ['', ''],
             languages: ['', [Validators.required]],
             status: ['', [Validators.required]],
-
         });
 
         this.secondFormGroup = this._formBuilder.group({
@@ -151,17 +159,21 @@ export class UpdateComponent implements OnInit {
             third_phone_call: [''],
             third_call_remarks: [''],
             thirdRanking: [''],
-
         });
 
-        this.formArr = [this.firstFormGroup, this.secondFormGroup, this.thirdFormGroup, this.fourthFormGroup, this.fifthFormGroup, this.sixthFormGroup]
+        this.formArr = [
+            this.firstFormGroup,
+            this.secondFormGroup,
+            this.thirdFormGroup,
+            this.fourthFormGroup,
+            this.fifthFormGroup,
+            this.sixthFormGroup,
+        ];
 
         if (this.data !== null) {
-
             this._applicantService
                 .getApplicantById(this.data?.id)
-                .subscribe((applicantObjData) => {
-
+                .subscribe((applicantObjData: any) => {
                     this.firstFormGroup.patchValue({
                         first_name: applicantObjData.first_name,
                         last_name: applicantObjData.last_name,
@@ -170,8 +182,6 @@ export class UpdateComponent implements OnInit {
                         home_phone_number: applicantObjData.home_phone_number,
                         languages: applicantObjData.languages,
                         status: applicantObjData.status,
-
-
                     });
                     this.secondFormGroup.patchValue({
                         date_of_birth: moment(applicantObjData.date_of_birth)
@@ -200,7 +210,8 @@ export class UpdateComponent implements OnInit {
                         question_3: applicantObjData.question_3,
                         question_4: applicantObjData.question_4,
                         question_5: applicantObjData.question_5,
-                        work_experience_description: applicantObjData.work_experience_description,
+                        work_experience_description:
+                            applicantObjData.work_experience_description,
                         recent_job: applicantObjData.recent_job,
                         supervisor: applicantObjData.supervisor,
                         supervisor_contact: applicantObjData.supervisor_contact,
@@ -212,31 +223,33 @@ export class UpdateComponent implements OnInit {
                     });
                     this.fifthFormGroup.patchValue({
                         blood_group: applicantObjData.blood_group,
-                        reason_for_applying: applicantObjData.reason_for_applying,
+                        reason_for_applying:
+                            applicantObjData.reason_for_applying,
                     });
                     this.sixthFormGroup.patchValue({
                         first_phone_call: applicantObjData.first_phone_call,
                         first_call_remarks: applicantObjData.first_call_remarks,
                         firstRanking: applicantObjData.firstRanking,
-                        reference_phone_call: applicantObjData.reference_phone_call,
-                        reference_call_remarks: applicantObjData.reference_call_remarks,
+                        reference_phone_call:
+                            applicantObjData.reference_phone_call,
+                        reference_call_remarks:
+                            applicantObjData.reference_call_remarks,
                         refreeRanking: applicantObjData.refreeRanking,
                         second_phone_call: applicantObjData.second_phone_call,
-                        second_call_remarks: applicantObjData.second_call_remarks,
+                        second_call_remarks:
+                            applicantObjData.second_call_remarks,
                         secondRanking: applicantObjData.secondRanking,
                         third_phone_call: applicantObjData.third_phone_call,
                         third_call_remarks: applicantObjData.third_call_remarks,
                         thirdRanking: applicantObjData.thirdRanking,
                     });
-
-                    this._changeDetectorRef.markForCheck();
                 });
+            this._changeDetectorRef.markForCheck();
         }
     }
     // #endregion
 
-
-    ngAfterViewInit(): void { }
+    ngAfterViewInit(): void {}
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -254,11 +267,9 @@ export class UpdateComponent implements OnInit {
     submit(): void {
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
-            Object.entries(f.value).forEach(element => {
-                const control = this._formBuilder.control(
-                    element[1]
-                )
-                this.form.addControl(element[0], control)
+            Object.entries(f.value).forEach((element) => {
+                const control = this._formBuilder.control(element[1]);
+                this.form.addControl(element[0], control);
             });
         });
         this._applicantService.isLoadingApplicant.next(true);
@@ -270,13 +281,14 @@ export class UpdateComponent implements OnInit {
         }
     }
     updateApplicant(applicantData: any): void {
-        this._applicantService.updateApplicant(
-            applicantData);
+        this._applicantService.updateApplicant(applicantData);
     }
     initCalendar() {
         //Calender Year Initilize
         if (this.data.isEdit) {
-            this.calendar_year = new FormControl(this.data.applicantObjData.calendar_year);
+            this.calendar_year = new FormControl(
+                this.data.applicantObjData.calendar_year
+            );
         } else {
             this.calendar_year = new FormControl(moment());
         }

@@ -180,19 +180,9 @@ export class ApplicantService {
      * Get applicant by id
      */
      getApplicantById(id: string) {
-        this._httpClient
+        return this._httpClient
             .get(`api-1/applicants?id=${id}`)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingApplicant.next(true);
-                    this.applicant.next(res);
-                    this.isLoadingApplicant.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
+            .pipe(take(1));
     }
 
     /**
