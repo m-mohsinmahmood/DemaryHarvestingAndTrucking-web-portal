@@ -49,6 +49,7 @@ export class CropsListComponent implements OnInit {
     crops$: Observable<Crops[]>;
     is_loading_crops$: Observable<boolean>;
     exportCrop$: Observable<Crops>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
 
     //#region Variables
@@ -56,8 +57,8 @@ export class CropsListComponent implements OnInit {
         search: new FormControl(),
     });
     search: Subscription;
-    sortActive:any;
-    sortDirection:any;
+    sortActive: any;
+    sortDirection: any;
     isEdit: boolean = false;
     pageSize = 10;
     currentPage = 0;
@@ -71,15 +72,21 @@ export class CropsListComponent implements OnInit {
         private _matDialog: MatDialog,
         private _cropsService: CropService,
         private _changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) { }
 
     //#region Lifecycle Functions
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
     }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
     //#endregion
-    
+
     //#region Init Observables
     initObservables() {
         this.is_loading_crops$ = this._cropsService.is_loading_crops$;
@@ -91,7 +98,7 @@ export class CropsListComponent implements OnInit {
             .subscribe((data) => {
                 this.page = 1;
                 this.searchResult = data.search;
-                this._cropsService.getCrops(this.page, 10,'','', this.searchResult);
+                this._cropsService.getCrops(this.page, 10, '', '', this.searchResult);
             });
     }
 
@@ -151,24 +158,43 @@ export class CropsListComponent implements OnInit {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._cropsService.getCrops(this.page, this.limit,this.sortActive,this.sortDirection, this.searchResult);
+        this._cropsService.getCrops(this.page, this.limit, this.sortActive, this.sortDirection, this.searchResult);
     }
     //#endregion
 
-   //#region Export Function
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
     handleExport() {
+        let allCrops;
+        this._cropsService.getCropExport(this.sortActive,this.sortDirection,this.searchResult,)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCrops = value
+                const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCrops, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Crop Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
         const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        // utils.sheet_add_json(ws, {
-        //     origin: 'A2',
-        //     skipHeader: true,
-        // });
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Crops Data.xlsx');
     }
-    //#endregion
 
     //#region Confirmation Customer Crops Delete Dialog
     confirmDeleteDialog(cropId: string): void {

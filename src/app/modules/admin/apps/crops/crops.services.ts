@@ -204,5 +204,18 @@ export class CropService {
             );
 
     }
+
+    getCropExport(
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/crop`, { params })
+            .pipe(take(1))
+    }
     //#endregion
 }

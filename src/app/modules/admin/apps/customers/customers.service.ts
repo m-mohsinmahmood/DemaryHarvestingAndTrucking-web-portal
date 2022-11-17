@@ -591,8 +591,14 @@ export class CustomersService {
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
         filters: customerFilters = { type: '', status: '' },) {
+            let params = new HttpParams();
+            params = params.set('search', search);
+            params = params.set('sort', sort);
+            params = params.set('order', order);
+            params = params.set('type', filters.type);
+            params = params.set('status', filters.status)
         return this._httpClient
-            .get<any>('api-2/customer')
+            .get<any>('api-2/customer', {params})
             .pipe(take(1))
     }
 
