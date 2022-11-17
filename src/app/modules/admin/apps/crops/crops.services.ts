@@ -217,5 +217,35 @@ export class CropService {
             .get<any>(`api-2/crop`, { params })
             .pipe(take(1))
     }
+
+    cropImport(data){
+        this._httpClient
+        .post(`api-2/crop`, data)
+        .pipe(take(1))
+        .subscribe(
+            (res: any) => {
+                this.closeDialog.next(true);
+                this.is_loading_crops.next(true);
+                //show notification based on message returned from the api
+                this._alertSerice.showAlert({
+                    type: 'success',
+                    shake: false,
+                    slideRight: true,
+                    title: 'Bulk Crops Created',
+                    message: res.message,
+                    time: 5000,
+                });
+                this.is_loading_crops.next(false);
+            },
+            (err) => {
+                this.handleError(err);
+                this.closeDialog.next(false);
+            },
+            () => {
+                this.getCrops();
+            }
+        );
+
+    }
     //#endregion
 }

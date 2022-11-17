@@ -28,9 +28,9 @@ import { CropService } from '../crops.services';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Crops } from '../crops.types';
 import { read, utils, writeFile } from 'xlsx';
-import * as XLSX from 'xlsx';
-import * as Joi from 'joi';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { ImportCropsComponent } from './../import-crops/import-crops.component';
+
 
 @Component({
     selector: 'app-list',
@@ -110,13 +110,10 @@ export class CropsListComponent implements OnInit {
     }
     //#endregion
 
-    //#region Add/Edit Dialog
+    //#region Add/Edit/Import Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCropsComponent);
-        dialogRef.afterClosed().subscribe((result) => {
-            //Call this function only when success is returned from the create API call//
-            //this._cropsService.getCrops();
-        });
+        dialogRef.afterClosed().subscribe((result) => { });
     }
     openEditDialog(event): void {
         this.isEdit = true;
@@ -131,9 +128,12 @@ export class CropsListComponent implements OnInit {
                 },
             },
         });
+        dialogRef.afterClosed().subscribe((result) => { });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportCropsComponent);
         dialogRef.afterClosed().subscribe((result) => {
-            //Call this function only when success is returned from the update API call//
-            // this._cropsService.getCrops();
+
         });
     }
 
@@ -162,14 +162,11 @@ export class CropsListComponent implements OnInit {
     }
     //#endregion
 
-    //#region Import/Export Function
-    handleImport() {
-
-    }
+    //#region Export/Download Template Function
 
     handleExport() {
         let allCrops;
-        this._cropsService.getCropExport(this.sortActive,this.sortDirection,this.searchResult,)
+        this._cropsService.getCropExport(this.sortActive, this.sortDirection, this.searchResult,)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((value) => {
                 allCrops = value
