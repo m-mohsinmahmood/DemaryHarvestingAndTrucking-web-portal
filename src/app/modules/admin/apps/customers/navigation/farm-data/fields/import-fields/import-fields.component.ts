@@ -25,22 +25,12 @@ export class ImportFieldsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    main_contact: Joi.required(),
-    position: Joi.string(),
-    phone_number: Joi.string().max(13).required(),
-    state: Joi.string(),
-    country: Joi.string(),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    customer_type: Joi.required(),
-    status: Joi.bool(),
-    customer_name: Joi.required(),
-    fax: Joi.number(),
-    address: Joi.string(),
-    billing_address: Joi.string(),
-    city: Joi.string(),
-    zip_code: Joi.number(),
-    website: Joi.string(),
-    linkedin: Joi.string()
+    customer_id: Joi.required(),
+    farm_id: Joi.required(),
+    name: Joi.required(),
+    acres: Joi.required(),
+    status: Joi.bool().required(),
+    calendar_year: Joi.number(),
 
   });
   //#endregion
@@ -75,13 +65,6 @@ export class ImportFieldsComponent implements OnInit {
       const worksheet = workbook.Sheets[first_sheet_name];
 
       this.importCustomerFieldList = XLSX.utils.sheet_to_json(worksheet, {});
-      var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
-
-      this.importCustomerFieldList.map((value) => {
-        var str = value.phone_number.toString()
-        value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
-      })
-
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -97,10 +80,10 @@ export class ImportFieldsComponent implements OnInit {
           skipHeader: true,
         });
         utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Crop Report logs.xlsx');
+        writeFile(wb, 'Customer Field logs.xlsx');
       }
       else {
-        this._customersService.customerImport(this.importCustomerFieldList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
+        this._customersService.customerFieldImport(this.data?.customer_id,this.importCustomerFieldList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
     };

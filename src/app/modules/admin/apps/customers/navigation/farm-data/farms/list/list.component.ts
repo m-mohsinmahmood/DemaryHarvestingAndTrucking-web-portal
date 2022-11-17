@@ -122,6 +122,7 @@ export class ListFarmComponent implements OnInit {
     openImportDialog(): void {
         const dialogRef = this._matDialog.open(ImportFarmsComponent, {
             data: { 
+                customer_id: this.routeID,
                 limit: this.farmPageSize,
                 sort: this.farmSort[0],
                 order: this.farmSort[1],
@@ -192,7 +193,7 @@ export class ListFarmComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Farm Name', 'Status']];
+        const headings = [['name', 'status']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);

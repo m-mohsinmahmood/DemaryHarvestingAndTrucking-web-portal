@@ -169,6 +169,7 @@ export class ListFieldComponent implements OnInit {
     openImportDialog(): void {
         const dialogRef = this._matDialog.open(ImportFieldsComponent, {
             data: { 
+                customer_id: this.routeID,
                 limit: this.fieldPageSize,
                 sort: this.fieldSort[0],
                 order: this.fieldSort[1],
@@ -242,7 +243,7 @@ export class ListFieldComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Farm Name', 'Field Name', 'Acres', 'Status', 'Calendar Year']];
+        const headings = [['customer_id', 'farm_id', 'name', 'acres','status', 'calendar_year']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);

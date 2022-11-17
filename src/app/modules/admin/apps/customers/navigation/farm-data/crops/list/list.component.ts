@@ -166,6 +166,7 @@ export class ListCropComponent implements OnInit {
     openImportDialog(): void {
         const dialogRef = this._matDialog.open(ImportCropsComponent, {
             data: { 
+                customer_id: this.routeID,
                 limit: this.cropPageSize,
                 sort: this.cropSort[0],
                 order: this.cropSort[1],
@@ -239,7 +240,7 @@ export class ListCropComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Crop Name', 'Status', 'Calendar Year']];
+        const headings = [['customer_id','crop_id','calendar_year','status']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
