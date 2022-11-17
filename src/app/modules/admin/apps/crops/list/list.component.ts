@@ -131,7 +131,7 @@ export class CropsListComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => { });
     }
     openImportDialog(): void {
-        const dialogRef = this._matDialog.open(ImportCropsComponent);
+        const dialogRef = this._matDialog.open(ImportCropsComponent,{});
         dialogRef.afterClosed().subscribe((result) => {
 
         });

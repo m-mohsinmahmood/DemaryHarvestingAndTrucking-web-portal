@@ -1,4 +1,3 @@
-
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -14,23 +13,12 @@ import {
     FormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    debounceTime,
-    map,
-    merge,
-    Observable,
-    Subject,
-    Subscription,
-    switchMap,
-    takeUntil,
-} from 'rxjs';
+import { debounceTime,Observable,Subject,Subscription,takeUntil} from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import {
-    Customers,
-    InventoryProduct,
-} from 'app/modules/admin/apps/customers/customers.types';
+import { Customers } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AddCustomer } from '../add/add.component';
+import { ImportCustomersComponent } from './../import-customers/import-customers.component';
 import { Router } from '@angular/router';
 import { read, utils, writeFile } from 'xlsx';
 
@@ -89,7 +77,16 @@ export class CustomersListComponent implements OnInit {
         this.initObservables();
         localStorage.removeItem("state");
     }
+    ngAfterViewInit(): void { }
 
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
+    //#region Init Observables and Apis
     initObservables() {
         this.isLoadingCustomers$ = this._customersService.isLoadingCustomers$;
         this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
@@ -117,17 +114,10 @@ export class CustomersListComponent implements OnInit {
     initApis() {
         this._customersService.getCustomers();
     }
-    ngAfterViewInit(): void { }
 
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
     //#endregion
 
-    //#region Add Dialog
-
+    //#region Add/Import Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomer, {
             data: {
@@ -138,6 +128,19 @@ export class CustomersListComponent implements OnInit {
         dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
             //Call this function only when success is returned from the create API call//
         });
+    }
+
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportCustomersComponent, {
+            data: { 
+                limit: this.pageSize,
+                sort: this.sort,
+                order: this.order,
+                search: this.searchResult,
+                filters: this.customerFiltersForm.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
 
     //#endregion
@@ -203,11 +206,6 @@ export class CustomersListComponent implements OnInit {
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Customer Data.xlsx');
     }
-
-
-
-
-
 
     //#endregion
 

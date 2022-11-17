@@ -7,6 +7,7 @@ import { CustomersService } from '../../../../customers.service';
 import { AddFarmComponent } from '../../farms/add-farm/add-farm.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportFarmsComponent } from '../import-farms/import-farms.component';
 
 @Component({
     selector: 'app-list-farms',
@@ -117,6 +118,17 @@ export class ListFarmComponent implements OnInit {
             this.farmPage = 1;
             this.emitFarmPageChanged();
         });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportFarmsComponent, {
+            data: { 
+                limit: this.farmPageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 

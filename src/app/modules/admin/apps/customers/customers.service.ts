@@ -620,7 +620,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customers Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -817,7 +817,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customer Contacts Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -1027,7 +1027,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customer Farm Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -1232,7 +1232,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customer Field Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -1417,7 +1417,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customer Crop Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });
@@ -1605,7 +1605,7 @@ export class CustomersService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Bulk Customer Destination Created',
+                        title: 'Success',
                         message: res.message,
                         time: 5000,
                     });

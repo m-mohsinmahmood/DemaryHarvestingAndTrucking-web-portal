@@ -36,6 +36,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AddCustomerContact } from '../add/add.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportCustomerContactsComponent } from '../import-customer-contacts/import-customer-contacts.component';
 
 @Component({
     selector: 'customers-contacts',
@@ -142,6 +143,18 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
             this.page = 1;
         });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportCustomerContactsComponent, {
+            data: { 
+                customerId: this.routeID,
+                limit: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
 
     //#endregion

@@ -17,6 +17,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportFieldsComponent } from '../import-fields/import-fields.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -163,6 +164,19 @@ export class ListFieldComponent implements OnInit {
             this.fieldPage = 1;
             this.emitFieldPageChanged();
         });
+    }
+
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportFieldsComponent, {
+            data: { 
+                limit: this.fieldPageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
+                filters: this.fieldFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 

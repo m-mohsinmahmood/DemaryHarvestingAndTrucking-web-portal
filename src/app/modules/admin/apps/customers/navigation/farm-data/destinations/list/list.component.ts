@@ -11,6 +11,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportDestinationsComponent } from '../import-destinations/import-destinations.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -159,6 +160,18 @@ export class ListDestinationComponent implements OnInit {
             this.destinationPage = 1;
             this.emitDestinationPageChanged();
         });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportDestinationsComponent, {
+            data: { 
+                limit: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
+                filters: this.destinationFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 
