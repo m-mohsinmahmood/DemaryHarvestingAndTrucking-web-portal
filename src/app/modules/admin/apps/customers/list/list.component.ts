@@ -25,7 +25,6 @@ import {
     takeUntil,
 } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import {
     Customers,
     InventoryProduct,
@@ -52,7 +51,6 @@ export class CustomersListComponent implements OnInit {
     isLoadingCustomer$: Observable<boolean>;
     customers$: Observable<Customers[]>;
     isLoadingCustomers$: Observable<boolean>;
-    exportCrop$: Observable<Customers>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
 
@@ -64,6 +62,8 @@ export class CustomersListComponent implements OnInit {
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;
+    sort: any;
+    order: any;
     limit: number;
     isLoading: boolean = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
@@ -129,7 +129,7 @@ export class CustomersListComponent implements OnInit {
     //#region Add Dialog
 
     openAddDialog(): void {
-        const dialogRef = this._matDialog.open(AddCustomer,{
+        const dialogRef = this._matDialog.open(AddCustomer, {
             data: {
                 isEdit: this.isEdit,
                 filters: this.customerFiltersForm.value,
@@ -145,6 +145,8 @@ export class CustomersListComponent implements OnInit {
     //#region Sort Function
     sortData(sort: any) {
         this.page = 1;
+        this.sort = sort.active;
+        this.order = sort.direction
         this._customersService.getCustomers(
             this.page,
             this.limit,
@@ -160,23 +162,52 @@ export class CustomersListComponent implements OnInit {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult,this.customerFiltersForm.value);
+        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult, this.customerFiltersForm.value);
     }
     //#endregion
 
-    //#region Export Function
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
     handleExport() {
-        const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
+        let allCustomers;
+        this._customersService.getCustomerExport(
+            this.sort,
+            this.order,
+            this.searchResult,
+            this.customerFiltersForm.value)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomers = value
+                const headings = [['Customer Name', 'Main Contact', 'Position', 'Phone Number', 'State', 'Country', 'Email', 'Customer Type', 'Address', 'Billing Address', 'Fax', 'City', 'Zip Code', 'Website', 'Linkedln', 'Status']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomers, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
+        const headings = [['Customer Name', 'Main Contact', 'Position', 'Phone Number', 'State', 'Country', 'Email', 'Customer Type', 'Address', 'Billing Address', 'Fax', 'City', 'Zip Code', 'Website', 'Linkedln', 'Status']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        // utils.sheet_add_json(ws, {
-        //     origin: 'A2',
-        //     skipHeader: true,
-        // });
         utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Crops Data.xlsx');
+        writeFile(wb, 'Customer Data.xlsx');
     }
+
+
+
+
+
 
     //#endregion
 

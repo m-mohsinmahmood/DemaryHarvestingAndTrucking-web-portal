@@ -63,6 +63,9 @@ export class CustomersService {
     );
     readonly customer$: Observable<Customers | null> =
         this.customer.asObservable();
+
+    private customerExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerExport$: Observable<Customers | null> = this.customerExport.asObservable();
     //#endregion
 
     //#region Observables Customer Contact
@@ -77,6 +80,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerContact$: Observable<CustomerContacts | null> =
         this.customerContact.asObservable();
+
+    private customerContactExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerContactExport$: Observable<Customers | null> = this.customerContactExport.asObservable();
 
     // Loaders
     private isLoadingCustomerContactList: BehaviorSubject<boolean> =
@@ -102,6 +108,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerFarm$: Observable<CustomerFarm | null> =
         this.customerFarm.asObservable();
+
+    private customerFarmExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerFarmExport$: Observable<Customers | null> = this.customerFarmExport.asObservable();
     // Loaders
     private isLoadingCustomerFarmList: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -125,6 +134,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerField$: Observable<CustomerField | null> =
         this.customerField.asObservable();
+
+    private customerFieldExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerFieldExport$: Observable<Customers | null> = this.customerFieldExport.asObservable();
 
     // Loaders
     private isLoadingCustomerFieldList: BehaviorSubject<boolean> =
@@ -153,6 +165,9 @@ export class CustomersService {
     readonly customerCrop$: Observable<any[] | null> =
         this.customerCrop.asObservable();
 
+    private customerCropExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerCropExport$: Observable<Customers | null> = this.customerCropExport.asObservable();
+
     // Loaders
     private isLoadingCustomerCropList: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -178,6 +193,9 @@ export class CustomersService {
         new BehaviorSubject(null);
     readonly customerDestination$: Observable<any[] | null> =
         this.customerDestination.asObservable();
+
+    private customerDestinationExport: BehaviorSubject<Customers | null> = new BehaviorSubject(null);
+    readonly customerDestinationExport$: Observable<Customers | null> = this.customerDestinationExport.asObservable();
 
     // Loaders
     private isLoadingCustomerDestinationList: BehaviorSubject<boolean> =
@@ -568,6 +586,56 @@ export class CustomersService {
             );
     }
 
+    getCustomerExport(
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: customerFilters = { type: '', status: '' },) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('type', filters.type);
+        params = params.set('status', filters.status)
+        return this._httpClient
+            .get<any>('api-2/customer', { params })
+            .pipe(take(1))
+    }
+
+    customerImport(
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '', filters: customerFilters) {
+        this._httpClient
+            .post(`api-2/customer`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomers.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customers Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomers.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomers(1,limit,sort,order,search,filters);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Contact API
     getCustomerContact(
@@ -716,6 +784,54 @@ export class CustomersService {
                 }
             );
     }
+    getCustomerContactExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/customer-contact?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+
+    customerContactImport(
+        customerID: string,
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        this._httpClient
+            .post(`api-2/customer-contact?customerId=${customerID}`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerContactList.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customer Contacts Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomerContactList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerContact(customerID,1,limit,sort,order,search);
+                }
+            );
+    }
 
     //#endregion
     //#region Customer Farm Data Farm API
@@ -766,7 +882,6 @@ export class CustomersService {
             }
         );
     }
-
     getCustomerFarmById(id: string) {
         this._httpClient
             .get(`api-1/customer-farm?id=${id}`)
@@ -782,7 +897,6 @@ export class CustomersService {
                 }
             );
     }
-
     createCustomerFarm(data: any,
         limit: number = 10,
         sort: string = '',
@@ -816,7 +930,6 @@ export class CustomersService {
                 }
             );
     }
-
     updateCustomerFarm(customerFarmData: any,
         limit: number = 10,
         sort: string = '',
@@ -851,7 +964,6 @@ export class CustomersService {
                 }
             );
     }
-
     deleteCustomerFarm(id: string,
         customerID: string,
         limit: number = 10,
@@ -880,6 +992,53 @@ export class CustomersService {
                 () => {
                     this.getCustomerFarm(customerID, 1, limit, sort, order, search);
                     this.isLoadingCustomerFarm.next(false);
+                }
+            );
+    }
+    getCustomerFarmExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/customer-farm?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+    customerFarmImport(
+        customerID: string,
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        this._httpClient
+            .post(`api-2/customer-farm?customerId=${customerID}`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerFarmList.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customer Farm Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomerFarmList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerFarm(customerID,1,limit,sort,order,search);
                 }
             );
     }
@@ -1036,6 +1195,59 @@ export class CustomersService {
             );
     }
 
+    getCustomerFieldExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: fieldFilters = { farm_id: '', status: '', calendar_year: '' }) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-field?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+    customerFieldImport(
+        customerID: string,
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: fieldFilters = { farm_id: '', status: '', calendar_year: '' }) {
+        this._httpClient
+            .post(`api-2/customer-field?customerId=${customerID}`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerFieldList.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customer Field Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomerFieldList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerField(customerID,1,limit,sort,order,search,filters);
+                }
+            );
+    }
+
     //#endregion
     //#region Customer Farm Data Crop API
     getCustomerCrops(
@@ -1046,7 +1258,6 @@ export class CustomersService {
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
         filters: cropFilters = { status: '', calendar_year: '' },
-
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -1166,6 +1377,58 @@ export class CustomersService {
                 () => {
                     this.getCustomerCrops(customerID, 1, limit, sort, order, search, filters);
                     this.isLoadingCustomerCrop.next(false);
+                }
+            );
+    }
+
+    getCustomerCropExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: cropFilters = { status: '', calendar_year: '' },) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-crop?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+    customerCropImport(
+        customerID: string,
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: cropFilters = { status: '', calendar_year: '' }) {
+        this._httpClient
+            .post(`api-2/customer-crop?customerId=${customerID}`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerCropList.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customer Crop Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomerCropList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerCrops(customerID,1,limit,sort,order,search,filters);
                 }
             );
     }
@@ -1301,6 +1564,59 @@ export class CustomersService {
                 () => {
                     this.getCustomerDestination(customerID, 1, limit, sort, order, search, filters);
                     this.isLoadingCustomerDestination.next(false);
+                }
+            );
+    }
+    getCustomerDestinationExport(
+        customerID: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: destinationFilters = { farm_id: '', status: '', calendar_year: '' },
+    ) {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('farmId', filters.farm_id);
+        params = params.set('status', filters.status);
+        params = params.set('year', filters.calendar_year);
+        return this._httpClient
+            .get<any>(`api-2/customer-destination?customerId=${customerID}`, { params })
+            .pipe(take(1))
+    }
+    customerDestinationImport(
+        customerID: string,
+        data: any,
+        limit: number = 10,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        filters: destinationFilters = { farm_id: '', status: '', calendar_year: '' }) {
+        this._httpClient
+            .post(`api-2/customer-destination?customerId=${customerID}`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomerDestinationList.next(true);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Bulk Customer Destination Created',
+                        message: res.message,
+                        time: 5000,
+                    });
+                    this.isLoadingCustomerDestinationList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getCustomerDestination(customerID,1,limit,sort,order,search,filters);
                 }
             );
     }

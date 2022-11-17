@@ -36,11 +36,11 @@
                 <mat-icon>upload</mat-icon>
                 <span>Import</span>
             </button>
-            <button mat-menu-item>
-                <mat-icon>download</mat-icon>
+            <button (click)="handleExport()" mat-menu-item>
+            <mat-icon>download</mat-icon>
                 <span>Export</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="downloadTemplate()" mat-menu-item>
                 <mat-icon>download</mat-icon>
                 <span>Download Template</span>
             </button>

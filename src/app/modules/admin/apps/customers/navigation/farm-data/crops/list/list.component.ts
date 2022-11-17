@@ -18,6 +18,8 @@ import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-d
 import { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import moment from 'moment';
+import { read, utils, writeFile } from 'xlsx';
+
 
 export const MY_FORMATS = {
     parse: {
@@ -44,15 +46,14 @@ export const MY_FORMATS = {
     ],
 })
 export class ListCropComponent implements OnInit {
-    //#region Input
+
+    //#region Input/Output Variables
     @Input() customerCropList: Observable<any>;
     @Input() cropPage: number;
     @Input() cropPageSize: number;
     @Input() cropFilters: any;
-    //#endregion
-
-    //#region Output
     @Output() cropPageChanged = new EventEmitter<{ cropPageChild: number, cropPageSizeChild: number }>();
+
     //#endregion
 
     //#region Search form variables
@@ -194,6 +195,42 @@ export class ListCropComponent implements OnInit {
             this.searchResult,
             this.cropFilters.value
         );
+    }
+    //#endregion
+
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerCrop;
+        this._customerService
+        .getCustomerCropExport(this.routeID,this.cropSort[0],this.cropSort[1],this.searchResult,this.cropFilters.value)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((value) => {
+            allCustomerCrop = value
+            const headings = [['Crop Name', 'Status', 'Calendar Year']];
+            const wb = utils.book_new();
+            const ws: any = utils.json_to_sheet([]);
+            utils.sheet_add_aoa(ws, headings);
+            utils.sheet_add_json(ws, allCustomerCrop, {
+                origin: 'A2',
+                skipHeader: true,
+            });
+            utils.book_append_sheet(wb, ws, 'Report');
+            writeFile(wb, 'Customer Crop Data.xlsx');
+        })
+
+    }
+
+    downloadTemplate() {
+        const headings = [['Crop Name', 'Status', 'Calendar Year']];
+        const wb = utils.book_new();
+        const ws: any = utils.json_to_sheet([]);
+        utils.sheet_add_aoa(ws, headings);
+        utils.book_append_sheet(wb, ws, 'Report');
+        writeFile(wb, 'Customer Crop Data.xlsx');
     }
     //#endregion
 
