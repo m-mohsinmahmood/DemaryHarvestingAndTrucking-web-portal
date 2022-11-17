@@ -11,17 +11,17 @@ import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
 @Component({
-    selector       : 'applicant-details',
-    templateUrl    : './details.component.html',
+    selector: 'applicant-details',
+    templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    encapsulation  : ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class  ApplicantDetailComponent implements OnInit, OnDestroy
-{
+export class ApplicantDetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading: boolean = false;
@@ -29,13 +29,22 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     applicants: any;
     panelOpenState = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
-    country_list = ['Afghanistan','Albania','Algeria','Andorra','Angola','Anguilla','Antigua &amp; Barbuda','Argentina','Armenia','Aruba','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia &amp; Herzegovina','Botswana','Brazil','British Virgin Islands','Brunei','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Cape Verde','Cayman Islands','Chad','Chile','China','Colombia','Congo','Cook Islands','Costa Rica','Cote D Ivoire','Croatia','Cruise Ship','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Estonia','Ethiopia','Falkland Islands','Faroe Islands','Fiji','Finland','France','French Polynesia','French West Indies','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Greenland','Grenada','Guam','Guatemala','Guernsey','Guinea','Guinea Bissau','Guyana','Haiti','Honduras','Hong Kong','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Isle of Man','Israel','Italy','Jamaica','Japan','Jersey','Jordan','Kazakhstan','Kenya','Kuwait','Kyrgyz Republic','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Macau','Macedonia','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Mauritania','Mauritius','Mexico','Moldova','Monaco','Mongolia','Montenegro','Montserrat','Morocco','Mozambique','Namibia','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Norway','Oman','Pakistan','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Reunion','Romania','Russia','Rwanda','Saint Pierre &amp; Miquelon','Samoa','San Marino','Satellite','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','South Africa','South Korea','Spain','Sri Lanka','St Kitts &amp; Nevis','St Lucia','St Vincent','St. Lucia','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor L\'Este','Togo','Tonga','Trinidad &amp; Tobago','Tunisia','Turkey','Turkmenistan','Turks &amp; Caicos','Uganda','Ukraine','United Arab Emirates','United Kingdom','Uruguay','Uzbekistan','Venezuela','Vietnam','Virgin Islands (US)','Yemen','Zambia','Zimbabwe'];
-    applicants$: Observable<any>;
+    country_list = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
     routesLeft = [];
     routesright = [];
     selectedIndex: string = 'Applicant Data';
-    items=[];
+    items = [];
     isEdit: boolean;
+    applicant$: Observable<any>;
+    isLoadingApplicant$: Observable<any>;
+    routes: any;
+    applicants$: Observable<any>;
+
+
+    drawerMode: 'over' | 'side' = 'side';
+    drawerOpened: boolean = true;
+
+
 
     /**
      * Constructor
@@ -47,11 +56,11 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
         public activatedRoute: ActivatedRoute,
         public _applicantService: ApplicantService,
         private _router: Router,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseConfirmationService: FuseConfirmationService,
 
 
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -61,61 +70,98 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-     ngOnInit(): void {
+    ngOnInit(): void {
         this.items = [
-            {content:'Applicant Completed',name:'', date:'15/02/2022', status:'a',active:true},
-            {content:'Advance Preliminary review',name:'Bethnay Blake', date:'15/02/2022', status:'b',active:true},
-            {content:'Adavnce to interview',name:'Martha Grander', date:'15/02/2022',status:'c',active:true},
-            {content:'Interview Completed',name:'Bethnay Blake', date:'15/02/2022',status:'d1',active:true},
-            {content:'Reference calls completed', name:'Katherine synder', date:'15/02/2022',status:'e2',active:false},
-            {content:'Recruiter decision made', name:'', date:'15/02/2022',status:'e1',active:false},
-            {content:'Offer made', name:'Bethnay Blake', date:'15/02/2022',status:'e1',active:false},
-            {content:'Offer Accepted', name:'Martha Grander', date:'15/02/2022',status:'e1',active:false},
-            {content:'Advance to pre-employment Process', name:'Martha Grander', date:'15/02/2022',status:'e1',active:false},
-            {content:'Not Qualified', name:'rejected', date:'15/02/2022',status:false,active:false},
-            {content:'Reconsider in Future', name:'rejected', date:'15/02/2022',status:false,active:false},
+            { content: 'Applicant Completed', name: '', date: '15/02/2022', status: 'a', active: true },
+            { content: 'Advance Preliminary review', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: true },
+            { content: 'Adavnce to interview', name: 'Martha Grander', date: '15/02/2022', status: 'c', active: true },
+            { content: 'Interview Completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: true },
+            { content: 'Reference calls completed', name: 'Katherine synder', date: '15/02/2022', status: 'e2', active: false },
+            { content: 'Recruiter decision made', name: '', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Offer made', name: 'Bethnay Blake', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Offer Accepted', name: 'Martha Grander', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Advance to pre-employment Process', name: 'Martha Grander', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Not Qualified', name: 'rejected', date: '15/02/2022', status: false, active: false },
+            { content: 'Reconsider in Future', name: 'rejected', date: '15/02/2022', status: false, active: false },
         ];
+
 
         this.routesLeft = this._applicantService.applicantNavigationLeft;
         this.routesright = this._applicantService.applicantNavigationRight;
         this.activatedRoute.params.subscribe((params) => {
-          this.routeID = params.id;
+            this.routeID = params.id;
         });
 
 
-       // Get the applicant by id
-        this._applicantService.getApplicantById(this.routeID).subscribe((applicant) => {
-            this.applicants = applicant;
-        });
+        // Get the applicant by id
+        this._applicantService.getApplicantById(this.routeID);
 
-        //  this._applicantService.applicant$
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe((applicant) => {
-        //       this.applicants = applicant;
-        //       console.log('ssssss',applicant);
-        //         // Mark for check
-        //         this._changeDetectorRef.markForCheck();
-        //     });
+      
+    }
 
-            // Subscribe to media query change
-        // this._fuseMediaWatcherService.onMediaQueryChange$('(min-width: 1440px)')
-        // .pipe(takeUntil(this._unsubscribeAll))
-        // .subscribe((state) => {
+    ngAfterViewInit(): void {
+        this.initApis(this.routeID);
+        this.initObservables();
+        this.initSideNavigation();
+    }
 
-        //     // Calculate the drawer mode
-        //     this.drawerMode = state.matches ? 'side' : 'over';
+    //#region Initial APIs
+    initApis(id: string) {
+        this._applicantService.getApplicantById(id);
+    }
+    //#endregion
 
-        //     // Mark for check
-        //     this._changeDetectorRef.markForCheck();
-        // });
-      }
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.applicant$ = this._applicantService.applicant$;
+        // Loader
+        // this.applicant$.subscribe((value)=>{console.log(value)}
+        // );
+        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
+    }
+    //#endregion
+
+       //#region Initialize Side Navigation
+       initSideNavigation() {
+        this.routes = this._applicantService.applicantNavigationLeft;
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                } else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
+            });
+    }
+
+    //#endregion
+
+
+        //#region Inner Navigation Routing
+        routeHandler(index) {
+            const { title } = index;
+            if (title === this.selectedIndex) {
+                return;
+            }
+            // this.isLoading = true;
+            this.selectedIndex = title;
+        }
+    
+        toggleDrawer() {
+            this.drawerOpened = !this.drawerOpened;
+        }
+        //#endregion
+    
 
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
@@ -124,33 +170,31 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    openUpdateDialog(): void
-    {
+    openUpdateDialog(): void {
         this.isEdit = true;
-    // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent,{
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent, {
             height: '800px',
             width: '900px',
-         data:{
-            isEdit: this.isEdit,
-            id: this.routeID
-        }
+            data: {
+                isEdit: this.isEdit,
+                id: this.routeID
+            }
         });
 
 
         dialogRef.afterClosed()
-                 .subscribe((result) => {
-      });
+            .subscribe((result) => {
+            });
     }
 
-    backHandler(): void
-    {
+    backHandler(): void {
         this._router.navigate(['/apps/applicants/']);
     }
-    deleteApplicant(){
+    deleteApplicant() {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title  : 'Delete applicant',
+            title: 'Delete applicant',
             message: 'Are you sure you want to remove this applicant? This action cannot be undone!',
             actions: {
                 confirm: {
@@ -162,11 +206,11 @@ export class  ApplicantDetailComponent implements OnInit, OnDestroy
     clicked(index) {
         const { title } = index;
         if (title === this.selectedIndex) {
-          return;
+            return;
         }
         // this.isLoading = true;
         this.selectedIndex = title;
-      };
+    };
 
 
 }

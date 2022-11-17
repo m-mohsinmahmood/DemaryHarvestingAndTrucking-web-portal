@@ -4,12 +4,12 @@
     <!-- Header -->
     <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4">
         <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoadingApplicant$ | async">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
         <div
-            (click)="backHandler()"
+        *ngIf="applicant$ | async; let applicant" (click)="backHandler()"
             class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer"
         >
         <div class="flex items-center">
@@ -18,7 +18,7 @@
                 [svgIcon]="'heroicons_solid:arrow-circle-left'"
             ></mat-icon>
             <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight"
-                >{{ applicants.fname }} {{ applicants.lname }}
+                >{{ applicant.first_name}} {{ applicant.last_name }}
             </span>
         </div>
             <div class="sm:w-auto lg:w-auto w-full">

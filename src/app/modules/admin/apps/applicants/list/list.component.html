@@ -6,7 +6,7 @@
         class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4 px-6 md:px-8 border-b"
     >
         <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoadingApplicant$ | async">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
@@ -74,26 +74,25 @@
         <div
             class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
         >
-            <ng-container *ngIf="applicantsdata$ | async as applicants">
-                <ng-container *ngIf="applicants.length > 0; else noProducts">
+            <ng-container *ngIf="applicantList$ | async as applicant">
+                <ng-container>
                     <div class="grid">
                         <!-- Header -->
                         <div
                             class="applicant-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                            matSort
-                            matSortDisableClear
+                            matSort matSortDisableClear (matSortChange)="sortData($event)"
                         >
-                            <div mat-sort-header="fname">First Name</div>
-                            <div mat-sort-header="lname">Last Name</div>
+                            <div mat-sort-header="first_name">First Name</div>
+                            <div mat-sort-header="last_name">Last Name</div>
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
-                            <div class="hidden sm:block">Country</div>
+                            <div mat-sort-header="country" class="hidden sm:block">Country</div>
                             <div
-                                mat-sort-header="cellPhone"
+                                mat-sort-header="home_phone_number"
                                 class="hidden sm:block"
                             >
                                 Phone Number
                             </div>
-                            <div class="hidden sm:block">
+                            <div mat-sort-header="calendar_year" class="hidden sm:block">
                                 Calender Year
                             </div>
                             <div
@@ -106,11 +105,12 @@
                         </div>
                         <!-- Rows -->
                         <ng-container
-                            *ngIf="applicantsdata$ | async as applicants"
+                            *ngIf="applicantList$ | async as applicantList"
                         >
+                        <ng-container *ngIf="applicantList.count > 0; else noProducts">
                             <ng-container
                                 *ngFor="
-                                    let applicant of applicants;
+                                    let applicant of applicantList.applicants;
                                     trackBy: trackByFn
                                 "
                             >
@@ -123,11 +123,11 @@
                                 </div> -->
                                     <!-- First Name -->
                                     <div class="truncate">
-                                        {{ applicant.fname }}
+                                        {{ applicant.first_name }}
                                     </div>
                                     <!-- Last Name -->
                                     <div class="truncate">
-                                        {{ applicant.lname }}
+                                        {{ applicant.last_name }}
                                     </div>
                                     <!-- Email -->
                                     <div class="hidden sm:block truncate">
@@ -141,19 +141,19 @@
                                     <div
                                         class="capitalize hidden sm:block truncate"
                                     >
-                                        {{ applicant.cellPhone }}
+                                        {{ applicant.cell_phone_number }}
                                     </div>
                                     <!-- Foreign Phone number -->
                                     <div
                                         class="capitalize hidden sm:block truncate"
                                     >
-                                        {{ "2022" }}
+                                        {{ applicant.calendar_year | date: "YYYY" }}
                                     </div>
 
                                     <!-- Status -->
                                     <div class="hidden sm:block">
                                         <div
-                                            class="truncate rounded-full h-7 w-26 flex justify-center items-center
+                                            class="truncate rounded-full h-7 w-26 flex justify-center items-center text-white
                                      bg-{{
                                                 applicant.status ===
                                                 'In-Process'
@@ -161,7 +161,7 @@
                                                     : ''
                                             }}-400
                                      bg-{{
-                                                applicant.status === 'Hired'
+                                                applicant.status === 'true'
                                                     ? 'green'
                                                     : ''
                                             }}-700
@@ -182,7 +182,7 @@
                                                     : ''
                                             }}-400
                                      bg-{{
-                                                applicant.status === 'Rejected'
+                                                applicant.status === 'false'
                                                     ? 'red'
                                                     : ''
                                             }}-400
@@ -232,17 +232,23 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                        </ng-container>
                     </div>
 
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }"
-                        [length]="pagination.length"
-                        [pageIndex]="pagination.page"
-                        [pageSize]="pagination.size"
+                        [length]="applicant.count"
+                        [pageIndex]="page - 1" [pageSize]="pageSize"
                         [pageSizeOptions]="[5, 10, 25, 100]"
+                        (page)="pageChanged($event)"
                         [showFirstLastButtons]="true"
                     ></mat-paginator>
+                    <!-- <mat-paginator
+                        class="absolute inset-x-0 bottom-0 border-b border-t border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{ 'pointer-events-none': isLoading }" [length]="applicantList.count"
+                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator> -->
                 </ng-container>
             </ng-container>
 

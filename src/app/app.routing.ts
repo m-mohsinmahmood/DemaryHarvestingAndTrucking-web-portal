@@ -109,7 +109,7 @@ export const appRoutes: Route[] = [
 
                 //applicant page
                 {path:'applicant', data: {
-                    layout: 'top-navigation'
+                    layout: 'empty'
                 },
                 loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
