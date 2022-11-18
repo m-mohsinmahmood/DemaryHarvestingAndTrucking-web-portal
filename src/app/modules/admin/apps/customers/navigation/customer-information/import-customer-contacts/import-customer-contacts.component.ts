@@ -27,17 +27,17 @@ export class ImportCustomerContactsComponent implements OnInit {
   //#region Import Function Validation
   importSchema = Joi.object({
     company_name: Joi.string().optional().allow(''),
-    customer_id: Joi.required(),
-    first_name: Joi.string().required(),
-    last_name: Joi.string().required(),
+    customer_id: Joi.string().min(1).required(),
+    first_name: Joi.string().min(1).required(),
+    last_name: Joi.string().min(1).required(),
     website: Joi.string().optional().allow(''),
     position: Joi.string().optional().allow(''),
     address: Joi.string().optional().allow(''),
-    cell_number: Joi.string().max(15).required(),
+    cell_number: Joi.string().min(1).max(15).required(),
     city: Joi.string().optional().allow(''),
-    office_number: Joi.string().max(15).required(),
+    office_number: Joi.string().max(15).optional().allow(''),
     state: Joi.string().optional().allow(''),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    email: Joi.string().min(1).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     zip_code: Joi.string().optional().allow(''),
     fax: Joi.string().optional().allow(''),
     linkedin: Joi.string().optional().allow(''),
@@ -79,10 +79,14 @@ export class ImportCustomerContactsComponent implements OnInit {
       this.importCustomerContactList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
       this.importCustomerContactList.map((value) => {
-        var cell = value.phone_number.toString();
-        var office = value.phone_number.toString();
-        value.phone_number = cell.replace(phoneRegex, '($1)-$2-$3');
-        value.phone_number = office.replace(phoneRegex, '($1)-$2-$3');
+        if (value.cell_number != "") {
+          var cell = value.cell_number.toString();
+          value.cell_number = cell.replace(phoneRegex, '($1)-$2-$3');
+        }
+        if (value.office_number != "") {
+          var office = value.office_number.toString();
+          value.office_number = office.replace(phoneRegex, '($1)-$2-$3');
+        }
       })
 
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {

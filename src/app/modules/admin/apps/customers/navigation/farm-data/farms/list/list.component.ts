@@ -193,7 +193,7 @@ export class ListFarmComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['name', 'status']];
+        const headings = [['customer_id','name', 'status']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
