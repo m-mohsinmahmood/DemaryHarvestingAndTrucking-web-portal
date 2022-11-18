@@ -19,6 +19,8 @@ export class ImportFarmsComponent implements OnInit {
   file: File;
   fileError: string = '';
   isFileError: boolean = false;
+  isEmptyFile: boolean = false;
+
   fileHeaders: any[] = [];
   importFileData: any;
   //#endregion
@@ -28,7 +30,7 @@ export class ImportFarmsComponent implements OnInit {
   importSchema = Joi.object({
     customer_id: Joi.required(),
     name: Joi.required(),
-    status: Joi.bool(),
+    status: Joi.bool().required(),
   });
   //#endregion
 
@@ -56,11 +58,11 @@ export class ImportFarmsComponent implements OnInit {
       const arr = new Array();
       for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
       const bstr = arr.join('');
-      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
 
-      this.importCustomerFarmList = XLSX.utils.sheet_to_json(worksheet, {});
+      this.importCustomerFarmList = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -78,7 +80,7 @@ export class ImportFarmsComponent implements OnInit {
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Customer Farm logs.xlsx');
       }
-      else {
+      else if (!this.isEmptyFile) {
         this._customersService.customerFarmImport(this.data?.customer_id,this.importCustomerFarmList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search);
       }
       this.saveAndClose();
@@ -87,25 +89,38 @@ export class ImportFarmsComponent implements OnInit {
   }
 
   async importValidation() {
-    this.importCustomerFarmList.map(async (val, index) => {
-      try {
-        const value = await this.importSchema.validateAsync(val, {
-          abortEarly: false,
-        });
-      } catch (err) {
-        const message = err.details.map(i => i.message).join(',');
-        this.importCustomerFarmList[index].error = message;
-        this.isFileError = true;
-        this._alertSerice.showAlert({
-          type: 'error',
-          shake: false,
-          slideRight: true,
-          title: 'Error',
-          message: 'Check file for errors',
-          time: 6000,
-        });
-      }
-    });
+    if (this.importCustomerFarmList.length > 0 ){
+      this.importCustomerFarmList.map(async (val, index) => {
+        try {
+          const value = await this.importSchema.validateAsync(val, {
+            abortEarly: false,
+          });
+        } catch (err) {
+          const message = err.details.map(i => i.message).join(',');
+          this.importCustomerFarmList[index].error = message;
+          this.isFileError = true;
+          this._alertSerice.showAlert({
+            type: 'error',
+            shake: false,
+            slideRight: true,
+            title: 'Error',
+            message: 'Check file for errors',
+            time: 6000,
+          });
+        }
+      });
+    }
+    else {
+      this.isEmptyFile = true;
+      this._alertSerice.showAlert({
+        type: 'error',
+        shake: false,
+        slideRight: true,
+        title: 'Error',
+        message: 'Please upload valid file',
+        time: 6000,
+      });
+    }
   }
 
   //#endregion

@@ -5,6 +5,7 @@ import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-import-destinations',
@@ -19,6 +20,7 @@ export class ImportDestinationsComponent implements OnInit {
   file: File;
   fileError: string = '';
   isFileError: boolean = false;
+  isEmptyFile: boolean = false;
   fileHeaders: any[] = [];
   importFileData: any;
   //#endregion
@@ -29,7 +31,7 @@ export class ImportDestinationsComponent implements OnInit {
     farm_id: Joi.required(),
     name: Joi.required(),
     status: Joi.bool().required(),
-    calendar_year: Joi.number(),
+    calendar_year: Joi.number().required(),
 
   });
   //#endregion
@@ -59,11 +61,11 @@ export class ImportDestinationsComponent implements OnInit {
       const arr = new Array();
       for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
       const bstr = arr.join('');
-      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
 
-      this.importCustomerDestinationList = XLSX.utils.sheet_to_json(worksheet, {});
+      this.importCustomerDestinationList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -81,8 +83,11 @@ export class ImportDestinationsComponent implements OnInit {
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Customer Destination logs.xlsx');
       }
-      else {
-        this._customersService.customerDestinationImport(this.data?.customer_id,this.importCustomerDestinationList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
+      else if (!this.isEmptyFile) {
+        this.importCustomerDestinationList.map((value)=> {
+          value.calendar_year = moment().set({'year': value.calendar_year});
+        })
+        this._customersService.customerDestinationImport(this.data?.customer_id, this.importCustomerDestinationList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
     };
@@ -90,25 +95,39 @@ export class ImportDestinationsComponent implements OnInit {
   }
 
   async importValidation() {
-    this.importCustomerDestinationList.map(async (val, index) => {
-      try {
-        const value = await this.importSchema.validateAsync(val, {
-          abortEarly: false,
-        });
-      } catch (err) {
-        const message = err.details.map(i => i.message).join(',');
-        this.importCustomerDestinationList[index].error = message;
-        this.isFileError = true;
-        this._alertSerice.showAlert({
-          type: 'error',
-          shake: false,
-          slideRight: true,
-          title: 'Error',
-          message: 'Check file for errors',
-          time: 6000,
-        });
-      }
-    });
+    if (this, this.importCustomerDestinationList) {
+      this.importCustomerDestinationList.map(async (val, index) => {
+        try {
+          const value = await this.importSchema.validateAsync(val, {
+            abortEarly: false,
+          });
+        } catch (err) {
+          const message = err.details.map(i => i.message).join(',');
+          this.importCustomerDestinationList[index].error = message;
+          this.isFileError = true;
+          this._alertSerice.showAlert({
+            type: 'error',
+            shake: false,
+            slideRight: true,
+            title: 'Error',
+            message: 'Check file for errors',
+            time: 6000,
+          });
+        }
+      });
+    }
+    else {
+      this.isEmptyFile = true;
+      this._alertSerice.showAlert({
+        type: 'error',
+        shake: false,
+        slideRight: true,
+        title: 'Error',
+        message: 'Please upload valid file',
+        time: 6000,
+      });
+
+    }
   }
 
   //#endregion

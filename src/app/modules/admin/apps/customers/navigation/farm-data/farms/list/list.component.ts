@@ -121,7 +121,7 @@ export class ListFarmComponent implements OnInit {
     }
     openImportDialog(): void {
         const dialogRef = this._matDialog.open(ImportFarmsComponent, {
-            data: { 
+            data: {
                 customer_id: this.routeID,
                 limit: this.farmPageSize,
                 sort: this.farmSort[0],
@@ -129,7 +129,7 @@ export class ListFarmComponent implements OnInit {
                 search: this.searchResult,
             },
         });
-        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => { });
     }
     //#endregion
 
@@ -174,21 +174,21 @@ export class ListFarmComponent implements OnInit {
     handleExport() {
         let allCustomerFarm;
         this._customerService
-        .getCustomerFarmExport(this.routeID,this.farmSort[0],this.farmSort[1],this.searchResult)
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((value) => {
-            allCustomerFarm = value
-            const headings = [['Farm Name', 'Status']];
-            const wb = utils.book_new();
-            const ws: any = utils.json_to_sheet([]);
-            utils.sheet_add_aoa(ws, headings);
-            utils.sheet_add_json(ws, allCustomerFarm, {
-                origin: 'A2',
-                skipHeader: true,
-            });
-            utils.book_append_sheet(wb, ws, 'Report');
-            writeFile(wb, 'Customer Farm Data.xlsx');
-        })
+            .getCustomerFarmExport(this.routeID, this.farmSort[0], this.farmSort[1], this.searchResult)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomerFarm = value
+                const headings = [['Farm Name', 'Status']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomerFarm, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Farm Data.xlsx');
+            })
 
     }
 
@@ -232,6 +232,22 @@ export class ListFarmComponent implements OnInit {
     //#region emit farm page changed
     emitFarmPageChanged() {
         this.farmPageChanged.emit({ farmPageChild: this.farmPage, farmPageSizeChild: this.farmPageSize });
+    }
+    //#endregion
+
+    //#region Copy Farm Id
+    copyFarmId(val: string) {
+        let selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
     //#endregion
 }

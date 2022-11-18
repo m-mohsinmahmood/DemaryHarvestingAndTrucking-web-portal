@@ -3,9 +3,8 @@
     <div>
         <header class="ml-2 text-3xl font-extrabold tracking-tight">
             Crops
-            <mat-hint
-                *ngIf="cropFilters.value.calendar_year || cropFilters.value.status"
-                class="text-sm ml-2 mt-1">(Filters Applied)
+            <mat-hint *ngIf="cropFilters.value.calendar_year || cropFilters.value.status" class="text-sm ml-2 mt-1">
+                (Filters Applied)
             </mat-hint>
         </header>
     </div>
@@ -22,13 +21,11 @@
             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
             <span class="lg:ml-2">Add</span>
         </button>
-         <!-- Filters Button -->
-         <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
-            <mat-icon
-                *ngIf="cropFilters.value.calendar_year || cropFilters.value.status"
+        <!-- Filters Button -->
+        <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+            <mat-icon *ngIf="cropFilters.value.calendar_year || cropFilters.value.status"
                 [svgIcon]="'heroicons_solid:filter'"></mat-icon>
-            <mat-icon
-                *ngIf="!cropFilters.value.calendar_year && !cropFilters.value.status"
+            <mat-icon *ngIf="!cropFilters.value.calendar_year && !cropFilters.value.status"
                 [svgIcon]="'heroicons_outline:filter'"></mat-icon>
         </button>
         <!-- Import/Export -->
@@ -116,10 +113,11 @@
                                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'">
                                             </mat-icon>
                                         </button>
-                                        <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center" mat-stroked-button
-                                            (click)="confirmDeleteDialog(crop.customer_crop_id)" matTooltip="Delete"
-                                            matTooltipPosition="above">
-                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                        <button class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                            mat-stroked-button (click)="confirmDeleteDialog(crop.customer_crop_id)"
+                                            matTooltip="Delete" matTooltipPosition="above">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
+                                            </mat-icon>
                                         </button>
                                     </div>
                                 </div>
@@ -180,15 +178,13 @@
             </div>
             <div class="flex flex-row justify-evenly items-center w-80">
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button
-                        [disabled]="!cropFilters.value.status && !cropFilters.value.calendar_year"
+                    <button [disabled]="!cropFilters.value.status && !cropFilters.value.calendar_year"
                         (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button [color]="'primary'">
                         <span class="">Apply filters</span>
                     </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button
-                        [disabled]="!cropFilters.value.status && !cropFilters.value.calendar_year"
+                    <button [disabled]="!cropFilters.value.status && !cropFilters.value.calendar_year"
                         (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
                         <span>Remove filters</span>
                     </button>

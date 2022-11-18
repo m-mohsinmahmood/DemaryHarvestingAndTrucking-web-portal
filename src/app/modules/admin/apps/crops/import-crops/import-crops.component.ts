@@ -22,6 +22,7 @@ export class ImportCropsComponent implements OnInit {
   file: File;
   fileError: string = '';
   isFileError: boolean = false;
+  isEmptyFile: boolean = false;
   fileHeaders: any[] = [];
   importFileData: any;
   //#endregion
@@ -29,7 +30,7 @@ export class ImportCropsComponent implements OnInit {
   //#region Import Function Validation
   importSchema = Joi.object({
     name: Joi.string().required(),
-    variety: Joi.string(),
+    variety: Joi.string().optional().allow(''),
     bushel_weight: Joi.number().required(),
 
   });
@@ -60,10 +61,10 @@ export class ImportCropsComponent implements OnInit {
       const arr = new Array();
       for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
       const bstr = arr.join('');
-      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
-      this.importCropList = XLSX.utils.sheet_to_json(worksheet, {});
+      this.importCropList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -81,7 +82,7 @@ export class ImportCropsComponent implements OnInit {
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Crop Report logs.xlsx');
       }
-      else {
+      else if (!this.isEmptyFile) {
         this._cropsService.cropImport(this.importCropList);
       }
       this.saveAndClose();
@@ -90,25 +91,38 @@ export class ImportCropsComponent implements OnInit {
   }
 
   async importValidation() {
-    this.importCropList.map(async (val, index) => {
-      try {
-        const value = await this.importSchema.validateAsync(val, {
-          abortEarly: false,
-        });
-      } catch (err) {
-        const message = err.details.map(i => i.message).join(',');
-        this.importCropList[index].error = message;
-        this.isFileError = true;
-        this._alertSerice.showAlert({
-          type: 'error',
-          shake: false,
-          slideRight: true,
-          title: 'Error',
-          message: 'Check file for errors',
-          time: 6000,
+    if (this.importCropList.length > 0) {
+      this.importCropList.map(async (val, index) => {
+        try {
+          const value = await this.importSchema.validateAsync(val, {
+            abortEarly: false,
+          });
+        } catch (err) {
+          const message = err.details.map(i => i.message).join(',');
+          this.importCropList[index].error = message;
+          this.isFileError = true;
+          this._alertSerice.showAlert({
+            type: 'error',
+            shake: false,
+            slideRight: true,
+            title: 'Error',
+            message: 'Check file for errors',
+            time: 6000,
+          });
+        }
       });
-      }
-    });
+    }
+    else {
+      this.isEmptyFile = true;
+      this._alertSerice.showAlert({
+        type: 'error',
+        shake: false,
+        slideRight: true,
+        title: 'Error',
+        message: 'Please upload valid file',
+        time: 6000,
+      });
+    }
   }
 
   //#endregion

@@ -19,6 +19,7 @@ export class ImportCustomersComponent implements OnInit {
   file: File;
   fileError: string = '';
   isFileError: boolean = false;
+  isEmptyFile: boolean = false;
   fileHeaders: any[] = [];
   importFileData: any;
   //#endregion
@@ -26,22 +27,21 @@ export class ImportCustomersComponent implements OnInit {
   //#region Import Function Validation
   importSchema = Joi.object({
     main_contact: Joi.required(),
-    position:Joi.string(),
+    position: Joi.string().optional().allow(''),
     phone_number: Joi.string().max(15).required(),
-    state:Joi.string(),
-    country: Joi.string(),
+    state: Joi.string().optional().allow(''),
+    country: Joi.string().optional().allow(''),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     customer_type: Joi.required(),
     status: Joi.bool(),
     customer_name: Joi.required(),
-    fax: Joi.number(),
-    address: Joi.string(),
-    billing_address: Joi.string(),
-    city: Joi.string(),
-    zip_code: Joi.number(),
-    website: Joi.string(),
-    linkedin: Joi.string()  
-
+    fax: Joi.number().optional().allow(''),
+    address: Joi.string().optional().allow(''),
+    billing_address: Joi.string().optional().allow(''),
+    city: Joi.string().optional().allow(''),
+    zip_code: Joi.number().optional().allow(''),
+    website: Joi.string().optional().allow(''),
+    linkedin: Joi.string().optional().allow('')
   });
   //#endregion
 
@@ -70,22 +70,16 @@ export class ImportCustomersComponent implements OnInit {
       const arr = new Array();
       for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
       const bstr = arr.join('');
-      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
-      
-      this.importCustomerList = JSON.parse(JSON.stringify(XLSX.utils.sheet_to_json(worksheet, {defval: ""})));
-
+      this.importCustomerList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       console.log("importCustomerList", this.importCustomerList);
-      
-      
       var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
-
-      this.importCustomerList.map((value)=> {
+      this.importCustomerList.map((value) => {
         var str = value.phone_number.toString()
-        value.phone_number = str.replace(phoneRegex,'($1)-$2-$3');
+        value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
       })
-         
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -103,8 +97,8 @@ export class ImportCustomersComponent implements OnInit {
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'Crop Report logs.xlsx');
       }
-      else {
-        this._customersService.customerImport(this.importCustomerList,this.data?.limit,this.data?.sort,this.data?.order,this.data?.search,this.data?.filters);
+      else if (!this.isEmptyFile) {
+        this._customersService.customerImport(this.importCustomerList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
     };
@@ -112,25 +106,41 @@ export class ImportCustomersComponent implements OnInit {
   }
 
   async importValidation() {
-    this.importCustomerList.map(async (val, index) => {
-      try {
-        const value = await this.importSchema.validateAsync(val, {
-          abortEarly: false,
-        });
-      } catch (err) {
-        const message = err.details.map(i => i.message).join(',');
-        this.importCustomerList[index].error = message;
-        this.isFileError = true;
-        this._alertSerice.showAlert({
-          type: 'error',
-          shake: false,
-          slideRight: true,
-          title: 'Error',
-          message: 'Check file for errors',
-          time: 6000,
+    debugger;
+    if (this.importCustomerList.length > 0){
+      this.importCustomerList.map(async (val, index) => {
+        try {
+          const value = await this.importSchema.validateAsync(val, {
+            abortEarly: false,
+          });
+        } catch (err) {
+          const message = err.details.map(i => i.message).join(',');
+          this.importCustomerList[index].error = message;
+          this.isFileError = true;
+          this._alertSerice.showAlert({
+            type: 'error',
+            shake: false,
+            slideRight: true,
+            title: 'Error',
+            message: 'Check file for errors',
+            time: 6000,
+          });
+        }
       });
-      }
-    });
+    }
+    else {
+      this.isEmptyFile = true;
+      this._alertSerice.showAlert({
+        type: 'error',
+        shake: false,
+        slideRight: true,
+        title: 'Error',
+        message: 'Please upload valid file',
+        time: 6000,
+      });
+
+    }
+    
   }
 
   //#endregion
