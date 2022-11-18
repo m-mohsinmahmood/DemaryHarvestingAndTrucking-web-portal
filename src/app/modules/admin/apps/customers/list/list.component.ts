@@ -184,7 +184,7 @@ export class CustomersListComponent implements OnInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((value) => {
                 allCustomers = value
-                const headings = [['Customer Name', 'Main Contact', 'Position', 'Phone Number', 'State', 'Country', 'Email', 'Customer Type', 'Address', 'Billing Address', 'Fax', 'City', 'Zip Code', 'Website', 'Linkedln', 'Status']];
+                const headings = [['Customer Name', 'Main Contact', 'Position', 'Phone Number', 'State', 'Country', 'Email', 'Customer Type', 'Address', 'Billing Address', 'Fax', 'City', 'Zip Code', 'Website', 'Linkedin', 'Status']];
                 const wb = utils.book_new();
                 const ws: any = utils.json_to_sheet([]);
                 utils.sheet_add_aoa(ws, headings);
@@ -199,7 +199,7 @@ export class CustomersListComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['customer_name', 'main_contact', 'position', 'phone_number', 'state', 'country', 'email', 'customer_type', 'address', 'billing_address', 'fax', 'city', 'zip_code', 'website', 'linkedln', 'status']];
+        const headings = [['customer_name', 'main_contact', 'position', 'phone_number', 'state', 'country', 'email', 'customer_type', 'address', 'billing_address', 'fax', 'city', 'zip_code', 'website', 'linkedin', 'status']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);

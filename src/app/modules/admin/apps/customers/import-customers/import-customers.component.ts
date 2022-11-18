@@ -26,15 +26,15 @@ export class ImportCustomersComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    main_contact: Joi.required(),
+    main_contact: Joi.string().optional().allow(''),
     position: Joi.string().optional().allow(''),
-    phone_number: Joi.string().max(15).required(),
+    phone_number: Joi.string().min(1).max(15).required(),
     state: Joi.string().optional().allow(''),
     country: Joi.string().optional().allow(''),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    customer_type: Joi.required(),
-    status: Joi.bool(),
-    customer_name: Joi.required(),
+    email: Joi.string().min(1).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    customer_type: Joi.string().min(1).required(),
+    status: Joi.bool().required(),
+    customer_name: Joi.string().min(1).required(),
     fax: Joi.number().optional().allow(''),
     address: Joi.string().optional().allow(''),
     billing_address: Joi.string().optional().allow(''),
@@ -74,11 +74,12 @@ export class ImportCustomersComponent implements OnInit {
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       this.importCustomerList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
-      console.log("importCustomerList", this.importCustomerList);
       var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
       this.importCustomerList.map((value) => {
-        var str = value.phone_number.toString()
-        value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
+        if ( value.phone_number != ""){
+          var str = value.phone_number.toString()
+          value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
+        } 
       })
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
@@ -95,7 +96,7 @@ export class ImportCustomersComponent implements OnInit {
           skipHeader: true,
         });
         utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Crop Report logs.xlsx');
+        writeFile(wb, 'Customer logs.xlsx');
       }
       else if (!this.isEmptyFile) {
         this._customersService.customerImport(this.importCustomerList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
@@ -106,7 +107,6 @@ export class ImportCustomersComponent implements OnInit {
   }
 
   async importValidation() {
-    debugger;
     if (this.importCustomerList.length > 0){
       this.importCustomerList.map(async (val, index) => {
         try {

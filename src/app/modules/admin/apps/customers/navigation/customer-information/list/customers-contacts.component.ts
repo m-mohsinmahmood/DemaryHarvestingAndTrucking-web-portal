@@ -212,7 +212,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
 
     downloadTemplate() {
-        const headings = [['first_name', 'last_name', 'wesite', 'position', 'address', 'cell_number', 'office_number', 'state', 'city', 'email', 'zip-code', 'fax', 'linkedln', 'note_1', 'note _2']];
+        const headings = [['first_name', 'last_name', 'website', 'position', 'address', 'cell_number', 'office_number', 'state', 'city', 'email', 'zip_code', 'fax', 'linkedin', 'note_1', 'note_2']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
