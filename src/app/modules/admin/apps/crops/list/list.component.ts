@@ -131,7 +131,7 @@ export class CropsListComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => { });
     }
     openImportDialog(): void {
-        const dialogRef = this._matDialog.open(ImportCropsComponent);
+        const dialogRef = this._matDialog.open(ImportCropsComponent, {});
         dialogRef.afterClosed().subscribe((result) => {
 
         });
@@ -185,7 +185,7 @@ export class CropsListComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
+        const headings = [['name', 'variety', 'bushel_weight']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
@@ -206,6 +206,22 @@ export class CropsListComponent implements OnInit {
             if (dialogResult)
                 this._cropsService.deleteCrop(cropId);
         });
+    }
+    //#endregion
+    
+    //#region Copy Crop Id
+    copyCropId(val: string) {
+        let selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
     //#endregion
 }

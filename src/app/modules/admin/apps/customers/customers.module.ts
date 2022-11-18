@@ -68,6 +68,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/confirmation-dialog.component';
 import { PhoneMaskDirective } from './phone-mask.directive';
+import { ImportCustomersComponent } from './import-customers/import-customers.component';
+import { ImportCustomerContactsComponent } from './navigation/customer-information/import-customer-contacts/import-customer-contacts.component';
+import { ImportFarmsComponent } from './navigation/farm-data/farms/import-farms/import-farms.component';
+import { ImportFieldsComponent } from './navigation/farm-data/fields/import-fields/import-fields.component';
+import { ImportCropsComponent } from './navigation/farm-data/crops/import-crops/import-crops.component';
+import { ImportDestinationsComponent } from './navigation/farm-data/destinations/import-destinations/import-destinations.component';
 
 
 @NgModule({
@@ -108,7 +114,13 @@ import { PhoneMaskDirective } from './phone-mask.directive';
         ListTruckingRateComponent,
         ListFarmingRateComponent,
         ConfirmationDialogComponent,
-        PhoneMaskDirective
+        PhoneMaskDirective,
+        ImportCustomersComponent,
+        ImportCustomerContactsComponent,
+        ImportFarmsComponent,
+        ImportFieldsComponent,
+        ImportCropsComponent,
+        ImportDestinationsComponent
     ],
     imports: [
     RouterModule.forChild(customersRoutes),

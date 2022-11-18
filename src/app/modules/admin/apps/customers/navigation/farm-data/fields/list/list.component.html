@@ -32,7 +32,7 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu1="matMenu">
-            <button mat-menu-item>
+            <button (click)="openImportDialog()" mat-menu-item>
                 <mat-icon>upload</mat-icon>
                 <span>Import</span>
             </button>

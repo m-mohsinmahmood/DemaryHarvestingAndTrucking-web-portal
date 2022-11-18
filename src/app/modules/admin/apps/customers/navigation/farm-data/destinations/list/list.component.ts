@@ -11,6 +11,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportDestinationsComponent } from '../import-destinations/import-destinations.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -160,6 +161,19 @@ export class ListDestinationComponent implements OnInit {
             this.emitDestinationPageChanged();
         });
     }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportDestinationsComponent, {
+            data: { 
+                customer_id: this.routeID,
+                limit: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
+                filters: this.destinationFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
+    }
     //#endregion
 
     //#region  Sort Data
@@ -223,7 +237,7 @@ export class ListDestinationComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Farm Name', 'Destination Name','Status', 'Calendar Year']];
+        const headings = [['customer_id', 'farm_id','name','status','calendar_year']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);

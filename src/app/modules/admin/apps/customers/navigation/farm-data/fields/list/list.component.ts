@@ -17,6 +17,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { read, utils, writeFile } from 'xlsx';
+import { ImportFieldsComponent } from '../import-fields/import-fields.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -164,6 +165,20 @@ export class ListFieldComponent implements OnInit {
             this.emitFieldPageChanged();
         });
     }
+
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportFieldsComponent, {
+            data: { 
+                customer_id: this.routeID,
+                limit: this.fieldPageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
+                filters: this.fieldFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
+    }
     //#endregion
 
     //#region Sort Data
@@ -228,7 +243,7 @@ export class ListFieldComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['Farm Name', 'Field Name', 'Acres', 'Status', 'Calendar Year']];
+        const headings = [['customer_id', 'farm_id', 'name', 'acres','status', 'calendar_year']];
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);

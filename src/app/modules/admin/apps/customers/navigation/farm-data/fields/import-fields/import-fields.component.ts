@@ -1,23 +1,21 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { CropService } from '../crops.services';
 import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
+import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AlertService } from 'app/core/alert/alert.service';
-
+import moment from 'moment';
 
 @Component({
-  selector: 'app-import-crops',
-  templateUrl: './import-crops.component.html',
-  styleUrls: ['./import-crops.component.scss']
+  selector: 'app-import-fields',
+  templateUrl: './import-fields.component.html',
+  styleUrls: ['./import-fields.component.scss']
 })
-export class ImportCropsComponent implements OnInit {
+export class ImportFieldsComponent implements OnInit {
 
   //#region Import Variables
-  importCropList: any[] = [];
+  importCustomerFieldList: any[] = [];
   arrayBuffer: any;
   file: File;
   fileError: string = '';
@@ -29,17 +27,20 @@ export class ImportCropsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    name: Joi.string().required(),
-    variety: Joi.string().optional().allow(''),
-    bushel_weight: Joi.number().required(),
+    customer_id: Joi.required(),
+    farm_id: Joi.required(),
+    name: Joi.required(),
+    acres: Joi.required(),
+    status: Joi.bool().required(),
+    calendar_year: Joi.number().required(),
 
   });
   //#endregion
 
   constructor(
-    private _cropsService: CropService,
+    private _customersService: CustomersService,
     private _alertSerice: AlertService,
-    public matDialogRef: MatDialogRef<ImportCropsComponent>,
+    public matDialogRef: MatDialogRef<ImportFieldsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -49,7 +50,7 @@ export class ImportCropsComponent implements OnInit {
 
   //#endregion
 
-  //#region Import Crops
+  //#region Import functions
   incomingfile(event) {
     this.file = event.target.files[0];
   }
@@ -64,7 +65,10 @@ export class ImportCropsComponent implements OnInit {
       const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
-      this.importCropList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+      this.importCustomerFieldList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+      
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -75,15 +79,18 @@ export class ImportCropsComponent implements OnInit {
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        utils.sheet_add_json(ws, this.importCropList, {
+        utils.sheet_add_json(ws, this.importCustomerFieldList, {
           origin: 'A2',
           skipHeader: true,
         });
         utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Crop Report logs.xlsx');
+        writeFile(wb, 'Customer Field logs.xlsx');
       }
       else if (!this.isEmptyFile) {
-        this._cropsService.cropImport(this.importCropList);
+      this.importCustomerFieldList.map((value)=> {
+        value.calendar_year = moment().set({'year': value.calendar_year});
+      })
+        this._customersService.customerFieldImport(this.data?.customer_id, this.importCustomerFieldList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
     };
@@ -91,15 +98,15 @@ export class ImportCropsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCropList.length > 0) {
-      this.importCropList.map(async (val, index) => {
+    if (this.importCustomerFieldList.length > 0) {
+      this.importCustomerFieldList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {
             abortEarly: false,
           });
         } catch (err) {
           const message = err.details.map(i => i.message).join(',');
-          this.importCropList[index].error = message;
+          this.importCustomerFieldList[index].error = message;
           this.isFileError = true;
           this._alertSerice.showAlert({
             type: 'error',
@@ -122,14 +129,17 @@ export class ImportCropsComponent implements OnInit {
         message: 'Please upload valid file',
         time: 6000,
       });
+
     }
   }
 
   //#endregion
 
+  //#region close dialog
   saveAndClose(): void {
     // this._cropsService.is_loading_crop.next(false);
     this.matDialogRef.close();
   }
+  //#endregion
 
 }

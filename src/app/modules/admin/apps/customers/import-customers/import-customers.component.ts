@@ -1,23 +1,20 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { CropService } from '../crops.services';
 import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
+import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AlertService } from 'app/core/alert/alert.service';
 
-
 @Component({
-  selector: 'app-import-crops',
-  templateUrl: './import-crops.component.html',
-  styleUrls: ['./import-crops.component.scss']
+  selector: 'app-import-customers',
+  templateUrl: './import-customers.component.html',
+  styleUrls: ['./import-customers.component.scss']
 })
-export class ImportCropsComponent implements OnInit {
+export class ImportCustomersComponent implements OnInit {
 
   //#region Import Variables
-  importCropList: any[] = [];
+  importCustomerList: any[] = [];
   arrayBuffer: any;
   file: File;
   fileError: string = '';
@@ -29,17 +26,29 @@ export class ImportCropsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    name: Joi.string().required(),
-    variety: Joi.string().optional().allow(''),
-    bushel_weight: Joi.number().required(),
-
+    main_contact: Joi.required(),
+    position: Joi.string().optional().allow(''),
+    phone_number: Joi.string().max(15).required(),
+    state: Joi.string().optional().allow(''),
+    country: Joi.string().optional().allow(''),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    customer_type: Joi.required(),
+    status: Joi.bool(),
+    customer_name: Joi.required(),
+    fax: Joi.number().optional().allow(''),
+    address: Joi.string().optional().allow(''),
+    billing_address: Joi.string().optional().allow(''),
+    city: Joi.string().optional().allow(''),
+    zip_code: Joi.number().optional().allow(''),
+    website: Joi.string().optional().allow(''),
+    linkedin: Joi.string().optional().allow('')
   });
   //#endregion
 
   constructor(
-    private _cropsService: CropService,
+    private _customersService: CustomersService,
     private _alertSerice: AlertService,
-    public matDialogRef: MatDialogRef<ImportCropsComponent>,
+    public matDialogRef: MatDialogRef<ImportCustomersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -64,7 +73,13 @@ export class ImportCropsComponent implements OnInit {
       const workbook = XLSX.read(bstr, { type: 'binary', sheetStubs: true });
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
-      this.importCropList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+      this.importCustomerList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+      console.log("importCustomerList", this.importCustomerList);
+      var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
+      this.importCustomerList.map((value) => {
+        var str = value.phone_number.toString()
+        value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
+      })
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
@@ -75,7 +90,7 @@ export class ImportCropsComponent implements OnInit {
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        utils.sheet_add_json(ws, this.importCropList, {
+        utils.sheet_add_json(ws, this.importCustomerList, {
           origin: 'A2',
           skipHeader: true,
         });
@@ -83,7 +98,7 @@ export class ImportCropsComponent implements OnInit {
         writeFile(wb, 'Crop Report logs.xlsx');
       }
       else if (!this.isEmptyFile) {
-        this._cropsService.cropImport(this.importCropList);
+        this._customersService.customerImport(this.importCustomerList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
     };
@@ -91,15 +106,16 @@ export class ImportCropsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCropList.length > 0) {
-      this.importCropList.map(async (val, index) => {
+    debugger;
+    if (this.importCustomerList.length > 0){
+      this.importCustomerList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {
             abortEarly: false,
           });
         } catch (err) {
           const message = err.details.map(i => i.message).join(',');
-          this.importCropList[index].error = message;
+          this.importCustomerList[index].error = message;
           this.isFileError = true;
           this._alertSerice.showAlert({
             type: 'error',
@@ -122,14 +138,18 @@ export class ImportCropsComponent implements OnInit {
         message: 'Please upload valid file',
         time: 6000,
       });
+
     }
+    
   }
 
   //#endregion
 
+  //#region close dialog
   saveAndClose(): void {
     // this._cropsService.is_loading_crop.next(false);
     this.matDialogRef.close();
   }
+  //#endregion
 
 }
