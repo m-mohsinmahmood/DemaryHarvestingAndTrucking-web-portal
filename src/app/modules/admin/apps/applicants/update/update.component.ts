@@ -15,12 +15,43 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { Applicant } from '../applicants.types';
 import { MatDatepicker } from '@angular/material/datepicker';
+import {
+    DateAdapter,
+    MAT_DATE_FORMATS,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 
 @Component({
     selector: 'app-update',
     templateUrl: './update.component.html',
     styleUrls: ['./update.component.scss'],
+    providers: [
+        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+        // application's root module. We provide it at the component level here, due to limitations of
+        // our example generation script.
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
+
+
 // @Inject(MAT_DIALOG_DATA)
 export class UpdateComponent implements OnInit {
     applicant$: Observable<Applicant>;
@@ -49,7 +80,7 @@ export class UpdateComponent implements OnInit {
     isBack = false;
     imageURL: string = '';
     calendar_year;
-    applicantObjData: any;
+    applicantObjDataCal: any;
     date = new FormControl(moment());
     //   avatar: string = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
     routeID: string;
@@ -90,6 +121,7 @@ export class UpdateComponent implements OnInit {
     // #region initializing forms
     initApplicantForm() {
         this.firstFormGroup = this._formBuilder.group({
+            id:[''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
             email: [
@@ -115,6 +147,7 @@ export class UpdateComponent implements OnInit {
             address_2: ['', ''],
             city: ['', [Validators.required]],
             county: ['', [Validators.required]],
+            self_rating:['',[Validators.required]],
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
             us_citizen: ['', [Validators.required]],
@@ -175,31 +208,33 @@ export class UpdateComponent implements OnInit {
                 .getApplicantById(this.data?.id)
                 .subscribe((applicantObjData: any) => {
                     this.firstFormGroup.patchValue({
+                        id: applicantObjData.id,
                         first_name: applicantObjData.first_name,
                         last_name: applicantObjData.last_name,
                         email: applicantObjData.email,
                         cell_phone_number: applicantObjData.cell_phone_number,
                         home_phone_number: applicantObjData.home_phone_number,
-                        languages: applicantObjData.languages,
-                        status: applicantObjData.status,
+                        languages: applicantObjData.languages.replace(/\s/g, '').split(','),
+                        status: applicantObjData.status.toString(),
                     });
                     this.secondFormGroup.patchValue({
                         date_of_birth: moment(applicantObjData.date_of_birth)
-                            .subtract(1, 'week')
-                            .hour(18)
-                            .minute(56)
-                            .toISOString(),
+                                .subtract(1, 'week')
+                                .hour(18)
+                                .minute(56)
+                                .toISOString(),
                         calendar_year: applicantObjData.calendar_year,
                         marital_status: applicantObjData.marital_status,
                         address_1: applicantObjData.address_1,
                         address_2: applicantObjData.address_2,
-                        city: applicantObjData.town,
+                        city: applicantObjData.city,
                         province: applicantObjData.state,
                         postal_code: applicantObjData.postal_code,
                         country: applicantObjData.country,
-                        usCitizen: applicantObjData.citizenStatus,
-                        license: applicantObjData.tractorStatus,
-                        passport: applicantObjData.passport,
+                        self_rating:applicantObjData.self_rating,
+                        us_citizen: applicantObjData.us_citizen.toString(),
+                        tractor_license: applicantObjData.tractor_license.toString(),
+                        passport: applicantObjData.passport.toString(),
                         county: applicantObjData.county,
                         //   imageURL: applicantObjData.imageURL,
                         avatar: applicantObjData.avatar,
@@ -264,6 +299,19 @@ export class UpdateComponent implements OnInit {
     }
     //#endregion
 
+    //#region Init Calendar
+    initCalendar() {
+        //Calender Year Initilize
+        if (this.data) {
+            this.calendar_year = new FormControl(this.data.calendar_year);
+            console.log("im in calendar",this.data);
+            
+        } else {
+            this.calendar_year = new FormControl(moment());
+        }
+    }
+    //#endregion
+
     submit(): void {
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -283,17 +331,9 @@ export class UpdateComponent implements OnInit {
     updateApplicant(applicantData: any): void {
         this._applicantService.updateApplicant(applicantData);
     }
-    initCalendar() {
-        //Calender Year Initilize
-        if (this.data.isEdit) {
-            this.calendar_year = new FormControl(
-                this.data.applicantObjData.calendar_year
-            );
-        } else {
-            this.calendar_year = new FormControl(moment());
-        }
-    }
 
+    
+    
     //#region Calendar Year Function
     chosenYearHandler(
         normalizedYear: Moment,
@@ -302,7 +342,10 @@ export class UpdateComponent implements OnInit {
         const ctrlValue = moment(this.calendar_year.value);
         ctrlValue.year(normalizedYear.year());
         this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
+        console.log(this.calendar_year.value);
+        console.log(ctrlValue);
+        
+        this.secondFormGroup.value.calendar_year = ctrlValue;
         datepicker.close();
     }
 

@@ -15,7 +15,7 @@
 // }
 
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -27,7 +27,8 @@ import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
     selector: 'app-applicantpage',
@@ -60,7 +61,10 @@ export class ApplicantpageComponent implements OnInit
     routeID: string;
     avatar: string = '';
     isEdit: boolean = true;
+    formArr = [];
+
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
+    calendar_year: any;
      //#endregion
 
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
@@ -105,144 +109,124 @@ export class ApplicantpageComponent implements OnInit
         // this.isEdit = this.data.isEdit;
     }
     initfarmGroups() {
-        // #region initializing forms
         this.firstFormGroup = this._formBuilder.group({
-            fname: ['', ''],
-            lname: ['', ''],
-            email: ['', ''],
-            cellNumber: ['', ''],
-            homeNumber: ['', ''],
-            languages: [''],
+            first_name: ['', [Validators.required]],
+            last_name: ['', [Validators.required]],
+            email: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern(
+                        '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+                    ),
+                ],
+            ],
+            cell_phone_number: ['', [Validators.required]],
+            home_phone_number: ['', ''],
+            languages: ['', [Validators.required]],
+            status: ['', [Validators.required]],
         });
 
         this.secondFormGroup = this._formBuilder.group({
-            fullName: ['', ''],
-            lastNameFirstName: ['', ''],
-            firstName: ['', ''],
-            lastName: ['', ''],
-            cellPhone: ['', ''],
-            homePhone: ['', ''],
-            email: ['', ''],
+            date_of_birth: ['', [Validators.required]],
+            calendar_year: [moment()],
+            marital_status: ['', [Validators.required]],
+            address_1: ['', [Validators.required]],
+            address_2: ['', ''],
+            city: ['', [Validators.required]],
+            county: ['', [Validators.required]],
+            postal_code: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            us_citizen: ['', [Validators.required]],
+            tractor_license: ['', [Validators.required]],
+            passport: ['', [Validators.required]],
+            //imageURL: ['', [Validators.required]],
+            self_rating: [''],
+            avatar: ['', ''],
+        });
+        this.thirdFormGroup = this._formBuilder.group({
+            question_1: ['', [Validators.required]],
+            question_2: ['', [Validators.required]],
+            question_3: ['', [Validators.required]],
+            question_4: ['', [Validators.required]],
+            question_5: ['', [Validators.required]],
+            work_experience_description: ['', [Validators.required]],
+            recent_job: ['', [Validators.required]],
+            supervisor: ['', [Validators.required]],
+            supervisor_contact: ['', [Validators.required]],
         });
 
         this.fourthFormGroup = this._formBuilder.group({
-            dob: ['', ''],
-            maritalStatus: ['', ''],
-            address1: ['', ''],
-            address2: ['', ''],
-            city: ['', ''],
-            province: ['', ''],
-            county: ['', ''],
-            postalCode: ['', ''],
-            country: ['', ''],
-            usCitizen: ['', ''],
-            license: ['', ''],
-            passport: ['', ''],
-            //   imageURL: ['', [Validators.required]],
-            avatar: ['', ''],
+            degree_name: ['', [Validators.required]],
+            institute_name: ['', [Validators.required]],
+            education: ['', [Validators.required]],
         });
 
         this.fifthFormGroup = this._formBuilder.group({
-            firstQuestion: ['', ''],
-            secondQuestion: ['', ''],
-            thirdQuestion: ['', ''],
-            fourthQuestion: ['', ''],
-            fifthQuestion: ['', ''],
-            workExperience: ['', ''],
-            job: ['', ''],
-            supervisor: ['', ''],
-            supervisorContact: ['', ''],
-        });
-
-        this.sixthFormGroup = this._formBuilder.group({
-            e_firstQuestion: ['', ''],
-            e_secondQuestion: ['', ''],
+            blood_group: [''],
+            reason_for_applying: ['', [Validators.required]],
             e_thirdQuestion: ['', ''],
         });
-        this.seventhFormGroup = this._formBuilder.group({
-            degree: ['', ''],
-            institution: ['', ''],
-            education: ['', ''],
+        this.sixthFormGroup = this._formBuilder.group({
+            first_phone_call: [''],
+            first_call_remarks: [''],
+            firstRanking: [''],
+            reference_phone_call: [''],
+            reference_call_remarks: [''],
+            refreeRanking: [''],
+            second_phone_call: [''],
+            second_call_remarks: [''],
+            secondRanking: [''],
+            third_phone_call: [''],
+            third_call_remarks: [''],
+            thirdRanking: [''],
         });
 
-        // #endregion
-        // #region populating farms
-        // Get the employee by id
-        // if (this.data !== null) {
-        //     this._applicantService
-        //         .getApplicantById('a9beac0d-1ea0-42af-bc36-ca839f27271f')
-        //         .subscribe((employee) => {
-        //             // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
+        this.formArr = [
+            this.firstFormGroup,
+            this.secondFormGroup,
+            this.thirdFormGroup,
+            this.fourthFormGroup,
+            this.fifthFormGroup,
+            this.sixthFormGroup,
+        ];
 
-        //              this.firstFormGroup = this._formBuilder.group({
-        //                 first_name: employee.first_name,
-        //                 last_name: employee.last_name,
-        //                email: employee.secondEmail,
-        //                cell_phone_number: employee.cell_phone_number,
-        //                home_phone_number:employee.home_phone_number,
-        //                languages:employee.languages,
-        //             //    secondSentDate: moment( employee.secondSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-        //             //    applicationDate: moment( employee.applicationDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-
-        //              });
-        //             this.secondFormGroup.patchValue({
-        //                 fullName: employee.name,
-        //                 lastNameFirstName: employee.name,
-        //                 first_name: employee.first_name,
-        //                 last_name: employee.last_name,
-        //                 cell_phone_number: employee.cell_phone_number,
-        //                 home_phone_number: employee.home_phone_number,
-        //                 email: employee.email,
-        //             });
-        //             this.fourthFormGroup.patchValue({
-        //                 date_of_birth: moment(employee.date_of_birth)
-        //                     .subtract(1, 'week')
-        //                     .hour(18)
-        //                     .minute(56)
-        //                     .toISOString(),
-        //                 marital_status: employee.marital_status,
-        //                 address_1: employee.address_1,
-        //                 address_2: employee.address_2,
-        //                 city: employee.town,
-        //                 province: employee.state,
-        //                 postal_code: employee.postal_code,
-        //                 country: employee.country,
-        //                 us_citizen: employee.us_citizen,
-        //                 tractor_license: employee.tractor_license,
-        //                 passport: employee.passport,
-        //                 //   imageURL: employee.imageURL,
-        //                 avatar: employee.avatar,
-        //             });
-        //             this.fifthFormGroup.patchValue({
-        //                 question_1: employee.question_1,
-        //                 question_2: employee.question_2,
-        //                 question_3: employee.question_3,
-        //                 question_4: employee.question_4,
-        //                 question_5: employee.question_5,
-        //                 work_experience_description: employee.work_experience_description,
-        //                 recent_job: employee.recent_job,
-        //                 supervisor: employee.supervisor,
-        //                 supervisor_contact: employee.supervisor_contact,
-        //             });
-        //             this.sixthFormGroup.patchValue({
-        //                 degree_name: employee.degree_name,
-        //                 institute_name: employee.institute_name,
-        //                 education: employee.education,
-        //             });
-        //             this.seventhFormGroup.patchValue({
-        //                 degree: employee.name,
-        //                 institution: employee.name,
-        //                 education: employee.name,
-        //             });
-        //             this._changeDetectorRef.markForCheck();
-        //         });
-        // } else {
-        // }
-        // #endregion
     }
     
     submit(): void {
+        this.form = this._formBuilder.group({});
+        this.formArr.forEach((f) => {
+            Object.entries(f.value).forEach((element) => {
+                const control = this._formBuilder.control(element[1]);
+                this.form.addControl(element[0], control);
+            });
+        });
+        this._applicantService.isLoadingApplicant.next(true);
+        
+            this._applicantService.createApplicant(this.form.value);
+        
+    }
+    updateApplicant(applicantData: any): void {
+        this._applicantService.updateApplicant(applicantData);
+    }
 
+
+    initCalendar() {
+       
+            this.calendar_year = new FormControl(moment());
+        
+    }
+
+    //#region Calendar Year Function
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment(this.calendar_year.value);
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue);
+        this.form.value.calendar_year = ctrlValue;
+        datepicker.close();
     }
 
     showFlashMessage(type: 'success' | 'error'): void {

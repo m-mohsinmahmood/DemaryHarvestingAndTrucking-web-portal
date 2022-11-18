@@ -26,7 +26,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     isLoading: boolean = false;
     routeID; // URL ID
-    applicants: any;
     panelOpenState = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
     country_list = ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor L\'Este', 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'];
@@ -35,10 +34,11 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     selectedIndex: string = 'Applicant Data';
     items = [];
     isEdit: boolean;
-    applicant$: Observable<any>;
+    applicant: any;
     isLoadingApplicant$: Observable<any>;
     routes: any;
-    applicants$: Observable<any>;
+    applicants$ = new Subject();
+    data: any;
 
 
     drawerMode: 'over' | 'side' = 'side';
@@ -93,37 +93,52 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         });
 
 
-        // Get the applicant by id
-        this._applicantService.getApplicantById(this.routeID);
 
-      
+        // Get the applicant by id
+        this._applicantService
+        .getApplicantById(this.routeID)
+        .subscribe((applicantObjData: any) => {
+            this.applicant = applicantObjData;
+            console.log("hello", this.applicant.first_name  );
+
+        });
+
+        // this.applicants$.next(this._applicantService.getApplicantById(this.routeID));
+        // console.log("hello", this.applicants$);
+
+        // this.data = this._applicantService.getApplicantById(this.routeID);
+        // console.log("hello", this.data);
+
+
+
+
     }
 
     ngAfterViewInit(): void {
-        this.initApis(this.routeID);
-        this.initObservables();
+        // this.initApis(this.routeID);
+        // this.initObservables();
         this.initSideNavigation();
     }
 
     //#region Initial APIs
-    initApis(id: string) {
-        this._applicantService.getApplicantById(id);
-    }
+    // initApis(id: string) {
+    // this.applicants = this._applicantService.getApplicantById(id);
+    // }
     //#endregion
 
     //#region Initialize Observables
-    initObservables() {
-        // Data
-        this.applicant$ = this._applicantService.applicant$;
-        // Loader
-        // this.applicant$.subscribe((value)=>{console.log(value)}
-        // );
-        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
-    }
+    // initObservables() {
+    //     // Data
+    //     this.applicant$ = this._applicantService.applicant$;
+    //     // Loader
+    //     // this.applicant$.subscribe((value)=>{console.log(value)}
+    //     // );
+    //     this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
+    // }
     //#endregion
 
-       //#region Initialize Side Navigation
-       initSideNavigation() {
+    //#region Initialize Side Navigation
+    initSideNavigation() {
         this.routes = this._applicantService.applicantNavigationLeft;
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -141,21 +156,21 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
 
-        //#region Inner Navigation Routing
-        routeHandler(index) {
-            const { title } = index;
-            if (title === this.selectedIndex) {
-                return;
-            }
-            // this.isLoading = true;
-            this.selectedIndex = title;
+    //#region Inner Navigation Routing
+    routeHandler(index) {
+        const { title } = index;
+        if (title === this.selectedIndex) {
+            return;
         }
-    
-        toggleDrawer() {
-            this.drawerOpened = !this.drawerOpened;
-        }
-        //#endregion
-    
+        // this.isLoading = true;
+        this.selectedIndex = title;
+    }
+
+    toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+    }
+    //#endregion
+
 
 
     /**
@@ -170,15 +185,15 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    openUpdateDialog(): void {
+    openUpdateDialog(applicant): void {
         this.isEdit = true;
+        console.log("im in details update comp ", applicant);
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent, {
-            height: '800px',
-            width: '900px',
             data: {
                 isEdit: this.isEdit,
-                id: this.routeID
+                id: this.routeID,
+                calendar_year: applicant.calendar_year,
             }
         });
 

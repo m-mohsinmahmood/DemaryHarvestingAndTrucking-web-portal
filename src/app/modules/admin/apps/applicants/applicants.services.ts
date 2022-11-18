@@ -182,7 +182,9 @@ export class ApplicantService {
      getApplicantById(id: string) {
         return this._httpClient
             .get(`api-1/applicants?id=${id}`)
-            .pipe(take(1));
+            .pipe(take(1))
+            ;
+            
     }
 
     /**

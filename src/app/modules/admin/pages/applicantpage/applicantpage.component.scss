@@ -114,3 +114,7 @@
 {
     display: none !important;
 }
+::ng-deep .mat-form-field-prefix
+{
+    top: 0px !important;
+}

@@ -123,11 +123,11 @@
                                 </div> -->
                                     <!-- First Name -->
                                     <div class="truncate">
-                                        {{ applicant.first_name }}
+                                        {{ applicant?.first_name }}
                                     </div>
                                     <!-- Last Name -->
                                     <div class="truncate">
-                                        {{ applicant.last_name }}
+                                        {{ applicant?.last_name }}
                                     </div>
                                     <!-- Email -->
                                     <div class="hidden sm:block truncate">
@@ -197,10 +197,8 @@
                                         <button
                                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                             mat-stroked-button
-                                            [routerLink]="[
-                                                '/apps/applicants/details/',
-                                                applicant.id
-                                            ]"
+                                            (click)="
+                                            toggleDetails(applicant.id, true)"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"

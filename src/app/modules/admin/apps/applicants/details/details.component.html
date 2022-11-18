@@ -9,7 +9,7 @@
         </div>
         <!-- Title -->
         <div
-        *ngIf="applicant$ | async; let applicant" (click)="backHandler()"
+         (click)="backHandler()"
             class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer"
         >
         <div class="flex items-center">
@@ -18,7 +18,7 @@
                 [svgIcon]="'heroicons_solid:arrow-circle-left'"
             ></mat-icon>
             <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight"
-                >{{ applicant.first_name}} {{ applicant.last_name }}
+                >{{ applicant?.first_name}} {{ applicant?.last_name }}
             </span>
         </div>
             <div class="sm:w-auto lg:w-auto w-full">
@@ -52,7 +52,7 @@
                             <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                         </button>
                 </div>
-            <button mat-stroked-button   class="my-1 ml-2" (click)="openUpdateDialog()">
+            <button mat-stroked-button   class="my-1 ml-2" (click)="openUpdateDialog(applicant)">
                 <span style="font-size: 13px;"> Update Profile </span>
             </button>
             <button mat-stroked-button   class="my-1 ml-2">
@@ -72,7 +72,7 @@
                     <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                 </button>
         </div>
-            <button mat-stroked-button   class="my-1 ml-2 min-w-40" (click)="openUpdateDialog()">
+            <button mat-stroked-button   class="my-1 ml-2 min-w-40" (click)="openUpdateDialog(applicant)">
                 <span style="font-size: 13px;"> Update Profile </span>
             </button>
             <button mat-stroked-button   class="my-1 ml-2 min-w-48">

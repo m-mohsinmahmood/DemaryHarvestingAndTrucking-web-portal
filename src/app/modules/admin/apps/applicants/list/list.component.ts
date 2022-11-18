@@ -104,10 +104,8 @@ export class ApplicantsListComponent
         this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
         this.applicantList$ = this._applicantService.applicantList$;
         this.applicant$ = this._applicantService.applicant$;
-        console.log(this.applicantList$);
 
         this.applicantList$.subscribe((data) =>{
-            console.log("applicantList$", data);
         })
 
         this.search = this.searchform.valueChanges
@@ -190,8 +188,12 @@ export class ApplicantsListComponent
 
 
     toggleDetails(applicantId: string): void {
-        this._applicantService.getApplicantById(applicantId);
-        this._router.navigate(['/apps/applicants/details/' + applicantId]);
+        this._applicantService
+        .getApplicantById(applicantId)
+        .subscribe((applicantObjData: any) => {
+            this._router.navigate(['/apps/applicants/details/' + applicantObjData.id]);
+        });
+
     }
 
     closeDetails(): void {

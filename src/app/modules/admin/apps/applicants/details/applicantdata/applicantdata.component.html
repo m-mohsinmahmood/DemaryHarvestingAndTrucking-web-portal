@@ -20,7 +20,7 @@
     </div>
 </div>
 <!-- General Info -->
-<div class="parent-of-accordions" *ngIf="applicant$ | async as applicant">
+<div class="parent-of-accordions">
 <mat-accordion class="bg-gray-100" >
     <mat-expansion-panel
         (opened)="panelOpenState = true"
@@ -45,7 +45,7 @@
                     <dd
                         class="font-semibold text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.first_name }}
+                        {{ applicant?.first_name }}
                     </dd>
                 </div>
                 <div
@@ -57,7 +57,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.last_name }}
+                        {{ applicant?.last_name }}
                     </dd>
                 </div>
                 <div
@@ -69,7 +69,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.email }}
+                        {{ applicant?.email }}
                     </dd>
                 </div>
 
@@ -82,7 +82,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.cell_phone_number }}
+                        {{ applicant?.cell_phone_number }}
                     </dd>
                 </div>
                 <div
@@ -94,7 +94,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.home_phone_number }}
+                        {{ applicant?.home_phone_number }}
                     </dd>
                 </div>
                 <div
@@ -106,7 +106,19 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{applicant.languages}}
+                        {{applicant?.languages}}
+                    </dd>
+                </div>
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Calendar Year
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                        {{applicant?.calendar_year | date: "YYYY"}}
                     </dd>
                 </div>
             </dl>
@@ -134,12 +146,12 @@
                     class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
                 >
                     <dt class="text-sm font-normal text-gray-500">
-                        DOB
+                        Date of Birth
                     </dt>
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.date_of_birth }}
+                        {{ applicant?.date_of_birth | date: "YYYY-MM-DD"}}
                     </dd>
                 </div>
                 <div
@@ -151,7 +163,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.marital_status }}
+                        {{ applicant?.marital_status }}
                     </dd>
                 </div>
                 <div
@@ -163,7 +175,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.address_1 }}
+                        {{ applicant?.address_1 }}
                     </dd>
                 </div>
                 <div
@@ -175,7 +187,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.address_2 }}
+                        {{ applicant?.address_2 }}
                     </dd>
                 </div>
                 <div
@@ -187,7 +199,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.city }}
+                        {{ applicant?.city }}
                     </dd>
                 </div>
                 <div
@@ -199,7 +211,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.postal_code }}
+                        {{ applicant?.postal_code }}
                     </dd>
                 </div>
                 <div
@@ -211,7 +223,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.country }}
+                        {{ applicant?.country }}
                     </dd>
                 </div>
                 <div
@@ -224,11 +236,11 @@
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
                         <mat-icon class="{{
-                            applicant.us_citizen === true
+                            applicant?.us_citizen === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant.us_citizen === true
+                        applicant?.us_citizen === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -244,11 +256,11 @@
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
                         <mat-icon class="{{
-                            applicant.tractor_license === true
+                            applicant?.tractor_license === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant.tractor_license === true
+                        applicant?.tractor_license === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -264,11 +276,11 @@
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
                         <mat-icon class="{{
-                            applicant.passport === true
+                            applicant?.passport === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant.passport === true
+                        applicant?.passport === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -306,7 +318,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.question_1 }}
+                    {{ applicant?.question_1 }}
                     </dd>
                 </div>
                 <div
@@ -320,7 +332,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.question_2 }}
+                        {{ applicant?.question_2 }}
                     </dd>
                 </div>
                 <div
@@ -332,7 +344,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.question_3 }}
+                    {{ applicant?.question_3 }}
                     </dd>
                 </div>
 
@@ -345,7 +357,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.question_4 }}
+                    {{ applicant?.question_4 }}
                     </dd>
                 </div>
                 <div
@@ -357,7 +369,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.question_5 }}
+                    {{ applicant?.question_5 }}
                     </dd>
                 </div>
                 <div
@@ -369,7 +381,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.work_experience_description }}
+                        {{ applicant?.work_experience_description }}
                     </dd>
                 </div>
                 <div
@@ -381,7 +393,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.recent_job }}
+                        {{ applicant?.recent_job }}
                     </dd>
                 </div>
                 <div
@@ -393,7 +405,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.supervisor }}
+                        {{ applicant?.supervisor }}
                     </dd>
                 </div>
                 <div
@@ -405,7 +417,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.supervisor_contact }}
+                        {{ applicant?.supervisor_contact }}
                     </dd>
                 </div>
             </dl>
@@ -438,7 +450,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.education }}
+                        {{ applicant?.education }}
                     </dd>
                 </div>
                 <div
@@ -450,7 +462,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.degree_name }}
+                        {{ applicant?.degree_name }}
                     </dd>
                 </div>
                 <div
@@ -464,7 +476,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                        {{ applicant.institute_name }}
+                        {{ applicant?.institute_name }}
                     </dd>
                 </div>
             </dl>
@@ -497,7 +509,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.blood_group }}
+                    {{ applicant?.blood_group }}
                 </dd>
                 </div>
                 <div
@@ -509,7 +521,7 @@
                     <dd
                         class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
                     >
-                    {{ applicant.reason_for_applying }}
+                    {{ applicant?.reason_for_applying }}
                 </dd>
                 </div>
                 <!-- <div

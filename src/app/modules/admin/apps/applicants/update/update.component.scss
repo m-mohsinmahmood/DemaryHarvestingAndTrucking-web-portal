@@ -139,3 +139,25 @@
     margin-bottom: 2px !important;
 }
 
+::ng-deep .add-update-applicant-form
+{
+    min-height: 800px !important;
+}
+
+::ng-deep .mat-form-field-prefix
+{
+    top: 0px !important;
+}
+
+// ::ng-deep .mat-select-panel:nth-of-type(1)
+// {
+//     min-width: calc(100% + 16px) !important;
+//     margin-left: 8px !important;
+// }
+
+
+// ::ng-deep .mat-select-panel-wrap:nth-child(odd) 
+// {
+//     min-width: calc(100% + 17px) !important;
+//     margin-left: 32px !important;
+// }
