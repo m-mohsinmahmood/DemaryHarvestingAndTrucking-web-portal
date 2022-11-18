@@ -28,8 +28,8 @@ export class ImportCropsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.required(),
-    crop_id: Joi.required(),
+    customer_id: Joi.string().min(1).required(),
+    crop_id: Joi.string().min(1).required(),
     calendar_year: Joi.number().required(),
     status: Joi.bool().required()
 

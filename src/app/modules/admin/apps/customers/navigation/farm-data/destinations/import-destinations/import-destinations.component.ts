@@ -27,9 +27,9 @@ export class ImportDestinationsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.required(),
-    farm_id: Joi.required(),
-    name: Joi.required(),
+    customer_id: Joi.string().min(1).required(),
+    farm_id: Joi.string().min(1).required(),
+    name: Joi.string().required(),
     status: Joi.bool().required(),
     calendar_year: Joi.number().required(),
 
