@@ -27,7 +27,6 @@ export class ImportCustomerContactsComponent implements OnInit {
   //#region Import Function Validation
   importSchema = Joi.object({
     company_name: Joi.string().optional().allow(''),
-    customer_id: Joi.string().min(1).required(),
     first_name: Joi.string().min(1).required(),
     last_name: Joi.string().min(1).required(),
     website: Joi.string().optional().allow(''),
@@ -38,8 +37,8 @@ export class ImportCustomerContactsComponent implements OnInit {
     office_number: Joi.string().max(15).optional().allow(''),
     state: Joi.string().optional().allow(''),
     email: Joi.string().min(1).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    zip_code: Joi.string().optional().allow(''),
-    fax: Joi.string().optional().allow(''),
+    zip_code: Joi.number().optional().allow(''),
+    fax: Joi.number().optional().allow(''),
     linkedin: Joi.string().optional().allow(''),
     note_1: Joi.string().optional().allow(''),
     note_2: Joi.string().optional().allow(''),
@@ -79,11 +78,11 @@ export class ImportCustomerContactsComponent implements OnInit {
       this.importCustomerContactList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
       this.importCustomerContactList.map((value) => {
-        if (value.cell_number != "") {
+        if (value.cell_number  && value.cell_number != "") {
           var cell = value.cell_number.toString();
           value.cell_number = cell.replace(phoneRegex, '($1)-$2-$3');
         }
-        if (value.office_number != "") {
+        if (value.office_number && value.office_number != "") {
           var office = value.office_number.toString();
           value.office_number = office.replace(phoneRegex, '($1)-$2-$3');
         }
@@ -92,7 +91,6 @@ export class ImportCustomerContactsComponent implements OnInit {
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -107,6 +105,7 @@ export class ImportCustomerContactsComponent implements OnInit {
         writeFile(wb, 'Customer Contact Report logs.xlsx');
       }
       else if (!this.isEmptyFile) {
+        this.importCustomerContactList = this.importCustomerContactList.map(v => ({...v, customer_id: this.data?.customerId}))
         this._customersService.customerContactImport(this.data?.customerId, this.importCustomerContactList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search);
       }
       this.saveAndClose();
@@ -115,7 +114,9 @@ export class ImportCustomerContactsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCustomerContactList.length > 0) {
+    const headers = ['first_name', 'last_name', 'website', 'position', 'address', 'cell_number', 'office_number', 'state', 'city', 'email', 'zip_code', 'fax', 'linkedin', 'note_1', 'note_2'];
+    if (this.importCustomerContactList.length > 0  && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])) {
+      this.fileHeaders[0].push('Errors');
       this.importCustomerContactList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {

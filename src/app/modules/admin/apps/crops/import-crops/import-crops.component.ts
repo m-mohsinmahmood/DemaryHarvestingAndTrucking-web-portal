@@ -30,7 +30,8 @@ export class ImportCropsComponent implements OnInit {
   //#region Import Function Validation
   importSchema = Joi.object({
     name: Joi.string().required(),
-    variety: Joi.string().optional().allow(''),
+    variety: [Joi.string().optional().allow(''),
+    Joi.number()],
     bushel_weight: Joi.number().required(),
 
   });
@@ -68,7 +69,6 @@ export class ImportCropsComponent implements OnInit {
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -91,7 +91,9 @@ export class ImportCropsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCropList.length > 0) {
+    const headers = ['name','variety','bushel_weight']
+    if (this.importCropList.length > 0 && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])) {
+      this.fileHeaders[0].push('Errors');
       this.importCropList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {

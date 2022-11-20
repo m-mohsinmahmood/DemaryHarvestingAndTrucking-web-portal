@@ -27,12 +27,13 @@ export class ImportFieldsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.string().min(1).required(),
     farm_id: Joi.string().min(1).required(),
     name: Joi.string().required(),
     acres: Joi.number().required(),
-    status: Joi.bool().required(),
-    calendar_year: Joi.number().required(),
+    status: Joi.boolean().required() .messages({
+      'boolean.base': `"status" is not allowed to be empty'`,
+    }),
+    calendar_year: Joi.number().integer().min(2000).max(2050).required(),
 
   });
   //#endregion
@@ -67,12 +68,9 @@ export class ImportFieldsComponent implements OnInit {
       const worksheet = workbook.Sheets[first_sheet_name];
 
       this.importCustomerFieldList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
-
-      
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -89,7 +87,8 @@ export class ImportFieldsComponent implements OnInit {
       else if (!this.isEmptyFile) {
       this.importCustomerFieldList.map((value)=> {
         value.calendar_year = moment().set({'year': value.calendar_year});
-      })
+      });
+        this.importCustomerFieldList = this.importCustomerFieldList.map(v => ({...v, customer_id: this.data?.customer_id}))
         this._customersService.customerFieldImport(this.data?.customer_id, this.importCustomerFieldList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
@@ -98,7 +97,9 @@ export class ImportFieldsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCustomerFieldList.length > 0) {
+    const headers = ['farm_id','name','acres','status','calendar_year']; 
+    if (this.importCustomerFieldList.length > 0 && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])) {
+      this.fileHeaders[0].push('Errors');
       this.importCustomerFieldList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {

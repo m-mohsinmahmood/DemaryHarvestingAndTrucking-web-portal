@@ -28,9 +28,10 @@ export class ImportFarmsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.string().min(1).required(),
     name: Joi.string().required(),
-    status: Joi.bool().required(),
+    status: Joi.boolean().required() .messages({
+      'boolean.base': `"status" is not allowed to be empty'`,
+    })
   });
   //#endregion
 
@@ -66,7 +67,6 @@ export class ImportFarmsComponent implements OnInit {
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -81,6 +81,7 @@ export class ImportFarmsComponent implements OnInit {
         writeFile(wb, 'Customer Farm logs.xlsx');
       }
       else if (!this.isEmptyFile) {
+        this.importCustomerFarmList = this.importCustomerFarmList.map(v => ({...v, customer_id: this.data?.customer_id}));
         this._customersService.customerFarmImport(this.data?.customer_id,this.importCustomerFarmList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search);
       }
       this.saveAndClose();
@@ -89,7 +90,9 @@ export class ImportFarmsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCustomerFarmList.length > 0 ){
+    const headers = ['name','status']; 
+    if (this.importCustomerFarmList.length > 0 && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])){
+      this.fileHeaders[0].push('Errors');
       this.importCustomerFarmList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {
