@@ -33,7 +33,9 @@ export class ImportCustomersComponent implements OnInit {
     country: Joi.string().optional().allow(''),
     email: Joi.string().min(1).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     customer_type: Joi.string().min(1).required(),
-    status: Joi.bool().required(),
+    status: Joi.boolean().required() .messages({
+      'boolean.base': `"status" is not allowed to be empty'`,
+    }),
     customer_name: Joi.string().min(1).required(),
     fax: Joi.number().optional().allow(''),
     address: Joi.string().optional().allow(''),
@@ -76,15 +78,14 @@ export class ImportCustomersComponent implements OnInit {
       this.importCustomerList = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
       var phoneRegex = /^(\d{0,3})(\d{0,3})(\d{0,4})/;
       this.importCustomerList.map((value) => {
-        if ( value.phone_number != ""){
-          var str = value.phone_number.toString()
+        if ( value.phone_number && value.phone_number != ""){
+          var str = value?.phone_number.toString()
           value.phone_number = str.replace(phoneRegex, '($1)-$2-$3');
         } 
       })
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -107,7 +108,9 @@ export class ImportCustomersComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCustomerList.length > 0){
+    const headers =['customer_name', 'main_contact', 'position', 'phone_number', 'state', 'country', 'email', 'customer_type', 'address', 'billing_address', 'fax', 'city', 'zip_code', 'website', 'linkedin', 'status']
+    if (this.importCustomerList.length > 0  && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])){
+      this.fileHeaders[0].push('Errors');
       this.importCustomerList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {

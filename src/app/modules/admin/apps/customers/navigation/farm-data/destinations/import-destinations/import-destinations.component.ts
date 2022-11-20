@@ -27,11 +27,12 @@ export class ImportDestinationsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.string().min(1).required(),
     farm_id: Joi.string().min(1).required(),
     name: Joi.string().required(),
-    status: Joi.bool().required(),
-    calendar_year: Joi.number().required(),
+    status: Joi.boolean().required() .messages({
+      'boolean.base': `"status" is not allowed to be empty'`,
+    }),
+    calendar_year: Joi.number().integer().min(2000).max(2050).required(),
 
   });
   //#endregion
@@ -69,7 +70,7 @@ export class ImportDestinationsComponent implements OnInit {
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
+      
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -87,6 +88,7 @@ export class ImportDestinationsComponent implements OnInit {
         this.importCustomerDestinationList.map((value)=> {
           value.calendar_year = moment().set({'year': value.calendar_year});
         })
+        this.importCustomerDestinationList = this.importCustomerDestinationList.map(v => ({...v, customer_id: this.data?.customer_id}))
         this._customersService.customerDestinationImport(this.data?.customer_id, this.importCustomerDestinationList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
@@ -95,7 +97,9 @@ export class ImportDestinationsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this, this.importCustomerDestinationList) {
+    const headers = ['farm_id','name','status','calendar_year']; 
+    if (this.importCustomerDestinationList.length > 0 && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])) {
+      this.fileHeaders[0].push('Errors');
       this.importCustomerDestinationList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {

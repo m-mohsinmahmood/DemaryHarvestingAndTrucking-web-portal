@@ -18,7 +18,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Customers } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AddCustomer } from '../add/add.component';
-import { ImportCustomersComponent } from './../import-customers/import-customers.component';
+import { ImportCustomersComponent } from '../import-customers/import-customers.component';
 import { Router } from '@angular/router';
 import { read, utils, writeFile } from 'xlsx';
 

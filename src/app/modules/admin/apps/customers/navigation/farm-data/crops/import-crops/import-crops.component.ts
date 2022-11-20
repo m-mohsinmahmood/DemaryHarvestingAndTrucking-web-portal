@@ -28,11 +28,11 @@ export class ImportCropsComponent implements OnInit {
 
   //#region Import Function Validation
   importSchema = Joi.object({
-    customer_id: Joi.string().min(1).required(),
     crop_id: Joi.string().min(1).required(),
-    calendar_year: Joi.number().required(),
-    status: Joi.bool().required()
-
+    calendar_year: Joi.number().integer().min(2000).max(2050).required(),
+    status: Joi.boolean().required() .messages({
+      'boolean.base': `"status" is not allowed to be empty'`,
+    })
   });
   //#endregion
 
@@ -69,7 +69,6 @@ export class ImportCropsComponent implements OnInit {
       this.fileHeaders = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
       });
-      this.fileHeaders[0].push('Errors');
       await this.importValidation();
       if (this.isFileError) {
         const headings = [this.fileHeaders[0]];
@@ -87,6 +86,7 @@ export class ImportCropsComponent implements OnInit {
         this.importCustomerCropList.map((value)=> {
           value.calendar_year = moment().set({'year': value.calendar_year});
         })
+        this.importCustomerCropList = this.importCustomerCropList.map(v => ({...v, customer_id: this.data?.customer_id}))
         this._customersService.customerCropImport(this.data?.customer_id, this.importCustomerCropList, this.data?.limit, this.data?.sort, this.data?.order, this.data?.search, this.data?.filters);
       }
       this.saveAndClose();
@@ -95,14 +95,16 @@ export class ImportCropsComponent implements OnInit {
   }
 
   async importValidation() {
-    if (this.importCustomerCropList.length > 0) {
+    const headers = ['crop_id','calendar_year','status']; 
+    if (this.importCustomerCropList.length > 0 && JSON.stringify(headers) === JSON.stringify(this.fileHeaders[0])){
+      this.fileHeaders[0].push('Errors');
       this.importCustomerCropList.map(async (val, index) => {
         try {
           const value = await this.importSchema.validateAsync(val, {
             abortEarly: false,
           });
         } catch (err) {
-          const message = err.details.map(i => i.message).join(',');
+          const message = err.details.map(i => i.message).join(',');          
           this.importCustomerCropList[index].error = message;
           this.isFileError = true;
           this._alertSerice.showAlert({
