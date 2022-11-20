@@ -264,19 +264,15 @@ export class UpdateComponent implements OnInit {
                     this.sixthFormGroup.patchValue({
                         first_phone_call: applicantObjData.first_phone_call,
                         first_call_remarks: applicantObjData.first_call_remarks,
-                        firstRanking: applicantObjData.firstRanking,
                         reference_phone_call:
                             applicantObjData.reference_phone_call,
                         reference_call_remarks:
                             applicantObjData.reference_call_remarks,
-                        refreeRanking: applicantObjData.refreeRanking,
                         second_phone_call: applicantObjData.second_phone_call,
                         second_call_remarks:
                             applicantObjData.second_call_remarks,
-                        secondRanking: applicantObjData.secondRanking,
                         third_phone_call: applicantObjData.third_phone_call,
                         third_call_remarks: applicantObjData.third_call_remarks,
-                        thirdRanking: applicantObjData.thirdRanking,
                     });
                 });
             this._changeDetectorRef.markForCheck();

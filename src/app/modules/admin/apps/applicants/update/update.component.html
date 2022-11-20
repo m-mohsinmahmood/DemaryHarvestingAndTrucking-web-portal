@@ -402,6 +402,67 @@
                         </div>
                     </form>
                 </mat-step>
+                <div *ngIf="this.data.isEdit == true">
+                <mat-step [stepControl]="sixthFormGroup" [editable]="true">
+                    <form [formGroup]="sixthFormGroup" class="personal-info-form mt-1">
+                        <ng-template matStepLabel>Interview Results</ng-template>
+
+                        <div class="md:grid md:grid-cols-2 md:gap-4">
+
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>First Phone Call</mat-label>
+                                    <input matInput type="text" formControlName="first_phone_call">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>First Call Remarks</mat-label>
+                                    <input matInput type="text" formControlName="first_call_remarks">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Second Phone Call</mat-label>
+                                    <input matInput type="text" formControlName="second_phone_call">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Second Call Remarks</mat-label>
+                                    <input matInput type="text" formControlName="second_call_remarks">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Third Phone Call</mat-label>
+                                    <input matInput type="text" formControlName="third_phone_call">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Third Call Remarks</mat-label>
+                                    <input matInput type="text" formControlName="third_call_remarks">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Reference Phone Call</mat-label>
+                                    <input matInput type="text" formControlName="reference_phone_call">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Reference Call Remarks</mat-label>
+                                    <input matInput type="text" formControlName="reference_call_remarks">
+                                </mat-form-field>
+                            </div>
+                           
+                        </div>
+
+                    </form>
+                </mat-step>
+            </div>
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
                     <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">

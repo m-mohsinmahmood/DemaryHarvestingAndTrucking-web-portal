@@ -542,4 +542,138 @@
         </div>
     </mat-expansion-panel>
 </mat-accordion>
+
+<!--Interview Results-->
+<mat-accordion class="bg-gray-100">
+    <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+        class="bg-gray-100 my-3"
+    >
+        <mat-expansion-panel-header>
+            <mat-panel-title
+                class="font-sans font-semibold text-lg tracking-tight flex items-center"
+            >
+            Interview Results
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+            <dl class="sm:divide-y sm:divide-gray-200">
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        First Phone Call
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.first_phone_call }}
+                </dd>
+                </div>
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        First Call Remarks
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.first_call_remarks }}
+                </dd>
+                </div>
+
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Second Phone Call
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.second_phone_call }}
+                </dd>
+                </div>
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Second Call Remarks
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.second_call_remarks }}
+                </dd>
+                </div>
+
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Third Phone Call
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.third_phone_call }}
+                </dd>
+                </div>
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Third Call Remarks
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.third_call_remarks }}
+                </dd>
+                </div>
+
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Reference Phone Call
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.reference_phone_call }}
+                </dd>
+                </div>
+                <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt class="text-sm font-normal text-gray-500">
+                        Reference Call Remarks
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                    {{ applicant?.reference_call_remarks }}
+                </dd>
+                </div>
+                <!-- <div
+                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center"
+                >
+                    <dt
+                        class="text-sm font-normal text-gray-500 whitespace-pre"
+                    >
+                        How Did You Hear About Us?
+                    </dt>
+                    <dd
+                        class="mt-1 font-semibold text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end"
+                    >
+                        {{ "Newspaper" }}
+                    </dd>
+                </div> -->
+            </dl>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
 </div>
