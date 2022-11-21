@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
 import { AddFarmComponent } from '../../farms/add-farm/add-farm.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { read, utils, writeFile } from 'xlsx';
+import { ImportFarmsComponent } from '../import-farms/import-farms.component';
 
 @Component({
     selector: 'app-list-farms',
@@ -13,15 +15,13 @@ import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-d
     styleUrls: ['./list.component.scss'],
 })
 export class ListFarmComponent implements OnInit {
-    //#region Input
+    //#region Input/Output variables
     @Input() customerFarmList: Observable<any>;
     @Input() farmPage: number;
     @Input() farmPageSize: number;
-    //#endregion
-
-    //#region Output
     @Output() farmPageChanged = new EventEmitter<{ farmPageChild: number, farmPageSizeChild: number }>();
     //#endregion
+
     //#region Search form variables
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -119,6 +119,18 @@ export class ListFarmComponent implements OnInit {
             this.emitFarmPageChanged();
         });
     }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportFarmsComponent, {
+            data: {
+                customer_id: this.routeID,
+                limit: this.farmPageSize,
+                sort: this.farmSort[0],
+                order: this.farmSort[1],
+                search: this.searchResult,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => { });
+    }
     //#endregion
 
     //#region  Sort Data
@@ -154,6 +166,37 @@ export class ListFarmComponent implements OnInit {
     }
     //#endregion
 
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerFarm;
+        this._customerService
+            .getCustomerFarmExport(this.routeID, this.farmSort[0], this.farmSort[1], this.searchResult)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomerFarm = value
+                const headings = [['Farm Name', 'Status']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomerFarm, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Farm Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Farm_Data.xlsx', "_blank");
+    }
+    //#endregion
+
     //#region Confirmation Customer Farm Delete Dialog
     confirmDeleteDialog(farmId: string): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
@@ -180,10 +223,26 @@ export class ListFarmComponent implements OnInit {
         });
     }
     //#endregion
-    
+
     //#region emit farm page changed
     emitFarmPageChanged() {
         this.farmPageChanged.emit({ farmPageChild: this.farmPage, farmPageSizeChild: this.farmPageSize });
+    }
+    //#endregion
+
+    //#region Copy Farm Id
+    copyFarmId(val: string) {
+        let selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
     //#endregion
 }

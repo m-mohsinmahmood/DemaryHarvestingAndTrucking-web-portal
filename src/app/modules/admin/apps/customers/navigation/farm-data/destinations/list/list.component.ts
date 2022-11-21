@@ -10,6 +10,8 @@ import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { read, utils, writeFile } from 'xlsx';
+import { ImportDestinationsComponent } from '../import-destinations/import-destinations.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -36,15 +38,13 @@ export const MY_FORMATS = {
     ],
 })
 export class ListDestinationComponent implements OnInit {
-    //#region Input
+    //#region Input/Output Variables
     @Input() customerDestinationList: Observable<any>;
     @Input() destinationPage: number;
     @Input() destinationPageSize: number;
     @Input() destinationFilters: any;
-    //#endregion
-
-    //#region Output
     @Output() destinationPageChanged = new EventEmitter<{ destinationPageChild: number, destinationPageSizeChild: number }>();
+
     //#endregion
 
     //#region Search form variables
@@ -159,7 +159,20 @@ export class ListDestinationComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             this.destinationPage = 1;
             this.emitDestinationPageChanged();
-         });
+        });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportDestinationsComponent, {
+            data: { 
+                customer_id: this.routeID,
+                limit: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
+                filters: this.destinationFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 
@@ -195,6 +208,36 @@ export class ListDestinationComponent implements OnInit {
             this.searchResult,
             this.destinationFilters.value
         );
+    }
+    //#endregion
+    
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerDestination;
+        this._customerService.getCustomerDestinationExport(this.routeID,this.destinationSort[0],this.destinationSort[1],this.searchResult,this.destinationFilters.value)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((value) => {
+            allCustomerDestination = value
+            const headings = [['Farm Name', 'Destination Name','Status', 'Calendar Year']];
+            const wb = utils.book_new();
+            const ws: any = utils.json_to_sheet([]);
+            utils.sheet_add_aoa(ws, headings);
+            utils.sheet_add_json(ws, allCustomerDestination, {
+                origin: 'A2',
+                skipHeader: true,
+            });
+            utils.book_append_sheet(wb, ws, 'Report');
+            writeFile(wb, 'Customer Destination Data.xlsx');
+        });
+
+    }
+
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Destination_Data.xlsx', "_blank");
     }
     //#endregion
 
@@ -318,7 +361,7 @@ export class ListDestinationComponent implements OnInit {
     //#endregion
 
     //#region emit farm page changed
-      emitDestinationPageChanged() {
+    emitDestinationPageChanged() {
         this.destinationPageChanged.emit({ destinationPageChild: this.destinationPage, destinationPageSizeChild: this.destinationPageSize });
     }
     //#endregion

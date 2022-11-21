@@ -1,4 +1,3 @@
-
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -14,24 +13,12 @@ import {
     FormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    debounceTime,
-    map,
-    merge,
-    Observable,
-    Subject,
-    Subscription,
-    switchMap,
-    takeUntil,
-} from 'rxjs';
+import { debounceTime,Observable,Subject,Subscription,takeUntil} from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import {
-    Customers,
-    InventoryProduct,
-} from 'app/modules/admin/apps/customers/customers.types';
+import { Customers } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
 import { AddCustomer } from '../add/add.component';
+import { ImportCustomersComponent } from '../import-customers/import-customers.component';
 import { Router } from '@angular/router';
 import { read, utils, writeFile } from 'xlsx';
 
@@ -52,7 +39,6 @@ export class CustomersListComponent implements OnInit {
     isLoadingCustomer$: Observable<boolean>;
     customers$: Observable<Customers[]>;
     isLoadingCustomers$: Observable<boolean>;
-    exportCrop$: Observable<Customers>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
 
@@ -64,6 +50,8 @@ export class CustomersListComponent implements OnInit {
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;
+    sort: any;
+    order: any;
     limit: number;
     isLoading: boolean = false;
     statusList: string[] = ['Hired', 'Evaluated', 'In-Process', 'New', 'N/A', 'Not Being Considered'];
@@ -89,7 +77,16 @@ export class CustomersListComponent implements OnInit {
         this.initObservables();
         localStorage.removeItem("state");
     }
+    ngAfterViewInit(): void { }
 
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
+    //#region Init Observables and Apis
     initObservables() {
         this.isLoadingCustomers$ = this._customersService.isLoadingCustomers$;
         this.isLoadingCustomer$ = this._customersService.isLoadingCustomer$;
@@ -117,19 +114,12 @@ export class CustomersListComponent implements OnInit {
     initApis() {
         this._customersService.getCustomers();
     }
-    ngAfterViewInit(): void { }
 
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
     //#endregion
 
-    //#region Add Dialog
-
+    //#region Add/Import Dialog
     openAddDialog(): void {
-        const dialogRef = this._matDialog.open(AddCustomer,{
+        const dialogRef = this._matDialog.open(AddCustomer, {
             data: {
                 isEdit: this.isEdit,
                 filters: this.customerFiltersForm.value,
@@ -140,11 +130,26 @@ export class CustomersListComponent implements OnInit {
         });
     }
 
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportCustomersComponent, {
+            data: { 
+                limit: this.pageSize,
+                sort: this.sort,
+                order: this.order,
+                search: this.searchResult,
+                filters: this.customerFiltersForm.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
+    }
+
     //#endregion
 
     //#region Sort Function
     sortData(sort: any) {
         this.page = 1;
+        this.sort = sort.active;
+        this.order = sort.direction
         this._customersService.getCustomers(
             this.page,
             this.limit,
@@ -160,24 +165,38 @@ export class CustomersListComponent implements OnInit {
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult,this.customerFiltersForm.value);
+        this._customersService.getCustomers(this.page, this.limit, '', '', this.searchResult, this.customerFiltersForm.value);
     }
     //#endregion
 
     //#region Export Function
     handleExport() {
-        const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
-        const wb = utils.book_new();
-        const ws: any = utils.json_to_sheet([]);
-        utils.sheet_add_aoa(ws, headings);
-        // utils.sheet_add_json(ws, {
-        //     origin: 'A2',
-        //     skipHeader: true,
-        // });
-        utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Crops Data.xlsx');
+        let allCustomers;
+        this._customersService.getCustomerExport(
+            this.sort,
+            this.order,
+            this.searchResult,
+            this.customerFiltersForm.value)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomers = value
+                const headings = [['Customer Name', 'Main Contact', 'Position', 'Phone Number', 'State', 'Country', 'Email', 'Customer Type', 'Address', 'Billing Address', 'Fax', 'City', 'Zip Code', 'Website', 'Linkedin', 'Status']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomers, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Data.xlsx');
+            })
+
     }
 
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Data.xlsx', "_blank");
+    }
     //#endregion
 
     //#region Details Page
