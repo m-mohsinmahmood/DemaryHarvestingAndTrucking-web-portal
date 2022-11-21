@@ -36,7 +36,10 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
 import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
-import { PreliminaryReviewDialogComponent } from './details/preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component'
+import { PreliminaryReviewDialogComponent } from './details/preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
+import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
+import { QuillModule } from 'ngx-quill';
+
 
 @NgModule({
     declarations: [
@@ -48,6 +51,7 @@ import { PreliminaryReviewDialogComponent } from './details/preliminary-review-d
         ApplicantdataComponent,
         RecruiterremarksComponent,
         PreliminaryReviewDialogComponent,
+        ComposeEmailDialogComponent,
     ],
     imports     : [
     RouterModule.forChild(applicantsRoutes),
@@ -97,6 +101,7 @@ import { PreliminaryReviewDialogComponent } from './details/preliminary-review-d
         // MatDialogModule,
         // MatTabsModule,
         FuseDrawerModule,
+        QuillModule 
 
     ],
 })

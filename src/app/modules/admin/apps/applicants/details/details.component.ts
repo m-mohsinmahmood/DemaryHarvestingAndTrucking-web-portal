@@ -9,8 +9,7 @@ import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.s
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { PreliminaryReviewDialogComponent } from './preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
-
-
+import { ComposeEmailDialogComponent } from './compose-email-dialog/compose-email-dialog.component';
 
 @Component({
     selector: 'applicant-details',
@@ -229,13 +228,21 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     statusBarHandler(index) {
         if (index == 1) {
             // Open the dialog
-            const dialogRef = this._matDialog.open(PreliminaryReviewDialogComponent, {
-                data: {}
+            const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                data: {
+                    applicant: this.applicant,
+                }
             });
-            dialogRef.afterClosed().subscribe((result) => {});
+            dialogRef.afterClosed().subscribe((result) => { });
+
         }
     }
 
     //#endregion
+
+    openComposeEmail() {
+
+
+    }
 
 }
