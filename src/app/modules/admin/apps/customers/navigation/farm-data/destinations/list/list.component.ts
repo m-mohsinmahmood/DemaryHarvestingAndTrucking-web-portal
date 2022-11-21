@@ -237,12 +237,7 @@ export class ListDestinationComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['customer_id', 'farm_id','name','status','calendar_year']];
-        const wb = utils.book_new();
-        const ws: any = utils.json_to_sheet([]);
-        utils.sheet_add_aoa(ws, headings);
-        utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Customer Destination Data.xlsx');
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Destination_Data.xlsx', "_blank");
     }
     //#endregion
 

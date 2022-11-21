@@ -212,12 +212,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
 
     downloadTemplate() {
-        const headings = [['first_name', 'last_name', 'website', 'position', 'address', 'cell_number', 'office_number', 'state', 'city', 'email', 'zip_code', 'fax', 'linkedin', 'note_1', 'note_2']];
-        const wb = utils.book_new();
-        const ws: any = utils.json_to_sheet([]);
-        utils.sheet_add_aoa(ws, headings);
-        utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Customer Contact Data.xlsx');
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Contact_Data.xlsx', "_blank");
     }
 
     //#endregion
