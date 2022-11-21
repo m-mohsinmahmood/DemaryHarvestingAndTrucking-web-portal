@@ -354,20 +354,21 @@
                     <form [formGroup]="fifthFormGroup" class="personal-info-form mt-1">
                         <ng-template matStepLabel>Other</ng-template>
                         <div class="my-1.5 mt-2.5">
-                            <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
-                                <label class="font-bold text-lg">Your blood group </label>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Blood Group</mat-label>
+                                    <mat-select formControlName="blood_group">
+                                        <mat-option value="A+">A+</mat-option>
+                                        <mat-option value="A-">A-</mat-option>
+                                        <mat-option value="B+">B+</mat-option>
+                                        <mat-option value="B-">B-</mat-option>
+                                        <mat-option value="AB+">AB+</mat-option>
+                                        <mat-option value="AB-">AB-</mat-option>
+                                        <mat-option value="O+">O+</mat-option>
+                                        <mat-option value="O-">O-</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
-                            <mat-radio-group class="example-radio-group" formControlName="blood_group">
-                                <mat-radio-button class="m-1" value="A+">A+</mat-radio-button>
-                                <mat-radio-button class="m-1" value="A-">A-</mat-radio-button>
-                                <mat-radio-button class="m-1" value="B+">B+</mat-radio-button>
-                                <mat-radio-button class="m-1" value="B-">B-</mat-radio-button>
-                                <mat-radio-button class="m-1" value="AB+">AB+</mat-radio-button>
-                                <mat-radio-button class="m-1" value="AB-">AB-</mat-radio-button>
-                                <mat-radio-button class="m-1" value="O+">O+</mat-radio-button>
-                                <mat-radio-button class="m-1" value="O-">O-</mat-radio-button>
-
-                            </mat-radio-group>
                         </div>
                         <div class=" my-1.5">
                             <div class="sm:w-6/12 md:w-8/12 lg:w-6/12">
@@ -383,7 +384,7 @@
                             </mat-radio-group>
                         </div>
                         <div class="my-1.5">
-                            <div class="sm:w-auto md:w-8/12 lg:w-6/12">
+                            <!-- <div class="sm:w-auto md:w-8/12 lg:w-6/12">
                                 <label class="font-bold text-lg">How did you hear about Demaray Harvesting and Trucking?
                                 </label>
                             </div>
@@ -398,7 +399,7 @@
                                     Zealand,England)</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Trademe.co.nz</mat-radio-button>
                                 <mat-radio-button class="m-1" value="5">Other</mat-radio-button>
-                            </mat-radio-group>
+                            </mat-radio-group> -->
                         </div>
                     </form>
                 </mat-step>

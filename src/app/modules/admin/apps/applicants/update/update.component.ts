@@ -154,7 +154,9 @@ export class UpdateComponent implements OnInit {
             tractor_license: ['', [Validators.required]],
             passport: ['', [Validators.required]],
             //imageURL: ['', [Validators.required]],
-            avatar: ['', ''],
+            avatar: [''],
+            resume:['']
+
         });
         this.thirdFormGroup = this._formBuilder.group({
             question_1: ['', [Validators.required]],
@@ -182,16 +184,20 @@ export class UpdateComponent implements OnInit {
         this.sixthFormGroup = this._formBuilder.group({
             first_phone_call: [''],
             first_call_remarks: [''],
-            firstRanking: [''],
+            first_call_ranking: [''],
+            first_interviewer_id:[''],
             reference_phone_call: [''],
             reference_call_remarks: [''],
-            refreeRanking: [''],
+            reference_call_ranking: [''],
+            reference_interviewer_id:[''],
             second_phone_call: [''],
             second_call_remarks: [''],
-            secondRanking: [''],
+            second_call_ranking: [''],
+            second_interviewer_id:[''],
             third_phone_call: [''],
             third_call_remarks: [''],
-            thirdRanking: [''],
+            third_call_ranking: [''],
+            third_interviewer_id:[''],
         });
 
         this.formArr = [
@@ -264,15 +270,23 @@ export class UpdateComponent implements OnInit {
                     this.sixthFormGroup.patchValue({
                         first_phone_call: applicantObjData.first_phone_call,
                         first_call_remarks: applicantObjData.first_call_remarks,
-                        reference_phone_call:
-                            applicantObjData.reference_phone_call,
-                        reference_call_remarks:
-                            applicantObjData.reference_call_remarks,
+                        first_call_ranking: applicantObjData.first_call_ranking,
+                        first_interviewer_id:applicantObjData.first_interviewer_id,
+
+                        reference_phone_call: applicantObjData.reference_phone_call,
+                        reference_call_remarks: applicantObjData.reference_call_remarks,
+                        reference_call_ranking: applicantObjData.reference_call_ranking,
+                        reference_interviewer_id:applicantObjData.reference_interviewer_id, 
+
                         second_phone_call: applicantObjData.second_phone_call,
-                        second_call_remarks:
-                            applicantObjData.second_call_remarks,
+                        second_call_remarks:applicantObjData.second_call_remarks,
+                        second_call_ranking: applicantObjData.second_call_ranking,
+                        second_interviewer_id:applicantObjData.second_interviewer_id,
+
                         third_phone_call: applicantObjData.third_phone_call,
                         third_call_remarks: applicantObjData.third_call_remarks,
+                        third_call_ranking: applicantObjData.third_call_ranking,
+                        third_interviewer_id:applicantObjData.third_interviewer_id,
                     });
                 });
             this._changeDetectorRef.markForCheck();
