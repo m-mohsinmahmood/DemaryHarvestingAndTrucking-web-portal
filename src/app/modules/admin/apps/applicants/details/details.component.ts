@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { PreliminaryReviewDialogComponent } from './preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
+
 
 
 @Component({
@@ -96,12 +94,12 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
         // Get the applicant by id
         this._applicantService
-        .getApplicantById(this.routeID)
-        .subscribe((applicantObjData: any) => {
-            this.applicant = applicantObjData;
-            console.log("hello", this.applicant.first_name  );
+            .getApplicantById(this.routeID)
+            .subscribe((applicantObjData: any) => {
+                this.applicant = applicantObjData;
+                console.log("hello", this.applicant.first_name);
 
-        });
+            });
 
         // this.applicants$.next(this._applicantService.getApplicantById(this.routeID));
         // console.log("hello", this.applicants$);
@@ -227,5 +225,17 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this.selectedIndex = title;
     };
 
+    //#region Status Bar onclick
+    statusBarHandler(index) {
+        if (index == 1) {
+            // Open the dialog
+            const dialogRef = this._matDialog.open(PreliminaryReviewDialogComponent, {
+                data: {}
+            });
+            dialogRef.afterClosed().subscribe((result) => {});
+        }
+    }
+
+    //#endregion
 
 }

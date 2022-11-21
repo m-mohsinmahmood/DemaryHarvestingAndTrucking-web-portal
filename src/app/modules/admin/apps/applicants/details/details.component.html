@@ -105,7 +105,7 @@
         <div class="sm:w-4/12 md:w-4/12">
             <div class="h-180 bg-gray-100 rounded-lg mx-2 shadow">
             <div class="flex flex-col   py-4 px-2">
-                <div class="flex relative min-h-14 {{item.active? 'opacity-100':'opacity-50'}}" *ngFor="let item of items" >
+                <div class="flex relative min-h-14 {{item.active? 'opacity-100':'opacity-50'}}" *ngFor="let item of items;index as i" >
                    <div class="flex flex-col items-center min-w-12">
                     <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
 
@@ -153,7 +153,7 @@
                     <div class="timeline-track"></div>
                      </div>
                    <div class="flex-1 flex flex-row px-4">
-                    <div class="w-8/12 flex flex-col">
+                    <div (click)="statusBarHandler(i)" class="cursor-pointer w-8/12 flex flex-col">
                         <ng-template [ngIf]="item.name !== ''">
                             <span class="text-md font-sans font-normal text-gray-400">{{item.content}}</span>
                         </ng-template>
