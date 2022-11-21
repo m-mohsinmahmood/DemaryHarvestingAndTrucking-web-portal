@@ -169,11 +169,7 @@ export class CustomersListComponent implements OnInit {
     }
     //#endregion
 
-    //#region Import/Export Function
-    handleImport() {
-
-    }
-
+    //#region Export Function
     handleExport() {
         let allCustomers;
         this._customersService.getCustomerExport(
@@ -199,14 +195,8 @@ export class CustomersListComponent implements OnInit {
     }
 
     downloadTemplate() {
-        const headings = [['customer_name', 'main_contact', 'position', 'phone_number', 'state', 'country', 'email', 'customer_type', 'address', 'billing_address', 'fax', 'city', 'zip_code', 'website', 'linkedin', 'status']];
-        const wb = utils.book_new();
-        const ws: any = utils.json_to_sheet([]);
-        utils.sheet_add_aoa(ws, headings);
-        utils.book_append_sheet(wb, ws, 'Report');
-        writeFile(wb, 'Customer Data.xlsx');
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Data.xlsx', "_blank");
     }
-
     //#endregion
 
     //#region Details Page
