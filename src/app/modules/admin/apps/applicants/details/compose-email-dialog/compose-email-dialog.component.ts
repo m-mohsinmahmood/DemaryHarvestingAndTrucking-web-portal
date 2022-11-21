@@ -10,7 +10,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   encapsulation: ViewEncapsulation.None
 
 })
+
+
+
 export class ComposeEmailDialogComponent implements OnInit {
+  emails = [
+    {id: '1',subject: '' , email: ''},
+    {id: '2',subject: '' , email: ''},
+    {id: '3',subject: '' , email: ''},
+    {id: '4',subject: '' , email: ''},
+    {id: '5',subject: '' , email: ''},
+    {id: '6',subject: '' , email: ''},
+    {id: '7',subject: '' , email: ''},
+    {id: '8',subject: '' , email: ''},
+    {id: '9',subject: '' , email: ''},
+
+]
   composeForm: FormGroup;
   copyFields: { cc: boolean; bcc: boolean } = {
     cc: false,
@@ -35,8 +50,6 @@ export class ComposeEmailDialogComponent implements OnInit {
   ngOnInit(): void {
     // Create the form
     const { applicant } = this.data;
-    console.log(this.data);
-    console.log(applicant);
     this.composeForm = this._formBuilder.group({
       preliminary_review: [''],
       to: ['', [Validators.required, Validators.email]],
@@ -45,8 +58,10 @@ export class ComposeEmailDialogComponent implements OnInit {
       subject: [''],
       body: ['', [Validators.required]]
     });
+    this.composeForm.patchValue({
+      to: applicant.first_name,
+  });
   }
-
   //#endregion
 
 
