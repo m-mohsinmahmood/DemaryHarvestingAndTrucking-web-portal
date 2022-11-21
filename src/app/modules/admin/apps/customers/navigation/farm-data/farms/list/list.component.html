@@ -98,7 +98,7 @@
                                         matTooltip="Delete" matTooltipPosition="above">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                     </button>
-                                    <button mat-stroked-button (click)="copyFarmId(customerFarm.id)" class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                    <button *ngIf="customerFarm.status === true" mat-stroked-button (click)="copyFarmId(customerFarm.id)" class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
                                         matTooltip="Copy Farm Id" matTooltipPosition="above">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:square-2-stack'"></mat-icon>
                                     </button>
