@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Directive, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
     FormBuilder,
@@ -33,6 +33,25 @@ export const MY_FORMATS = {
         monthYearA11yLabel: 'MMMM YYYY',
     },
 };
+export const MY_FORMATS_2 = {
+    parse: {
+        dateInput: 'LL',
+      },
+      display: {
+        dateInput: 'LL',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+      },
+};
+@Directive({
+    selector: '[birthdayFormat]',
+    providers: [
+      {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2},
+    ],
+  })
+  export class BirthDateFormat {
+}
 
 @Component({
     selector: 'app-update',
@@ -48,7 +67,9 @@ export const MY_FORMATS = {
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+
     ],
+    
 })
 
 
@@ -134,7 +155,7 @@ export class UpdateComponent implements OnInit {
                 ],
             ],
             cell_phone_number: ['', [Validators.required]],
-            home_phone_number: ['', ''],
+            home_phone_number: [''],
             languages: ['', [Validators.required]],
             status: ['', [Validators.required]],
         });
@@ -152,12 +173,15 @@ export class UpdateComponent implements OnInit {
             country: ['', [Validators.required]],
             us_citizen: ['', [Validators.required]],
             tractor_license: ['', [Validators.required]],
+            lorry_license: ['', [Validators.required]],
+            cdl_license: ['', [Validators.required]],
             passport: ['', [Validators.required]],
             //imageURL: ['', [Validators.required]],
             avatar: [''],
-            resume:['']
-
+            resume:[''],
+            unique_fact:['',[Validators.required]],
         });
+
         this.thirdFormGroup = this._formBuilder.group({
             question_1: ['', [Validators.required]],
             question_2: ['', [Validators.required]],
@@ -168,6 +192,7 @@ export class UpdateComponent implements OnInit {
             recent_job: ['', [Validators.required]],
             supervisor: ['', [Validators.required]],
             supervisor_contact: ['', [Validators.required]],
+            employment_period:['',[Validators.required]],
         });
 
         this.fourthFormGroup = this._formBuilder.group({
@@ -221,14 +246,10 @@ export class UpdateComponent implements OnInit {
                         cell_phone_number: applicantObjData.cell_phone_number,
                         home_phone_number: applicantObjData.home_phone_number,
                         languages: applicantObjData.languages.replace(/\s/g, '').split(','),
-                        status: applicantObjData.status.toString(),
+                        status: applicantObjData.status,
                     });
                     this.secondFormGroup.patchValue({
-                        date_of_birth: moment(applicantObjData.date_of_birth)
-                                .subtract(1, 'week')
-                                .hour(18)
-                                .minute(56)
-                                .toISOString(),
+                        date_of_birth:applicantObjData.date_of_birth,
                         calendar_year: applicantObjData.calendar_year,
                         marital_status: applicantObjData.marital_status,
                         address_1: applicantObjData.address_1,
@@ -240,6 +261,8 @@ export class UpdateComponent implements OnInit {
                         self_rating:applicantObjData.self_rating,
                         us_citizen: applicantObjData.us_citizen.toString(),
                         tractor_license: applicantObjData.tractor_license.toString(),
+                        lorry_license: applicantObjData.lorry_license.toString(),
+                        cdl_license: applicantObjData.cdl_license.toString(),
                         passport: applicantObjData.passport.toString(),
                         county: applicantObjData.county,
                         //   imageURL: applicantObjData.imageURL,
@@ -293,6 +316,7 @@ export class UpdateComponent implements OnInit {
         }
     }
     // #endregion
+
 
     ngAfterViewInit(): void {}
 

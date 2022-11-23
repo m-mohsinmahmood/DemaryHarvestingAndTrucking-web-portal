@@ -36,6 +36,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
 import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import { BirthDateFormat } from './update/update.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
         FilterComponent,
         ApplicantdataComponent,
         RecruiterremarksComponent,
+        BirthDateFormat
     ],
     imports     : [
     RouterModule.forChild(applicantsRoutes),
@@ -98,6 +100,7 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
         FuseDrawerModule,
 
     ],
+    
 })
 export class ApplicantsModule
 {
