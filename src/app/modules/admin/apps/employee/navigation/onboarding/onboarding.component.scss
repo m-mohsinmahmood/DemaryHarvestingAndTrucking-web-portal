@@ -25,3 +25,15 @@
 .background-grey{
     background-color: #E9E9E9 !important;
 }
+@media only screen and (min-width: 991px) {
+    .custom-width-tabs
+{
+    width: 10.43rem !important;
+}
+.custom-aspect-tabs
+{
+    --tw-aspect-h: 2 !important;
+
+}
+    
+}
