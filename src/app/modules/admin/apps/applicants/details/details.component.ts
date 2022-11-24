@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { PreliminaryReviewDialogComponent } from './preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
 import { ComposeEmailDialogComponent } from './compose-email-dialog/compose-email-dialog.component';
 import moment from 'moment';
 

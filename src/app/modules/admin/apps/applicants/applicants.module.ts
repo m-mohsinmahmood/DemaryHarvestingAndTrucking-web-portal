@@ -38,7 +38,6 @@ import { ApplicantdataComponent } from './details/applicantdata/applicantdata.co
 import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { BirthDateFormat } from './update/update.component';
-import { PreliminaryReviewDialogComponent } from './details/preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
 import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
 import { QuillModule } from 'ngx-quill';
 
@@ -56,6 +55,7 @@ import { QuillModule } from 'ngx-quill';
         ComposeEmailDialogComponent,
     ],
     imports: [
+        RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,

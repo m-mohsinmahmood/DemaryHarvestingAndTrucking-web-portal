@@ -9,8 +9,5 @@ export const applicantNavigationLeft = [
     },
 ];
 export const applicantNavigationRight = [
-    {
-        id: 1,
-        title: 'Prior Application',
-    },
+  
 ];
