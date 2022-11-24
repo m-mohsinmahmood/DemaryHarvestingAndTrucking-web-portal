@@ -22,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
@@ -78,6 +79,7 @@ import { QuillModule } from 'ngx-quill';
         MatTabsModule,
         MatExpansionModule,
         SharedModule,
+        MatAutocompleteModule,
         // MatDialogModule,
         // MatTabsModule,
         // MatButtonModule,
