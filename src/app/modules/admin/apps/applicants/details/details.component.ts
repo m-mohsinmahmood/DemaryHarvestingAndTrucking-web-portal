@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,7 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-
+import { PreliminaryReviewDialogComponent } from './preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
+import { ComposeEmailDialogComponent } from './compose-email-dialog/compose-email-dialog.component';
+import moment from 'moment';
 
 @Component({
     selector: 'applicant-details',
@@ -39,7 +37,12 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     routes: any;
     applicants$ = new Subject();
     data: any;
-
+    statusStep: string = '3';
+    statusMessage: string = 'Applicant Completed';
+    statusDate: any = moment().format('DD-MM-YYYY')
+    preliminaryReviewForm: FormGroup;
+    interviewCompletedForm: FormGroup;
+    decisionMadeForm: FormGroup;
 
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -52,39 +55,67 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _matDialog: MatDialog,
-        private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _applicantService: ApplicantService,
         private _router: Router,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseConfirmationService: FuseConfirmationService,
+        private _formBuilder: FormBuilder,
+
 
 
     ) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
+    //#region Lifecycle functions
     ngOnInit(): void {
         this.items = [
             { content: 'Applicant Completed', name: '', date: '15/02/2022', status: 'a', active: true },
-            { content: 'Advance Preliminary review', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: true },
-            { content: 'Adavnce to interview', name: 'Martha Grander', date: '15/02/2022', status: 'c', active: true },
-            { content: 'Interview Completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: true },
-            { content: 'Reference calls completed', name: 'Katherine synder', date: '15/02/2022', status: 'e2', active: false },
-            { content: 'Recruiter decision made', name: '', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Offer made', name: 'Bethnay Blake', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Offer Accepted', name: 'Martha Grander', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Advance to pre-employment Process', name: 'Martha Grander', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Not Qualified', name: 'rejected', date: '15/02/2022', status: false, active: false },
-            { content: 'Reconsider in Future', name: 'rejected', date: '15/02/2022', status: false, active: false },
+            { content: 'Advance Preliminary review', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: false },
+            { content: 'First interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
+            { content: 'Second interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
+            { content: 'Third interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
+            { content: 'Reference call completed', name: 'Katherine synder', date: '15/02/2022', status: 'e2', active: false },
+            { content: 'Recruiter decision made', name: 'Bill Demaray', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Offer made', name: '', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Offer Accepted', name: '', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Advance to pre-employment Process', name: '', date: '15/02/2022', status: 'e1', active: false },
+            { content: 'Results', name: '', date: '15/02/2022', status: 'e2', active: false },
+            { content: 'Hired', name: 'rejected', date: '15/02/2022', status: false, active: false },
+            { content: 'Waitlisted', name: 'rejected', date: '15/02/2022', status: false, active: false },
+            { content: 'Qualifications dont match current openings', name: 'rejected', date: '15/02/2022', status: false, active: false },
+
         ];
 
+        this.preliminaryReviewForm = this._formBuilder.group({
+            preliminary_review: [''],
+            recruiter: [''],
+            recruiter_id: [{value: '', disabled: true}],
+            to: ['', [Validators.required, Validators.email]],
+            cc: ['', [Validators.email]],
+            bcc: ['', [Validators.email]],
+            subject: [''],
+            body: ['', [Validators.required]]
+        });
+        this.interviewCompletedForm = this._formBuilder.group({
+            next_step: [''],
+            preliminary_review: [''],
+            recruiter: [''],
+            recruiter_id: [{value: '', disabled: true}],
+            to: ['', [Validators.required, Validators.email]],
+            cc: ['', [Validators.email]],
+            bcc: ['', [Validators.email]],
+            subject: [''],
+            body: ['', [Validators.required]]
+        });
+        this.decisionMadeForm = this._formBuilder.group({
+            next_step: [''],
+            to: ['', [Validators.required, Validators.email]],
+            cc: ['', [Validators.email]],
+            bcc: ['', [Validators.email]],
+            subject: [''],
+            body: ['', [Validators.required]]
+        });
 
         this.routesLeft = this._applicantService.applicantNavigationLeft;
         this.routesright = this._applicantService.applicantNavigationRight;
@@ -92,49 +123,32 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             this.routeID = params.id;
         });
 
-
-
         // Get the applicant by id
         this._applicantService
-        .getApplicantById(this.routeID)
-        .subscribe((applicantObjData: any) => {
-            this.applicant = applicantObjData;
-            console.log("hello", this.applicant.first_name  );
+            .getApplicantById(this.routeID)
+            .subscribe((applicantObjData: any) => {
+                this.applicant = applicantObjData;
+                console.log("hello", this.applicant.first_name);
 
-        });
+            });
 
         // this.applicants$.next(this._applicantService.getApplicantById(this.routeID));
         // console.log("hello", this.applicants$);
 
         // this.data = this._applicantService.getApplicantById(this.routeID);
         // console.log("hello", this.data);
-
-
-
-
     }
 
     ngAfterViewInit(): void {
-        // this.initApis(this.routeID);
-        // this.initObservables();
         this.initSideNavigation();
     }
 
-    //#region Initial APIs
-    // initApis(id: string) {
-    // this.applicants = this._applicantService.getApplicantById(id);
-    // }
-    //#endregion
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
 
-    //#region Initialize Observables
-    // initObservables() {
-    //     // Data
-    //     this.applicant$ = this._applicantService.applicant$;
-    //     // Loader
-    //     // this.applicant$.subscribe((value)=>{console.log(value)}
-    //     // );
-    //     this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
-    // }
     //#endregion
 
     //#region Initialize Side Navigation
@@ -152,9 +166,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 }
             });
     }
-
     //#endregion
-
 
     //#region Inner Navigation Routing
     routeHandler(index) {
@@ -171,20 +183,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+   //#region Dialog 
     openUpdateDialog(applicant): void {
         this.isEdit = true;
         console.log("im in details update comp ", applicant);
@@ -227,5 +226,66 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this.selectedIndex = title;
     };
 
+    //#region Status Bar onclick
+    openStatusBarForm(index) {
+        if (index == 1) {
+            const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                data: {
+                    preliminaryReview: true,
+                    applicant: this.applicant,
+                    form: this.preliminaryReviewForm,
+                }
+            });
+            dialogRef.afterClosed().subscribe((result) => { });
 
+        }
+        else if (index == 2 || index == 3 || index == 4){
+            if (index == 2){
+                const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                    data: {
+                        firstInterview: true,
+                        interviewCompletedForm: true,
+                        applicant: this.applicant,
+                        form: this.interviewCompletedForm,
+                    }
+                });
+                dialogRef.afterClosed().subscribe((result) => { });
+            }
+            if (index == 3){
+                const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                    data: {
+                        secondInterview: true,
+                        interviewCompletedForm: true,
+                        applicant: this.applicant,
+                        form: this.interviewCompletedForm,
+                    }
+                });
+                dialogRef.afterClosed().subscribe((result) => { });
+            }
+            if (index == 4){
+                const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                    data: {
+                        thirdInterview:true,
+                        interviewCompletedForm: true,
+                        applicant: this.applicant,
+                        form: this.interviewCompletedForm,
+                    }
+                });
+                dialogRef.afterClosed().subscribe((result) => { });
+            }           
+       }
+        else if (index == 6){
+            const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                data: {
+                    decisionMadeForm: true,
+                    applicant: this.applicant,
+                    form: this.decisionMadeForm,
+                }
+            });
+            dialogRef.afterClosed().subscribe((result) => { });
+
+        }
+    }
+
+    //#endregion
 }

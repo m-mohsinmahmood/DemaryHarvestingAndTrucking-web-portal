@@ -1,6 +1,4 @@
-<div
-    class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent p-8"
->
+<div class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent p-8">
     <!-- Header -->
     <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2 sm:py-4">
         <!-- Loader -->
@@ -8,19 +6,14 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div
-         (click)="backHandler()"
-            class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer"
-        >
-        <div class="flex items-center">
-            <mat-icon
-                class="icon-size-6 text-secondary"
-                [svgIcon]="'heroicons_solid:arrow-circle-left'"
-            ></mat-icon>
-            <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight"
-                >{{ applicant?.first_name}} {{ applicant?.last_name }}
-            </span>
-        </div>
+        <div (click)="backHandler()"
+            class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer">
+            <div class="flex items-center">
+                <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight">{{ applicant?.first_name}} {{
+                    applicant?.last_name }}
+                </span>
+            </div>
             <div class="sm:w-auto lg:w-auto w-full">
                 <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
                     <p class="text-lg text-gray-300	font-normal ">(Recruiter decision made)</p>
@@ -41,43 +34,63 @@
     <div class="sm:flex sm:flex-row mb-4 pt-2  sm:visible hidden">
         <div class="w-4/12 h-12 flex justify-start items-center gap-2">
             <div class="flex" *ngFor="let route of routesLeft;let i = index">
-                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 sm:w-30 " (click)="clicked(route)">
-                        <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
-                    </button>
+                <button mat-stroked-button
+                    [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                    [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 sm:w-30 "
+                    (click)="clicked(route)">
+                    <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                </button>
             </div>
+            <button
+                class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded-full mr-2 w-44">
+                <span>Advance to offer</span>
+            </button>
+            <button
+                class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded-full w-28">
+                <span>Reject</span>
+            </button>
         </div>
         <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
-                <div class="" *ngFor="let route of routesright;let i = index">
-                    <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
-                            <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
-                        </button>
-                </div>
-            <button mat-stroked-button   class="my-1 ml-2" (click)="openUpdateDialog(applicant)">
+            <div class="" *ngFor="let route of routesright;let i = index">
+                <button mat-stroked-button
+                    [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                    [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 "
+                    (click)="clicked(route)">
+                    <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                </button>
+            </div>
+            <button mat-stroked-button class="my-1 ml-2" (click)="openUpdateDialog(applicant)">
                 <span style="font-size: 13px;"> Update Profile </span>
             </button>
-            <button mat-stroked-button   class="my-1 ml-2">
+            <button mat-stroked-button class="my-1 ml-2">
                 <span style="font-size: 13px"> Download/Print Profile </span>
             </button>
         </div>
     </div>
-        <!-- Main for Mobile -->
+    <!-- Main for Mobile -->
     <div class="flex sm:flex-row mb-4 pt-2 pb-2  sm:hidden visible overflow-x-scroll">
-            <div class="flex" *ngFor="let route of routesLeft;let i = index">
-                <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 " (click)="clicked(route)">
-                        <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
-                    </button>
-            </div>
-        <div class="flex" *ngFor="let route of routesright;let i = index">
-            <button mat-stroked-button  [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 " (click)="clicked(route)">
-                    <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
-                </button>
+        <div class="flex" *ngFor="let route of routesLeft;let i = index">
+            <button mat-stroked-button
+                [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 "
+                (click)="clicked(route)">
+                <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+            </button>
         </div>
-            <button mat-stroked-button   class="my-1 ml-2 min-w-40" (click)="openUpdateDialog(applicant)">
-                <span style="font-size: 13px;"> Update Profile </span>
+        <div class="flex" *ngFor="let route of routesright;let i = index">
+            <button mat-stroked-button
+                [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 "
+                (click)="clicked(route)">
+                <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
             </button>
-            <button mat-stroked-button   class="my-1 ml-2 min-w-48">
-                <span style="font-size: 13px"> Download/Print Profile </span>
-            </button>
+        </div>
+        <button mat-stroked-button class="my-1 ml-2 min-w-40" (click)="openUpdateDialog(applicant)">
+            <span style="font-size: 13px;"> Update Profile </span>
+        </button>
+        <button mat-stroked-button class="my-1 ml-2 min-w-48">
+            <span style="font-size: 13px"> Download/Print Profile </span>
+        </button>
     </div>
 
     <div class="flex sm:flex-row flex-col gap-2">
@@ -100,88 +113,57 @@
                     </app-applicantdata>
                 </ng-template>
             </div>
-
         </div>
         <div class="sm:w-4/12 md:w-4/12">
-            <div class="h-180 bg-gray-100 rounded-lg mx-2 shadow">
-            <div class="flex flex-col   py-4 px-2">
-                <div class="flex relative min-h-14 {{item.active? 'opacity-100':'opacity-50'}}" *ngFor="let item of items" >
-                   <div class="flex flex-col items-center min-w-12">
-                    <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
-
-                      bg-{{
-                        item.status === 'a'
-                            ? 'blue'
-                            : ''
-                    }}-400
-                    bg-{{
-                        item.status === 'b'
-                            ? 'red'
-                            : ''
-                    }}-400
-                    bg-{{
-                        item.status === 'c'
-                            ? 'orange'
-                            : ''
-                    }}-400
-                      bg-{{
-                        item.status === 'd1'
-                            ? 'yellow'
-                            : ''
-                    }}-400
-             bg-{{
-                        item.status ===
-                        'e1'
-                            ? 'green'
-                            : 'red'
-                    }}-400
-
-                    bg-{{
-                        item.status ===
-                        false
-                            ? 'indigo'
-                            : ''
-                    }}-400
-                      "
-                      >
-                      <mat-icon
-                        class="{{item.active? 'visible': 'invisible'}}"
-                         [svgIcon]="'heroicons_outline:check'"
-                         [ngStyle]="{'color':'white'}"
-                         ></mat-icon>
+            <div class="bg-gray-100 rounded-lg mx-2 shadow mt-3">
+                <div class="flex flex-col py-4 px-2">
+                    <div class=" last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
+                        *ngFor="let item of items;index as i">
+                        <div class="flex flex-col items-center min-w-12">
+                            <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
+                                    bg-{{item.status === 'a'? 'blue': ''}}-400
+                                    bg-{{item.status === 'b'? 'red': ''}}-400
+                                    bg-{{item.status === 'c'? 'orange': ''}}-400
+                                    bg-{{item.status === 'd1'? 'yellow': ''}}-400
+                                    bg-{{item.status ==='e1'? 'green': 'red'}}-400
+                                    bg-{{item.status ==='e2'? 'slate': 'red'}}-400
+                                    bg-{{item.status === false? 'indigo': ''}}-400">
+                                <mat-icon class="{{i+1 < this.statusStep? 'visible': 'invisible'}}"
+                                    [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
+                                </mat-icon>
+                            </div>
+                            <div class="timeline-track"></div>
                         </div>
-                    <div class="timeline-track"></div>
-                     </div>
-                   <div class="flex-1 flex flex-row px-4">
-                    <div class="w-8/12 flex flex-col">
-                        <ng-template [ngIf]="item.name !== ''">
-                            <span class="text-md font-sans font-normal text-gray-400">{{item.content}}</span>
-                        </ng-template>
-                        <ng-template [ngIf]="item.name === ''">
-                            <span class="text-md font-sans font-normal text-gray-400 mt-2">{{item.content}}</span>
-                        </ng-template>
-                        <span class=" text-md text-black">{{item.name === 'rejected'? "": item.name}}</span>
+                        <div class="flex-1 flex flex-row px-4">
+                            <div (click)="openStatusBarForm(i)" class="cursor-pointer w-8/12 flex flex-col">
+                                <span *ngIf="second_interviewer_id != null || third_interviewer_id != null"
+                                    class="flex items-center text-md font-sans font-normal">
+                                    {{item.content}}>
+                                </span>
+                                <span class="flex items-center text-md font-sans font-normal">{{item.content}}
+                                    <mat-icon matTooltip="Compose Email" *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
+                                        class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                                </span>
+                                <!-- <ng-template [ngIf]="item.name === ''">
+                                <span class="text-md font-sans font-normal ">{{item.content}}</span>
+                                    </ng-template> -->
+                                <span *ngIf="i == 1" class=" text-md text-black">{{first_interviewer_id === null ? "":
+                                    first_interviewer_id}} </span>
+                                <span *ngIf="i == 2" class=" text-md text-black">{{second_interviewer_id === null ? "":
+                                    second_interviewer_id}} </span>
+                                <span *ngIf="i == 3" class=" text-md text-black">{{third_interviewer_id === null ? "":
+                                    third_interviewer_id}} </span>
+                                <span *ngIf="i == 4" class=" text-md text-black">{{reference_interviewer_id === null ?
+                                    "": reference_interviewer_id}} </span>
+                                <!-- <span *ngIf="i == 5" class=" text-md text-black">{{first_interviewer_id === null ? "": first_interviewer_id}} </span> -->
+                            </div>
+                            <div class=" w-4/12 flex justify-end font-mono text-xs">
+                                {{item.date}}
+                            </div>
+                        </div>
                     </div>
-                    <div class=" w-4/12 flex justify-end font-mono text-xs">
-                        {{item.date}}
-                    </div>
-                   </div>
                 </div>
             </div>
-
-            <div class="flex flex-row justify-center items-center mb-5">
-                <button
-                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded-full mr-2 w-44"
-                >
-                    <span>Advance to offer</span>
-                </button>
-                <button
-                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded-full w-28"
-                >
-                    <span>Reject</span>
-                </button>
-            </div>
-        </div>
         </div>
     </div>
 </div>

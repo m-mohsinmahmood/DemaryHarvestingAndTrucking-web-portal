@@ -22,12 +22,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
 import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
 import { UpdateComponent } from './update/update.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FilterComponent } from './filter/filter.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,6 +38,9 @@ import { ApplicantdataComponent } from './details/applicantdata/applicantdata.co
 import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { BirthDateFormat } from './update/update.component';
+import { PreliminaryReviewDialogComponent } from './details/preliminary-review-dialog/premilinary-review-dialog/preliminary-review-dialog.component';
+import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -48,10 +52,10 @@ import { BirthDateFormat } from './update/update.component';
         FilterComponent,
         ApplicantdataComponent,
         RecruiterremarksComponent,
-        BirthDateFormat
+        BirthDateFormat,
+        ComposeEmailDialogComponent,
     ],
-    imports     : [
-    RouterModule.forChild(applicantsRoutes),
+    imports: [
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -75,6 +79,7 @@ import { BirthDateFormat } from './update/update.component';
         MatTabsModule,
         MatExpansionModule,
         SharedModule,
+        MatAutocompleteModule,
         // MatDialogModule,
         // MatTabsModule,
         // MatButtonModule,
@@ -98,10 +103,10 @@ import { BirthDateFormat } from './update/update.component';
         // MatDialogModule,
         // MatTabsModule,
         FuseDrawerModule,
+        QuillModule
 
     ],
-    
+
 })
-export class ApplicantsModule
-{
+export class ApplicantsModule {
 }

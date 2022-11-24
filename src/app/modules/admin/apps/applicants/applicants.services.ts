@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
@@ -98,16 +96,6 @@ export class ApplicantService {
         return this._pagination.asObservable();
     }
 
-    /**
-     * Getter for applicant
-     */
-    // get applicant$(): Observable<Applicant> {
-    //     return this._applicantdata.asObservable();
-    // }
-
-    /**
-     * Getter for applicant
-     */
     get applicantdata$(): Observable<Applicant[]> {
         return this._applicantsdata.asObservable();
     }
@@ -142,16 +130,18 @@ export class ApplicantService {
     }
     //#endregion
 
-    /**
-     * Get applicants
-     *
-     *
-     * @param page
-     * @param size
-     * @param sort
-     * @param order
-     * @param search
-     */
+    //#region All Recruiter
+    getDropdownAllRecruiters(search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=allRecruiters`, {params})
+            .pipe(take(1))
+    }
+
+    //#endregion
+
+    //#region Applicant API's 
     getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -176,10 +166,8 @@ export class ApplicantService {
             );
     }
 
-    /**
-     * Get applicant by id
-     */
-     getApplicantById(id: string) {
+   
+    getApplicantById(id: string) {
         return this._httpClient
             .get(`api-1/applicants?id=${id}`)
             .pipe(take(1))
@@ -187,10 +175,8 @@ export class ApplicantService {
             
     }
 
-    /**
-     * Create applicant
-     */
-     createApplicant(data: any) {
+   
+    createApplicant(data: any) {
         this._httpClient
             .post(`api-1/applicants`, data)
             .pipe(take(1))
@@ -259,107 +245,6 @@ export class ApplicantService {
                 () => {
                     this.getApplicants();
                     this.isLoadingApplicant.next(false);
-                }
-            );
-
-    }
-
-    // #region Applicants & Applicant
-    getApplicantDummy(
-        page: number = 1,
-        limit: number = 10,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
-        let params = new HttpParams();
-        params = params.set('page', page);
-        params = params.set('limit', limit);
-        params = params.set('search', search);
-        params = params.set('sort', sort);
-        params = params.set('order', order);
-        return this._httpClient
-            .get<any>('api-1/hahahahahahahaha', {
-                params,
-            })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingApplicants.next(true);
-                    this.applicantsList.next(res);
-                    this.isLoadingApplicants.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-    getApplicantByIdDummy(id: string) {
-        this._httpClient
-            .get(`api-1/customers?id=${id}`)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingApplicant.next(true);
-                    this.applicantList.next(res);
-                    this.isLoadingApplicant.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
-    }
-    createApplicantDummy(data: any) {
-        this._httpClient
-            .post(`api-1/customers`, data)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingApplicant.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getApplicantDummy();
-                }
-            );
-    }
-
-    updateApplicantDummy(customerData: any, paginatioData: any) {
-        this._httpClient
-            .put(`api-1/customers`, customerData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingApplicant.next(false);
-                    this.closeDialog.next(true);
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                },
-                () => {
-                    this.getApplicantDummy(customerData.id);
                 }
             );
     }
