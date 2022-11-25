@@ -23,7 +23,7 @@
             <mat-select formControlName="status_message">
                 <mat-option *ngIf="data.decisionMadeForm" value="Offer Made">Offer</mat-option>
                 <mat-option *ngIf="data.decisionMadeForm" value="Qualifications dont match current openings">Qualifications don't match current openings</mat-option>
-                <mat-option *ngIf="data.firstInterview"   value="`Second Interview Completed">Second Interview</mat-option>
+                <mat-option *ngIf="data.firstInterview"   value="Second Interview Completed">Second Interview</mat-option>
                 <mat-option *ngIf="data.secondInterview"  value="Third Interview Completed">Third Interview</mat-option>
                 <mat-option *ngIf="!data.decisionMadeForm"value="Reference Call Completed">Reference Call</mat-option>
                 <mat-option *ngIf="data.thirdInterview"   value="WaitListed">Waitlisted</mat-option>

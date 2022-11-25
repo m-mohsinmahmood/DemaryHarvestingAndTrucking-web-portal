@@ -76,6 +76,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       { id: 12, status: false, statusStep: '13', statusMessage: 'Reconsider in future' },
     ]
     this.patchForm();
+    this.recruiterSearchSubscription()
   }
 
   ngAfterViewInit() { }
@@ -84,30 +85,27 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
     if (this.data.preliminaryReview) {
       if (this.data?.form?.controls['status_message'].value == 'First Interview Completed') {
         this.data.form.controls['recruiter_id'].enable();
-        this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
-          status_step: '3',
+          status_step: '4',
         })
       }
       else if (this.data.form.controls['status_message'].value == 'WaitListed') {
         this.data?.form?.controls['recruiter_id'].enable();
-        this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[2].subject,
           body: this.emails[2].email,
-          status_step: '13',
+          status_step: '14',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
       else if (this.data?.form?.controls['status_message'].value == 'Qualifications dont match current openings') {
         this.data.form.controls['recruiter_id'].enable();
-        this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[3].subject,
           body: this.emails[3].email,
-          status_step: '14',
+          status_step: '15',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -117,20 +115,13 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[4].subject,
           body: this.emails[4].email,
-          status_step: '6',
+          status_step: '7',
         })
         this.data.form.controls['recruiter_id'].enable();
         this.isReferenceCall = true;
       }
       else if (this.data?.form?.controls['status_message'].value == 'Second Interview Completed') {
-        this.data.form.patchValue({
-          subject: this.emails[1].subject,
-          body: this.emails[1].email,
-          status_step: '4',
-        })
         this.data.form.controls['recruiter_id'].enable();
-      }
-      else if (this.data?.form?.controls['status_message'].value == 'Third Interview Completed') {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
@@ -138,11 +129,20 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         })
         this.data.form.controls['recruiter_id'].enable();
       }
+      else if (this.data?.form?.controls['status_message'].value == 'Third Interview Completed') {
+        this.data.form.controls['recruiter_id'].enable();
+        this.data.form.patchValue({
+          subject: this.emails[1].subject,
+          body: this.emails[1].email,
+          status_step: '6',
+        })
+        this.data.form.controls['recruiter_id'].enable();
+      }
       else if (this.data?.form?.controls['status_message'].value == 'WaitListed') {
         this.data.form.patchValue({
           subject: this.emails[5].subject,
           body: this.emails[5].email,
-          status_step: '6',
+          status_step: '14',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -150,7 +150,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[6].subject,
           body: this.emails[6].email,
-          status_step: '6',
+          status_step: '15',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -160,13 +160,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[7].subject,
           body: this.emails[7].email,
-          status_step: '8',
+          status_step: '9',
         })
       }
       if (this.data?.form?.controls['status_message'].value == 'Qualifications dont match current openings') {
         this.data.form.patchValue({
           subject: this.emails[8].subject,
-          body: this.emails[8].email
+          body: this.emails[8].email,
+          status_step: '15',
         })
       }
     }

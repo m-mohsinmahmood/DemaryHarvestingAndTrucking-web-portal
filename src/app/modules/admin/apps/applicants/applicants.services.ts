@@ -232,7 +232,7 @@ export class ApplicantService {
         const {id,status_step,status_message, ...email_data } = data
         const newData = Object.assign({},{applicant_data},{email_data} )
         this._httpClient
-            .put(`api-1/applicants`, newData)
+            .patch(`api-1/applicants`, newData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -253,7 +253,7 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicants();
+                    this.getApplicantById(applicant_data.id);
                 }
             );
     }
