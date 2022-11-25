@@ -102,7 +102,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this._applicantService
         .getApplicantById(this.routeID)
         .subscribe((applicantObjData: any) => {
-            this.applicant = applicantObjData.applicant_info;
+            this.applicant = applicantObjData;
         }); 
     }
     //#endregion
@@ -173,7 +173,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(UpdateComponent, {
             data: {
                 isEdit: this.isEdit,
-                applicantData: applicant,
+                applicantData: applicant.applicant_info,
             }
         });
         dialogRef.afterClosed()

@@ -92,9 +92,6 @@
                             >
                                 Phone Number
                             </div>
-                            <div mat-sort-header="calendar_year" class="hidden sm:block">
-                                Calender Year
-                            </div>
                             <div
                                 mat-sort-header="status"
                                 class="hidden sm:block"
@@ -144,16 +141,11 @@
                                         {{ applicant.cell_phone_number }}
                                     </div>
                                     <!-- Foreign Phone number -->
-                                    <div
-                                        class="capitalize hidden sm:block truncate"
-                                    >
-                                        {{ applicant.calendar_year | date: "YYYY" }}
-                                    </div>
 
                                     <!-- Status -->
                                     <div class="hidden sm:block">
                                         <div
-                                            class="truncate rounded-full h-7 w-26 flex justify-center items-center text-white
+                                            class="truncate justify-center items-center
                                      bg-{{
                                                 applicant.status ===
                                                 'In-Process'
@@ -188,7 +180,7 @@
                                             }}-400
                                         "
                                         >
-                                            {{ applicant.status }}
+                                            {{ applicant.status_message }}
                                         </div>
                                     </div>
 
@@ -198,7 +190,7 @@
                                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                             mat-stroked-button
                                             (click)="
-                                            toggleDetails(applicant.applicant_info.id, true)"
+                                            toggleDetails(applicant.id,true)"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
