@@ -1,160 +1,182 @@
-<form [formGroup]="sixthFormGroup"  class="interview-results-form bg-gray-100 mx-3 mb-3 p-3 rounded-lg">
+<form [formGroup]="sixthFormGroup" class="interview-results-form mx-3 mb-3 p-3 rounded-lg">
     <ng-template matStepLabel>Interview Results</ng-template>
     <!-- First Section    -->
-    <section class="sm:w-6/12 md:w-8/12 lg:w-full">
-        <mat-checkbox formControlName="first_phone_call" class="firstphoneCall" id="firstphoneCall" name="firstphoneCall" >1st Phone Call </mat-checkbox>
-    </section>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>1st Phone Interview Results</mat-label>
-        <textarea formControlName="first_call_remarks"  matInput type="text" id="interviewResults"  placeholder="1st Phone Interview Results"> </textarea>
-    </mat-form-field>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Interviewer</mat-label>
-        <textarea formControlName="first_interviewer_id"  matInput type="text" placeholder="First Interviewer"> </textarea>
-    </mat-form-field>
-    <div class="md:flex lg:flex align-center justify-between">
-        <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-            <label>First Interview Ranking: </label>
+    <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
+        <section class="sm:w-6/12 md:w-8/12 lg:w-full">
+            <mat-checkbox formControlName="first_phone_call" class="firstphoneCall" id="firstphoneCall"
+                name="firstphoneCall">1st Phone Call </mat-checkbox>
+        </section>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>1st Phone Interview Results</mat-label>
+            <textarea formControlName="first_call_remarks" matInput type="text" id="interviewResults"
+                placeholder="1st Phone Interview Results"> </textarea>
+        </mat-form-field>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Interviewer</mat-label>
+            <input formControlName="first_interviewer_id" matInput type="text" placeholder="First Interviewer">
+        </mat-form-field>
+        <div class="md:flex lg:flex align-center justify-between">
+            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
+                <label>First Interview Ranking: </label>
+            </div>
+            <mat-radio-group formControlName="first_call_ranking" class="grid sm:flex md:flex lg:flex">
+                <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
+                <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
+                <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
+                <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
+                <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
+                <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
+                <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
+                <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
+                <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
+                <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
+            </mat-radio-group>
         </div>
-        <mat-radio-group formControlName="first_call_ranking" class="grid sm:flex md:flex lg:flex">
-            <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
-            <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
-            <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
-            <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
-            <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
-            <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
-            <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
-            <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
-            <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
-            <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
-        </mat-radio-group>
-    </div>
-    <div class="flex justify-end"> 
-        <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-        (click)="submit()">
-        Save
-        </button>
+        <div class="flex justify-end">
+            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+                Save
+            </button>
+
+        </div>
 
     </div>
-   
 
-    
+
+
+
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
     <!-- Second section -->
-    <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-        <mat-checkbox formControlName="second_phone_call" class="secondPhoneCall" id="secondPhoneCall" name="secondPhoneCall" >2nd Phone Call </mat-checkbox>
-    </section>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Second Phone Interview Results</mat-label>
-        <textarea formControlName="second_call_remarks"  matInput type="text" id="secondInterviewResult"  placeholder="1st Phone Interview Results"> </textarea>
-    </mat-form-field>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Interviewer</mat-label>
-        <textarea formControlName="second_interviewer_id"  matInput type="text" placeholder="Second Interviewer"> </textarea>
-    </mat-form-field>
-    <div class="md:flex lg:flex align-center justify-between">
-        <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-            <label>Second Interview Ranking: </label>
+    <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
+        <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+            <mat-checkbox formControlName="second_phone_call" class="secondPhoneCall" id="secondPhoneCall"
+                name="secondPhoneCall">2nd Phone Call </mat-checkbox>
+        </section>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Second Phone Interview Results</mat-label>
+            <textarea formControlName="second_call_remarks" matInput type="text" id="secondInterviewResult"
+                placeholder="1st Phone Interview Results"> </textarea>
+        </mat-form-field>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Interviewer</mat-label>
+            <input formControlName="second_interviewer_id" matInput type="text" placeholder="Second Interviewer">
+        </mat-form-field>
+        <div class="md:flex lg:flex align-center justify-between">
+            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
+                <label>Second Interview Ranking: </label>
+            </div>
+            <mat-radio-group formControlName="second_call_ranking" class="grid sm:flex md:flex lg:flex">
+                <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
+                <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
+                <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
+                <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
+                <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
+                <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
+                <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
+                <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
+                <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
+                <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
+            </mat-radio-group>
         </div>
-        <mat-radio-group formControlName="second_call_ranking" class="grid sm:flex md:flex lg:flex">
-            <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
-            <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
-            <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
-            <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
-            <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
-            <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
-            <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
-            <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
-            <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
-            <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
-        </mat-radio-group>
-    </div>
 
-    <div class="flex justify-end"> 
-        <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-        (click)="submit()">
-        Save
-        </button>
+        <div class="flex justify-end">
+            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+                Save
+            </button>
 
-    </div>
-
-        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-    <!-- Third Section -->
-    <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-        <mat-checkbox formControlName="third_phone_call" class="thirdPhoneCall" id="thirdPhoneCall"  name="thirdPhoneCall">3rd Phone Call </mat-checkbox>
-    </section>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Third Phone Interview Results</mat-label>
-        <textarea formControlName="third_call_remarks"  matInput type="text" id="thirdInterviewResult"  placeholder="3rd Face/Phone Interview Results"> </textarea>
-    </mat-form-field>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Interviewer</mat-label>
-        <textarea formControlName="third_interviewer_id"  matInput type="text" placeholder="Third Interviewer"> </textarea>
-    </mat-form-field>
-    <div class="md:flex lg:flex align-center justify-between">
-        <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-            <label>Third Interview Ranking: </label>
         </div>
-        <mat-radio-group formControlName="third_call_ranking" class="grid sm:flex md:flex lg:flex">
-            <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
-            <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
-            <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
-            <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
-            <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
-            <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
-            <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
-            <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
-            <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
-            <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
-        </mat-radio-group>
-    </div>
-
-    <div class="flex justify-end"> 
-        <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-        (click)="submit()">
-        Save
-        </button>
 
     </div>
+
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
-        <mat-checkbox formControlName="reference_phone_call"  class="refreePhoneCall" id="refreePhoneCall" name="refreePhoneCall">Refree Phone Call </mat-checkbox>
-    </section>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Reference Phone Interview Results</mat-label>
-        <textarea formControlName="reference_call_remarks"  matInput type="text" id="refreeInterviewResult"  placeholder="Refree Phone Interview Results"> </textarea>
-    </mat-form-field>
-    <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-        <mat-label>Interviewer</mat-label>
-        <textarea formControlName="second_interviewer_id"  matInput type="text" placeholder="Reference Interviewer"> </textarea>
-    </mat-form-field>
-    <div class="md:flex lg:flex align-center justify-between">
-        <div class="sm:w-6/12 md:w-8/12 lg:w-52">
-            <label>Refree Interview Ranking: </label>
+
+    <!-- Third Section -->
+    <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
+
+        <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+            <mat-checkbox formControlName="third_phone_call" class="thirdPhoneCall" id="thirdPhoneCall"
+                name="thirdPhoneCall">3rd Phone Call </mat-checkbox>
+        </section>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Third Phone Interview Results</mat-label>
+            <textarea formControlName="third_call_remarks" matInput type="text" id="thirdInterviewResult"
+                placeholder="3rd Face/Phone Interview Results"> </textarea>
+        </mat-form-field>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Interviewer</mat-label>
+            <input formControlName="third_interviewer_id" matInput type="text" placeholder="Third Interviewer">
+        </mat-form-field>
+        <div class="md:flex lg:flex align-center justify-between">
+            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
+                <label>Third Interview Ranking: </label>
+            </div>
+            <mat-radio-group formControlName="third_call_ranking" class="grid sm:flex md:flex lg:flex">
+                <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
+                <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
+                <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
+                <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
+                <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
+                <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
+                <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
+                <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
+                <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
+                <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
+            </mat-radio-group>
         </div>
-        <mat-radio-group formControlName="reference_call_ranking"  class="grid sm:flex md:flex lg:flex">
-            <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
-            <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
-            <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
-            <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
-            <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
-            <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
-            <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
-            <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
-            <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
-            <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
-        </mat-radio-group>
-    </div>
 
-    <div class="flex justify-end"> 
-        <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-        (click)="submit()">
-        Save
-        </button>
+        <div class="flex justify-end">
+            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+                Save
+            </button>
+
+        </div>
 
     </div>
+
+
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
+        <section class="py-8 sm:w-6/12 md:w-8/12 lg:w-full mt-2">
+            <mat-checkbox formControlName="reference_phone_call" class="refreePhoneCall" id="refreePhoneCall"
+                name="refreePhoneCall">Refree Phone Call </mat-checkbox>
+        </section>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Reference Phone Interview Results</mat-label>
+            <textarea formControlName="reference_call_remarks" matInput type="text" id="refreeInterviewResult"
+                placeholder="Refree Phone Interview Results"> </textarea>
+        </mat-form-field>
+        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
+            <mat-label>Interviewer</mat-label>
+            <input formControlName="second_interviewer_id" matInput type="text" placeholder="Reference Interviewer">
+        </mat-form-field>
+        <div class="md:flex lg:flex align-center justify-between">
+            <div class="sm:w-6/12 md:w-8/12 lg:w-52">
+                <label>Refree Interview Ranking: </label>
+            </div>
+            <mat-radio-group formControlName="reference_call_ranking" class="grid sm:flex md:flex lg:flex">
+                <mat-radio-button value="1" class="mr-2">1</mat-radio-button>
+                <mat-radio-button value="2" class="mr-2">2</mat-radio-button>
+                <mat-radio-button value="3" class="mr-2">3</mat-radio-button>
+                <mat-radio-button value="4" class="mr-2">4</mat-radio-button>
+                <mat-radio-button value="5" class="mr-2">5</mat-radio-button>
+                <mat-radio-button value="6" class="mr-2">6</mat-radio-button>
+                <mat-radio-button value="7" class="mr-2">7</mat-radio-button>
+                <mat-radio-button value="8" class="mr-2">8</mat-radio-button>
+                <mat-radio-button value="9" class="mr-2">9</mat-radio-button>
+                <mat-radio-button value="10" class="mr-2">10</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="flex justify-end">
+            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit()">
+                Save
+            </button>
+
+        </div>
+
+    </div>
+
 
 </form>
