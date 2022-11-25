@@ -165,8 +165,6 @@ export class ApplicantService {
                 }
             );
     }
-
-   
     getApplicantById(id: string) {
         return this._httpClient
             .get(`api-1/applicants?id=${id}`)
@@ -174,8 +172,6 @@ export class ApplicantService {
             ;
             
     }
-
-   
     createApplicant(data: any) {
         this._httpClient
             .post(`api-1/applicants`, data)
@@ -207,6 +203,36 @@ export class ApplicantService {
     updateApplicant(data: any) {
         this._httpClient
             .put(`api-1/applicants`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingApplicant.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Applicant',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingApplicant.next(false);
+                },
+                () => {
+                    this.getApplicants();
+                }
+            );
+    }
+    patchApplicant(data: any) {
+        const {bcc,body,cc,recruiter_id,subject,to, ...applicantData } = data;
+        const {id,status_step,status_message,date, ...emailData } = data
+        const newData = Object.assign({},{applicantData},{emailData} )
+        this._httpClient
+            .put(`api-1/applicants`, newData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

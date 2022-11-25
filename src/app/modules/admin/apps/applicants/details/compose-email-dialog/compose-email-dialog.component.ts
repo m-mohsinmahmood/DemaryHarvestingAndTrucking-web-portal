@@ -1,5 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { ApplicantService } from '../../applicants.services';
@@ -15,6 +14,8 @@ import { ApplicantService } from '../../applicants.services';
 
 export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
 
+
+  //#region email variables
   emails: any;
   formValid: boolean;
   copyFields: { cc: boolean; bcc: boolean } = {
@@ -28,14 +29,17 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       ['clean']
     ]
   };
+  //#endregion
   //#region Auto Complete Farms
   allRecruiters: Observable<any>;
   recruiter_search$ = new Subject();
   //#endregion
+
+  //#region variables
   isReferenceCall = false;
   selectedRecruiterCalendly: any;
-
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  //#endregion
 
   constructor(
     public matDialogRef: MatDialogRef<ComposeEmailDialogComponent>,
@@ -56,9 +60,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       { id: '7', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we feel that your qualifications do not currently match any available positions at DHT.  We will keep your application on file should any new opportunities arise.' },
       { id: '8', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we are excited to inform you that DHT has decided to offer you a position as a [insert position they selected from drop down list].  DHT’s Administrative Director, Bill Demaray, will be contacting you shortly by email to discuss the required pre-employment (onboarding) enrollment steps. We look forward to meeting and working with you soon.' },
       { id: '9', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we feel that your qualifications do not currently match any available positions at DHT.  We will keep your application on file should any new opportunities arise.' },
-
     ];
-
     const statusBar = [
       { id: 1, status: false, statusStep: '1', statusMessage: 'Applicant completed' },
       { id: 2, status: false, statusStep: '2', statusMessage: 'Advance Preliminary review' },
@@ -73,21 +75,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       { id: 11, status: false, statusStep: '12', statusMessage: 'Not qualified' },
       { id: 12, status: false, statusStep: '13', statusMessage: 'Reconsider in future' },
     ]
-    // Create the form
-    const { applicant } = this.data;
-    this.data.form.patchValue({
-      to: applicant.email,
-    });
-
+    this.patchForm();
   }
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() { }
 
   ngDoCheck() {
     if (this.data.preliminaryReview) {
-      if (this.data?.form?.controls['preliminary_review'].value == 'advance') {
+      if (this.data?.form?.controls['status_message'].value == 'advance') {
         this.data.form.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
@@ -95,7 +90,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           body: this.emails[1].email
         })
       }
-      else if (this.data.form.controls['preliminary_review'].value == 'wait-listed') {
+      else if (this.data.form.controls['status_message'].value == 'wait-listed') {
         this.data?.form?.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
@@ -103,7 +98,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           body: this.emails[2].email
         })
       }
-      else if (this.data?.form?.controls['preliminary_review'].value == 'not-qualified') {
+      else if (this.data?.form?.controls['status_message'].value == 'not-qualified') {
         this.data.form.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
@@ -113,40 +108,57 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       }
     }
     if (this.data.interviewCompletedForm) {
-      if (this.data?.form?.controls['next_step'].value == 'reference_call') {
+      if (this.data?.form?.controls['status_message'].value == 'reference_call') {
         this.data.form.patchValue({
-          subject: this.emails[5].subject,
-          body: this.emails[5].email
+          subject: this.emails[4].subject,
+          body: this.emails[4].email,
+          status_step: '6',
         })
-      }
-      else if (this.data?.form?.controls['next_step'].value != '') {
-        this.data.form.patchValue({
-          subject: this.emails[1].subject,
-          body: this.emails[1].email
-        })
-      }
-
-
-      if (this.data?.form?.controls['next_step'].value == 'reference_call') {
         this.data.form.controls['recruiter_id'].enable();
         this.isReferenceCall = true;
       }
-      if (this.data?.form?.controls['next_step'].value == 'second_interview' || this.data.form.controls['next_step'].value == 'third_interview') {
+      else if (this.data?.form?.controls['status_message'].value == 'second_interview') {
+        this.data.form.patchValue({
+          subject: this.emails[1].subject,
+          body: this.emails[1].email,
+          status_step: '4',
+        })
         this.data.form.controls['recruiter_id'].enable();
       }
-      if (this.data?.form?.controls['next_step'].value == 'wait_listed' || this.data.form.controls['next_step'].value == 'not_qualified') {
+      else if (this.data?.form?.controls['status_message'].value == 'third_interview') {
+        this.data.form.patchValue({
+          subject: this.emails[1].subject,
+          body: this.emails[1].email,
+          status_step: '5',
+        })
+        this.data.form.controls['recruiter_id'].enable();
+      }
+      else if (this.data?.form?.controls['status_message'].value == 'wait_listed') {
+        this.data.form.patchValue({
+          subject: this.emails[5].subject,
+          body: this.emails[5].email,
+          status_step: '6',
+        })
+        this.data.form.controls['recruiter_id'].disable();
+      }
+      else if (this.data.form.controls['status_message'].value == 'not_qualified') {
+        this.data.form.patchValue({
+          subject: this.emails[6].subject,
+          body: this.emails[6].email,
+          status_step: '6',
+        })
         this.data.form.controls['recruiter_id'].disable();
       }
     }
-
     if (this.data.decisionMadeForm) {
-      if (this.data?.form?.controls['next_step'].value == 'offer') {
+      if (this.data?.form?.controls['status_message'].value == 'offer') {
         this.data.form.patchValue({
           subject: this.emails[7].subject,
-          body: this.emails[7].email
+          body: this.emails[7].email,
+          status_step: '8',
         })
       }
-      if (this.data?.form?.controls['next_step'].value == 'not_qualified') {
+      if (this.data?.form?.controls['status_message'].value == 'not_qualified') {
         this.data.form.patchValue({
           subject: this.emails[8].subject,
           body: this.emails[8].email
@@ -161,47 +173,46 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   }
   //#endregion
 
+  //#region Patch form 
+  patchForm() {
+    const { applicant } = this.data;
+    this.data.form.patchValue({
+      to: applicant.email,
+      id: applicant.id,
+    });
+  }
+
   //#region Public Methods
   showCopyField(name: string): void {
     // Return if the name is not one of the available names
     if (name !== 'cc' && name !== 'bcc') {
       return;
     }
-
     // Show the field
     this.copyFields[name] = true;
   }
 
+  //#endregion
 
-
+  //#region Form Methods
   discard(): void {
+    this.matDialogRef.close();
+    this.data.form?.controls['recruiter_id']?.disable();
+    this.data.form.reset();
+  }
+
+  send(): void {
+    this._applicantService.patchApplicant(this.data.form.value);
     this.matDialogRef.close();
     this.data.form.controls['recruiter_id'].disable();
     this.data.form.reset();
   }
 
-  send(): void {
-
-  }
-
   //#endregion
-
-  getDropdownRecruiters() {
-    let searchValue;
-    typeof this.data.form.controls['recruiter_id'].value === 'object' ? (searchValue = this.data.form.controls['recruiter_id'].value?.name) : searchValue = this.data.form.controls['recruiter_id'].value;
-    !searchValue ? searchValue = '' : '';
-    this.allRecruiters = this._applicantService.getDropdownAllRecruiters(searchValue);
-  }
-
-  //#region Auto Complete Recruiters Display Function
-  displayRecruiterForAutoComplete(recruiter: any) {
-    return recruiter ? `${recruiter.name}` : undefined;
-  }
-  //#endregion
-
+  //#region Select Recruiter Calendly link
   recruiterSelect(recruiter: any) {
     if (this.data.preliminaryReview) {
-      if (this.data?.form?.controls['preliminary_review'].value == 'advance') {
+      if (this.data?.form?.controls['status_message'].value == 'advance') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 1);
         }
@@ -210,7 +221,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[1].email = this.emails[1].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form?.controls['preliminary_review'].value == 'wait-listed') {
+      if (this.data?.form?.controls['status_message'].value == 'wait-listed') {
         if (this.emails[2].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 2);
         }
@@ -219,7 +230,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[2].email = this.emails[2].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form?.controls['preliminary_review'].value == 'not-qualified') {
+      if (this.data?.form?.controls['status_message'].value == 'not-qualified') {
         if (this.emails[3].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 3);
         }
@@ -230,7 +241,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       }
     }
     if (this.data.interviewCompletedForm) {
-      if (this.data?.form.controls['next_step'].value == 'second_interview' || this.data?.form.controls['next_step'].value == 'third_interview') {
+      if (this.data?.form.controls['status_message'].value == 'second_interview' || this.data?.form.controls['status_message'].value == 'third_interview') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 1);
         }
@@ -239,13 +250,13 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[1].email = this.emails[1].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form.controls['next_step'].value == 'reference_call') {
-        if (this.emails[5].email.includes('&#8205')) {
-          this.changeCalendlyLink(recruiter, 1);
+      if (this.data?.form.controls['status_message'].value == 'reference_call') {
+        if (this.emails[4].email.includes('&#8205')) {
+          this.changeCalendlyLink(recruiter, 4);
         }
         else {
-          this.emails[5].email = this.emails[5].email + '&#8205';
-          this.emails[5].email = this.emails[5].email + `</br>${recruiter.calendly}`;
+          this.emails[4].email = this.emails[4].email + '&#8205';
+          this.emails[4].email = this.emails[4].email + `</br>${recruiter.calendly}`;
         }
       }
     }
@@ -259,8 +270,21 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
     split.push(recruiter.calendly);
     this.emails[index].email = split.join('</br>');
   }
+  //#endregion
 
-  //#region Search Function
+  //#region Auto Complete
+  getDropdownRecruiters() {
+    let searchValue;
+    typeof this.data.form.controls['recruiter_id'].value === 'object' ? (searchValue = this.data.form.controls['recruiter_id'].value?.name) : searchValue = this.data.form.controls['recruiter_id'].value;
+    !searchValue ? searchValue = '' : '';
+    this.allRecruiters = this._applicantService.getDropdownAllRecruiters(searchValue);
+  }
+  // Display Function
+  displayRecruiterForAutoComplete(recruiter: any) {
+    return recruiter ? `${recruiter.name}` : undefined;
+  }
+
+  // Search Function
   recruiterSearchSubscription() {
     this.recruiter_search$
       .pipe(
@@ -274,9 +298,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         );
       });
   }
-  //#endregion
-
-  //#region Validation
+  
+  // Validation
   formValidation(e) {
     typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
   }

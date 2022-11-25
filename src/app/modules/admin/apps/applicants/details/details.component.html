@@ -37,25 +37,31 @@
                 <button mat-stroked-button
                     [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
                     [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 sm:w-30 "
-                    (click)="clicked(route)">
+                    (click)="routeHandler(route)">
                     <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                 </button>
             </div>
-            <button
+            <button class="" mat-flat-button [color]="'primary'" >
+                <span class="whitespace-normal">Advance to offer</span>
+            </button>
+            <button class="" mat-flat-button [color]="'warn'" >
+                <span class="">Reject</span>
+            </button>
+            <!-- <button
                 class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded-full mr-2 w-44">
                 <span>Advance to offer</span>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
                 class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded-full w-28">
                 <span>Reject</span>
-            </button>
+            </button> -->
         </div>
         <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
             <div class="" *ngFor="let route of routesright;let i = index">
                 <button mat-stroked-button
                     [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
                     [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 "
-                    (click)="clicked(route)">
+                    (click)="routeHandler(route)">
                     <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                 </button>
             </div>
@@ -73,7 +79,7 @@
             <button mat-stroked-button
                 [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
                 [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-30 "
-                (click)="clicked(route)">
+                (click)="routeHandler(route)">
                 <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
             </button>
         </div>
@@ -81,7 +87,7 @@
             <button mat-stroked-button
                 [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
                 [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 ml-1 sm:w-48 "
-                (click)="clicked(route)">
+                (click)="routeHandler(route)">
                 <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
             </button>
         </div>
@@ -114,10 +120,10 @@
                 </ng-template>
             </div>
         </div>
-        <div class="sm:w-4/12 md:w-4/12">
+        <div  class="sm:w-4/12 md:w-4/12">
             <div class="bg-gray-100 rounded-lg mx-2 shadow">
-                <div class="flex flex-col py-4 px-2">
-                    <div class=" last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
+                <div class="status-bar flex flex-col py-4 px-2">
+                    <div class="last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
                         *ngFor="let item of items;index as i">
                         <div class="flex flex-col items-center min-w-12">
                             <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
@@ -135,14 +141,15 @@
                             <div class="timeline-track"></div>
                         </div>
                         <div class="flex-1 flex flex-row px-4">
-                            <div (click)="openStatusBarForm(i)" class="cursor-pointer w-8/12 flex flex-col">
+                            <div (click)="composeEmail(i)" class="cursor-pointer w-8/12 flex flex-col">
                                 <span *ngIf="second_interviewer_id != null || third_interviewer_id != null"
                                     class="flex items-center text-md font-sans font-normal">
                                     {{item.content}}>
                                 </span>
                                 <span class="flex items-center text-md font-sans font-normal">{{item.content}}
-                                    <mat-icon matTooltip="Compose Email" *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
-                                        class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                                    <mat-icon matTooltip="Compose Email"
+                                        *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6" class="ml-2 icon-size-5"
+                                        [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
                                 </span>
                                 <!-- <ng-template [ngIf]="item.name === ''">
                                 <span class="text-md font-sans font-normal ">{{item.content}}</span>

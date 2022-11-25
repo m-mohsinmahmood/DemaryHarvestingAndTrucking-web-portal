@@ -11,7 +11,7 @@
     <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="data.form">
         <mat-form-field *ngIf="data.preliminaryReview" appearance="outline">
             <mat-label>Preliminary Review</mat-label>
-            <mat-select formControlName="preliminary_review">
+            <mat-select formControlName="status_message">
                 <mat-option value="advance">Advance</mat-option>
                 <mat-option value="wait-listed">Wait-listed</mat-option>
                 <mat-option value="not-qualified">Not Qualified</mat-option>
@@ -20,7 +20,7 @@
 
         <mat-form-field *ngIf="data.interviewCompletedForm || data.decisionMadeForm" appearance="outline">
             <mat-label>Select Next Step</mat-label>
-            <mat-select formControlName="next_step">
+            <mat-select formControlName="status_message">
                 <mat-option *ngIf="data.decisionMadeForm" value="offer">Offer</mat-option>
                 <mat-option *ngIf="data.decisionMadeForm" value="not_qualified">Qualifications don't match current openings</mat-option>
                 <mat-option *ngIf="data.firstInterview" value="second_interview">Second Interview</mat-option>
@@ -81,11 +81,11 @@
                 <button class="mr-2" mat-stroked-button (click)="discard()">
                     Discard
                 </button>
-
                 <!-- Send -->
-                <button class="" mat-flat-button [color]="'primary'" (click)="send()">
-                    Send
-                </button>
+                <button class="" mat-flat-button [color]="'primary'" 
+                (click)="send()">
+                <span class=" ">Save</span>
+            </button>
             </div>
         </div>
     </form>
