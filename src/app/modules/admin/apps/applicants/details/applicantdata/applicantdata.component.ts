@@ -49,7 +49,6 @@ export class ApplicantdataComponent implements OnInit {
     .getApplicantById(this.routeID)
     .subscribe((applicantObjData: any) => {
         this.applicant  = applicantObjData;
-        // console.log("hello", this.data);
 
     });
 

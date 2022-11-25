@@ -121,7 +121,7 @@ export class UpdateComponent implements OnInit {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-        this.routeID = data ? data.id : '';
+        this.routeID = data.applicant_info ? data.applicant_info.id : '';
     }
 
     ngOnInit(): void {
@@ -129,6 +129,7 @@ export class UpdateComponent implements OnInit {
         this.initObservables();
         this.initCalendar();
 
+        console.log("abcd", this.data.applicantData);
         this.isEdit = this.data.isEdit;
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -141,6 +142,7 @@ export class UpdateComponent implements OnInit {
     }
     // #region initializing forms
     initApplicantForm() {
+        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
@@ -229,88 +231,84 @@ export class UpdateComponent implements OnInit {
             this.sixthFormGroup,
         ];
 
-        if (this.data !== null) {
-            this._applicantService
-                .getApplicantById(this.data?.id)
-                .subscribe((applicantObjData: any) => {
-                    this.firstFormGroup.patchValue({
-                        id: applicantObjData.id,
-                        first_name: applicantObjData.first_name,
-                        last_name: applicantObjData.last_name,
-                        email: applicantObjData.email,
-                        cell_phone_number: applicantObjData.cell_phone_number,
-                        home_phone_number: applicantObjData.home_phone_number,
-                        date_of_birth: applicantObjData.date_of_birth,
-                        age: applicantObjData.age,
-                        marital_status: applicantObjData.marital_status,
-                        rank_speaking_english: applicantObjData.rank_speaking_english,
-                        languages: applicantObjData.languages.replace(/\s/g, '').split(','),
-                        // status: applicantObjData.status,
-                    });
-                    this.secondFormGroup.patchValue({
-                        address_1: applicantObjData.address_1,
-                        address_2: applicantObjData.address_2,
-                        town_city: applicantObjData.town_city,
-                        county_providence: applicantObjData.county_providence,
-                        state: applicantObjData.state,
-                        postal_code: applicantObjData.postal_code,
-                        country: applicantObjData.country,
-                        avatar: applicantObjData.avatar,
-                    });
-                    this.thirdFormGroup.patchValue({
-                        question_1: applicantObjData.question_1,
-                        question_2: applicantObjData.question_2,
-                        question_3: applicantObjData.question_3,
-                        question_4: applicantObjData.question_4,
-                        question_5: applicantObjData.question_5,
-                        authorized_to_work: applicantObjData.authorized_to_work,
-                        us_citizen: applicantObjData.us_citizen,
-                        cdl_license: applicantObjData.cdl_license,
-                        lorry_license: applicantObjData.lorry_license,
-                        tractor_license: applicantObjData.tractor_license,
-                        passport: applicantObjData.passport,
-                        work_experience_description: applicantObjData.work_experience_description,
-                        employment_period: applicantObjData.employment_period,
+        if (this.data.applicantData !== null) {
+            const { applicantObjData } = this.data.applicantData;
+            console.log("applicantObjData1", this.data.applicantData.first_name);
+
+            console.log("applicantObjData1", this.data.applicantData);
+            this.firstFormGroup.patchValue({
+                id: this.data.applicantData?.id,
+                first_name: this.data.applicantData?.first_name,
+                last_name: this.data.applicantData.last_name,
+                email: this.data.applicantData.email,
+                cell_phone_number: this.data.applicantData.cell_phone_number,
+                home_phone_number: this.data.applicantData.home_phone_number,
+                date_of_birth: this.data.applicantData.date_of_birth,
+                age: this.data.applicantData.age,
+                marital_status: this.data.applicantData.marital_status,
+                rank_speaking_english: this.data.applicantData.rank_speaking_english,
+                languages: this.data.applicantData.languages.replace(/\s/g, '').split(','),
+                // status: this.data.applicantData.status,
+            });
+            this.secondFormGroup.patchValue({
+                address_1: this.data.applicantData.address_1,
+                address_2: this.data.applicantData.address_2,
+                town_city: this.data.applicantData.town_city,
+                county_providence: this.data.applicantData.county_providence,
+                state: this.data.applicantData.state,
+                postal_code: this.data.applicantData.postal_code,
+                country: this.data.applicantData.country,
+                avatar: this.data.applicantData.avatar,
+            });
+            this.thirdFormGroup.patchValue({
+                question_1: this.data.applicantData.question_1,
+                question_2: this.data.applicantData.question_2,
+                question_3: this.data.applicantData.question_3,
+                question_4: this.data.applicantData.question_4,
+                question_5: this.data.applicantData.question_5,
+                authorized_to_work: this.data.applicantData.authorized_to_work.toString(),
+                us_citizen: this.data.applicantData.us_citizen.toString(),
+                cdl_license: this.data.applicantData.cdl_license.toString(),
+                lorry_license: this.data.applicantData.lorry_license.toString(),
+                tractor_license: this.data.applicantData.tractor_license.toString(),
+                passport: this.data.applicantData.passport.toString(),
+                work_experience_description: this.data.applicantData.work_experience_description,
+                employment_period: this.data.applicantData.employment_period,
 
 
 
-                    });
-                    this.fourthFormGroup.patchValue({
-                        supervisor_name: applicantObjData.supervisor_name,
-                        supervisor_contact: applicantObjData.supervisor_contact,
-                        degree_name: applicantObjData.degree_name,
-                        reason_for_applying: applicantObjData.reason_for_applying,
-                        hear_about_dht: applicantObjData.hear_about_dht,
-                    });
-                    this.fifthFormGroup.patchValue({
-                        us_phone_number: applicantObjData.us_phone_number,
-            blood_type: applicantObjData.blood_type,
-            emergency_contact_name: applicantObjData.emergency_contact_name,
-            emergency_contact_phone: applicantObjData.emergency_contact_phone,
-                        
-                    });
-                    this.sixthFormGroup.patchValue({
-                        first_phone_call: applicantObjData.first_phone_call,
-                        first_call_remarks: applicantObjData.first_call_remarks,
-                        first_call_ranking: applicantObjData.first_call_ranking,
-                        first_interviewer_id: applicantObjData.first_interviewer_id,
+            });
+            this.fourthFormGroup.patchValue({
+                supervisor_name: this.data.applicantData.supervisor_name,
+                supervisor_contact: this.data.applicantData.supervisor_contact,
+                degree_name: this.data.applicantData.degree_name,
+                reason_for_applying: this.data.applicantData.reason_for_applying,
+                hear_about_dht: this.data.applicantData.hear_about_dht,
+            });
+            this.fifthFormGroup.patchValue({
+                us_phone_number: this.data.applicantData.us_phone_number,
+                blood_type: this.data.applicantData.blood_type,
+                emergency_contact_name: this.data.applicantData.emergency_contact_name,
+                emergency_contact_phone: this.data.applicantData.emergency_contact_phone,
 
-                        reference_phone_call: applicantObjData.reference_phone_call,
-                        reference_call_remarks: applicantObjData.reference_call_remarks,
-                        reference_call_ranking: applicantObjData.reference_call_ranking,
-                        reference_interviewer_id: applicantObjData.reference_interviewer_id,
+            });
+            this.sixthFormGroup.patchValue({
+                first_call_remarks: this.data.applicantData.first_call_remarks,
+                first_call_ranking: this.data.applicantData.first_call_ranking,
+                first_interviewer_id: this.data.applicantData.first_interviewer_id,
 
-                        second_phone_call: applicantObjData.second_phone_call,
-                        second_call_remarks: applicantObjData.second_call_remarks,
-                        second_call_ranking: applicantObjData.second_call_ranking,
-                        second_interviewer_id: applicantObjData.second_interviewer_id,
+                reference_call_remarks: this.data.applicantData.reference_call_remarks,
+                reference_call_ranking: this.data.applicantData.reference_call_ranking,
+                reference_interviewer_id: this.data.applicantData.reference_interviewer_id,
 
-                        third_phone_call: applicantObjData.third_phone_call,
-                        third_call_remarks: applicantObjData.third_call_remarks,
-                        third_call_ranking: applicantObjData.third_call_ranking,
-                        third_interviewer_id: applicantObjData.third_interviewer_id,
-                    });
-                });
+                second_call_remarks: this.data.applicantData.second_call_remarks,
+                second_call_ranking: this.data.applicantData.second_call_ranking,
+                second_interviewer_id: this.data.applicantData.second_interviewer_id,
+
+                third_call_remarks: this.data.applicantData.third_call_remarks,
+                third_call_ranking: this.data.applicantData.third_call_ranking,
+                third_interviewer_id: this.data.applicantData.third_interviewer_id,
+            });
             this._changeDetectorRef.markForCheck();
         }
     }

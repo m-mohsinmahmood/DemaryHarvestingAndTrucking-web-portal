@@ -593,8 +593,9 @@
                         <mat-icon [ngStyle]="{'color':'green'}"
                             class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
                             [svgIcon]="'heroicons_outline:check'"></mat-icon>
-                        <p class="flex justify-center items-center ">You have successfully updated the applicants
-                            details. Please click on submit button to complete update process.</p>
+                            <p class="flex justify-center items-center font-bold text-2xl">{{this.isEdit? 'You have successfully updated the applicants
+                                details. Please click on submit button to complete update process.':'You have successfully submitted the applicant
+                                details. Please click on submit button to complete the process.'}}</p>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
