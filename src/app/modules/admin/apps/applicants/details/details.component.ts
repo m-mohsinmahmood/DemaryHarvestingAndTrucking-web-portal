@@ -45,7 +45,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     decisionMadeForm: FormGroup;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    isApplicant: BehaviorSubject<boolean>;
+    results: string[] = ['Waitlisted','Hired','Qualifications dont match current openings'];
     //#endregion
 
     constructor(
@@ -99,12 +99,10 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     //#region Get Applicant By id 
     getApplicantById(){
-        this.isApplicant.next(false);
         this._applicantService
         .getApplicantById(this.routeID)
         .subscribe((applicantObjData: any) => {
-            this.isApplicant.next(true);
-            this.applicant = applicantObjData;
+            this.applicant = applicantObjData.applicant_info;
         }); 
     }
     //#endregion
@@ -116,10 +114,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             status_message: [''],
             status_step: ['3'],
             recruiter_id: [{ value: '', disabled: true }],
-            date: [moment()],
             to: ['', [Validators.required, Validators.email]],
-            cc: ['', [Validators.email]],
-            bcc: ['', [Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
@@ -128,10 +123,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             status_message: [''],
             status_step: [''],
             recruiter_id: [{ value: '', disabled: true }],
-            date: [moment()],
             to: ['', [Validators.required, Validators.email]],
-            cc: ['', [Validators.email]],
-            bcc: ['', [Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
@@ -139,10 +131,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             id: [''],
             status_message: [''],
             status_step: [''],
-            date: [moment()],
             to: ['', [Validators.required, Validators.email]],
-            cc: ['', [Validators.email]],
-            bcc: ['', [Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
@@ -180,13 +169,11 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     //#region Dialog 
     openUpdateDialog(applicant): void {
         this.isEdit = true;
-        console.log("im in details update comp ", applicant);
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent, {
             data: {
                 isEdit: this.isEdit,
-                id: this.routeID,
-                calendar_year: applicant.calendar_year,
+                applicantData: applicant,
             }
         });
         dialogRef.afterClosed()
@@ -217,58 +204,63 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     //#region Status Bar onclick
     composeEmail(index) {
-        if (index == 1 && index <= parseInt(this.applicant.status_step) ) {
+        if (index == 1 && index <= parseInt(this.applicant?.applicant_info.status_step) ) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     preliminaryReview: true,
-                    applicant: this.applicant,
+                    applicant: this.applicant.applicant_info,
                     form: this.preliminaryReviewForm,
+                    index: index,
                 }
             });
             dialogRef.afterClosed().subscribe((result) => { });
 
         }
         else if (index == 2 || index == 3 || index == 4) {
-            if (index == 2 && index <= parseInt(this.applicant.status_step)) {
+            if (index == 2 && index <= parseInt(this.applicant.applicant_info.status_step)) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         firstInterview: true,
                         interviewCompletedForm: true,
-                        applicant: this.applicant,
+                        applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
+                        index: index,
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 3 && index <= parseInt(this.applicant.status_step)) {
+            if (index == 3 && index <= parseInt(this.applicant.applicant_info.status_step)) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         secondInterview: true,
                         interviewCompletedForm: true,
-                        applicant: this.applicant,
+                        applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
+                        index: index,
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 4 && index <= parseInt(this.applicant.status_step)) {
+            if (index == 4 && index <= parseInt(this.applicant.applicant_info.status_step)) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         thirdInterview: true,
                         interviewCompletedForm: true,
-                        applicant: this.applicant,
+                        applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
+                        index: index,
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
         }
-        else if (index == 6  && index <= parseInt(this.applicant.status_step)) {
+        else if (index == 6  && index <= parseInt(this.applicant.applicant_info.status_step)) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     decisionMadeForm: true,
-                    applicant: this.applicant,
+                    applicant: this.applicant.applicant_info,
                     form: this.decisionMadeForm,
+                    index: index,
                 }
             });
             dialogRef.afterClosed().subscribe((result) => { });

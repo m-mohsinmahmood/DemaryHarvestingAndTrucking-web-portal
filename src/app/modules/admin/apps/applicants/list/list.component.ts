@@ -94,9 +94,6 @@ export class ApplicantsListComponent
         this.initObservables();
         this.initApis();
         this.initFiltersForm();
-
-
-
     }
 
     initObservables() {
@@ -191,7 +188,7 @@ export class ApplicantsListComponent
         this._applicantService
         .getApplicantById(applicantId)
         .subscribe((applicantObjData: any) => {
-            this._router.navigate(['/apps/applicants/details/' + applicantObjData.id]);
+            this._router.navigate(['/apps/applicants/details/' + applicantObjData.applicant_info.id]);
         });
 
     }

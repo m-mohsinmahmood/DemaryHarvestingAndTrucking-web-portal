@@ -82,33 +82,38 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
 
   ngDoCheck() {
     if (this.data.preliminaryReview) {
-      if (this.data?.form?.controls['status_message'].value == 'advance') {
+      if (this.data?.form?.controls['status_message'].value == 'First Interview Completed') {
         this.data.form.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[1].subject,
-          body: this.emails[1].email
+          body: this.emails[1].email,
+          status_step: '3',
         })
       }
-      else if (this.data.form.controls['status_message'].value == 'wait-listed') {
+      else if (this.data.form.controls['status_message'].value == 'WaitListed') {
         this.data?.form?.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[2].subject,
-          body: this.emails[2].email
+          body: this.emails[2].email,
+          status_step: '13',
         })
+        this.data.form.controls['recruiter_id'].disable();
       }
-      else if (this.data?.form?.controls['status_message'].value == 'not-qualified') {
+      else if (this.data?.form?.controls['status_message'].value == 'Qualifications dont match current openings') {
         this.data.form.controls['recruiter_id'].enable();
         this.data.form.controls['recruiter_id'].value = '';
         this.data.form.patchValue({
           subject: this.emails[3].subject,
-          body: this.emails[3].email
+          body: this.emails[3].email,
+          status_step: '14',
         })
+        this.data.form.controls['recruiter_id'].disable();
       }
     }
     if (this.data.interviewCompletedForm) {
-      if (this.data?.form?.controls['status_message'].value == 'reference_call') {
+      if (this.data?.form?.controls['status_message'].value == 'Reference Call Completed') {
         this.data.form.patchValue({
           subject: this.emails[4].subject,
           body: this.emails[4].email,
@@ -117,7 +122,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.controls['recruiter_id'].enable();
         this.isReferenceCall = true;
       }
-      else if (this.data?.form?.controls['status_message'].value == 'second_interview') {
+      else if (this.data?.form?.controls['status_message'].value == 'Second Interview Completed') {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
@@ -125,7 +130,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         })
         this.data.form.controls['recruiter_id'].enable();
       }
-      else if (this.data?.form?.controls['status_message'].value == 'third_interview') {
+      else if (this.data?.form?.controls['status_message'].value == 'Third Interview Completed') {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
@@ -133,7 +138,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         })
         this.data.form.controls['recruiter_id'].enable();
       }
-      else if (this.data?.form?.controls['status_message'].value == 'wait_listed') {
+      else if (this.data?.form?.controls['status_message'].value == 'WaitListed') {
         this.data.form.patchValue({
           subject: this.emails[5].subject,
           body: this.emails[5].email,
@@ -141,7 +146,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         })
         this.data.form.controls['recruiter_id'].disable();
       }
-      else if (this.data.form.controls['status_message'].value == 'not_qualified') {
+      else if (this.data.form.controls['status_message'].value == 'Qualifications dont match current openings') {
         this.data.form.patchValue({
           subject: this.emails[6].subject,
           body: this.emails[6].email,
@@ -151,14 +156,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       }
     }
     if (this.data.decisionMadeForm) {
-      if (this.data?.form?.controls['status_message'].value == 'offer') {
+      if (this.data?.form?.controls['status_message'].value == 'Offer Made') {
         this.data.form.patchValue({
           subject: this.emails[7].subject,
           body: this.emails[7].email,
           status_step: '8',
         })
       }
-      if (this.data?.form?.controls['status_message'].value == 'not_qualified') {
+      if (this.data?.form?.controls['status_message'].value == 'Qualifications dont match current openings') {
         this.data.form.patchValue({
           subject: this.emails[8].subject,
           body: this.emails[8].email
@@ -202,6 +207,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   }
 
   send(): void {
+    this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id;
     this._applicantService.patchApplicant(this.data.form.value);
     this.matDialogRef.close();
     this.data.form.controls['recruiter_id'].disable();
@@ -212,7 +218,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   //#region Select Recruiter Calendly link
   recruiterSelect(recruiter: any) {
     if (this.data.preliminaryReview) {
-      if (this.data?.form?.controls['status_message'].value == 'advance') {
+      if (this.data?.form?.controls['status_message'].value == 'First Interview Completed') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 1);
         }
@@ -221,7 +227,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[1].email = this.emails[1].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form?.controls['status_message'].value == 'wait-listed') {
+      if (this.data?.form?.controls['status_message'].value == 'WaitListed') {
         if (this.emails[2].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 2);
         }
@@ -230,7 +236,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[2].email = this.emails[2].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form?.controls['status_message'].value == 'not-qualified') {
+      if (this.data?.form?.controls['status_message'].value == 'Qualifications dont match current openings') {
         if (this.emails[3].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 3);
         }
@@ -241,7 +247,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       }
     }
     if (this.data.interviewCompletedForm) {
-      if (this.data?.form.controls['status_message'].value == 'second_interview' || this.data?.form.controls['status_message'].value == 'third_interview') {
+      if (this.data?.form.controls['status_message'].value == 'Second Interview Completed' || this.data?.form.controls['status_message'].value == 'Third Interview Completed') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 1);
         }
@@ -250,7 +256,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.emails[1].email = this.emails[1].email + `</br>${recruiter.calendly}`;
         }
       }
-      if (this.data?.form.controls['status_message'].value == 'reference_call') {
+      if (this.data?.form.controls['status_message'].value == 'Reference Call Completed') {
         if (this.emails[4].email.includes('&#8205')) {
           this.changeCalendlyLink(recruiter, 4);
         }

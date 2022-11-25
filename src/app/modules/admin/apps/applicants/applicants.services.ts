@@ -228,9 +228,9 @@ export class ApplicantService {
             );
     }
     patchApplicant(data: any) {
-        const {bcc,body,cc,recruiter_id,subject,to, ...applicantData } = data;
-        const {id,status_step,status_message,date, ...emailData } = data
-        const newData = Object.assign({},{applicantData},{emailData} )
+        const {body,recruiter_id,subject,to, ...applicant_data } = data;
+        const {id,status_step,status_message, ...email_data } = data
+        const newData = Object.assign({},{applicant_data},{email_data} )
         this._httpClient
             .put(`api-1/applicants`, newData)
             .pipe(take(1))
