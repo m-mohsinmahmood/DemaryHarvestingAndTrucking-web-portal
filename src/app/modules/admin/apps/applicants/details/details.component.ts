@@ -61,22 +61,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     //#region Lifecycle functions
     ngOnInit(): void {
-        this.items = [
-            { content: 'Applicant Completed', name: '', date: '15/02/2022', status: 'a', active: true },
-            { content: 'Advance Preliminary review', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: false },
-            { content: 'First interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-            { content: 'Second interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-            { content: 'Third interview completed', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-            { content: 'Reference call completed', name: 'Katherine synder', date: '15/02/2022', status: 'e2', active: false },
-            { content: 'Recruiter decision made', name: 'Bill Demaray', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Offer made', name: '', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Offer Accepted', name: '', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Advance to pre-employment Process', name: '', date: '15/02/2022', status: 'e1', active: false },
-            { content: 'Results', name: '', date: '15/02/2022', status: 'e2', active: false },
-            { content: 'Hired', name: 'rejected', date: '15/02/2022', status: false, active: false },
-            { content: 'Waitlisted', name: 'rejected', date: '15/02/2022', status: false, active: false },
-            { content: 'Qualifications dont match current openings', name: 'rejected', date: '15/02/2022', status: false, active: false },
-        ];
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.id;
         });
@@ -210,7 +194,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     preliminaryReview: true,
                     applicant: this.applicant.applicant_info,
                     form: this.preliminaryReviewForm,
-                    index: index,
                 }
             });
             dialogRef.afterClosed().subscribe((result) => { });
@@ -224,7 +207,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                        index: index,
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
@@ -236,7 +218,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                        index: index,
+                        
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
@@ -248,7 +230,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                        index: index,
                     }
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
@@ -260,7 +241,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     decisionMadeForm: true,
                     applicant: this.applicant.applicant_info,
                     form: this.decisionMadeForm,
-                    index: index,
+                   
                 }
             });
             dialogRef.afterClosed().subscribe((result) => { });

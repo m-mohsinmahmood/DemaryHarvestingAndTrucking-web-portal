@@ -227,10 +227,17 @@ export class ApplicantService {
                 }
             );
     }
-    patchApplicant(data: any) {
-        const {body,recruiter_id,subject,to, ...applicant_data } = data;
-        const {id,status_step,status_message, ...email_data } = data
-        const newData = Object.assign({},{applicant_data},{email_data} )
+    patchApplicant(data: any, recruiterRemarks: boolean) {
+        let newData;
+        if (recruiterRemarks){
+            const {...applicant_data } = data;
+            newData = Object.assign({},{applicant_data} )
+        }
+        else {
+            const {body,recruiter_id,subject,to, ...applicant_data } = data;
+            const {id,status_step,status_message, ...email_data } = data
+            newData = Object.assign({},{applicant_data},{email_data} )
+        }
         this._httpClient
             .patch(`api-1/applicants`, newData)
             .pipe(take(1))
@@ -253,7 +260,7 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicantById(applicant_data.id);
+                    this.getApplicantById(newData.applicant_data.id);
                 }
             );
     }

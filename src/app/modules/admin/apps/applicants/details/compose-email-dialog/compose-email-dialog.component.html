@@ -18,7 +18,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="data.interviewCompletedForm || data.decisionMadeForm" appearance="outline">
+        <!-- <mat-form-field *ngIf="data.interviewCompletedForm || data.decisionMadeForm" appearance="outline">
             <mat-label>Select Next Step</mat-label>
             <mat-select formControlName="status_message">
                 <mat-option *ngIf="data.decisionMadeForm" value="Offer Made">Offer</mat-option>
@@ -29,7 +29,7 @@
                 <mat-option *ngIf="data.thirdInterview"   value="WaitListed">Waitlisted</mat-option>
                 <mat-option *ngIf="data.thirdInterview"   value="Qualifications dont match current openings"> Qualifications don't match current openings</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <!-- MAT AUTOCOMPLETE -->
         <mat-form-field *ngIf="data.interviewCompletedForm || data.preliminaryReview" appearance="outline" fxFlex>

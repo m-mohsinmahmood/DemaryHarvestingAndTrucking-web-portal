@@ -61,20 +61,6 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       { id: '8', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we are excited to inform you that DHT has decided to offer you a position as a [insert position they selected from drop down list].  DHT’s Administrative Director, Bill Demaray, will be contacting you shortly by email to discuss the required pre-employment (onboarding) enrollment steps. We look forward to meeting and working with you soon.' },
       { id: '9', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we feel that your qualifications do not currently match any available positions at DHT.  We will keep your application on file should any new opportunities arise.' },
     ];
-    const statusBar = [
-      { id: 1, status: false, statusStep: '1', statusMessage: 'Applicant completed' },
-      { id: 2, status: false, statusStep: '2', statusMessage: 'Advance Preliminary review' },
-      { id: 3, status: false, statusStep: '4', statusMessage: 'First interview completed' },
-      { id: 4, status: false, statusStep: '5', statusMessage: 'Second interview completed' },
-      { id: 5, status: false, statusStep: '6', statusMessage: 'Third interview completed' },
-      { id: 6, status: false, statusStep: '7', statusMessage: 'Reference call completed' },
-      { id: 7, status: false, statusStep: '8', statusMessage: 'Recruiter decision made' },
-      { id: 8, status: false, statusStep: '9', statusMessage: 'Offer made' },
-      { id: 9, status: false, statusStep: '10', statusMessage: 'Offer accepted' },
-      { id: 10, status: false, statusStep: '11', statusMessage: 'Advance to pre-employement process' },
-      { id: 11, status: false, statusStep: '12', statusMessage: 'Not qualified' },
-      { id: 12, status: false, statusStep: '13', statusMessage: 'Reconsider in future' },
-    ]
     this.patchForm();
     this.recruiterSearchSubscription()
   }
@@ -88,7 +74,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
-          status_step: '4',
+          status_step: '3',
         })
       }
       else if (this.data.form.controls['status_message'].value == 'WaitListed') {
@@ -96,7 +82,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[2].subject,
           body: this.emails[2].email,
-          status_step: '14',
+          status_step: '13',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -105,7 +91,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[3].subject,
           body: this.emails[3].email,
-          status_step: '15',
+          status_step: '14',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -115,7 +101,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[4].subject,
           body: this.emails[4].email,
-          status_step: '7',
+          status_step: '6',
         })
         this.data.form.controls['recruiter_id'].enable();
         this.isReferenceCall = true;
@@ -125,7 +111,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
-          status_step: '5',
+          status_step: '4',
         })
         this.data.form.controls['recruiter_id'].enable();
       }
@@ -134,7 +120,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[1].subject,
           body: this.emails[1].email,
-          status_step: '6',
+          status_step: '5',
         })
         this.data.form.controls['recruiter_id'].enable();
       }
@@ -142,7 +128,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[5].subject,
           body: this.emails[5].email,
-          status_step: '14',
+          status_step: '13',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -150,7 +136,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         this.data.form.patchValue({
           subject: this.emails[6].subject,
           body: this.emails[6].email,
-          status_step: '15',
+          status_step: '14',
         })
         this.data.form.controls['recruiter_id'].disable();
       }
@@ -209,7 +195,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
 
   send(): void {
     this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id;
-    this._applicantService.patchApplicant(this.data.form.value);
+    this._applicantService.patchApplicant(this.data.form.value, false);
     this.matDialogRef.close();
     this.data.form.controls['recruiter_id'].disable();
     this.data.form.reset();
