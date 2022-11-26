@@ -10,7 +10,8 @@
             class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer">
             <div class="flex items-center">
                 <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-                <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight">{{ applicant?.applicant_info.first_name}} {{
+                <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight">{{
+                    applicant?.applicant_info.first_name}} {{
                     applicant?.applicant_info.last_name }}
                 </span>
             </div>
@@ -41,10 +42,10 @@
                     <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
                 </button>
             </div>
-            <button class="" mat-flat-button [color]="'primary'" >
+            <button class="" mat-flat-button [color]="'primary'">
                 <span class="whitespace-normal">Advance to offer</span>
             </button>
-            <button class="" mat-flat-button [color]="'warn'" >
+            <button class="" mat-flat-button [color]="'warn'">
                 <span class="">Reject</span>
             </button>
             <!-- <button
@@ -168,7 +169,7 @@
                 </div>
             </div>
         </div> -->
-        <div  class="sm:w-4/12 md:w-4/12">
+        <div class="sm:w-4/12 md:w-4/12">
             <div class="bg-gray-100 rounded-lg mx-2 shadow">
                 <div class="status-bar flex flex-col py-4 px-2">
                     <div class="last-of-type:h-2 flex relative {{item.show? 'min-h-14': 'min-h-0'}} {{item.status? 'opacity-100':'opacity-50'}}"
@@ -177,26 +178,35 @@
                             <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{this.results.includes(item.step)? '4': '8'}} h-{{this.results.includes(item.step)? '4': '8'}} bg-white
                                     bg-{{item.status === true ? 'green': 'red'}}-400
                                     bg-{{item.status === false? 'indigo': ''}}-400">
-                                <mat-icon class="{{i+1 < this.applicant.applicant_info?.status_step? 'visible': 'invisible'}}"
+                                <mat-icon
+                                    class="{{i+1 < this.applicant.applicant_info?.status_step? 'visible': 'invisible'}}"
                                     [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
                                 </mat-icon>
                             </div>
                             <div class="timeline-track"></div>
                         </div>
                         <div *ngIf="item.show" class="flex-1 flex flex-row px-4">
-                            <div (click)="composeEmail(i)" class="cursor-pointer w-8/12 flex flex-col">  
+                            <div (click)="composeEmail(i)" class="cursor-pointer w-8/12 flex flex-col">
                                 <span class="flex items-center text-md font-sans font-normal">{{item.step}}
                                     <mat-icon matTooltip="Compose Email"
                                         *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6" class="ml-2 icon-size-5"
                                         [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
                                 </span>
-                                <span *ngIf="i == 1" class=" text-md text-black">{{this.applicant.applicant_info.first_interviewer_name === null ? "":
+                                <span *ngIf="i == 1"
+                                    class=" text-md text-black">{{this.applicant.applicant_info.first_interviewer_name
+                                    === null ? "":
                                     this.applicant.applicant_info.first_interviewer_name}} </span>
-                                <span *ngIf="i == 2" class=" text-md text-black">{{this.applicant.applicant_info.second_interviewer_name === null ? "":
+                                <span *ngIf="i == 2"
+                                    class=" text-md text-black">{{this.applicant.applicant_info.second_interviewer_name
+                                    === null ? "":
                                     this.applicant.applicant_info.second_interviewer_name}} </span>
-                                <span *ngIf="i == 3" class=" text-md text-black">{{this.applicant.applicant_info.third_interviewer_name === null ? "":
+                                <span *ngIf="i == 3"
+                                    class=" text-md text-black">{{this.applicant.applicant_info.third_interviewer_name
+                                    === null ? "":
                                     this.applicant.applicant_info.third_interviewer_name}} </span>
-                                <span *ngIf="i == 4" class=" text-md text-black">{{this.applicant.applicant_info.reference_interviewer_name === null ?
+                                <span *ngIf="i == 4"
+                                    class=" text-md text-black">{{this.applicant.applicant_info.reference_interviewer_name
+                                    === null ?
                                     "": this.applicant.applicant_info.reference_interviewer_name}} </span>
                             </div>
                             <div class=" w-4/12 flex justify-end font-mono text-xs">
