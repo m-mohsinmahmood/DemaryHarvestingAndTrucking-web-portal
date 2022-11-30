@@ -6,33 +6,26 @@
             <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </div>
+    <!-- Header -->
 
     <!-- Compose form -->
     <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="data.form">
-        <mat-form-field *ngIf="data.preliminaryReview" appearance="outline">
-            <mat-label>Preliminary Review</mat-label>
+        <mat-form-field appearance="outline">
+            <mat-label>Next Step</mat-label>
             <mat-select formControlName="status_message">
-                <mat-option value="First Interview Completed">Advance</mat-option>
-                <mat-option value="WaitListed">Wait-listed</mat-option>
+                <mat-option *ngIf="current_status_step == 2" value="First Interview Completed">First Interview</mat-option>
+                <mat-option *ngIf="current_status_step == 3" value="Second Interview Completed">Second Interview</mat-option>
+                <mat-option *ngIf="current_status_step == 4" value="Third Interview Completed">Third Interview</mat-option>
+                <mat-option *ngIf="current_status_step == 3 || current_status_step == 4 || current_status_step == 5" value="Reference Call Completed">Reference Call</mat-option>
+                <mat-option value="Waitlisted">Wait-listed</mat-option>
                 <mat-option value="Qualifications dont match current openings">Not Qualified</mat-option>
+                <mat-option *ngIf="current_status_step == 7" value="Offer Made">Make Offer</mat-option>
+                
             </mat-select>
         </mat-form-field>
 
-        <!-- <mat-form-field *ngIf="data.interviewCompletedForm || data.decisionMadeForm" appearance="outline">
-            <mat-label>Select Next Step</mat-label>
-            <mat-select formControlName="status_message">
-                <mat-option *ngIf="data.decisionMadeForm" value="Offer Made">Offer</mat-option>
-                <mat-option *ngIf="data.decisionMadeForm" value="Qualifications dont match current openings">Qualifications don't match current openings</mat-option>
-                <mat-option *ngIf="data.firstInterview"   value="Second Interview Completed">Second Interview</mat-option>
-                <mat-option *ngIf="data.secondInterview"  value="Third Interview Completed">Third Interview</mat-option>
-                <mat-option *ngIf="!data.decisionMadeForm"value="Reference Call Completed">Reference Call</mat-option>
-                <mat-option *ngIf="data.thirdInterview"   value="WaitListed">Waitlisted</mat-option>
-                <mat-option *ngIf="data.thirdInterview"   value="Qualifications dont match current openings"> Qualifications don't match current openings</mat-option>
-            </mat-select>
-        </mat-form-field> -->
-
         <!-- MAT AUTOCOMPLETE -->
-        <mat-form-field *ngIf="data.interviewCompletedForm || data.preliminaryReview" appearance="outline" fxFlex>
+        <mat-form-field *ngIf="[3, 4, 5, 6].includes(next_status_step)" appearance="outline" fxFlex>
             <mat-label>Recruiter Name</mat-label>
             <input  (ngModelChange)="formValidation($event)" (click)="getDropdownRecruiters()" [matAutocomplete]="recruiters"
                 (keyup)="recruiter_search$.next($event.target.value)" matInput formControlName="recruiter_id" name="name"
@@ -58,20 +51,24 @@
             </div>
         </mat-autocomplete>
         <!-- MAT AUTOCOMPLETE -->
+        
         <!-- To -->
         <mat-form-field appearance="outline">
             <mat-label>To</mat-label>
             <input matInput [formControlName]="'to'">
         </mat-form-field>
+        <!-- To -->
 
         <!-- Subject -->
         <mat-form-field appearance="outline">
             <mat-label>Subject</mat-label>
             <input matInput [formControlName]="'subject'">
         </mat-form-field>
-
+        <!-- Subject -->
+        
         <!-- Body -->
         <quill-editor class="mt-2" [formControlName]="'body'" [modules]="quillModules"></quill-editor>
+        <!-- Body -->
 
         <!-- Actions -->
         <div class="flex items-center justify-end mt-4">
@@ -88,5 +85,7 @@
             </button>
             </div>
         </div>
+        <!-- Actions -->
     </form>
+    <!-- Compose form -->
 </div>

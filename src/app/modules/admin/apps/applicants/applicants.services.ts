@@ -229,6 +229,7 @@ export class ApplicantService {
     }
     patchApplicant(data: any, recruiterRemarks: boolean) {
         let newData;
+        let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
         if (recruiterRemarks){
             const {...applicant_data } = data;
             newData = Object.assign({},{applicant_data} )
@@ -239,7 +240,7 @@ export class ApplicantService {
             newData = Object.assign({},{applicant_data},{email_data} )
         }
         this._httpClient
-            .patch(`api-1/applicants`, newData)
+            .patch(`api-1/applicants${url}`, newData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

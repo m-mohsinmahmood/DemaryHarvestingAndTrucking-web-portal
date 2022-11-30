@@ -40,6 +40,7 @@ export class RecruiterremarksComponent implements OnInit {
     secondInterviewForm: FormGroup;
     thirdInterviewForm: FormGroup;
     referenceForm: FormGroup
+    status_step;
 
 
 
@@ -57,6 +58,7 @@ export class RecruiterremarksComponent implements OnInit {
 
     ngOnInit(): void {
         this.initApplicantForm();
+        this.status_step = this.applicantData?.status_step;
     }
 
     // #region initializing forms
@@ -136,37 +138,39 @@ export class RecruiterremarksComponent implements OnInit {
         //     status_step:[''],
         //     id: [''],
         // });
+        console.log(this.applicantData?.first_call_remarks == null ? "" : this.applicantData?.first_call_remarks);
         this.firstInterviewForm = this._formBuilder.group({
-            first_call_remarks: this.applicantData?.first_call_remarks,
+            first_call_remarks: this.applicantData?.first_call_remarks == null ? "" : this.applicantData?.first_call_remarks,
             first_call_ranking: this.applicantData?.first_call_ranking,
             first_interviewer_id: this.applicantData?.first_interviewer_id,
-            status_message: [''],
-            status_step:[''],
-            id: [''],
+            status_message: ['First Interview Completed'],
+            status_step:['3'],
+            id: [this.applicantData?.id]
         });
+        console.log(this.applicantData?.second_call_remarks);
         this.secondInterviewForm = this._formBuilder.group({        
-            second_call_remarks: this.applicantData?.second_call_remarks,
+            second_call_remarks: this.applicantData?.second_call_remarks == null ? "" : this.applicantData?.second_call_remarks,
             second_call_ranking: this.applicantData?.second_call_ranking,
             second_interviewer_id: this.applicantData?.second_interviewer_id,
-            status_message: [''],
-            status_step:[''],
-            id: [''],
+            status_message: ['Second Interview Completed'],
+            status_step:['4'],
+            id: [this.applicantData?.id]
         });
         this.thirdInterviewForm = this._formBuilder.group({           
-            third_call_remarks: this.applicantData?.third_call_remarks,
+            third_call_remarks: this.applicantData?.third_call_remarks == null ? "" : this.applicantData?.third_call_remarks,
             third_call_ranking: this.applicantData?.third_call_ranking,
             third_interviewer_id: this.applicantData?.third_interviewer_id,
-            status_message: [''],
-            status_step:[''],
-            id: [''],
+            status_message: ['Third Decision Made'],
+            status_step:['5'],
+            id: [this.applicantData?.id]
         });
         this.referenceForm = this._formBuilder.group({         
-            reference_call_remarks: this.applicantData?.reference_call_remarks,
+            reference_call_remarks: this.applicantData?.reference_call_remarks == null ? "" : this.applicantData?.reference_call_remarks,
             reference_call_ranking: this.applicantData?.reference_call_ranking,
             reference_interviewer_id: this.applicantData?.reference_interviewer_id,
-            status_message: [''],
-            status_step:[''],
-            id: [''],
+            status_message: ['Recruiter Decision Made'],
+            status_step:['7'],
+            id: [this.applicantData?.id]
         });
 
         this.formArr = [

@@ -15,7 +15,7 @@
                     applicant?.applicant_info.last_name }}
                 </span>
             </div>
-            <div class="sm:w-auto lg:w-auto w-full">
+            <!-- <div class="sm:w-auto lg:w-auto w-full">
                 <ng-template [ngIf]="selectedIndex === 'Applicant Data'">
                     <p class="text-lg text-gray-300	font-normal ">(Recruiter decision made)</p>
                 </ng-template>
@@ -25,7 +25,7 @@
                 <ng-template [ngIf]="selectedIndex === 'Old Submitted Application'">
                     <p class="text-lg text-red-400	font-normal">(Offer Accepted)</p>
                 </ng-template>
-            </div>
+            </div> -->
 
         </div>
         <!-- Actions -->
@@ -33,21 +33,29 @@
 
     <!-- Main for Web & Tab -->
     <div class="sm:flex sm:flex-row mb-4 pt-2  sm:visible hidden">
-        <div class="w-4/12 h-12 flex justify-start items-center gap-2">
-            <div class="flex" *ngFor="let route of routesLeft;let i = index">
-                <button mat-stroked-button
-                    [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
-                    [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 sm:w-30 "
-                    (click)="routeHandler(route)">
-                    <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
-                </button>
+        <div class="w-8/12 h-12 flex justify-between items-center">
+            <div class="buttons-wrapper-1 gap-2 flex justify-start items-center">
+                <div class="flex" *ngFor="let route of routesLeft;let i = index">
+                    <button mat-stroked-button
+                        [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                        [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" class="my-1 sm:w-30 "
+                        (click)="routeHandler(route)">
+                        <span style="font-size: 13px;  margin-left: 0px;" class="text-black"> {{route.title}} </span>
+                    </button>
+                </div>
+
             </div>
-            <button class="" mat-flat-button [color]="'primary'">
-                <span class="whitespace-normal">Advance to offer</span>
-            </button>
-            <button class="" mat-flat-button [color]="'warn'">
-                <span class="">Reject</span>
-            </button>
+            <div class="buttons-wrapper-1">
+                <button class="mr-1" mat-flat-button [color]="'primary'">
+                    <span class="whitespace-normal">Advance to offer</span>
+                </button>
+                <button class="m-1" mat-flat-button [color]="'warn'">
+                    <span class="">Reject</span>
+                </button>
+
+            </div>
+
+
             <!-- <button
                 class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded-full mr-2 w-44">
                 <span>Advance to offer</span>
@@ -57,7 +65,7 @@
                 <span>Reject</span>
             </button> -->
         </div>
-        <div class="w-8/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
+        <div class="w-4/12 sm:h-12 flex sm:flex-row   justify-end items-center px-3">
             <div class="" *ngFor="let route of routesright;let i = index">
                 <button mat-stroked-button
                     [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
@@ -210,7 +218,7 @@
                                     "": this.applicant.applicant_info.reference_interviewer_name}} </span>
                             </div>
                             <div class=" w-4/12 flex justify-end font-mono text-xs">
-                                {{item.date | date: "dd-MM-YYYY"}}
+                                {{item.date | date: "MM-dd-YYYY"}}
                             </div>
                         </div>
                     </div>

@@ -48,6 +48,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     results: string[] = ['Waitlisted','Hired','Qualifications dont match current openings'];
     //#endregion
 
+    //#region Constructor
     constructor(
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
@@ -56,8 +57,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-    ) {
-    }
+    ) {}
+    //#endregion Constructor
 
     //#region Lifecycle functions
     ngOnInit(): void {
@@ -80,48 +81,46 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     //#endregion
-
-    //#region Get Applicant By id 
-    getApplicantById(){
-        this._applicantService
-        .getApplicantById(this.routeID)
-        .subscribe((applicantObjData: any) => {
-            this.applicant = applicantObjData;
-        }); 
-    }
-    //#endregion
-
+    
     //#region Init Form
     initForm() {
         this.preliminaryReviewForm = this._formBuilder.group({
             id: [''],
             status_message: [''],
-            status_step: ['3'],
+            status_step: ['2'],
+            prev_status_step: [''],
+            prev_status_message: [''],
             recruiter_id: [{ value: '', disabled: true }],
             to: ['', [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
+
         this.interviewCompletedForm = this._formBuilder.group({
             id: [''],
             status_message: [''],
-            status_step: [''],
+            status_step: ['3'],
+            prev_status_step: [''],
+            prev_status_message: [''],
             recruiter_id: [{ value: '', disabled: true }],
             to: ['', [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
+
         this.decisionMadeForm = this._formBuilder.group({
             id: [''],
             status_message: [''],
             status_step: [''],
+            prev_status_step: [''],
+            prev_status_message: [''],
             to: ['', [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
     }
     //#endregion
-
+    
     //#region Initialize Side Navigation
     initSideNavigation() {
         this.routes = this._applicantService.applicantNavigationLeft;
@@ -138,7 +137,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             });
     }
     //#endregion
-
+    
     //#region Inner Navigation Routing
     routeHandler(index) {
         const { title } = index;
@@ -148,6 +147,12 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         // this.isLoading = true;
         this.selectedIndex = title;
     };
+    //#endregion
+    
+    //#region Back Button
+    backHandler(): void {
+        this._router.navigate(['/apps/applicants/']);
+    }
     //#endregion
 
     //#region Dialog 
@@ -166,11 +171,16 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    //#region Back Button
-    backHandler(): void {
-        this._router.navigate(['/apps/applicants/']);
+    //#region Get Applicant By id 
+    getApplicantById(){
+        this._applicantService
+        .getApplicantById(this.routeID)
+        .subscribe((applicantObjData: any) => {
+            this.applicant = applicantObjData;
+        }); 
     }
     //#endregion
+    
     //#region Delete Applicant
     deleteApplicant() {
         // Open the confirmation dialog
@@ -185,10 +195,10 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         });
     }
     //#endregion
-
+    
     //#region Status Bar onclick
     composeEmail(index) {
-        if (index == 1 && index <= parseInt(this.applicant?.applicant_info.status_step) ) {
+        if (index == 1 ) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     preliminaryReview: true,
@@ -200,7 +210,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
         }
         else if (index == 2 || index == 3 || index == 4) {
-            if (index == 2 && index <= parseInt(this.applicant.applicant_info.status_step)) {
+            if (index == 2 ) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         firstInterview: true,
@@ -211,7 +221,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 3 && index <= parseInt(this.applicant.applicant_info.status_step)) {
+            if (index == 3 ) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         secondInterview: true,
@@ -223,7 +233,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 4 && index <= parseInt(this.applicant.applicant_info.status_step)) {
+            if (index == 4 ) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         thirdInterview: true,
@@ -235,7 +245,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 dialogRef.afterClosed().subscribe((result) => { });
             }
         }
-        else if (index == 6  && index <= parseInt(this.applicant.applicant_info.status_step)) {
+        else if (index == 6  ) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     decisionMadeForm: true,
@@ -248,6 +258,9 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
         }
     }
-
     //#endregion
+
+    expandAll(){
+        this.panelOpenState = true;
+    }
 }

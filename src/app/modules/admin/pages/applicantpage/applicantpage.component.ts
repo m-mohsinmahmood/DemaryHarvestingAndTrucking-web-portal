@@ -1,19 +1,14 @@
 // import { Component, OnInit } from '@angular/core';
-
 // @Component({
 //   selector: 'app-applicantpage',
 //   templateUrl: './applicantpage.component.html',
 //   styleUrls: ['./applicantpage.component.scss']
 // })
 // export class ApplicantpageComponent implements OnInit {
-
 //   constructor() { }
-
 //   ngOnInit(): void {
 //   }
-
 // }
-
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
@@ -29,7 +24,6 @@ import { map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
-
 @Component({
     selector: 'app-applicantpage',
       templateUrl: './applicantpage.component.html',
@@ -42,7 +36,6 @@ export class ApplicantpageComponent implements OnInit
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
-
     // #region local variables
     form: FormGroup;
     employees: any;
@@ -62,20 +55,16 @@ export class ApplicantpageComponent implements OnInit
     avatar: string = '';
     isEdit: boolean = true;
     formArr = [];
-
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
     calendar_year: any;
      //#endregion
-
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
-
     // alert: { type: FuseAlertType; message: string } = {
     //     type   : 'success',
     //     message: ''
     // };
     // comingSoonForm: FormGroup;
     // showAlert: boolean = false;
-
     /**
      * Constructor
      */
@@ -84,7 +73,6 @@ export class ApplicantpageComponent implements OnInit
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
         // @Inject(MAT_DIALOG_DATA) public data: any,
-
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
         breakpointObserver: BreakpointObserver
@@ -95,11 +83,9 @@ export class ApplicantpageComponent implements OnInit
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
         // this.routeID = data ? data.id : '';
     }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
-
     /**
      * On init
      */
@@ -108,41 +94,31 @@ export class ApplicantpageComponent implements OnInit
         this.initfarmGroups();
         // this.isEdit = this.data.isEdit;
     }
+    // #region initializing forms
     initfarmGroups() {
+        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
+            id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: [
-                '',
-                [
-                    Validators.required,
-                    Validators.pattern(
-                        '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
-                    ),
-                ],
-            ],
+            email  : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             cell_phone_number: ['', [Validators.required]],
-            home_phone_number: ['', ''],
-            languages: ['', [Validators.required]],
-            status: ['', [Validators.required]],
-        });
-
-        this.secondFormGroup = this._formBuilder.group({
+            home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
-            calendar_year: [moment()],
+            age: ['', [Validators.required]],
             marital_status: ['', [Validators.required]],
+            languages: ['', [Validators.required]],
+            rank_speaking_english: ['', [Validators.required]],
+        });
+        this.secondFormGroup = this._formBuilder.group({
             address_1: ['', [Validators.required]],
-            address_2: ['', ''],
-            city: ['', [Validators.required]],
-            county: ['', [Validators.required]],
+            address_2: [''],
+            town_city: ['', [Validators.required]],
+            county_providence: ['', [Validators.required]],
+            state: ['', [Validators.required]],
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
-            us_citizen: ['', [Validators.required]],
-            tractor_license: ['', [Validators.required]],
-            passport: ['', [Validators.required]],
-            //imageURL: ['', [Validators.required]],
-            self_rating: [''],
-            avatar: ['', ''],
+            avatar: [''],
         });
         this.thirdFormGroup = this._formBuilder.group({
             question_1: ['', [Validators.required]],
@@ -150,38 +126,46 @@ export class ApplicantpageComponent implements OnInit
             question_3: ['', [Validators.required]],
             question_4: ['', [Validators.required]],
             question_5: ['', [Validators.required]],
+            authorized_to_work: ['', [Validators.required]],
+            us_citizen: ['', [Validators.required]],
+            cdl_license: ['', [Validators.required]],
+            lorry_license: ['', [Validators.required]],
+            tractor_license: ['', [Validators.required]],
+            passport: ['', [Validators.required]],
             work_experience_description: ['', [Validators.required]],
-            recent_job: ['', [Validators.required]],
-            supervisor: ['', [Validators.required]],
-            supervisor_contact: ['', [Validators.required]],
+            employment_period: ['', [Validators.required]],
         });
-
         this.fourthFormGroup = this._formBuilder.group({
+            supervisor_name: ['', [Validators.required]],
+            supervisor_contact: ['', [Validators.required]],
             degree_name: ['', [Validators.required]],
-            institute_name: ['', [Validators.required]],
-            education: ['', [Validators.required]],
-        });
-
-        this.fifthFormGroup = this._formBuilder.group({
-            blood_group: [''],
             reason_for_applying: ['', [Validators.required]],
-            e_thirdQuestion: ['', ''],
+            hear_about_dht: ['', [Validators.required]],
+        });
+        this.fifthFormGroup = this._formBuilder.group({
+            us_phone_number: [''],
+            blood_type: [''],
+            emergency_contact_name: [''],
+            emergency_contact_phone: [''],
         });
         this.sixthFormGroup = this._formBuilder.group({
             first_phone_call: [''],
             first_call_remarks: [''],
-            firstRanking: [''],
+            first_call_ranking: [''],
+            first_interviewer_id: [''],
             reference_phone_call: [''],
             reference_call_remarks: [''],
-            refreeRanking: [''],
+            reference_call_ranking: [''],
+            reference_interviewer_id: [''],
             second_phone_call: [''],
             second_call_remarks: [''],
-            secondRanking: [''],
+            second_call_ranking: [''],
+            second_interviewer_id: [''],
             third_phone_call: [''],
             third_call_remarks: [''],
-            thirdRanking: [''],
+            third_call_ranking: [''],
+            third_interviewer_id: [''],
         });
-
         this.formArr = [
             this.firstFormGroup,
             this.secondFormGroup,
@@ -190,9 +174,8 @@ export class ApplicantpageComponent implements OnInit
             this.fifthFormGroup,
             this.sixthFormGroup,
         ];
-
     }
-    
+    // #endregion
     submit(): void {
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -202,21 +185,15 @@ export class ApplicantpageComponent implements OnInit
             });
         });
         this._applicantService.isLoadingApplicant.next(true);
-        
-            this._applicantService.createApplicant(this.form.value);
-        
+        this._applicantService.createApplicant(this.form.value);
+        this._router.navigateByUrl("/pages/landing-page")
     }
     updateApplicant(applicantData: any): void {
         this._applicantService.updateApplicant(applicantData);
     }
-
-
     initCalendar() {
-       
             this.calendar_year = new FormControl(moment());
-        
     }
-
     //#region Calendar Year Function
     chosenYearHandler(
         normalizedYear: Moment,
@@ -228,41 +205,32 @@ export class ApplicantpageComponent implements OnInit
         this.form.value.calendar_year = ctrlValue;
         datepicker.close();
     }
-
     showFlashMessage(type: 'success' | 'error'): void {
         // Show the message
         this.flashMessage = type;
-
         // Mark for check
         this._changeDetectorRef.markForCheck();
-
         // Hide it after 3 seconds
         setTimeout(() => {
             this.flashMessage = null;
-
             // Mark for check
             this._changeDetectorRef.markForCheck();
         }, 3000);
     }
-
     saveAndClose(): void {
         // Save the message as a draft
         this.saveAsDraft();
-
         // Close the dialog
         // this.matDialogRef.close();
     }
-
     /**
      * Discard the message
      */
     discard(): void {}
-
     /**
      * Save the message as a draft
      */
     saveAsDraft(): void {}
-
     /**
      * Send the message
      */
@@ -277,7 +245,6 @@ export class ApplicantpageComponent implements OnInit
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
     }
-
     showPreview(event) {
         const file = (event.target as HTMLInputElement).files[0];
         this.fourthFormGroup.patchValue({

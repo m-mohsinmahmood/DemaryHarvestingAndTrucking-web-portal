@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WithLoadingPipe } from './../general-pipes/with-loading.pipe';
+import { PhoneMaskDirective } from './phone-mask-directive/phone-mask.directive';
 
 @NgModule({
-    declarations: [WithLoadingPipe],
+    declarations: [WithLoadingPipe, PhoneMaskDirective],
     imports: [
         CommonModule,
         FormsModule,
@@ -14,7 +15,8 @@ import { WithLoadingPipe } from './../general-pipes/with-loading.pipe';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        WithLoadingPipe
+        WithLoadingPipe,
+        PhoneMaskDirective
     ]
 })
 export class SharedModule

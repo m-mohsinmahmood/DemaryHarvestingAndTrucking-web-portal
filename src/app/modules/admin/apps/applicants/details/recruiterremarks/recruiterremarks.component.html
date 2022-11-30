@@ -1,7 +1,7 @@
-<form [formGroup]="firstInterviewForm" class="interview-results-form mx-3 mb-3 p-3 rounded-lg">
+<form *ngIf="status_step >= 3" [formGroup]="firstInterviewForm" class="interview-results-form mb-3 rounded-lg">
     <ng-template matStepLabel>Interview Results</ng-template>
     <!-- First Section    -->
-    <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
+    <div class="interview-section bg-gray-100 p-4 rounded-lg shadow">
         
         <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
             <mat-label>1st Phone Interview Results</mat-label>
@@ -13,13 +13,6 @@
             <input formControlName="first_interviewer_id" matInput type="text" placeholder="First Interviewer">
         </mat-form-field>
 
-        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-            <mat-label>Select Next Step</mat-label>
-            <mat-select formControlName="status_message">
-                <mat-option value="Second Interview Completed">Second Interview</mat-option>
-                <mat-option value="Reference Call Completed">Reference Call</mat-option>
-            </mat-select>
-        </mat-form-field>
         <div class="md:flex lg:flex align-center justify-between">
             <div class="sm:w-6/12 md:w-8/12 lg:w-52">
                 <label>First Interview Ranking: </label>
@@ -38,12 +31,10 @@
             </mat-radio-group>
         </div>
         <div class="flex justify-end">
-            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('First')">
+            <button class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('First')">
                 Save
             </button>
-
         </div>
-
     </div>
     </form>
 
@@ -53,7 +44,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
     <!-- Second section -->
-    <form [formGroup]="secondInterviewForm" class="interview-results-form mx-3 mb-3 p-3 rounded-lg">
+    <form *ngIf="status_step >= 4" [formGroup]="secondInterviewForm" class="interview-results-form mb-3 rounded-lg">
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
         
         <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
@@ -61,17 +52,12 @@
             <textarea formControlName="second_call_remarks" matInput type="text" id="secondInterviewResult"
                 placeholder="1st Phone Interview Results"> </textarea>
         </mat-form-field>
+        
         <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
             <mat-label>Interviewer</mat-label>
             <input formControlName="second_interviewer_id" matInput type="text" placeholder="Second Interviewer">
         </mat-form-field>
-        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-            <mat-label>Select Next Step</mat-label>
-            <mat-select formControlName="status_message">
-                <mat-option value="Third Interview Completed">Third Interview</mat-option>
-                <mat-option value="Reference Call Completed">Reference Call</mat-option>
-            </mat-select>
-        </mat-form-field>
+        
         <div class="md:flex lg:flex align-center justify-between">
             <div class="sm:w-6/12 md:w-8/12 lg:w-52">
                 <label>Second Interview Ranking: </label>
@@ -91,7 +77,7 @@
         </div>
 
         <div class="flex justify-end">
-            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Second')">
+            <button class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Second')">
                 Save
             </button>
 
@@ -105,7 +91,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
     <!-- Third Section -->
-    <form [formGroup]="thirdInterviewForm" class="interview-results-form mx-3 mb-3 p-3 rounded-lg">
+    <form *ngIf="status_step >= 5" [formGroup]="thirdInterviewForm" class="interview-results-form mb-3 rounded-lg">
 
     
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
@@ -116,18 +102,12 @@
             <textarea formControlName="third_call_remarks" matInput type="text" id="thirdInterviewResult"
                 placeholder="3rd Face/Phone Interview Results"> </textarea>
         </mat-form-field>
+        
         <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
             <mat-label>Interviewer</mat-label>
             <input formControlName="third_interviewer_id" matInput type="text" placeholder="Third Interviewer">
         </mat-form-field>
-        <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
-            <mat-label>Select Next Step</mat-label>
-            <mat-select formControlName="status_message">
-                <mat-option value="Reference Call Completed">Reference Call</mat-option>
-                <mat-option value="WaitListed">Waitlisted</mat-option>
-                <mat-option value="Qualifications dont match current openings"> Qualifications don't match current openings</mat-option>
-            </mat-select>
-        </mat-form-field>
+        
         <div class="md:flex lg:flex align-center justify-between">
             <div class="sm:w-6/12 md:w-8/12 lg:w-52">
                 <label>Third Interview Ranking: </label>
@@ -147,7 +127,7 @@
         </div>
 
         <div class="flex justify-end">
-            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Third')">
+            <button class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Third')">
                 Save
             </button>
 
@@ -159,7 +139,7 @@
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-    <form [formGroup]="referenceForm" class="interview-results-form mx-3 mb-3 p-3 rounded-lg">
+    <form *ngIf="status_step >= 6" [formGroup]="referenceForm" class="interview-results-form mb-3 rounded-lg">
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
         
         <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
@@ -190,7 +170,7 @@
         </div>
 
         <div class="flex justify-end">
-            <button class="m-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Reference')">
+            <button class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Reference')">
                 Save
             </button>
 
@@ -198,5 +178,8 @@
 
     </div>
 
-
 </form>
+
+<div *ngIf="status_step < 3" class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+    No Interviews Conducted Yet
+</div>

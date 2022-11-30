@@ -55,6 +55,10 @@ export class ApplicantdataComponent implements OnInit {
 
   }
 
+  expandAll(){
+      this.panelOpenState = true;
+  }
+
 //   ngAfterViewInit(): void {
 //     this.initApis(this.routeID);
 //     this.initObservables();
