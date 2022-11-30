@@ -40,6 +40,7 @@ import { DocumentsComponent } from './navigation/documents/documents.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MailboxComposeComponent } from './navigation/onboarding/compose/compose.component';
 import { QuillModule } from 'ngx-quill';
+import { UpdateProfileData } from './navigation/profile-data/update-profile-data/update.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { QuillModule } from 'ngx-quill';
       PayrollComponent,
       DocumentsComponent,
       MailboxComposeComponent,
+      UpdateProfileData
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { UpdateProfileData } from './update-profile-data/update.component';
 
 @Component({
   selector: 'app-profile-data',
@@ -8,9 +11,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class ProfileDataComponent implements OnInit {
     selectedProductForm: FormGroup;
+    isEditMode: boolean = true;
+    routeID; // URL ID
 
   constructor(
     private _formBuilder: FormBuilder,
+    private _matDialog: MatDialog,
+    public activatedRoute: ActivatedRoute,
 
   ) { }
 
@@ -35,5 +42,16 @@ export class ProfileDataComponent implements OnInit {
 
  });
   }
+
+  enableEditButton(): void {
+    // Open the dialog
+    const dialogRef = this._matDialog.open(UpdateProfileData, {
+        data: { id: this.routeID },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+        console.log('Compose dialog was closed!');
+    });
+}
 
 }
