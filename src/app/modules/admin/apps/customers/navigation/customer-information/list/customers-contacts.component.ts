@@ -51,7 +51,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     customerList: any;
 
     isEdit: boolean = false;
-    pageSize = 10;
+    pageSize = 50;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;

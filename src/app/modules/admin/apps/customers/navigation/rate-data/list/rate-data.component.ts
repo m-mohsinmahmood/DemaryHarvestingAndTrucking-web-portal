@@ -72,7 +72,7 @@ export class RateDataComponent implements OnInit {
   searchHauling: Subscription;
   searchResult: string;
   isEdit: boolean = false;
-  pageSize = 10;
+  pageSize = 50;
   pageSizeSummary = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [10, 25, 50, 100];

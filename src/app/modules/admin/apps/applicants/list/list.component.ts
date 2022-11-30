@@ -54,7 +54,7 @@ export class ApplicantsListComponent
     countries: string[] =[];
     page: number;
     limit: number;
-    pageSize = 10;
+    pageSize = 50;
     currentPage = 0;
     pageSizeOptions: number[] = [5,10, 25, 50];
     isEdit: boolean;

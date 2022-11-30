@@ -70,7 +70,7 @@ export class FarmDataComponent implements OnInit, OnDestroy, AfterViewInit {
     search: Subscription;
     searchDestination: Subscription;
     isEdit: boolean = false;
-    pageSize = 10;
+    pageSize = 50;
     pageSizeSummary = 5;
     pageSizeSummaryFarm = 5;
     pageSizeSummaryField = 5;
