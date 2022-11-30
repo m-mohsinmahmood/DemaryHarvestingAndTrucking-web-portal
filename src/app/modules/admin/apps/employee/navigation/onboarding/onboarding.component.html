@@ -46,35 +46,29 @@
         </div>
         <!-- DOI BLOCK -->
         <div *ngIf="block === 'DOI'">
-            <div class="flex bg-gray-100
-             rounded-md mt-2 sm:h-auto px-4  shadow">
-                <div class="flex justify-center items-center sm:6/12 md:w-4/12 ">
+            <div class="flex flex-col sm:flex-row bg-gray-100
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center items-center sm:6/12 md:w-4/12 py-4 ">
                     <div>
                         <p class="font-semibold text-xl text-blue-600">Passport</p>
                         <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full  sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 "> Country: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:</mat-label>
+                                <mat-label>USA</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                                <mat-label>123456789XX</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date: </mat-label>
+                                <mat-label>11-11-2022</mat-label>
+                            </div>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max">Number: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
-                        </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max whitespace-nowrap">Expiration Date: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="flex bg-gray-100
@@ -86,18 +80,14 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2  ">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Sign: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>John</mat-label>
                         </div>
                     </div>
                 </div>
@@ -111,18 +101,14 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">sign: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>John</mat-label>
                         </div>
                     </div>
                 </div>
@@ -136,18 +122,14 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Number: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Expiration Date: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -165,24 +147,18 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full  sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 "> Name: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>USA</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max">Expiration Date: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max whitespace-nowrap">Issue Date: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date: </mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -195,24 +171,18 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2  ">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Name: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>USA</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Expiration Date: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Issue Date: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date: </mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -226,30 +196,22 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> State: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">State:</mat-label>
+                            <mat-label>New York</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Number: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Date Issued: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date: </mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Date Expired: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -262,24 +224,18 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> State: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">State:</mat-label>
+                            <mat-label>New York</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Number: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Date Issued: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date: </mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -296,24 +252,18 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full  sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 "> Name: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max">Routing: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Routing:</mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max whitespace-nowrap">Account: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Account: </mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -326,14 +276,11 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2  ">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Name: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -346,18 +293,15 @@
                     </div>
                 </div>
                 <div class="sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Number: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                       
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Name: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -375,18 +319,15 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full  sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                       
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max">Signature: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -400,18 +341,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2  ">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Signature: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -424,42 +361,30 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Control Number: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Control Number:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Issue Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Expiration Date: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Nationality: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Nationality:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Red Stamped# </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Red Stamped#:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Issuing Post: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issuing Post:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -473,18 +398,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Signature: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -497,18 +418,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Signature: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                            <mat-label>Jamie</mat-label>
                         </div>
                     </div>
                 </div>
@@ -522,18 +439,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Arrival Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Arrival Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">First Day of Work: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">First day of work:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -547,18 +460,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Last Day of work: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Last day of work:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Departure Date: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Departure Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
                     </div>
                 </div>
@@ -575,18 +484,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full  sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full ">
-                                <mat-label class="text-sm font-normal text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class=" w-full">
-                                <mat-label class="text-sm font-normal text-gray-500 w-max">Sign: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
                     </div>
                 </div>
@@ -599,18 +504,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2  ">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">Sign: </mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
                     </div>
                 </div>
@@ -623,18 +524,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 ">Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max">sign: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
                     </div>
                 </div>
@@ -647,18 +544,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Sign: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
                     </div>
                 </div>
@@ -671,18 +564,14 @@
                     </div>
                 </div>
                 <div class="w-8/12 sm:w-6/12 md:w-8/12">
-                    <div class="flex flex-col p-2">
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 "> Date: </mat-label>
-                                <input matInput  class="">
-                            </mat-form-field>
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
                         </div>
-                        <div class="w-full sm:mt-auto h-16">
-                            <mat-form-field appearance="outline" class="w-full">
-                                <mat-label class="text-sm font-normal mr-1 text-gray-500 w-max whitespace-nowrap">Sign: </mat-label>
-                                <input matInput >
-                            </mat-form-field>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
                         </div>
                     </div>
                 </div>
