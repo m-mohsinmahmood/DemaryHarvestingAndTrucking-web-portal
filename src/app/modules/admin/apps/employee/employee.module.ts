@@ -41,7 +41,8 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MailboxComposeComponent } from './navigation/onboarding/compose/compose.component';
 import { QuillModule } from 'ngx-quill';
 import { UpdateProfileData } from './navigation/profile-data/update-profile-data/update.component';
-
+import { ConfirmDialogComponent } from './navigation/account-management/confirm-dialog/confirm-dialog.component';
+import { UpdateEmployeeComponent } from './navigation/employee-data/update/update.component';
 @NgModule({
     declarations: [
       EmployeeComponent,
@@ -57,7 +58,9 @@ import { UpdateProfileData } from './navigation/profile-data/update-profile-data
       PayrollComponent,
       DocumentsComponent,
       MailboxComposeComponent,
-      UpdateProfileData
+      UpdateProfileData,
+      ConfirmDialogComponent,
+      UpdateEmployeeComponent
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

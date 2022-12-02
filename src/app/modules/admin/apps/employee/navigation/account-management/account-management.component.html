@@ -1,5 +1,5 @@
 <div class="flex flex-col px-3">
-    <!-- <form class="example-form" [formGroup]="form"> -->
+    <form class="example-form" [formGroup]="form" ngNativeValidate>
     <p class="text-black  py-3 border-b mb-2 text-2xl font-extrabold tracking-tight">
         Account Management
     </p>
@@ -44,13 +44,15 @@
                                                         ? 'heroicons_solid:check-circle'
                                                         : 'heroicons_solid:x-circle'
                                                 ">check-circle</mat-icon>
+                                                <mat-label>{{combineOperaterStatus}}</mat-label>
                                             </div>
 
                                             <!-- Action -->
                                             <div>
-                                                <mat-slide-toggle [(ngModel)]="combineOperaterStatus"></mat-slide-toggle>
+                                                <mat-slide-toggle (change)="combineOperator($event)" [checked]="combineOperaterStatus" formControlName="combineOperaterStatus">{{combineOperaterStatus}}</mat-slide-toggle>
 
                                             </div>
+                                            
                                         </div>
                                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                             <div class="truncate">Tractor/Cart operator</div>
@@ -69,7 +71,7 @@
 
                                             <!-- Action -->
                                             <div>
-                                                <mat-slide-toggle [(ngModel)]="tractorCartOperaterStatus"></mat-slide-toggle>
+                                                <mat-slide-toggle formControlName="tractorCartOperaterStatus"></mat-slide-toggle>
                                             </div>
                                         </div>
                                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -89,7 +91,7 @@
 
                                             <!-- Action -->
                                             <div>
-                                                <mat-slide-toggle [(ngModel)]="truckDriverStatus"></mat-slide-toggle>
+                                                <mat-slide-toggle formControlName="truckDriverStatus"></mat-slide-toggle>
                                             </div>
                                         </div>
                                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
@@ -109,7 +111,7 @@
 
                                             <!-- Action -->
                                             <div>
-                                                <mat-slide-toggle [(ngModel)]="farmingTractorOperaterStatus"></mat-slide-toggle>
+                                                <mat-slide-toggle formControlName="farmingTractorOperaterStatus"></mat-slide-toggle>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +141,7 @@
                     <p class="font-normal text-base text-gray-500 my-3 mx-4">Choose:</p>
                 </div>
                 <div class="flex flex-col my-3 mx-4">
-                    <div class="flex items-center gap-2">
+                    <div class="flex  items-center gap-2">
                         <mat-radio-button class="mb-2" value="before">Base Rate</mat-radio-button>
                         <mat-form-field appearance="outline">
                             <mat-label>Base Rate</mat-label>
@@ -193,6 +195,6 @@
 
               </div>
         </div>
-        <!-- </form> -->
+        </form>
 </div>
 
