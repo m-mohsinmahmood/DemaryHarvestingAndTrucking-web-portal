@@ -115,7 +115,6 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
 
   send(): void {
     this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id != undefined ? this.data.form.value['recruiter_id']?.id : "";
-    console.log("this.data.form.value", this.data.form.value);
     this._applicantService.patchApplicant(this.data.form.value, false);
     this.matDialogRef.close();
     this.data.form.controls['recruiter_id'].disable({ emitEvent: false });

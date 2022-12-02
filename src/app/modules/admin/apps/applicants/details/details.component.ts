@@ -38,7 +38,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     applicants$ = new Subject();
     data: any;
     statusStep: string = '3';
-    statusMessage: string = 'Applicant Completed';
+    statusMessage: string = 'Application Submitted';
     statusDate: any = moment().format('DD-MM-YYYY')
     preliminaryReviewForm: FormGroup;
     interviewCompletedForm: FormGroup;

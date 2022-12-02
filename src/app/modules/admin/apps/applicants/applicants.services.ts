@@ -232,7 +232,7 @@ export class ApplicantService {
         let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
         if (recruiterRemarks){
             const {...applicant_data } = data;
-            newData = Object.assign({},{applicant_data} )
+            newData = Object.assign({},{applicant_data} );
         }
         else {
             const {body,recruiter_id,subject,to, ...applicant_data } = data;
@@ -262,6 +262,7 @@ export class ApplicantService {
                 },
                 () => {
                     this.getApplicantById(newData.applicant_data.id);
+                    location.reload();
                 }
             );
     }

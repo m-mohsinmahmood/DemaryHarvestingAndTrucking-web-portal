@@ -25,7 +25,7 @@ export class OnboardingComponent implements OnInit {
     routes: any;
     data: any;
     statusStep: string = '3';
-    statusMessage: string = 'Applicant Completed';
+    statusMessage: string = 'Application Submitted';
     preliminaryReviewForm: FormGroup;
     interviewCompletedForm: FormGroup;
     decisionMadeForm: FormGroup;
