@@ -12,7 +12,7 @@
             </button>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight">
+        <div (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
             <img *ngIf="employees.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employees.avatar}}" alt="">
             <img *ngIf="employees.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">

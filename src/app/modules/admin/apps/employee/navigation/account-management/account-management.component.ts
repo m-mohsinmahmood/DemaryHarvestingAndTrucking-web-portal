@@ -37,18 +37,19 @@ export class AccountManagementComponent implements OnInit {
     });
   }
   
-  combineOperator(event: any) {
-   
+  combineOperator(event: any):void {
       const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
       dialogRef.afterClosed().subscribe(response => {
         console.log( 'response ', response );
-        if (response) {
-           this.combineOperaterStatus = !this.combineOperaterStatus;
-           console.log('combine operator true',this.combineOperaterStatus)
-           console.log("toggle")
-        } else {
-          console.log('combine operator false',this.combineOperaterStatus)
-          console.log("toggle should not change if I click the cancel button")
+           if(event.checked === true && response === true){
+          
+            return this.combineOperaterStatus = !this.combineOperaterStatus;
+        }
+        else if(event.checked === false){
+           this.combineOperaterStatus = true;
+        } else if(response===undefined)
+        {
+          this.combineOperaterStatus = this.combineOperaterStatus;
         }
       })
     }

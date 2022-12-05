@@ -44,12 +44,12 @@
                                                         ? 'heroicons_solid:check-circle'
                                                         : 'heroicons_solid:x-circle'
                                                 ">check-circle</mat-icon>
-                                                <mat-label>{{combineOperaterStatus}}</mat-label>
+                                                <mat-label></mat-label>
                                             </div>
 
                                             <!-- Action -->
                                             <div>
-                                                <mat-slide-toggle (change)="combineOperator($event)" [checked]="combineOperaterStatus" formControlName="combineOperaterStatus">{{combineOperaterStatus}}</mat-slide-toggle>
+                                                <mat-slide-toggle (change)="combineOperator($event)" [checked]="combineOperaterStatus" formControlName="combineOperaterStatus"></mat-slide-toggle>
 
                                             </div>
                                             
