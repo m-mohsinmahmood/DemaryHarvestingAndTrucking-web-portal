@@ -139,40 +139,39 @@
                             <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{this.results.includes(item.step)? '4': '8'}} h-{{this.results.includes(item.step)? '4': '8'}} bg-white
                                     bg-{{item.status === true ? 'green': 'red'}}-400
                                     bg-{{item.status === false? 'indigo': ''}}-400">
-                                <mat-icon
-                                    class="{{ item.status ? 'visible': 'invisible' }}"
+                                <mat-icon class="{{ item.status ? 'visible': 'invisible' }}"
                                     [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
                                 </mat-icon>
                             </div>
-                            <div *ngIf="i+1 < applicant.applicant_info.status_step" class="timeline-track"></div>
+                            <div class="timeline-track"></div>
                         </div>
                         <div *ngIf="item.show" class="flex-1 flex flex-row px-4">
                             <div [ngClass]="{ 'pointer-events-none': !item.click }" (click)="composeEmail(i)"
                                 class="cursor-pointer w-8/12 flex flex-col">
                                 <span class="flex items-center text-md font-sans font-normal">{{item.step}}
-                                    <!-- <div class="animate-bounce"> -->
+                                    <div [ngClass]="{ 'animate-bounce': item.click }">
                                         <mat-icon matTooltip="Compose Email"
                                             *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
                                             class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'">
                                         </mat-icon>
-                                    <!-- </div> -->
+                                    </div>
                                 </span>
-                                <span *ngIf="i == 1"
-                                    class=" text-md text-black">{{this.applicant.applicant_info.first_interviewer_name
-                                    === null ? "":
-                                    this.applicant.applicant_info.first_interviewer_name}} </span>
-                                <span *ngIf="i == 2"
-                                    class=" text-md text-black">{{this.applicant.applicant_info.second_interviewer_name
-                                    === null ? "":
-                                    this.applicant.applicant_info.second_interviewer_name}} </span>
-                                <span *ngIf="i == 3"
-                                    class=" text-md text-black">{{this.applicant.applicant_info.third_interviewer_name
-                                    === null ? "":
-                                    this.applicant.applicant_info.third_interviewer_name}} </span>
-                                <span *ngIf="i == 4"
-                                    class=" text-md text-black">{{this.applicant.applicant_info.reference_interviewer_name
-                                    === null ?
-                                    "": this.applicant.applicant_info.reference_interviewer_name}} </span>
+                                <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
+                                    {{this.applicant.applicant_info.first_interviewer_name === null ? 
+                                    "" : "(" + this.applicant.applicant_info.first_interviewer_name + ")"}} 
+                                </mat-hint>
+                                <mat-hint *ngIf="i == 3" class="my-1 text-md font-semibold">
+                                    {{this.applicant.applicant_info.second_interviewer_name === null ?  
+                                    "" : "(" + this.applicant.applicant_info.second_interviewer_name + ")"}} 
+                                </mat-hint>
+                                <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
+                                    {{this.applicant.applicant_info.third_interviewer_name === null ? 
+                                    "" : "(" + this.applicant.applicant_info.third_interviewer_name + ")"}} 
+                                </mat-hint>
+                                <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
+                                    {{this.applicant.applicant_info.reference_interviewer_name === null ?
+                                    "": "(" + this.applicant.applicant_info.reference_interviewer_name + ")"}} 
+                                </mat-hint>
                             </div>
                             <div class=" w-4/12 flex justify-end font-mono text-xs">
                                 {{item.date | date: "MM-dd-YYYY"}}
