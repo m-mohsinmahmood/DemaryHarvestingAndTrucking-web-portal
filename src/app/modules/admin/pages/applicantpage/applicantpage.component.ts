@@ -57,6 +57,7 @@ export class ApplicantpageComponent implements OnInit
     formArr = [];
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
     calendar_year: any;
+    isLoading:boolean = false;
      //#endregion
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
     // alert: { type: FuseAlertType; message: string } = {
@@ -219,6 +220,7 @@ export class ApplicantpageComponent implements OnInit
     }
     saveAndClose(): void {
         // Save the message as a draft
+        this._router.navigateByUrl("/pages/landing-page")
         this.saveAsDraft();
         // Close the dialog
         // this.matDialogRef.close();

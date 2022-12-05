@@ -24,15 +24,15 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button (click)="openImportDialog()" mat-menu-item>
                 <mat-icon>upload</mat-icon>
                 <span>Import</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="handleExport()" mat-menu-item>
                 <mat-icon>download</mat-icon>
                 <span>Export</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="downloadTemplate()" mat-menu-item>
                 <mat-icon>download</mat-icon>
                 <span>Download Template</span>
             </button>
@@ -98,6 +98,10 @@
                                         matTooltip="Delete" matTooltipPosition="above">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                     </button>
+                                    <button *ngIf="customerFarm.status === true" mat-stroked-button (click)="copyFarmId(customerFarm.id)" class="ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                        matTooltip="Copy Farm Id" matTooltipPosition="above">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:square-2-stack'"></mat-icon>
+                                    </button>
                                 </div>
                             </div>
                         </ng-container>
@@ -107,7 +111,7 @@
                     customerFarmList?.customer_farms?.length > 0"
                     class="absolute inset-x-0 bottom-0 border-b border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                     [ngClass]="{ 'pointer-events-none': isLoading }" [length]="customerFarmList?.count"
-                    [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    [pageIndex]="farmPage - 1" [pageSize]="farmPageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
             </ng-container>
             <ng-template class="flex" #noFarms>

@@ -79,7 +79,7 @@ export class CropService {
      * @param order
      * @param search
      */
-    getCrops(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
+    getCrops(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
@@ -202,6 +202,49 @@ export class CropService {
                     this.is_loading_crop.next(false);
                 }
             );
+
+    }
+
+    getCropExport(
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        return this._httpClient
+            .get<any>(`api-2/crop`, { params })
+            .pipe(take(1))
+    }
+
+    cropImport(data){
+        this._httpClient
+        .post(`api-2/crop`, data)
+        .pipe(take(1))
+        .subscribe(
+            (res: any) => {
+                this.closeDialog.next(true);
+                this.is_loading_crops.next(true);
+                //show notification based on message returned from the api
+                this._alertSerice.showAlert({
+                    type: 'success',
+                    shake: false,
+                    slideRight: true,
+                    title: 'Bulk Crops Created',
+                    message: res.message,
+                    time: 5000,
+                });
+                this.is_loading_crops.next(false);
+            },
+            (err) => {
+                this.handleError(err);
+                this.closeDialog.next(false);
+            },
+            () => {
+                this.getCrops();
+            }
+        );
 
     }
     //#endregion

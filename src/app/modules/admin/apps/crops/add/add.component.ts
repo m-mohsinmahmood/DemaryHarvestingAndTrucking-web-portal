@@ -1,7 +1,3 @@
-/* eslint-disable curly */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Subscription } from 'rxjs';
-/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

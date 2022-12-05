@@ -35,6 +35,8 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddCustomerContact } from '../add/add.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { read, utils, writeFile } from 'xlsx';
+import { ImportCustomerContactsComponent } from '../import-customer-contacts/import-customer-contacts.component';
 
 @Component({
     selector: 'customers-contacts',
@@ -49,7 +51,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     customerList: any;
 
     isEdit: boolean = false;
-    pageSize = 10;
+    pageSize = 50;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
     page: number;
@@ -57,7 +59,6 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     isLoading: boolean = false;
     sortActive: any;
     sortDirection: any;
-
     search: Subscription;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -77,7 +78,7 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         private _customersService: CustomersService,
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute
-    ) {}
+    ) { }
 
     //#region Lifecycle Functions
     ngOnInit(): void {
@@ -97,9 +98,9 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
                 this._customersService.getCustomerContact(
                     this.routeID,
                     this.page,
-                    10,
-                    '',
-                    '',
+                    this.pageSize,
+                    this.sortActive,
+                    this.sortDirection,
                     this.searchResult
                 );
             });
@@ -131,9 +132,29 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     //#region Dialog
     openAddDialog(): void {
         const dialogRef = this._matDialog.open(AddCustomerContact, {
-            data: { customerId: this.routeID },
+            data: {
+                customerId: this.routeID,
+                pageSize: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
+            },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportCustomerContactsComponent, {
+            data: { 
+                customerId: this.routeID,
+                limit: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
 
     //#endregion
@@ -169,16 +190,49 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+    handleExport() {
+        let allCustomerContact;
+        this._customersService
+            .getCustomerContactExport(this.routeID, this.sortActive, this.sortDirection, this.searchResult)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((val) => {
+                allCustomerContact = val
+                const headings = [['First Name', 'Last Name', 'Website', 'Contact Position', 'Address', 'Cell Number', 'Office Number', 'State', 'City', 'Email', 'Zip Code', 'Fax', 'Linkedln', 'Note 1', 'Note 2']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomerContact, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Contact Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Contact_Data.xlsx', "_blank");
+    }
+
+    //#endregion
+
     //#region Open Detail Page
     toggleContactsDetails(customerContact: string): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(ContactsDataComponent, {
             data: {
                 customerContact,
+                pageSize: this.pageSize,
+                sort: this.sortActive,
+                order: this.sortDirection,
+                search: this.searchResult
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => {
+            this.page = 1;
+        });
     }
     //#endregion
 
@@ -192,9 +246,14 @@ export class CustomersContactsList implements OnInit, AfterViewInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult){
+            if (dialogResult) {
                 this.page = 1
-                this._customersService.deleteCustomerContact(id, this.routeID);
+                this._customersService.deleteCustomerContact(id,
+                    this.routeID,
+                    this.pageSize,
+                    this.sortActive,
+                    this.sortDirection,
+                    this.searchResult);
             }
         });
     }

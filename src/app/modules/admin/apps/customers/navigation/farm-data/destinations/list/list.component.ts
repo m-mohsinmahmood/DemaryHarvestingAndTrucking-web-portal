@@ -1,5 +1,5 @@
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +10,8 @@ import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { read, utils, writeFile } from 'xlsx';
+import { ImportDestinationsComponent } from '../import-destinations/import-destinations.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -36,9 +38,13 @@ export const MY_FORMATS = {
     ],
 })
 export class ListDestinationComponent implements OnInit {
-    //#region Input
+    //#region Input/Output Variables
     @Input() customerDestinationList: Observable<any>;
+    @Input() destinationPage: number;
+    @Input() destinationPageSize: number;
     @Input() destinationFilters: any;
+    @Output() destinationPageChanged = new EventEmitter<{ destinationPageChild: number, destinationPageSizeChild: number }>();
+
     //#endregion
 
     //#region Search form variables
@@ -57,11 +63,8 @@ export class ListDestinationComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     destinationSort: any[] = [];
     isEdit: boolean;
     calendar_year;
@@ -89,13 +92,14 @@ export class ListDestinationComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.destinationPage = 1;
+                this.emitDestinationPageChanged();
                 this._customerService.getCustomerDestination(
                     this.routeID,
-                    this.page,
-                    10,
-                    '',
-                    '',
+                    this.destinationPage,
+                    this.destinationPageSize,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
                     this.searchResult,
                     this.destinationFilters.value
                 );
@@ -117,10 +121,16 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 customer_id: this.routeID,
                 isEdit: this.isEdit,
+                pageSize: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
                 filters: this.destinationFilters.value,
             },
         });
         dialogRef.afterClosed().subscribe((result) => {
+            this.destinationPage = 1;
+            this.emitDestinationPageChanged();
         });
     }
 
@@ -130,6 +140,10 @@ export class ListDestinationComponent implements OnInit {
             data: {
                 isEdit: this.isEdit,
                 customer_id: this.routeID,
+                pageSize: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
                 filters: this.destinationFilters.value,
                 customerDestinationData: {
                     id: destination.destination_id,
@@ -142,19 +156,36 @@ export class ListDestinationComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.destinationPage = 1;
+            this.emitDestinationPageChanged();
+        });
+    }
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportDestinationsComponent, {
+            data: { 
+                customer_id: this.routeID,
+                limit: this.destinationPageSize,
+                sort: this.destinationSort[0],
+                order: this.destinationSort[1],
+                search: this.searchResult,
+                filters: this.destinationFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 
     //#region  Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationSort[0] = sort.active;
         this.destinationSort[1] = sort.direction;
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
-            this.limit,
+            this.destinationPage,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
@@ -165,17 +196,48 @@ export class ListDestinationComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.destinationPage = event.pageIndex + 1;
+        this.destinationPageSize = event.pageSize;
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
-            this.page,
-            this.limit,
+            this.destinationPage,
+            this.destinationPageSize,
             this.destinationSort[0],
             this.destinationSort[1],
             this.searchResult,
             this.destinationFilters.value
         );
+    }
+    //#endregion
+    
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerDestination;
+        this._customerService.getCustomerDestinationExport(this.routeID,this.destinationSort[0],this.destinationSort[1],this.searchResult,this.destinationFilters.value)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((value) => {
+            allCustomerDestination = value
+            const headings = [['Farm Name', 'Destination Name','Status', 'Calendar Year']];
+            const wb = utils.book_new();
+            const ws: any = utils.json_to_sheet([]);
+            utils.sheet_add_aoa(ws, headings);
+            utils.sheet_add_json(ws, allCustomerDestination, {
+                origin: 'A2',
+                skipHeader: true,
+            });
+            utils.book_append_sheet(wb, ws, 'Report');
+            writeFile(wb, 'Customer Destination Data.xlsx');
+        });
+
+    }
+
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Destination_Data.xlsx', "_blank");
     }
     //#endregion
 
@@ -190,10 +252,15 @@ export class ListDestinationComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult) {
-                this.page = 1
+                this.destinationPage = 1
+                this.emitDestinationPageChanged();
                 this._customerService.deleteCustomerDestination(
                     destinationId,
                     this.routeID,
+                    this.destinationPageSize,
+                    this.destinationSort[0],
+                    this.destinationSort[1],
+                    this.searchResult,
                     this.destinationFilters.value
                 );
             }
@@ -204,7 +271,7 @@ export class ListDestinationComponent implements OnInit {
 
     //#region Filters
     applyFilters() {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationFilters.value.farm_id?.id
             ? (this.destinationFilters.value.farm_id =
                 this.destinationFilters.value.farm_id?.id)
@@ -219,30 +286,32 @@ export class ListDestinationComponent implements OnInit {
             ? (this.destinationFilters.value.calendar_year = '')
             : '';
         this.calendar_year.value ? (this.destinationFilters.value.calendar_year = this.calendar_year.value) : ''
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.destinationPageSize,
+            this.destinationSort[0],
+            this.destinationSort[1],
             this.searchResult,
             this.destinationFilters.value
         );
     }
 
     removeFilters() {
-        this.page = 1;
+        this.destinationPage = 1;
         this.destinationFilters.reset();
         this.destinationFilters.value.farm_id = '';
         this.destinationFilters.value.status = '';
         this.destinationFilters.value.calendar_year = '';
         this.calendar_year.setValue('');
+        this.emitDestinationPageChanged();
         this._customerService.getCustomerDestination(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.destinationPageSize,
+            this.destinationSort[0],
+            this.destinationSort[1],
             this.searchResult,
             this.destinationFilters.value
         );
@@ -288,6 +357,12 @@ export class ListDestinationComponent implements OnInit {
                     value
                 );
             });
+    }
+    //#endregion
+
+    //#region emit farm page changed
+    emitDestinationPageChanged() {
+        this.destinationPageChanged.emit({ destinationPageChild: this.destinationPage, destinationPageSizeChild: this.destinationPageSize });
     }
     //#endregion
 }

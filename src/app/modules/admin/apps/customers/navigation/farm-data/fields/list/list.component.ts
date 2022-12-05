@@ -14,8 +14,10 @@ import { AddFieldComponent } from '../add-field/add-field.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateAdapter,MAT_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { read, utils, writeFile } from 'xlsx';
+import { ImportFieldsComponent } from '../import-fields/import-fields.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -43,9 +45,13 @@ export const MY_FORMATS = {
     ],
 })
 export class ListFieldComponent implements OnInit {
-    //#region Input
+
+    //#region Input/Output Variables
     @Input() customerFieldList: Observable<any>;
+    @Input() fieldPage: number;
+    @Input() fieldPageSize: number;
     @Input() fieldFilters: any;
+    @Output() fieldPageChanged = new EventEmitter<{ fieldPageChild: number, fieldPageSizeChild: number }>();
     //#endregion
 
     //#region Search form variables
@@ -64,11 +70,10 @@ export class ListFieldComponent implements OnInit {
     routeID: any;
     search: any;
     searchResult: any;
-    page: number;
-    pageSize = 10;
+    // page: number;
+    // pageSize = 10;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
-    limit: number;
     fieldSort: any[] = [];
     calendar_year;
     //#endregion
@@ -94,13 +99,14 @@ export class ListFieldComponent implements OnInit {
             .pipe(debounceTime(500))
             .subscribe((data) => {
                 this.searchResult = data.search;
-                this.page = 1;
+                this.fieldPage = 1;
+                this.emitFieldPageChanged();
                 this._customerService.getCustomerField(
                     this.routeID,
-                    this.page,
-                    10,
-                    '',
-                    '',
+                    this.fieldPage,
+                    this.fieldPageSize,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
                     this.searchResult,
                     this.fieldFilters.value
                 );
@@ -120,10 +126,17 @@ export class ListFieldComponent implements OnInit {
                 customer_id: this.routeID,
                 isEdit: false,
                 status: true,
+                pageSize: this.fieldPageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
                 filters: this.fieldFilters.value,
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.fieldPage = 1;
+            this.emitFieldPageChanged();
+        });
     }
 
     openEditFieldDialog(field): void {
@@ -131,6 +144,10 @@ export class ListFieldComponent implements OnInit {
             data: {
                 isEdit: true,
                 customer_id: this.routeID,
+                pageSize: this.fieldPageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
                 filters: this.fieldFilters.value,
                 customerFieldData: {
                     field_name: field.field_name,
@@ -143,19 +160,37 @@ export class ListFieldComponent implements OnInit {
                 },
             },
         });
-        dialogRef.afterClosed().subscribe((result) => { });
+        dialogRef.afterClosed().subscribe((result) => {
+            this.fieldPage = 1;
+            this.emitFieldPageChanged();
+        });
+    }
+
+    openImportDialog(): void {
+        const dialogRef = this._matDialog.open(ImportFieldsComponent, {
+            data: { 
+                customer_id: this.routeID,
+                limit: this.fieldPageSize,
+                sort: this.fieldSort[0],
+                order: this.fieldSort[1],
+                search: this.searchResult,
+                filters: this.fieldFilters.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {});
     }
     //#endregion
 
     //#region Sort Data
     sortData(sort: any) {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldSort[0] = sort.active;
         this.fieldSort[1] = sort.direction;
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
-            this.limit,
+            this.fieldPage,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -166,12 +201,13 @@ export class ListFieldComponent implements OnInit {
 
     //#region Pagination
     pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
+        this.fieldPage = event.pageIndex + 1;
+        this.fieldPageSize = event.pageSize;
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
-            this.page,
-            this.limit,
+            this.fieldPage,
+            this.fieldPageSize,
             this.fieldSort[0],
             this.fieldSort[1],
             this.searchResult,
@@ -180,9 +216,47 @@ export class ListFieldComponent implements OnInit {
     }
     //#endregion
 
+    //#region Import/Export Function
+    handleImport() {
+
+    }
+
+    handleExport() {
+        let allCustomerField;
+        this._customerService
+            .getCustomerFieldExport(this.routeID, this.fieldSort[0], this.fieldSort[1], this.searchResult, this.fieldFilters.value)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((value) => {
+                allCustomerField = value;
+                const headings = [['Farm Name', 'Field Name', 'Acres', 'Status', 'Calendar Year']];
+                const wb = utils.book_new();
+                const ws: any = utils.json_to_sheet([]);
+                utils.sheet_add_aoa(ws, headings);
+                utils.sheet_add_json(ws, allCustomerField, {
+                    origin: 'A2',
+                    skipHeader: true,
+                });
+                utils.book_append_sheet(wb, ws, 'Report');
+                writeFile(wb, 'Customer Field Data.xlsx');
+            })
+
+    }
+
+    downloadTemplate() {
+        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Customer_Field_Data.xlsx', "_blank");
+    }
+    //#endregion
+
+
+    //#region emit field page changed
+    emitFieldPageChanged() {
+        this.fieldPageChanged.emit({ fieldPageChild: this.fieldPage, fieldPageSizeChild: this.fieldPageSize });
+    }
+    //#endregion 
+
     //#region Filters
     applyFilters() {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldFilters.value.farm_id?.id
             ? (this.fieldFilters.value.farm_id =
                 this.fieldFilters.value.farm_id?.id)
@@ -197,30 +271,32 @@ export class ListFieldComponent implements OnInit {
             ? (this.fieldFilters.value.calendar_year = '')
             : '';
         this.calendar_year.value ? (this.fieldFilters.value.calendar_year = this.calendar_year.value) : ''
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.fieldPageSize,
+            this.fieldSort[0],
+            this.fieldSort[1],
             this.searchResult,
             this.fieldFilters.value
         );
     }
 
     removeFilters() {
-        this.page = 1;
+        this.fieldPage = 1;
         this.fieldFilters.reset();
         this.fieldFilters.value.farm_id = '';
         this.fieldFilters.value.status = '';
         this.fieldFilters.value.calendar_year = '';
         this.calendar_year.setValue('');
+        this.emitFieldPageChanged();
         this._customerService.getCustomerField(
             this.routeID,
             1,
-            10,
-            '',
-            '',
+            this.fieldPageSize,
+            this.fieldSort[0],
+            this.fieldSort[1],
             this.searchResult,
             this.fieldFilters.value
         );
@@ -279,13 +355,20 @@ export class ListFieldComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)   
-                this.page = 1;
+            if (dialogResult) {
+                this.fieldPage = 1;
+                this.emitFieldPageChanged();
                 this._customerService.deleteCustomerField(
                     fieldId,
                     this.routeID,
+                    this.fieldPageSize,
+                    this.fieldSort[0],
+                    this.fieldSort[1],
+                    this.searchResult,
                     this.fieldFilters.value
                 );
+            }
+
         });
     }
     //#endregion

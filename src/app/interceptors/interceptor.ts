@@ -22,6 +22,9 @@ export class Interceptor implements HttpInterceptor {
         if (requestUrl.indexOf('api-1') !== -1) {
             requestUrl = requestUrl.replace('api-1', environment.baseUrl);
         }
+        else if(requestUrl.indexOf('api-2') !== -1) {
+            requestUrl = requestUrl.replace('api-2', ' https://dht-dev-node.azurewebsites.net/api');
+        }
         request = request.clone({
             url: requestUrl,
         });
