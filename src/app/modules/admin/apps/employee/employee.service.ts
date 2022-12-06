@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { EmployeePagination, Employee , Country, Documents,Item } from 'app/modules/admin/apps/employee/employee.types';
+import { HttpClient,HttpErrorResponse,HttpParams} from '@angular/common/http';import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { EmployeePagination, Employee, Country, Documents, Item } from 'app/modules/admin/apps/employee/employee.types';
 import { employeeNavigation } from './employeeNavigation';
+import { AlertService } from 'app/core/alert/alert.service';
+
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class EmployeeService
-{
+export class EmployeeService {
     // Private
-
     public navigationLabels = employeeNavigation;
     public _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
     private _pagination: BehaviorSubject<EmployeePagination | null> = new BehaviorSubject(null);
@@ -20,61 +19,101 @@ export class EmployeeService
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
 
+    //#region Close Dialog
+    closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly closeDialog$: Observable<boolean> = this.closeDialog.asObservable();
+    //#endregion
 
+    // #region Applicants & Applicant
 
+    // Data
+    private employeesList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    readonly employeesList$: Observable<any[] | null> = this.employeesList.asObservable();
 
+    private employeeList: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly employeeList$: Observable<any | null> = this.employeeList.asObservable();
 
-    /**
-     * Constructor
-     */
-    constructor(private _httpClient: HttpClient)
-    {
+    // Loaders
+    private isLoadingEmployees: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingEmployees$: Observable<boolean> = this.isLoadingEmployees.asObservable();
+
+    isLoadingEmployee: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingEmployee$: Observable<boolean> = this.isLoadingEmployee.asObservable();
+    // #endregion
+
+    //#region 
+    constructor(
+        private _httpClient: HttpClient,
+        private _alertSerice: AlertService
+        ) {
     }
 
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<EmployeePagination>
-    {
+    get pagination$(): Observable<EmployeePagination> {
         return this._pagination.asObservable();
     }
 
     /**
      * Getter for employee
      */
-    get employee$(): Observable<Employee>
-    {
+    get employee$(): Observable<Employee> {
         return this._employeedata.asObservable();
     }
 
     /**
      * Getter for employees
      */
-    get employeedata$(): Observable<Employee[]>
-    {
+    get employeedata$(): Observable<Employee[]> {
         return this._employeesdata.asObservable();
     }
 
-    get countries$(): Observable<Country[]>
-    {
+    get countries$(): Observable<Country[]> {
         return this._countries.asObservable();
     }
 
     /**
      * Getter for items
      */
-     get documents$(): Observable<Documents>
-     {
-         return this._documents.asObservable();
-     }
+    get documents$(): Observable<Documents> {
+        return this._documents.asObservable();
+    }
 
-     /**
-      * Getter for item
-      */
-     get item$(): Observable<Item>
-     {
-         return this._item.asObservable();
-     }
+    /**
+     * Getter for item
+     */
+    get item$(): Observable<Item> {
+        return this._item.asObservable();
+    }
+
+    handleError(error: HttpErrorResponse) {
+        let errorMessage = 'Unknown error!';
+        if (error.error instanceof ErrorEvent) {
+            // Client-side errors
+            errorMessage = `Error: ${error.error.message}`;
+            this._alertSerice.showAlert({
+                type: 'error',
+                shake: false,
+                slideRight: true,
+                title: 'Error',
+                message: error.error.message,
+                time: 6000,
+            });
+        } else {
+            // Server-side errors
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            this._alertSerice.showAlert({
+                type: 'error',
+                shake: false,
+                slideRight: true,
+                title: 'Error',
+                message: error.error.message,
+                time: 6000,
+            });
+        }
+        return throwError(errorMessage);
+    }
 
     /**
      * Get employees
@@ -87,8 +126,7 @@ export class EmployeeService
      * @param search
      */
     getEmployees(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pagination: EmployeePagination; products: Employee[] }>
-    {
+        Observable<{ pagination: EmployeePagination; products: Employee[] }> {
         return this._httpClient.get<{ pagination: EmployeePagination; products: Employee[] }>('api/apps/employee', {
             params: {
                 page: '' + page,
@@ -108,8 +146,7 @@ export class EmployeeService
     /**
      * Get employee by id
      */
-    getEmployeeById(id: string): Observable<Employee>
-    {
+    getEmployeeById(id: string): Observable<Employee> {
         return this._employeesdata.pipe(
             take(1),
             map((employees) => {
@@ -124,8 +161,7 @@ export class EmployeeService
             }),
             switchMap((employee) => {
 
-                if ( !employee )
-                {
+                if (!employee) {
                     return throwError('Could not found product with id of ' + id + '!');
                 }
 
@@ -134,23 +170,21 @@ export class EmployeeService
         );
     }
 
-     /**
-      * Get countries
-      */
-      getCountries(): Observable<Country[]>
-      {
-          return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
-              tap((countries) => {
-                  this._countries.next(countries);
-              })
-          );
-      }
+    /**
+     * Get countries
+     */
+    getCountries(): Observable<Country[]> {
+        return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
+            tap((countries) => {
+                this._countries.next(countries);
+            })
+        );
+    }
 
     /**
      * Create product
      */
-    createEmployee(): Observable<Employee>
-    {
+    createEmployee(): Observable<Employee> {
         return this.employeedata$.pipe(
             take(1),
             switchMap(employees => this._httpClient.post<Employee>('api/apps/employee/product', {}).pipe(
@@ -172,8 +206,7 @@ export class EmployeeService
      * @param id
      * @param product
      */
-    updateEmployee(id: string, product: Employee): Observable<Employee>
-    {
+    updateEmployee(id: string, product: Employee): Observable<Employee> {
         return this.employeedata$.pipe(
             take(1),
             switchMap(employees => this._httpClient.patch<Employee>('api/apps/employee/product', {
@@ -215,11 +248,10 @@ export class EmployeeService
      *
      * @param id
      */
-     deleteEmployee(id: string): Observable<boolean>
-    {
+    deleteEmployee(id: string): Observable<boolean> {
         return this.employeedata$.pipe(
             take(1),
-            switchMap(employees => this._httpClient.delete('api/apps/employee/product', {params: {id}}).pipe(
+            switchMap(employees => this._httpClient.delete('api/apps/employee/product', { params: { id } }).pipe(
                 map((isDeleted: boolean) => {
 
                     // Find the index of the deleted employee
@@ -237,9 +269,8 @@ export class EmployeeService
             ))
         );
     }
-    getItems(folderId: string | null = null): Observable<Item[]>
-    {
-        return this._httpClient.get<Documents>('api/apps/employee/details', {params: {folderId}}).pipe(
+    getItems(folderId: string | null = null): Observable<Item[]> {
+        return this._httpClient.get<Documents>('api/apps/employee/details', { params: { folderId } }).pipe(
             tap((response: any) => {
                 this._documents.next(response);
             })
@@ -249,8 +280,7 @@ export class EmployeeService
     /**
      * Get item by id
      */
-    getItemById(id: string): Observable<Item>
-    {
+    getItemById(id: string): Observable<Item> {
         return this._documents.pipe(
             take(1),
             map((documents) => {
@@ -266,8 +296,7 @@ export class EmployeeService
             }),
             switchMap((item) => {
 
-                if ( !item )
-                {
+                if (!item) {
                     return throwError('Could not found the item with id of ' + id + '!');
                 }
 
@@ -277,8 +306,7 @@ export class EmployeeService
     }
 
 
-
-
+    //#endregion
 
 
 
