@@ -29,7 +29,7 @@ import { equipmentRoutes } from 'app/modules/admin/apps/equipment/equipment.rout
 import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
 import { UpdateAddComponent } from './vehicle/update-add/update-add.component';
 import { UpdateAddMachineryComponent } from './machinery/update/update-add.component';
-
+import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -41,6 +41,12 @@ import { UpdateAddPartsComponent } from './part/update/update-add.component';
 import { PartsDetailComponent } from './part/details/details.component';
 import { UpdateAddPropertyComponent } from './property/update/update-add.component';
 import { PropertyDetailComponent } from './property/details/details.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ProfileComponent } from './navigation/profile/profile.component';
+import { LocationComponent } from './navigation/location/location.component';
+import { MainRepairComponent } from './navigation/main-repair/main-repair.component';
+import { ListComponent } from './navigation/list/list.component';
+
 
 
 
@@ -63,6 +69,10 @@ import { PropertyDetailComponent } from './property/details/details.component';
         PartsDetailComponent,
         UpdateAddPropertyComponent,
         PropertyDetailComponent,
+        ProfileComponent,
+        LocationComponent,
+        MainRepairComponent,
+        ListComponent,
 
     ],
     imports     : [
@@ -105,6 +115,8 @@ import { PropertyDetailComponent } from './property/details/details.component';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
+        FuseDrawerModule,
+        MatSidenavModule
     ]
 })
 export class EquipmentModule

@@ -28,6 +28,7 @@ import { PropertyBrandsResolver, PropertyCategoriesResolver, PropertyProductsRes
 import { PartsBrandsResolver, PartsCategoriesResolver, PartsProductsResolver, PartsTagsResolver, PartsVendorsResolver } from './part/part.resolvers';
 import { PartsDetailComponent } from './part/details/details.component';
 import { PropertyDetailComponent } from './property/details/details.component';
+import { ProfileComponent } from './navigation/profile/profile.component';
 
 export const equipmentRoutes: Route[] = [
     {
@@ -88,7 +89,7 @@ export const equipmentRoutes: Route[] = [
                     tags: MachineryTagsResolver,
                     vendors: MachineryVendorsResolver,
                 },
-            }
+            },
         ],
     },
     {
