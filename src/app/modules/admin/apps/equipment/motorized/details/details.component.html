@@ -26,6 +26,7 @@
         <mat-drawer-container class="sub-nav-component bg-card divide-x" style="height: 100%" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes; let i = index">
+                    <div *ngIf="route.title != 'Fuels/Miles'">
                     <button style="padding: 15px" [style.background-color]="route.title === selectedIndex? '#d4d7dd': 'transparent'"  matTooltip=
                     "{{ route.title }}"
                         matTooltipPosition="right"
@@ -34,6 +35,7 @@
                         <mat-icon svgIcon="{{ route.icon }}" class="icon-size-5 text-primary"></mat-icon>
                         <span style="font-size: 13px;font-weight: bold;margin-left: 10px;"></span>
                     </button>
+                </div>
                 </div>
             </mat-drawer>
 

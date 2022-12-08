@@ -86,17 +86,24 @@ export const defaultNavigation: FuseNavigationItem[] = [
     children: [
       {
         id: "",
-        title: "Vehicle List",
-        type: "basic",
-        icon: "heroicons_outline:user-group",
-        link: "/apps/equipment/vehicle",
-      },
-      {
-        id: "",
-        title: "Machinery List",
+        title: "Machinery",
         type: "basic",
         icon: "heroicons_outline:user-group",
         link: "/apps/equipment/machinery",
+      },
+      {
+        id: "",
+        title: "Motorized",
+        type: "basic",
+        icon: "heroicons_outline:user-group",
+        link: "/apps/equipment/motorized",
+      },
+      {
+        id: "",
+        title: "Non Motorized",
+        type: "basic",
+        icon: "heroicons_outline:user-group",
+        link: "/apps/equipment/non-motorized",
       },
     ],
   }

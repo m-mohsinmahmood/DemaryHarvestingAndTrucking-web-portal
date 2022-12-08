@@ -1,18 +1,18 @@
 export const equipmentNavigation = [
     {
         id: 0,
-        title: 'Listing',
-        icon: 'heroicons_outline:user-circle',
-    },
-    {
-        id: 1,
         title: 'Profile',
         icon: 'heroicons_outline:identification',
     },
     {
-        id: 2,
+        id: 1,
         title: 'Location',
         icon: 'mat_outline:local_shipping',
+    },
+    {
+        id: 2,
+        title: 'Fuels/Miles',
+        icon: 'heroicons_outline:calculator'
     },
     {
         id: 3,

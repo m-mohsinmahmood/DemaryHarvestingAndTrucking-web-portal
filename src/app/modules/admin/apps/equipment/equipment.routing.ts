@@ -29,6 +29,12 @@ import { PartsBrandsResolver, PartsCategoriesResolver, PartsProductsResolver, Pa
 import { PartsDetailComponent } from './part/details/details.component';
 import { PropertyDetailComponent } from './property/details/details.component';
 import { ProfileComponent } from './navigation/profile/profile.component';
+import { MotorizedComponent } from './motorized/motorized.component';
+import { MotorizedDetailComponent } from './motorized/details/details.component';
+import { MotorizedListComponent } from './motorized/list/motorized.component';
+import { NonMotorizedComponent } from './non-motorized/non-motorized.component';
+import { NonMotorizedListComponent } from './non-motorized/list/non-motorized.component';
+import { NonMotorizedDetailComponent } from './non-motorized/details/details.component';
 
 export const equipmentRoutes: Route[] = [
     {
@@ -82,6 +88,62 @@ export const equipmentRoutes: Route[] = [
             {
                 path     : 'details/:Id',
                 component: MachineryDetailComponent,
+                resolve: {
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
+                },
+            },
+        ],
+    },
+    {
+        path: 'motorized',
+        component: MotorizedComponent,
+        children: [
+            {
+                path: '',
+                component: MotorizedListComponent,
+                resolve: {
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
+                },
+            },
+            {
+                path     : 'details/:Id',
+                component: MotorizedDetailComponent,
+                resolve: {
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
+                },
+            },
+        ],
+    },
+    {
+        path: 'non-motorized',
+        component: NonMotorizedComponent,
+        children: [
+            {
+                path: '',
+                component: NonMotorizedListComponent,
+                resolve: {
+                    brands: MachineryBrandsResolver,
+                    categories: MachineryCategoriesResolver,
+                    products: MachineryProductsResolver,
+                    tags: MachineryTagsResolver,
+                    vendors: MachineryVendorsResolver,
+                },
+            },
+            {
+                path     : 'details/:Id',
+                component: NonMotorizedDetailComponent,
                 resolve: {
                     brands: MachineryBrandsResolver,
                     categories: MachineryCategoriesResolver,

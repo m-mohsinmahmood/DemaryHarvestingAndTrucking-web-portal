@@ -6,8 +6,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
-import { UpdateAddMachineryComponent } from '../update/update-add.component';
-import { MachineryService } from './../machinery.service';
+import { NonMotorizedService } from '../non-motorized.service';
 import { EquipmentService } from '../../equipment.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
@@ -56,7 +55,7 @@ const companyDocs = [
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MachineryDetailComponent implements OnInit, OnDestroy {
+export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     isLoading: boolean = false;
@@ -81,7 +80,7 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
         private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
-        public _machineService: MachineryService,
+        public _machineService: NonMotorizedService,
         private _router: Router,
         public _equipmentService: EquipmentService,
         private _fuseMediaWatcherService: FuseMediaWatcherService
@@ -151,18 +150,18 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    openUpdateDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
-            data: { id: this.routeID }
-        });
+    // openUpdateDialog(): void {
+    //     // Open the dialog
+    //     const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
+    //         data: { id: this.routeID }
+    //     });
 
 
-        dialogRef.afterClosed()
-            .subscribe((result) => {
-                console.log('Compose dialog was closed!');
-            });
-    }
+    //     dialogRef.afterClosed()
+    //         .subscribe((result) => {
+    //             console.log('Compose dialog was closed!');
+    //         });
+    // }
 
      //#region Inner Navigation Routing
      routeHandler(index) {

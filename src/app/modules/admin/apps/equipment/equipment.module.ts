@@ -46,6 +46,12 @@ import { ProfileComponent } from './navigation/profile/profile.component';
 import { LocationComponent } from './navigation/location/location.component';
 import { MainRepairComponent } from './navigation/main-repair/main-repair.component';
 import { ListComponent } from './navigation/list/list.component';
+import { MotorizedComponent } from './motorized/motorized.component';
+import { MotorizedDetailComponent } from './motorized/details/details.component';
+import { MotorizedListComponent } from './motorized/list/motorized.component';
+import { NonMotorizedComponent } from './non-motorized/non-motorized.component';
+import { NonMotorizedDetailComponent } from './non-motorized/details/details.component';
+import { NonMotorizedListComponent } from './non-motorized/list/non-motorized.component';
 
 
 
@@ -73,6 +79,12 @@ import { ListComponent } from './navigation/list/list.component';
         LocationComponent,
         MainRepairComponent,
         ListComponent,
+        MotorizedComponent,
+        MotorizedDetailComponent,
+        MotorizedListComponent,
+        NonMotorizedComponent,
+        NonMotorizedDetailComponent,
+        NonMotorizedListComponent
 
     ],
     imports     : [
