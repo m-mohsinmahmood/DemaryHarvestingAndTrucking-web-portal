@@ -21,7 +21,6 @@ export class ApplicantdataComponent implements OnInit {
     routeID; // URL ID
     applicant : any;
 
-
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
@@ -39,20 +38,8 @@ export class ApplicantdataComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.routeID = params.id;
-  });
-    // this._applicantService.getApplicantById(this.routeID);
-    // this.applicant$ = this._applicantService.applicant$;
-    // Loader
-    // this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
-
-    this._applicantService
-    .getApplicantById(this.routeID)
-    .subscribe((applicantObjData: any) => {
-        this.applicant  = applicantObjData;
-
     });
-
-
+    this.applicant$ = this._applicantService.applicant$;
   }
 
   expandAll(){

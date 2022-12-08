@@ -229,6 +229,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   //#region Form Value Updates
   formUpdates() {
     this.data.form?.valueChanges.subscribe((_formValues => {
+      console.log('_formValues', _formValues);
       //#region Advance Preliminary Review Handlers //
       if (this.data.preliminaryReview) {
         // Advance to 1st Interview //
@@ -387,14 +388,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       if (this.data.decisionMadeForm) {
         if (_formValues['status_message'] === 'Offer Made') {
           this.next_status_step = '8';
-          this.email_text = this.emails[2].email;
+          this.email_text = this.emails[7].email;
           this.data.form.patchValue({
             subject: this.emails[7].subject,
             body: this.emails[7].email,
             prev_status_step: '7',
             prev_status_message: "Offer Made",
             status_step: '9',
-            status_message: "Offer Accepted"
+            status_message: "Offer Made"
           },
             {
               emitEvent: false,

@@ -11,6 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ConfirmationDialogComponent implements OnInit {
     title: string;
     message: string;
+    hideDeleteIcon: boolean;
+    deleteText: string;
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
@@ -20,6 +22,8 @@ export class ConfirmationDialogComponent implements OnInit {
         // Update view with given values
         this.title = data.title;
         this.message = data.message;
+        this.hideDeleteIcon = data.hideDeleteIcon? true : false;
+        this.deleteText = data.deleteText ? data.deleteText: "Delete";
     }
 
     //#region Lifecycle functions
@@ -46,7 +50,7 @@ export class ConfirmationDialogComponent implements OnInit {
 }
 export class ConfirmDialogModel {
 
-    constructor(public title: string, public message: string) {
+    constructor(public title: string, public message: string, public hideDeleteIcon: boolean = false, public deleteText: string = "Delete") {
     }
 
   }

@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="parent-of-accordions">
+<div class="parent-of-accordions" *ngIf="applicant$ | async as applicantInfo">
     <!-- General Info -->
     <mat-accordion class="bg-gray-100">
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="bg-gray-100">
@@ -30,7 +30,7 @@
                             First Name
                         </dt>
                         <dd class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.first_name }}
+                            {{ applicantInfo?.applicant_info?.first_name }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -38,7 +38,7 @@
                             Last Name
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.last_name }}
+                            {{ applicantInfo?.applicant_info?.last_name }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -46,7 +46,7 @@
                             Email
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.email }}
+                            {{ applicantInfo?.applicant_info?.email }}
                         </dd>
                     </div>
 
@@ -55,7 +55,7 @@
                             Cell Phone number
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.cell_phone_number }}
+                            {{ applicantInfo?.applicant_info?.cell_phone_number }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -63,7 +63,7 @@
                             Home Phone Number
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.home_phone_number }}
+                            {{ applicantInfo?.applicant_info?.home_phone_number }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -71,7 +71,7 @@
                             Date of Birth
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.date_of_birth | date: "MMM-dd-YYYY"}}
+                            {{ applicantInfo?.applicant_info?.date_of_birth | date: "MMM-dd-YYYY"}}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -79,15 +79,15 @@
                             Age
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.age }}
+                            {{ applicantInfo?.applicant_info?.age }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            Maritial Status
+                            Marital Status
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.marital_status }}
+                            {{ applicantInfo?.applicant_info?.marital_status }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -95,7 +95,7 @@
                             Languages Spoken
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{applicant?.applicant_info?.languages}}
+                            {{applicantInfo?.applicant_info?.languages}}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -103,7 +103,7 @@
                             Rank Speaking English
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{applicant?.applicant_info?.rank_speaking_english}} out of 5
+                            {{applicantInfo?.applicant_info?.rank_speaking_english}} out of 5
                         </dd>
                     </div>
                 </dl>
@@ -127,7 +127,7 @@
                             Address 1
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.address_1 }}
+                            {{ applicantInfo?.applicant_info?.address_1 }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -135,7 +135,7 @@
                             Address 2
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.address_2 }}
+                            {{ applicantInfo?.applicant_info?.address_2 }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -143,7 +143,7 @@
                             Town/City
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.town_city }}
+                            {{ applicantInfo?.applicant_info?.town_city }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -151,7 +151,7 @@
                             County/Providence
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.county_providence }}
+                            {{ applicantInfo?.applicant_info?.county_providence }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -159,7 +159,7 @@
                             State
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.state }}
+                            {{ applicantInfo?.applicant_info?.state }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -167,7 +167,7 @@
                             Postal Code
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.postal_code }}
+                            {{ applicantInfo?.applicant_info?.postal_code }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -175,7 +175,7 @@
                             Country
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.country }}
+                            {{ applicantInfo?.applicant_info?.country }}
                         </dd>
                     </div>
                 </dl>
@@ -200,11 +200,11 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
-                            applicant?.applicant_info?.authorized_to_work === true
+                            applicantInfo?.applicant_info?.authorized_to_work === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant?.applicant_info?.authorized_to_work === true
+                        applicantInfo?.applicant_info?.authorized_to_work === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -216,11 +216,11 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
-                            applicant?.applicant_info?.us_citizen === true
+                            applicantInfo?.applicant_info?.us_citizen === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant?.applicant_info?.us_citizen === true
+                        applicantInfo?.applicant_info?.us_citizen === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -232,11 +232,11 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
-                            applicant?.applicant_info?.tractor_license === true
+                            applicantInfo?.applicant_info?.tractor_license === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant?.applicant_info?.tractor_license === true
+                        applicantInfo?.applicant_info?.tractor_license === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -249,11 +249,11 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
-                            applicant?.applicant_info?.passport === true
+                            applicantInfo?.applicant_info?.passport === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicant?.applicant_info?.passport === true
+                        applicantInfo?.applicant_info?.passport === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
@@ -264,7 +264,7 @@
                             Work Experience Description
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.work_experience_description }}
+                            {{ applicantInfo?.applicant_info?.work_experience_description }}
                         </dd>
                     </div>
 
@@ -278,7 +278,7 @@
 
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
 
-                            {{ applicant.applicant_info?.employment_period }}
+                            {{ applicantInfo?.applicant_info?.employment_period }}
 
                         </dd>
 
@@ -289,7 +289,7 @@
                             Operating Farm Equipment
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.question_1 }} out of 5
+                            {{ applicantInfo?.applicant_info?.question_1 }} out of 5
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
@@ -297,7 +297,7 @@
                             Operating Harvesting Equipment
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.question_2 }} out of 5
+                            {{ applicantInfo?.applicant_info?.question_2 }} out of 5
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
@@ -305,7 +305,7 @@
                             Driving Trucks
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.question_3 }} out of 5
+                            {{ applicantInfo?.applicant_info?.question_3 }} out of 5
                         </dd>
                     </div>
 
@@ -314,7 +314,7 @@
                             Welding Experience
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.question_4 }} out of 5
+                            {{ applicantInfo?.applicant_info?.question_4 }} out of 5
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
@@ -322,7 +322,7 @@
                             Mechanical Experience
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.question_5 }} out of 5
+                            {{ applicantInfo?.applicant_info?.question_5 }} out of 5
                         </dd>
                     </div>
 
@@ -348,7 +348,7 @@
                             Supervisor Name
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.supervisor_name }}
+                            {{ applicantInfo?.applicant_info?.supervisor_name }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
@@ -356,7 +356,7 @@
                             Supervisor Contact
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.supervisor_contact }}
+                            {{ applicantInfo?.applicant_info?.supervisor_contact }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -364,7 +364,7 @@
                             Education Degree Name
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.degree_name }}
+                            {{ applicantInfo?.applicant_info?.degree_name }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -372,7 +372,7 @@
                             Reasons for Applying
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.reason_for_applying }}
+                            {{ applicantInfo?.applicant_info?.reason_for_applying }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -380,7 +380,7 @@
                             How did you hear about DHT?
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.hear_about_dht }}
+                            {{ applicantInfo?.applicant_info?.hear_about_dht }}
                         </dd>
                     </div>
                 </dl>
@@ -404,7 +404,7 @@
                             US Phone Number
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.us_phone_number }}
+                            {{ applicantInfo?.applicant_info?.us_phone_number }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -412,7 +412,7 @@
                             Blood Type
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.blood_type }}
+                            {{ applicantInfo?.applicant_info?.blood_type }}
                         </dd>
                     </div>
 
@@ -421,7 +421,7 @@
                             Emergency Contact Name/Relation
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.emergency_contact_name }}
+                            {{ applicantInfo?.applicant_info?.emergency_contact_name }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -429,7 +429,7 @@
                             Emergency Contact Phone
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicant?.applicant_info?.emergency_contact_phone }}
+                            {{ applicantInfo?.applicant_info?.emergency_contact_phone }}
                         </dd>
                     </div>
                     <!-- <div

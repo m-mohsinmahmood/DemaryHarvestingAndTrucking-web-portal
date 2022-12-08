@@ -165,6 +165,7 @@ export class ApplicantService {
                 }
             );
     }
+
     getApplicantById(id: string) {
         return this._httpClient
             .get(`api-1/applicants?id=${id}`)
@@ -172,6 +173,20 @@ export class ApplicantService {
             ;
             
     }
+
+    getApplicantByIdNew(id: string) {
+        this.isLoadingApplicant.next(true);
+        return this._httpClient
+            .get(`api-1/applicants?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.applicant.next(res);
+                    this.isLoadingApplicant.next(false);
+                }
+            );
+    }
+
     createApplicant(data: any) {
         this._httpClient
             .post(`api-1/applicants`, data)
@@ -233,6 +248,7 @@ export class ApplicantService {
         if (recruiterRemarks){
             const {...applicant_data } = data;
             newData = Object.assign({},{applicant_data} );
+            console.log("Recruiter", newData);
         }
         else {
             const {body,recruiter_id,subject,to, ...applicant_data } = data;

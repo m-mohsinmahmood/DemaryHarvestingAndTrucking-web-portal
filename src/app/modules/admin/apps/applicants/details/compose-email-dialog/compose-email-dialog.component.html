@@ -13,25 +13,30 @@
         <mat-form-field appearance="outline">
             <mat-label>Next Step</mat-label>
             <mat-select formControlName="status_message">
-                <mat-option *ngIf="current_status_step == 2" value="First Interview Completed">First Interview</mat-option>
-                <mat-option *ngIf="current_status_step == 3" value="Second Interview Completed">Second Interview</mat-option>
-                <mat-option *ngIf="current_status_step == 4" value="Third Interview Completed">Third Interview</mat-option>
-                <mat-option *ngIf="current_status_step == 3 || current_status_step == 4 || current_status_step == 5" value="Reference Call Completed">Reference Call</mat-option>
-                <mat-option value="Waitlisted">Wait-listed</mat-option>
-                <mat-option value="Qualifications dont match current openings">Not Qualified</mat-option>
-                <mat-option *ngIf="current_status_step == 7" value="Offer Made">Make Offer</mat-option>
-                
+                <mat-option *ngIf="current_status_step == 2 && !data.makeOffer && !data.reject" value="First Interview Completed">First Interview
+                </mat-option>
+                <mat-option *ngIf="current_status_step == 3 && !data.makeOffer && !data.reject" value="Second Interview Completed">Second Interview
+                </mat-option>
+                <mat-option *ngIf="current_status_step == 4 && !data.makeOffer && !data.reject" value="Third Interview Completed">Third Interview
+                </mat-option>
+                <mat-option *ngIf="(current_status_step == 3 || current_status_step == 4 || current_status_step == 5) && !data.reject"
+                    value="Reference Call Completed">Reference Call</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not Qualified</mat-option>
+                <mat-option *ngIf="data.makeOffer" value="Offer Made">Make Offer</mat-option>
+
             </mat-select>
         </mat-form-field>
 
         <!-- MAT AUTOCOMPLETE -->
         <mat-form-field *ngIf="[3, 4, 5, 6].includes(next_status_step)" appearance="outline" fxFlex>
             <mat-label>Recruiter Name</mat-label>
-            <input  (ngModelChange)="formValidation($event)" (click)="getDropdownRecruiters()" [matAutocomplete]="recruiters"
-                (keyup)="recruiter_search$.next($event.target.value)" matInput formControlName="recruiter_id" name="name"
-                placeholder="Recruiter Name" required />
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownRecruiters()"
+                [matAutocomplete]="recruiters" (keyup)="recruiter_search$.next($event.target.value)" matInput
+                formControlName="recruiter_id" name="name" placeholder="Recruiter Name" required />
         </mat-form-field>
-        <mat-autocomplete #recruiters="matAutocomplete" [displayWith]="displayRecruiterForAutoComplete" (optionSelected)="recruiterSelect($event.option.value)">
+        <mat-autocomplete #recruiters="matAutocomplete" [displayWith]="displayRecruiterForAutoComplete"
+            (optionSelected)="recruiterSelect($event.option.value)">
             <div *ngIf="allRecruiters | withLoading | async as allRecruiters">
                 <ng-template [ngIf]="allRecruiters.value">
                     <mat-option *ngFor="let allRecruiter of allRecruiters.value.recruiters" [value]="allRecruiter">{{
@@ -51,11 +56,11 @@
             </div>
         </mat-autocomplete>
         <!-- MAT AUTOCOMPLETE -->
-        
+
         <!-- To -->
-        <mat-form-field appearance="outline">
+        <mat-form-field disabled appearance="outline">
             <mat-label>To</mat-label>
-            <input matInput [formControlName]="'to'">
+            <input disabled="true" matInput [formControlName]="'to'">
         </mat-form-field>
         <!-- To -->
 
@@ -65,9 +70,10 @@
             <input matInput [formControlName]="'subject'">
         </mat-form-field>
         <!-- Subject -->
-        
+
         <!-- Body -->
-        <quill-editor class="mt-2" [(ngModel)]="email_text" [ngModelOptions]="{ standalone: true }" [modules]="quillModules"></quill-editor>
+        <quill-editor class="mt-2" [(ngModel)]="email_text" [ngModelOptions]="{ standalone: true }"
+            [modules]="quillModules"></quill-editor>
         <!-- Body -->
 
         <!-- Actions -->
@@ -79,10 +85,9 @@
                     Discard
                 </button>
                 <!-- Send -->
-                <button class="" mat-flat-button [color]="'primary'" 
-                (click)="send()">
-                <span class=" ">Save</span>
-            </button>
+                <button class="" mat-flat-button [color]="'primary'" (click)="send()">
+                    <span class=" ">Save</span>
+                </button>
             </div>
         </div>
         <!-- Actions -->

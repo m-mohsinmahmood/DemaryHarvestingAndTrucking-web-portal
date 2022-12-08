@@ -5,7 +5,7 @@
         class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary"
     >
         <div class="text-lg font-medium">
-                Delete {{title}}
+                {{hideDeleteIcon ? '' : 'Delete'}} {{title}}
         </div>
         <button mat-icon-button (click)="onClose()" [tabIndex]="-1">
             <mat-icon
@@ -15,7 +15,7 @@
         </button>
     </header>
         <div class="flex justify-center items-center h-30">
-            <div class="w-1/12  flex justify-end items-center">
+            <div *ngIf="!hideDeleteIcon" class="w-1/12  flex justify-end items-center">
                     <div class=" flex justify-end items-center">
                         <mat-icon
                         [svgIcon]="'heroicons_outline:trash'"
@@ -42,10 +42,11 @@
             </button>
             <button
                 mat-flat-button
-                [color]="'warn'"
+                class="text-white"
+                [ngClass]="{'bg-red-600': deleteText !== 'Accept', 'bg-green-600': deleteText === 'Accept' }"
                 (click)="onSubmit()"
             >
-                Delete
+                {{deleteText}}
             </button>
         </div>
     </div>

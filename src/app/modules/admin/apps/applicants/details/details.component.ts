@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
-import { Observable, Subject, takeUntil, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, takeUntil, BehaviorSubject, lastValueFrom, take } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { FuseConfirmationService } from '@fuse/services/confirmation/confirmation.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { UpdateComponent } from '../update/update.component';
 import { ComposeEmailDialogComponent } from './compose-email-dialog/compose-email-dialog.component';
-import moment from 'moment';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'applicant-details',
@@ -45,7 +46,11 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     decisionMadeForm: FormGroup;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    results: string[] = ['Waitlisted','Hired','Qualifications dont match current openings'];
+    results: string[] = ['Waitlisted', 'Hired', 'Qualifications dont match current openings'];
+    //#endregion
+
+    //#region Applicant Variables
+    applicant$: Observable<any>;
     //#endregion
 
     //#region Constructor
@@ -57,18 +62,26 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-    ) {}
+    ) { }
     //#endregion Constructor
 
     //#region Lifecycle functions
-    ngOnInit(): void {
+    ngOnInit() {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.id;
         });
+
+        this.applicant$ = this._applicantService.applicant$;
+        this.applicant$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+            console.log("res", res);
+            this.applicant = res;
+            console.log('this.applicant', this.applicant);
+        });
+        console.log(this.applicant);
         this.initForm();
         this.getApplicantById();
         this.routesLeft = this._applicantService.applicantNavigationLeft;
-        this.routesright = this._applicantService.applicantNavigationRight;       
+        this.routesright = this._applicantService.applicantNavigationRight;
     }
 
     ngAfterViewInit(): void {
@@ -81,7 +94,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     //#endregion
-    
+
     //#region Init Form
     initForm() {
         this.preliminaryReviewForm = this._formBuilder.group({
@@ -91,7 +104,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             prev_status_step: [''],
             prev_status_message: [''],
             recruiter_id: [{ value: '', disabled: true }],
-            to: ['', [Validators.required, Validators.email]],
+            to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
@@ -103,7 +116,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             prev_status_step: [''],
             prev_status_message: [''],
             recruiter_id: [{ value: '', disabled: true }],
-            to: ['', [Validators.required, Validators.email]],
+            to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
@@ -114,13 +127,13 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             status_step: [''],
             prev_status_step: [''],
             prev_status_message: [''],
-            to: ['', [Validators.required, Validators.email]],
+            to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]]
         });
     }
     //#endregion
-    
+
     //#region Initialize Side Navigation
     initSideNavigation() {
         this.routes = this._applicantService.applicantNavigationLeft;
@@ -137,7 +150,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             });
     }
     //#endregion
-    
+
     //#region Inner Navigation Routing
     routeHandler(index) {
         const { title } = index;
@@ -148,7 +161,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this.selectedIndex = title;
     };
     //#endregion
-    
+
     //#region Back Button
     backHandler(): void {
         this._router.navigate(['/apps/applicants/']);
@@ -167,20 +180,23 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed()
             .subscribe((result) => {
-        });
+            });
     }
     //#endregion
 
     //#region Get Applicant By id 
-    getApplicantById(){
-        this._applicantService
-        .getApplicantById(this.routeID)
-        .subscribe((applicantObjData: any) => {
-            this.applicant = applicantObjData;
-        }); 
+    // getApplicantById(){
+    //     this._applicantService
+    //     .getApplicantById(this.routeID)
+    //     .subscribe((applicantObjData: any) => {
+    //         this.applicant = applicantObjData;
+    //     }); 
+    // }
+    getApplicantById() {
+        this._applicantService.getApplicantByIdNew(this.routeID);
     }
     //#endregion
-    
+
     //#region Delete Applicant
     deleteApplicant() {
         // Open the confirmation dialog
@@ -195,64 +211,94 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         });
     }
     //#endregion
-    
+
     //#region Status Bar onclick
     composeEmail(index) {
-        if (index == 1 ) {
+        if (index == 1) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     preliminaryReview: true,
                     applicant: this.applicant.applicant_info,
                     form: this.preliminaryReviewForm,
-                }
+                },
+                disableClose: true
             });
             dialogRef.afterClosed().subscribe((result) => { });
 
         }
         else if (index == 2 || index == 3 || index == 4) {
-            if (index == 2 ) {
+            if (index == 2) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         firstInterview: true,
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                    }
+                    },
+                    disableClose: true
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 3 ) {
+            if (index == 3) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         secondInterview: true,
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                        
-                    }
+                    },
+                    disableClose: true
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 4 ) {
+            if (index == 4) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         thirdInterview: true,
                         interviewCompletedForm: true,
                         applicant: this.applicant.applicant_info,
                         form: this.interviewCompletedForm,
-                    }
+                    },
+                    disableClose: true
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
         }
-        else if (index == 6  ) {
+        else if (index == 6) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     decisionMadeForm: true,
+                    makeOffer: false,
                     applicant: this.applicant.applicant_info,
                     form: this.decisionMadeForm,
-                   
-                }
+                },
+                disableClose: true
+            });
+            dialogRef.afterClosed().subscribe((result) => { });
+
+        }
+        else if (index == 8) {
+            const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                data: {
+                    makeOffer: true,
+                    decisionMadeForm: true,
+                    applicant: this.applicant.applicant_info,
+                    form: this.decisionMadeForm,
+                },
+                disableClose: true
+            });
+            dialogRef.afterClosed().subscribe((result) => { });
+
+        }
+        else if (index == -1) {
+            const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
+                data: {
+                    decisionMadeForm: true,
+                    reject: true,
+                    applicant: this.applicant.applicant_info,
+                    form: this.decisionMadeForm,
+                },
+                disableClose: true
             });
             dialogRef.afterClosed().subscribe((result) => { });
 
@@ -260,7 +306,26 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    expandAll(){
+    //#region Confirmation Customer Delete Dialog
+    confirmAcceptRejectOffer(type): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+          data: {
+            message: type === "Accept" ? "Are you sure you want to accept this Applicant an Employee?" : "Are you sure you want to put this Applicant in Rejected Offer list?",
+            title: type === "Accept" ? "Offer Accepted" : "Offer Rejected",
+            hideDeleteIcon: true,
+            deleteText: type === "Accept" ? "Accept" : "Reject"
+          },
+
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if(dialogResult)
+            this._applicantService.getApplicantByIdNew(this.applicant.applicant_info.id);
+        });
+      }
+    //#endregion
+
+    expandAll() {
         this.panelOpenState = true;
     }
 }

@@ -144,8 +144,8 @@ export class RecruiterremarksComponent implements OnInit {
             reference_call_remarks: this.applicantData?.reference_call_remarks == null ? "" : this.applicantData?.reference_call_remarks,
             reference_call_ranking: this.applicantData?.reference_call_ranking,
             reference_interviewer_id: this.applicantData?.reference_interviewer_id,
-            status_message: ['Recruiter Decision Made'],
-            status_step:['7'],
+            status_message: ['Reference Call Completed'],
+            status_step:['6'],
             id: [this.applicantData?.id]
         });
         
@@ -255,7 +255,6 @@ export class RecruiterremarksComponent implements OnInit {
             this._applicantService.patchApplicant(this.referenceForm.value , true);
         }
     }
-
 
     updateApplicant(applicantData: any): void {
         this._applicantService.updateApplicant(applicantData);

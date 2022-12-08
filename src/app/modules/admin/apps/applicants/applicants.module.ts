@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { QuillModule } from 'ngx-quill';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
@@ -39,7 +40,7 @@ import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterr
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { BirthDateFormat } from './update/update.component';
 import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
-import { QuillModule } from 'ngx-quill';
+
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { QuillModule } from 'ngx-quill';
         ApplicantdataComponent,
         RecruiterremarksComponent,
         BirthDateFormat,
-        ComposeEmailDialogComponent,
+        ComposeEmailDialogComponent
     ],
     imports: [
         RouterModule.forChild(applicantsRoutes),
