@@ -79,7 +79,7 @@ export class CropService {
      * @param order
      * @param search
      */
-    getCrops(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
+    getCrops(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);

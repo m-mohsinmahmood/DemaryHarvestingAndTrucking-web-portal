@@ -67,7 +67,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ConfirmationDialogComponent } from './../../ui/confirmation-dialog/confirmation-dialog.component';
-import { PhoneMaskDirective } from './phone-mask.directive';
 import { ImportCustomersComponent } from './import-customers/import-customers.component';
 import { ImportCustomerContactsComponent } from './navigation/customer-information/import-customer-contacts/import-customer-contacts.component';
 import { ImportFarmsComponent } from './navigation/farm-data/farms/import-farms/import-farms.component';
@@ -114,7 +113,6 @@ import { ImportDestinationsComponent } from './navigation/farm-data/destinations
         ListTruckingRateComponent,
         ListFarmingRateComponent,
         ConfirmationDialogComponent,
-        PhoneMaskDirective,
         ImportCustomersComponent,
         ImportCustomerContactsComponent,
         ImportFarmsComponent,
@@ -182,10 +180,7 @@ import { ImportDestinationsComponent } from './navigation/farm-data/destinations
         MatButtonToggleModule,
         FuseDrawerModule,
 
-    ],
-    exports: [
-        PhoneMaskDirective
-    ],
+    ]
 
 })
 export class CustomersModule {}

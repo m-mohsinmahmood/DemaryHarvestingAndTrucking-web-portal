@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
@@ -30,7 +28,8 @@ export class ApplicantService {
     public applicantNavigationRight = applicantNavigationRight;
 
     //#region Close Dialog
-    closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    closeDialog: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
     readonly closeDialog$: Observable<boolean> =
         this.closeDialog.asObservable();
    //#endregion
@@ -38,29 +37,48 @@ export class ApplicantService {
     // #region Applicants & Applicant
 
     // Data
+    private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
+
+    private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly applicant$: Observable<any | null> = this.applicant.asObservable();
+
+    // Loaders
+    private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
+
+    isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
+
     private applicantsList: BehaviorSubject<any[] | null> = new BehaviorSubject(
         null
     );
     readonly applicantsList$: Observable<any[] | null> =
         this.applicantsList.asObservable();
-
-    private applicantList: BehaviorSubject<any | null> = new BehaviorSubject(
-        null
-    );
-    readonly applicantList$: Observable<any | null> =
-        this.applicantList.asObservable();
-
     // Loaders
     private isLoadingApplicants: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly isLoadingApplicants$: Observable<boolean> =
         this.isLoadingApplicants.asObservable();
 
-    isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-        false
-    );
-    readonly isLoadingApplicant$: Observable<boolean> =
-        this.isLoadingApplicant.asObservable();
+    
+    
+    // #endregion
+
+    // #region Applicants & Applicant
+    // Data
+    // private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    // readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
+
+    // private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    // readonly applicant$: Observable<any | null> = this.applicant.asObservable();
+
+    // // Loaders
+    // private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
+
+    // private isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
     // #endregion
 
     /**
@@ -78,20 +96,11 @@ export class ApplicantService {
         return this._pagination.asObservable();
     }
 
-    /**
-     * Getter for applicant
-     */
-    get applicant$(): Observable<Applicant> {
-        return this._applicantdata.asObservable();
-    }
-
-    /**
-     * Getter for applicant
-     */
     get applicantdata$(): Observable<Applicant[]> {
         return this._applicantsdata.asObservable();
     }
 
+    //#region Error handling
     handleError(error: HttpErrorResponse) {
         let errorMessage = 'Unknown error!';
         if (error.error instanceof ErrorEvent) {
@@ -119,192 +128,21 @@ export class ApplicantService {
         }
         return throwError(errorMessage);
     }
+    //#endregion
 
-    /**
-     * Get applicants
-     *
-     *
-     * @param page
-     * @param size
-     * @param sort
-     * @param order
-     * @param search
-     */
-    getApplicants(
-        page: number = 0,
-        size: number = 10,
-        sort: string = 'name',
-        order: 'asc' | 'desc' | '' = 'asc',
-        search: string = ''
-    ): Observable<{ pagination: ApplicantPagination; products: Applicant[] }> {
+    //#region All Recruiter
+    getDropdownAllRecruiters(search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
         return this._httpClient
-            .get<{ pagination: ApplicantPagination; products: Applicant[] }>(
-                'api/apps/applicants',
-                {
-                    params: {
-                        page: '' + page,
-                        size: '' + size,
-                        sort,
-                        order,
-                        search,
-                    },
-                }
-            )
-            .pipe(
-                tap((response) => {
-                    this._pagination.next(response.pagination);
-                    this._applicantsdata.next(response.products);
-                })
-            );
+            .get<any>(`api-1/dropdowns?entity=allRecruiters`, {params})
+            .pipe(take(1))
     }
 
-    /**
-     * Get applicant by id
-     */
-    getApplicantById(id: string): Observable<Applicant> {
-        
-        return this._applicantsdata.pipe(
-            take(1),
-            map((applicants) => {
-                
-                // Find the applicant
-                const applicant =
-                    applicants.find((item) => item.id === id) || null;
-                
-                // Update the applicant
-                this._applicantdata.next(applicant);
+    //#endregion
 
-                // Return the applicant
-                return applicant;
-            }),
-            switchMap((applicant) => {
-                if (!applicant) {
-                    return throwError(
-                        'Could not found product with id of ' + id + '!'
-                    );
-                }
-
-                return of(applicant);
-            })
-        );
-    }
-
-    /**
-     * Create applicant
-     */
-    createApplicant(): Observable<Applicant> {
-        return this.applicantdata$.pipe(
-            take(1),
-            switchMap((applicants) =>
-                this._httpClient
-                    .post<Applicant>('api/apps/applicants/product', {})
-                    .pipe(
-                        map((newApplicant) => {
-                            // Update the applicant with the new product
-                            this._applicantsdata.next([
-                                newApplicant,
-                                ...applicants,
-                            ]);
-
-                            // Return the new applicant
-                            return newApplicant;
-                        })
-                    )
-            )
-        );
-    }
-
-    /**
-     * Update applicant
-     *
-     * @param id
-     * @param applicant
-     */
-    updateApplicant(id: string, applicant: Applicant): Observable<Applicant> {
-        
-        return this.applicantdata$.pipe(
-            take(1),
-            switchMap((applicants) =>
-                this._httpClient
-                    .patch<Applicant>('api/apps/applicants/product', {
-                        id,
-                        applicant,
-                    })
-                    .pipe(
-                        map((updatedApplicant) => {
-
-                            // Find the index of the updated applicant
-                            const index = applicants.findIndex(
-                                (item) => item.id === id
-                            );
-
-                            // Update the applicant
-                            applicants[index] = updatedApplicant;
-
-                            // Update the applicants
-                            this._applicantsdata.next(applicants);
-
-                            // Return the updated applicant
-                            return updatedApplicant;
-                        }),
-                        switchMap((updatedApplicant) =>
-                            this.applicant$.pipe(
-                                take(1),
-                                filter((item) => item && item.id === id),
-                                tap(() => {
-                                    // Update the applicant if it's selected
-                                    this._applicantdata.next(updatedApplicant);
-
-                                    // Return the updated applicant
-                                    return updatedApplicant;
-                                })
-                            )
-                        )
-                    )
-            )
-        );
-    }
-
-    /**
-     * Delete the applicant
-     *
-     * @param id
-     */
-    deleteApplicant(id: string): Observable<boolean> {
-        return this.applicantdata$.pipe(
-            take(1),
-            switchMap((applicants) =>
-                this._httpClient
-                    .delete('api/apps/applicants/product', { params: { id } })
-                    .pipe(
-                        map((isDeleted: boolean) => {
-                            // Find the index of the deleted applicant
-                            const index = applicants.findIndex(
-                                (item) => item.id === id
-                            );
-
-                            // Delete the applicant
-                            applicants.splice(index, 1);
-
-                            // Update the applicants
-                            this._applicantsdata.next(applicants);
-
-                            // Return the deleted status
-                            return isDeleted;
-                        })
-                    )
-            )
-        );
-    }
-
-    // #region Applicants & Applicant
-    getApplicantDummy(
-        page: number = 1,
-        limit: number = 10,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = ''
-    ) {
+    //#region Applicant API's 
+    getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
@@ -312,39 +150,46 @@ export class ApplicantService {
         params = params.set('sort', sort);
         params = params.set('order', order);
         return this._httpClient
-            .get<any>('api-1/hahahahahahahaha', {
+            .get<any>(`api-1/applicants`, {
                 params,
             })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingApplicants.next(true);
-                    this.applicantsList.next(res);
-                    this.isLoadingApplicants.next(false);
+                    this.isLoadingApplicantList.next(true);
+                    this.applicantList.next(res);
+                    this.isLoadingApplicantList.next(false);
                 },
                 (err) => {
                     this.handleError(err);
                 }
             );
     }
-    getApplicantByIdDummy(id: string) {
-        this._httpClient
-            .get(`api-1/customers?id=${id}`)
+
+    getApplicantById(id: string) {
+        return this._httpClient
+            .get(`api-1/applicants?id=${id}`)
+            .pipe(take(1))
+            ;
+            
+    }
+
+    getApplicantByIdNew(id: string) {
+        this.isLoadingApplicant.next(true);
+        return this._httpClient
+            .get(`api-1/applicants?id=${id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingApplicant.next(true);
-                    this.applicantList.next(res);
+                    this.applicant.next(res);
                     this.isLoadingApplicant.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
                 }
             );
     }
-    createApplicantDummy(data: any) {
+
+    createApplicant(data: any) {
         this._httpClient
-            .post(`api-1/customers`, data)
+            .post(`api-1/applicants`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -355,7 +200,7 @@ export class ApplicantService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Success',
+                        title: 'Create Applicant',
                         message: res.message,
                         time: 5000,
                     });
@@ -363,16 +208,16 @@ export class ApplicantService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicantDummy();
+                    this.getApplicants();
                 }
             );
     }
-
-    updateApplicantDummy(customerData: any, paginatioData: any) {
+    updateApplicant(data: any) {
         this._httpClient
-            .put(`api-1/customers`, customerData)
+            .put(`api-1/applicants`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -382,7 +227,7 @@ export class ApplicantService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Success',
+                        title: 'Update Applicant',
                         message: res.message,
                         time: 5000,
                     });
@@ -390,9 +235,68 @@ export class ApplicantService {
                 (err) => {
                     this.handleError(err);
                     this.closeDialog.next(false);
+                    this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicantDummy(customerData.id);
+                    this.getApplicants();
+                }
+            );
+    }
+    patchApplicant(data: any, recruiterRemarks: boolean) {
+        let newData;
+        let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
+        if (recruiterRemarks) {
+            const { ...applicant_data } = data;
+            newData = Object.assign({}, { applicant_data });
+            console.log('Recruiter', newData);
+        } else {
+            const { body, recruiter_id, subject, to, ...applicant_data } = data;
+            const { id, status_step, status_message, ...email_data } = data;
+            newData = Object.assign({}, { applicant_data }, { email_data });
+        }
+
+        console.log("NEW DATA",newData)
+        
+        this._httpClient
+            .patch(`api-1/applicants${url}`, newData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingApplicant.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Applicant',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingApplicant.next(false);
+                },
+                () => {
+                    this.getApplicantByIdNew(newData.applicant_data.id);
+                }
+            );
+    }
+    deleteApplicant(id: string) {
+        this._httpClient
+            .delete(`api-1/applicant?applicantId=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingApplicant.next(true);                   
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getApplicants();
+                    this.isLoadingApplicant.next(false);
                 }
             );
     }

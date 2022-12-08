@@ -34,15 +34,6 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { ApplicantpageComponent } from './applicantpage.component';
 import { activitiesRoutes } from './applicantpage.routing';
 
-
-
-// const routes: Routes = [
-//     {
-//         path     : '',
-//         component: ApplicantpageComponent
-//     }
-// ];
-
 @NgModule({
     declarations: [
         ApplicantpageComponent

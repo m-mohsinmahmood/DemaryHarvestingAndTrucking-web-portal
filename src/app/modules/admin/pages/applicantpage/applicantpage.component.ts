@@ -1,21 +1,16 @@
 // import { Component, OnInit } from '@angular/core';
-
 // @Component({
 //   selector: 'app-applicantpage',
 //   templateUrl: './applicantpage.component.html',
 //   styleUrls: ['./applicantpage.component.scss']
 // })
 // export class ApplicantpageComponent implements OnInit {
-
 //   constructor() { }
-
 //   ngOnInit(): void {
 //   }
-
 // }
-
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -27,8 +22,8 @@ import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import moment from 'moment';
-
+import moment, { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
 @Component({
     selector: 'app-applicantpage',
       templateUrl: './applicantpage.component.html',
@@ -41,7 +36,6 @@ export class ApplicantpageComponent implements OnInit
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
-
     // #region local variables
     form: FormGroup;
     employees: any;
@@ -60,19 +54,18 @@ export class ApplicantpageComponent implements OnInit
     routeID: string;
     avatar: string = '';
     isEdit: boolean = true;
+    formArr = [];
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
+    calendar_year: any;
     isLoading:boolean = false;
      //#endregion
-
     // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
-
     // alert: { type: FuseAlertType; message: string } = {
     //     type   : 'success',
     //     message: ''
     // };
     // comingSoonForm: FormGroup;
     // showAlert: boolean = false;
-
     /**
      * Constructor
      */
@@ -81,7 +74,6 @@ export class ApplicantpageComponent implements OnInit
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
         // @Inject(MAT_DIALOG_DATA) public data: any,
-
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
         breakpointObserver: BreakpointObserver
@@ -92,11 +84,9 @@ export class ApplicantpageComponent implements OnInit
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
         // this.routeID = data ? data.id : '';
     }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
-
     /**
      * On init
      */
@@ -105,185 +95,144 @@ export class ApplicantpageComponent implements OnInit
         this.initfarmGroups();
         // this.isEdit = this.data.isEdit;
     }
+    // #region initializing forms
     initfarmGroups() {
-        // #region initializing forms
+        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
-            fname: ['', ''],
-            lname: ['', ''],
-            email: ['', ''],
-            cellNumber: ['', ''],
-            homeNumber: ['', ''],
-            languages: [''],
+            id: [''],
+            first_name: ['', [Validators.required]],
+            last_name: ['', [Validators.required]],
+            email  : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            cell_phone_number: ['', [Validators.required]],
+            home_phone_number: [''],
+            date_of_birth: ['', [Validators.required]],
+            age: ['', [Validators.required]],
+            marital_status: ['', [Validators.required]],
+            languages: ['', [Validators.required]],
+            rank_speaking_english: ['', [Validators.required]],
         });
-
         this.secondFormGroup = this._formBuilder.group({
-            fullName: ['', ''],
-            lastNameFirstName: ['', ''],
-            firstName: ['', ''],
-            lastName: ['', ''],
-            cellPhone: ['', ''],
-            homePhone: ['', ''],
-            email: ['', ''],
+            address_1: ['', [Validators.required]],
+            address_2: [''],
+            town_city: ['', [Validators.required]],
+            county_providence: ['', [Validators.required]],
+            state: ['', [Validators.required]],
+            postal_code: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            avatar: [''],
         });
-
+        this.thirdFormGroup = this._formBuilder.group({
+            question_1: ['', [Validators.required]],
+            question_2: ['', [Validators.required]],
+            question_3: ['', [Validators.required]],
+            question_4: ['', [Validators.required]],
+            question_5: ['', [Validators.required]],
+            authorized_to_work: ['', [Validators.required]],
+            us_citizen: ['', [Validators.required]],
+            cdl_license: ['', [Validators.required]],
+            lorry_license: ['', [Validators.required]],
+            tractor_license: ['', [Validators.required]],
+            passport: ['', [Validators.required]],
+            work_experience_description: ['', [Validators.required]],
+            employment_period: ['', [Validators.required]],
+        });
         this.fourthFormGroup = this._formBuilder.group({
-            dob: ['', ''],
-            maritalStatus: ['', ''],
-            address1: ['', ''],
-            address2: ['', ''],
-            city: ['', ''],
-            province: ['', ''],
-            county: ['', ''],
-            postalCode: ['', ''],
-            country: ['', ''],
-            usCitizen: ['', ''],
-            license: ['', ''],
-            passport: ['', ''],
-            //   imageURL: ['', [Validators.required]],
-            avatar: ['', ''],
+            supervisor_name: ['', [Validators.required]],
+            supervisor_contact: ['', [Validators.required]],
+            degree_name: ['', [Validators.required]],
+            reason_for_applying: ['', [Validators.required]],
+            hear_about_dht: ['', [Validators.required]],
         });
-
         this.fifthFormGroup = this._formBuilder.group({
-            firstQuestion: ['', ''],
-            secondQuestion: ['', ''],
-            thirdQuestion: ['', ''],
-            fourthQuestion: ['', ''],
-            fifthQuestion: ['', ''],
-            workExperience: ['', ''],
-            job: ['', ''],
-            supervisor: ['', ''],
-            supervisorContact: ['', ''],
+            us_phone_number: [''],
+            blood_type: [''],
+            emergency_contact_name: [''],
+            emergency_contact_phone: [''],
         });
-
         this.sixthFormGroup = this._formBuilder.group({
-            e_firstQuestion: ['', ''],
-            e_secondQuestion: ['', ''],
-            e_thirdQuestion: ['', ''],
+            first_phone_call: [''],
+            first_call_remarks: [''],
+            first_call_ranking: [''],
+            first_interviewer_id: [''],
+            reference_phone_call: [''],
+            reference_call_remarks: [''],
+            reference_call_ranking: [''],
+            reference_interviewer_id: [''],
+            second_phone_call: [''],
+            second_call_remarks: [''],
+            second_call_ranking: [''],
+            second_interviewer_id: [''],
+            third_phone_call: [''],
+            third_call_remarks: [''],
+            third_call_ranking: [''],
+            third_interviewer_id: [''],
         });
-        this.seventhFormGroup = this._formBuilder.group({
-            degree: ['', ''],
-            institution: ['', ''],
-            education: ['', ''],
-        });
-
-        // #endregion
-        // #region populating farms
-        // Get the employee by id
-        if (this.data !== null) {
-            this._applicantService
-                .getApplicantById('a9beac0d-1ea0-42af-bc36-ca839f27271f')
-                .subscribe((employee) => {
-                    // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
-
-                     this.firstFormGroup = this._formBuilder.group({
-                       fname: employee.firstEmail,
-                       lname: moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-                       email: employee.secondEmail,
-                       cellNumber: employee.cellPhone,
-                       homeNumber:employee.cellPhone,
-                       languages:employee.status,
-                    //    secondSentDate: moment( employee.secondSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-                    //    applicationDate: moment( employee.applicationDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-
-                     });
-                    this.secondFormGroup.patchValue({
-                        fullName: employee.name,
-                        lastNameFirstName: employee.name,
-                        firstName: employee.fname,
-                        lastName: employee.lname,
-                        cellPhone: employee.cellPhone,
-                        homePhone: employee.homePhone,
-                        email: employee.email,
-                    });
-                    this.fourthFormGroup.patchValue({
-                        dob: moment(employee.dob)
-                            .subtract(1, 'week')
-                            .hour(18)
-                            .minute(56)
-                            .toISOString(),
-                        maritalStatus: employee.martialStatus,
-                        address1: employee.address1,
-                        address2: employee.address2,
-                        city: employee.town,
-                        province: employee.state,
-                        postalCode: employee.postalCode,
-                        country: employee.country,
-                        usCitizen: employee.citizenStatus,
-                        license: employee.tractorStatus,
-                        passport: employee.passport,
-                        //   imageURL: employee.imageURL,
-                        avatar: employee.avatar,
-                    });
-                    this.fifthFormGroup.patchValue({
-                        firstQuestion: employee.fifthQuestion,
-                        secondQuestion: employee.secondQuestion,
-                        thirdQuestion: employee.thirdQuestion,
-                        fourthQuestion: employee.fourthQuestion,
-                        fifthQuestion: employee.fifthQuestion,
-                        workExperience: employee.workExperience,
-                        job: employee.job,
-                        supervisor: employee.supervisor,
-                        supervisorContact: employee.supervisorContact,
-                    });
-                    this.sixthFormGroup.patchValue({
-                        e_firstQuestion: employee.e_firstQuestion,
-                        e_secondQuestion: employee.e_secondQuestion,
-                        e_thirdQuestion: employee.e_thirdQuestion,
-                    });
-                    this.seventhFormGroup.patchValue({
-                        degree: employee.name,
-                        institution: employee.name,
-                        education: employee.name,
-                    });
-                    this._changeDetectorRef.markForCheck();
-                });
-        } else {
-        }
-        // #endregion
+        this.formArr = [
+            this.firstFormGroup,
+            this.secondFormGroup,
+            this.thirdFormGroup,
+            this.fourthFormGroup,
+            this.fifthFormGroup,
+            this.sixthFormGroup,
+        ];
     }
+    // #endregion
     submit(): void {
-        this.isLoading = true;
+        this.form = this._formBuilder.group({});
+        this.formArr.forEach((f) => {
+            Object.entries(f.value).forEach((element) => {
+                const control = this._formBuilder.control(element[1]);
+                this.form.addControl(element[0], control);
+            });
+        });
+        this._applicantService.isLoadingApplicant.next(true);
+        this._applicantService.createApplicant(this.form.value);
         this._router.navigateByUrl("/pages/landing-page")
-
-
-
     }
-
+    updateApplicant(applicantData: any): void {
+        this._applicantService.updateApplicant(applicantData);
+    }
+    initCalendar() {
+            this.calendar_year = new FormControl(moment());
+    }
+    //#region Calendar Year Function
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment(this.calendar_year.value);
+        ctrlValue.year(normalizedYear.year());
+        this.calendar_year.setValue(ctrlValue);
+        this.form.value.calendar_year = ctrlValue;
+        datepicker.close();
+    }
     showFlashMessage(type: 'success' | 'error'): void {
         // Show the message
         this.flashMessage = type;
-
         // Mark for check
         this._changeDetectorRef.markForCheck();
-
         // Hide it after 3 seconds
         setTimeout(() => {
             this.flashMessage = null;
-
             // Mark for check
             this._changeDetectorRef.markForCheck();
         }, 3000);
     }
-
     saveAndClose(): void {
         // Save the message as a draft
         this._router.navigateByUrl("/pages/landing-page")
         this.saveAsDraft();
-
         // Close the dialog
         // this.matDialogRef.close();
     }
-
     /**
      * Discard the message
      */
     discard(): void {}
-
     /**
      * Save the message as a draft
      */
     saveAsDraft(): void {}
-
     /**
      * Send the message
      */
@@ -298,7 +247,6 @@ export class ApplicantpageComponent implements OnInit
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
     }
-
     showPreview(event) {
         const file = (event.target as HTMLInputElement).files[0];
         this.fourthFormGroup.patchValue({

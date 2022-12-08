@@ -60,7 +60,7 @@ export class CropsListComponent implements OnInit {
     sortActive: any;
     sortDirection: any;
     isEdit: boolean = false;
-    pageSize = 10;
+    pageSize = 50;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;
@@ -98,7 +98,7 @@ export class CropsListComponent implements OnInit {
             .subscribe((data) => {
                 this.page = 1;
                 this.searchResult = data.search;
-                this._cropsService.getCrops(this.page, 10, '', '', this.searchResult);
+                this._cropsService.getCrops(this.page, 50, '', '', this.searchResult);
             });
     }
 

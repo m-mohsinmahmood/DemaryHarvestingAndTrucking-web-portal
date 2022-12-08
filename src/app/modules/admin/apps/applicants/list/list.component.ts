@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
+import { debounceTime, map, merge, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
@@ -54,10 +54,22 @@ export class ApplicantsListComponent
     countries: string[] =[];
     page: number;
     limit: number;
-    pageSize = 10;
+    pageSize = 50;
     currentPage = 0;
     pageSizeOptions: number[] = [5,10, 25, 50];
     isEdit: boolean;
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+
+    search: Subscription;
+    applicant$: Observable<Applicant>;
+    isLoadingApplicant$: Observable<boolean>;
+    applicantList$: Observable<Applicant[]>;
+    isLoadingApplicants$: Observable<boolean>;
+    searchResult: string;
+    applicantFiltersForm: FormGroup;
+
 
     // #endregion
 
@@ -79,88 +91,47 @@ export class ApplicantsListComponent
 
     //#region life-cycle methods
     ngOnInit(): void {
-        // passing country array
-        this.countries = countryList;
-        // Get the pagination
-        this._applicantService.pagination$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: ApplicantPagination) => {
-                // Update the pagination
-                this.pagination = pagination;
+        this.initObservables();
+        this.initApis();
+        this.initFiltersForm();
+    }
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+    initObservables() {
+        this.isLoadingApplicants$ = this._applicantService.isLoadingApplicants$;
+        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
+        this.applicantList$ = this._applicantService.applicantList$;
+        this.applicant$ = this._applicantService.applicant$;
 
-        // Get the employees
-        this.applicantsdata$ = this._applicantService.applicantdata$;
-
-        // Subscribe to search input field value changes
-        this.searchInputControl.valueChanges
+        this.search = this.searchform.valueChanges
             .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                switchMap((query) => {
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return this._applicantService.getApplicants(
-                        0,
-                        10,
-                        'name',
-                        'asc',
-                        query
-                    );
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
+                debounceTime(500),
+                takeUntil(this._unsubscribeAll)
             )
-            .subscribe();
-    }
-
-    ngAfterViewInit(): void {
-        if (this._sort && this._paginator) {
-            // Set the initial sort
-            this._sort.sort({
-                id: 'name',
-                start: 'asc',
-                disableClear: true,
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._applicantService.getApplicants(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
             });
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-
-            // If the user changes the sort order...
-            this._sort.sortChange
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(() => {
-                    // Reset back to the first page
-                    this._paginator.pageIndex = 0;
-
-                    // Close the details
-                    this.closeDetails();
-                });
-
-            // Get employees if sort or page changes
-            merge(this._sort.sortChange, this._paginator.page)
-                .pipe(
-                    switchMap(() => {
-                        this.closeDetails();
-                        this.isLoading = true;
-                        return this._applicantService.getApplicants(
-                            this._paginator.pageIndex,
-                            this._paginator.pageSize,
-                            this._sort.active,
-                            this._sort.direction
-                        );
-                    }),
-                    map(() => {
-                        this.isLoading = false;
-                    })
-                )
-                .subscribe();
-        }
     }
+
+    initApis() {
+        this._applicantService.getApplicants();
+    }
+    ngAfterViewInit(): void { }
+
+    initFiltersForm() {
+        this.applicantFiltersForm = this._formBuilder.group({
+            type: [''],
+            status: [''],
+        });
+    }
+
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -182,64 +153,60 @@ export class ApplicantsListComponent
             // width: '900px',
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
+            //Call this function only when success is returned from the create API call//
         });
     }
 
-    // openFilterDialog() {
-    //     // Open the dialog
-    //     const dialogRef = this._matDialog.open(FilterComponent, {
-    //         height: '800px',
-    //         width: '300px',
-    //     });
+        //#region Sort Function
+        sortData(sort: any) {
+            this.page = 1;
+            this._applicantService.getApplicants(
+                this.page,
+                this.limit,
+                sort.active,
+                sort.direction,
+                this.searchResult
+                );
+        }
+        //#endregion
 
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //         console.log('Compose dialog was closed!');
-    //     });
-    // }
+
+    //#region  Pagination
+       pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult);
+    }
+    //#endregion
+
 
     toggleDetails(applicantId: string): void {
-        // If the product is already selected...
-        /* if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        } */
+        this._applicantService
+        .getApplicantById(applicantId)
+        .subscribe((applicantObjData: any) => {
+            this._router.navigate(['/apps/applicants/details/' + applicantObjData.applicant_info.id]);
+        });
 
-        // Get the product by id
-        /* this._applicantService.getProductById(productId)
-            .subscribe((product) => {
-                this._router.navigateByUrl('apps/employee/details/'+ productId)  */
-        /* // Set the selected product
-                this.selectedProduct = product;
-
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck(); */
-        /* }); */
-        this._router.navigate(['/apps/applicants/details/' + applicantId]);
     }
 
     closeDetails(): void {
         this.selectedProduct = null;
     }
 
-    createEmployee(): void {
-        // Create the employee
-        this._applicantService.createApplicant().subscribe((newEmployee) => {
-            // Go to new employee
-            this.selectedProduct = newEmployee;
+    // createEmployee(): void {
+    //     // Create the employee
+    //     this._applicantService.createApplicant().subscribe((newEmployee) => {
+    //         // Go to new employee
+    //         this.selectedProduct = newEmployee;
 
-            // Fill the form
-            this.selectedProductForm.patchValue(newEmployee);
+    //         // Fill the form
+    //         this.selectedProductForm.patchValue(newEmployee);
 
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
+    //         // Mark for check
+    //         this._changeDetectorRef.markForCheck();
+    //     });
+    // }
 
     // pageChanged(event){
     //     console.log(event);

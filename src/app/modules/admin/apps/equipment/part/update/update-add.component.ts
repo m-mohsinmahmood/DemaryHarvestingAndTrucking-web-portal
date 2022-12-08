@@ -121,67 +121,70 @@ this.sixthFormGroup = this._formBuilder.group({
 });
  console.log('object',this.data);
    // Get the employee by id
-if(this.data !== null){
-    this._applicantService.getApplicantById(this.data.id).subscribe((employee) => {
-     console.log('Applicant:',employee);
-     // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
+// if(this.data !== null){
+//     this._applicantService.getApplicantById(this.data.id).subscribe((employee) => {
+//      console.log('Applicant:',employee);
+//      // console.log('--',moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString());
 
-     this.firstFormGroup = this._formBuilder.group({
-       firstEmail: employee.firstEmail,
-       firstSentDate: moment( employee.firstSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-       secondEmail: employee.secondEmail,
-       secondSentDate: moment( employee.secondSentDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
-       applicationDate: moment( employee.applicationDate).subtract(1, 'week').hour(18).minute(56).toISOString(),
+//      this.firstFormGroup = this._formBuilder.group({
+//       first_name: employee.first_name,
+//       last_name: employee.last_name,
+//       email: employee.secondEmail,
+//       cell_phone_number: employee.cell_phone_number,
+//       home_phone_number: employee.home_phone_number,
+//       languages: employee.languages,
 
-     });
-     this.secondFormGroup.patchValue({
-       fullName: employee.name,
-       lastNameFirstName: employee.name,
-       firstName: employee.fname,
-       lastName: employee.lname,
-       cellPhone: employee.cellPhone,
-       homePhone: employee.homePhone,
-       email: employee.email,
-     });
-     this.fourthFormGroup.patchValue({
-       dob: moment( employee.dob).subtract(1, 'week').hour(18).minute(56).toISOString(),
-       maritalStatus: employee.martialStatus,
-       address1: employee.address1,
-       address2: employee.address2,
-       city: employee.town,
-       province: employee.state,
-       postalCode: employee.postalCode,
-       country: employee.country,
-       usCitizen: employee.citizenStatus,
-       license: employee.tractorStatus,
-       passport: employee.passport,
-     //   imageURL: employee.imageURL,
-       avatar: employee.avatar,
-     });
-     this.fifthFormGroup.patchValue({
-       firstQuestion: employee.fifthQuestion,
-       secondQuestion: employee.secondQuestion,
-       thirdQuestion: employee.thirdQuestion,
-       fourthQuestion: employee.fourthQuestion,
-       fifthQuestion: employee.fifthQuestion,
-       workExperience: employee.workExperience,
-       job: employee.job,
-       supervisor: employee.supervisor,
-       supervisorContact: employee.supervisorContact,
-     });
-     this.sixthFormGroup.patchValue({
-       e_firstQuestion: employee.e_firstQuestion,
-       e_secondQuestion: employee.e_secondQuestion,
-       e_thirdQuestion: employee.e_thirdQuestion,
-     });
+//     });
+//     this.secondFormGroup.patchValue({
+//       fullName: employee.name,
+//       lastNameFirstName: employee.name,
+//       first_name: employee.first_name,
+//       last_name: employee.last_name,
+//       cell_phone_number: employee.cell_phone_number,
+//       home_phone_number: employee.home_phone_number,
+//       email: employee.email,
+//     });
+//     this.fourthFormGroup.patchValue({
+//       date_of_birth: moment(employee.date_of_birth)
+//         .subtract(1, 'week')
+//         .hour(18)
+//         .minute(56)
+//         .toISOString(),
+//       marital_status: employee.marital_status,
+//       address_1: employee.address_1,
+//       address_2: employee.address_2,
+//       city: employee.town,
+//       province: employee.state,
+//       postal_code: employee.postal_code,
+//       country: employee.country,
+//       us_citizen: employee.us_citizen,
+//       tractor_license: employee.tractor_license,
+//       passport: employee.passport,
+//       //   imageURL: employee.imageURL,
+//       avatar: employee.avatar,
+//     });
+//     this.fifthFormGroup.patchValue({
+//       question_1: employee.question_1,
+//       question_2: employee.question_2,
+//       question_3: employee.question_3,
+//       question_4: employee.question_4,
+//       question_5: employee.question_5,
+//       work_experience_description: employee.work_experience_description,
+//       recent_job: employee.recent_job,
+//       supervisor: employee.supervisor,
+//       supervisor_contact: employee.supervisor_contact,
+//     });
+//     this.sixthFormGroup.patchValue({
+//       degree: employee.name,
+//       institution: employee.name,
+//       education: employee.name,
+//     });
+//      this._changeDetectorRef.markForCheck();
 
-
-     this._changeDetectorRef.markForCheck();
-
- });
-}else{
-    console.log('Else Called');
-}
+//  });
+// }else{
+//     console.log('Else Called');
+// }
   }
 
   submit(): void {

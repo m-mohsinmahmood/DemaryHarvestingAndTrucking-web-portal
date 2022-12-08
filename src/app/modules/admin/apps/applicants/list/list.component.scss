@@ -22,14 +22,14 @@
         grid-template-columns: 35% 35% 36% ;
 
         @screen sm {
-            grid-template-columns: 11% 10% 18% 8% 13% 8% 13% 10%;
+            grid-template-columns: 11% 10% 18% 8% 13%  13% 10%;
         }
         @screen md {
-            grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10%;
+            grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
         }
 
         @screen lg {
-            grid-template-columns: 10% 10% 18% 10% 15% 10% 13% 10%;
+            grid-template-columns: 10% 10% 18% 10%  20% 13% 10%;
         }
     }
 

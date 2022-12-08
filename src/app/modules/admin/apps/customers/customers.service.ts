@@ -456,7 +456,7 @@ export class CustomersService {
     //#region Customer API
     getCustomers(
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -604,7 +604,7 @@ export class CustomersService {
 
     customerImport(
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '', filters: customerFilters) {
@@ -641,7 +641,7 @@ export class CustomersService {
     getCustomerContact(
         id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -686,7 +686,7 @@ export class CustomersService {
     }
 
     createCustomerContact(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -720,7 +720,7 @@ export class CustomersService {
     }
 
     updateCustomerContact(customerContactData: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -755,7 +755,7 @@ export class CustomersService {
 
     deleteCustomerContact(id: string,
         customerID: string,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -801,7 +801,7 @@ export class CustomersService {
     customerContactImport(
         customerID: string,
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '') {
@@ -838,7 +838,7 @@ export class CustomersService {
     getCustomerFarm(
         customerId: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -898,7 +898,7 @@ export class CustomersService {
             );
     }
     createCustomerFarm(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -931,7 +931,7 @@ export class CustomersService {
             );
     }
     updateCustomerFarm(customerFarmData: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = ''
@@ -966,7 +966,7 @@ export class CustomersService {
     }
     deleteCustomerFarm(id: string,
         customerID: string,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1011,7 +1011,7 @@ export class CustomersService {
     customerFarmImport(
         customerID: string,
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '') {
@@ -1049,7 +1049,7 @@ export class CustomersService {
     getCustomerField(
         customer_id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1098,7 +1098,7 @@ export class CustomersService {
     }
 
     createCustomerField(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1132,7 +1132,7 @@ export class CustomersService {
     }
 
     updateCustomerField(customerFieldData: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1165,7 +1165,7 @@ export class CustomersService {
     }
 
     deleteCustomerField(id: string, customerID: string,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1215,7 +1215,7 @@ export class CustomersService {
     customerFieldImport(
         customerID: string,
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1253,7 +1253,7 @@ export class CustomersService {
     getCustomerCrops(
         customer_id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1285,7 +1285,7 @@ export class CustomersService {
     }
 
     createCustomerCrops(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1318,7 +1318,7 @@ export class CustomersService {
             );
     }
     updateCustomerCrops(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1351,7 +1351,7 @@ export class CustomersService {
             );
     }
     deleteCustomerCrop(id: string, customerID: string,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1400,7 +1400,7 @@ export class CustomersService {
     customerCropImport(
         customerID: string,
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1438,7 +1438,7 @@ export class CustomersService {
     getCustomerDestination(
         customer_id: string,
         page: number = 1,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1472,7 +1472,7 @@ export class CustomersService {
 
     updateCustomerDestination(
         customerDestinationData: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1504,7 +1504,7 @@ export class CustomersService {
             );
     }
     createCustomerDestination(data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1538,7 +1538,7 @@ export class CustomersService {
     }
 
     deleteCustomerDestination(id: string, customerID: string,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
@@ -1588,7 +1588,7 @@ export class CustomersService {
     customerDestinationImport(
         customerID: string,
         data: any,
-        limit: number = 10,
+        limit: number = 50,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '',

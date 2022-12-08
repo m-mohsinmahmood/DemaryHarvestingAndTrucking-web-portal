@@ -37,7 +37,7 @@ export class CustomerDetailsComponent
     //#region Variables
     search: Subscription;
     isEdit: boolean = false;
-    pageSize = 10;
+    pageSize = 50;
     currentPage = 0;
     pageSizeOptions: number[] = [10, 25, 50, 100];
     searchResult: string;

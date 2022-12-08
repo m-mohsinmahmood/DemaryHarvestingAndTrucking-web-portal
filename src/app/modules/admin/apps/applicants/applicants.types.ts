@@ -10,60 +10,65 @@ export interface Applicant
             email1: string;
             email2: string;
             active: true;
-
-            status: string;
+            status: boolean;
 
 
              // contact info
              name: string;
-            fname: string;
-            lname: string;
-             cellPhone: string;
-             homePhone: string;
+             first_name: string;
+             last_name: string;
+             cell_phone_number: string;
+             home_phone_number: string;
              email: string;
              image: String;
+             calendar_year:string;
+             languages:string;
 
 
             // personal info
-            dob: string;
-            martialStatus: string;
-            address1: string;
-            address2: string;
+            date_of_birth: string;
+            marital_status: string;
+            address_1: string;
+            address_2: string;
             town: string;
             state: string;
-            postalCode: string;
+            postal_code: string;
+            county:string;
+            self_rating:string;
             country: string;
-            citizenStatus: string;
-            tractorStatus: string;
-            passport: string;
+            us_citizen: boolean;
+            tractor_license: boolean;
+            passport: boolean;
             imageURL: string;
             avatar: String;
+            blood_group:string;
+            reason_for_applying:string;
 
 
             // interviwe results
-            firstPhoneCall: boolean;
-            firstInterviewResult: string;
+            first_phone_call: boolean;
+            first_call_remarks: string;
             firstRanking: string;
-            refreePhoneCall: boolean;
-            refreeInterviewResult: string;
+            reference_phone_call: boolean;
+            reference_call_remarks: string;
             refreeRanking: string;
-            secondPhoneCall: boolean;
-            secondInterviewResult: string;
+            second_phone_call: boolean;
+            second_call_remarks: string;
             secondRanking: string;
-            thirdPhoneCall: boolean;
-            thirdInterviewResult: string;
+            third_phone_call: boolean;
+            third_call_remarks: string;
             thirdRanking: string;
 
             // work experience
-            fifthQuestion: string;
-            firstQuestion: string;
-            fourthQuestion: string;
-            job: string;
-            secondQuestion: string;
+            question_5: string;
+            question_1: string;
+            question_4: string;
+            recent_job: string;
+            question_2: string;
             supervisor: string;
-            supervisorContact: string;
-            thirdQuestion: string;
-            workExperience: string;
+            supervisor_contact: string;
+            question_3: string;
+            work_experience_description: string;
 
             // other
               firstEmail: boolean;
@@ -73,9 +78,9 @@ export interface Applicant
               applicationDate: Moment;
 
               // education
-      e_firstQuestion: string;
-      e_secondQuestion: string;
-      e_thirdQuestion: string;
+              degree_name: string;
+              institute_name: string;
+              education: string;
 }
 
 export interface ApplicantPagination

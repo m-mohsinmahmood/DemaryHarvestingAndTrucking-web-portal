@@ -6,13 +6,13 @@
 
 .interview-results-form {
     min-width: 150px;
-    max-height: 430px;
+    max-height: 520px;
     overflow-y: scroll;
 }
 
 .personal-info-form {
     min-width: 150px;
-    max-height: 432px;
+    max-height: 520px;
     overflow-y: scroll;
     // background-color: aqua;
 }
@@ -37,8 +37,7 @@
 }
 
  ::ng-deep .mat-form-field .mat-input-element {
-    color: slategray;
-    font-size: large;
+   
 }
 
  ::ng-deep .mat-form-field .mat-form-field-label {
@@ -110,3 +109,55 @@
     color: white;
     text-align: center;
 }
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}
+::ng-deep .phone-number-outline .mat-form-field-outline-start {
+    width: 28px !important;
+}
+
+::ng-deep .phone-number-outline .mat-form-field-infix input {
+    margin-bottom: 2px !important;
+}
+
+::ng-deep .add-update-applicant-form
+{
+    min-height: 800px !important;
+}
+
+::ng-deep .mat-form-field-prefix
+{
+    top: 0px !important;
+}
+
+// ::ng-deep .mat-select-panel:nth-of-type(1)
+// {
+//     min-width: calc(100% + 16px) !important;
+//     margin-left: 8px !important;
+// }
+
+
+// ::ng-deep .mat-select-panel-wrap:nth-child(odd) 
+// {
+//     min-width: calc(100% + 17px) !important;
+//     margin-left: 32px !important;
+// }

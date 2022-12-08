@@ -143,66 +143,54 @@
         </div>
 
     </div>
-    <div class="sm:5/12 md:w-5/12 px-2">
-        <div class="h-auto background-grey rounded m-2 p-1">
+    <div class="sm:w-4/12 md:w-4/12">
+        <div class="bg-gray-100 rounded-lg mx-2 shadow">
             <div class="flex flex-col py-4 px-2">
-                <div class="flex relative min-h-14" *ngFor="let item of items">
+                <div class=" last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
+                    *ngFor="let item of items;index as i">
                     <div class="flex flex-col items-center min-w-12">
-                        <div
-                            class="flex border-2 border-solid border-white rounded-full w-{{
-                                item.status === false ? '4' : '8'
-                            }} h-{{
-                                item.status === false ? '4' : '8'
-                            }} bg-white
-                           bg-{{ item.status === 'a' ? 'blue' : 'to-blue-400' }}-400
-                           bg-{{ item.status === 'b' ? 'red' : '' }}-400
-                           bg-{{ item.status === 'c' ? 'orange' : '' }}-400
-                           bg-{{ item.status === 'd1' ? 'yellow' : '' }}-400
-                           bg-{{ item.status === 'e1' ? 'green' : '' }}-400
-                           bg-{{ item.status === false ? 'blue' : '' }}-400
-                           "
-                        ></div>
+                        <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{item.status === false? '4': '8'}} h-{{item.status === false? '4': '8'}} bg-white
+                                bg-{{item.status === 'a'? 'blue': ''}}-400
+                                bg-{{item.status === 'b'? 'red': ''}}-400
+                                bg-{{item.status === 'c'? 'orange': ''}}-400
+                                bg-{{item.status === 'd1'? 'yellow': ''}}-400
+                                bg-{{item.status ==='e1'? 'green': 'red'}}-400
+                                bg-{{item.status ==='e2'? 'slate': 'red'}}-400
+                                bg-{{item.status === false? 'indigo': ''}}-400">
+                            <mat-icon class="{{i+1 < this.statusStep? 'visible': 'invisible'}}"
+                                [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
+                            </mat-icon>
+                        </div>
                         <div class="timeline-track"></div>
                     </div>
                     <div class="flex-1 flex flex-row px-4">
-                        <div class="w-8/12 flex flex-col">
-                            <ng-template [ngIf]="item.name !== ''">
-                                <span
-                                    class="text-md font-sans font-normal text-gray-400"
-                                    >{{ item.content }}</span
-                                >
-                            </ng-template>
-                            <ng-template [ngIf]="item.name === ''">
-                                <span class="text-md font-sans font-normal text-gray-400 mt-2">{{ item.content }}</span>
-                            </ng-template>
-                            <span class="text-md text-black">{{
-                                item.name === "rejected" ? "" : item.name
-                            }}</span>
-
-                            <button class="bg-white w-36 h-7 rounded-full text-sm" *ngIf="item.status === 'a'" (click)="openComposeDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:pencil'" class="icon-size-3 mr-2" ></mat-icon>
-                                Send email
-                                <mat-icon [svgIcon]="'heroicons_outline:chevron-right'" class="icon-size-3 ml-2" ></mat-icon>
-                            </button>
+                        <div (click)="openStatusBarForm(i)" class="cursor-pointer w-8/12 flex flex-col">
+                            <span *ngIf="second_interviewer_id != null || third_interviewer_id != null"
+                                class="flex items-center text-md font-sans font-normal">
+                                {{item.content}}>
+                            </span>
+                            <span class="flex items-center text-md font-sans font-normal">{{item.content}}
+                                <mat-icon matTooltip="Compose Email" *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
+                                    class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                            </span>
+                            <!-- <ng-template [ngIf]="item.name === ''">
+                            <span class="text-md font-sans font-normal ">{{item.content}}</span>
+                                </ng-template> -->
+                            <span *ngIf="i == 1" class=" text-md text-black">{{first_interviewer_id === null ? "":
+                                first_interviewer_id}} </span>
+                            <span *ngIf="i == 2" class=" text-md text-black">{{second_interviewer_id === null ? "":
+                                second_interviewer_id}} </span>
+                            <span *ngIf="i == 3" class=" text-md text-black">{{third_interviewer_id === null ? "":
+                                third_interviewer_id}} </span>
+                            <span *ngIf="i == 4" class=" text-md text-black">{{reference_interviewer_id === null ?
+                                "": reference_interviewer_id}} </span>
+                            <!-- <span *ngIf="i == 5" class=" text-md text-black">{{first_interviewer_id === null ? "": first_interviewer_id}} </span> -->
                         </div>
-                        <div class="w-4/12 flex justify-end font-mono text-xs">
-                            {{ item.date }}
+                        <div class=" w-4/12 flex justify-end font-mono text-xs">
+                            {{item.date}}
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="flex flex-row justify-center items-center mb-5">
-                <button
-                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44"
-                >
-                    <span>Advance to offer</span>
-                </button>
-                <button
-                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28"
-                >
-                    <span>Reject</span>
-                </button>
             </div>
         </div>
     </div>
