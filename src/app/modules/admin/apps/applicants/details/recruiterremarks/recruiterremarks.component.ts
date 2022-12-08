@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Applicant } from '../../applicants.types';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class RecruiterremarksComponent implements OnInit {
     isLoadingApplicants$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-    @Input() applicantData: any;
+    // @Input() applicantData: any;
 
 
     form: FormGroup;
@@ -39,18 +39,22 @@ export class RecruiterremarksComponent implements OnInit {
     thirdInterviewForm: FormGroup;
     referenceForm: FormGroup
     status_step;
+    applicantData;
 
     constructor(
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
-        breakpointObserver: BreakpointObserver
     ) { }
 
     ngOnInit(): void {
-        this.initApplicantForm();
+        this.applicant$ = this._applicantService.applicant$;
+        this.applicant$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res: any) => {
+            this.applicantData = res.applicant_info;
+        });
         this.status_step = this.applicantData?.status_step;
+        this.initApplicantForm();
     }
 
     // #region initializing forms
@@ -239,6 +243,33 @@ export class RecruiterremarksComponent implements OnInit {
         }
     }
     // #endregion
+
+    validation(form:string){
+        if( form === "firstInterview" && 
+            (!this.firstInterviewForm.get('first_interviewer_id').value || 
+            !this.firstInterviewForm.get('first_call_remarks').value ||
+            !this.firstInterviewForm.get('first_call_ranking').value)
+        )return true;
+
+        else if( form === "secondInterview" && 
+        (!this.secondInterviewForm.get('second_interviewer_id').value || 
+        !this.secondInterviewForm.get('second_call_remarks').value ||
+        !this.secondInterviewForm.get('second_call_ranking').value)
+        )return true;
+
+        else if( form === "thirdInterview" && 
+        (!this.thirdInterviewForm.get('third_interviewer_id').value || 
+        !this.thirdInterviewForm.get('third_call_remarks').value ||
+        !this.thirdInterviewForm.get('third_call_ranking').value)
+        )return true;
+
+        else if( form === "refrenceInterview" && 
+        (!this.referenceForm.get('reference_interviewer_id').value || 
+        !this.referenceForm.get('reference_call_remarks').value ||
+        !this.referenceForm.get('reference_call_ranking').value)
+        )return true;
+        
+    }
 
     submit(interViewer: string): void {
         if(interViewer === 'First'){

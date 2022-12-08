@@ -8,63 +8,35 @@ import { Observable, Subject } from 'rxjs';
 import { ApplicantService } from '../../applicants.services';
 
 @Component({
-  selector: 'app-applicantdata',
-  templateUrl: './applicantdata.component.html',
-  styleUrls: ['./applicantdata.component.scss']
+    selector: 'app-applicantdata',
+    templateUrl: './applicantdata.component.html',
+    styleUrls: ['./applicantdata.component.scss'],
 })
 export class ApplicantdataComponent implements OnInit {
-    panelOpenState = false;
+    allExpandState = false;
     applicant$: Observable<any>;
     isLoadingApplicant$: Observable<any>;
     routes: any;
     applicants$: Observable<any>;
     routeID; // URL ID
-    applicant : any;
+    applicant: any;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-
-
-  constructor(
-    private _matDialog: MatDialog,
+    constructor(
+        private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _applicantService: ApplicantService,
         private _router: Router,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseConfirmationService: FuseConfirmationService,
-  ) {}
+        private _fuseConfirmationService: FuseConfirmationService
+    ) {}
 
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      this.routeID = params.id;
-    });
-    this.applicant$ = this._applicantService.applicant$;
-  }
-
-  expandAll(){
-      this.panelOpenState = true;
-  }
-
-//   ngAfterViewInit(): void {
-//     this.initApis(this.routeID);
-//     this.initObservables();
-// }
-
-
-//     //#region Initial APIs
-//     initApis(id: string) {
-//       this._applicantService.getApplicantById(id);
-//   }
-//   //#endregion
-
-//   //#region Initialize Observables
-//   initObservables() {
-//       // Data
-//       this.applicant$ = this._applicantService.applicant$;
-//       // Loader
-//       this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
-//   }
-  //#endregion
-
+    ngOnInit(): void {
+        this.activatedRoute.params.subscribe((params) => {
+            this.routeID = params.id;
+        });
+        this.applicant$ = this._applicantService.applicant$;
+    }
 }

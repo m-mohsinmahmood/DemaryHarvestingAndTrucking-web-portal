@@ -1,4 +1,4 @@
-<div class="bg-gray-100 mb-3 rounded-lg shadow " *ngIf="isLoadingApplicant$ | async">
+<!-- <div class="bg-gray-100 mb-3 rounded-lg shadow " *ngIf="isLoadingApplicant$ | async">
     <p class="font-sans font-semibold pl-2 pt-2 text-xl">
         Resume/Profile Picture
     </p>
@@ -12,12 +12,25 @@
             <p>Download Resume</p>
         </div>
     </div>
-</div>
+</div> -->
 
+<div class="flex justify-end mb-2">
+
+    <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = true"
+        matTooltip="Expand All">
+        <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-down'"></mat-icon>
+    </button>
+
+    <button *ngIf="allExpandState == true" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = false"
+        matTooltip="Collapse All">
+        <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-up'"></mat-icon>
+    </button>
+</div>
 <div class="parent-of-accordions" *ngIf="applicant$ | async as applicantInfo">
     <!-- General Info -->
     <mat-accordion class="bg-gray-100">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="bg-gray-100">
+        <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100">
             <mat-expansion-panel-header>
                 <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
                     Personal Information
@@ -113,8 +126,8 @@
 
     <!-- Personal Info -->
     <mat-accordion class="bg-gray-100">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            class="bg-gray-100 my-3">
+        <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100 my-3">
             <mat-expansion-panel-header>
                 <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
                     Contact Information
@@ -185,8 +198,8 @@
 
     <!-- Work Info -->
     <mat-accordion class="bg-gray-100">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            class="bg-gray-100 my-3">
+        <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100 my-3">
             <mat-expansion-panel-header>
                 <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
                     Work History
@@ -334,8 +347,8 @@
 
     <!-- Education Info -->
     <mat-accordion class="bg-gray-100">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            class="bg-gray-100 my-3">
+        <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100 my-3">
             <mat-expansion-panel-header>
                 <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
                     Educational and Misc.
@@ -390,8 +403,8 @@
 
     <!--Interview Results-->
     <mat-accordion class="bg-gray-100">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            class="bg-gray-100 my-3">
+        <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false" class="bg-gray-100 my-3">
             <mat-expansion-panel-header>
                 <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
                     Information Collected During Onboarding

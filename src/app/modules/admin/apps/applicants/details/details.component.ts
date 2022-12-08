@@ -76,6 +76,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             console.log("res", res);
             this.applicant = res;
             console.log('this.applicant', this.applicant);
+            this.selectedIndex = "Applicant Data";
         });
         console.log(this.applicant);
         this.initForm();
@@ -168,30 +169,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    //#region Dialog 
-    openUpdateDialog(applicant): void {
-        this.isEdit = true;
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent, {
-            data: {
-                isEdit: this.isEdit,
-                applicantData: applicant.applicant_info,
-            }
-        });
-        dialogRef.afterClosed()
-            .subscribe((result) => {
-            });
-    }
-    //#endregion
-
     //#region Get Applicant By id 
-    // getApplicantById(){
-    //     this._applicantService
-    //     .getApplicantById(this.routeID)
-    //     .subscribe((applicantObjData: any) => {
-    //         this.applicant = applicantObjData;
-    //     }); 
-    // }
     getApplicantById() {
         this._applicantService.getApplicantByIdNew(this.routeID);
     }
@@ -309,20 +287,51 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     //#region Confirmation Customer Delete Dialog
     confirmAcceptRejectOffer(type): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-          data: {
-            message: type === "Accept" ? "Are you sure you want to accept this Applicant an Employee?" : "Are you sure you want to put this Applicant in Rejected Offer list?",
-            title: type === "Accept" ? "Offer Accepted" : "Offer Rejected",
-            hideDeleteIcon: true,
-            deleteText: type === "Accept" ? "Accept" : "Reject"
-          },
+            data: {
+                message: type === "Accept" ? "Are you sure you want to accept this Applicant as an Employee?" : "Are you sure you want to put this Applicant in Rejected Offer list?",
+                title: type === "Accept" ? "Offer Accepted" : "Offer Rejected",
+                hideDeleteIcon: true,
+                deleteText: type === "Accept" ? "Accept" : "Reject"
+            },
 
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
-          if(dialogResult)
+            if (dialogResult && type === "Accept") {
+                this._applicantService.patchApplicant({
+                        id: this.applicant.applicant_info.id,
+                        prev_status_message: "Results",
+                        status_message: "Results",
+                        status_step: "10.1" 
+                }, false);
+            }
+            else if (dialogResult && type === "Reject") {
+                this._applicantService.patchApplicant({
+                        id: this.applicant.applicant_info.id,
+                        prev_status_message: "Results",
+                        status_message: "Results",
+                        status_step: "10.4"
+                }, false);
+            }
             this._applicantService.getApplicantByIdNew(this.applicant.applicant_info.id);
         });
-      }
+    }
+    //#endregion
+
+    //#region Dialog 
+    openUpdateDialog(applicant): void {
+        this.isEdit = true;
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateComponent, {
+            data: {
+                isEdit: this.isEdit,
+                applicantData: applicant.applicant_info,
+            }
+        });
+        dialogRef.afterClosed()
+            .subscribe((result) => {
+            });
+    }
     //#endregion
 
     expandAll() {

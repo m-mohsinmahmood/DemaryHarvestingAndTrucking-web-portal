@@ -245,16 +245,18 @@ export class ApplicantService {
     patchApplicant(data: any, recruiterRemarks: boolean) {
         let newData;
         let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
-        if (recruiterRemarks){
-            const {...applicant_data } = data;
-            newData = Object.assign({},{applicant_data} );
-            console.log("Recruiter", newData);
+        if (recruiterRemarks) {
+            const { ...applicant_data } = data;
+            newData = Object.assign({}, { applicant_data });
+            console.log('Recruiter', newData);
+        } else {
+            const { body, recruiter_id, subject, to, ...applicant_data } = data;
+            const { id, status_step, status_message, ...email_data } = data;
+            newData = Object.assign({}, { applicant_data }, { email_data });
         }
-        else {
-            const {body,recruiter_id,subject,to, ...applicant_data } = data;
-            const {id,status_step,status_message, ...email_data } = data
-            newData = Object.assign({},{applicant_data},{email_data} )
-        }
+
+        console.log("NEW DATA",newData)
+        
         this._httpClient
             .patch(`api-1/applicants${url}`, newData)
             .pipe(take(1))
@@ -277,8 +279,7 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicantById(newData.applicant_data.id);
-                    location.reload();
+                    this.getApplicantByIdNew(newData.applicant_data.id);
                 }
             );
     }

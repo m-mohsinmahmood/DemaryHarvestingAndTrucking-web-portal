@@ -1,5 +1,6 @@
+<div *ngIf="applicant$ | async">
 <!-- First Interview -->
-<form *ngIf="status_step >= 3 && applicantData.first_interviewer_id" [formGroup]="firstInterviewForm"
+<form *ngIf="applicantData.status_step >= 3 && applicantData.first_interviewer_id" [formGroup]="firstInterviewForm"
     class="interview-results-form mb-3 rounded-lg">
     <ng-template matStepLabel>Interview Results</ng-template>
 
@@ -35,9 +36,9 @@
 
         <div class="flex justify-end">
             <button
-                [disabled]="applicantData.first_interviewer_id && applicantData.first_call_remarks && applicantData.first_call_ranking"
+                [disabled]="(applicantData.first_interviewer_id && applicantData.first_call_remarks && applicantData.first_call_ranking) || (validation('firstInterview'))"
                 class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('First')">
-                Save
+                Send
             </button>
         </div>
     </div>
@@ -45,7 +46,7 @@
 <!-- First Interview -->
 
 <!-- Second Interview -->
-<form *ngIf="status_step >= 4 && applicantData.second_interviewer_id" [formGroup]="secondInterviewForm"
+<form *ngIf="applicantData.status_step >= 4 && applicantData.second_interviewer_id" [formGroup]="secondInterviewForm"
     class="interview-results-form mb-3 rounded-lg">
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
 
@@ -80,7 +81,8 @@
 
         <div class="flex justify-end">
             <button
-                [disabled]="applicantData.second_interviewer_id && applicantData.second_call_remarks && applicantData.second_call_ranking"
+                [disabled]="(applicantData.second_interviewer_id && applicantData.second_call_remarks && applicantData.second_call_ranking) ||
+                validation('secondInterview')"
                 class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Second')">
                 Save
             </button>
@@ -92,7 +94,7 @@
 <!-- Second Interview -->
 
 <!-- Third Interview -->
-<form *ngIf="status_step >= 5 && applicantData.third_interviewer_id" [formGroup]="thirdInterviewForm"
+<form *ngIf="applicantData.status_step >= 5 && applicantData.third_interviewer_id" [formGroup]="thirdInterviewForm"
     class="interview-results-form mb-3 rounded-lg">
 
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
@@ -127,7 +129,8 @@
 
         <div class="flex justify-end">
             <button
-                [disabled]="applicantData.third_interviewer_id && applicantData.third_call_remarks && applicantData.third_call_ranking"
+                [disabled]="(applicantData.third_interviewer_id && applicantData.third_call_remarks && applicantData.third_call_ranking) ||
+                validation('thirdInterview')"
                 class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Third')">
                 Save
             </button>
@@ -139,7 +142,7 @@
 <!-- Third Interview -->
 
 <!-- Reference Interview -->
-<form *ngIf="status_step >= 6 && applicantData.reference_interviewer_id" [formGroup]="referenceForm"
+<form *ngIf="applicantData.status_step >= 6 && applicantData.reference_interviewer_id" [formGroup]="referenceForm"
     class="interview-results-form mb-3 rounded-lg">
     <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
 
@@ -172,7 +175,8 @@
 
         <div class="flex justify-end">
             <button
-                [disabled]="applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking"
+                [disabled]="(applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking) ||
+                validation('referenceInterview')"
                 class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal" (click)="submit('Reference')">
                 Save
             </button>
@@ -185,7 +189,8 @@
 <!-- Reference Interview -->
 
 <!-- No Interview Message -->
-<div *ngIf="status_step < 3" class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+<div *ngIf="applicantData.status_step < 3" class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
     No Interviews Conducted Yet
 </div>
 <!-- No Interview Message -->
+</div>
