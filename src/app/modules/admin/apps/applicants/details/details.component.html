@@ -104,9 +104,9 @@
                         <div
                             class="last-of-type:h-2 flex relative {{item.show? 'min-h-14': 'min-h-0'}} {{item.active? 'opacity-100':'opacity-50'}}">
                             <div *ngIf="item.show" class="flex flex-col items-center min-w-12">
-                                <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{this.results.includes(item.step)? '4': '8'}} h-{{this.results.includes(item.step)? '4': '8'}} bg-white
+                                <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{this.results.includes(item.step)? '4': '8'}} h-{{this.results.includes(item.step)? '4': '8'}}
                                     bg-{{item.status === true ? 'green': 'red'}}-400
-                                    bg-{{item.status === false? 'amber': ''}}-400">
+                                    bg-{{item.status === false? 'gray': ''}}-300">
                                     <mat-icon class="{{ item.status ? 'visible': 'invisible' }}"
                                         [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
                                     </mat-icon>
