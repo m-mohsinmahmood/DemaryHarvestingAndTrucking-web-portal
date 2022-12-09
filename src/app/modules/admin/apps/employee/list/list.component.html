@@ -44,8 +44,9 @@
                     <!-- Search -->
                     <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded sm:min-w-64 min-w-60">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                        <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
-                            [placeholder]="'Search Employee'" />
+                        <form [formGroup]="searchform">
+                            <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search Employee'" />
+                        </form>
                     </mat-form-field>
                     <!-- FILTER BUTTON -->
                     <!-- <button
