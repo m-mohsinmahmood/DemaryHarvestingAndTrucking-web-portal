@@ -67,7 +67,7 @@
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Date Of Birth</mat-label>
                                     <input id="date" name="date" formControlName="date_of_birth" matInput
-                                        [matDatepicker]="picker4">
+                                        [matDatepicker]="picker4" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
                                     <mat-hint *ngIf="this.firstFormGroup.get('date_of_birth').hasError('required')"

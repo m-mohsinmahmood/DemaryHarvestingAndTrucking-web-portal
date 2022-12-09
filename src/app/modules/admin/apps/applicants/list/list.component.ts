@@ -101,11 +101,9 @@ export class ApplicantsListComponent
         this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
         this.applicantList$ = this._applicantService.applicantList$;
         this.applicant$ = this._applicantService.applicant$;
-
         this.search = this.searchform.valueChanges
             .pipe(
-                debounceTime(500),
-                takeUntil(this._unsubscribeAll)
+                debounceTime(500)
             )
             .subscribe((data) => {
                 this.searchResult = data.search;

@@ -14,59 +14,34 @@
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
-            <mat-form-field
-                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded sm:min-w-64 min-w-50"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    matPrefix
-                    [svgIcon]="'heroicons_solid:search'"
-                ></mat-icon>
-                <input
-                    matInput
-                    [formControl]="searchInputControl"
-                    [autocomplete]="'off'"
-                    [placeholder]="'Search'"
-                />
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                <form [formGroup]="searchform">
+                    <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
+                </form>
             </mat-form-field>
-
             <!-- Add product button -->
-            <button
-                class="ml-4 mr-0"
-                mat-flat-button
-                [color]="'primary'"
-                (click)="openAddDialog()"
-            >
+            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="lg:ml-2">Add</span>
             </button>
-
-            <!-- FILTER BUTTON -->
-            <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                aria-label="Example icon-button with a menu"
-            >
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="settingsDrawer.toggle()">
-                    <mat-icon>filter</mat-icon>
-                    <span>Filters</span>
-                </button>
-                <button mat-menu-item>
+            </button> -->
+            <!-- <mat-menu #menu="matMenu">
+                <button (click)="openImportDialog()" mat-menu-item>
                     <mat-icon>upload</mat-icon>
                     <span>Import</span>
                 </button>
-                <button mat-menu-item>
+                <button (click)="handleExport()" mat-menu-item>
                     <mat-icon>download</mat-icon>
                     <span>Export</span>
                 </button>
-                <button mat-menu-item>
+                <button (click)="downloadTemplate()" mat-menu-item>
                     <mat-icon>download</mat-icon>
                     <span>Download Template</span>
                 </button>
-            </mat-menu>
+            </mat-menu> -->
         </div>
     </div>
     <!-- Main -->
@@ -119,7 +94,8 @@
                                     <div *ngIf="applicant.avatar === ''" class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">{{applicant.name.charAt(0)}} </div>
                                 </div> -->
                                     <!-- First Name -->
-                                    <div class="truncate">
+                                    <div class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                                        (click)="toggleDetails(applicant.id,true)">
                                         {{ applicant?.first_name }}
                                     </div>
                                     <!-- Last Name -->
@@ -127,11 +103,13 @@
                                         {{ applicant?.last_name }}
                                     </div>
                                     <!-- Email -->
-                                    <div class="hidden sm:block truncate">
+                                    <div class="hidden sm:block truncate" 
+                                        matTooltip="{{ applicant.email }}" matTooltipPosition="above">
                                         {{ applicant.email }}
                                     </div>
                                     <!-- Role -->
-                                    <div class="hidden sm:block truncate">
+                                    <div class="hidden sm:block truncate" 
+                                        matTooltip="{{ applicant.country }}" matTooltipPosition="above">
                                         {{ applicant.country }}
                                     </div>
                                     <!-- US Phone number -->
@@ -145,6 +123,7 @@
                                     <!-- Status -->
                                     <div class="hidden sm:block">
                                         <div
+                                        matTooltip="{{ applicant.status_message }}" matTooltipPosition="above"
                                             class="truncate justify-center items-center
                                      bg-{{
                                                 applicant.status ===
