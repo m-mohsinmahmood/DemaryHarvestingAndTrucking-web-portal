@@ -1,207 +1,279 @@
-<div class="parent-class overflow-y-auto mb-16">
+<div *ngIf="(machinery$ | async) as machinery" class="parent-class overflow-y-auto mb-16">
     <div class="flex w-9/12 m-auto flex-col">
         <div class="py-4">Non-Motorized Vehicle VIN # 133</div>
         <img class="" src="assets\images\apps\equipment\Rectangle 1834.png">
     </div>
 
     <!-- Profile Data -->
+    <div class="w-9/12 m-auto my-8">
+        <div class="my-4">
+            <mat-accordion class="bg-gray-100">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    class="bg-gray-100">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                            Profile Data
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="border-gray-200 px-4 py-5 sm:p-0">
+                        <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Type
+                                </dt>
+                                <dd
+                                    class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.type}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    VIN Number
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.vin_number}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Company ID
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.company_id}}
+                                </dd>
+                            </div>
 
-    <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <div class="font-bold text-2xl pl-10 pt-4">Profile Data</div>
-            <dl class="px-4 sm:divide-y sm:divide-gray-200">
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Type
-                    </dt>
-                    <dd class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        IFTA Truck
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        VIN Number
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        4593849593133
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Company ID
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        133
-                    </dd>
-                </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Color
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.color}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Year
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.year}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Make
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.make}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Model
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.model}}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
 
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Color
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Black
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Year
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        2019
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Make
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Peterbilt
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Make
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        AG 543
-                    </dd>
-                </div>
-            </dl>
+        <!-- Registration, Title and Insurance-->
+        <div class="my-4">
+
+            <mat-accordion class="bg-gray-100">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    class="bg-gray-100">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                            Registration, Title and Insurance
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="border-gray-200 px-4 py-5 sm:p-0">
+                        <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Title
+                                </dt>
+                                <dd
+                                    class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.title}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    License
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.license}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Registration
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.registration}}
+                                </dd>
+                            </div>
+
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Insurance status
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.insurance_status}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Liability
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.liability}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Collision
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.collision}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Comprehensive
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.comprehensive}}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <!-- Current / Historical Market Value -->
+        <div class="my-4">
+
+            <mat-accordion class="bg-gray-100">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    class="bg-gray-100">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                            Current / Historical Market Value
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="border-gray-200 px-4 py-5 sm:p-0">
+                        <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Purchase/Trade/Lease Price
+                                </dt>
+                                <dd
+                                    class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.purchase_price}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Date of Purchase/Trade/Lease
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.date_of_purchase}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Sales/Trade Price
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.sales_price}}
+                                </dd>
+                            </div>
+
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Date of Sale/Trade
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.date_of_sales}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Estimated Market Value
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.estimated_market_value}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Source of Market Value
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.source_of_market_value}}
+                                </dd>
+                            </div>
+                            <div
+                                class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                <dt class="text-sm font-bold text-gray-500">
+                                    Date of Market Value
+                                </dt>
+                                <dd
+                                    class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                    {{machinery.date_of_market_value}}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
 
     </div>
 
-    <!-- Registration, Title and Insurance -->
-    <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <div class="font-bold text-2xl pl-10 pt-4">Registration, Title and Insurance</div>
-            <dl class="px-4 sm:divide-y sm:divide-gray-200">
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Title
-                    </dt>
-                    <dd class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        No
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        License
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        No
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Registration
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        No
-                    </dd>
-                </div>
-
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Insurance status
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Yes
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Liability
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Yes
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Collision
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Yes
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Comprehensive
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Yes
-                    </dd>
-                </div>
-            </dl>
-        </div>
-
-    </div> 
-    <!-- Current / Historical Market Value -->
-    <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <div class="font-bold text-2xl pl-10 pt-4">Current / Historical Market Value</div>
-            <dl class="px-4 sm:divide-y sm:divide-gray-200">
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Purchase/Trade/Lease Price
-                    </dt>
-                    <dd class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        $102,234​
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Date of Purchase/Trade/Lease
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        June 19th, 2019​
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Sales/Trade Price
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        N/A
-                    </dd>
-                </div>
-
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Date of Sale/Trade
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        N/A
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Estimated Market Value
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        $56,800​
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Source of Market Value
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Auction results​
-                    </dd>
-                </div>
-                <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                    <dt class="text-sm font-bold text-gray-500">
-                        Date of Market Value
-                    </dt>
-                    <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                        Jan 18, 2022​
-                    </dd>
-                </div>
-            </dl>
-        </div>
-
-    </div> 
 </div>

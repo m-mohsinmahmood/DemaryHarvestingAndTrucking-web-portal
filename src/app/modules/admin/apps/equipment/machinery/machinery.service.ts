@@ -71,6 +71,22 @@ export class MachineryService {
                 }
             );
     }
+    
+    getMachineryById(id: string) {
+        this._httpClient
+            .get(`api-1/machinery?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingMachinery.next(true);
+                    this.machinery.next(res);
+                    this.isLoadingMachinery.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
     handleError(err: any) {
         throw new Error('Method not implemented.');
     }
