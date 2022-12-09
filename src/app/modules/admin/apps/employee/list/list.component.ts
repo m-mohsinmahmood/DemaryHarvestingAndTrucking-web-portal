@@ -24,6 +24,7 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
@@ -52,8 +53,26 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    //#region observable
     employeesdata$: Observable<Employee[]>;
-    employeeList: any[] = [];
+    employeeList$: Observable<Employee[]>;
+    employee$: Observable<Employee[]>;
+    isLoadingEmployeeList$: Observable<boolean>;
+    isLoadingEmployee$: Observable<boolean>;
+    //#endregion
+
+
+    //#region variables
+    page: number;
+    limit: number;
+    pageSize = 10;
+    pageSizeOptions: number[] = [5, 10, 25, 50];
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+
+    search: Subscription;
+    searchResult: string;
     importEmployeeList: any[] = [];
     arrayBuffer: any;
     file: File;
@@ -70,7 +89,13 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         'N/A',
         'Not Being Considered',
     ];
+    isLoading: boolean = false;
+    pagination: EmployeePagination;
+    searchInputControl: FormControl = new FormControl();
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
+    //#region Import Validation
     importSchema = Joi.object({
         fullName: Joi.string().min(3).max(30).required(),
         firstName: Joi.string().min(3).max(30).required(),
@@ -86,23 +111,9 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         salary: Joi.number().required(),
         currentEmployee: Joi.required(),
     });
+    //#endregion
 
-    flashMessage: 'success' | 'error' | null = null;
-    isLoading: boolean = false;
-    pagination: EmployeePagination;
-    searchInputControl: FormControl = new FormControl();
-    selectedProduct: Employee | null = null;
-    selectedProductForm: FormGroup;
-    tagsEditMode: boolean = false;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-    /**
-     * Constructor
-     */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseConfirmationService: FuseConfirmationService,
-        private _formBuilder: FormBuilder,
         private _router: Router,
         private _employeeService: EmployeeService,
         private _matDialog: MatDialog
@@ -112,75 +123,58 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * On init
-     */
+    //#region life-cycle methods
     ngOnInit(): void {
-        // passing country array
         this.countries = countryList;
-
-
-        // Get the pagination
-        this._employeeService.pagination$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: EmployeePagination) => {
-                // Update the pagination
-                this.pagination = pagination;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the employees
-        this._employeeService.getEmployees();
-        this.employeesdata$ = this._employeeService.employeedata$;
-
-        this.employeesdata$.subscribe((value) => {
-            this.employeeList = value;
-        });
-
-        // Subscribe to search input field value changes
-        // this.searchInputControl.valueChanges
-        //     .pipe(
-        //         takeUntil(this._unsubscribeAll),
-        //         debounceTime(300),
-        //         switchMap((query) => {
-        //             this.closeDetails();
-        //             this.isLoading = true;
-        //             return this._employeeService.getEmployees(
-        //                 0,
-        //                 10,
-        //                 'name',
-        //                 'asc',
-        //                 query
-        //             );
-        //         }),
-        //         map(() => {
-        //             this.isLoading = false;
-        //         })
-        //     )
-        //     .subscribe();
+     
     }
 
-    /**
-     * After view init
-     */
     ngAfterViewInit(): void {
+        this.initObservables();
+        this.initApis();
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 
+    //#endregion
+
+    //#region Init Methods
+    initObservables() {
+        this.isLoadingEmployeeList$ = this._employeeService.isLoadingEmployeeList$;
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+        this.employeeList$ = this._employeeService.employeeList$;
+        this.employee$ = this._employeeService.employee$;
+        this.search = this.searchform.valueChanges
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._employeeService.getEmployees(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
+    }
+
+    initApis() {
+        this._employeeService.getEmployees();
+    }
+    //#endregion
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    //#region Import/Export
     incomingfile(event) {
         this.file = event.target.files[0];
     }
@@ -235,59 +229,49 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        utils.sheet_add_json(ws, this.employeeList, {
-            origin: 'A2',
-            skipHeader: true,
-        });
+        // utils.sheet_add_json(ws, this.employeeList, {
+        //     origin: 'A2',
+        //     skipHeader: true,
+        // });
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'employee Report.xlsx');
     }
 
-    openAddDialog(): void {
+    //#endregion
+
+    openEditDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddComponent);
-
         dialogRef.afterClosed().subscribe((result) => { });
     }
-    /**
-     * Toggle employee details
-     *
-     * @param employeeId
-     */
+
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._employeeService.getEmployees(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
+    }
+    //#endregion
+
+    //#region  Pagination
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._employeeService.getEmployees(this.page, this.limit, '', '', this.searchResult);
+    }
+    //#endregion
+    //#region open details
     toggleDetails(employeeId: string): void {
         this._router.navigate(['/apps/employee/details/' + employeeId]);
     }
+    //#endregion
 
-    /**
-     * Close the details
-     */
-    closeDetails(): void {
-        this.selectedProduct = null;
-    }
 
-    createEmployee(): void {
-        // Create the employee
-        // this._employeeService.createEmployee().subscribe((newEmployee) => {
-        //     // Go to new employee
-        //     this.selectedProduct = newEmployee;
-
-        //     // Fill the form
-        //     this.selectedProductForm.patchValue(newEmployee);
-
-        //     // Mark for check
-        //     this._changeDetectorRef.markForCheck();
-        // });
-    }
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
 }
 
 
