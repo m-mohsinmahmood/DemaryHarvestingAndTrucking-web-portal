@@ -4,7 +4,7 @@
     <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
             <div class="font-bold text-2xl pl-8 pt-4">Pre-Trip Check Inspection Forms</div>
-            <ng-container *ngIf="products$ | async as products">
+            <ng-container *ngIf="">
                 <ng-container *ngIf="products.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
@@ -20,7 +20,7 @@
                             <div class="hidden lg:block">Reports</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="products$ | async as products">
+                        <ng-container *ngIf="">
                             <ng-container
                                 *ngFor="
                                     let product of products;
@@ -88,7 +88,7 @@
     <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
             <div class="font-bold text-2xl pl-8 pt-4">Service Repair Records   </div>
-            <ng-container *ngIf="products$ | async as products">
+            <ng-container *ngIf="">
                 <ng-container *ngIf="products.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
@@ -104,7 +104,7 @@
                             <div class="hidden lg:block">Reports</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="products$ | async as products">
+                        <ng-container *ngIf="">
                             <ng-container
                                 *ngFor="
                                     let product of products;
@@ -173,7 +173,7 @@
     <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
             <div class="font-bold text-2xl pl-8 pt-4">Maintenance Records</div>
-            <ng-container *ngIf="products$ | async as products">
+            <ng-container *ngIf="">
                 <ng-container *ngIf="products.length > 0; else noProducts">
                     <div class="grid">
                         <!-- Header -->
@@ -189,7 +189,7 @@
                             <div class="hidden lg:block">Reports</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="products$ | async as products">
+                        <ng-container *ngIf="">
                             <ng-container
                                 *ngFor="
                                     let product of products;

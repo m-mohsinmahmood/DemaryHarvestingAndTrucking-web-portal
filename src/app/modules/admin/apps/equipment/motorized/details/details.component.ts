@@ -5,7 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VehicleService } from 'app/modules/admin/apps/equipment/vehicle/vehicle.service';
 import { MotorizedService } from '../motorized.service';
 import { EquipmentService } from '../../equipment.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
@@ -107,10 +106,10 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
 
 
         // Get the employee by id
-        this._machineService.getProductById(this.routeID).subscribe((vehicle) => {
-            console.log('EEE', vehicle);
-            this.vehicleDetails = vehicle;
-        });
+        // this._machineService.getProductById(this.routeID).subscribe((vehicle) => {
+        //     console.log('EEE', vehicle);
+        //     this.vehicleDetails = vehicle;
+        // });
     }
 
     ngAfterViewInit(): void {

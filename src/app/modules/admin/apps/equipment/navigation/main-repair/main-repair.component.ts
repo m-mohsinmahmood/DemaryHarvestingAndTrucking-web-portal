@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { Observable, Subject } from 'rxjs';
 import { MachineryService } from '../../machinery/machinery.service';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from '../../machinery/machinery.types';
 
 @Component({
   selector: 'app-main-repair',
@@ -36,20 +35,12 @@ export class MainRepairComponent implements OnInit {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    products$: Observable<InventoryProduct[]>;
 
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredTags: InventoryTag[];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
-    pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedProduct: InventoryProduct | null = null;
     selectedProductForm: FormGroup;
-    tags: InventoryTag[];
     tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
@@ -63,7 +54,7 @@ export class MainRepairComponent implements OnInit {
 
   ngOnInit(): void {
             // Get the products
-            this.products$ = this._inventoryService.products$;
+            // this.products$ = this._inventoryService.products$;
 
 
   }
