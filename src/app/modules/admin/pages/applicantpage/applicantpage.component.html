@@ -40,8 +40,12 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Email</mat-label>
                                     <input matInput type="email" formControlName="email">
-                                    <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')"
-                                        class="text-xs text-red-500">Email is required</mat-hint>
+                                        <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')" class="text-xs text-red-500">
+                                            Email is required
+                                        </mat-hint>
+                                        <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('pattern')" class="text-xs text-red-500">
+                                            Please provide a valid email address
+                                        </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -212,10 +216,11 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Postal Code</mat-label>
-                                    <input matInput type="number" id="postal-code" name="postal-code"
+                                    <input matInput id="postal-code" name="postal-code"
                                         formControlName="postal_code" placeholder="Postal Code">
-                                    <mat-hint *ngIf="this.secondFormGroup.get('postal_code').hasError('required')"
-                                        class="text-xs text-red-500">Postal Code is required</mat-hint>
+                                    <mat-hint *ngIf="this.secondFormGroup.get('postal_code').hasError('required')" class="text-xs text-red-500">
+                                        Postal Code is required
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -464,8 +469,18 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>How did you hear about DHT?</mat-label>
-                                    <input matInput type="text" id="hear-about-dht" name="hear_about_dht"
-                                        formControlName="hear_about_dht" placeholder="How did you hear about DHT?">
+                                    <mat-select matNativeControl formControlName="hear_about_dht">
+                                        <mat-option value="Done Deal">Done Deal</mat-option>
+                                        <mat-option value="Farmers Journal">Farmers Journal</mat-option>
+                                        <mat-option value="Top Link">Top Link</mat-option>
+                                        <mat-option value="Facebook">Facebook</mat-option>
+                                        <mat-option value="From a Friend">From a Friend</mat-option>
+                                        <mat-option value="Internet Search">Internet Search</mat-option>
+                                        <mat-option value="Farmers Weekly">Farmers Weekly</mat-option>
+                                        <mat-option value="Trademe.co.nz">Trademe.co.nz</mat-option>
+                                        <mat-option value="Twitter">Twitter</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                    </mat-select>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('hear_about_dht').hasError('required')"
                                         class="text-xs text-red-500">How did you hear about DHT? field is required
                                     </mat-hint>
