@@ -48,24 +48,6 @@ const companyDocs = [
     selector: 'employee-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    styles: [
-        /* language=SCSS */
-        `
-            .employee-detail-grid {
-                grid-template-columns: 10% 50% 30%;
-
-                @screen sm {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-            }
-        `,
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

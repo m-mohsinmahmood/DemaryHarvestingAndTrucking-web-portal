@@ -65,7 +65,7 @@ export class UpdateComponent implements OnInit {
 
    // Get the employee by id
    this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-   this.avatar = employee.avatar;
+   //this.avatar = employee.avatar;
    this.employees = employee;
    this.form.patchValue(employee);
   });
