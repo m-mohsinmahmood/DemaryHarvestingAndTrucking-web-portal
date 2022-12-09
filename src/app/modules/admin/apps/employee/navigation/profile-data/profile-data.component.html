@@ -23,7 +23,7 @@
         <div class="mt-4 grid sm:gap-3 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
-                <mat-label>{{employeeProfileData.date_of_birth}}</mat-label>
+                <mat-label>{{employeeProfileData.date_of_birth | date: 'MMM dd YYY'}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Age:</mat-label>
@@ -152,7 +152,7 @@
             <div> </div>
 
             <div class="my-4">
-                <p class="font-semibold text-2xl my-0">Self Ranking</p>
+                <p class="font-semibold text-3xl my-0">Self Ranking</p>
             </div>
             <div></div>
 

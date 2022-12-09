@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-// import { UpdateComponent } from '../../../customers/update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
@@ -14,9 +12,11 @@ import { UpdateEmployeeComponent } from './update/update.component';
 })
 export class EmployeeDataComponent implements OnInit {
 
-
+  //#region variables
+  employeeData;
   isEditMode: boolean = false;
   routeID; // URL ID
+  //#endregion
 
   //#region Observables
   employeeData$: Observable<any>;
@@ -24,12 +24,10 @@ export class EmployeeDataComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
-
   constructor(
     private _employeeService: EmployeeService,
     private _matDialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-    // public matDialogRef: MatDialogRef<EmployeeDataComponent>,
 
   ) { }
 
@@ -52,6 +50,9 @@ export class EmployeeDataComponent implements OnInit {
   initObservables() {
     this.isLoadingEmployeeData$ = this._employeeService.isLoadingEmployee$;
     this.employeeData$ = this._employeeService.employee$;
+    this.employeeData$.subscribe((value)=>{
+      this.employeeData = value;
+    })
   }
   //#endregion
 
@@ -62,9 +63,11 @@ export class EmployeeDataComponent implements OnInit {
   //#endregion
 
   openUpdateDialog(): void {
-    // Open the dialog
     const dialogRef = this._matDialog.open(UpdateEmployeeComponent, {
-      data: { id: this.routeID },
+      data: {
+        id: this.routeID,
+        employeeData : this.employeeData,
+    },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

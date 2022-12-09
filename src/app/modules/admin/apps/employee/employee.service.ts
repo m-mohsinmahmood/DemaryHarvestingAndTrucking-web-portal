@@ -158,7 +158,7 @@ export class EmployeeService {
                 }
             );
     }
-    updateEmployee(data: any) {
+    updateEmployee(id:string,data: any) {
         this._httpClient
             .put(`api-1/employee`, data)
             .pipe(take(1))
@@ -181,7 +181,7 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    this.getEmployees();
+                    this.getEmployeeById(id);
                 }
             );
     }

@@ -14,7 +14,7 @@ import { UpdateProfileData } from './update-profile-data/update.component';
 export class ProfileDataComponent implements OnInit {
 
   //#region variables
-  isEditMode: boolean = true;
+  employeeProfileData: any;
   routeID; // URL ID
   //#endregion
 
@@ -52,6 +52,9 @@ export class ProfileDataComponent implements OnInit {
   initObservables() {
     this.isLoadingEmployeeProfileData$ = this._employeeService.isLoadingEmployee$;
     this.employeeProfileData$ = this._employeeService.employee$;
+    this.employeeProfileData$.subscribe((value)=> {
+      this.employeeProfileData = value;
+    })
   }
   //#endregion
 
@@ -64,7 +67,10 @@ export class ProfileDataComponent implements OnInit {
   openUpdateDialog(): void {
     // Open the dialog
     const dialogRef = this._matDialog.open(UpdateProfileData, {
-      data: { id: this.routeID },
+      data: { 
+        id: this.routeID ,
+        employeeProfileData: this.employeeProfileData
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -1,15 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
-
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EmployeeService } from '../../../employee.service';
 import { Country } from 'app/modules/admin/apps/employee/employee.types';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
-
-
+import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -19,115 +15,107 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 
 export class UpdateProfileData implements OnInit {
 
-  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors'];
+  //#region observables
+  isLoadingEmployee$: Observable<boolean>;
+  closeDialog$: Observable<boolean>;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  //#endregion
 
+  //#region variablles
+  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors'];
   form: FormGroup;
   employees: any;
   imageURL: string = '';
   previews: string[] = [];
   avatar: string = '';
-  internationalPhoneNumber: string [] = [];
+  internationalPhoneNumber: string[] = [];
   countries: Country[];
   countryCodeLength: any = '0';
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+  //#endregion
 
   constructor(
     public matDialogRef: MatDialogRef<UpdateProfileData>,
     private _formBuilder: FormBuilder,
     public _employeeService: EmployeeService,
     private _changeDetectorRef: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) public data: {id: string},
+    @Inject(MAT_DIALOG_DATA) public data: any,
 
-   ) {
+  ) { }
 
-    }
-
+  //#region Lifecycle hooks
   ngOnInit(): void {
+    this.initObservables()
+    this.initForm();
 
-    this.form = this._formBuilder.group({
-      avatar: ['', [Validators.required]],
-      fname     : ['', [Validators.required]],
-      lname     : ['', [Validators.required]],
-      role    : ['', [Validators.required]],
-      position: ['', [Validators.required]],
-      email   : ['', [Validators.email]],
-      address : ['', [Validators.required]],
-      phone : ['', [Validators.required]],
-      internationalPhoneNumbers: this._formBuilder.array([]),
-      emergencyContact : ['', [Validators.required]],
-      bankingInfo : ['', [Validators.required]],
-      salary  : ['',[]],
-      currentEmployee : ['',[]],
-      wages : ['',[]]
-
-    });
-
-   // Get the employee by id
-   let emp = this._employeeService.getEmployeeById(this.data.id)
-   //this.avatar = employee.avatar;
-   this.employees = emp;
-   this.form.patchValue(emp);
-  
-    const internationalPhoneNumbersFormGroups = [];
-    if ( this.employees.internationalPhoneNumber.length > 0 )
-    {
-        // Iterate through them
-            internationalPhoneNumbersFormGroups.push(
-                this._formBuilder.group({
-                    country    : [this.employees.internationalPhoneNumber[0].country],
-                    phoneNumber: [this.employees.internationalPhoneNumber[0].phoneNumber],
-
-                })
-            );
-
-    }
-    else
-    {
-        // Create a phone number form group
-        internationalPhoneNumbersFormGroups.push(
-            this._formBuilder.group({
-                country    : ['us'],
-                phoneNumber: [''],
-            })
-        );
-    }
-
-    internationalPhoneNumbersFormGroups.forEach((internationalPhoneNumbersFormGroup) => {
-        (this.form.get('internationalPhoneNumbers') as FormArray)?.push(internationalPhoneNumbersFormGroup);
-    });
-
-//   const internationalPhoneNumbersFormGroups = [];
-//   internationalPhoneNumbersFormGroups?.push(
-//     this._formBuilder.group({
-//         country    : ['us'],
-//         phoneNumber: [''],
-//     })
-//   );
-//     internationalPhoneNumbersFormGroups.forEach((internationalPhoneNumbersFormGroup) => {
-//         (this.form.get('internationalPhoneNumbers') as FormArray)?.push(internationalPhoneNumbersFormGroup);
-//     });
-
-    this._employeeService.countries$
+    this._employeeService.closeDialog$
     .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((codes: Country[]) => {
-        this.countries = codes;
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
+    .subscribe((res) => {
+        if (res) {
+            this.matDialogRef.close();
+            this._employeeService.closeDialog.next(false);
+        }
     });
-
-
   }
 
   ngAfterContentChecked(): void {
     this._changeDetectorRef.detectChanges();
-   }
-
-  onSubmit(): void {
-    console.warn('Your order has been submitted', this.form.value);
-    this.form.reset();
   }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+}
+
+  //#endregion
+
+  //#region Init Observables
+  initObservables() {
+    this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+    this.closeDialog$ = this._employeeService.closeDialog$;
+  }
+  //#endregion
+
+  //#region Init Form
+  initForm() {
+    this.form = this._formBuilder.group({
+      id: ['' || this.data?.id],
+      date_of_birth: ['' || this.data.employeeProfileData.date_of_birth, [Validators.required]],
+      age: ['' || this.data.employeeProfileData.age, [Validators.required]],
+      marital_status: ['' || this.data.employeeProfileData.marital_status, [Validators.required]],
+      languages: ['' || this.data.employeeProfileData.languages.replace(/\s/g, '').split(','), [Validators.required]],
+      degree_name: ['' || this.data.employeeProfileData.degree_name, [Validators.required]],
+      blood_type: ['' || this.data.employeeProfileData.blood_type],
+      authorized_to_work: ['' || this.data.employeeProfileData.authorized_to_work.toString(), [Validators.required]],
+      us_citizen: ['' || this.data.employeeProfileData.us_citizen.toString(), [Validators.required]],
+      cdl_license: ['' || this.data.employeeProfileData.cdl_license.toString(), [Validators.required]],
+      lorry_license: ['' || this.data.employeeProfileData.lorry_license.toString(), [Validators.required]],
+      tractor_license: ['' || this.data.employeeProfileData.tractor_license.toString(), [Validators.required]],
+      passport: ['' || this.data.employeeProfileData.passport.toString(), [Validators.required]],
+      rank_speaking_english: ['' || this.data?.employeeProfileData.rank_speaking_english, [Validators.required]],
+      question_1: ['' || this.data.employeeProfileData.question_1, [Validators.required]],
+      question_2: ['' || this.data.employeeProfileData.question_2, [Validators.required]],
+      question_3: ['' || this.data.employeeProfileData.question_3, [Validators.required]],
+      question_4: ['' || this.data.employeeProfileData.question_4, [Validators.required]],
+      question_5: ['' || this.data.employeeProfileData.question_5, [Validators.required]],
+      supervisor_name: ['' || this.data.employeeProfileData.supervisor_name, [Validators.required]],
+      supervisor_contact: ['' || this.data.employeeProfileData.supervisor_contact, [Validators.required]],
+      work_experience_description: ['' || this.data.employeeProfileData.work_experience_description.toString(), [Validators.required]],
+    });
+  }
+  //#endregion
+
+  //#region Form methods
+  discard(): void {
+    this.matDialogRef.close();
+  }
+
+  submit(): void {
+    this._employeeService.isLoadingEmployee.next(true);
+    this.form.value['languages'] = this.form.value['languages'].join(', ');
+    this._employeeService.updateEmployee(this.data.id,this.form.value);
+  }
+
+  //#endregion
 
   showPreview(event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -144,63 +132,10 @@ export class UpdateProfileData implements OnInit {
   }
 
 
-  saveAndClose(): void
-  {
-      // Save the message as a draft
-      this.saveAsDraft();
-
-      // Close the dialog
-      this.matDialogRef.close();
+  getCountryByIso(iso: string): Country {
+    const country = this.countries.find(country => country.iso === iso);
+    this.countryCodeLength = country.code.length;
+    return country;
   }
-
-  /**
-   * Discard the message
-   */
-  discard(): void
-  {
-    this.matDialogRef.close();
-  }
-
-  /**
-   * Save the message as a draft
-   */
-  saveAsDraft(): void
-  {
-
-  }
-
-  /**
-   * Send the message
-   */
-  send(): void
-  {
-
-  }
-
-    /**
-     * Get country info by iso code
-     *
-     * @param iso
-     */
-     getCountryByIso(iso: string): Country
-     {
-        const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length;
-        return country;
-     }
-
-     /**
-      * Track by function for ngFor loops
-      *
-      * @param index
-      * @param item
-      */
-     trackByFn(index: number, item: any): any
-     {
-         return item.id || index;
-     }
-
-
-
 
 }

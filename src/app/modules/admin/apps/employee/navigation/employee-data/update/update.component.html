@@ -51,10 +51,9 @@
                                     <span matPrefix>+1 &nbsp;</span>
                                     <input maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="cell_phone_number">
+                                    <mat-hint *ngIf="this.firstFormGroup.get('cell_phone_number').hasError('required')"
+                                        class="text-xs text-red-500">Cell Phone Number is required</mat-hint>
                                 </mat-form-field>
-                                <mat-hint *ngIf="this.firstFormGroup.get('cell_phone_number').hasError('required')"
-                                    class="text-xs text-red-500">Cell Phone Number is required</mat-hint>
-
                             </div>
                             <div>
                                 <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
@@ -73,7 +72,6 @@
                                     <mat-datepicker #picker4></mat-datepicker>
                                     <mat-hint *ngIf="this.firstFormGroup.get('date_of_birth').hasError('required')"
                                         class="text-xs text-red-500">Date Of Birth is required</mat-hint>
-
                                 </mat-form-field>
                             </div>
                             <div>
@@ -92,7 +90,8 @@
                                         <mat-option value="Married">Married</mat-option>
                                         <mat-option value="Divorced"> Divorced</mat-option>
                                     </mat-select>
-                                    <mat-hint *ngIf="this.firstFormGroup.get('marital_status').hasError('required')" class="text-xs text-red-500">Marital Status is required</mat-hint>
+                                    <mat-hint *ngIf="this.firstFormGroup.get('marital_status').hasError('required')"
+                                        class="text-xs text-red-500">Marital Status is required</mat-hint>
 
                                 </mat-form-field>
                             </div>
@@ -204,8 +203,8 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>County/Providence</mat-label>
-                                    <input matInput type="text" id="county" name="county" formControlName="county_providence"
-                                        placeholder="County/Providence">
+                                    <input matInput type="text" id="county" name="county"
+                                        formControlName="county_providence" placeholder="County/Providence">
                                     <mat-hint *ngIf="this.secondFormGroup.get('county_providence').hasError('required')"
                                         class="text-xs text-red-500">County/Providence is required</mat-hint>
 
@@ -486,7 +485,8 @@
                                     <mat-label>Supervisor Contact Number</mat-label>
                                     <input matInput type="number" id="supervisorContact" name="postal-code"
                                         formControlName="supervisor_contact" placeholder="Supervisor Contact #">
-                                    <mat-hint *ngIf="this.fourthFormGroup.get('supervisor_contact').hasError('required')"
+                                    <mat-hint
+                                        *ngIf="this.fourthFormGroup.get('supervisor_contact').hasError('required')"
                                         class="text-xs text-red-500">Supervisor Contact Number is required</mat-hint>
 
                                 </mat-form-field>
@@ -565,9 +565,11 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Emergency Contact Name/Relation</mat-label>
-                                    <input matInput type="text" id="emergency_contact_name" name="emergency_contact_name" formControlName="emergency_contact_name"
+                                    <input matInput type="text" id="emergency_contact_name"
+                                        name="emergency_contact_name" formControlName="emergency_contact_name"
                                         placeholder="Emergency Contact Name/Relation" value="emergency_contact_name">
-                                    <mat-hint *ngIf="this.fifthFormGroup.get('emergency_contact_name').hasError('required')"
+                                    <mat-hint
+                                        *ngIf="this.fifthFormGroup.get('emergency_contact_name').hasError('required')"
                                         class="text-xs text-red-500">Town/City is required</mat-hint>
 
                                 </mat-form-field>
@@ -579,7 +581,8 @@
                                     <input maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="emergency_contact_phone">
                                 </mat-form-field>
-                                <mat-hint *ngIf="this.fifthFormGroup.get('emergency_contact_phone').hasError('required')"
+                                <mat-hint
+                                    *ngIf="this.fifthFormGroup.get('emergency_contact_phone').hasError('required')"
                                     class="text-xs text-red-500">Emergency Contact Phone is required</mat-hint>
 
                             </div>
@@ -593,9 +596,8 @@
                         <mat-icon [ngStyle]="{'color':'green'}"
                             class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
                             [svgIcon]="'heroicons_outline:check'"></mat-icon>
-                            <p class="flex justify-center items-center font-bold text-2xl">{{this.isEdit? 'You have successfully updated the applicants
-                                details. Please click on submit button to complete update process.':'You have successfully submitted the applicant
-                                details. Please click on submit button to complete the process.'}}</p>
+                        <p class="flex justify-center items-center font-bold text-2xl">You have successfully updated employee
+                            details. Please click on submit button to complete update process</p>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
