@@ -4,7 +4,7 @@
     <div class="border-b">
     <div class="relative flex flex-col xs:items-center sm:flex-row flex-0 sm:items-center py-4 px-4 md:px-4">
         <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <div class="absolute inset-x-0 bottom-0"  *ngIf="isLoadingEmployee$ | async">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <div>
@@ -13,20 +13,20 @@
             </button>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2">
+        <div *ngIf="employee$ | async; let employee" (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <img *ngIf="employees.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employees.avatar}}" alt="">
-            <img *ngIf="employees.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
-            <span class="ml-1 capitalize">{{employees.fname}} {{employees.lname}}   </span>
+            <img *ngIf="employee.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employee.avatar}}" alt="">
+            <img *ngIf="employee.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+            <span class="ml-1 capitalize">{{employee?.first_name}} {{employee?.last_name}}   </span>
         </div>
     </div>
     </div>
     <div style="height: 100%" class="bg-card dark:bg-transparent">
-        <mat-drawer-container class=" w-full bg-card divide-x" autosize>
+        <mat-drawer-container class=" w-full bg-card divide-x" style="height: 100%" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
                     <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
-                    [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="navigationHandler(route)">
+                    [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="routeHandler(route)">
                             <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
                             <!-- <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span> -->
                         </button>

@@ -7,7 +7,7 @@ import {
     ViewEncapsulation,
     Inject,
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { UpdateComponent } from '../update/update.component';
@@ -52,8 +52,14 @@ const companyDocs = [
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeDetailComponent implements OnInit, OnDestroy {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    //#region  Observables
+    employee$: Observable<any>;
+    isLoadingEmployee$: Observable<any>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
+
+    //#region Variables
     isLoading: boolean = false;
     routeID; // URL ID
     employees: any;
@@ -63,88 +69,85 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
     employee: Employee;
-
     // Sidebar stuff
-      drawerMode: 'over' | 'side' = 'side';
-      drawerOpened: boolean = true;
-      selectedIndex: string = "Employee Data";
+    drawerMode: 'over' | 'side' = 'side';
+    drawerOpened: boolean = true;
+    selectedIndex: string = "Employee Data";
 
+    //#endregion
 
-    /*
-    *
-     * Constructor
-     */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
         private _matDialog: MatDialog,
-        private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
         private _router: Router,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
 
-    ) {}
+    ) { }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
+    //#region Life Cycle Hooks
     ngOnInit(): void {
-
-        this.routes = this._employeeService.navigationLabels;
-
-
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         })
 
-        // Get the employee by id
-        this._employeeService
-            .getEmployeeById(this.routeID)
-            .subscribe((employee) => {
-                this.employees = employee;
-            });
-
-        // Subscribe to media changes
-        this._fuseMediaWatcherService.onMediaChange$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe(({ matchingAliases }) => {
-
-          // Set the drawerMode and drawerOpened if the given breakpoint is active
-          if (matchingAliases.includes('lg')) {
-            this.drawerMode = 'side';
-            this.drawerOpened = true;
-          }
-          else {
-            this.drawerMode = 'over';
-            this.drawerOpened = false;
-          }
-
-          // Mark for check
-          this._changeDetectorRef.markForCheck();
-        });
+        this.routes = this._employeeService.navigationLabels;
     }
 
-    /**
-     * On destroy
-     */
+    ngAfterViewInit(): void {
+        this.initApis(this.routeID);
+        this.initObservables();
+        this.initSideNavigation();
+    }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#endregion
+
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.employee$ = this._employeeService.employee$;
+        // Loader
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+    }
+    //#endregion
+
+    //#region Initial APIs
+    initApis(id: string) {
+        this._employeeService.getEmployeeById(id);
+    }
+    //#endregion
+
+    //#region Initialize Side Navigation
+    initSideNavigation() {
+        this.routes = this._employeeService.navigationLabels;
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                } else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
+            });
+    }
+
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    navigationHandler(index) {
+    //#region Inner Navigation Routing
+    routeHandler(index) {
         const { title } = index;
         if (title === this.selectedIndex) {
-          return;
+            return;
         }
         // this.isLoading = true;
         this.selectedIndex = title;
@@ -152,8 +155,10 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
 
     toggleDrawer() {
         this.drawerOpened = !this.drawerOpened;
-      };
+    };
+    //#endregion
 
+    //#region Update Dialog
     openUploadDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UploadDocModal, {
@@ -194,7 +199,7 @@ export class UploadDocModal {
         public dialogRef: MatDialogRef<UploadDocModal>,
         private _formBuilder: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.form = this._formBuilder.group({
@@ -203,7 +208,7 @@ export class UploadDocModal {
         });
     }
 
-    onSubmit(): void {}
+    onSubmit(): void { }
 
     discard(): void {
         // Close the dialog
