@@ -24,6 +24,7 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
@@ -40,28 +41,13 @@ import {
 import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/machinery.service';
 import { Router } from '@angular/router';
 import { UpdateAddMachineryComponent } from '../update/update-add.component';
+import { Machineries } from '../../motorized/motorized.types';
 
 @Component({
     selector: 'machinery-list',
     templateUrl: './machinery.component.html',
-    styles: [
-        /* language=SCSS */
-        `
-            .machinery-grid {
-                grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
+    styleUrls: ['./machinery.component.scss'],
 
-                @screen sm {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-            }
-        `,
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
@@ -86,8 +72,24 @@ export class MachineryListComponent
     tags: InventoryTag[];
     tagsEditMode: boolean = false;
     vendors: InventoryVendor[];
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    isEdit: boolean = false;
+    pageSize = 50;
+    currentPage = 0;
+    pageSizeOptions: number[] = [10, 25, 50, 100];
+    searchResult: string;
+    page: number;
+    sort: any;
+    order: any;
+    limit: number;
 
+    //#region Observables
+    search: Subscription;
+    machinery$: Observable<Machineries>;
+    isLoadingMachinery$: Observable<boolean>;
+    machineries$: Observable<Machineries[]>;
+    isLoadingMachineries$: Observable<boolean>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
     /**
      * Constructor
      */
@@ -96,7 +98,7 @@ export class MachineryListComponent
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _inventoryService: MachineryService,
+        private _machineryService: MachineryService,
         private _matDialog: MatDialog
     ) {}
 
@@ -108,157 +110,120 @@ export class MachineryListComponent
      * On init
      */
     ngOnInit(): void {
-        // Create the selected product form
-        this.selectedProductForm = this._formBuilder.group({
-            id: [''],
-            category: [''],
-            name: ['', [Validators.required]],
-            description: [''],
-            tags: [[]],
-            sku: [''],
-            barcode: [''],
-            brand: [''],
-            vendor: [''],
-            stock: [''],
-            reserved: [''],
-            cost: [''],
-            basePrice: [''],
-            taxPercent: [''],
-            price: [''],
-            weight: [''],
-            thumbnail: [''],
-            images: [[]],
-            currentImageIndex: [0], // Image index that is currently being viewed
-            active: [false],
-        });
+        this.initApis();
+        this.initObservables();
 
-        // Get the brands
-        this._inventoryService.brands$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: InventoryBrand[]) => {
-                // Update the brands
-                this.brands = brands;
+        // // Create the selected product form
+        // this.selectedProductForm = this._formBuilder.group({
+        //     id: [''],
+        //     category: [''],
+        //     name: ['', [Validators.required]],
+        //     description: [''],
+        //     tags: [[]],
+        //     sku: [''],
+        //     barcode: [''],
+        //     brand: [''],
+        //     vendor: [''],
+        //     stock: [''],
+        //     reserved: [''],
+        //     cost: [''],
+        //     basePrice: [''],
+        //     taxPercent: [''],
+        //     price: [''],
+        //     weight: [''],
+        //     thumbnail: [''],
+        //     images: [[]],
+        //     currentImageIndex: [0], // Image index that is currently being viewed
+        //     active: [false],
+        // });
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // // Get the brands
+        // this._machineryService.brands$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((brands: InventoryBrand[]) => {
+        //         // Update the brands
+        //         this.brands = brands;
 
-        // Get the categories
-        this._inventoryService.categories$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: InventoryCategory[]) => {
-                // Update the categories
-                this.categories = categories;
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // // Get the categories
+        // this._machineryService.categories$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((categories: InventoryCategory[]) => {
+        //         // Update the categories
+        //         this.categories = categories;
 
-        // Get the pagination
-        this._inventoryService.pagination$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: InventoryPagination) => {
-                // Update the pagination
-                this.pagination = pagination;
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // // Get the pagination
+        // this._machineryService.pagination$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((pagination: InventoryPagination) => {
+        //         // Update the pagination
+        //         this.pagination = pagination;
 
-        // Get the products
-        this.products$ = this._inventoryService.products$;
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
-        // Get the tags
-        this._inventoryService.tags$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tags: InventoryTag[]) => {
-                // Update the tags
-                this.tags = tags;
-                this.filteredTags = tags;
+        // // Get the products
+        // this.products$ = this._machineryService.products$;
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // // Get the tags
+        // this._machineryService.tags$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((tags: InventoryTag[]) => {
+        //         // Update the tags
+        //         this.tags = tags;
+        //         this.filteredTags = tags;
 
-        // Get the vendors
-        this._inventoryService.vendors$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: InventoryVendor[]) => {
-                // Update the vendors
-                this.vendors = vendors;
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // // Get the vendors
+        // this._machineryService.vendors$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((vendors: InventoryVendor[]) => {
+        //         // Update the vendors
+        //         this.vendors = vendors;
 
-        // Subscribe to search input field value changes
-        this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                switchMap((query) => {
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return this._inventoryService.getProducts(
-                        0,
-                        10,
-                        'name',
-                        'asc',
-                        query
-                    );
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
-            )
-            .subscribe();
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
+
+        // // Subscribe to search input field value changes
+        // this.searchInputControl.valueChanges
+        //     .pipe(
+        //         takeUntil(this._unsubscribeAll),
+        //         debounceTime(300),
+        //         switchMap((query) => {
+        //             this.closeDetails();
+        //             this.isLoading = true;
+        //             return this._machineryService.getProducts(
+        //                 0,
+        //                 10,
+        //                 'name',
+        //                 'asc',
+        //                 query
+        //             );
+        //         }),
+        //         map(() => {
+        //             this.isLoading = false;
+        //         })
+        //     )
+        //     .subscribe();
     }
 
     /**
      * After view init
      */
     ngAfterViewInit(): void {
-        if (this._sort && this._paginator) {
-            // Set the initial sort
-            this._sort.sort({
-                id: 'name',
-                start: 'asc',
-                disableClear: true,
-            });
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-
-            // If the user changes the sort order...
-            this._sort.sortChange
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(() => {
-                    // Reset back to the first page
-                    this._paginator.pageIndex = 0;
-
-                    // Close the details
-                    this.closeDetails();
-                });
-
-            // Get products if sort or page changes
-            merge(this._sort.sortChange, this._paginator.page)
-                .pipe(
-                    switchMap(() => {
-                        this.closeDetails();
-                        this.isLoading = true;
-                        return this._inventoryService.getProducts(
-                            this._paginator.pageIndex,
-                            this._paginator.pageSize,
-                            this._sort.active,
-                            this._sort.direction
-                        );
-                    }),
-                    map(() => {
-                        this.isLoading = false;
-                    })
-                )
-                .subscribe();
-        }
+      
     }
 
     /**
@@ -269,6 +234,36 @@ export class MachineryListComponent
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#region Init Observables and Apis
+    initObservables() {
+        this.isLoadingMachinery$ = this._machineryService.isLoadingMachinery$;
+        this.isLoadingMachineries$ = this._machineryService.isLoadingMachineries$;
+        this.machineries$ = this._machineryService.machineries$;
+        this.machinery$ = this._machineryService.machinery$;
+        // this.search = this.searchform.valueChanges
+        //     .pipe(
+        //         debounceTime(500),
+        //         takeUntil(this._unsubscribeAll)
+        //     )
+        //     .subscribe((data) => {
+        //         this.searchResult = data.search;
+        //         this.page = 1;
+        //         this._machineryService.getCustomers(
+        //             1,
+        //             10,
+        //             '',
+        //             '',
+        //             this.searchResult,
+        //             this.customerFiltersForm.value
+        //         );
+        //     });
+    }
+
+    initApis() {
+        this._machineryService.getMachineries();
+    }
+
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -389,7 +384,7 @@ export class MachineryListComponent
         };
 
         // Create tag on the server
-        this._inventoryService.createTag(tag).subscribe((response) => {
+        this._machineryService.createTag(tag).subscribe((response) => {
             // Add the tag to the product
             this.addTagToProduct(response);
         });
@@ -406,7 +401,7 @@ export class MachineryListComponent
         tag.title = event.target.value;
 
         // Update the tag on the server
-        this._inventoryService
+        this._machineryService
             .updateTag(tag.id, tag)
             .pipe(debounceTime(300))
             .subscribe();
@@ -422,7 +417,7 @@ export class MachineryListComponent
      */
     deleteTag(tag: InventoryTag): void {
         // Delete the tag from the server
-        this._inventoryService.deleteTag(tag.id).subscribe();
+        this._machineryService.deleteTag(tag.id).subscribe();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -481,7 +476,7 @@ export class MachineryListComponent
      */
     createProduct(): void {
         // Create the product
-        this._inventoryService.createProduct().subscribe((newProduct) => {
+        this._machineryService.createProduct().subscribe((newProduct) => {
             // Go to new product
             this.selectedProduct = newProduct;
 
@@ -504,7 +499,7 @@ export class MachineryListComponent
         delete product.currentImageIndex;
 
         // Update the product on the server
-        this._inventoryService
+        this._machineryService
             .updateProduct(product.id, product)
             .subscribe(() => {
                 // Show a success message
@@ -536,7 +531,7 @@ export class MachineryListComponent
                 const product = this.selectedProductForm.getRawValue();
 
                 // Delete the product on the server
-                this._inventoryService
+                this._machineryService
                     .deleteProduct(product.id)
                     .subscribe(() => {
                         // Close the details
