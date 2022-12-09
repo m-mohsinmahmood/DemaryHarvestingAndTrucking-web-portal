@@ -64,11 +64,11 @@ export class UpdateProfileData implements OnInit {
     });
 
    // Get the employee by id
-   this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
+   let emp = this._employeeService.getEmployeeById(this.data.id)
    //this.avatar = employee.avatar;
-   this.employees = employee;
-   this.form.patchValue(employee);
-  });
+   this.employees = emp;
+   this.form.patchValue(emp);
+  
     const internationalPhoneNumbersFormGroups = [];
     if ( this.employees.internationalPhoneNumber.length > 0 )
     {
