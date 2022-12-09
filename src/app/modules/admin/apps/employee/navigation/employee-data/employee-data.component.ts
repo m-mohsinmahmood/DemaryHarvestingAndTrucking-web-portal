@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // import { UpdateComponent } from '../../../customers/update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { EmployeeService } from '../../employee.service';
 import { UpdateEmployeeComponent } from './update/update.component';
 
 @Component({
@@ -11,80 +13,62 @@ import { UpdateEmployeeComponent } from './update/update.component';
   styleUrls: ['./employee-data.component.scss']
 })
 export class EmployeeDataComponent implements OnInit {
-    isEditMode: boolean = false;
-    selectedProductForm: FormGroup;
-    routeID; // URL ID
+
+
+  isEditMode: boolean = false;
+  routeID; // URL ID
+
+  //#region Observables
+  employeeData$: Observable<any>;
+  isLoadingEmployeeData$: Observable<boolean>;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  //#endregion
 
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _employeeService: EmployeeService,
     private _matDialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-
-
     // public matDialogRef: MatDialogRef<EmployeeDataComponent>,
 
   ) { }
 
+  //#region Lifecycle Functions
   ngOnInit(): void {
-
     this.activatedRoute.params.subscribe((params) => {
-        this.routeID = params.Id;
+      this.routeID = params.Id;
     });
 
-     // Create the selected product form
-     this.selectedProductForm = this._formBuilder.group({
-      fname               : [''],
-      lname      : [''],
-      email             : [''],
-      cellnumber      : [''],
-      homenumber              : [''],
-      usnumber          : [''],
-      address1            : [''],
-      address2: [''],
-      city            : [''],
-      country    : [''],
-      postalcode         : [''],
-      sname         : [''],
-      snumber             : [''],
-      ename        : [''],
-      enumber       : [''],
-
-  });
-  this.selectedProductForm.patchValue({
-    fname               : 'Sam',
-    lname      : 'John',
-    email             : 's@s.com ',
-    cellnumber      : '+1(123)-456-7890',
-    homenumber              : '+1(123)-456-7890',
-    usnumber          : '+1(123)-456-7890',
-    address1            : 'Michigan Heights',
-    address2:           'Michigan Heights',
-    city            : 'Michigan',
-    country    : 'U.S.',
-    postalcode         : '54000',
-    sname         : 'Lisa',
-    snumber             : '000-0000-0000',
-    ename        : 'Donald',
-    enumber       : '000-0000-0000',
-
-  });
+    this.initApi();
+    this.initObservables();
   }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+  }
+  //#endregion
 
-// enableEditButton(): void
-//   {
-//     this.isEditMode = true;
+  //#region Initialize Observables
+  initObservables() {
+    this.isLoadingEmployeeData$ = this._employeeService.isLoadingEmployee$;
+    this.employeeData$ = this._employeeService.employee$;
+  }
+  //#endregion
 
-//   }
+  //#region Initialize APIs
+  initApi() {
+    this._employeeService.getEmployeeById(this.routeID);
+  }
+  //#endregion
 
-  enableEditButton(): void {
+  openUpdateDialog(): void {
     // Open the dialog
     const dialogRef = this._matDialog.open(UpdateEmployeeComponent, {
-        data: { id: this.routeID },
+      data: { id: this.routeID },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-        console.log('Compose dialog was closed!');
+      console.log('Compose dialog was closed!');
     });
-}
+  }
 }
