@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // import { UpdateComponent } from '../../../customers/update/update.component';
-import { UpdateComponent } from '../../update/update.component';
-
-import { AddComponent } from '../../add/add.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UpdateEmployeeComponent } from './update/update.component';
 
 @Component({
   selector: 'app-employee-data',
@@ -82,7 +79,7 @@ export class EmployeeDataComponent implements OnInit {
 
   enableEditButton(): void {
     // Open the dialog
-    const dialogRef = this._matDialog.open(UpdateComponent, {
+    const dialogRef = this._matDialog.open(UpdateEmployeeComponent, {
         data: { id: this.routeID },
     });
 

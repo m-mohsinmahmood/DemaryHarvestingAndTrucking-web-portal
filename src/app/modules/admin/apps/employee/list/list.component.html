@@ -64,7 +64,7 @@
                         />
                     </mat-form-field>
                     <!-- Add product button -->
-                    <button
+                    <!-- <button
                         class="sm:ml-4 ml-3"
                         mat-flat-button
                         [color]="'primary'"
@@ -74,7 +74,7 @@
                             [svgIcon]="'heroicons_outline:plus'"
                         ></mat-icon>
                         <span class="lg:ml-2">Add</span>
-                    </button>
+                    </button> -->
                     <!-- FILTER BUTTON -->
                     <button
                         mat-icon-button
@@ -219,12 +219,6 @@
                                             selectedProduct?.id === employee.id
                                         "
                                     >
-                                        <ng-container
-                                            *ngTemplateOutlet="
-                                                rowDetailsTemplate;
-                                                context: { $implicit: employee }
-                                            "
-                                        ></ng-container>
                                     </ng-container>
                                 </div>
                             </ng-container>

@@ -5,7 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { EmployeeService } from '../employee.service';
+import { EmployeeService } from '../../../employee.service';
 import { Country } from 'app/modules/admin/apps/employee/employee.types';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 })
 // @Inject(MAT_DIALOG_DATA)
 
-export class UpdateComponent implements OnInit {
+export class UpdateProfileData implements OnInit {
 
   roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors'];
 
@@ -33,7 +33,7 @@ export class UpdateComponent implements OnInit {
 
 
   constructor(
-    public matDialogRef: MatDialogRef<UpdateComponent>,
+    public matDialogRef: MatDialogRef<UpdateProfileData>,
     private _formBuilder: FormBuilder,
     public _employeeService: EmployeeService,
     private _changeDetectorRef: ChangeDetectorRef,

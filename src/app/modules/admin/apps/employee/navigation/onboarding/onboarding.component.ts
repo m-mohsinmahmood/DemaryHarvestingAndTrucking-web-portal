@@ -11,6 +11,7 @@ import { MailboxComposeComponent } from './compose/compose.component';
 export class OnboardingComponent implements OnInit {
     items=[];
     folders=[];
+    block: any;
 
     isLoading: boolean = false;
     routeID; // URL ID
@@ -93,12 +94,12 @@ this.decisionMadeForm = this._formBuilder.group({
     this.folders =[
         {folder:'DOI'},
         {folder:'DOT'},
-        {folder:'DHT'},
         {folder:'Payroll'},
         {folder:'DHS'},
-        {folder:'Summary'}
-
+        {folder:'Documents'},
     ];
+    // on page rending of Folder
+    this.block = 'DOI';
   }
 
   openComposeDialog(): void
@@ -110,6 +111,10 @@ this.decisionMadeForm = this._formBuilder.group({
                  .subscribe((result) => {
                      console.log('Compose dialog was closed!');
                  });
+    }
+    onClick(foldename: any){
+        console.log('first',foldename.folder);
+        this.block = foldename.folder;
     }
 
 }
