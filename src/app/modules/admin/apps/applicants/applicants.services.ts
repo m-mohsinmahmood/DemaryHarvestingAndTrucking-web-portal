@@ -8,6 +8,7 @@ import {
     HttpParams,
 } from '@angular/common/http';
 import { AlertService } from 'app/core/alert/alert.service';
+import { ApplicantFilters } from 'app/modules/admin/apps/applicants/applicants.types';
 
 @Injectable({
     providedIn: 'root',
@@ -142,13 +143,16 @@ export class ApplicantService {
     //#endregion
 
     //#region Applicant API's 
-    getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
+    getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: ''},
+    ) {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('state', filters.state);
+        params = params.set('created_at', filters.created_at);
         return this._httpClient
             .get<any>(`api-1/applicants`, {
                 params,
