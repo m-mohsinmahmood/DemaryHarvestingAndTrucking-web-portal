@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
-import { MatDrawerToggleResult } from '@angular/material/sidenav';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { Observable, Subject, takeUntil, BehaviorSubject, lastValueFrom, take } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import moment from 'moment';
