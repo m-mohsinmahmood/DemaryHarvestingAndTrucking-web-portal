@@ -6,12 +6,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { UpdateComponent } from '../update/update.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
-import { SettingsComponent } from 'app/layout/common/settings/settings.component';
 import { FilterComponent } from './../filter/filter.component';
 import { date_format } from 'JSON/date-format';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -129,7 +127,8 @@ export class ApplicantsListComponent
                     10,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResult,
+                    this.applicantFiltersForm.value
                 );
             });
     }
@@ -145,7 +144,6 @@ export class ApplicantsListComponent
             created_at: [''],
         });
     }
-
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -163,8 +161,6 @@ export class ApplicantsListComponent
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateComponent, {
             data: this.isEdit,
-            // height: '800px',
-            // width: '900px',
         });
 
         dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
@@ -180,7 +176,8 @@ export class ApplicantsListComponent
             this.limit,
             sort.active,
             sort.direction,
-            this.searchResult
+            this.searchResult,
+            this.applicantFiltersForm.value
         );
     }
     //#endregion
@@ -190,7 +187,7 @@ export class ApplicantsListComponent
     pageChanged(event) {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult);
+        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult,this.applicantFiltersForm.value);
     }
     //#endregion
 
@@ -212,6 +209,8 @@ export class ApplicantsListComponent
     }
     applyFilters() {
         this.page = 1;
+        !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
+        !this.applicantFiltersForm.value.created_at ? (this.applicantFiltersForm.value.created_at = '') : ('');
         this.created_at.value ? (this.applicantFiltersForm.value.created_at = this.created_at.value) : ''
         this._applicantService.getApplicants(
             1,
