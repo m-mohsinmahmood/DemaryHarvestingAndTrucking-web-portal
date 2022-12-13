@@ -289,7 +289,7 @@ export class ApplicantService {
     }
     deleteApplicant(id: string) {
         this._httpClient
-            .delete(`api-1/applicant?applicantId=${id}`)
+            .delete(`api-1/applicants?id=${id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

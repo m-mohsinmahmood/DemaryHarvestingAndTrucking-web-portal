@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup,Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/core/auth/auth.service';
 import { ChangeDetectorRef, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
@@ -14,6 +11,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { states } from './../../../../../JSON/state';
+import { HelpModalComponent } from './help-modal/help-modal.component';
 
 @Component({
     selector: 'app-applicantpage',
@@ -58,6 +56,8 @@ export class ApplicantpageComponent implements OnInit
         // @Inject(MAT_DIALOG_DATA) public data: any,
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
+        private _matDialog: MatDialog,
+
         breakpointObserver: BreakpointObserver
     )
     {
@@ -243,4 +243,16 @@ export class ApplicantpageComponent implements OnInit
         };
         reader.readAsDataURL(file);
     }
+
+    //#region Open Help Modal
+      openHelpDialog(): void {
+        const dialogRef = this._matDialog.open(HelpModalComponent, {
+            data: {},
+        });
+        dialogRef.afterClosed().pipe().subscribe((result) => {
+            //Call this function only when success is returned from the create API call//
+        });
+    }
+
+    //#endregion
 }

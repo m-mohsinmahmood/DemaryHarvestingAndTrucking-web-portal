@@ -33,10 +33,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { ApplicantpageComponent } from './applicantpage.component';
 import { activitiesRoutes } from './applicantpage.routing';
+import { HelpModalComponent } from './help-modal/help-modal.component';
+import { QuillModule } from 'ngx-quill';
+
 
 @NgModule({
     declarations: [
-        ApplicantpageComponent
+        ApplicantpageComponent,
+        HelpModalComponent,
 
     ],
     imports     : [
@@ -79,6 +83,7 @@ RouterModule.forChild(activitiesRoutes),
         NgApexchartsModule,
         MatButtonToggleModule,
         FuseDrawerModule,
+        QuillModule,
 
     ]
 })
