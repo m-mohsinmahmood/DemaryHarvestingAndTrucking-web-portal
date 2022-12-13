@@ -48,8 +48,8 @@
         <div
             class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
         >
-            <ng-container *ngIf="">
-                <ng-container *ngIf="products.length > 0; else noProducts">
+            <ng-container *ngIf="nonMotorizedList$ | async as nonMotorizedList">
+                <ng-container *ngIf="nonMotorizedList.non_motorized.length > 0; else noVehicle">
                     <div class="grid">
                         <!-- Header -->
                         <div
@@ -57,72 +57,77 @@
                             matSort
                             matSortDisableClear
                         >
-                            <div></div>
-                            <div>Name</div>
-                            <div class="hidden sm:block">Make</div>
-                            <div class="hidden lg:block">Model</div>
-                            <div class="hidden lg:block">Odometer</div>
-                            <div class="hidden lg:block">Value</div>
-                            <div class="hidden sm:block">Details</div>
+                        <div>Name</div>
+                        <div class="hidden sm:block">Type</div>
+                        <div class="hidden lg:block">Model</div>
+                        <div class="hidden lg:block">Make</div>
+                        <div class="hidden lg:block">Year</div>
+                        <div class="hidden lg:block">License Plate</div>
+                        <div class="hidden lg:block">Status</div>
+
+                        <div class="hidden sm:block">Details</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="products$ | async as products">
+                        <ng-container *ngIf="nonMotorizedList$ | async as nonMotorizedList">
                             <ng-container
                                 *ngFor="
-                                    let product of products;
+                                    let nonMotorized of nonMotorizedList.non_motorized;
                                     trackBy: trackByFn
                                 "
                             >
                                 <div
                                     class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b"
                                 >
-                                    <!-- Image -->
-                                    <div>
-                                        <img
-                                            *ngIf="product.photo"
-                                            class="max-w-none flex items-center justify-center h-8 w-8 rounded-full"
-                                            src="{{ product.photo }}"
-                                            alt=""
-                                        />
-                                        <div
-                                            *ngIf="product.photo === ''"
-                                            class="flex items-center justify-center w-8 h-8 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                                        >
-                                            {{ product.name.charAt(0) }}
-                                        </div>
-                                    </div>
+                                   
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{ product.name }}
+                                        {{ nonMotorized.name }}
                                     </div>
 
                                     <!-- Make -->
                                     <div class="hidden sm:block">
-                                        {{ product.make }}
+                                        {{ nonMotorized.type }}
                                     </div>
 
                                     <!-- Model -->
                                     <div class="hidden sm:block">
-                                        {{ product.model }}
+                                        {{ nonMotorized.model }}
                                     </div>
 
                                     <!-- Odometer -->
                                     <div class="hidden sm:block">
-                                        {{ product.odometer }}
+                                        {{ nonMotorized.make }}
                                     </div>
 
                                     <!-- Value -->
                                     <div class="hidden sm:block">
-                                        {{ product.value }}
+                                        {{ nonMotorized.year }}
                                     </div>
+                                     <!-- Value -->
+                                     <div class="hidden sm:block">
+                                        {{ nonMotorized.license_plate }}
+                                    </div>
+                                     <!-- Active -->
+                                     <div class="hidden sm:block">
+                                        <mat-icon class="{{
+                                            nonMotorized.status === true
+                                                ? 'greenActiveIcon'
+                                                : 'redInActiveIcon'
+                                        }}" [svgIcon]="
+                                            nonMotorized.status === true
+                                                ? 'heroicons_solid:check-circle'
+                                                : 'heroicons_solid:x-circle'
+                                        ">check-circle</mat-icon>
+                                    </div>
+
 
                                     <!-- Details button -->
                                     <div>
                                         <button
                                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                             mat-stroked-button
-                                            (click)="toggleDetails(product.id)"
+                                            (click)="toggleDetails(nonMotorized.id)"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -131,20 +136,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="grid">
-                                    <ng-container
-                                        *ngIf="
-                                            selectedProduct?.id === product.id
-                                        "
-                                    >
-                                        <ng-container
-                                            *ngTemplateOutlet="
-                                                rowDetailsTemplate;
-                                                context: { $implicit: product }
-                                            "
-                                        ></ng-container>
-                                    </ng-container>
-                                </div>
+                              
                             </ng-container>
                         </ng-container>
                     </div>
@@ -152,16 +144,16 @@
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }"
-                        [length]="pagination.length"
-                        [pageIndex]="pagination.page"
-                        [pageSize]="pagination.size"
-                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        [length]="nonMotorizedList.non_motorized.length"
+                        [pageIndex]="nonMotorizedList.non_motorized.page"
+                        [pageSize]="nonMotorizedList.non_motorized.size"
+                        [pageSizeOptions]="pageSizeOptions"
                         [showFirstLastButtons]="true"
                     ></mat-paginator>
                 </ng-container>
             </ng-container>
 
-            <ng-template #noProducts>
+            <ng-template #noVehicle>
                 <div
                     class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
                 >

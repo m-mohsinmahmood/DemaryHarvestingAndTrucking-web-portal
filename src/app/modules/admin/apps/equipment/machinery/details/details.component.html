@@ -42,18 +42,23 @@
                     <div class="tab bg-white shadow overflow-auto">
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Profile'">
-                                <app-profile></app-profile>
+                                <app-machinery-profile></app-machinery-profile>
                             </ng-template>
                         </div>
 
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Location'">
-                                <app-location></app-location>
+                                <app-machinery-location></app-machinery-location>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Fuels/Miles'">
+                                <app-fuels-miles></app-fuels-miles>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Maintenance & Repair'">
-                                <app-main-repair></app-main-repair>
+                                <app-machinery-main-repair></app-machinery-main-repair>
                             </ng-template>
                         </div>
                     </div>

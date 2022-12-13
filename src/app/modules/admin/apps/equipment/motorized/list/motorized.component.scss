@@ -1,0 +1,21 @@
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+.machinery-grid {
+    grid-template-columns: 15% 10% 14% 14% 14% 14% 10% 10%;
+
+    @screen sm {
+        grid-template-columns: 15% 10% 14% 14% 14% 14% 10% 10%;
+    }
+    @screen md {
+        grid-template-columns: 15% 10% 14% 14% 14% 14% 10% 10%;
+    }
+    @screen lg {
+        grid-template-columns: 15% 10% 14% 14% 14% 14% 10% 10%;
+    }
+}

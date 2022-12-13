@@ -1,0 +1,270 @@
+<div class="parent-class overflow-y-auto mb-16 sm:w-9/12 sm:m-auto ">
+    <!-- Profile Data -->
+
+    <div class="bg-gray-100 rounded-lg my-8">
+
+        <mat-accordion class="bg-gray-100">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="bg-gray-100">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                        Pre-Trip Check Inspection Forms
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="border-gray-200 px-4 py-5 sm:p-0">
+                    <ng-container>
+                        <ng-container>
+                            <div class="grid">
+                                <!-- Header -->
+                                <div
+                                    class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                                    matSort
+                                    matSortDisableClear
+                                >
+                                    <div>Date</div>
+                                    <div class="hidden sm:block">Truck Driver</div>
+                                    <div class="hidden lg:block">Truck ID</div>
+                                    <div class="hidden lg:block">Unsatisfactory</div>
+
+                                    <div class="hidden lg:block">Notes</div>
+                                    <div class="hidden lg:block">Reports</div>
+                                </div>
+                                <!-- Rows -->
+                                <ng-container>
+                                    <ng-container
+                                    *ngFor="let number of [0,1,2,3,4]"                            >
+                                        <div
+                                            class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white"
+                                        >
+        
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                Dec 09, 2022
+                                            </div>
+        
+                                            <!-- Make -->
+                                            <div class="hidden sm:block">
+                                                Adam Smith
+                                            </div>
+        
+                                            <!-- Model -->
+                                            <div class="hidden sm:block">
+                                                21548
+                                            </div>
+
+                                            <!-- Model -->
+                                            <div class="hidden sm:block">
+                                                Battery Repair
+                                            </div>
+        
+                                            <!-- Odometer -->
+                                            <div class="hidden sm:block">
+                                                Left tailing is out.
+                                            </div>
+        
+                                            <!-- Value -->
+                                            <div class="hidden sm:block">
+                                                Report
+                                            </div>
+        
+                                            
+                                        </div>
+                                        
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+        
+                        </ng-container>
+                    </ng-container>
+                   
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        
+
+    </div>
+
+    <!-- Service Repair Records -->
+    <div class="bg-gray-100 rounded-lg my-8">
+
+        <mat-accordion class="bg-gray-100">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="bg-gray-100">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                        Service Repair Records
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="border-gray-200 px-4 py-5 sm:p-0">
+                    <ng-container>
+                        <ng-container >
+                            <div class="grid">
+                                <!-- Header -->
+                                <div
+                                    class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                                    matSort
+                                    matSortDisableClear
+                                >
+                                    <div>Ticket #</div>
+                                    <div class="hidden sm:block">Mechanic</div>
+                                    <div class="hidden lg:block">Truck ID</div>
+                                    <div class="hidden lg:block">Location</div>
+                                    <div class="hidden lg:block">Type</div>
+                                    <div class="hidden lg:block">Notes</div>
+                                    <div class="hidden lg:block">Reports</div>
+
+
+                                </div>
+                                <!-- Rows -->
+                                <ng-container>
+                                    <ng-container
+                                    *ngFor="let number1 of [0,1,2,3,4]">
+                                        <div
+                                            class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white"
+                                        >
+        
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                Service Repair-01
+                                            </div>
+                                            <!-- Mechanic -->
+                                            <div class="hidden sm:block">
+                                                Adam Smith
+                                            </div>
+        
+                                            <!-- Make -->
+                                            <div class="hidden sm:block">
+                                                21548
+                                            </div>
+        
+                                            <!-- Model -->
+                                            <div class="hidden sm:block">
+                                                Burnsville, MN
+                                            </div>
+        
+                                            <!-- Odometer -->
+                                            <div class="hidden sm:block">
+                                                Electrical
+                                            </div>
+        
+                                            <!-- Value -->
+                                            <div class="hidden sm:block">
+                                                Left tailing is out....
+                                            </div>
+
+                                            <!-- Value -->
+                                            <div class="hidden sm:block">
+                                                View Ticket
+                                            </div>
+        
+                                            
+                                        </div>
+                                        
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+        
+                        </ng-container>
+                    </ng-container>
+                   
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        
+
+    </div>
+
+
+    <!-- Maintenance Records -->
+
+    <div class="bg-gray-100 rounded-lg my-8">
+
+        <mat-accordion class="bg-gray-100">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="bg-gray-100">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                        Maintenance Records
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="border-gray-200 px-4 py-5 sm:p-0">
+                    <ng-container>
+                        <ng-container >
+                            <div class="grid">
+                                <!-- Header -->
+                                <div
+                                    class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                                    matSort
+                                    matSortDisableClear
+                                >
+                                    <div>Ticket #</div>
+                                    <div class="hidden sm:block">Mechanic</div>
+                                    <div class="hidden lg:block">Truck ID</div>
+                                    <div class="hidden lg:block">Location</div>
+                                    <div class="hidden lg:block">Type</div>
+                                    <div class="hidden lg:block">Notes</div>
+                                    <div class="hidden lg:block">Reports</div>
+
+
+                                </div>
+                                <!-- Rows -->
+                                <ng-container>
+                                    <ng-container
+                                    *ngFor="let number1 of [0,1,2,3,4]">
+                                        <div
+                                            class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white"
+                                        >
+        
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                Service Repair-01
+                                            </div>
+                                            <!-- Mechanic -->
+                                            <div class="hidden sm:block">
+                                                Adam Smith
+                                            </div>
+        
+                                            <!-- Make -->
+                                            <div class="hidden sm:block">
+                                                21548
+                                            </div>
+        
+                                            <!-- Model -->
+                                            <div class="hidden sm:block">
+                                                Burnsville, MN
+                                            </div>
+        
+                                            <!-- Odometer -->
+                                            <div class="hidden sm:block">
+                                                Electrical
+                                            </div>
+        
+                                            <!-- Value -->
+                                            <div class="hidden sm:block">
+                                                Left tailing is out....
+                                            </div>
+
+                                            <!-- Value -->
+                                            <div class="hidden sm:block">
+                                                View Ticket
+                                            </div>
+        
+                                            
+                                        </div>
+                                        
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+        
+                        </ng-container>
+                    </ng-container>
+                   
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        
+
+    </div>
+
+    
+</div>

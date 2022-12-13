@@ -58,7 +58,7 @@ export class MachineryListComponent
     isEdit: boolean = false;
     pageSize = 50;
     currentPage = 0;
-    pageSizeOptions: number[] = [10, 25, 50, 100];
+    pageSizeOptions: number[] = [50, 100, 150, 200];
     searchResult: string;
     page: number;
     sort: any;

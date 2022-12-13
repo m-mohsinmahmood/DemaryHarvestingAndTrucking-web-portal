@@ -10,24 +10,7 @@ import { EquipmentService } from '../../equipment.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
-const governmentDocs = [
-    { 'id': '1', 'name': 'Passport', 'type': 'PDF' },
-    { 'id': '2', 'name': 'Visa', 'type': 'DOC' },
-    { 'id': '3', 'name': 'I-94', 'type': 'XLS' },
-    { 'id': '4', 'name': 'License', 'type': 'TXT' },
-    { 'id': '5', 'name': 'Social Security ', 'type': 'JPG' },
-    { 'id': '6', 'name': 'DOT docs', 'type': 'DOC' },
-    { 'id': '7', 'name': 'Physical', 'type': 'PDF' },
-    { 'id': '8', 'name': 'Drug Testing', 'type': 'TXT' },
-];
-const companyDocs = [
-    { 'id': '9', 'name': 'Drug Testing', 'type': 'TXT' },
-    { 'id': '10', 'name': 'Contract', 'type': 'PDF' },
-    { 'id': '11', 'name': 'Approval Letter', 'type': 'DOC' },
-    { 'id': '12', 'name': 'Departure Form', 'type': 'JPG' },
-    { 'id': '13', 'name': 'Equipment Usage', 'type': 'XLS' },
-    { 'id': '14', 'name': 'Work Agreement', 'type': 'PDF' },
-];
+
 
 @Component({
     selector: 'employee-details',
@@ -60,8 +43,7 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     routeID; // URL ID
     vehicleDetails: any;
-    employeeGovernemtDocs: any[] = governmentDocs;
-    employeeCompanyDocs: any[] = companyDocs;
+
     routes = [];
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
@@ -79,9 +61,8 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
         private _matDialog: MatDialog,
         private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
-        public _machineService: MotorizedService,
+        public _motorizedService: MotorizedService,
         private _router: Router,
-        public _equipmentService: EquipmentService,
         private _fuseMediaWatcherService: FuseMediaWatcherService
 
 
@@ -98,10 +79,7 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-            console.log('PARAMS:', params); //log the entire params object
             this.routeID = params.Id;
-            console.log('object', this.routeID);
-            console.log(params['id']); //log the value of id
         });
 
 
@@ -120,7 +98,7 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
 
     //#region Initialize Side Navigation
     initSideNavigation() {
-        this.routes = this._equipmentService.navigationLabels;
+        this.routes = this._motorizedService.navigationLabels;
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(({ matchingAliases }) => {

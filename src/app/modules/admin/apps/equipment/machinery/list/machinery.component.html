@@ -156,11 +156,11 @@
 
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
-                        [ngClass]="{ 'pointer-events-none': isLoadingMachinery }"
-                        [length]="machineries.length"
-                        [pageIndex]="machineries.page"
-                        [pageSize]="machineries.size"
-                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        [ngClass]="{ 'pointer-events-none': isLoading }"
+                        [length]="machineries.machinery.length"
+                        [pageIndex]="machineries.machinery.page"
+                        [pageSize]="machineries.machinery.size"
+                        [pageSizeOptions]="pageSizeOptions"
                         [showFirstLastButtons]="true"
                     ></mat-paginator>
                 </ng-container>

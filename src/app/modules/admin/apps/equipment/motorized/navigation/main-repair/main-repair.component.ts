@@ -6,35 +6,19 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { Observable, Subject } from 'rxjs';
-import { MachineryService } from '../../machinery/machinery.service';
+import { MachineryService } from '../../../machinery/machinery.service';
 
 @Component({
-  selector: 'app-main-repair',
+  selector: 'app-motorized-main-repair',
   templateUrl: './main-repair.component.html',
   styleUrls: ['./main-repair.component.scss'],
-  styles: [
-    /* language=SCSS */
-    `
-        .machinery-grid {
-            grid-template-columns: 25% 20% 20% 15% 14% ;
 
-            @screen sm {
-                grid-template-columns: 25% 20% 20% 15% 14%;
-            }
-            @screen md {
-                grid-template-columns: 25% 20% 20% 15% 14%;
-            }
-            @screen lg {
-                grid-template-columns: 25% 20% 20% 15% 14%;
-            }
-        }
-    `,
-],
 })
-export class MainRepairComponent implements OnInit {
+export class MotorizedMainRepairComponent implements OnInit {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    panelOpenState = false;
 
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;

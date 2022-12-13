@@ -29,17 +29,22 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MachineryDetailComponent } from './machinery/details/details.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ProfileComponent } from './navigation/profile/profile.component';
-import { LocationComponent } from './navigation/location/location.component';
-import { MainRepairComponent } from './navigation/main-repair/main-repair.component';
 import { MotorizedComponent } from './motorized/motorized.component';
 import { MotorizedDetailComponent } from './motorized/details/details.component';
 import { MotorizedListComponent } from './motorized/list/motorized.component';
 import { NonMotorizedComponent } from './non-motorized/non-motorized.component';
 import { NonMotorizedDetailComponent } from './non-motorized/details/details.component';
 import { NonMotorizedListComponent } from './non-motorized/list/non-motorized.component';
-
-
+import { MachineryProfileComponent } from './machinery/navigation/profile/profile.component';
+import { NonMotorizedProfileComponent } from './non-motorized/navigation/profile/profile.component';
+import { MachineryMainRepairComponent } from './machinery/navigation/main-repair/main-repair.component';
+import { NonMotorizedMainRepairComponent } from './non-motorized/navigation/main-repair/main-repair.component';
+import { NonMotorizedLocationComponent } from './non-motorized/navigation/location/location.component';
+import { MachineryLocationComponent } from './machinery/navigation/location/location.component';
+import { MotorizedProfileComponent } from './motorized/navigation/profile/profile.component';
+import { MotorizedMainRepairComponent } from './motorized/navigation/main-repair/main-repair.component';
+import { MotorizedLocationComponent } from './motorized/navigation/location/location.component';
+import { FuelsMilesComponent } from './machinery/navigation/fuels-miles/fuels-miles.component';
 
 
 @NgModule({
@@ -48,15 +53,23 @@ import { NonMotorizedListComponent } from './non-motorized/list/non-motorized.co
         MachineryListComponent,
         UpdateAddMachineryComponent,
         MachineryDetailComponent,
-        ProfileComponent,
-        LocationComponent,
-        MainRepairComponent,
+        NonMotorizedProfileComponent,
+        MotorizedMainRepairComponent,
+        MotorizedProfileComponent,
+        MachineryMainRepairComponent,
+        NonMotorizedMainRepairComponent,
+        NonMotorizedProfileComponent,
+        NonMotorizedLocationComponent,
+        MotorizedLocationComponent,
+        MachineryLocationComponent,
+        MachineryProfileComponent,
         MotorizedComponent,
         MotorizedDetailComponent,
         MotorizedListComponent,
         NonMotorizedComponent,
         NonMotorizedDetailComponent,
-        NonMotorizedListComponent
+        NonMotorizedListComponent,
+        FuelsMilesComponent
 
     ],
     imports     : [

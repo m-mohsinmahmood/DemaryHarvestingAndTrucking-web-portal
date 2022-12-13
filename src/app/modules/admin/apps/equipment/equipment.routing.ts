@@ -2,7 +2,6 @@ import { Route } from '@angular/router';
 import { MachineryComponent } from 'app/modules/admin/apps/equipment/machinery/machinery.component';
 import { MachineryListComponent } from 'app/modules/admin/apps/equipment/machinery/list/machinery.component';
 import { MachineryDetailComponent } from './machinery/details/details.component';
-import { ProfileComponent } from './navigation/profile/profile.component';
 import { MotorizedComponent } from './motorized/motorized.component';
 import { MotorizedDetailComponent } from './motorized/details/details.component';
 import { MotorizedListComponent } from './motorized/list/motorized.component';

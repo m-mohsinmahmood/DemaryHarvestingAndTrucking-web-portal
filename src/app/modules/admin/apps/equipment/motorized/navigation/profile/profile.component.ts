@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { MachineryService } from '../../machinery/machinery.service';
-import { Machineries } from '../../machinery/machinery.types';
+import { MotorizedService } from '../../motorized.service';
+import { Motorized } from '../../motorized.types';
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-motorized-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class MotorizedProfileComponent implements OnInit {
       //#region Variables
       isLoading: boolean = false;
       isEdit: boolean;
@@ -20,14 +20,14 @@ export class ProfileComponent implements OnInit {
   
       //#region Observables
       search: Subscription;
-      machinery$: Observable<Machineries>;
-      isLoadingMachinery$: Observable<boolean>;
+      motorizedVehicle$: Observable<Motorized>;
+      isLoadingMotorizedVehicle$: Observable<boolean>;
       //#endregion
       private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
   constructor(
-    private _machineryService: MachineryService,
+    private _motorizedService: MotorizedService,
     private _matDialog: MatDialog,
     public activatedRoute: ActivatedRoute,
 
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
   });
   this.initApi();
   this.initObservables();
-  console.log(this.machinery$)
+  console.log("TEST", this.motorizedVehicle$);
 }
 
 ngOnDestroy(): void {
@@ -50,14 +50,14 @@ ngOnDestroy(): void {
 
     //#region init API
     initApi(){
-      this._machineryService.getMachineryById(this.routeID);
+      this._motorizedService.getMotorizedVehicleById(this.routeID);
   }
   //#endregion
 
       //#region init Observables
       initObservables(){
-        this.isLoadingMachinery$ = this._machineryService.isLoadingMachinery$;
-        this.machinery$ = this._machineryService.machinery$;
+        this.isLoadingMotorizedVehicle$ = this._motorizedService.isLoadingMotorizedVehicle$;
+        this.motorizedVehicle$ = this._motorizedService.motorizedVehicle$;
     }
     //#endregion
 

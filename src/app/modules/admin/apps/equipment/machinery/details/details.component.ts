@@ -61,8 +61,6 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     routeID; // URL ID
     vehicleDetails: any;
-    employeeGovernemtDocs: any[] = governmentDocs;
-    employeeCompanyDocs: any[] = companyDocs;
     routes = [];
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
@@ -179,7 +177,7 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
     backHandler(): void {
-        this._router.navigate(['/apps/customers/']);
+        this._router.navigate(['/apps/equipment/machinery/']);
     }
 
 

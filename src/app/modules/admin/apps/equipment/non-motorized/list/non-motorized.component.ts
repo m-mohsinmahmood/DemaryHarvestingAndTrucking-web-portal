@@ -24,35 +24,21 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/machinery.service';
 import { Router } from '@angular/router';
+import { NonMotorized } from '../non-motorized.types';
+import { NonMotorizedService } from '../non-motorized.service';
 
 @Component({
     selector: 'non-motorized-list',
     templateUrl: './non-motorized.component.html',
-    styles: [
-        /* language=SCSS */
-        `
-            .machinery-grid {
-                grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
+    styleUrls: ['./non-motorized.component.scss'],
 
-                @screen sm {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-            }
-        `,
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
@@ -68,8 +54,27 @@ export class NonMotorizedListComponent
     isLoading: boolean = false;
     searchInputControl: FormControl = new FormControl();
     selectedProductForm: FormGroup;
-    tagsEditMode: boolean = false;
+    isEdit: boolean = false;
+    pageSize = 50;
+    currentPage = 0;
+    pageSizeOptions: number[] = [50, 100, 150, 200];
+    searchResult: string;
+    page: number;
+    sort: any;
+    order: any;
+    limit: number;
+    
+    //#region Observables
+    search: Subscription;
+    nonMotorizedList$: Observable<NonMotorized[]>;
+    isLoadingNonMotorizedList$: Observable<boolean>;
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
+
+
 
     /**
      * Constructor
@@ -79,7 +84,7 @@ export class NonMotorizedListComponent
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _inventoryService: MachineryService,
+        private _nonMotorizedService: NonMotorizedService,
         private _matDialog: MatDialog
     ) {}
 
@@ -91,7 +96,11 @@ export class NonMotorizedListComponent
      * On init
      */
     ngOnInit(): void {
-     }
+        this.initApis();
+        this.initObservables();
+
+    }
+
 
     /**
      * After view init
@@ -109,9 +118,34 @@ export class NonMotorizedListComponent
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    //#region Init Observables and Apis
+    initObservables() {
+        this.isLoadingNonMotorizedList$ = this._nonMotorizedService.isLoadingNonMotorizedList$;
+        this.nonMotorizedList$ = this._nonMotorizedService.nonMotorizedList$;
+        this.search = this.searchform.valueChanges
+            .pipe(
+                debounceTime(500),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._nonMotorizedService.getNonMotorizedVehicles(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
+    }
+
+    initApis() {
+        this._nonMotorizedService.getNonMotorizedVehicles();
+    }
+
+    //#endregion
+
 
     /**
      * Toggle employee details

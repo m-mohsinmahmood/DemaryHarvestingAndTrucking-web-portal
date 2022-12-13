@@ -24,6 +24,7 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
@@ -31,28 +32,15 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/machinery.service';
 import { Router } from '@angular/router';
+import { Motorized } from '../motorized.types';
+import { MotorizedService } from '../motorized.service';
 
 @Component({
     selector: 'motorized-list',
     templateUrl: './motorized.component.html',
-    styles: [
-        /* language=SCSS */
-        `
-            .machinery-grid {
-                grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
+    styleUrls: ['./motorized.component.scss'],
 
-                @screen sm {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 25% 14% 14% 14% 14% 14%;
-                }
-            }
-        `,
-    ],
+
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
@@ -68,8 +56,25 @@ export class MotorizedListComponent
     isLoading: boolean = false;
     searchInputControl: FormControl = new FormControl();
     selectedProductForm: FormGroup;
-    tagsEditMode: boolean = false;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    isEdit: boolean = false;
+    pageSize = 50;
+    currentPage = 0;
+    pageSizeOptions: number[] = [50, 100, 150, 200];
+    searchResult: string;
+    page: number;
+    sort: any;
+    order: any;
+    limit: number;
+
+     //#region Observables
+     search: Subscription;
+     motorizedList$: Observable<Motorized[]>;
+     isLoadingMotorizedList$: Observable<boolean>;
+     searchform: FormGroup = new FormGroup({
+         search: new FormControl(),
+     });
+     private _unsubscribeAll: Subject<any> = new Subject<any>();
+     //#endregion
 
     /**
      * Constructor
@@ -79,7 +84,7 @@ export class MotorizedListComponent
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _inventoryService: MachineryService,
+        private _motorizedService: MotorizedService,
         private _matDialog: MatDialog
     ) {}
 
@@ -91,7 +96,9 @@ export class MotorizedListComponent
      * On init
      */
     ngOnInit(): void {
-
+        this.initApis();
+        this.initObservables();
+        console.log(this.motorizedList$);
      }
 
     /**
@@ -109,10 +116,33 @@ export class MotorizedListComponent
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+     //#region Init Observables and Apis
+     initObservables() {
+        this.isLoadingMotorizedList$ = this._motorizedService.isLoadingMotorizedList$;
+        this.motorizedList$ = this._motorizedService.motorizedList$;
+        this.search = this.searchform.valueChanges
+            .pipe(
+                debounceTime(500),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._motorizedService.getMotorizedVehicles(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
+    }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    initApis() {
+        this._motorizedService.getMotorizedVehicles();
+    }
+
+    //#endregion
 
     /**
      * Toggle employee details
