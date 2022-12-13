@@ -1,12 +1,6 @@
-import {
-    debounceTime,
-    distinctUntilChanged,
-    Observable,
-    Subject,
-    takeUntil,
-} from 'rxjs';
+import { debounceTime,distinctUntilChanged,Observable,Subject,takeUntil,} from 'rxjs';
 import { Component, Input, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CustomersService } from '../../../../customers.service';
@@ -18,18 +12,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { read, utils, writeFile } from 'xlsx';
 import { ImportFieldsComponent } from '../import-fields/import-fields.component';
-
-export const MY_FORMATS = {
-    parse: {
-        dateInput: 'YYYY',
-    },
-    display: {
-        dateInput: 'YYYY',
-        monthYearLabel: 'YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
+import { date_format } from 'JSON/date-format';
 
 @Component({
     selector: 'app-list-fields',
@@ -41,7 +24,7 @@ export const MY_FORMATS = {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        { provide: MAT_DATE_FORMATS, useValue: date_format },
     ],
 })
 export class ListFieldComponent implements OnInit {
