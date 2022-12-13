@@ -124,7 +124,7 @@ export class ApplicantsListComponent
                 this.page = 1;
                 this._applicantService.getApplicants(
                     1,
-                    10,
+                    this.pageSize,
                     '',
                     '',
                     this.searchResult,
@@ -173,7 +173,7 @@ export class ApplicantsListComponent
         this.page = 1;
         this._applicantService.getApplicants(
             this.page,
-            this.limit,
+            this.pageSize,
             sort.active,
             sort.direction,
             this.searchResult,
@@ -186,8 +186,8 @@ export class ApplicantsListComponent
     //#region  Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult,this.applicantFiltersForm.value);
+        this.pageSize = event.pageSize;
+        this._applicantService.getApplicants(this.page, this.pageSize, '', '', this.searchResult,this.applicantFiltersForm.value);
     }
     //#endregion
 
