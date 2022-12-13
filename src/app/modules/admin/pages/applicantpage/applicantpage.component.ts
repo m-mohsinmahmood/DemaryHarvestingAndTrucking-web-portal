@@ -1,14 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// @Component({
-//   selector: 'app-applicantpage',
-//   templateUrl: './applicantpage.component.html',
-//   styleUrls: ['./applicantpage.component.scss']
-// })
-// export class ApplicantpageComponent implements OnInit {
-//   constructor() { }
-//   ngOnInit(): void {
-//   }
-// }
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
@@ -24,6 +13,8 @@ import { map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { states } from './../../../../../JSON/state';
+
 @Component({
     selector: 'app-applicantpage',
       templateUrl: './applicantpage.component.html',
@@ -58,19 +49,10 @@ export class ApplicantpageComponent implements OnInit
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
     calendar_year: any;
     isLoading:boolean = false;
-     //#endregion
-    // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
-    // alert: { type: FuseAlertType; message: string } = {
-    //     type   : 'success',
-    //     message: ''
-    // };
-    // comingSoonForm: FormGroup;
-    // showAlert: boolean = false;
-    /**
-     * Constructor
-     */
+    states: string[]= [];
+
+
     constructor(
-        // public matDialogRef: MatDialogRef<UpdateComponent>,
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -93,7 +75,7 @@ export class ApplicantpageComponent implements OnInit
     ngOnInit(): void
     {
         this.initfarmGroups();
-        // this.isEdit = this.data.isEdit;
+        this.states = states;
     }
     // #region initializing forms
     initfarmGroups() {
@@ -116,7 +98,7 @@ export class ApplicantpageComponent implements OnInit
             address_2: [''],
             town_city: ['', [Validators.required]],
             county_providence: ['', [Validators.required]],
-            state: ['', [Validators.required]],
+            state: ['', []],
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
             avatar: [''],
@@ -146,6 +128,7 @@ export class ApplicantpageComponent implements OnInit
         this.fifthFormGroup = this._formBuilder.group({
             us_phone_number: [''],
             blood_type: [''],
+            unique_fact: [''],
             emergency_contact_name: [''],
             emergency_contact_phone: [''],
         });
