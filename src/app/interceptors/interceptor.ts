@@ -28,7 +28,6 @@ export class Interceptor implements HttpInterceptor {
         request = request.clone({
             url: requestUrl,
         });
-        // move to next HttpClient request life cycle
         return next.handle(request);
     }
 }
