@@ -6,14 +6,15 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div (click)="backHandler()"
+        <div 
             class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer">
             <div class="flex items-center" *ngIf="applicant$ | async as applicantInfo">
-                <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                <mat-icon (click)="backHandler()" class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
                 <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight">{{
                     applicantInfo?.applicant_info.first_name}} {{
                     applicantInfo?.applicant_info.last_name }}
                 </span>
+                <mat-hint class="text-{{score == '0' ? 'slate' : score < '30' ? 'red' : score < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4"> {{score}}% </mat-hint>
             </div>
         </div>
         <!-- Actions -->

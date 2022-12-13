@@ -11,6 +11,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { LandingPageFullscreenComponent } from 'app/modules/admin/pages/landing-page/fullscreen/landing-page.component';
 import { LandingPageClassicComponent } from 'app/modules/admin/pages/landing-page/classic/landing-page.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ApplyNowComponent } from './apply-now/apply-now.component';
 
 const routes: Routes = [
     {
@@ -26,7 +27,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LandingPageClassicComponent,
-        LandingPageFullscreenComponent
+        LandingPageFullscreenComponent,
+        ApplyNowComponent
 
     ],
     imports     : [

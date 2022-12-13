@@ -11,25 +11,35 @@
 //         border-radius: 25px !important;
 //     }
 
-    // .mat-form-field-appearance-outline .mat-form-field-outline {
-    //     background-color: #FFFFFF66;
-    //     border-radius: 10em;
-    //     color: transparent;
-    //     opacity: 0.5;
-    // }
+// .mat-form-field-appearance-outline .mat-form-field-outline {
+//     background-color: #FFFFFF66;
+//     border-radius: 10em;
+//     color: transparent;
+//     opacity: 0.5;
+// }
 
-    .applicant-grid {
-        grid-template-columns: 35% 35% 36% ;
+.applicant-grid {
+    grid-template-columns: 40% 30% 10%;
 
-        @screen sm {
-            grid-template-columns: 11% 10% 18% 8% 13%  13% 10%;
-        }
-        @screen md {
-            grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
-        }
-
-        @screen lg {
-            grid-template-columns: 10% 10% 18% 10%  20% 13% 10%;
-        }
+    @screen sm {
+        grid-template-columns: 11% 10% 10% 10% 8% 13% 13% 10%;
     }
 
+    @screen md {
+        grid-template-columns: 10% 10% 15% 10% 10% 10% 10% 10%;
+    }
+
+    @screen lg {
+        grid-template-columns: 10% 10% 15% 10% 10% 10% 15% 10%;
+    }
+}
+
+.mat-filter {
+    background-color: #f1f5f9 !important;
+    color: #4f46e5 !important;
+}
+
+.mat-filter-applied {
+    background-color: green;
+    color: #fff;
+}

@@ -1,13 +1,15 @@
 <div class="flex flex-col w-full h-full relative bg-white">
-    <!-- <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
-        <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
-        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"></mat-icon>
-        </button>
-    </header> -->
-    <H1 class="text-6xl font-bold w-9/12 px-8 pt-8"> Applicant Form</H1>
+    <div class="flex items-center justify-between ml-4">
+        <div>
+            <img class="h-20 w-20" src="../../../../../assets/logo/dht-logo.svg" />
+        </div>
+        <div class="">
+            <h1 class="text-4xl font-bold px-8 "> Application Form</h1>
+        </div>
+        <div class="mr-4" (click)="openHelpDialog()">
+            <mat-icon [matTooltip]="'Help'"  [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>
+        </div>
+    </div>
     <main class="mb-auto">
         <div class="modal-body  p-4">
             <ng-container [ngSwitch]="stepperOrientation | async">
@@ -41,7 +43,13 @@
                                     <mat-label>Email</mat-label>
                                     <input matInput type="email" formControlName="email">
                                     <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')"
-                                        class="text-xs text-red-500">Email is required</mat-hint>
+                                        class="text-xs text-red-500">
+                                        Email is required
+                                    </mat-hint>
+                                    <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('pattern')"
+                                        class="text-xs text-red-500">
+                                        Please provide a valid email address
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -67,7 +75,7 @@
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Date Of Birth</mat-label>
                                     <input id="date" name="date" formControlName="date_of_birth" matInput
-                                        [matDatepicker]="picker4">
+                                        [matDatepicker]="picker4" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
                                     <mat-hint *ngIf="this.firstFormGroup.get('date_of_birth').hasError('required')"
@@ -77,7 +85,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Age</mat-label>
-                                    <input matInput type="text" formControlName="age">
+                                    <input matInput type="number" formControlName="age">
                                     <mat-hint *ngIf="this.firstFormGroup.get('age').hasError('required')"
                                         class="text-xs text-red-500">Age is required</mat-hint>
                                 </mat-form-field>
@@ -89,6 +97,7 @@
                                         <mat-option value="Single"> Single</mat-option>
                                         <mat-option value="Married">Married</mat-option>
                                         <mat-option value="Divorced"> Divorced</mat-option>
+                                        <mat-option value="Other"> Other</mat-option>
                                     </mat-select>
                                     <mat-hint *ngIf="this.firstFormGroup.get('marital_status').hasError('required')"
                                         class="text-xs text-red-500">Marital Status is required</mat-hint>
@@ -102,6 +111,7 @@
                                         <mat-option value="Spanish">Spanish</mat-option>
                                         <mat-option value="Chinese">Chinese</mat-option>
                                         <mat-option value="Arabic">Arabic</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                     <mat-hint *ngIf="this.firstFormGroup.get('languages').hasError('required')"
                                         class="text-xs text-red-500">Languages are required</mat-hint>
@@ -112,11 +122,11 @@
                                     <mat-label>Rank Speaking English</mat-label>
                                     <mat-select formControlName="rank_speaking_english"
                                         class="languages overflow-hidden">
-                                        <mat-option value="1">1</mat-option>
-                                        <mat-option value="2">2</mat-option>
-                                        <mat-option value="3">3</mat-option>
-                                        <mat-option value="4">4</mat-option>
-                                        <mat-option value="5">5</mat-option>
+                                        <mat-option value="1">1 - Poor </mat-option>
+                                        <mat-option value="2">2 - Fair</mat-option>
+                                        <mat-option value="3">3 - Good</mat-option>
+                                        <mat-option value="4">4 - Very Good</mat-option>
+                                        <mat-option value="5">5 - Excellent </mat-option>
                                     </mat-select>
                                     <mat-hint
                                         *ngIf="this.firstFormGroup.get('rank_speaking_english').hasError('required')"
@@ -202,20 +212,22 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>State</mat-label>
-                                    <input matInput type="text" id="county" name="county" formControlName="state"
-                                        placeholder="State">
-                                    <mat-hint *ngIf="this.secondFormGroup.get('state').hasError('required')"
-                                        class="text-xs text-red-500">State is required</mat-hint>
+                                    <mat-label>Select State</mat-label>
+                                    <mat-select formControlName="state">
+                                        <mat-option *ngFor="let state of states" [value]="state">{{ state
+                                            }}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Postal Code</mat-label>
-                                    <input matInput type="number" id="postal-code" name="postal-code"
-                                        formControlName="postal_code" placeholder="Postal Code">
+                                    <input matInput id="postal-code" name="postal-code" formControlName="postal_code"
+                                        placeholder="Postal Code">
                                     <mat-hint *ngIf="this.secondFormGroup.get('postal_code').hasError('required')"
-                                        class="text-xs text-red-500">Postal Code is required</mat-hint>
+                                        class="text-xs text-red-500">
+                                        Postal Code is required
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -410,6 +422,8 @@
                                     <mat-option value="I would work during either period, depending on DHT openings">I
                                         would work during either period, depending on DHT openings
                                     </mat-option>
+                                    <mat-option value="Other">Other
+                                    </mat-option>
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('employment_period').hasError('required')"
                                     class="text-xs text-red-500">Employment Period field is required</mat-hint>
@@ -464,27 +478,40 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>How did you hear about DHT?</mat-label>
-                                    <input matInput type="text" id="hear-about-dht" name="hear_about_dht"
-                                        formControlName="hear_about_dht" placeholder="How did you hear about DHT?">
+                                    <mat-select matNativeControl formControlName="hear_about_dht">
+                                        <mat-option value="Done Deal">Done Deal</mat-option>
+                                        <mat-option value="Farmers Journal">Farmers Journal</mat-option>
+                                        <mat-option value="Top Link">Top Link</mat-option>
+                                        <mat-option value="Facebook">Facebook</mat-option>
+                                        <mat-option value="From a Friend">From a Friend</mat-option>
+                                        <mat-option value="Internet Search">Internet Search</mat-option>
+                                        <mat-option value="Farmers Weekly">Farmers Weekly</mat-option>
+                                        <mat-option value="Trademe.co.nz">Trademe.co.nz</mat-option>
+                                        <mat-option value="Twitter">Twitter</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                    </mat-select>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('hear_about_dht').hasError('required')"
                                         class="text-xs text-red-500">How did you hear about DHT? field is required
                                     </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-label class="font-bold text-lg">Reasons for applying </mat-label>
-                                <mat-radio-group class="example-radio-group" formControlName="reason_for_applying">
-                                    <mat-radio-button class="m-1" value="See the United States">See the United States
-                                    </mat-radio-button>
-                                    <mat-radio-button class="m-1" value="Travel">Travel</mat-radio-button>
-                                    <mat-radio-button class="m-1 whitespace-normal" value="Learn more about
-                                    harvesting in the U.S.">Learn more about
-                                        harvesting in the U.S.</mat-radio-button>
-                                    <mat-radio-button class="m-1" value="Financial">Financial</mat-radio-button>
-                                    <mat-radio-button class="m-1" value="Other">Other</mat-radio-button>
-                                </mat-radio-group>
-                                <mat-hint *ngIf="this.fourthFormGroup.get('reason_for_applying').hasError('required')"
-                                    class="text-xs text-red-500">Reasons for applying field is required</mat-hint>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Reasons for applying </mat-label>
+                                    <mat-select formControlName="reason_for_applying" class="languages overflow-hidden"
+                                        multiple>
+                                        <mat-option value="See the United States">See the United States</mat-option>
+                                        <mat-option value="Travel">Travel</mat-option>
+                                        <mat-option value="Learn more about harvesting in the U.S.">Learn more about
+                                            harvesting in the U.S</mat-option>
+                                        <mat-option value="Financial">Financial</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                    </mat-select>
+                                    <mat-hint
+                                        *ngIf="this.fourthFormGroup.get('reason_for_applying').hasError('required')"
+                                        class="text-xs text-red-500">Reasons for applying field is required</mat-hint>
+                                </mat-form-field>
+
                             </div>
                         </div>
                     </form>
@@ -515,9 +542,20 @@
                                         <mat-option value="AB-">AB-</mat-option>
                                         <mat-option value="O+">O+</mat-option>
                                         <mat-option value="O-">O-</mat-option>
+                                        <mat-option value="N/A">N/A</mat-option>
                                     </mat-select>
                                     <mat-hint *ngIf="this.fifthFormGroup.get('blood_type').hasError('required')"
                                         class="text-xs text-red-500">Blood Group is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Tell us something unique about yourself</mat-label>
+                                    <textarea matInput type="text" id="unique_fact" formControlName="unique_fact"
+                                        placeholder="Tell us something unique about yourself"> </textarea>
+                                    <mat-hint *ngIf="this.fifthFormGroup.get('unique_fact').hasError('required')"
+                                        class="text-xs text-red-500">Tell us something unique about yourself is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

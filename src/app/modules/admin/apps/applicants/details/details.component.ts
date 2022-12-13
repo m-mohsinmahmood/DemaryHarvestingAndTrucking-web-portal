@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
-import { MatDrawerToggleResult } from '@angular/material/sidenav';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { Observable, Subject, takeUntil, BehaviorSubject, lastValueFrom, take } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import moment from 'moment';
@@ -47,6 +46,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     results: string[] = ['Waitlisted', 'Hired', 'Qualifications dont match current openings'];
+    score: any = 0;
+    totalScore: any = 0;
     //#endregion
 
     //#region Applicant Variables
@@ -76,9 +77,9 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             console.log("res", res);
             this.applicant = res;
             console.log('this.applicant', this.applicant);
+            this.calculateScore();
             this.selectedIndex = "Applicant Data";
         });
-        console.log(this.applicant);
         this.initForm();
         this.getApplicantById();
         this.routesLeft = this._applicantService.applicantNavigationLeft;
@@ -162,6 +163,39 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this.selectedIndex = title;
     };
     //#endregion
+
+    //#region Calculate Score
+    calculateScore() {
+        let firstRanking = this.applicant?.applicant_info.first_call_ranking;
+        let secondRanking = this.applicant?.applicant_info.second_call_ranking;
+        let thirdRanking = this.applicant?.applicant_info.third_call_ranking;
+        let refRanking = this.applicant?.applicant_info.reference_call_ranking;
+        this.score = 0;
+        if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.third_call_ranking && this.applicant?.applicant_info.reference_call_ranking){
+
+            this.score = (((+firstRanking + +secondRanking + +thirdRanking + +refRanking) / 40) * 100).toFixed(2) 
+        }
+        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.reference_call_ranking ){
+
+            this.score = (((+firstRanking + +secondRanking + +refRanking) / 30) * 100).toFixed(2)
+        }
+        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.reference_call_ranking ){
+
+            this.score = (((+firstRanking + +refRanking) / 20) * 100).toFixed(2)
+        }
+        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.third_call_ranking){
+
+            this.score = (((+firstRanking + +secondRanking + +thirdRanking) / 30) * 100).toFixed(2)
+        }
+        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking){
+
+            this.score = (((+firstRanking + +secondRanking) / 20) * 100).toFixed(2)
+        }
+        else if (this.applicant?.applicant_info.first_call_ranking){
+
+            this.score = (((+firstRanking) / 10) * 100).toFixed(2)
+        }
+    }
 
     //#region Back Button
     backHandler(): void {
@@ -299,18 +333,18 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(dialogResult => {
             if (dialogResult && type === "Accept") {
                 this._applicantService.patchApplicant({
-                        id: this.applicant.applicant_info.id,
-                        prev_status_message: "Results",
-                        status_message: "Results",
-                        status_step: "10.1" 
+                    id: this.applicant.applicant_info.id,
+                    prev_status_message: "Results",
+                    status_message: "Results",
+                    status_step: "10.1"
                 }, false);
             }
             else if (dialogResult && type === "Reject") {
                 this._applicantService.patchApplicant({
-                        id: this.applicant.applicant_info.id,
-                        prev_status_message: "Results",
-                        status_message: "Results",
-                        status_step: "10.4"
+                    id: this.applicant.applicant_info.id,
+                    prev_status_message: "Results",
+                    status_message: "Results",
+                    status_step: "10.4"
                 }, false);
             }
             this._applicantService.getApplicantByIdNew(this.applicant.applicant_info.id);

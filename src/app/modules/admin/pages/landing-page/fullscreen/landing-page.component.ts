@@ -1,36 +1,28 @@
+import { ApplyNowComponent } from './../apply-now/apply-now.component';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector     : 'landing-page-classic',
-    templateUrl  : './landing-page.component.html',
+    selector: 'landing-page-classic',
+    templateUrl: './landing-page.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class LandingPageFullscreenComponent implements OnInit
-{
-    // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
+export class LandingPageFullscreenComponent implements OnInit {
 
-    // alert: { type: FuseAlertType; message: string } = {
-    //     type   : 'success',
-    //     message: ''
-    // };
-    // comingSoonForm: FormGroup;
-    // showAlert: boolean = false;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private router: Router
-    )
-    {
+        private _matDialog: MatDialog,
+
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -40,16 +32,23 @@ export class LandingPageFullscreenComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // // Create the form
         // this.comingSoonForm = this._formBuilder.group({
         //     email: ['', [Validators.required, Validators.email]]
         // });
     }
-  navigate(){
- this.router.navigateByUrl('pages/applicant');
-  }
+ 
+    openDialog() {
+        // this.router.navigateByUrl('pages/applicant');
+        const dialogRef = this._matDialog.open(ApplyNowComponent, {
+            data: {},
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
+            //Call this function only when success is returned from the create API call//
+        });
+
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -57,8 +56,7 @@ export class LandingPageFullscreenComponent implements OnInit
     /**
      * Sign in
      */
-    register(): void
-    {
+    register(): void {
         // // Return if the form is invalid
         // if ( this.comingSoonForm.invalid )
         // {

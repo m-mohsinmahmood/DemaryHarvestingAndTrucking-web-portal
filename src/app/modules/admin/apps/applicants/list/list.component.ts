@@ -1,7 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/member-ordering */
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,13 +6,19 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { UpdateComponent } from '../update/update.component';
-import { SettingsComponent } from 'app/layout/common/settings/settings.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import { FilterComponent } from './../filter/filter.component';
-import { countryList } from './../../../../../../JSON/country';
+import { date_format } from 'JSON/date-format';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Moment } from 'moment';
+import moment from 'moment';
+import { states } from './../../../../../../JSON/state';
+
 
 @Component({
     selector: 'app-employee',
@@ -25,10 +27,17 @@ import { countryList } from './../../../../../../JSON/country';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: date_format },
+    ],
 })
 export class ApplicantsListComponent
-    implements OnInit, AfterViewInit, OnDestroy
-{
+    implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
@@ -51,12 +60,12 @@ export class ApplicantsListComponent
         'N/A',
         'Not Being Considered',
     ];
-    countries: string[] =[];
+    countries: string[] = [];
     page: number;
     limit: number;
     pageSize = 50;
     currentPage = 0;
-    pageSizeOptions: number[] = [5,10, 25, 50];
+    pageSizeOptions: number[] = [5, 10, 25, 50];
     isEdit: boolean;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -69,6 +78,10 @@ export class ApplicantsListComponent
     isLoadingApplicants$: Observable<boolean>;
     searchResult: string;
     applicantFiltersForm: FormGroup;
+    created_at: any;
+    sortActive;
+    sortDirection;
+    states: string[]= [];
 
 
     // #endregion
@@ -77,13 +90,11 @@ export class ApplicantsListComponent
      * Constructor
      */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _applicantService: ApplicantService,
         private _matDialog: MatDialog
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -91,9 +102,12 @@ export class ApplicantsListComponent
 
     //#region life-cycle methods
     ngOnInit(): void {
+        this.initCreatedAt();
         this.initObservables();
         this.initApis();
         this.initFiltersForm();
+
+        this.states = states;
     }
 
     initObservables() {
@@ -101,11 +115,9 @@ export class ApplicantsListComponent
         this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
         this.applicantList$ = this._applicantService.applicantList$;
         this.applicant$ = this._applicantService.applicant$;
-
         this.search = this.searchform.valueChanges
             .pipe(
-                debounceTime(500),
-                takeUntil(this._unsubscribeAll)
+                debounceTime(500)
             )
             .subscribe((data) => {
                 this.searchResult = data.search;
@@ -115,7 +127,8 @@ export class ApplicantsListComponent
                     10,
                     '',
                     '',
-                    this.searchResult
+                    this.searchResult,
+                    this.applicantFiltersForm.value
                 );
             });
     }
@@ -127,11 +140,10 @@ export class ApplicantsListComponent
 
     initFiltersForm() {
         this.applicantFiltersForm = this._formBuilder.group({
-            type: [''],
-            status: [''],
+            state: [''],
+            created_at: [''],
         });
     }
-
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -147,10 +159,8 @@ export class ApplicantsListComponent
     openAddDialog(): void {
         this.isEdit = false;
         // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent,{
+        const dialogRef = this._matDialog.open(UpdateComponent, {
             data: this.isEdit,
-            // height: '800px',
-            // width: '900px',
         });
 
         dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
@@ -158,71 +168,102 @@ export class ApplicantsListComponent
         });
     }
 
-        //#region Sort Function
-        sortData(sort: any) {
-            this.page = 1;
-            this._applicantService.getApplicants(
-                this.page,
-                this.limit,
-                sort.active,
-                sort.direction,
-                this.searchResult
-                );
-        }
-        //#endregion
-
-
-    //#region  Pagination
-       pageChanged(event) {
-        this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult);
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._applicantService.getApplicants(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult,
+            this.applicantFiltersForm.value
+        );
     }
     //#endregion
 
 
+    //#region  Pagination
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult,this.applicantFiltersForm.value);
+    }
+    //#endregion
+
     toggleDetails(applicantId: string): void {
         this._applicantService
-        .getApplicantById(applicantId)
-        .subscribe((applicantObjData: any) => {
-            this._router.navigate(['/apps/applicants/details/' + applicantObjData.applicant_info.id]);
-        });
+            .getApplicantById(applicantId)
+            .subscribe((applicantObjData: any) => {
+                this._router.navigate(['/apps/applicants/details/' + applicantObjData.applicant_info.id]);
+            });
 
     }
 
     closeDetails(): void {
         this.selectedProduct = null;
     }
+    //#region Filters
+    initCreatedAt() {
+        this.created_at = new FormControl();
+    }
+    applyFilters() {
+        this.page = 1;
+        !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
+        !this.applicantFiltersForm.value.created_at ? (this.applicantFiltersForm.value.created_at = '') : ('');
+        this.created_at.value ? (this.applicantFiltersForm.value.created_at = this.created_at.value) : ''
+        this._applicantService.getApplicants(
+            1,
+            this.pageSize,
+            this.sortActive,
+            this.sortDirection,
+            this.searchResult,
+            this.applicantFiltersForm.value
+        );
+    }
 
-    // createEmployee(): void {
-    //     // Create the employee
-    //     this._applicantService.createApplicant().subscribe((newEmployee) => {
-    //         // Go to new employee
-    //         this.selectedProduct = newEmployee;
+    removeFilters() {
+        this.page = 1;
+        this.applicantFiltersForm.reset();
+        this.applicantFiltersForm.value.state = '';
+        this.applicantFiltersForm.value.created_at = '';
+        this.created_at.setValue('');
+        this._applicantService.getApplicants(
+            1,
+            this.pageSize,
+            this.sortActive,
+            this.sortDirection,
+            this.searchResult,
+            this.applicantFiltersForm.value
+        );
+    }
 
-    //         // Fill the form
-    //         this.selectedProductForm.patchValue(newEmployee);
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.created_at.setValue(ctrlValue.format('YYYY'));
+        this.applicantFiltersForm.value.created_at = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
 
-    //         // Mark for check
-    //         this._changeDetectorRef.markForCheck();
-    //     });
-    // }
+     //#region Confirmation Customer Crops Delete Dialog
+     confirmDeleteDialog(applicantId: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Applicant?',
+                title: 'Applicant',
+            },
+        });
 
-    // pageChanged(event){
-    //     console.log(event);
-    //     this.page = event.pageIndex + 1;
-    //     this.limit = event.pageSize;
-    //     this._applicantService.getApplicantDummy(this.page,this.limit,'','','');
-    // }
-    // sortData(sort: any) {
-    //     console.log(sort);
-    //     this.page = 1;
-    //     this._applicantService.getApplicantDummy(
-    //         this.page,
-    //         this.limit,
-    //         sort.active,
-    //         sort.direction,
-    //         ''
-    //     );
-    // }
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._applicantService.deleteApplicant(applicantId);
+        });
+    }
+    //#endregion
 }
+
+
