@@ -2,8 +2,8 @@
     <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-            <div class="w-12">
-                <img src="assets/images/logo/logo.svg">
+            <div class="w-36">
+                <img src="assets\images\logo\dht-logo.svg">
             </div>
 
             <!-- Title -->
@@ -11,7 +11,7 @@
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Don't have an account?</div>
                 <a
-                    class="ml-1 text-primary-500 hover:underline"
+                    class="ml-1 text-primary-500 hover:underline custom-sign-in-color"
                     [routerLink]="['/sign-up']">Sign up
                 </a>
             </div>
@@ -84,14 +84,14 @@
                         Remember me
                     </mat-checkbox>
                     <a
-                        class="text-md font-medium text-primary-500 hover:underline"
+                        class="text-md font-medium text-primary-500 hover:underline custom-sign-in-color"
                         [routerLink]="['/forgot-password']">Forgot password?
                     </a>
                 </div>
 
                 <!-- Submit button -->
                 <button
-                    class="fuse-mat-button-large w-full mt-6"
+                    class="fuse-mat-button-large w-full mt-6 sign-in-btn"
                     mat-flat-button
                     [color]="'primary'"
                     [disabled]="signInForm.disabled"
@@ -142,11 +142,11 @@
             </form>
         </div>
     </div>
-    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
+    <div class="custom-bg-color-sign-in relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
         <!-- Background - @formatter:off -->
         <!-- Rings -->
         <svg class="absolute inset-0 pointer-events-none"
-             viewBox="0 0 960 540" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+             viewBox="0 0 960 540" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" xmlns="src\assets\images\logo\sign-in-bg.png">
             <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
                 <circle r="234" cx="196" cy="23"></circle>
                 <circle r="234" cx="790" cy="491"></circle>
@@ -165,30 +165,17 @@
         <!-- @formatter:on -->
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+            <div  class="text-7xl font-bold leading-none text-gray-100">
+                <div class="text-2xl">Welcome to the</div>
+                <div style="color:#FFC482">DHT Web Portal for 
+                    </div>
+                <div style="color:#FFC482">Customers & Employees</div>
             </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </div>
-            <div class="flex items-center mt-8">
-                <div class="flex flex-0 items-center -space-x-1.5">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-18.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-11.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-09.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-16.jpg">
-                </div>
-                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
-            </div>
+            <div class="mt-6 text-lg tracking-tight leading-6 text-white">
+                The DHT Web Portal has been designed so that every Customer and Employee has access to their own Private Data. This data is accessed on the User Dashboard. The Dashboard is designed to provide Key Performance Indicators (KPI'S) for all content that has been collected. i.e. Harvest Results for Customers and Payroll Information for the Employee. 
+
+                We hope that you find the DHT Web Portal to be Informative and Valuable. Enjoy!            </div>
+            
         </div>
     </div>
 </div>
