@@ -174,4 +174,17 @@ export class MachineryListComponent
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+
+    //#region Sort Function
+        sortData(sort: any) {
+            this.page = 1;
+            this._machineryService.getMachineries(
+                this.page,
+                this.limit,
+                sort.active,
+                sort.direction,
+                this.searchResult
+                );
+        }
+        //#endregion
 }

@@ -159,7 +159,7 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
     backHandler(): void {
-        this._router.navigate(['/apps/customers/']);
+        this._router.navigate(['/apps/equipment/non-motorized/']);
     }
 
 

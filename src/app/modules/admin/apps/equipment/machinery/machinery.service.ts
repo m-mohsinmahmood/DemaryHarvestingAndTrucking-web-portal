@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { Machineries } from 'app/modules/admin/apps/equipment/machinery/machinery.types';
+import { AlertService } from 'app/core/alert/alert.service';
 @Injectable({
     providedIn: 'root'
 })
 export class MachineryService {
     // Private
+    closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly closeDialog$: Observable<boolean> =
+        this.closeDialog.asObservable();
+
     //#region Loaders Machinery List
     private isLoadingMachineries: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -37,7 +42,9 @@ export class MachineryService {
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient) {
+    constructor(private _httpClient: HttpClient,
+        private _alertSerice: AlertService,
+        ) {
     }
     //#region API Functions
     getMachineries(
@@ -87,8 +94,93 @@ export class MachineryService {
                 }
             );
     }
-    handleError(err: any) {
-        throw new Error('Method not implemented.');
+createMachinery(data: any) {
+    console.log(data);
+        this._httpClient
+            .post(`api-1/machinery`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingMachinery.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingMachinery.next(false);
+                },
+                () => {
+                    this.getMachineries(1, 10, '', '', '');
+                }
+            );
+    }
+
+    updateMachinery(machineryData: any) {
+        this._httpClient
+            .put(`api-1/machinery`, machineryData)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingMachinery.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingMachinery.next(false);
+                },
+                () => {
+                    this.getMachineryById(machineryData.id);
+                }
+            );
+    }
+
+    //#endregion
+
+    //#region Error handling
+    handleError(error: HttpErrorResponse) {
+        let errorMessage = 'Unknown error!';
+        if (error.error instanceof ErrorEvent) {
+            // Client-side errors
+            errorMessage = `Error: ${error.error.message}`;
+            this._alertSerice.showAlert({
+                type: 'error',
+                shake: false,
+                slideRight: true,
+                title: 'Error',
+                message: error.error.message,
+                time: 6000,
+            });
+        } else {
+            // Server-side errors
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            this._alertSerice.showAlert({
+                type: 'error',
+                shake: false,
+                slideRight: true,
+                title: 'Error',
+                message: error.error.message,
+                time: 6000,
+            });
+        }
+        return throwError(errorMessage);
     }
     //#endregion
 }

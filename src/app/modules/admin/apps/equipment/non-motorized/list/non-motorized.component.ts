@@ -33,6 +33,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { Router } from '@angular/router';
 import { NonMotorized } from '../non-motorized.types';
 import { NonMotorizedService } from '../non-motorized.service';
+import { UpdateAddNonMotorizedComponent } from '../update/update-add.component';
 
 @Component({
     selector: 'non-motorized-list',
@@ -157,19 +158,16 @@ export class NonMotorizedListComponent
             `/apps/equipment/non-motorized/details/${machineId}`,
         ]);
     }
-    // openAddDialog(): void
-    // {
-    //     // Open the dialog
-    //     const dialogRef = this._matDialog.open(UpdateAddMachineryComponent);
-    //     /* const dialogRef = this._matDialog.open(UpdateComponent,{
-    //      data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
-    //     }); */
+    openAddDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddNonMotorizedComponent);
 
-    //     dialogRef.afterClosed()
-    //              .subscribe((result) => {
-    //                  console.log('Compose dialog was closed!');
-    //              });
-    // }
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
 
 
     /**
@@ -181,4 +179,17 @@ export class NonMotorizedListComponent
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._nonMotorizedService.getNonMotorizedVehicles(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+            );
+    }
+    //#endregion
 }

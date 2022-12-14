@@ -1,4 +1,10 @@
 <div *ngIf="(machinery$ | async) as machinery" class="parent-class overflow-y-auto mb-16">
+    <div class="flex float-right justify-end p-4"><button class="ml-4 float-right justify-end" mat-flat-button
+            [color]="'primary'" (click)="openUpdateDialog(machinery)">
+            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+            <span class="ml-2 mr-1">Edit</span>
+        </button>
+    </div>
     <div class="flex w-9/12 m-auto flex-col">
         <img class="" src="assets\images\apps\equipment\Rectangle 1834.png">
     </div>

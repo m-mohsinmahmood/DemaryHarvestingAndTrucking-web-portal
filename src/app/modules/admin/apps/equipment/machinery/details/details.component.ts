@@ -11,24 +11,6 @@ import { EquipmentService } from '../../equipment.service';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
-const governmentDocs = [
-    { 'id': '1', 'name': 'Passport', 'type': 'PDF' },
-    { 'id': '2', 'name': 'Visa', 'type': 'DOC' },
-    { 'id': '3', 'name': 'I-94', 'type': 'XLS' },
-    { 'id': '4', 'name': 'License', 'type': 'TXT' },
-    { 'id': '5', 'name': 'Social Security ', 'type': 'JPG' },
-    { 'id': '6', 'name': 'DOT docs', 'type': 'DOC' },
-    { 'id': '7', 'name': 'Physical', 'type': 'PDF' },
-    { 'id': '8', 'name': 'Drug Testing', 'type': 'TXT' },
-];
-const companyDocs = [
-    { 'id': '9', 'name': 'Drug Testing', 'type': 'TXT' },
-    { 'id': '10', 'name': 'Contract', 'type': 'PDF' },
-    { 'id': '11', 'name': 'Approval Letter', 'type': 'DOC' },
-    { 'id': '12', 'name': 'Departure Form', 'type': 'JPG' },
-    { 'id': '13', 'name': 'Equipment Usage', 'type': 'XLS' },
-    { 'id': '14', 'name': 'Work Agreement', 'type': 'PDF' },
-];
 
 @Component({
     selector: 'employee-details',
@@ -104,11 +86,6 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
         });
 
 
-        // Get the employee by id
-        // this._machineService.getProductById(this.routeID).subscribe((vehicle) => {
-        //     console.log('EEE', vehicle);
-        //     this.vehicleDetails = vehicle;
-        // });
     }
 
     ngAfterViewInit(): void {

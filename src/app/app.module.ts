@@ -17,6 +17,8 @@ import { Interceptor } from '../app/interceptors/interceptor';
 import {MatNativeDateModule} from '@angular/material/core';
 import { ApplicantpageComponent } from './modules/admin/pages/applicantpage/applicantpage.component';
 
+
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
@@ -29,7 +31,6 @@ const routerConfig: ExtraOptions = {
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
         HttpClientModule,
-
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
         FuseConfigModule.forRoot(appConfig),

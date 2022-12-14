@@ -44,7 +44,11 @@ import { MachineryLocationComponent } from './machinery/navigation/location/loca
 import { MotorizedProfileComponent } from './motorized/navigation/profile/profile.component';
 import { MotorizedMainRepairComponent } from './motorized/navigation/main-repair/main-repair.component';
 import { MotorizedLocationComponent } from './motorized/navigation/location/location.component';
-import { FuelsMilesComponent } from './machinery/navigation/fuels-miles/fuels-miles.component';
+import { FuelsMilesComponent } from './motorized/navigation/fuels-miles/fuels-miles.component';
+import { UpdateAddMotorizedComponent } from './motorized/update/update-add.component';
+import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-add.component';
+
+
 
 
 @NgModule({
@@ -69,7 +73,10 @@ import { FuelsMilesComponent } from './machinery/navigation/fuels-miles/fuels-mi
         NonMotorizedComponent,
         NonMotorizedDetailComponent,
         NonMotorizedListComponent,
-        FuelsMilesComponent
+        FuelsMilesComponent,
+        UpdateAddMotorizedComponent,
+        UpdateAddNonMotorizedComponent
+        
 
     ],
     imports     : [
@@ -113,7 +120,7 @@ import { FuelsMilesComponent } from './machinery/navigation/fuels-miles/fuels-mi
         MatTabsModule,
         MatExpansionModule,
         FuseDrawerModule,
-        MatSidenavModule
+        MatSidenavModule,
     ]
 })
 export class EquipmentModule

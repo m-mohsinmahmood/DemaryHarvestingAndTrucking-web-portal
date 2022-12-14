@@ -34,6 +34,7 @@ import { MachineryService } from 'app/modules/admin/apps/equipment/machinery/mac
 import { Router } from '@angular/router';
 import { Motorized } from '../motorized.types';
 import { MotorizedService } from '../motorized.service';
+import { UpdateAddMotorizedComponent } from '../update/update-add.component';
 
 @Component({
     selector: 'motorized-list',
@@ -154,19 +155,19 @@ export class MotorizedListComponent
             `/apps/equipment/motorized/details/${machineId}`,
         ]);
     }
-    // openAddDialog(): void
-    // {
-    //     // Open the dialog
-    //     const dialogRef = this._matDialog.open(UpdateAddMachineryComponent);
-    //     /* const dialogRef = this._matDialog.open(UpdateComponent,{
-    //      data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
-    //     }); */
+    openAddDialog(): void
+    {
+        // Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddMotorizedComponent);
+        /* const dialogRef = this._matDialog.open(UpdateComponent,{
+         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
+        }); */
 
-    //     dialogRef.afterClosed()
-    //              .subscribe((result) => {
-    //                  console.log('Compose dialog was closed!');
-    //              });
-    // }
+        dialogRef.afterClosed()
+                 .subscribe((result) => {
+                     console.log('Compose dialog was closed!');
+                 });
+    }
 
     /**
      * Track by function for ngFor loops
@@ -177,4 +178,17 @@ export class MotorizedListComponent
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._motorizedService.getMotorizedVehicles(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+            );
+    }
+    //#endregion
 }
