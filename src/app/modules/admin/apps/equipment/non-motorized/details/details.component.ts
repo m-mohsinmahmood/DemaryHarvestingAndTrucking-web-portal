@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,6 +49,10 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     drawerOpened: boolean = true;
     selectedIndex: string = 'Profile';
 
+    // Observables
+    nonMotorizedVehicle$: Observable<any>;
+    isLoadingNonMotorizedVehicle$: Observable<any>;
+
 
 
 
@@ -56,11 +60,9 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _matDialog: MatDialog,
-        private _formBuilder: FormBuilder,
+
         public activatedRoute: ActivatedRoute,
-        public _machineService: NonMotorizedService,
+        public _nonMotorizedService: NonMotorizedService,
         private _router: Router,
         public _equipmentService: EquipmentService,
         private _fuseMediaWatcherService: FuseMediaWatcherService
@@ -86,18 +88,30 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
         });
 
 
-        // Get the employee by id
-        // this._machineService.getNonMotorizedVehicleById(this.routeID).subscribe((vehicle) => {
-        //     console.log('EEE', vehicle);
-        //     this.vehicleDetails = vehicle;
-        // });
     }
 
     ngAfterViewInit(): void {
-        // this.initApis(this.routeID);
-        // this.initObservables();
+        this.initApis(this.routeID);
+        this.initObservables();
         this.initSideNavigation();
     }
+
+
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.nonMotorizedVehicle$ = this._nonMotorizedService.nonMotorizedVehicle$;
+        // Loader
+        this.isLoadingNonMotorizedVehicle$ = this._nonMotorizedService.isLoadingNonMotorizedVehicle$;
+    }
+    //#endregion
+
+    //#region Initial APIs
+    initApis(id: string) {
+        this._nonMotorizedService.getNonMotorizedVehicleById(id);
+    }
+    //#endregion
+
 
     //#region Initialize Side Navigation
     initSideNavigation() {
@@ -127,24 +141,8 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-    // openUpdateDialog(): void {
-    //     // Open the dialog
-    //     const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
-    //         data: { id: this.routeID }
-    //     });
-
-
-    //     dialogRef.afterClosed()
-    //         .subscribe((result) => {
-    //             console.log('Compose dialog was closed!');
-    //         });
-    // }
-
-     //#region Inner Navigation Routing
-     routeHandler(index) {
+    //#region Inner Navigation Routing
+    routeHandler(index) {
         const { title } = index;
         if (title === this.selectedIndex) {
             return;

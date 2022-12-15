@@ -11,12 +11,10 @@
                     <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                 </button>
             </div>
-            <div (click)="backHandler()"
+            <div *ngIf="machinery$ | async; let machinery" (click)="backHandler()"
                 class="flex gap-3 items-center text-2xl font-extrabold tracking-tight cursor-pointer">
                 <mat-icon w-24 h-24 class="text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-                <!-- <img *ngIf="customers.avatar" class="inline-block h-14 w-14 rounded-full" src="{{customers.avatar}}" alt="">
-                <img *ngIf="customers.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt=""> -->
-                <span class="ml-1">Some Name</span>
+                <span class="ml-1">{{ machinery?.name }} </span>
             </div>
         </div>
     </div>
@@ -41,7 +39,7 @@
 
             <div class="flex sub-sidenav-content bg-light">
                 <div class="w-full h-full">
-                    <div class="tab bg-white overflow-auto">
+                    <div class="tab bg-white overflow-auto h-full mb-28">
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Profile'">
                                 <app-machinery-profile></app-machinery-profile>

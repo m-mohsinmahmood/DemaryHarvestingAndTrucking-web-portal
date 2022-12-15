@@ -11,7 +11,7 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Machinery</div>
+        <div class="text-2xl font-extrabold tracking-tight">Machinery</div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -50,13 +50,13 @@
                         >
                             <div mat-sort-header="name">Name</div>
                             <div mat-sort-header="type" class="hidden sm:block">Type</div>
-                            <div mat-sort-header="model" class="hidden lg:block">Model</div>
-                            <div mat-sort-header="make" class="hidden lg:block">Make</div>
-                            <div mat-sort-header="year" class="hidden lg:block">Year</div>
-                            <div mat-sort-header="license_plate" class="hidden lg:block">License Plate</div>
-                            <div mat-sort-header="status" class="hidden lg:block">Status</div>
+                            <div mat-sort-header="model" class="hidden md:block">Model</div>
+                            <div mat-sort-header="make" class="hidden md:block">Make</div>
+                            <div mat-sort-header="year" class="hidden md:block">Year</div>
+                            <div mat-sort-header="license_plate" class="hidden md:block">License Plate</div>
+                            <div mat-sort-header="status" class="hidden sm:block">Status</div>
 
-                            <div class="hidden sm:block">Details</div>
+                            <div class="">Details</div>
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="machineries$ | async as machineries">
@@ -82,21 +82,21 @@
                                     </div>
 
                                     <!-- Model -->
-                                    <div class="hidden sm:block">
+                                    <div class="hidden md:block">
                                         {{ machinery.model }}
                                     </div>
 
                                     <!-- Odometer -->
-                                    <div class="hidden sm:block">
+                                    <div class="hidden md:block">
                                         {{ machinery.make }}
                                     </div>
 
                                     <!-- Value -->
-                                    <div class="hidden sm:block">
+                                    <div class="hidden md:block">
                                         {{ machinery.year }}
                                     </div>
                                      <!-- Value -->
-                                     <div class="hidden sm:block">
+                                     <div class="hidden md:block">
                                         {{ machinery.license_plate }}
                                     </div>
                                      <!-- Active -->

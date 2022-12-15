@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, APP_INITIALIZER } from '@angular/core';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,24 +16,6 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
     selector: 'employee-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    styles: [
-        /* language=SCSS */
-        `
-            .employee-detail-grid {
-                grid-template-columns: 10% 50% 30%;
-
-                @screen sm {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-            }
-        `
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -48,6 +30,10 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = 'Profile';
+
+    // Observables
+    machinery$: Observable<any>;
+    isLoadingMachinery$: Observable<any>;
 
 
 
@@ -79,20 +65,36 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-            console.log('PARAMS:', params); //log the entire params object
             this.routeID = params.Id;
-            console.log('object', this.routeID);
-            console.log(params['id']); //log the value of id
         });
+
+        this.selectedIndex = history.state?.title ? history.state?.title : 'Profile';
+
 
 
     }
 
     ngAfterViewInit(): void {
-        // this.initApis(this.routeID);
-        // this.initObservables();
+        this.initApis(this.routeID);
+        this.initObservables();
         this.initSideNavigation();
     }
+
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.machinery$ = this._machineService.machinery$;
+        // Loader
+        this.isLoadingMachinery$ = this._machineService.isLoadingMachinery$;
+    }
+    //#endregion
+
+    //#region Initial APIs
+    initApis(id: string) {
+        this._machineService.getMachineryById(id);
+    }
+    //#endregion
+
 
     //#region Initialize Side Navigation
     initSideNavigation() {
@@ -138,8 +140,8 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
             });
     }
 
-     //#region Inner Navigation Routing
-     routeHandler(index) {
+    //#region Inner Navigation Routing
+    routeHandler(index) {
         const { title } = index;
         if (title === this.selectedIndex) {
             return;

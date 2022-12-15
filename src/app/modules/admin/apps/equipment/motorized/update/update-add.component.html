@@ -3,11 +3,9 @@
         <div class="text-lg font-medium">            
             {{ this.data? "Edit Moterized Vehicle" : "Add New Moterized Vehicle" }}
         </div>
-        <!-- <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"></mat-icon>
-        </button> -->
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
     </header>
 
     <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
