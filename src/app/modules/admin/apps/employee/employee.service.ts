@@ -185,45 +185,7 @@ export class EmployeeService {
                 }
             );
     }
-    patchEmployee(data: any, recruiterRemarks: boolean) {
-        let newData;
-        let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
-        if (recruiterRemarks) {
-            const { ...applicant_data } = data;
-            newData = Object.assign({}, { applicant_data });
-        }
-        else {
-            const { body, recruiter_id, subject, to, ...applicant_data } = data;
-            const { id, status_step, status_message, ...email_data } = data
-            newData = Object.assign({}, { applicant_data }, { email_data })
-        }
-        this._httpClient
-            .patch(`api-1/employees${url}`, newData)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingEmployee.next(false);
-                    this.closeDialog.next(true);
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Update Employee',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingEmployee.next(false);
-                },
-                () => {
-                    this.getEmployeeById(newData.employee_data.id);
-                    location.reload();
-                }
-            );
-    }
+
     deleteEmployee(id: string) {
         this._httpClient
             .delete(`api-1/employee?employeeId=${id}`)
@@ -289,5 +251,34 @@ export class EmployeeService {
     }
     //#endregion
 
+    //#region Patch Employee
 
+    patchEmployee(data: any) {
+        this._httpClient
+            .patch(`api-1/employee`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingEmployee.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Update Employee',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingEmployee.next(false);
+                },
+                () => {
+                    // this.getEmployeeById(data);
+                }
+            );
+    }
+    //#endregion
 }
