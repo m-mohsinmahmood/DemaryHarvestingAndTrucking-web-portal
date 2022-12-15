@@ -78,21 +78,35 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:cog",
     link: "/apps/crops",
   },
-  // {
-  //   id: "",
-  //   title: "Equipment",
-  //   type: "collapsable",
-  //   icon: "heroicons_outline:user",
-  //   children: [
-  //     {
-  //       id: "",
-  //       title: "Vehicle List",
-  //       type: "basic",
-  //       icon: "heroicons_outline:user-group",
-  //       link: "/apps/vehicle",
-  //     },
-  //   ],
-  // }
+  {
+    id: "",
+    title: "Equipment",
+    type: "collapsable",
+    icon: "heroicons_outline:user",
+    children: [
+      {
+        id: "",
+        title: "Machinery",
+        type: "basic",
+        icon: "heroicons_outline:cog",
+        link: "/apps/equipment/machinery",
+      },
+      {
+        id: "",
+        title: "Motorized",
+        type: "basic",
+        icon: "heroicons_outline:truck",
+        link: "/apps/equipment/motorized",
+      },
+      {
+        id: "",
+        title: "Non Motorized",
+        type: "basic",
+        icon: "heroicons_outline:presentation-chart-line",
+        link: "/apps/equipment/non-motorized",
+      },
+    ],
+  }
 
 ]
 
