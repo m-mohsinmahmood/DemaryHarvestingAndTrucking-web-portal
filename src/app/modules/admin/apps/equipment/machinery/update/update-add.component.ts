@@ -1,41 +1,70 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/naming-convention */
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-update',
-//   templateUrl: './update.component.html',
-//   styleUrls: ['./update.component.scss']
-// })
-// export class UpdateComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Directive, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Machineries } from '../machinery.types';
 import { MachineryService } from '../machinery.service';
+import { MatDatepicker } from '@angular/material/datepicker';
+import {
+    DateAdapter,
+    MAT_DATE_FORMATS,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
+export const MY_FORMATS_2 = {
+    parse: {
+        dateInput: 'LL',
+    },
+    display: {
+        dateInput: 'LL',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
+@Directive({
+    selector: '[birthdayFormat]',
+    providers: [
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2 },
+    ],
+})
+export class BirthDateFormat {
+}
+
 
 
 @Component({
   selector: 'app-updateadd',
   templateUrl: './update-add.component.html',
-  styleUrls: ['./update-add.component.scss']
+  styleUrls: ['./update-add.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+        provide: DateAdapter,
+        useClass: MomentDateAdapter,
+        deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+
+],
 })
 // @Inject(MAT_DIALOG_DATA)
 
@@ -53,6 +82,8 @@ export class UpdateAddMachineryComponent implements OnInit {
 //   avatar: string = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
   routeID: string;
   avatar: string = '';
+  year;
+
 
       //#region Observables
       machinery$: Observable<Machineries>;
@@ -173,6 +204,34 @@ discard(): void {
     this.matDialogRef.close();
 }
 
+    //#region Init Calendar
+    initCalendar() {
+      //Calender Year Initilize
+      if (this.data) {
+          this.year = new FormControl(this.data.machineryData.year);
+
+      } else {
+          this.year = new FormControl(moment());
+      }
+  }
+  //#endregion
+
+    //#region Calendar Year Function
+    chosenYearHandler(
+      normalizedYear: Moment,
+      datepicker: MatDatepicker<Moment>
+  ) {
+      const ctrlValue = moment(this.year.value);
+      ctrlValue.year(normalizedYear.year());
+      this.year.setValue(ctrlValue);
+      console.log(this.year.value);
+      console.log(ctrlValue);
+
+      this.form.value.year = ctrlValue;
+      datepicker.close();
+  }
+
+  //#endregion
 
 
 

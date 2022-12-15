@@ -45,11 +45,11 @@ import { UpdateAddNonMotorizedComponent } from '../update/update-add.component';
     animations: fuseAnimations,
 })
 export class NonMotorizedListComponent
-    implements OnInit, AfterViewInit, OnDestroy
-{
+    implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    //#region Variables
 
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
@@ -64,7 +64,9 @@ export class NonMotorizedListComponent
     sort: any;
     order: any;
     limit: number;
-    
+    //#endregion
+
+
     //#region Observables
     search: Subscription;
     nonMotorizedList$: Observable<NonMotorized[]>;
@@ -87,15 +89,11 @@ export class NonMotorizedListComponent
         private _router: Router,
         private _nonMotorizedService: NonMotorizedService,
         private _matDialog: MatDialog
-    ) {}
+    ) { }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * On init
-     */
+    //#region Lifecycle Functions
+
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
@@ -103,21 +101,18 @@ export class NonMotorizedListComponent
     }
 
 
-    /**
-     * After view init
-     */
     ngAfterViewInit(): void {
-  
+
     }
 
-    /**
-     * On destroy
-     */
+
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#endregion
+
 
     //#region Init Observables and Apis
     initObservables() {
@@ -148,37 +143,30 @@ export class NonMotorizedListComponent
     //#endregion
 
 
-    /**
-     * Toggle employee details
-     *
-     * @param machineId
-     */
+    //#region Details Page
     toggleDetails(machineId: string): void {
         this._router.navigate([
             `/apps/equipment/non-motorized/details/${machineId}`,
         ]);
     }
-    openAddDialog(): void
-    {
+
+    //#endregion
+
+    //#region Add Dialog
+
+    openAddDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateAddNonMotorizedComponent);
 
         dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+            .subscribe((result) => {
+                console.log('Compose dialog was closed!');
+            });
     }
+    //#endregion
 
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
+
 
     //#region Sort Function
     sortData(sort: any) {
@@ -189,7 +177,11 @@ export class NonMotorizedListComponent
             sort.active,
             sort.direction,
             this.searchResult
-            );
+        );
+    }
+
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
     }
     //#endregion
 }

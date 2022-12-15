@@ -17,6 +17,8 @@ export class MachineryProfileComponent implements OnInit {
   isEdit: boolean;
   routeID;
   result: string = '';
+  allExpandState = false;
+
   //#endregion
 
   //#region Observables
@@ -35,6 +37,8 @@ export class MachineryProfileComponent implements OnInit {
 
   ) { }
 
+  //#region Lifecycle Functions
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.routeID = params.Id;
@@ -48,6 +52,8 @@ export class MachineryProfileComponent implements OnInit {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
+  //#endregion
+
 
   //#region init API
   initApi() {

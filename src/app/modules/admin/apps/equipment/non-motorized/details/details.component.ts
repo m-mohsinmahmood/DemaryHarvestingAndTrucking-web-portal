@@ -12,33 +12,17 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
 @Component({
-    selector: 'employee-details',
+    selector: 'non-motorized-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    styles: [
-        /* language=SCSS */
-        `
-            .employee-detail-grid {
-                grid-template-columns: 10% 50% 30%;
-
-                @screen sm {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-            }
-        `
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    //#region Variables
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
     isLoading: boolean = false;
     routeID; // URL ID
     vehicleDetails: any;
@@ -48,10 +32,12 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = 'Profile';
+    //#endregion
 
-    // Observables
+    //#region Observables
     nonMotorizedVehicle$: Observable<any>;
     isLoadingNonMotorizedVehicle$: Observable<any>;
+    //#endregion
 
 
 
@@ -72,13 +58,8 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    //#region Lifecycle Functions
 
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             console.log('PARAMS:', params); //log the entire params object
@@ -95,6 +76,16 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
         this.initObservables();
         this.initSideNavigation();
     }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+
+    //#endregion
+
 
 
     //#region Initialize Observables
@@ -132,14 +123,7 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
+
 
     //#region Inner Navigation Routing
     routeHandler(index) {
@@ -154,11 +138,13 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
     toggleDrawer() {
         this.drawerOpened = !this.drawerOpened;
     }
-    //#endregion
+
 
     backHandler(): void {
         this._router.navigate(['/apps/equipment/non-motorized/']);
     }
+
+    //#endregion
 
 
 }

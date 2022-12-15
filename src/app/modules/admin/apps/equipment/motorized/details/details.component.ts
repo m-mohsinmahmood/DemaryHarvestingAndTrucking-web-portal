@@ -13,15 +13,17 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
 @Component({
-    selector: 'employee-details',
+    selector: 'motorized-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MotorizedDetailComponent implements OnInit, OnDestroy {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    //#region Variables
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
     isLoading: boolean = false;
     routeID; // URL ID
     vehicleDetails: any;
@@ -31,10 +33,12 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = 'Profile';
+    //#endregion
 
-    // Observables
+    //#region Observables
     motorizedVehicle$: Observable<any>;
     isLoadingMotorizedVehicle$: Observable<any>;
+    //#endregion
 
 
 
@@ -54,9 +58,8 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    /**
-     * On init
-     */
+    //#region Lifecycle Functions
+
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
@@ -69,6 +72,16 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
         this.initObservables();
         this.initSideNavigation();
     }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+
+    //#endregion
+
 
     //#region Initialize Observables
     initObservables() {
@@ -104,14 +117,7 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
+
 
 
 
@@ -128,11 +134,13 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
     toggleDrawer() {
         this.drawerOpened = !this.drawerOpened;
     }
-    //#endregion
 
     backHandler(): void {
         this._router.navigate(['/apps/equipment/motorized/']);
     }
+    //#endregion
+
+
 
 
 }

@@ -25,6 +25,8 @@ export class MotorizedMainRepairComponent implements OnInit {
     searchInputControl: FormControl = new FormControl();
     selectedProductForm: FormGroup;
     tagsEditMode: boolean = false;
+    allExpandState = false;
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(

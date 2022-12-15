@@ -47,8 +47,7 @@ import { UpdateAddMotorizedComponent } from '../update/update-add.component';
     animations: fuseAnimations,
 })
 export class MotorizedListComponent
-    implements OnInit, AfterViewInit, OnDestroy
-{
+    implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
@@ -66,16 +65,18 @@ export class MotorizedListComponent
     sort: any;
     order: any;
     limit: number;
+    //#endregion
 
-     //#region Observables
-     search: Subscription;
-     motorizedList$: Observable<Motorized[]>;
-     isLoadingMotorizedList$: Observable<boolean>;
-     searchform: FormGroup = new FormGroup({
-         search: new FormControl(),
-     });
-     private _unsubscribeAll: Subject<any> = new Subject<any>();
-     //#endregion
+
+    //#region Observables
+    search: Subscription;
+    motorizedList$: Observable<Motorized[]>;
+    isLoadingMotorizedList$: Observable<boolean>;
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
     /**
      * Constructor
@@ -87,38 +88,32 @@ export class MotorizedListComponent
         private _router: Router,
         private _motorizedService: MotorizedService,
         private _matDialog: MatDialog
-    ) {}
+    ) { }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    //#region Lifecycle Functions
 
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
         console.log(this.motorizedList$);
-     }
+    }
 
-    /**
-     * After view init
-     */
+
     ngAfterViewInit(): void {
 
     }
 
-    /**
-     * On destroy
-     */
+
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-     //#region Init Observables and Apis
-     initObservables() {
+
+    //#endregion
+
+    //#region Init Observables and Apis
+    initObservables() {
         this.isLoadingMotorizedList$ = this._motorizedService.isLoadingMotorizedList$;
         this.motorizedList$ = this._motorizedService.motorizedList$;
         this.search = this.searchform.valueChanges
@@ -145,39 +140,29 @@ export class MotorizedListComponent
 
     //#endregion
 
-    /**
-     * Toggle employee details
-     *
-     * @param machineId
-     */
+    //#region Details Page
+
     toggleDetails(machineId: string): void {
         this._router.navigate([
             `/apps/equipment/motorized/details/${machineId}`,
         ]);
     }
-    openAddDialog(): void
-    {
+
+    //#endregion
+
+    //#region Add Dialog
+
+    openAddDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateAddMotorizedComponent);
-        /* const dialogRef = this._matDialog.open(UpdateComponent,{
-         data:{id: '7eb7c859-1347-4317-96b6-9476a7e2784578ba3c334343'}
-        }); */
 
         dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+            .subscribe((result) => {
+                console.log('Compose dialog was closed!');
+            });
     }
+    //#endregion
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
 
     //#region Sort Function
     sortData(sort: any) {
@@ -188,7 +173,11 @@ export class MotorizedListComponent
             sort.active,
             sort.direction,
             this.searchResult
-            );
+        );
     }
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
+
     //#endregion
 }

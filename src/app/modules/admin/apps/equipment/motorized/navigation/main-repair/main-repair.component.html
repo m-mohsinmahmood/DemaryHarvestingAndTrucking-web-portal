@@ -1,10 +1,22 @@
 <div class="parent-class overflow-y-auto mb-16 sm:w-9/12 sm:m-auto ">
     <!-- Profile Data -->
+        <div class="flex justify-end mt-4 -mb-4">
+
+        <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = true"
+            matTooltip="Expand All">
+            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-down'"></mat-icon>
+        </button>
+    
+        <button *ngIf="allExpandState == true" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = false"
+            matTooltip="Collapse All">
+            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-up'"></mat-icon>
+        </button>
+    </div>
 
     <div class="bg-gray-100 rounded-lg my-8">
 
         <mat-accordion class="bg-gray-100">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="bg-gray-100">
                 <mat-expansion-panel-header>
                     <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
@@ -88,7 +100,7 @@
     <div class="bg-gray-100 rounded-lg my-8">
 
         <mat-accordion class="bg-gray-100">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="bg-gray-100">
                 <mat-expansion-panel-header>
                     <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
@@ -180,7 +192,7 @@
     <div class="bg-gray-100 rounded-lg my-8">
 
         <mat-accordion class="bg-gray-100">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="bg-gray-100">
                 <mat-expansion-panel-header>
                     <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">

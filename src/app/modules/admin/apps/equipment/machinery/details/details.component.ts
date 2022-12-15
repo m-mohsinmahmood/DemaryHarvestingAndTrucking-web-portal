@@ -13,27 +13,30 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 
 @Component({
-    selector: 'employee-details',
+    selector: 'machinery-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MachineryDetailComponent implements OnInit, OnDestroy {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    //#region Variables
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
     isLoading: boolean = false;
     routeID; // URL ID
     vehicleDetails: any;
     routes = [];
-    // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = 'Profile';
+    //#endregion
 
-    // Observables
+    //#region Observables
     machinery$: Observable<any>;
     isLoadingMachinery$: Observable<any>;
+    //#endregion
 
 
 
@@ -56,13 +59,8 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    //#region Lifecycle Functions
 
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
@@ -79,6 +77,13 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
         this.initObservables();
         this.initSideNavigation();
     }
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+    //#endregion
+
 
     //#region Initialize Observables
     initObservables() {
@@ -115,18 +120,8 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
+    //#region helper Functions
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
     openUpdateDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
@@ -139,6 +134,11 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
                 console.log('Compose dialog was closed!');
             });
     }
+    backHandler(): void {
+        this._router.navigate(['/apps/equipment/machinery/']);
+    }
+    //#endregion
+
 
     //#region Inner Navigation Routing
     routeHandler(index) {
@@ -155,9 +155,7 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    backHandler(): void {
-        this._router.navigate(['/apps/equipment/machinery/']);
-    }
+
 
 
 }

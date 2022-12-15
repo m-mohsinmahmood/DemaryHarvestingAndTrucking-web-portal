@@ -45,11 +45,11 @@ import { Machineries } from '../machinery.types';
     animations: fuseAnimations,
 })
 export class MachineryListComponent
-    implements OnInit, AfterViewInit, OnDestroy
-{
+    implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    //#region Variables
 
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
@@ -64,6 +64,8 @@ export class MachineryListComponent
     sort: any;
     order: any;
     limit: number;
+    //#endregion
+
 
     //#region Observables
     search: Subscription;
@@ -84,33 +86,28 @@ export class MachineryListComponent
         private _router: Router,
         private _machineryService: MachineryService,
         private _matDialog: MatDialog
-    ) {}
+    ) { }
 
-  
-    /**
-     * On init
-     */
+
+    //#region Lifecycle Functions
+
     ngOnInit(): void {
         this.initApis();
         this.initObservables();
 
     }
 
-    /**
-     * After view init
-     */
-    ngAfterViewInit(): void {
-      
-    }
 
-    /**
-     * On destroy
-     */
+    ngAfterViewInit(): void { }
+
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#endregion
+
+
     //#region Init Observables and Apis
     initObservables() {
         this.isLoadingMachineries$ = this._machineryService.isLoadingMachineries$;
@@ -139,18 +136,18 @@ export class MachineryListComponent
 
     //#endregion
 
-    /**
-     * Toggle Machinery details
-     *
-     * @param machineId
-     */
+    //#region Details Page
+
     toggleDetails(machineId: string): void {
         this._router.navigate([
             `/apps/equipment/machinery/details/${machineId}`,
         ]);
     }
-    openAddDialog(): void
-    {
+    //#endregion
+
+    //#region Add Dialog
+
+    openAddDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UpdateAddMachineryComponent);
         /* const dialogRef = this._matDialog.open(UpdateComponent,{
@@ -158,33 +155,27 @@ export class MachineryListComponent
         }); */
 
         dialogRef.afterClosed()
-                 .subscribe((result) => {
-                     console.log('Compose dialog was closed!');
-                 });
+            .subscribe((result) => {
+                console.log('Compose dialog was closed!');
+            });
+    }
+    //#endregion
+
+
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._machineryService.getMachineries(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
     }
 
-
-
-        /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
-
-    //#region Sort Function
-        sortData(sort: any) {
-            this.page = 1;
-            this._machineryService.getMachineries(
-                this.page,
-                this.limit,
-                sort.active,
-                sort.direction,
-                this.searchResult
-                );
-        }
-        //#endregion
+    //#endregion
 }
