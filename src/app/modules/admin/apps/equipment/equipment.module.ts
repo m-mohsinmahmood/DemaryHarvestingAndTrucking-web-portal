@@ -47,7 +47,7 @@ import { MotorizedLocationComponent } from './motorized/navigation/location/loca
 import { FuelsMilesComponent } from './motorized/navigation/fuels-miles/fuels-miles.component';
 import { UpdateAddMotorizedComponent } from './motorized/update/update-add.component';
 import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-add.component';
-
+import { BirthDateFormat } from './machinery/update/update-add.component';
 
 
 
@@ -75,7 +75,8 @@ import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-ad
         NonMotorizedListComponent,
         FuelsMilesComponent,
         UpdateAddMotorizedComponent,
-        UpdateAddNonMotorizedComponent
+        UpdateAddNonMotorizedComponent,
+        BirthDateFormat
         
 
     ],

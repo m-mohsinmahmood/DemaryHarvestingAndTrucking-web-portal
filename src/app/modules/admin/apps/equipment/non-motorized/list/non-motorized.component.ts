@@ -128,7 +128,7 @@ export class NonMotorizedListComponent
                 this.page = 1;
                 this._nonMotorizedService.getNonMotorizedVehicles(
                     1,
-                    10,
+                    50,
                     '',
                     '',
                     this.searchResult

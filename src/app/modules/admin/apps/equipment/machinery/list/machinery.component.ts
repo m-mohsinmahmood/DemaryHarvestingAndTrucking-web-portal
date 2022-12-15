@@ -122,7 +122,7 @@ export class MachineryListComponent
                 this.page = 1;
                 this._machineryService.getMachineries(
                     1,
-                    10,
+                    50,
                     '',
                     '',
                     this.searchResult

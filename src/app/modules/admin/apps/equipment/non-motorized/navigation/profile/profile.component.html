@@ -83,7 +83,7 @@
                                 </dt>
                                 <dd
                                     class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                                    {{nonMotorizedVehicle.year}}
+                                    {{nonMotorizedVehicle.year  | date: "YYYY"}}
                                 </dd>
                             </div>
                             <div
@@ -232,7 +232,7 @@
                                 </dt>
                                 <dd
                                     class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                                    {{nonMotorizedVehicle.date_of_purchase}}
+                                    {{nonMotorizedVehicle.date_of_purchase | date: "MMM-dd-YYYY"}}
                                 </dd>
                             </div>
                             <div
@@ -253,7 +253,7 @@
                                 </dt>
                                 <dd
                                     class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                                    {{nonMotorizedVehicle.date_of_sales}}
+                                    {{nonMotorizedVehicle.date_of_sales | date: "MMM-dd-YYYY"}}
                                 </dd>
                             </div>
                             <div
@@ -283,7 +283,7 @@
                                 </dt>
                                 <dd
                                     class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                                    {{nonMotorizedVehicle.date_of_market_value}}
+                                    {{nonMotorizedVehicle.date_of_market_value | date: "MMM-dd-YYYY"}}
                                 </dd>
                             </div>
                         </dl>

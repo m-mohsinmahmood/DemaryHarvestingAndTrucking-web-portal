@@ -126,7 +126,7 @@ export class MotorizedListComponent
                 this.page = 1;
                 this._motorizedService.getMotorizedVehicles(
                     1,
-                    10,
+                    50,
                     '',
                     '',
                     this.searchResult

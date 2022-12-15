@@ -58,9 +58,15 @@
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline">
+                <mat-form-field MY_FORMATS appearance="outline" class="w-full">
                     <mat-label>Year</mat-label>
-                    <input matInput formControlName="year" />
+                    <input readonly matInput [matDatepicker]="dp" placeholder="Year"
+                        [formControl]="year">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event, dp)"
+                        panelClass="example-month-picker">
+                    </mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -130,9 +136,11 @@
             </div>
 
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline">
-                    <mat-label class="sm:w-2/12">Date of Purchase</mat-label>
-                    <input matInput formControlName="date_of_purchase" />
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Purchase</mat-label>
+                    <input id="date2" name="date2" formControlName="date_of_purchase" matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -143,9 +151,11 @@
             </div>
 
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline">
-                    <mat-label class="sm:w-2/12">Date of Sales</mat-label>
-                    <input matInput formControlName="date_of_sales" />
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Sales</mat-label>
+                    <input id="date3" name="date3" formControlName="date_of_sales" matInput [matDatepicker]="picker3">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -162,9 +172,11 @@
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field appearance="outline">
-                    <mat-label class="sm:w-2/12">Date of Market Value</mat-label>
-                    <input matInput formControlName="date_of_market_value" />
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Market Value</mat-label>
+                    <input id="date4" name="date4" formControlName="date_of_market_value" matInput [matDatepicker]="picker5">
+                    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                    <mat-datepicker #picker5></mat-datepicker>
                 </mat-form-field>
             </div>
             <!-- </div> -->

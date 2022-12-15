@@ -127,7 +127,7 @@ export class NonMotorizedService {
                         this.isLoadingNonMotorizedVehicle.next(false);
                     },
                     () => {
-                        this.getNonMotorizedVehicles(1, 10, '', '', '');
+                        this.getNonMotorizedVehicles(1, 50, '', '', '');
                     }
                 );
         }

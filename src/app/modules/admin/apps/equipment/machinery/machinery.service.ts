@@ -119,7 +119,7 @@ createMachinery(data: any) {
                     this.isLoadingMachinery.next(false);
                 },
                 () => {
-                    this.getMachineries(1, 10, '', '', '');
+                    this.getMachineries(1, 50, '', '', '');
                 }
             );
     }
