@@ -73,6 +73,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = "Employee Data";
+    employeeRole: any;
 
     //#endregion
 
@@ -110,6 +111,9 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     initObservables() {
         // Data
         this.employee$ = this._employeeService.employee$;
+        this._employeeService.employee$.subscribe((value) => {
+            this.employeeRole = (value?.role);
+        })
         // Loader
         this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
     }

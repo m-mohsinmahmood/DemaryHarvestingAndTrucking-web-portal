@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
@@ -10,7 +10,15 @@ import { Observable, Subject } from 'rxjs';
   templateUrl: './account-management.component.html',
   styleUrls: ['./account-management.component.scss']
 })
+
 export class AccountManagementComponent implements OnInit {
+
+  roles = [{ role: 'Combine Operator', status: false, formRole: 'combineOperatorStatus' },
+  { role: 'Tractor/Cart Operator', status: false, formRole: 'tractorCartOperatorStatus' },
+  { role: 'Truck Driver', status: false, formRole: 'truckDriverStatus' },
+  { role: 'Tractor/Farming Operator', status: false, formRole: 'farmingTractorOperatorStatus' }
+  ]
+  @Input() employeeRole: any
 
   //#region  Observables
   employee$: Observable<any>;
@@ -19,13 +27,9 @@ export class AccountManagementComponent implements OnInit {
   //#endregion
 
   //#region Variable
-  combineOperatorStatus: boolean = false;
-  tractorCartOperatorStatus: boolean = false;
-  truckDriverStatus: boolean = false;
-  farmingTractorOperatorStatus = false;
   form: FormGroup;
   routeID: any;
-  employeeRole: any = [];
+  employeeRoleUpdate: any = [];
   //#endregion
 
   constructor(
@@ -42,14 +46,14 @@ export class AccountManagementComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.routeID = params.Id;
     });
+    this.updateEmployeeRole();
     this.initApis(this.routeID);
     this.initObservables();
     this.initForm();
   }
 
-  ngAfterViewInit(): void {
-    
-  }
+  ngAfterViewInit(): void { }
+
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next(null);
@@ -58,15 +62,29 @@ export class AccountManagementComponent implements OnInit {
 
   //#endregion
 
+  //#region Update Employee array
+  updateEmployeeRole() {
+    if (this.employeeRole.length > 0) {
+      this.employeeRoleUpdate = this.employeeRole.split(',');
+      if (this.employeeRoleUpdate.includes('Combine Operator')) {
+        this.roles[0].status = true;
+      }
+      if (this.employeeRoleUpdate.includes('Tractor/Cart Operator')) {
+        this.roles[1].status = true;
+      }
+      if (this.employeeRoleUpdate.includes('Truck Driver')) {
+        this.roles[2].status = true;
+      }
+      if (this.employeeRoleUpdate.includes('Tractor/Farming Operator')) {
+        this.roles[3].status = true;
+      }
+    }
+  }
+
   //#region Initialize Observables
   initObservables() {
     // Data
     this.employee$ = this._employeeService.employee$;
-    this._employeeService.employee$.subscribe((value) => {
-      if (value.role && !this.employeeRole.includes(value.role)){
-        this.employeeRole = (value.role);
-      }
-    })
     // Loader
     this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
   }
@@ -81,24 +99,25 @@ export class AccountManagementComponent implements OnInit {
   //#region Init Form
   initForm() {
     this.form = this._formBuilder.group({
-      combineOperatorStatus: ['' || (this.employeeRole.includes('Combine Operator')? true : false)],
-      tractorCartOperatorStatus: ['' || (this.employeeRole.includes('Tractor Cart Operator')? true : false) ],
-      truckDriverStatus: ['' || (this.employeeRole.includes('Truck Driver')? true : false)],
-      farmingTractorOperatorStatus: ['' || (this.employeeRole.includes('Farming Tractor Operator')? true : false)],
+      combineOperatorStatus: ['' || (this.roles[0].status ? true : false)],
+      tractorCartOperatorStatus: ['' || (this.roles[1].status ? true : false)],
+      truckDriverStatus: ['' || (this.roles[2].status ? true : false)],
+      farmingTractorOperatorStatus: ['' || (this.roles[3].status ? true : false)],
     });
   }
 
-  //#region Toggle Role Functions
-  toggleCombineOperator(event) {
+  //#region Toggle Role Function
+  toggleRole(event, index, role) {
     const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe(response => {
-      if (this.combineOperatorStatus) {
+      if (this.roles[index].status) {
         if (response === true) {
-          this.combineOperatorStatus = !this.combineOperatorStatus;
-          this.employeeRole.push('Combine Operator')
+          this.roles[index].status = !this.roles[index].status;
+          let i = this.employeeRoleUpdate.findIndex((x) => { return x === role })
+          this.employeeRoleUpdate.splice(i, 1);
           this._employeeService.patchEmployee({
             id: this.routeID,
-            role: this.employeeRole
+            role: this.employeeRoleUpdate
           })
         }
         else {
@@ -106,108 +125,12 @@ export class AccountManagementComponent implements OnInit {
         }
       } else {
         if (response === true) {
-          this.combineOperatorStatus = !this.combineOperatorStatus;
-          this.employeeRole.push('Combine Operator')
+          this.roles[index].status = !this.roles[index].status;
+          this.employeeRoleUpdate.push(role)
           this._employeeService.patchEmployee({
             id: this.routeID,
-            role: this.employeeRole
+            role: this.employeeRoleUpdate
           })
-        }
-        else {
-          event.source.checked = false;
-        }
-      }
-    })
-  }
-
-  toggleTractorCartOperator(event) {
-    ;
-    const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
-    dialogRef.afterClosed().subscribe(response => {
-      if (this.tractorCartOperatorStatus) {
-        if (response === true) {
-          this.tractorCartOperatorStatus = !this.tractorCartOperatorStatus;
-          this.employeeRole.push('Tractor Cart Operator')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          })
-        }
-        else {
-          event.source.checked = true;
-        }
-      } else {
-        if (response === true) {
-          this.tractorCartOperatorStatus = !this.tractorCartOperatorStatus;
-          this.employeeRole.push('Tractor Cart Operator')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          })
-        }
-        else {
-          event.source.checked = false;
-        }
-      }
-    })
-  }
-
-  toggleTruckDriver(event) {
-    ;
-    const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
-    dialogRef.afterClosed().subscribe(response => {
-      if (this.truckDriverStatus) {
-        if (response === true) {
-          this.truckDriverStatus = !this.truckDriverStatus;
-          this.employeeRole.push('Truck Driver')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          });
-        }
-        else {
-          event.source.checked = true;
-        }
-      } else {
-        if (response === true) {
-          this.truckDriverStatus = !this.truckDriverStatus;
-          this.employeeRole.push('Truck Driver')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          });
-        }
-        else {
-          event.source.checked = false;
-        }
-      }
-    })
-  }
-
-  toggleFarmingTractorOperator(event) {
-    ;
-    const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
-    dialogRef.afterClosed().subscribe(response => {
-      if (this.farmingTractorOperatorStatus) {
-        if (response === true) {
-          this.farmingTractorOperatorStatus = !this.farmingTractorOperatorStatus;
-          this.employeeRole.push('Farming Tractor Operator')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          });
-        }
-        else {
-          event.source.checked = true;
-        }
-      } else {
-        if (response === true) {
-          this.farmingTractorOperatorStatus = !this.farmingTractorOperatorStatus;
-          this.employeeRole.push('Farming Tractor Operator')
-          this._employeeService.patchEmployee({
-            id: this.routeID,
-            role: this.employeeRole
-          });
         }
         else {
           event.source.checked = false;

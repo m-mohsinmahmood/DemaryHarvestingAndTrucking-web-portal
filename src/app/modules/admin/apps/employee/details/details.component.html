@@ -55,7 +55,7 @@
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Account Management'">
-                                <app-account-management>
+                                <app-account-management [employeeRole] = "employeeRole">
                                 </app-account-management>
                             </ng-template>
                         </div>
