@@ -1,4 +1,5 @@
-.farm-data-farms {
+.account-management-grid
+ {
     grid-template-columns: 45% 40% 45%;
     @screen sm {
         grid-template-columns: 45% 45% 45%;
@@ -11,31 +12,6 @@
     }
 }
 
-.farm-data-crops {
-    grid-template-columns: 60% 40%;
-    @screen sm {
-        grid-template-columns: 50% 10% 15% 10%;
-    }
-    @screen md {
-        grid-template-columns: 25% 25 25% 25%;
-    }
-    @screen lg {
-        grid-template-columns: 65% 10% 10% 10%;
-    }
-}
-
-.farm-data-destination {
-    grid-template-columns: 60% 40%;
-    @screen sm {
-        grid-template-columns: 15% 35% 10% 15% 10%;
-    }
-    @screen md {
-        grid-template-columns: 25% 25 25% 25%;
-    }
-    @screen lg {
-        grid-template-columns: 15% 50% 10% 10% 10%;
-    }
-}
 ::ng-deep .mat-form-field.mat-form-field-appearance-fill.mat-form-field-has-label .mat-form-field-wrapper {
     margin-top: 24px;
     margin-bottom: 0px !important;
@@ -46,4 +22,12 @@
 
 .greenActiveIcon {
     color: #16a34a;
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #22c55e ;
+}
+
+:host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #22c55e  ;
 }

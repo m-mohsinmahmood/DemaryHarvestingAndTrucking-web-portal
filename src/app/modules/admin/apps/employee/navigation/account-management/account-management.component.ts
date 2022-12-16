@@ -108,7 +108,22 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Toggle Role Function
   toggleRole(event, index, role) {
-    const dialogRef = this.matDialogRef.open(ConfirmDialogComponent);
+    let msg;
+    let isRemoved;
+    if (this.roles[index].status){
+      msg = 'Are you sure you want to remove '+ role + ' role from this employee?',
+      isRemoved = false
+    }
+    else {
+      msg = 'Are you sure you want to assign '+ role + ' role to this employee?',
+      isRemoved = true
+    }
+    const dialogRef = this.matDialogRef.open(ConfirmDialogComponent, {
+      data: {
+        message: msg,
+        isRemoved: isRemoved
+      },
+    });
     dialogRef.afterClosed().subscribe(response => {
       if (this.roles[index].status) {
         if (response === true) {

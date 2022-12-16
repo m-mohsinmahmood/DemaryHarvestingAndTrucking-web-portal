@@ -25,7 +25,9 @@
         <mat-drawer-container class=" w-full bg-card divide-x" style="height: 100%" autosize>
             <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
                 <div class="flex" *ngFor="let route of routes;let i = index">
-                    <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'"
+                    <button style="padding: 15px;" [style.background-color]="route.title === selectedIndex ? '#d4d7dd' : 'transparent'" matTooltip=
+                    "{{ route.title }}"
+                        matTooltipPosition="right"
                     [ngClass]="route.title === selectedIndex ? 'opacity-100' : 'opacity-80'" mat-button class="my-1 justify-start w-full" (click)="routeHandler(route)">
                             <mat-icon svgIcon="{{route.icon}}" class="icon-size-5 text-primary"></mat-icon>
                             <!-- <span style="font-size: 13px; font-weight: bold; margin-left: 10px;"> {{route.title}} </span> -->

@@ -23,7 +23,7 @@
                         <ng-container>
                             <div class="grid">
                                 <!-- Header -->
-                                <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                <div class="account-management-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
                                     <div>Role</div>
                                     <div>
@@ -33,7 +33,7 @@
                                 </div>
                                 <!-- Rows -->
                                 <div>
-                                    <div *ngFor="let role of roles;index as i" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                    <div *ngFor="let role of roles;index as i" class="account-management-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                         <div class="truncate">{{role.role}}</div>
                                         <div class="items-center">
                                             <mat-icon class="{{
