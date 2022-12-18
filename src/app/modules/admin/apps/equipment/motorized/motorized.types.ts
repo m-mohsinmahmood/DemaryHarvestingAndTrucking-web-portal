@@ -27,4 +27,5 @@ export interface Motorized
     estimated_market_value:string;
     source_of_market_value:string;
     date_of_market_value:string;
+    pictures:String;
 }

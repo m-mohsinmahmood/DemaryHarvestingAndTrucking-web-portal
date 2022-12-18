@@ -53,7 +53,7 @@
                             <div mat-sort-header="model" class="hidden md:block">Model</div>
                             <div mat-sort-header="make" class="hidden md:block">Make</div>
                             <div mat-sort-header="year" class="hidden md:block">Year</div>
-                            <div mat-sort-header="license_plate" class="hidden md:block">License Plate</div>
+                            <div mat-sort-header="license_plate" class="hidden md:block">Serial Number</div>
                             <div mat-sort-header="status" class="hidden sm:block">Status</div>
 
                             <div class="">Details</div>
@@ -72,7 +72,8 @@
                                    
 
                                     <!-- Name -->
-                                    <div class="truncate">
+                                    <div (click)="toggleDetails(machinery.id)" 
+                                    class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate">
                                         {{ machinery.name }}
                                     </div>
 
@@ -97,7 +98,7 @@
                                     </div>
                                      <!-- Value -->
                                      <div class="hidden md:block">
-                                        {{ machinery.license_plate }}
+                                        {{ machinery.serial_number }}
                                     </div>
                                      <!-- Active -->
                                      <div class="hidden sm:block">
@@ -153,6 +154,7 @@
                         [pageSize]="machineries.machinery.size"
                         [pageSizeOptions]="pageSizeOptions"
                         [showFirstLastButtons]="true"
+                        (page)="pageChanged($event)"
                     ></mat-paginator>
                 </ng-container>
             </ng-container>

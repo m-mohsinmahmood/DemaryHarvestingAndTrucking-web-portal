@@ -127,7 +127,7 @@ export class UpdateAddMotorizedComponent implements OnInit {
   this.form = this._formBuilder.group({
     id: [''],
     type: [''],
-    status: [''],
+    status: true,
     name: [''],
     license_plate: [''],
     vin_number: [''],
@@ -151,7 +151,8 @@ export class UpdateAddMotorizedComponent implements OnInit {
     date_of_sales: [''],
     estimated_market_value: [''],
     source_of_market_value: [''],
-    date_of_market_value: ['']
+    date_of_market_value: [''],
+    pictures:['']
      
   });
   if (this.data) {
@@ -184,8 +185,8 @@ export class UpdateAddMotorizedComponent implements OnInit {
     date_of_sales: this.data.motorizedData.date_of_sales,
     estimated_market_value: this.data.motorizedData.estimated_market_value,
     source_of_market_value: this.data.motorizedData.source_of_market_value,
-    date_of_market_value: this.data.motorizedData.date_of_market_value
-       
+    date_of_market_value: this.data.motorizedData.date_of_market_value,
+    pictures : this.data.motorizedData.pictures,
     });
 }
   
@@ -193,7 +194,6 @@ export class UpdateAddMotorizedComponent implements OnInit {
 
 
 onSubmit(): void {
-  console.log("form", this.form.value)
     this._motorizedService.isLoadingMotorizedVehicle.next(true);
     if (this.data) {
         this._motorizedService.updateMotorized(this.form.value);

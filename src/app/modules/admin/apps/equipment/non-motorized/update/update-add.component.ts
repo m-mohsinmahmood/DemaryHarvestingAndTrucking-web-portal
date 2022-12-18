@@ -128,10 +128,12 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
   this.form = this._formBuilder.group({
     id: [''],
     type: [''],
-    status: [''],
+    status: true,
     name: [''],
     license_plate: [''],
     vin_number: [''],
+    odometer:[''],
+    odometer_reading:[''],
     company_id: [''],
     color: [''],
     year: [moment()],
@@ -150,7 +152,8 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
     date_of_sales: [''],
     estimated_market_value: [''],
     source_of_market_value: [''],
-    date_of_market_value: ['']
+    date_of_market_value: [''],
+    pictures: ['']
      
   });
   if (this.data) {
@@ -162,6 +165,8 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
     name: this.data.nonMotorizedData.name,
     license_plate: this.data.nonMotorizedData.license_plate,
     vin_number: this.data.nonMotorizedData.vin_number,
+    odometer:this.data.nonMotorizedData.odometer,
+    odometer_reading:this.data.nonMotorizedData.odometer_reading,
     company_id: this.data.nonMotorizedData.company_id,
     color: this.data.nonMotorizedData.color,
     year: this.data.nonMotorizedData.year,
@@ -180,8 +185,8 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
     date_of_sales: this.data.nonMotorizedData.date_of_sales,
     estimated_market_value: this.data.nonMotorizedData.estimated_market_value,
     source_of_market_value: this.data.nonMotorizedData.source_of_market_value,
-    date_of_market_value: this.data.nonMotorizedData.date_of_market_value
-       
+    date_of_market_value: this.data.nonMotorizedData.date_of_market_value,
+    pictures: this.data.nonMotorizedData.pictures
     });
 }
   
