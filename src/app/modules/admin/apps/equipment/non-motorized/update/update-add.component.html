@@ -21,6 +21,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label class="w-4/12">Type</mat-label>
                     <input matInput formControlName="type" />
+                    <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is required</mat-hint>
+
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -62,6 +64,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Company ID</mat-label>
                     <input matInput formControlName="company_id" />
+                    <mat-hint *ngIf="this.form.get('company_id').hasError('required')" class="text-xs text-red-500">Company ID is required</mat-hint>
+
                 </mat-form-field>
             </div>
 
@@ -85,6 +89,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Make</mat-label>
                     <input matInput formControlName="make" />
+                    <mat-hint *ngIf="this.form.get('make').hasError('required')" class="text-xs text-red-500">Make field is required</mat-hint>
+
                 </mat-form-field>
             </div>
 

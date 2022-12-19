@@ -124,37 +124,32 @@ export class UpdateAddMachineryComponent implements OnInit {
     initForm() {
         // Create the form
         this.form = this._formBuilder.group({
-            id: [''],
-            type: [''],
-            status: true,
-            name: [''],
-
-            serial_number: [''],
-            engine_hours: [''],
-            eh_reading: [''],
-            separator_hours: [''],
-            sh_reading: [''],
-
-            company_id: [''],
-            color: [''],
-            year: [moment()],
-            make: [''],
-            model: [''],
-
-            insurance_status: [''],
-            liability: [''],
-            collision: [''],
-            comprehensive: [''],
-
-            purchase_price: [''],
-            date_of_purchase: [''],
-            sales_price: [''],
-            date_of_sales: [''],
-
-            estimated_market_value: [''],
-            source_of_market_value: [''],
-            date_of_market_value: [''],
-            pictures:['']
+            id                      : [''],
+            type                    : ['', [Validators.required]],
+            status                  : true,
+            name                    : [''],
+            serial_number           : [''],
+            engine_hours            : [''],
+            eh_reading              : [''],
+            separator_hours         : [''],
+            sh_reading              : [''],
+            company_id              : ['', [Validators.required]],
+            color                   : [''],
+            year                    : [moment()],
+            make                    : ['', [Validators.required]],
+            model                   : [''],
+            insurance_status        : [''],
+            liability               : [''],
+            collision               : [''],
+            comprehensive           : [''],
+            purchase_price          : [''],
+            date_of_purchase        : [''],
+            sales_price             : [''],
+            date_of_sales           : [''],
+            estimated_market_value  : [''],
+            source_of_market_value  : [''],
+            date_of_market_value    : [''],
+            pictures                : ['']
 
         });
         if (this.data) {
