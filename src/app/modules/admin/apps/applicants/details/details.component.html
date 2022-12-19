@@ -134,6 +134,9 @@
                                             </mat-icon>
                                         </div>
                                     </span>
+                                    <mat-hint *ngIf="applicantInfo?.applicant_info.reason_for_rejection && i == 9" class="my-1 text-red-600 text-md font-semibold">
+                                        {{applicantInfo?.applicant_info.reason_for_rejection}}
+                                    </mat-hint>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}
@@ -147,6 +150,10 @@
                                         "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
                                     </mat-hint>
                                     <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
+                                        {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
+                                        "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
+                                    </mat-hint>
+                                     <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
                                         "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
                                     </mat-hint>

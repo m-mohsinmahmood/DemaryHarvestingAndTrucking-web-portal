@@ -131,7 +131,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             prev_status_message: [''],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
-            body: ['', [Validators.required]]
+            body: ['', [Validators.required]],
+            reason_for_rejection: ['']
         });
     }
     //#endregion
