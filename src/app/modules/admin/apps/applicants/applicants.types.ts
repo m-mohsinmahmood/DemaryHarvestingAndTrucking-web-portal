@@ -91,4 +91,7 @@ export interface ApplicantPagination {
 export interface ApplicantFilters {
   state: string;
   created_at: string;
+  status: string;
+  ranking: string;
+  date: string;
 }

@@ -14,7 +14,7 @@
                     applicantInfo?.applicant_info.first_name}} {{
                     applicantInfo?.applicant_info.last_name }}
                 </span>
-                <mat-hint class="text-{{score == '0' ? 'slate' : score < '30' ? 'red' : score < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4"> {{score}}% </mat-hint>
+                <mat-hint class="text-{{applicantInfo.applicant_info.ranking == '0' ? 'slate' : applicantInfo.applicant_info.ranking < '30' ? 'red' : applicantInfo.applicant_info.ranking < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4"> {{applicantInfo.applicant_info.ranking}}% </mat-hint>
             </div>
         </div>
         <!-- Actions -->
@@ -134,8 +134,8 @@
                                             </mat-icon>
                                         </div>
                                     </span>
-                                    <mat-hint *ngIf="applicantInfo?.applicant_info.reason_for_rejection && i == 9" class="my-1 text-red-600 text-md font-semibold">
-                                        {{applicantInfo?.applicant_info.reason_for_rejection}}
+                                    <mat-hint *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && i == 9" class="my-1 text-red-600 text-md font-semibold">
+                                        {{applicantInfo?.applicant_info?.reason_for_rejection}}
                                     </mat-hint>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
@@ -150,10 +150,6 @@
                                         "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
                                     </mat-hint>
                                     <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
-                                        {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
-                                        "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
-                                    </mat-hint>
-                                     <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
                                         "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
                                     </mat-hint>
