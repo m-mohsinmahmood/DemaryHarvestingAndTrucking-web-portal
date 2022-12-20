@@ -1,86 +1,262 @@
-
-    <!-- Actions -->
-    <div class="overflow-y-auto">
-        <div class="flex sm:justify-between justify-around items-center sm:mr-12 p-2">
-            <p class=" text-black ml-2 text-2xl font-extrabold tracking-tight">Employee Data</p>
-            <button *ngIf="!isEditMode" class="" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+<!-- Header -->
+<div class="overflow-y-auto">
+    <div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b">
+        <!-- Title -->
+        <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
+            <span class="ml-1 capitalize">Employee Data </span>
+        </div>
+        <div class="flex justify-end gap-4 px-4 sm:px-6 flex-shrink-0 items-center  sm:mt-0 sm:ml-4">
+            <button *ngIf="!isEditMode" class="" mat-flat-button
+                class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                [color]="'primary'" (click)="openUpdateDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-                <span class="">Edit</span>
+                <span class="ml-2 mr-1">Edit</span>
             </button>
         </div>
-        <!-- Image-->
-        <div class="flex sm:justify-start justify-center py-2 border-t mx-4">
+    </div>
+    <!-- Image-->
+    <!-- <div class="flex sm:justify-start justify-center py-2 border-t mx-4">
             <img class="inline-block h-24 w-24 rounded-full sm:ml-20" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
-        </div>
-        <form [formGroup]="selectedProductForm" class="flex flex-col flex-auto sm:p-0 p-6 sm:grid overflow-y-auto ">
-            <div class="grid sm:gap-2 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">First Name: </mat-label>
-                    <mat-label>Sam</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Last Name: </mat-label>
-                    <mat-label>John</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Email </mat-label>
-                    <mat-label>s@s.com</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Cell Phone Number: </mat-label>
-                    <mat-label>+1(123)-456-7890</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Home Phone Number: </mat-label>
-                    <mat-label class="">+1(123)-456-5890</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">US Phone Number: </mat-label>
-                    <mat-label class="">+1(123)-456-5890</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Address 1: </mat-label>
-                    <mat-label class="">Michigan Heights</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Address 2: </mat-label>
-                    <mat-label class="">Michigan Heights</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Town/City </mat-label>
-                    <mat-label class="">Michigan</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country: </mat-label>
-                    <mat-label class="">U.S.</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Postal Code: </mat-label>
-                    <mat-label class="">54000</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Supervisor Phone Number: </mat-label>
-                    <mat-label class="">000-0000-0000</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Emergency Contact Name: </mat-label>
-                    <mat-label class="">John</mat-label>
-                </div>
-                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Emergency Contact Phone: </mat-label>
-                    <mat-label class="">000-0000-0000</mat-label>
-                </div>
-
+        </div> -->
+    <div *ngIf="(employeeData$ | async) as employee" 
+        class="flex flex-col flex-auto sm:p-0 p-6 sm:grid overflow-y-auto mt-6">
+        <div class="grid sm:gap-3 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">First Name: </mat-label>
+                <mat-label>{{employee.first_name}}</mat-label>
             </div>
-        </form>
-    </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Last Name: </mat-label>
+                <mat-label>{{employee.last_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Email </mat-label>
+                <mat-label>{{employee.email}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Cell Phone Number:</mat-label>
+                <mat-label>+1 {{ employee.cell_phone_number}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Home Phone Number: </mat-label>
+                <mat-label >+1 {{ employee.home_phone_number}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
+                <mat-label>{{employee.date_of_birth}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Age:</mat-label>
+                <mat-label>{{employee.age}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Marital Status: </mat-label>
+                <mat-label class="">{{employee.marital_status}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Language Spoken: </mat-label>
+                <mat-label class="">{{employee.languages}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Speaking English:
+                </mat-label>
+                <mat-label class="">{{employee.rank_speaking_english}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Address 1: </mat-label>
+                <mat-label class="">{{employee.address_1}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Address 2: </mat-label>
+                <mat-label class="">{{employee.address_2}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Town/City:</mat-label>
+                <mat-label class="">{{employee.town_city}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">County/Province:</mat-label>
+                <mat-label class="">{{employee.county_province}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Postal Code: </mat-label>
+                <mat-label class="">{{employee.postal_code}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:</mat-label>
+                <mat-label class="">{{employee.country}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Emergency Contact Name:
+                </mat-label>
+                <mat-label class="">{{employee.emergency_contact_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Emergency Contact Phone:
+                </mat-label>
+                <mat-label class="">{{employee.emergency_contact_phone}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Authorized to Work in US:
+                </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.authorized_to_work === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.authorized_to_work === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">US Citizen: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.us_citizen === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.us_citizen === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">CDL License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.cdl_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.cdl_license === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Lorry License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.lorry_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.lorry_license === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Tractor License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.tractor_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.tractor_license === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Do You have a Passport:
+                </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee.passport === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee.passport === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Work Experience Description:
+                </mat-label>
+                <mat-label class="">{{employee.work_experience_description}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Farm Eq.
+                    Experience: </mat-label>
+                <mat-label class="">{{employee.question_1}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Harvest Eq.
+                    Experience: </mat-label>
+                <mat-label class="">{{employee.question_2}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Driving Trucks Ability:
+                </mat-label>
+                <mat-label class="">{{employee.question_3}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Welding Ability:
+                </mat-label>
+                <mat-label class="">{{employee.question_4}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Mechanical Ability:
+                </mat-label>
+                <mat-label class="">{{employee.question_5}}</mat-label>
+            </div>
 
-    <div class="flex justify-end mr-14 mt-1 mb-4">
-        <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
-                <span class="ml-2 mr-1">Cancel</span>
-            </button>
-        <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Save</span>
-            </button>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
+                    Name: </mat-label>
+                <mat-label class="">{{employee.supervisor_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
+                    Phone Number: </mat-label>
+                <mat-label class="">+1 {{ employee.supervisor_contact}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Education Degree Name:
+                </mat-label>
+                <mat-label class="">{{employee.degree_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Reasons for Applying:
+                </mat-label>
+                <mat-label class="">{{employee.reason_for_applying}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">How did you hear about DHT:
+                </mat-label>
+                <mat-label class="">{{employee.hear_about_dht}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">US Phone Number: </mat-label>
+                <mat-label class="">+1 {{ employee.us_phone_number}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Blood Type: </mat-label>
+                <mat-label class="">{{employee.blood_type}}</mat-label>
+            </div>
+
+        </div>
     </div>
+</div>
+
+<div class="flex justify-end mr-14 mt-1 mb-4">
+    <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
+        <span class="ml-2 mr-1">Cancel</span>
+    </button>
+    <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
+        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+        <span class="ml-2 mr-1">Save</span>
+    </button>
+</div>

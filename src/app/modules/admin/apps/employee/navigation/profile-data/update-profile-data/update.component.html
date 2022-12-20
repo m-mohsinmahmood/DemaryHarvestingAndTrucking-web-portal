@@ -1,0 +1,291 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Edit Employee Profile</div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date Of Birth</mat-label>
+                    <input id="date" name="date" formControlName="date_of_birth" matInput [matDatepicker]="picker4">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                    <mat-hint *ngIf="this.form.get('date_of_birth').hasError('required')"
+                        class="text-xs text-red-500">Date Of Birth is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Age</mat-label>
+                    <input matInput type="text" formControlName="age">
+                    <mat-hint *ngIf="this.form.get('age').hasError('required')" class="text-xs text-red-500">Age is
+                        required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Marital Status</mat-label>
+                    <mat-select formControlName="marital_status">
+                        <mat-option value="Single"> Single</mat-option>
+                        <mat-option value="Married">Married</mat-option>
+                        <mat-option value="Divorced"> Divorced</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('marital_status').hasError('required')"
+                        class="text-xs text-red-500">Marital Status is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full languages overflow-hidden">
+                    <mat-label>Languages</mat-label>
+                    <mat-select formControlName="languages" class="languages overflow-hidden" multiple>
+                        <mat-option value="English">English</mat-option>
+                        <mat-option value="Spanish">Spanish</mat-option>
+                        <mat-option value="Chinese">Chinese</mat-option>
+                        <mat-option value="Arabic">Arabic</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('languages').hasError('required')"
+                        class="text-xs text-red-500">Languages are required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Degree Name</mat-label>
+                    <input matInput type="text" formControlName="degree_name">
+                </mat-form-field>
+                <mat-hint *ngIf="this.form.get('degree_name').hasError('required')" class="text-xs text-red-500">Degree
+                    Name is required</mat-hint>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Blood Type</mat-label>
+                    <mat-select formControlName="blood_type">
+                        <mat-option value="A+">A+</mat-option>
+                        <mat-option value="A-">A-</mat-option>
+                        <mat-option value="B+">B+</mat-option>
+                        <mat-option value="B-">B-</mat-option>
+                        <mat-option value="AB+">AB+</mat-option>
+                        <mat-option value="AB-">AB-</mat-option>
+                        <mat-option value="O+">O+</mat-option>
+                        <mat-option value="O-">O-</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('blood_type').hasError('required')"
+                        class="text-xs text-red-500">Blood Group is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Authorized to Work in US?</mat-label>
+                    <mat-select matNativeControl formControlName="authorized_to_work">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('authorized_to_work').hasError('required')"
+                        class="text-xs text-red-500">Do you have a Lorry License? field is required
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Are you a US Citizen?</mat-label>
+                    <mat-select formControlName="us_citizen">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('us_citizen').hasError('required')" class="text-xs text-red-500">Are
+                        you a US Citizen? field is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Do you have a Lorry License?</mat-label>
+                    <mat-select matNativeControl formControlName="lorry_license">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('lorry_license').hasError('required')"
+                        class="text-xs text-red-500">Do you have a Lorry License? field is required
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Do you have a CDL License?</mat-label>
+                    <mat-select matNativeControl formControlName="cdl_license">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('cdl_license').hasError('required')" class="text-xs text-red-500">Do
+                        you have a CDL License? field is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Do you have a Tractor License?</mat-label>
+                    <mat-select matNativeControl formControlName="tractor_license">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('tractor_license').hasError('required')"
+                        class="text-xs text-red-500">Do you have a Tractor License? field is required
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Passport?</mat-label>
+                    <mat-select matNativeControl formControlName="passport">
+                        <mat-option value="true"> Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="this.form.get('passport').hasError('required')"
+                        class="text-xs text-red-500">Passport is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Supervisor Name</mat-label>
+                    <input matInput type="text" id="Supervisor" name="Supervisor" formControlName="supervisor_name"
+                        placeholder="Supervisor Name">
+                    <mat-hint *ngIf="this.form.get('supervisor_name').hasError('supervisor')"
+                        class="text-xs text-red-500">Supervisor Name is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Supervisor Contact Number</mat-label>
+                    <input matInput type="number" id="supervisorContact" name="postal-code"
+                        formControlName="supervisor_contact" placeholder="Supervisor Contact #">
+                    <mat-hint *ngIf="this.form.get('supervisor_contact').hasError('required')"
+                        class="text-xs text-red-500">Supervisor Contact Number is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class=" flex flex-col flex-auto justify-between gap-x-6 p-0 sm:mb-0 mb-6">
+                <mat-form-field class="w-full mt-4" appearance="outline">
+                    <mat-label>Brief Description of work experience</mat-label>
+                    <textarea matInput type="text" id="Address 2" formControlName="work_experience_description"
+                        placeholder="Brief Description of work experience"> </textarea>
+                    <mat-hint *ngIf="this.form.get('work_experience_description').hasError('required')"
+                        class="text-xs text-red-500">Brief Description of work experience field is required
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <p class="font-semibold text-2xl my-0">Self Ranking</p>
+        </div>
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-auto md:w-7/12 lg:w-88">
+                    <label>Rank Speaking English: </label>
+                </div>
+
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="rank_speaking_english">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('rank_speaking_english').hasError('required')"
+                        class="text-xs text-red-500">
+                        Rank Speaking English field is required</mat-hint>
+                </mat-radio-group>
+            </div>
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-auto md:w-7/12 lg:w-88">
+                    <label>Operating Farm Equipment (ie. Tractors): </label>
+                </div>
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="question_1">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('question_1').hasError('required')" class="text-xs text-red-500">
+                        Operating Farm Equipment field is required</mat-hint>
+                </mat-radio-group>
+            </div>
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-auto md:w-8/12 lg:w-88">
+                    <label>Operating Harvesting Equipment (ie. Combines): </label>
+                </div>
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="question_2">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('question_2').hasError('required')"
+                        class="text-xs text-red-500">Operating Harvesting Equipment field is required
+                    </mat-hint>
+                </mat-radio-group>
+            </div>
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-auto md:w-8/12 lg:w-88">
+                    <label class="font-md">Driving Trucks (ie. Artic and/or Semi's): </label>
+                </div>
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="question_3">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('question_3').hasError('required')"
+                        class="text-xs text-red-500">Driving
+                        Trucks (ie. Artic and/or Semi's) field is
+                        required</mat-hint>
+                </mat-radio-group>
+            </div>
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-6/12 md:w-8/12 lg:w-88">
+                    <label>Welding Experience: </label>
+                </div>
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="question_4">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('question_4').hasError('required')"
+                        class="text-xs text-red-500">Welding
+                        Experience field is required</mat-hint>
+                </mat-radio-group>
+            </div>
+            <div class="md:flex lg:flex align-center my-1.5">
+                <div class="sm:w-6/12 md:w-8/12 lg:w-88">
+                    <label>Mechanical Experience: </label>
+                </div>
+                <mat-radio-group class="grid md:flex lg:flex" formControlName="question_5">
+                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-hint *ngIf="this.form.get('question_5').hasError('required')"
+                        class="text-xs text-red-500">Mechanical Experience field is required</mat-hint>
+                </mat-radio-group>
+            </div>
+        </div>
+    </form>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+            <!-- Discard -->
+            <button type="submit" class="order-first sm:order-last bg-amber-600" mat-flat-button [color]="'primary'"
+                (click)="discard()">
+                Discard
+            </button>
+            <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'"
+                (click)="submit()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

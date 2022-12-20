@@ -1,4 +1,3 @@
-import { BooleanInput } from '@angular/cdk/coercion';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -25,6 +24,7 @@ import {
     merge,
     Observable,
     Subject,
+    Subscription,
     switchMap,
     takeUntil,
 } from 'rxjs';
@@ -44,25 +44,7 @@ import { countryList } from './../../../../../../JSON/country';
 @Component({
     selector: 'app-employee',
     templateUrl: './list.component.html',
-    styles: [
-        /* language=SCSS */
-        `
-            .employee-grid {
-                grid-template-columns: 35% 35% 36% ;
-
-        @screen sm {
-            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
-        }
-        @screen md {
-            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
-        }
-
-        @screen lg {
-            grid-template-columns: 10% 10% 15% 20% 13% 10% 5% 5%;
-        }
-            }
-        `,
-    ],
+    styleUrls: ['./list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
@@ -71,8 +53,26 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
+    //#region observable
     employeesdata$: Observable<Employee[]>;
-    employeeList: any[] = [];
+    employeeList$: Observable<Employee[]>;
+    employee$: Observable<Employee[]>;
+    isLoadingEmployeeList$: Observable<boolean>;
+    isLoadingEmployee$: Observable<boolean>;
+    //#endregion
+
+
+    //#region variables
+    page: number;
+    limit: number;
+    pageSize = 10;
+    pageSizeOptions: number[] = [5, 10, 25, 50];
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+
+    search: Subscription;
+    searchResult: string;
     importEmployeeList: any[] = [];
     arrayBuffer: any;
     file: File;
@@ -80,7 +80,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     isFileError: boolean = false;
     fileHeaders: any[] = [];
     importFileData: any;
-    countries: string[] =[];
+    countries: string[] = [];
     statusList: string[] = [
         'Hired',
         'Evaluated',
@@ -89,7 +89,13 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         'N/A',
         'Not Being Considered',
     ];
+    isLoading: boolean = false;
+    pagination: EmployeePagination;
+    searchInputControl: FormControl = new FormControl();
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
+    //#region Import Validation
     importSchema = Joi.object({
         fullName: Joi.string().min(3).max(30).required(),
         firstName: Joi.string().min(3).max(30).required(),
@@ -105,142 +111,70 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         salary: Joi.number().required(),
         currentEmployee: Joi.required(),
     });
+    //#endregion
 
-    flashMessage: 'success' | 'error' | null = null;
-    isLoading: boolean = false;
-    pagination: EmployeePagination;
-    searchInputControl: FormControl = new FormControl();
-    selectedProduct: Employee | null = null;
-    selectedProductForm: FormGroup;
-    tagsEditMode: boolean = false;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-    /**
-     * Constructor
-     */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseConfirmationService: FuseConfirmationService,
-        private _formBuilder: FormBuilder,
         private _router: Router,
         private _employeeService: EmployeeService,
         private _matDialog: MatDialog
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * On init
-     */
+    //#region life-cycle methods
     ngOnInit(): void {
-        // passing country array
         this.countries = countryList;
-
-
-        // Get the pagination
-        this._employeeService.pagination$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((pagination: EmployeePagination) => {
-                // Update the pagination
-                this.pagination = pagination;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the employees
-        this.employeesdata$ = this._employeeService.employeedata$;
-        console.log('Employee',this.employeesdata$);
-
-        this.employeesdata$.subscribe((value) => {
-            this.employeeList = value;
-        });
-
-        // Subscribe to search input field value changes
-        this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                switchMap((query) => {
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return this._employeeService.getEmployees(
-                        0,
-                        10,
-                        'name',
-                        'asc',
-                        query
-                    );
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
-            )
-            .subscribe();
+     
     }
 
-    /**
-     * After view init
-     */
     ngAfterViewInit(): void {
-        if (this._sort && this._paginator) {
-            // Set the initial sort
-            this._sort.sort({
-                id: 'name',
-                start: 'asc',
-                disableClear: true,
-            });
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-
-            // If the user changes the sort order...
-            this._sort.sortChange
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(() => {
-                    // Reset back to the first page
-                    this._paginator.pageIndex = 0;
-
-                    // Close the details
-                    this.closeDetails();
-                });
-
-            // Get employees if sort or page changes
-            merge(this._sort.sortChange, this._paginator.page)
-                .pipe(
-                    switchMap(() => {
-                        this.closeDetails();
-                        this.isLoading = true;
-                        return this._employeeService.getEmployees(
-                            this._paginator.pageIndex,
-                            this._paginator.pageSize,
-                            this._sort.active,
-                            this._sort.direction
-                        );
-                    }),
-                    map(() => {
-                        this.isLoading = false;
-                    })
-                )
-                .subscribe();
-        }
+        this.initObservables();
+        this.initApis();
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 
+    //#endregion
+
+    //#region Init Methods
+    initObservables() {
+        this.isLoadingEmployeeList$ = this._employeeService.isLoadingEmployeeList$;
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+        this.employeeList$ = this._employeeService.employeeList$;
+        this.employee$ = this._employeeService.employee$;
+        this.search = this.searchform.valueChanges
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe((data) => {
+                this.searchResult = data.search;
+                this.page = 1;
+                this._employeeService.getEmployees(
+                    1,
+                    10,
+                    '',
+                    '',
+                    this.searchResult
+                );
+            });
+    }
+
+    initApis() {
+        this._employeeService.getEmployees();
+    }
+    //#endregion
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    //#region Import/Export
     incomingfile(event) {
         this.file = event.target.files[0];
     }
@@ -250,8 +184,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.arrayBuffer = fileReader.result;
             const data = new Uint8Array(this.arrayBuffer);
             const arr = new Array();
-            for (let i = 0; i != data.length; ++i)
-                {arr[i] = String.fromCharCode(data[i]);}
+            for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
             const bstr = arr.join('');
             const workbook = XLSX.read(bstr, { type: 'binary' });
             const first_sheet_name = workbook.SheetNames[0];
@@ -287,9 +220,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
             } catch (err) {
                 const message = err.details.map(i => i.message).join(',');
                 this.importEmployeeList[index].error = message;
-                console.log('INDEX', index);
                 this.isFileError = true;
-                console.log(err);
             }
         });
     }
@@ -298,155 +229,50 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         const wb = utils.book_new();
         const ws: any = utils.json_to_sheet([]);
         utils.sheet_add_aoa(ws, headings);
-        utils.sheet_add_json(ws, this.employeeList, {
-            origin: 'A2',
-            skipHeader: true,
-        });
+        // utils.sheet_add_json(ws, this.employeeList, {
+        //     origin: 'A2',
+        //     skipHeader: true,
+        // });
         utils.book_append_sheet(wb, ws, 'Report');
         writeFile(wb, 'employee Report.xlsx');
     }
 
-    openAddDialog(): void {
+    //#endregion
+
+    openEditDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddComponent);
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
+        dialogRef.afterClosed().subscribe((result) => { });
     }
-    /**
-     * Toggle employee details
-     *
-     * @param employeeId
-     */
+
+    //#region Sort Function
+    sortData(sort: any) {
+        this.page = 1;
+        this._employeeService.getEmployees(
+            this.page,
+            this.limit,
+            sort.active,
+            sort.direction,
+            this.searchResult
+        );
+    }
+    //#endregion
+
+    //#region  Pagination
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._employeeService.getEmployees(this.page, this.limit, '', '', this.searchResult);
+    }
+    //#endregion
+    //#region open details
     toggleDetails(employeeId: string): void {
-        // If the product is already selected...
-        /* if ( this.selectedProduct && this.selectedProduct.id === productId )
-        {
-            // Close the details
-            this.closeDetails();
-            return;
-        } */
-
-        // Get the product by id
-        /* this._employeeService.getProductById(productId)
-            .subscribe((product) => {
-                this._router.navigateByUrl('apps/employee/details/'+ productId)  */
-        /* // Set the selected product
-                this.selectedProduct = product;
-
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck(); */
-        /* }); */
         this._router.navigate(['/apps/employee/details/' + employeeId]);
     }
+    //#endregion
 
-    /**
-     * Close the details
-     */
-    closeDetails(): void {
-        this.selectedProduct = null;
-    }
 
-    /**
-     * Create employee
-     */
-    createEmployee(): void {
-        // Create the employee
-        this._employeeService.createEmployee().subscribe((newEmployee) => {
-            // Go to new employee
-            this.selectedProduct = newEmployee;
-
-            // Fill the form
-            this.selectedProductForm.patchValue(newEmployee);
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
-
-    /**
-     * Update the selected employee using the form data
-     */
-    updateSelectedEmployee(): void {
-        // Get the employee object
-        const employee = this.selectedProductForm.getRawValue();
-
-        // Remove the currentImageIndex field
-        delete employee.currentImageIndex;
-
-        // Update the employee on the server
-        this._employeeService
-            .updateEmployee(employee.id, employee)
-            .subscribe(() => {
-                // Show a success message
-                this.showFlashMessage('success');
-            });
-    }
-
-    /**
-     * Delete the selected employee using the form data
-     */
-    deleteSelectedEmployee(): void {
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete employee',
-            message:
-                'Are you sure you want to remove this employee? This action cannot be undone!',
-            actions: {
-                confirm: {
-                    label: 'Delete',
-                },
-            },
-        });
-
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-                // Get the employee object
-                const employee = this.selectedProductForm.getRawValue();
-
-                // Delete the employee on the server
-                this._employeeService
-                    .deleteEmployee(employee.id)
-                    .subscribe(() => {
-                        // Close the details
-                        this.closeDetails();
-                    });
-            }
-        });
-    }
-
-    /**
-     * Show flash message
-     */
-    showFlashMessage(type: 'success' | 'error'): void {
-        // Show the message
-        this.flashMessage = type;
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-
-        // Hide it after 3 seconds
-        setTimeout(() => {
-            this.flashMessage = null;
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }, 3000);
-    }
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
 }
+
+
+

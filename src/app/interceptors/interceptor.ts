@@ -31,5 +31,7 @@ export class Interceptor implements HttpInterceptor {
         // move to next HttpClient request life cycle
         return next.handle(request);
     }
+    //https://dht-dev.azurewebsites.net
+    //http://localhost:7071/
 }
 

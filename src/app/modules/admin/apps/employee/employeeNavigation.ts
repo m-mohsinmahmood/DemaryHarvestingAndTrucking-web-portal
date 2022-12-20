@@ -7,12 +7,12 @@ export const employeeNavigation = [
     {
         id: 2,
         title: 'Profile Data',
-        icon: 'mat_outline:local_shipping',
+        icon: 'heroicons_outline:user-circle',
     },
     {
         id: 3,
         title: 'Onboarding',
-        icon: 'mat_outline:price_change'
+        icon: 'heroicons_outline:rocket-launch'
     },
     {
         id: 4,
@@ -22,11 +22,11 @@ export const employeeNavigation = [
     {
         id: 5,
         title: 'Payroll',
-        icon: 'heroicons_outline:chart-pie',
+        icon: 'heroicons_outline:currency-dollar',
     },
     {
         id: 6,
         title: 'Documents',
-        icon: 'heroicons_outline:calculator',
+        icon: 'heroicons_outline:document',
     },
 ];

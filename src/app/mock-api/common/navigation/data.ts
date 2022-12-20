@@ -106,8 +106,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: "/apps/equipment/non-motorized",
       },
     ],
+  },
+  {
+    id: "employee",
+    title: "Employees",
+    type: "basic",
+    icon: "heroicons_outline:user-circle",
+    link: "/apps/employee",
   }
 
 ]
-
-
