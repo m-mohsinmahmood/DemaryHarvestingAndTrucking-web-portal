@@ -128,7 +128,7 @@ export class UpdateAddMotorizedComponent implements OnInit {
     id                          : [''],
     type                        : ['', [Validators.required]],
     status                      : true,
-    name                        : [''],
+    name                        : ['', [Validators.required]],
     license_plate               : [''],
     vin_number                  : [''],
     odometer                    : [''],
