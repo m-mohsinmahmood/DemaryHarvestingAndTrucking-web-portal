@@ -1,16 +1,19 @@
-<div class="flex flex-col px-3">
-    <p class="text-black  py-3 border-b mb-2 text-2xl font-extrabold tracking-tight">
-        Account Management
-    </p>
-    <div class="flex justify-between bg-gray-200 px-4 mx-2 rounded-md">
-        <p class="text-black font-semibold text-lg px-4 py-3">
-            Acccount Status
-        </p>
-        <div class="flex justify-center items-center">
-            <div class="w-4 bg-green-300 h-4 rounded-full"></div>
-            <p class="text-blue-600 font-medium text-lg px-2 py-3">Active</p>
-        </div>
+<div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b">
+    <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
+        <span class="ml-1 capitalize">Account Management</span>
     </div>
+</div>
+<div class="flex flex-col px-3 mt-4">
+    <form class="example-form" [formGroup]="form" ngNativeValidate>
+        <div class="flex justify-between bg-gray-200 px-4 mx-2 rounded-md">
+            <p class="text-black font-semibold text-lg px-4 py-3">
+                Acccount Status
+            </p>
+            <div class="flex justify-center items-center">
+                <div class="w-4 bg-green-300 h-4 rounded-full"></div>
+                <p class="text-blue-600 font-medium text-lg px-2 py-3">Active</p>
+            </div>
+        </div>
         <div class="sm:p-0 rounded-md mx-2 my-2 border">
             <!-- Main -->
             <div class="flex flex-auto overflow-hidden">
@@ -20,7 +23,8 @@
                         <ng-container>
                             <div class="grid">
                                 <!-- Header -->
-                                <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="account-management-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                    matSort matSortDisableClear>
                                     <div>Role</div>
                                     <div>
                                         Status
@@ -28,24 +32,29 @@
                                     <div>Actions</div>
                                 </div>
                                 <!-- Rows -->
-                                <ng-container>
-                                    <ng-container>
-                                        <div *ngFor=" let number of [0, 1,2]" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                            <div class="truncate">Combine Operator</div>
-
-                                            <div class="items-center">
-                                                <mat-icon class="greenActiveIcon" [svgIcon]="
-                                                        'heroicons_solid:check-circle'
-                                                    "></mat-icon>
-                                            </div>
-
-                                            <!-- Action -->
-                                            <div (click)="openEditFarmDialog()">
-                                                <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                            </div>
+                                <div>
+                                    <div *ngFor="let role of roles;index as i" class="account-management-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate">{{role.role}}</div>
+                                        <div class="items-center">
+                                            <mat-icon class="{{
+                                                    role.status === true
+                                                        ? 'greenActiveIcon'
+                                                        : 'redInActiveIcon'
+                                                }}" [svgIcon]="
+                                                role.status === true
+                                                        ? 'heroicons_solid:check-circle'
+                                                        : 'heroicons_solid:x-circle'
+                                                ">check-circle</mat-icon>
+                                            <mat-label></mat-label>
                                         </div>
-                                    </ng-container>
-                                </ng-container>
+                                        <!-- Action -->
+                                        <div>
+                                            <mat-slide-toggle (change)="toggleRole($event,i,role.role)"
+                                                [checked]=role.formRole
+                                                [formControlName]=role.formRole></mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
                                 [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
@@ -71,7 +80,14 @@
                     <p class="font-normal text-base text-gray-500 my-3 mx-4">Choose:</p>
                 </div>
                 <div class="flex flex-col my-3 mx-4">
-                    <mat-radio-button class="mb-2" value="before">Base Rate</mat-radio-button>
+                    <div class="flex  items-center gap-2">
+                        <mat-radio-button class="mb-2" value="before">Base Rate</mat-radio-button>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Base Rate</mat-label>
+                            <input type="number" matInput>
+                        </mat-form-field>
+                    </div>
+
                     <mat-radio-button class="" value="before">Minimum Wage by State</mat-radio-button>
                 </div>
             </div>
@@ -87,7 +103,7 @@
                         <p class="text-xs font-normal mr-6">$12.35/hour</p>
                         <p class="text-xs font-normal ">$11.35/hour</p>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
         <div class="flex justify-between mx-2 rounded-md mt-2">
@@ -98,11 +114,11 @@
                 <mat-form-field appearance="fill" class="w-40">
                     <mat-label>Choose an option</mat-label>
                     <mat-select>
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2" disabled>Option 2 (disabled)</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option value="option2" disabled>Option 2 (disabled)</mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
                     </mat-select>
-                  </mat-form-field>
+                </mat-form-field>
             </div>
         </div>
         <div class="border flex justify-center items-center mx-2 mb-2 rounded-md">
@@ -116,7 +132,7 @@
                     <p class="text-xs font-normal mr-6">$12.35/hour</p>
                 </div>
 
-              </div>
+            </div>
         </div>
+    </form>
 </div>
-

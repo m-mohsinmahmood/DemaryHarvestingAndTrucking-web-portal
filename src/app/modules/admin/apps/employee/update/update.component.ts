@@ -64,11 +64,10 @@ export class UpdateComponent implements OnInit {
     });
 
    // Get the employee by id
-   this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-   this.avatar = employee.avatar;
-   this.employees = employee;
-   this.form.patchValue(employee);
-  });
+   let emp = this._employeeService.getEmployeeById(this.data.id)
+   //this.avatar = employee.avatar;
+   this.employees = emp;
+   this.form.patchValue(emp);
     const internationalPhoneNumbersFormGroups = [];
     if ( this.employees.internationalPhoneNumber.length > 0 )
     {
