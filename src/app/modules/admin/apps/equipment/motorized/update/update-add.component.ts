@@ -19,6 +19,7 @@ import {
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export const MY_FORMATS = {
   parse: {
@@ -89,7 +90,7 @@ export class UpdateAddMotorizedComponent implements OnInit {
 
       //#region Observables
       motorized$: Observable<Motorized>;
-      isLoadingMotorized$: Observable<boolean>;
+      isLoadingMotorizedVehicle$: Observable<boolean>;
       closeDialog$: Observable<boolean>;
       private _unsubscribeAll: Subject<any> = new Subject<any>();
       //#endregion
@@ -110,6 +111,7 @@ export class UpdateAddMotorizedComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.initCalendar();
+    this.initObservables()
 
 
     this._motorizedService.closeDialog$
@@ -191,6 +193,12 @@ export class UpdateAddMotorizedComponent implements OnInit {
 }
   
 }
+//#region Init Observables
+initObservables() {
+  this.isLoadingMotorizedVehicle$ = this._motorizedService.isLoadingMotorizedVehicle$;
+  this.closeDialog$ = this._motorizedService.closeDialog$;
+}
+//#endregion
 
 
 onSubmit(): void {

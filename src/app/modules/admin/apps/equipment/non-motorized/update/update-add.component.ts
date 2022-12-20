@@ -124,6 +124,7 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
   }
 
   initForm() {
+    console.log("data",this.data)
     // Create the form
   this.form = this._formBuilder.group({
     id                      : [''],

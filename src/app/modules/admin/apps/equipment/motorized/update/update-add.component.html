@@ -237,8 +237,8 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button [class.spinner]="isLoadingMotorized$ | async"
-                [disabled]="form.invalid || ((isLoadingMotorized$) | async)" mat-flat-button color="primary"
+            <button [class.spinner]="isLoadingMotorizedVehicle$ | async"
+                [disabled]="form.invalid || ((isLoadingMotorizedVehicle$) | async)" mat-flat-button color="primary"
                 (click)="onSubmit()">
                 {{ this.data? "Update" : "Save" }}
 
