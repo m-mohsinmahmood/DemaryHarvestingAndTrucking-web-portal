@@ -14,6 +14,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Name</mat-label>
                     <input matInput formControlName="name" />
+                    <mat-hint *ngIf="this.form.get('name').hasError('required')" class="text-xs text-red-500">Name is required</mat-hint>
                 </mat-form-field>
             </div>
             
@@ -236,8 +237,8 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button [class.spinner]="isLoadingMotorized$ | async"
-                [disabled]="form.invalid || ((isLoadingMotorized$) | async)" mat-flat-button color="primary"
+            <button [class.spinner]="isLoadingMotorizedVehicle$ | async"
+                [disabled]="form.invalid || ((isLoadingMotorizedVehicle$) | async)" mat-flat-button color="primary"
                 (click)="onSubmit()">
                 {{ this.data? "Update" : "Save" }}
 

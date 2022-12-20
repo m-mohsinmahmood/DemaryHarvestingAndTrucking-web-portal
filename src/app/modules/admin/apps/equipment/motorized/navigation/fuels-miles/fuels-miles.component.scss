@@ -11,3 +11,19 @@
         grid-template-columns: 25% 25% 25% 20%;
     }
 }
+
+.machinery-grid-date-range
+{
+    grid-template-columns: 25% 25% 25% 20% ;
+
+    @screen sm {
+        grid-template-columns: 15% 15% 15% 20% 20%;
+    }
+    @screen md {
+        grid-template-columns: 15% 15% 15% 20% 20%;
+    }
+    @screen lg {
+        grid-template-columns:  15% 15% 15% 20% 20%;
+    }
+
+}

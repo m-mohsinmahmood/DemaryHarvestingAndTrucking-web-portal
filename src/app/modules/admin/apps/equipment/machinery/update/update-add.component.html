@@ -15,6 +15,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Name</mat-label>
                     <input matInput formControlName="name" />
+                    <mat-hint *ngIf="this.form.get('name').hasError('required')" class="text-xs text-red-500">Name is required</mat-hint>
                 </mat-form-field>
             </div>
 
@@ -23,7 +24,6 @@
                     <mat-label class="w-4/12">Type</mat-label>
                     <input matInput formControlName="type" />
                     <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is required</mat-hint>
-
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
