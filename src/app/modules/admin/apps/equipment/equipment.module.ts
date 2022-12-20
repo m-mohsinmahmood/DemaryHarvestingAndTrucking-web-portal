@@ -48,6 +48,7 @@ import { FuelsMilesComponent } from './motorized/navigation/fuels-miles/fuels-mi
 import { UpdateAddMotorizedComponent } from './motorized/update/update-add.component';
 import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-add.component';
 import { BirthDateFormat } from './machinery/update/update-add.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -122,6 +123,7 @@ import { BirthDateFormat } from './machinery/update/update-add.component';
         MatExpansionModule,
         FuseDrawerModule,
         MatSidenavModule,
+        MatToolbarModule
     ]
 })
 export class EquipmentModule

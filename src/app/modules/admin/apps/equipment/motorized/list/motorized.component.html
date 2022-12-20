@@ -56,7 +56,8 @@
                                 <div class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
 
                                     <!-- Name -->
-                                    <div class="truncate">
+                                    <div (click)="toggleDetails(motorized.id)"
+                                    class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate">
                                         {{ motorized.name }}
                                     </div>
 
@@ -115,13 +116,14 @@
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }" [length]="motorizedList.motorized.length"
                         [pageIndex]="motorizedList.motorized.page" [pageSize]="motorizedList.motorized.size"
-                        [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"></mat-paginator>
+                        [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+                        (page)="pageChanged($event)"></mat-paginator>
                 </ng-container>
             </ng-container>
 
-            <ng-template #noProducts>
+            <ng-template #noVehicle>
                 <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                    There are no products!
+                    There are no Motorized Vehicles!
                 </div>
             </ng-template>
         </div>
