@@ -167,6 +167,8 @@ export class MotorizedListComponent
     //#region Sort Function
     sortData(sort: any) {
         this.page = 1;
+        this.sort = sort.active;
+        this.order = sort.direction
         this._motorizedService.getMotorizedVehicles(
             this.page,
             this.limit,
@@ -179,5 +181,13 @@ export class MotorizedListComponent
         return item.id || index;
     }
 
+    //#endregion
+
+      //#region  Pagination
+      pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._motorizedService.getMotorizedVehicles(this.page, this.limit, '', '');
+    }
     //#endregion
 }

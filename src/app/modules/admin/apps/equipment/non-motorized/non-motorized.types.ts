@@ -6,6 +6,10 @@ export interface NonMotorized
     name:string;
     license_plate:string;
     vin_number:string;
+
+    odometer:string;
+    odometer_reading: string;
+
     company_id:string;
     color:string;
     year:string;
@@ -25,4 +29,6 @@ export interface NonMotorized
     estimated_market_value:string;
     source_of_market_value:string;
     date_of_market_value:string;
+    pictures: string;
+
 }

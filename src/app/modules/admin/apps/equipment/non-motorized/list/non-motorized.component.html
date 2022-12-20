@@ -72,7 +72,8 @@
                                    
 
                                     <!-- Name -->
-                                    <div class="truncate">
+                                    <div (click)="toggleDetails(nonMotorized.id)" 
+                                    class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate">
                                         {{ nonMotorized.name }}
                                     </div>
 
@@ -140,6 +141,7 @@
                         [pageSize]="nonMotorizedList.non_motorized.size"
                         [pageSizeOptions]="pageSizeOptions"
                         [showFirstLastButtons]="true"
+                        (page)="pageChanged($event)"
                     ></mat-paginator>
                 </ng-container>
             </ng-container>
@@ -148,7 +150,7 @@
                 <div
                     class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
                 >
-                    There are no products!
+                    There are no Non Motorized Vehicles!
                 </div>
             </ng-template>
         </div>

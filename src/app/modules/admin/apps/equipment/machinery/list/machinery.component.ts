@@ -165,6 +165,8 @@ export class MachineryListComponent
     //#region Sort Function
     sortData(sort: any) {
         this.page = 1;
+        this.sort = sort.active;
+        this.order = sort.direction
         this._machineryService.getMachineries(
             this.page,
             this.limit,
@@ -176,6 +178,13 @@ export class MachineryListComponent
 
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+    //#endregion
+       //#region  Pagination
+       pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.limit = event.pageSize;
+        this._machineryService.getMachineries(this.page, this.limit, '', '', this.searchResult);
     }
     //#endregion
 }
