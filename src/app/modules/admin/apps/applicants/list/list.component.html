@@ -202,7 +202,7 @@
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }" [length]="applicant.count"
-                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                         (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                 </ng-container>
             </ng-container>
@@ -290,7 +290,7 @@
                     </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button (click)="removeFilters(); filtersDrawer.close()"
+                    <button  [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status)" (click)="removeFilters(); filtersDrawer.close()"
                         class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
                         <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
                         <span>Remove filters</span>

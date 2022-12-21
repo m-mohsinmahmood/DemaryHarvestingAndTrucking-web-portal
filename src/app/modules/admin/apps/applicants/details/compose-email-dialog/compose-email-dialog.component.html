@@ -92,11 +92,11 @@
                     Discard
                 </button>
                 <!-- Skip -->
-                <button [disabled]="data.form.invalid"  class="mr-2" mat-flat-button [color]="'warn'" (click)="skip()">
+                <button [disabled]="data.form.invalid|| this.formValid"  class="mr-2" mat-flat-button [color]="'warn'" (click)="skip()">
                     <span class=" ">Skip</span>
                 </button>
                 <!-- Send -->
-                <button [disabled]="data.form.invalid"   class="" mat-flat-button [color]="'primary'" (click)="send()">
+                <button [disabled]="data.form.invalid || this.formValid"   class="" mat-flat-button [color]="'primary'" (click)="send()">
                     <span class=" ">Save</span>
                 </button>
             </div>

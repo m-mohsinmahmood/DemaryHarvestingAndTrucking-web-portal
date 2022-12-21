@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { Applicant } from '../applicants.types';
@@ -22,6 +22,7 @@ import {
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { states } from 'JSON/state';
+import { countryList } from 'JSON/country';
 
 export const MY_FORMATS = {
     parse: {
@@ -108,7 +109,12 @@ export class UpdateComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     isEdit: boolean;
-    states: string[]= [];
+    states: string[] = [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+
+
 
     //#endregion
 
@@ -132,9 +138,20 @@ export class UpdateComponent implements OnInit {
         this.initObservables();
         this.initCalendar();
         this.states = states;
+        this.countries = countryList;
+
+        //Auto Complete functions for State and Country
+        this.stateOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
 
 
-        console.log("abcd", this.data.applicantData);
         this.isEdit = this.data.isEdit;
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -145,6 +162,19 @@ export class UpdateComponent implements OnInit {
                 }
             });
     }
+
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value;
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
+    }
+
+    private _filterCountries(value: string): string[] {
+        console.log(value,countryList)
+        const filterValue = value;
+        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
     // #region initializing forms
     initApplicantForm() {
         console.log("this.data", this.data);
@@ -152,7 +182,7 @@ export class UpdateComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email  : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             cell_phone_number: ['', [Validators.required]],
             home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
@@ -160,6 +190,7 @@ export class UpdateComponent implements OnInit {
             marital_status: ['', [Validators.required]],
             languages: ['', [Validators.required]],
             rank_speaking_english: ['', [Validators.required]],
+
         });
 
         this.secondFormGroup = this._formBuilder.group({
@@ -167,8 +198,8 @@ export class UpdateComponent implements OnInit {
             address_2: [''],
             town_city: ['', [Validators.required]],
             county_providence: ['', [Validators.required]],
-            state: ['', [Validators.required]],
             postal_code: ['', [Validators.required]],
+            state: ['', [Validators.required]],
             country: ['', [Validators.required]],
             avatar: [''],
         });
