@@ -246,7 +246,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     decisionMadeForm: true,
-                    makeOffer: false,
+                    recruiterDecision: true,
                     applicant: this.applicant.applicant_info,
                     form: this.decisionMadeForm,
                 },
