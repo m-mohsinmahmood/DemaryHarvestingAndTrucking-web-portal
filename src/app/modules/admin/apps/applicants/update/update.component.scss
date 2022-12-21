@@ -161,3 +161,7 @@
 //     min-width: calc(100% + 17px) !important;
 //     margin-left: 32px !important;
 // }
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background: #22c55e !important;
+  }

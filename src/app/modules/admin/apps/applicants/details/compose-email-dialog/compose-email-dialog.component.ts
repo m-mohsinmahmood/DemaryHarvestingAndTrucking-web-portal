@@ -90,7 +90,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   patchForm() {
     const { applicant } = this.data;
     this.current_status_step = applicant.status_step;
-    this.current_status_message = applicant.status_message;
+    this.data.decisionMadeForm? this.current_status_message = "Results" : this.current_status_message = applicant.status_message;
     this.data.form.patchValue({
       to: applicant.email,
       id: applicant.id,
@@ -119,8 +119,18 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
 
   send(): void {
     this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id != undefined ? this.data.form.value['recruiter_id']?.id : "";
-    console.log("this.data.form.value", this.data.form.value);
     this.data.form.value['body'] = this.email_text;
+    this._applicantService.patchApplicant(
+        Object.assign(this.data.form.value, { to: this.data.applicant.email }),
+        false
+    );
+    this.matDialogRef.close();
+    this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
+    this.data.form.reset();
+  }
+
+  skip(): void {
+    this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id != undefined ? this.data.form.value['recruiter_id']?.id : "";
     this._applicantService.patchApplicant(
         Object.assign(this.data.form.value, { to: this.data.applicant.email }),
         false

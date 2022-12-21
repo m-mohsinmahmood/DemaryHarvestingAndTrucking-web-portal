@@ -225,7 +225,7 @@ export class ListCropComponent implements OnInit {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((value) => {
             allCustomerCrop = value
-            const headings = [['Crop Name', 'Status', 'Calendar Year']];
+            const headings = [['Crop Name', 'Status', 'Year']];
             const wb = utils.book_new();
             const ws: any = utils.json_to_sheet([]);
             utils.sheet_add_aoa(ws, headings);

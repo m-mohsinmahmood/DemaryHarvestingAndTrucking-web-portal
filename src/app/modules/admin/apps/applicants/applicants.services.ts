@@ -143,7 +143,7 @@ export class ApplicantService {
     //#endregion
 
     //#region Applicant API's 
-    getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: ''},
+    getApplicants(page: number = 1, limit: number = 10, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '',date: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -153,6 +153,9 @@ export class ApplicantService {
         params = params.set('order', order);
         params = params.set('state', filters.state);
         params = params.set('created_at', filters.created_at);
+        params = params.set('status', filters.status );
+        params = params.set('ranking', filters.ranking );
+        params = params.set('date', filters.date );
         return this._httpClient
             .get<any>(`api-1/applicants`, {
                 params,
@@ -255,11 +258,10 @@ export class ApplicantService {
             console.log('Recruiter', newData);
         } else {
             const { body, recruiter_id, subject, to, ...applicant_data } = data;
-            const { id, status_step, status_message, ...email_data } = data;
+            const { id, status_step, status_message,reason_for_rejection, ...email_data } = data;
             newData = Object.assign({}, { applicant_data }, { email_data });
         }
 
-        console.log("NEW DATA",newData)
         
         this._httpClient
             .patch(`api-1/applicants${url}`, newData)

@@ -1,24 +1,24 @@
 <!--Resources Nested Tabs-->
 <div class="h-full rounded-lg overflow-auto absolute inset-0 overflow-hidden bg-card dark:bg-transparent">
     <mat-tab-group mat-align-tabs="start" class="tab_group" (selectedTabChange)="rateTabChanged($event)">
-        <!-- Custom Harvesting-->
-        <mat-tab label="Custom Harvesting">
+        <!-- Harvesting-->
+        <mat-tab label="Harvesting">
             <!-- Combining -->
             <app-list-combining-rate [combiningRateList]="(combiningRateList$ | async)"></app-list-combining-rate>
             <!-- Hauling -->
             <app-list-hauling-rate [haulingRateList]="(haulingRateList$ | async)"></app-list-hauling-rate>
         </mat-tab>
-        <!--Commercial Trucking -->
-        <mat-tab label="Commercial Trucking">
+        <!--Trucking -->
+        <mat-tab label="Trucking">
             <app-list-trucking-rate [truckingRateList]="(truckingRateList$ | async)"></app-list-trucking-rate>
         </mat-tab>
-        <!--Custom Farming-->
-        <mat-tab label="Custom Farming">
+        <!--Farming-->
+        <mat-tab label="Farming">
             <app-list-farming-rate [farmingRateList]="(farmingRateList$ | async)"></app-list-farming-rate>
         </mat-tab>
         <!-- Summary -->
         <mat-tab label="Summary" class="summary-tab flex flex-col">
-            <!-- Custom Harvesting-->
+            <!-- Harvesting-->
             <div
                 class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
@@ -266,12 +266,12 @@
                     </div>
                 </div>
             </div>
-            <!--Commercial Trucking -->
+            <!--Trucking -->
             <div
                 class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
-                        Commercial Trucking
+                        Trucking
                     </header>
                 </div>
                 <div class="mt-2 flex">
@@ -364,19 +364,19 @@
                         <ng-template class="flex" #noTruckingRateList>
                             <div class="show-centered-notice h-full justify-center items-center flex">
                                 <div class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
-                                    No Commercial Trucking Rate(s) Found!
+                                    No Trucking Rate(s) Found!
                                 </div>
                             </div>
                         </ng-template>
                     </div>
                 </div>
             </div>
-            <!--Custom Farming-->
+            <!--Farming-->
             <div
                 class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8 border-t border-gray-200">
                 <div>
                     <header class="ml-2 text-3xl font-extrabold tracking-tight">
-                        Custom Farming
+                        Farming
                     </header>
                 </div>
                 <div class="mt-2 flex">
@@ -469,7 +469,7 @@
                         <ng-template class="flex" #nofarmingRateList>
                             <div class="show-centered-notice h-full justify-center items-center flex">
                                 <div class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
-                                    No Custom Farming Rate(s) Found!
+                                    No Farming Rate(s) Found!
                                 </div>
                             </div>
                         </ng-template>

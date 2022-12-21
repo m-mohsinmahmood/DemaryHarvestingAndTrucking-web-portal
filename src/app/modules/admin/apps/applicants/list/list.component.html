@@ -8,7 +8,7 @@
         </div>
         <!-- Title -->
         <div class="text-2xl font-extrabold tracking-tight">Applicants <mat-hint
-                *ngIf="applicantFiltersForm.value.state || applicantFiltersForm.value.created_at "
+                *ngIf="applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status "
                 class="text-sm ml-2 mt-1">(Filters Applied)</mat-hint></div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
@@ -19,17 +19,19 @@
                     <input matInput formControlName="search" [autocomplete]="'off'" [placeholder]="'Search'" />
                 </form>
             </mat-form-field>
-            <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
-                <mat-icon *ngIf="applicantFiltersForm.value.state || applicantFiltersForm.value.created_at"
-                    [svgIcon]="'heroicons_solid:filter'"></mat-icon>
-                <mat-icon *ngIf="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at"
-                    [svgIcon]="'heroicons_outline:filter'"></mat-icon>
-            </button>
             <!-- Add product button -->
-            <!-- <button class="ml-4" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+            <button class="mr-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="lg:ml-2">Add</span>
-            </button> -->
+            </button>
+
+            <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+                <mat-icon *ngIf="applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status"
+                    [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+                <mat-icon *ngIf="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status"
+                    [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            </button>
+            
             <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
             </button> -->
@@ -67,6 +69,9 @@
                             </div>
                             <div mat-sort-header="created_at" class="hidden sm:block">
                                 Year
+                            </div>
+                            <div mat-sort-header="ranking" class="hidden sm:block">
+                                Ranking
                             </div>
                             <div mat-sort-header="status_message" class="hidden sm:block">
                                 Status
@@ -112,8 +117,10 @@
                                         <div class="capitalize hidden sm:block truncate">
                                             {{ applicant.created_at | date: "YYYY" }}
                                         </div>
-                                        <!-- Foreign Phone number -->
-
+                                        <!-- Created At -->
+                                        <div class="capitalize hidden sm:block truncate">
+                                            {{ applicant.ranking? applicant.ranking + '%' : '0%' }}
+                                        </div>
                                         <!-- Status -->
                                         <div class="hidden sm:block">
                                             <div matTooltip="{{ applicant.status_message }}" matTooltipPosition="above"
@@ -225,6 +232,38 @@
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="applicantFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
+                        <mat-form-field birthdayFormat appearance="outline">
+                            <mat-label>Date </mat-label>
+                            <input id="date" name="date" formControlName="date" matInput
+                                [matDatepicker]="picker4">
+                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                            <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value="Preliminary Review">Preliminary Review</mat-option>
+                                <mat-option value="First Interview Completed">First Interview Completed</mat-option>
+                                <mat-option value="Second Interview Completed">Second Interview Completed</mat-option>
+                                <mat-option value="Third Interview Completed">Third Interview Completed</mat-option>
+                                <mat-option value="Reference Call Completed">Reference Call Completed</mat-option>
+                                <mat-option value="Recruiter Decision Made">Recruiter Decision Made</mat-option>
+                                <mat-option value="Offer Made">Offer Made</mat-option>
+                                <mat-option value="Offer Accepted">Offer Accepted</mat-option>
+                                <mat-option value="Advance to Pre-Employment Process">Advance to Pre-Employment Process</mat-option>
+                                <mat-option value="Hired">Hired</mat-option>
+                                <mat-option value="Waitlisted">Waitlisted</mat-option>
+                                <mat-option value="Qualifications dont match current openings">Qualifications dont match current openings</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select Ranking</mat-label>
+                            <mat-select formControlName="ranking">
+                                <mat-option value="first_ranking"> < 30%</mat-option>
+                                <mat-option value="second_ranking">  30% - 70% </mat-option>
+                                <mat-option value="third_ranking"> > 70%</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Select State</mat-label>
                             <mat-select formControlName="state">
@@ -233,7 +272,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Year</mat-label>
-                            <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Year"
                                 [formControl]="created_at">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
@@ -245,7 +284,8 @@
             </div>
             <div class="flex flex-row justify-evenly items-center w-80">
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button [color]="'primary'">
+                    <button (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                        [color]="'primary'">
                         <span class="">Apply filters</span>
                     </button>
                 </div>
