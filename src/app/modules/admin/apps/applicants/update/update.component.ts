@@ -21,6 +21,7 @@ import {
     MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { states } from 'JSON/state';
 
 export const MY_FORMATS = {
     parse: {
@@ -107,6 +108,8 @@ export class UpdateComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     isEdit: boolean;
+    states: string[]= [];
+
     //#endregion
 
     constructor(
@@ -128,6 +131,8 @@ export class UpdateComponent implements OnInit {
         this.initApplicantForm();
         this.initObservables();
         this.initCalendar();
+        this.states = states;
+
 
         console.log("abcd", this.data.applicantData);
         this.isEdit = this.data.isEdit;
@@ -147,7 +152,7 @@ export class UpdateComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required]],
+            email  : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             cell_phone_number: ['', [Validators.required]],
             home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
@@ -198,6 +203,7 @@ export class UpdateComponent implements OnInit {
         this.fifthFormGroup = this._formBuilder.group({
             us_phone_number: [''],
             blood_type: [''],
+            unique_fact: [''],
             emergency_contact_name: [''],
             emergency_contact_phone: [''],
 
@@ -231,15 +237,11 @@ export class UpdateComponent implements OnInit {
             this.sixthFormGroup,
         ];
 
-        if (this.data.applicantData !== null) {
-            const { applicantObjData } = this.data.applicantData;
-            console.log("applicantObjData1", this.data.applicantData.first_name);
-
-            console.log("applicantObjData1", this.data.applicantData);
+        if (this.data?.applicantData) {
             this.firstFormGroup.patchValue({
                 id: this.data.applicantData?.id,
                 first_name: this.data.applicantData?.first_name,
-                last_name: this.data.applicantData.last_name,
+                last_name: this.data.applicantData?.last_name,
                 email: this.data.applicantData.email,
                 cell_phone_number: this.data.applicantData.cell_phone_number,
                 home_phone_number: this.data.applicantData.home_phone_number,
