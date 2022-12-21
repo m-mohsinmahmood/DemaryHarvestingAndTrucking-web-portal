@@ -139,6 +139,8 @@ export class NonMotorizedDetailComponent implements OnInit, OnDestroy {
           name: event.name,
           license_plate: event.license_plate,
           vin_number: event.vin_number,
+          odometer : event.odometer,
+          odometer_reading: event.odometer_reading,
           company_id: event.company_id,
           color: event.color,
           year: event.year,

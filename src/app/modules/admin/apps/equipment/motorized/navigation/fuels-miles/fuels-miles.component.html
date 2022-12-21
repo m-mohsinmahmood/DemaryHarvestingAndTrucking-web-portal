@@ -2,28 +2,29 @@
     <!-- Profile Data -->
     
 
-    <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
+    <div class="bg-gray-100 w-11/12 m-auto shadow rounded-lg my-8">
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
             <ng-container>
                 <ng-container>
                     <div class="grid">
                         <!-- Header -->
                         <div
-                            class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                            class="machinery-grid-date-range z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                             matSort
                             matSortDisableClear
                         >
                             <div>State</div>
                             <div class="hidden sm:block">Miles</div>
-                            <div class="hidden lg:block">Fuel(Gallons)</div>
-                            <div class="hidden lg:block">Miles per Gallons</div>
+                            <div class="hidden md:block">Fuel (Gallons)</div>
+                            <div class="hidden md:block">Miles per Gallons</div>
+                            <div class="hidden md:block">Date Range (MM/DD/YYYY)</div>
                         </div>
                         <!-- Rows -->
                         <ng-container>
                             <ng-container
                             *ngFor="let number of [0,1,2,3,4]"                            >
                                 <div
-                                    class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white"
+                                    class="machinery-grid-date-range grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white"
                                 >
 
                                     <!-- Name -->
@@ -37,13 +38,17 @@
                                     </div>
 
                                     <!-- Model -->
-                                    <div class="hidden sm:block">
+                                    <div class="hidden md:block">
                                         1,066
                                     </div>
 
                                     <!-- Odometer -->
-                                    <div class="hidden sm:block">
+                                    <div class="hidden md:block">
                                         3
+                                    </div>
+                                    <!-- Odometer -->
+                                    <div class="hidden md:block">
+                                        12/14/2022 - 12/15/2022
                                     </div>
 
 
@@ -74,7 +79,7 @@
     <!--Records -->
 
 
-    <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
+    <div class="bg-gray-100 w-11/12 m-auto shadow rounded-lg my-8">
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
             <ng-container>
                 <ng-container>
@@ -147,7 +152,7 @@
         <!--Records-->
 
 
-        <div class="bg-gray-100 w-9/12 m-auto shadow rounded-lg my-8">
+        <div class="bg-gray-100 w-11/12 m-auto shadow rounded-lg my-8">
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                 <ng-container>
                     <ng-container>

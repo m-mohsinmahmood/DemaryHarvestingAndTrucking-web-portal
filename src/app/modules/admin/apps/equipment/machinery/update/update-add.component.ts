@@ -127,7 +127,7 @@ export class UpdateAddMachineryComponent implements OnInit {
             id                      : [''],
             type                    : ['', [Validators.required]],
             status                  : true,
-            name                    : [''],
+            name                    : ['', [Validators.required]],
             serial_number           : [''],
             engine_hours            : [''],
             eh_reading              : [''],

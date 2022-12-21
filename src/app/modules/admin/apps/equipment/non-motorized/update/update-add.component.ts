@@ -124,12 +124,13 @@ export class UpdateAddNonMotorizedComponent implements OnInit {
   }
 
   initForm() {
+    console.log("data",this.data)
     // Create the form
   this.form = this._formBuilder.group({
     id                      : [''],
     type                    : ['', [Validators.required]],
     status                  : true,
-    name                    : [''],
+    name                    : ['', [Validators.required]],
     license_plate           : [''],
     vin_number              : [''],
     odometer                : [''],
