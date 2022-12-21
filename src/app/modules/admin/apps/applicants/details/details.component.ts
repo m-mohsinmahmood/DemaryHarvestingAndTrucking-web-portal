@@ -46,8 +46,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     results: string[] = ['Waitlisted', 'Hired', 'Qualifications dont match current openings'];
-    score: any = 0;
-    totalScore: any = 0;
     //#endregion
 
     //#region Applicant Variables
@@ -76,8 +74,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
         this.applicant$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
             console.log("res", res);
             this.applicant = res;
-            console.log('this.applicant', this.applicant);
-            this.calculateScore();
             this.selectedIndex = "Applicant Data";
         });
         this.initForm();
@@ -101,7 +97,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     initForm() {
         this.preliminaryReviewForm = this._formBuilder.group({
             id: [''],
-            status_message: [''],
+            status_message: ['', [Validators.required]],
             status_step: ['2'],
             prev_status_step: [''],
             prev_status_message: [''],
@@ -113,7 +109,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
         this.interviewCompletedForm = this._formBuilder.group({
             id: [''],
-            status_message: [''],
+            status_message: ['', [Validators.required]],
             status_step: ['3'],
             prev_status_step: [''],
             prev_status_message: [''],
@@ -125,13 +121,14 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
         this.decisionMadeForm = this._formBuilder.group({
             id: [''],
-            status_message: [''],
+            status_message: ['', [Validators.required]],
             status_step: [''],
             prev_status_step: [''],
             prev_status_message: [''],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
-            body: ['', [Validators.required]]
+            body: ['', [Validators.required]],
+            reason_for_rejection: ['']
         });
     }
     //#endregion
@@ -164,38 +161,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     };
     //#endregion
 
-    //#region Calculate Score
-    calculateScore() {
-        let firstRanking = this.applicant?.applicant_info.first_call_ranking;
-        let secondRanking = this.applicant?.applicant_info.second_call_ranking;
-        let thirdRanking = this.applicant?.applicant_info.third_call_ranking;
-        let refRanking = this.applicant?.applicant_info.reference_call_ranking;
-        this.score = 0;
-        if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.third_call_ranking && this.applicant?.applicant_info.reference_call_ranking){
-
-            this.score = (((+firstRanking + +secondRanking + +thirdRanking + +refRanking) / 40) * 100).toFixed(2) 
-        }
-        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.reference_call_ranking ){
-
-            this.score = (((+firstRanking + +secondRanking + +refRanking) / 30) * 100).toFixed(2)
-        }
-        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.reference_call_ranking ){
-
-            this.score = (((+firstRanking + +refRanking) / 20) * 100).toFixed(2)
-        }
-        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking && this.applicant?.applicant_info.third_call_ranking){
-
-            this.score = (((+firstRanking + +secondRanking + +thirdRanking) / 30) * 100).toFixed(2)
-        }
-        else if (this.applicant?.applicant_info.first_call_ranking && this.applicant?.applicant_info.second_call_ranking){
-
-            this.score = (((+firstRanking + +secondRanking) / 20) * 100).toFixed(2)
-        }
-        else if (this.applicant?.applicant_info.first_call_ranking){
-
-            this.score = (((+firstRanking) / 10) * 100).toFixed(2)
-        }
-    }
+   
 
     //#region Back Button
     backHandler(): void {
