@@ -6,12 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { states } from './../../../../../JSON/state';
 import { HelpModalComponent } from './help-modal/help-modal.component';
+import { countryList } from 'JSON/country';
 
 @Component({
     selector: 'app-applicantpage',
@@ -48,6 +49,10 @@ export class ApplicantpageComponent implements OnInit
     calendar_year: any;
     isLoading:boolean = false;
     states: string[]= [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+
 
 
     constructor(
@@ -76,7 +81,32 @@ export class ApplicantpageComponent implements OnInit
     {
         this.initfarmGroups();
         this.states = states;
+        this.countries = countryList;
+
+        
+         //Auto Complete functions for State and Country
+         this.stateOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
     }
+        //Auto Complete functions for State and Country
+
+        private _filterStates(value: string): string[] {
+            const filterValue = value.toLowerCase();
+            return this.states.filter(state => state.toLowerCase().includes(filterValue));
+        }
+    
+        private _filterCountries(value: string): string[] {
+            const filterValue = value.toLowerCase();
+            return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+        }
+        
     // #region initializing forms
     initfarmGroups() {
         console.log("this.data", this.data);

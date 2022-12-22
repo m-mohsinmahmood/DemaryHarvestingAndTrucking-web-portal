@@ -4,10 +4,7 @@
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">Add Contact Data</div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"
-            ></mat-icon>
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </header>
     <!-- Image-->
@@ -19,37 +16,36 @@
                         <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL" />
                     </div>
                     <div class="mb-4" *ngIf="imageURL === ''">
-                        <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                        <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                            src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                            alt="Avatar Upload" />
                     </div>
                     <label class="cursor-pointer mt-6">
                         <span
-                            class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full"
-                            >Upload Photo</span
-                        >
-                        <input
-                            formControlName="avatar"
-                            type="file"
-                            class="hidden"
-                            accept="image/*"
-                            (change)="showPreview($event)"
-                        />
+                            class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full">Upload
+                            Photo</span>
+                        <input formControlName="avatar" type="file" class="hidden" accept="image/*"
+                            (change)="showPreview($event)" />
                     </label>
                 </div>
             </div>
-            <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 gap-2 p-0">
+            <div
+                class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 gap-2 p-0">
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
                         <mat-label class="sm:w-4/12">First Name</mat-label>
                         <input matInput formControlName="first_name" />
                     </mat-form-field>
-                    <mat-hint *ngIf="this.form.get('first_name').hasError('required')" class="text-xs text-red-500">First Name is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('first_name').hasError('required')"
+                        class="text-xs text-red-500">First Name is required</mat-hint>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
                         <mat-label class="sm:w-4/12">Last Name</mat-label>
                         <input matInput formControlName="last_name" />
                     </mat-form-field>
-                    <mat-hint *ngIf="this.form.get('last_name').hasError('required')" class="text-xs text-red-500">Last Name is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('last_name').hasError('required')" class="text-xs text-red-500">Last
+                        Name is required</mat-hint>
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -66,7 +62,7 @@
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
-                        <mat-label >Address</mat-label>
+                        <mat-label>Address</mat-label>
                         <input matInput formControlName="address" />
                     </mat-form-field>
                 </div>
@@ -75,9 +71,10 @@
                     <mat-form-field class="phone-number-outline" appearance="outline">
                         <mat-label class="">Cell Number</mat-label>
                         <span matPrefix>+1 &nbsp;</span>
-                        <input  maxlength="14" appPhoneMask type="text" matInput formControlName="cell_number" />
+                        <input maxlength="14" appPhoneMask type="text" matInput formControlName="cell_number" />
                     </mat-form-field>
-                    <mat-hint *ngIf="this.form.get('cell_number').hasError('required')" class="text-xs text-red-500">Cell Number is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('cell_number').hasError('required')"
+                        class="text-xs text-red-500">Cell Number is required</mat-hint>
                 </div>
 
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -92,13 +89,13 @@
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline" class="cat w-full ">
                         <mat-label>Select State</mat-label>
-                        <mat-select  formControlName="state">
-                            <mat-option
-                                *ngFor="let state of states"
-                                [value]="state"
-                                >{{ state }}</mat-option
-                            >
-                        </mat-select>
+                        <input type="text" aria-label="state" matInput formControlName="state"
+                            [matAutocomplete]="state">
+                        <mat-autocomplete #state="matAutocomplete">
+                            <mat-option *ngFor="let state of stateOptions | async" [value]="state">
+                                {{state}}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
@@ -112,8 +109,10 @@
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="email" />
                     </mat-form-field>
-                    <mat-hint *ngIf="this.form.get('email').hasError('required')" class="text-xs text-red-500">Email is required</mat-hint>
-                    <mat-hint *ngIf="this.form.get('email').hasError('pattern')" class="text-xs text-red-500">Please provide a valid email address</mat-hint>
+                    <mat-hint *ngIf="this.form.get('email').hasError('required')" class="text-xs text-red-500">Email is
+                        required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('email').hasError('pattern')" class="text-xs text-red-500">Please
+                        provide a valid email address</mat-hint>
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
@@ -123,7 +122,7 @@
                 </div>
                 <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                     <mat-form-field appearance="outline">
-                        <mat-label >Fax</mat-label>
+                        <mat-label>Fax</mat-label>
                         <input type="number" matInput formControlName="fax" />
                     </mat-form-field>
                 </div>
@@ -157,7 +156,8 @@
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
             </button>
-            <button mat-flat-button color="primary" [class.spinner]="isLoadingCustomerContact$ | async" [disabled]="form.invalid || (isLoadingCustomerContact$ | async)" (click)="onSubmit()">
+            <button mat-flat-button color="primary" [class.spinner]="isLoadingCustomerContact$ | async"
+                [disabled]="form.invalid || (isLoadingCustomerContact$ | async)" (click)="onSubmit()">
                 Save
             </button>
         </div>
