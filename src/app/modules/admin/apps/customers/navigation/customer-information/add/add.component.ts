@@ -6,7 +6,7 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { states } from './../../../../../../../../JSON/state';
 
@@ -22,6 +22,7 @@ export class AddCustomerContact implements OnInit {
     closeDialog$: Observable<boolean>;
     country_list = ['USA'];
     states: string[] =[];
+    stateOptions: Observable<string[]>;
     //#endregion
 
     //#region Variables
@@ -53,8 +54,22 @@ export class AddCustomerContact implements OnInit {
             }
         });
 
+        
+
         // passing U.S. states
         this.states = states;
+        //Auto Complete functions for State and Country
+        this.stateOptions = this.form.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+    }
+
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
     }
 
     ngAfterViewInit(): void {}

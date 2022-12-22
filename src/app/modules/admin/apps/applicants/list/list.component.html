@@ -124,41 +124,8 @@
                                         <!-- Status -->
                                         <div class="hidden sm:block">
                                             <div matTooltip="{{ applicant.status_message }}" matTooltipPosition="above"
-                                                class="truncate justify-center items-center
-                                     bg-{{
-                                                applicant.status ===
-                                                'In-Process'
-                                                    ? 'green'
-                                                    : ''
-                                            }}-400
-                                     bg-{{
-                                                applicant.status === 'true'
-                                                    ? 'green'
-                                                    : ''
-                                            }}-700
-                                     bg-{{
-                                                applicant.status === 'New'
-                                                    ? 'yellow'
-                                                    : ''
-                                            }}-400
-                                     bg-{{
-                                                applicant.status ===
-                                                'Pre-Interview'
-                                                    ? 'orange'
-                                                    : ''
-                                            }}-400
-                                     bg-{{
-                                                applicant.status === 'Evaluated'
-                                                    ? 'blue'
-                                                    : ''
-                                            }}-400
-                                     bg-{{
-                                                applicant.status === 'false'
-                                                    ? 'red'
-                                                    : ''
-                                            }}-400
-                                        ">
-                                                {{ applicant.status_message }}
+                                                class="truncate justify-center items-center">
+                                                {{ applicant.status_message == 'Results'? 'Hired' : applicant.status_message  }}
                                             </div>
                                         </div>
 
@@ -228,11 +195,11 @@
             </button>
         </div>
         <div class="flex flex-col justify-center items-center md:h-screen">
-            <div class="sm:h-200 md:h-5/6 h-160 w-80">
+            <div class="md:h-5/6 h-160 w-100">
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="applicantFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
-                        <mat-form-field birthdayFormat appearance="outline">
+                        <mat-form-field birthdayFormat appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Date </mat-label>
                             <input id="date" name="date" formControlName="date" matInput
                                 [matDatepicker]="picker4">
@@ -250,8 +217,7 @@
                                 <mat-option value="Recruiter Decision Made">Recruiter Decision Made</mat-option>
                                 <mat-option value="Offer Made">Offer Made</mat-option>
                                 <mat-option value="Offer Accepted">Offer Accepted</mat-option>
-                                <mat-option value="Advance to Pre-Employment Process">Advance to Pre-Employment Process</mat-option>
-                                <mat-option value="Hired">Hired</mat-option>
+                                <mat-option value="Results">Hired</mat-option>
                                 <mat-option value="Waitlisted">Waitlisted</mat-option>
                                 <mat-option value="Qualifications dont match current openings">Qualifications dont match current openings</mat-option>
                             </mat-select>
@@ -270,7 +236,7 @@
                                 <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Year</mat-label>
                             <input readonly matInput [matDatepicker]="dp" placeholder="Year"
                                 [formControl]="created_at">
