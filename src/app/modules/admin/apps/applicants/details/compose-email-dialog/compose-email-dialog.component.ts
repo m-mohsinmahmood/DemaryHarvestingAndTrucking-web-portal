@@ -245,11 +245,11 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   //#region Form Value Updates
   formUpdates() {
     this.data.form?.valueChanges.subscribe((_formValues => {
-      console.log('_formValues', _formValues);
       //#region Advance Preliminary Review Handlers //
       if (this.data.preliminaryReview) {
         // Advance to 1st Interview //
-        if (this.current_status_step == 2 && _formValues["status_message"] === "First Interview Completed") {
+        if (this.current_status_step == 2 && _formValues["status_message"] === "First Interview Completed") {          
+          this.reason_for_rejection = false;
           this.next_status_step = 3;
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
           this.email_text = this.emails[1].email;
@@ -271,6 +271,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         }
         // Wait Listed //
         else if (this.current_status_step == 2 && _formValues["status_message"] === "Waitlisted") {
+          this.reason_for_rejection = true;
           this.next_status_step = 10.2;
           this.email_text = this.emails[2].email;
           this.data.form.patchValue({
@@ -290,6 +291,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         }
         // Qualifications dont match current openings //
         else if (this.current_status_step == 2 && _formValues["status_message"] === "Qualifications dont match current openings") {
+          this.reason_for_rejection = true;
           this.next_status_step = '10.3';
           this.email_text = this.emails[3].email;
           this.data.form.patchValue({
@@ -312,6 +314,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       //#region Interview Handlers //
       if (this.data.interviewCompletedForm) {
         if (_formValues['status_message'] === "Second Interview Completed") {
+          
+          this.reason_for_rejection = false;
           this.next_status_step = 4;
           this.email_text = this.emails[1].email;
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
@@ -330,6 +334,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
         }
         else if (_formValues['status_message'] === "Third Interview Completed") {
+          
+          this.reason_for_rejection = false;
           this.next_status_step = 5;
           this.email_text = this.emails[1].email;
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
@@ -348,6 +354,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
         }
         else if (_formValues['status_message'] === 'Reference Call Completed') {
+          
+          this.reason_for_rejection = false;
           this.next_status_step = 6;
           this.email_text = this.emails[4].email;
           this.data.form.patchValue({
@@ -366,6 +374,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.isReferenceCall = true;
         }
         else if (_formValues['status_message'] === 'Waitlisted') {
+          this.reason_for_rejection = true;
           this.email_text = this.emails[5].email;
           this.data.form.patchValue({
             subject: this.emails[5].subject,
@@ -382,6 +391,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
         }
         else if (this.data.form.controls['status_message'].value === 'Qualifications dont match current openings') {
+          this.reason_for_rejection = true;
           this.email_text = this.emails[6].email;
           this.data.form.patchValue({
             subject: this.emails[6].subject,
@@ -403,6 +413,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       // Decision Made Handlers //
       if (this.data.decisionMadeForm) {
         if (_formValues['status_message'] === 'Offer Made') {
+          
+          this.reason_for_rejection = false;
           this.next_status_step = '8';
           this.email_text = this.emails[7].email;
           this.data.form.patchValue({
