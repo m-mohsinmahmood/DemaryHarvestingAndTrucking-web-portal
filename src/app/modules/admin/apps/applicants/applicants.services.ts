@@ -262,7 +262,6 @@ export class ApplicantService {
             newData = Object.assign({}, { applicant_data }, { email_data });
         }
 
-        
         this._httpClient
             .patch(`api-1/applicants${url}`, newData)
             .pipe(take(1))

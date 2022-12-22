@@ -104,7 +104,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             recruiter_id: [{ value: '', disabled: true }],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
-            body: ['', [Validators.required]]
+            body: ['', [Validators.required]],
+            reason_for_rejection: ['']
         });
 
         this.interviewCompletedForm = this._formBuilder.group({
@@ -116,7 +117,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             recruiter_id: [{ value: '', disabled: true }],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
-            body: ['', [Validators.required]]
+            body: ['', [Validators.required]],
+            reason_for_rejection: ['']
         });
 
         this.decisionMadeForm = this._formBuilder.group({
