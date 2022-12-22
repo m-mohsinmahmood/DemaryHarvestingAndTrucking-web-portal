@@ -64,9 +64,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region variables
     page: number;
-    limit: number;
-    pageSize = 10;
-    pageSizeOptions: number[] = [5, 10, 25, 50];
+    pageSize = 50;
+    pageSizeOptions: number[] = [50, 100, 150, 200];
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -157,7 +156,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.page = 1;
                 this._employeeService.getEmployees(
                     1,
-                    10,
+                    this.pageSize,
                     '',
                     '',
                     this.searchResult
@@ -250,7 +249,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.page = 1;
         this._employeeService.getEmployees(
             this.page,
-            this.limit,
+            this.pageSize,
             sort.active,
             sort.direction,
             this.searchResult
@@ -261,8 +260,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#region  Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this._employeeService.getEmployees(this.page, this.limit, '', '', this.searchResult);
+        this.pageSize = event.pageSize;
+        this._employeeService.getEmployees(this.page, this.pageSize, '', '', this.searchResult);
     }
     //#endregion
     //#region open details

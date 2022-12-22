@@ -131,10 +131,10 @@
                                             </div>
                                         </div>
                                         <div class="hidden sm:block">
-                                            {{ employee.us_phone_number }}
+                                            +1 {{ employee.us_phone_number }}
                                         </div>
                                         <div class="hidden sm:block">
-                                            {{ employee.cell_phone_number }}
+                                            +1 {{ employee.cell_phone_number }}
                                         </div>
                                         <div class="hidden sm:block">
                                             <mat-icon class="{{
@@ -164,7 +164,7 @@
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }" [length]="employees.count"
-                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                         (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                 </ng-container>
             </ng-container>
