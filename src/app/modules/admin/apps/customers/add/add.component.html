@@ -24,11 +24,11 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Customer Type</mat-label>
                     <mat-select formControlName="customer_type" multiple>
-                        <mat-option value="CF">Custom Farming</mat-option>
-                        <mat-option value="CT">Custom Trucking</mat-option>
-                        <mat-option value="CH">Custom Harvesting</mat-option>
-                        <mat-option value="Leasing">Leasing</mat-option>
-                        <mat-option value="Prospect">Prospect</mat-option>
+                        <mat-option value="F">Farming</mat-option>
+                        <mat-option value="T">Trucking</mat-option>
+                        <mat-option value="H">Harvesting</mat-option>
+                        <mat-option value="L">Leasing</mat-option>
+                        <mat-option value="P">Prospect</mat-option>
                     </mat-select>
                     <mat-hint *ngIf="this.form.get('customer_type').hasError('required')"
                         class="text-xs text-red-500">Customer Type is required</mat-hint>

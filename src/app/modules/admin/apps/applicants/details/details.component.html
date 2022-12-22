@@ -134,7 +134,7 @@
                                             </mat-icon>
                                         </div>
                                     </span>
-                                    <mat-hint *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && i == 9" class="my-1 text-red-600 text-md font-semibold">
+                                    <mat-hint *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection && i == 9 " class="my-1 text-red-600 text-md font-semibold">
                                         {{applicantInfo?.applicant_info?.reason_for_rejection}}
                                     </mat-hint>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
