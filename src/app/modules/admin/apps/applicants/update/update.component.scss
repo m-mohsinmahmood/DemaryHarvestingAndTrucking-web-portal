@@ -1,25 +1,25 @@
-.form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-}
+// .form {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+// }
 
-.interview-results-form {
-    min-width: 150px;
-    max-height: 520px;
-    overflow-y: scroll;
-}
+// .interview-results-form {
+//     min-width: 150px;
+//     max-height: 520px;
+//     overflow-y: scroll;
+// }
 
-.personal-info-form {
-    min-width: 150px;
-    max-height: 520px;
-    overflow-y: scroll;
-    // background-color: aqua;
-}
+// .personal-info-form {
+//     min-width: 150px;
+//     max-height: 520px;
+//     overflow-y: scroll;
+//     // background-color: aqua;
+// }
 
-.example-full-width {
-    width: 80%;
-}
+// .example-full-width {
+//     width: 80%;
+// }
 
 .example-radio-group {
     display: flex;
@@ -141,7 +141,7 @@
 
 ::ng-deep .add-update-applicant-form
 {
-    min-height: 800px !important;
+    min-height: 600px !important;
 }
 
 ::ng-deep .mat-form-field-prefix

@@ -10,7 +10,7 @@
     <!-- Compose form -->
     <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="data.form">
         <!-- Rejection Reason -->
-        <mat-form-field *ngIf="data.reject" appearance="outline">
+        <mat-form-field *ngIf="data.reject || reason_for_rejection" appearance="outline">
             <mat-label>Reason for rejection</mat-label>
             <textarea matInput formControlName="reason_for_rejection"></textarea>
         </mat-form-field>
@@ -32,7 +32,7 @@
                 <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not
                     Qualified</mat-option>
-                <mat-option *ngIf="data.makeOffer" value="Offer Made">Make Offer</mat-option>
+                <mat-option *ngIf="data.makeOffer || data.recruiterDecision" value="Offer Made">Make Offer</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -92,11 +92,11 @@
                     Discard
                 </button>
                 <!-- Skip -->
-                <button [disabled]="data.form.invalid"  class="mr-2" mat-flat-button [color]="'warn'" (click)="skip()">
+                <button [disabled]="data.form.invalid|| this.formValid"  class="mr-2" mat-flat-button [color]="'warn'" (click)="skip()">
                     <span class=" ">Skip</span>
                 </button>
                 <!-- Send -->
-                <button [disabled]="data.form.invalid"   class="" mat-flat-button [color]="'primary'" (click)="send()">
+                <button [disabled]="data.form.invalid || this.formValid"   class="" mat-flat-button [color]="'primary'" (click)="send()">
                     <span class=" ">Save</span>
                 </button>
             </div>

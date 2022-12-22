@@ -39,6 +39,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   isReferenceCall = false;
   selectedRecruiterCalendly: any;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  reason_for_rejection = false;
   //#endregion
 
   //#region Status Bar Variables
@@ -418,6 +419,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             })
         }
         else if (_formValues['status_message'] === 'Waitlisted') {
+          this.reason_for_rejection = true;
           this.email_text = this.emails[5].email;
           this.data.form.patchValue({
             subject: this.emails[5].subject,
@@ -434,6 +436,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
         }
         else if (_formValues['status_message'] === 'Qualifications dont match current openings') {
+          this.reason_for_rejection = true;
           this.next_status_step = '10.3';
           this.email_text = this.emails[8].email;
           this.data.form.patchValue({
