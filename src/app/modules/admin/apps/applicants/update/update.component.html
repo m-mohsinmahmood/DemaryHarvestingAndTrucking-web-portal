@@ -155,10 +155,13 @@
                                     <span
                                         class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full">Upload
                                         Photo</span>
-                                    <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                    <input type='file' class="hidden" accept="image/*" (change)="uploadImage($event)" />
                                 </label>
                             </div>
                         </div>
+                        <mat-hint *ngIf="this.secondFormGroup.get('avatar').hasError('required')" class="flex items-center mb-4 justify-center text-md text-red-500">Image is required</mat-hint>
+
+                        <mat-hint *ngIf="!isImage" class="flex items-center justify-center text-md text-red-500">Only Image files can be uploaded</mat-hint>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
                             <!-- <div>
                                 <mat-form-field appearance="outline" class="w-full">
