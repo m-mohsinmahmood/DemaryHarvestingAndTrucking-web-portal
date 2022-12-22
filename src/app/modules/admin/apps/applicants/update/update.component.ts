@@ -166,13 +166,12 @@ export class UpdateComponent implements OnInit {
     //Auto Complete functions for State and Country
 
     private _filterStates(value: string): string[] {
-        const filterValue = value;
+        const filterValue = value.toLowerCase();
         return this.states.filter(state => state.toLowerCase().includes(filterValue));
     }
 
     private _filterCountries(value: string): string[] {
-        console.log(value,countryList)
-        const filterValue = value;
+        const filterValue = value.toLowerCase();
         return this.countries.filter(country => country.toLowerCase().includes(filterValue));
     }
     // #region initializing forms

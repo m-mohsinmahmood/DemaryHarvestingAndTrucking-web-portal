@@ -211,12 +211,38 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field appearance="outline" class="w-full">
+                                <mat-form-field class="w-full" appearance="outline">
                                     <mat-label>Select State</mat-label>
-                                    <mat-select formControlName="state">
-                                        <mat-option *ngFor="let state of states" [value]="state">{{ state
-                                            }}</mat-option>
-                                    </mat-select>
+                                    <input type="text"
+                                           aria-label="state"
+                                           matInput
+                                           formControlName="state"
+                                           [matAutocomplete]="state">
+                                    <mat-autocomplete #state="matAutocomplete">
+                                      <mat-option *ngFor="let state of stateOptions | async" [value]="state">
+                                        {{state}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-hint *ngIf="this.secondFormGroup.get('state').hasError('required')"
+                                        class="text-xs text-red-500">State is required</mat-hint>
+                                  </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Country</mat-label>
+                                    <input type="text"
+                                           aria-label="country"
+                                           matInput
+                                           formControlName="country"
+                                           [matAutocomplete]="country"
+                                           placeholder="Country">
+                                    <mat-autocomplete #country="matAutocomplete">
+                                      <mat-option *ngFor="let country of countryOptions | async" [value]="country">
+                                        {{country}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
+                                        class="text-xs text-red-500">Country is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

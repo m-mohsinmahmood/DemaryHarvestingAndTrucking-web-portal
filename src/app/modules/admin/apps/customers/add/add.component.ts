@@ -2,9 +2,10 @@ import { CustomersService } from 'app/modules/admin/apps/customers/customers.ser
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { Customers } from '../customers.types';
 import { states } from './../../../../../../JSON/state';
+import { countryList } from 'JSON/country';
 
 @Component({
     selector: 'app-add',
@@ -27,6 +28,10 @@ export class AddCustomer implements OnInit {
     selectedProduct: any;
     country_list = ['USA'];
     states: string[]= [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+    secondFormGroup: any;
     //#endregion
 
     // Constructor
@@ -51,7 +56,33 @@ export class AddCustomer implements OnInit {
 
         // passing U.S. states
         this.states = states;
+        this.countries = countryList;
+
+         //Auto Complete functions for State and Country
+         this.stateOptions = this.form.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.form.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
+
     }
+
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
+    }
+
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
+
 
     ngAfterViewInit(): void {}
 
