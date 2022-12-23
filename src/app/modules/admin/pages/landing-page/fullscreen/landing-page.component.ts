@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
     selector: 'landing-page-classic',
     templateUrl: './landing-page.component.html',
+    styleUrls: ['./landing-page.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })

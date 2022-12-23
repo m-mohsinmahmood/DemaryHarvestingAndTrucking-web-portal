@@ -1,0 +1,43 @@
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+  
+  /* Add some content at the bottom of the video/page */
+  .content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Style the button used to pause/play the video */
+  #myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #myBtn:hover {
+    background: #ddd;
+    color: black;
+  }
+
+  .what-do-we-do, .our-values{
+    /* -- CSS3 - add a drop shadow -- */
+-webkit-box-shadow: 0 0 5px 2px gray !important;
+-moz-box-shadow: 0 0 5px 2px gray !important;
+box-shadow: 0px 4px 25px #E7E7E7 !important; /*any color you want*/
+
+
+}
