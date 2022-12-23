@@ -113,6 +113,8 @@ export class UpdateComponent implements OnInit {
     countries: string[] = [];
     stateOptions: Observable<string[]>;
     countryOptions: Observable<string[]>;
+    imagePreview: string;
+    isImage: boolean = true;
 
 
 
@@ -200,7 +202,7 @@ export class UpdateComponent implements OnInit {
             postal_code: ['', [Validators.required]],
             state: ['', [Validators.required]],
             country: ['', [Validators.required]],
-            avatar: [''],
+            avatar: ['', [Validators.required]],
         });
 
         this.thirdFormGroup = this._formBuilder.group({
@@ -388,7 +390,10 @@ export class UpdateComponent implements OnInit {
             // this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
             this.updateApplicant(this.form.value);
         } else {
-            this._applicantService.createApplicant(this.form.value);
+            var formData: FormData = new FormData();
+            formData.append('image', this.secondFormGroup.get('avatar').value);
+            formData.append('form',this.form.value);
+            this._applicantService.createApplicant(formData);
         }
     }
     updateApplicant(applicantData: any): void {
@@ -442,5 +447,25 @@ export class UpdateComponent implements OnInit {
             this.imageURL = reader.result as string;
         };
         reader.readAsDataURL(file);
+    }
+
+    //#region Upload Image
+    uploadImage(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] &&
+            event.target.files[0].type.includes('image/')
+        ) {
+            this.isImage = true;
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.imageURL = _event.target.result;
+                this.secondFormGroup.controls['avatar']?.setValue(event.target.files[0]);
+                //this.imageURL.markAsDirty();
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.isImage = false;
+        }
     }
 }
