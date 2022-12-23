@@ -187,13 +187,12 @@
                 <div class="sm:w-auto md:w-7/12 lg:w-88">
                     <label>Rank Speaking English: </label>
                 </div>
-
                 <mat-radio-group class="grid md:flex lg:flex" formControlName="rank_speaking_english">
-                    <mat-radio-button class="mr-4" value="1">1</mat-radio-button>
-                    <mat-radio-button class="mr-4" value="2">2</mat-radio-button>
-                    <mat-radio-button class="mr-4" value="3">3</mat-radio-button>
-                    <mat-radio-button class="mr-4" value="4">4</mat-radio-button>
-                    <mat-radio-button class="mr-4" value="5">5</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="1 - Poor">1</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="2 - Above average">2</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="3 - Average">3</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="4 - Native">4</mat-radio-button>
+                    <mat-radio-button class="mr-4" value="5 - Fluent">5</mat-radio-button>
                     <mat-hint *ngIf="this.form.get('rank_speaking_english').hasError('required')"
                         class="text-xs text-red-500">
                         Rank Speaking English field is required</mat-hint>

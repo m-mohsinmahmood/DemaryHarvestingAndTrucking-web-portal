@@ -43,6 +43,8 @@ import { QuillModule } from 'ngx-quill';
 import { UpdateProfileData } from './navigation/profile-data/update-profile-data/update.component';
 import { ConfirmDialogComponent } from './navigation/account-management/confirm-dialog/confirm-dialog.component';
 import { UpdateEmployeeComponent } from './navigation/employee-data/update/update.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 @NgModule({
     declarations: [
       EmployeeComponent,
@@ -90,6 +92,7 @@ import { UpdateEmployeeComponent } from './navigation/employee-data/update/updat
         SharedModule,
         FuseDrawerModule,
         QuillModule,
+        MatAutocompleteModule,
     ]
 })
 export class EmployeeModule

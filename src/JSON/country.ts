@@ -194,6 +194,7 @@ export const countryList: string[] = [
     'Turks &amp; Caicos',
     'Uganda',
     'Ukraine',
+    'United States of America',
     'United Arab Emirates',
     'United Kingdom',
     'Uruguay',

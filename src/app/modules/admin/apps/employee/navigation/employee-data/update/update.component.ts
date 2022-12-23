@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -20,35 +20,17 @@ import {
     MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { states } from 'JSON/state';
+import { countryList } from 'JSON/country';
+import { date_format, date_format_2 } from 'JSON/date-format';
 
-export const MY_FORMATS = {
-    parse: {
-        dateInput: 'YYYY',
-    },
-    display: {
-        dateInput: 'YYYY',
-        monthYearLabel: 'YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
-export const MY_FORMATS_2 = {
-    parse: {
-        dateInput: 'LL',
-    },
-    display: {
-        dateInput: 'LL',
-        monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
 @Directive({
     selector: '[birthdayFormat]',
     providers: [
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2 },
+        { provide: MAT_DATE_FORMATS, useValue: date_format_2 },
     ],
 })
+
 export class BirthDateFormat {
 }
 
@@ -65,7 +47,7 @@ export class BirthDateFormat {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
         },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        { provide: MAT_DATE_FORMATS, useValue: date_format },
 
     ],
 
@@ -101,6 +83,12 @@ export class UpdateEmployeeComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     isEdit: boolean;
+    states: string[] = [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+    isImage: boolean = true;
+    isState: boolean = false;
     //#endregion
 
     constructor(
@@ -121,6 +109,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.initEmployeeForm();
         this.initObservables();
         this.initCalendar();
+        this.formUpdates();
         this._employeeService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
@@ -129,6 +118,20 @@ export class UpdateEmployeeComponent implements OnInit {
                     this._employeeService.closeDialog.next(false);
                 }
             });
+
+        this.states = states;
+        this.countries = countryList;
+
+        //Auto Complete functions for State and Country
+        this.stateOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
     }
 
     ngAfterViewInit(): void { }
@@ -138,6 +141,18 @@ export class UpdateEmployeeComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
     //#endregion
+
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
+    }
+
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
 
     // #region initializing forms
     initEmployeeForm() {
@@ -160,7 +175,7 @@ export class UpdateEmployeeComponent implements OnInit {
             address_2: ['' || this.data.employeeData.address_2],
             town_city: ['' || this.data.employeeData.town_city, [Validators.required]],
             county_providence: ['' || this.data.employeeData.county_province, [Validators.required]],
-            state: ['' || this.data.employeeData.state, [Validators.required]],
+            state: ['' || this.data.employeeData.state],
             postal_code: ['' || this.data.employeeData.postal_code, [Validators.required]],
             country: ['' || this.data.employeeData.country, [Validators.required]],
             avatar: ['' || this.data.employeeData.avatar],
@@ -188,12 +203,12 @@ export class UpdateEmployeeComponent implements OnInit {
             degree_name: ['' || this.data.employeeData.degree_name, [Validators.required]],
             reason_for_applying: ['' || this.data.employeeData.reason_for_applying, [Validators.required]],
             hear_about_dht: ['' || this.data.employeeData.hear_about_dht, [Validators.required]],
-
         });
 
         this.fifthFormGroup = this._formBuilder.group({
             us_phone_number: ['' || this.data.employeeData.us_phone_number],
             blood_type: ['' || this.data.employeeData.blood_type],
+            unique_fact: ['' || this.data.employeeData.unique_fact],
             emergency_contact_name: ['' || this.data.employeeData.emergency_contact_name],
             emergency_contact_phone: ['' || this.data.employeeData.emergency_contact_phone],
 
@@ -263,8 +278,6 @@ export class UpdateEmployeeComponent implements OnInit {
 
     //#endregion
 
-  
-
     selectionChange(event) {
         if (event.selectedIndex == 0) {
             this.isBack = false;
@@ -276,17 +289,40 @@ export class UpdateEmployeeComponent implements OnInit {
             : (this.isSubmit = false);
     }
 
-    showPreview(event) {
-        const file = (event.target as HTMLInputElement).files[0];
-        this.fourthFormGroup.patchValue({
-            avatar: file,
-        });
-        this.fourthFormGroup.get('avatar').updateValueAndValidity();
-        // File Preview
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.imageURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
+     //#region Upload Image
+     uploadImage(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] &&
+            event.target.files[0].type.includes('image/')
+        ) {
+            this.isImage = true;
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.imageURL = _event.target.result;
+                this.secondFormGroup.controls['avatar']?.setValue(event.target.files[0]);
+                //this.imageURL.markAsDirty();
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.isImage = false;
+        }
     }
+    //#endregion
+
+    //#region Form update
+    formUpdates() {
+        this.secondFormGroup?.valueChanges.subscribe((_formValues => {
+            if (_formValues["country"] === "United States of America") {
+                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
+                this.isState = true;
+            }
+            else {
+                this.isState = false;
+                this.secondFormGroup.controls['state'].setValue('');
+                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+            }
+        }));
+    }
+    //#endregion
 }

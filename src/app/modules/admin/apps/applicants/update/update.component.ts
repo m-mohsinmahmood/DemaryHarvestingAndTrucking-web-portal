@@ -114,6 +114,8 @@ export class UpdateComponent implements OnInit {
     countryOptions: Observable<string[]>;
     imagePreview: string;
     isImage: boolean = true;
+    formValid: boolean;
+    isState: boolean = false;
     //#endregion
 
     constructor(
@@ -135,6 +137,7 @@ export class UpdateComponent implements OnInit {
         this.initApplicantForm();
         this.initObservables();
         this.initCalendar();
+        this.formUpdates();
         this.states = states;
         this.countries = countryList;
 
@@ -174,7 +177,6 @@ export class UpdateComponent implements OnInit {
     }
     // #region initializing forms
     initApplicantForm() {
-        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
@@ -196,7 +198,7 @@ export class UpdateComponent implements OnInit {
             town_city: ['', [Validators.required]],
             county_providence: ['', [Validators.required]],
             postal_code: ['', [Validators.required]],
-            state: ['', [Validators.required]],
+            state: [''],
             country: ['', [Validators.required]],
             avatar: ['', [Validators.required]],
         });
@@ -450,4 +452,29 @@ export class UpdateComponent implements OnInit {
             this.isImage = false;
         }
     }
+    //#endregion
+
+    //#region Form Value Updates
+    formUpdates() {
+        this.secondFormGroup?.valueChanges.subscribe((_formValues => {
+            if (_formValues["country"] === "United States of America") {
+                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
+                this.isState = true;
+            }
+            else {
+                this.isState = false;
+                this.secondFormGroup.controls['state'].setValue('');
+                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+            }
+        }));
+    }
+    //#endregion
+    //#endregion
+
+    //#region Form Country/State Validation
+
+    formValidation(e) {
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
+      }
+    //#endregion
 }
