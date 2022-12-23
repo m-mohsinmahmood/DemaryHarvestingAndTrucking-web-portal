@@ -105,7 +105,6 @@ export class UpdateComponent implements OnInit {
     calendar_year;
     applicantObjDataCal: any;
     date = new FormControl(moment());
-    //   avatar: string = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
     routeID: string;
     avatar: string = '';
     isEdit: boolean;
@@ -115,9 +114,6 @@ export class UpdateComponent implements OnInit {
     countryOptions: Observable<string[]>;
     imagePreview: string;
     isImage: boolean = true;
-
-
-
     //#endregion
 
     constructor(
@@ -392,7 +388,7 @@ export class UpdateComponent implements OnInit {
         } else {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
-            formData.append('form',this.form.value);
+            formData.append('form', JSON.stringify(this.form.value));
             this._applicantService.createApplicant(formData);
         }
     }
@@ -433,20 +429,6 @@ export class UpdateComponent implements OnInit {
         event.selectedIndex == 5
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
-    }
-
-    showPreview(event) {
-        const file = (event.target as HTMLInputElement).files[0];
-        this.fourthFormGroup.patchValue({
-            avatar: file,
-        });
-        this.fourthFormGroup.get('avatar').updateValueAndValidity();
-        // File Preview
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.imageURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
     }
 
     //#region Upload Image

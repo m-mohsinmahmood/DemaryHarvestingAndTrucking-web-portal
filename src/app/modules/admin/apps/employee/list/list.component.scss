@@ -20,3 +20,7 @@
 .greenActiveIcon {
     color: #16a34a;
 }
+
+::ng-deep .mat-sort-header-content {
+    text-align: start !important;
+}

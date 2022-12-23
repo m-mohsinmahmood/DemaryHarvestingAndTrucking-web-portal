@@ -155,7 +155,7 @@
                                     <span
                                         class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full">Upload
                                         Photo</span>
-                                    <input type='file' class="hidden" accept="image/*" (change)="uploadImage($event)" />
+                                    <input for="file" name="file" id="file" type='file' class="hidden" accept="image/*" (change)="uploadImage($event)" />
                                 </label>
                             </div>
                         </div>
@@ -469,7 +469,7 @@
                                     <mat-label>Supervisor Name</mat-label>
                                     <input matInput type="text" id="Supervisor" name="Supervisor"
                                         formControlName="supervisor_name" placeholder="Supervisor Name">
-                                    <mat-hint *ngIf="this.fourthFormGroup.get('supervisor_name').hasError('supervisor')"
+                                    <mat-hint *ngIf="this.fourthFormGroup.get('supervisor_name').hasError('required')"
                                         class="text-xs text-red-500">Supervisor Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -488,9 +488,9 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Degree Name</mat-label>
                                     <input matInput type="text" formControlName="degree_name">
-                                </mat-form-field>
-                                <mat-hint *ngIf="this.fourthFormGroup.get('degree_name').hasError('required')"
+                                    <mat-hint *ngIf="this.fourthFormGroup.get('degree_name').hasError('required')"
                                     class="text-xs text-red-500">Degree Name is required</mat-hint>
+                                </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
