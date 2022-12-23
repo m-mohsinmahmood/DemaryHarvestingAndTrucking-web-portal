@@ -153,10 +153,18 @@
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            Town/City
+                            Country
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.town_city }}
+                            {{ applicantInfo?.applicant_info?.country }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            State
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.state == 'undefined'? '-' : applicantInfo?.applicant_info?.state }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -169,26 +177,18 @@
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            State
+                            Town/City
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.state }}
+                            {{ applicantInfo?.applicant_info?.town_city }}
                         </dd>
-                    </div>
+                    </div>  
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
                             Postal Code
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             {{ applicantInfo?.applicant_info?.postal_code }}
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Country
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.country }}
                         </dd>
                     </div>
                 </dl>
