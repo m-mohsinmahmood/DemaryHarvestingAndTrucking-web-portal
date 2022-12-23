@@ -293,11 +293,11 @@ export class UpdateComponent implements OnInit {
                 avatar: this.data.applicantData.avatar,
             });
             this.thirdFormGroup.patchValue({
-                question_1: this.data.applicantData.question_1,
-                question_2: this.data.applicantData.question_2,
-                question_3: this.data.applicantData.question_3,
-                question_4: this.data.applicantData.question_4,
-                question_5: this.data.applicantData.question_5,
+                question_1: this.data.applicantData.question_1.toString(),
+                question_2: this.data.applicantData.question_2.toString(),
+                question_3: this.data.applicantData.question_3.toString(),
+                question_4: this.data.applicantData.question_4.toString(),
+                question_5: this.data.applicantData.question_5.toString(),
                 authorized_to_work: this.data.applicantData.authorized_to_work.toString(),
                 us_citizen: this.data.applicantData.us_citizen.toString(),
                 cdl_license: this.data.applicantData.cdl_license.toString(),
@@ -305,7 +305,7 @@ export class UpdateComponent implements OnInit {
                 tractor_license: this.data.applicantData.tractor_license.toString(),
                 passport: this.data.applicantData.passport.toString(),
                 work_experience_description: this.data.applicantData.work_experience_description,
-                employment_period: this.data.applicantData.employment_period,
+                employment_period: this.data.applicantData.employment_period.toString(),
 
 
 
