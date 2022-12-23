@@ -601,9 +601,10 @@
 
                 <mat-step class="bg-green">
                     <ng-template matStepLabel>Done</ng-template>
-                    <div class="w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
+                    <div 
+                        class="flex text-center items-center justifuy-center w-full lg:h-100 md:h-100 sm:h-100 h-auto flex-col sm:p-20 ">
                         <mat-icon [ngStyle]="{'color':'green'}"
-                            class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full ml-15 mb-2  sm:ml-30 md:ml-80"
+                            class="icon-size-18 sm:icon-size-24 bg-gray-100 rounded-full mb-2"
                             [svgIcon]="'heroicons_outline:check'"></mat-icon>
                         <p class="flex justify-center items-center font-bold text-2xl">You have successfully updated employee
                             details. Please click on submit button to complete update process</p>

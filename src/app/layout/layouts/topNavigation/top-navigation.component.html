@@ -6,16 +6,16 @@
 
     <!-- Content -->
     <div class="flex flex-col flex-auto">
-        <div class="top-navigation-menu flex flex-row columns-2 w-9/12 m-auto">
-            <div class="col-1 w-1/2"> 
-                <img src="assets\images\pages\top-navigation-assets\DemaryHarvesting.png" class="py-8 w-64 h-auto">
+        <div class="top-navigation-menu flex flex-row columns-2 w-full md:w-9/12 m-auto justify-between">
+            <div class="col-1 w-4/12 md:w-4/12 px-2 items-center"> 
+                <img src="assets\images\pages\top-navigation-assets\DemaryHarvesting.png" class="py-10 w-64 h-auto">
             </div>
-            <div class="col-2 w-1/2 flex item-center justify-start font-bold gap-2 py-8 hidden sm:block">
+            <div class="col-2 w-8/12 md:w-8/12 sm:flex items-center justify-end font-bold gap-2 py-8 hidden">
                 <button class="max-w-16 py-4 font-bold text-xl"  (click)="navigateHome()" mat-button>Home</button>
                 <button class="min-w-16 py-4 font-bold text-xl" mat-button>Trucking</button>
                 <button class="min-w-16 py-4 font-bold text-xl" mat-button>Farming</button>
                 <button class="min-w-16 py-4 font-bold text-xl" mat-button>Employment</button>
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn" mat-flat-button type="button" [color]="'primary'" (click)="navigate()">
+                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn" mat-flat-button type="button" [color]="'primary'" (click)="openDialog()">
                     Join Us
                     <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
                 </button>
