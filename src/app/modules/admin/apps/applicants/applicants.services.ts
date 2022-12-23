@@ -123,7 +123,7 @@ export class ApplicantService {
                 shake: false,
                 slideRight: true,
                 title: 'Error',
-                message: error.error.message,
+                message: error.message,
                 time: 6000,
             });
         }
