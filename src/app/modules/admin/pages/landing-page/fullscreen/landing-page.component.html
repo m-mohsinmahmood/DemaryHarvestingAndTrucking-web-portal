@@ -1,5 +1,15 @@
 <div class="flex flex-col flex-auto bg-white">
 
+    <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true" id="myVideo">
+        <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
+        <p><i class="far fa-times-circle"></i> No Preview Available</p>
+    </video>
+
+    <div class="heading-title h-auto flex items-left justify-start ">
+        <h1 class="md:w-6/12 sm:text-6xl text-2xl font-bold p-8 text-white">DHT's mission is to consistently deliver
+            superior agricultural and trucking services for our customers</h1>
+
+    </div>
     <!-- New Page -->
 
     <div class="container flex item-center justify-center mx-auto sm:w-9/12 py-8">
@@ -80,28 +90,32 @@
     </div>
 
     <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-12 pb-8">
-        <div class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
+        <div
+            class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
             <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35594.png">
             <h1 class="text-2xl">Customer-Focused</h1>
         </div>
 
-        <div class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
+        <div
+            class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
             <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35606.png">
             <h1 class="text-2xl">Trustworthy</h1>
         </div>
 
-        <div class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
+        <div
+            class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
             <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35596.png">
             <h1 class="text-2xl">Teamwork</h1>
         </div>
 
-        <div class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
+        <div
+            class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
             <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35608.png">
             <h1 class="text-2xl">Respectful</h1>
         </div>
-       
 
-    </div>  
+
+    </div>
 
     <!-- //// -->
 
@@ -111,10 +125,14 @@
 
     <div class="container flex flex-col md:flex-row columns-2 mx-auto w-9/12 pt-12 pb-8">
 
-        <div class="flex flex-col bold md:w-1/2 justify-center bg-gray-100 rounded-sm p-8 gap-y-6">
-            <p class="text-lg">Demaray Harvesting and Trucking, LLC (“DHT”) was established in 1974 by Warren and SeDelle Demaray near Jamestown ND. Their son, Tim, joined in 1977, eventually taking over and building the company into an industry leader.</p>
-            <p class="text-lg">Today, the company operates a large fleet of combines and trucks in many Southern and Midwest states</p>
-            <p class="text-lg">Today DHT has two primary regional operating centers, one in Casa Grande, AZ and the other in Aberdeen, South Dakota.</p>
+        <div class="flex flex-col bold md:w-1/2 justify-center rounded-sm p-8 gap-y-6">
+            <p class="text-lg">Demaray Harvesting and Trucking, LLC (“DHT”) was established in 1974 by Warren and
+                SeDelle Demaray near Jamestown ND. Their son, Tim, joined in 1977, eventually taking over and building
+                the company into an industry leader.</p>
+            <p class="text-lg">Today, the company operates a large fleet of combines and trucks in many Southern and
+                Midwest states</p>
+            <p class="text-lg">Today DHT has two primary regional operating centers, one in Casa Grande, AZ and the
+                other in Aberdeen, South Dakota.</p>
 
         </div>
 
@@ -125,6 +143,36 @@
 
         </div>
 
+    </div>
+
+    <!-- /////////////////FOOOTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR//////////////////////////////////// -->
+
+
+    <div class="flex item-center justify-center w-full mt-24 pb-16" style="background-color:#31558C">
+        <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-12 pb-8">
+            <div class="footer-col flex flex-col md:w-1/3 items-left py-8 gap-y-6">
+                <img class="w-40 h-auto font-light" src="assets\images\pages\top-navigation-assets\Group 35423.png">
+                <div class="flex flex-row">
+                    <mat-icon class="text-white w-12 h-auto pr-2" [svgIcon]="'heroicons_outline:map'"> </mat-icon>
+                    <p class="text-white">1664 East Florence Blvd Suite 4 #505 Casa Grande AZ 85122</p>
+                </div>
+
+                <div class="flex flex-row">
+                    <mat-icon class="envelope-icon text-white w-12 h-auto pr-2" [svgIcon]="'heroicons_outline:envelope'"> </mat-icon>
+                    <p class="text-white">dht@dht-usa.com</p>
+                </div>
+            </div>
+
+
+            <div class="footer-col flex flex-col md:w-1/3 items-left py-8 gap-y-6">
+            </div>
+
+            <div class="footer-col flex flex-col md:w-1/3 items-left py-8 gap-y-6">
+            </div>
+
+
+
+        </div>
     </div>
 
 
