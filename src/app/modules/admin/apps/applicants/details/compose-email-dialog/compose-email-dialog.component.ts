@@ -123,6 +123,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
     this.data.form.value['body'] = this.email_text;
     this._applicantService.patchApplicant(
         Object.assign(this.data.form.value, { to: this.data.applicant.email }),
+        false,
         false
     );
     this.matDialogRef.close();
@@ -134,7 +135,8 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
     this.data.form.value['recruiter_id'] = this.data.form.value['recruiter_id']?.id != undefined ? this.data.form.value['recruiter_id']?.id : "";
     this._applicantService.patchApplicant(
         Object.assign(this.data.form.value, { to: this.data.applicant.email }),
-        false
+        false,
+        true
     );
     this.matDialogRef.close();
     this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
