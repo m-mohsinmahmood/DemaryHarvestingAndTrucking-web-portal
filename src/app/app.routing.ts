@@ -115,7 +115,7 @@ export const appRoutes: Route[] = [
 
                 //employment page
                 {path:'employment', data: {
-                    layout: 'empty'
+                    layout: 'top-navigation'
                 },
                 loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
 
