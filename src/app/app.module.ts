@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from '../app/interceptors/interceptor';
 import {MatNativeDateModule} from '@angular/material/core';
 import { ApplicantpageComponent } from './modules/admin/pages/applicantpage/applicantpage.component';
+import { EmploymentPageComponent } from './modules/admin/pages/employment-page/employment-page.component';
 
 
 
@@ -25,7 +26,8 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent,],
+    declarations: [
+        AppComponent        ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
