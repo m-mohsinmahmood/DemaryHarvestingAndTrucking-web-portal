@@ -280,19 +280,19 @@ export class RecruiterremarksComponent implements OnInit {
         if(interViewer === 'First'){
             this.firstInterviewForm.value.status_step = '3'
             this.calculateScore(this.firstInterviewForm);
-            this._applicantService.patchApplicant(this.firstInterviewForm.value , true);
+            this._applicantService.patchApplicant(this.firstInterviewForm.value , true , false);
         }else if(interViewer === 'Second'){
             this.secondInterviewForm.value.status_step = '4'
             this.calculateScore(this.secondInterviewForm);
-            this._applicantService.patchApplicant(this.secondInterviewForm.value , true);
+            this._applicantService.patchApplicant(this.secondInterviewForm.value , true , false);
         }else if(interViewer === 'Third'){
             this.thirdFormGroup.value.status_step = '5'
             this.calculateScore(this.thirdInterviewForm);
-            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true);
+            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true , false);
         }else if(interViewer === 'Reference'){
             this.referenceForm.value.status_step = '6'
             this.calculateScore(this.referenceForm);
-            this._applicantService.patchApplicant(this.referenceForm.value , true);
+            this._applicantService.patchApplicant(this.referenceForm.value , true , false);
         }
     }
      //#region Calculate Score
