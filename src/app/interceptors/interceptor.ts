@@ -30,5 +30,7 @@ export class Interceptor implements HttpInterceptor {
         });
         return next.handle(request);
     }
+    //https://dht-dev.azurewebsites.net
+    //http://localhost:7071/
 }
 

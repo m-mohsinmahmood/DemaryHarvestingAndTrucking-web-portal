@@ -7,7 +7,7 @@
             <h1 class="text-4xl font-bold px-8 "> Application Form</h1>
         </div>
         <div class="mr-4" (click)="openHelpDialog()">
-            <mat-icon [matTooltip]="'Help'"  [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>
+            <mat-icon [matTooltip]="'Help'" [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>
         </div>
     </div>
     <main class="mb-auto">
@@ -122,11 +122,11 @@
                                     <mat-label>Rank Speaking English</mat-label>
                                     <mat-select formControlName="rank_speaking_english"
                                         class="languages overflow-hidden">
-                                        <mat-option value="1">1 - Poor </mat-option>
-                                        <mat-option value="2">2 - Fair</mat-option>
-                                        <mat-option value="3">3 - Good</mat-option>
-                                        <mat-option value="4">4 - Very Good</mat-option>
-                                        <mat-option value="5">5 - Excellent </mat-option>
+                                        <mat-option value="1 - Fluent">1 - Fluent</mat-option>
+                                        <mat-option value="2 - Native">2 - Native speaker</mat-option>
+                                        <mat-option value="3 - Average">3 - Average</mat-option>
+                                        <mat-option value="4 - Above average">4 - Above average</mat-option>
+                                        <mat-option value="5 - Poor">5 - Poor</mat-option>
                                     </mat-select>
                                     <mat-hint
                                         *ngIf="this.firstFormGroup.get('rank_speaking_english').hasError('required')"
@@ -158,10 +158,16 @@
                                     <span
                                         class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full">Upload
                                         Photo</span>
-                                    <input type='file' class="hidden" accept="image/*" (change)="showPreview($event)" />
+                                    <input for="file" name="file" id="file" type='file' class="hidden" accept="image/*"
+                                        (change)="uploadImage($event)" />
                                 </label>
                             </div>
                         </div>
+                        <mat-hint *ngIf="this.secondFormGroup.get('avatar').hasError('required')"
+                            class="flex items-center mb-4 justify-center text-md text-red-500">Image is
+                            required</mat-hint>
+                        <mat-hint *ngIf="!isImage" class="flex items-center justify-center text-md text-red-500">Only
+                            Image files can be uploaded</mat-hint>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
                             <!-- <div>
                                 <mat-form-field appearance="outline" class="w-full">
@@ -194,11 +200,30 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Town/City</mat-label>
-                                    <input matInput type="text" id="city" name="city" formControlName="town_city"
-                                        placeholder="Town/City" value="city">
-                                    <mat-hint *ngIf="this.secondFormGroup.get('town_city').hasError('required')"
-                                        class="text-xs text-red-500">Town/City is required</mat-hint>
+                                    <mat-label>Country</mat-label>
+                                    <input type="text" aria-label="country" matInput formControlName="country"
+                                        [matAutocomplete]="country" placeholder="Country">
+                                    <mat-autocomplete #country="matAutocomplete">
+                                        <mat-option *ngFor="let country of countryOptions | async" [value]="country">
+                                            {{country}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
+                                        class="text-xs text-red-500">Country is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="w-full" appearance="outline">
+                                    <mat-label>Select State</mat-label>
+                                    <input type="text" aria-label="state" matInput formControlName="state"
+                                        [matAutocomplete]="state">
+                                    <mat-autocomplete #state="matAutocomplete">
+                                        <mat-option *ngFor="let state of stateOptions | async" [value]="state">
+                                            {{state}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-hint *ngIf="!isState" class="text-xs text-red-500">Select Country as United
+                                        States of America to enable State </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -212,11 +237,11 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Select State</mat-label>
-                                    <mat-select formControlName="state">
-                                        <mat-option *ngFor="let state of states" [value]="state">{{ state
-                                            }}</mat-option>
-                                    </mat-select>
+                                    <mat-label>Town/City</mat-label>
+                                    <input matInput type="text" id="city" name="city" formControlName="town_city"
+                                        placeholder="Town/City" value="city">
+                                    <mat-hint *ngIf="this.secondFormGroup.get('town_city').hasError('required')"
+                                        class="text-xs text-red-500">Town/City is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -228,15 +253,6 @@
                                         class="text-xs text-red-500">
                                         Postal Code is required
                                     </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Country</mat-label>
-                                    <input matInput type="text" id="country" name="country" formControlName="country"
-                                        placeholder="Country">
-                                    <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
-                                        class="text-xs text-red-500">Country is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <!-- <div>
@@ -452,7 +468,7 @@
                                     <mat-label>Supervisor Name</mat-label>
                                     <input matInput type="text" id="Supervisor" name="Supervisor"
                                         formControlName="supervisor_name" placeholder="Supervisor Name">
-                                    <mat-hint *ngIf="this.fourthFormGroup.get('supervisor_name').hasError('supervisor')"
+                                    <mat-hint *ngIf="this.fourthFormGroup.get('supervisor_name').hasError('required')"
                                         class="text-xs text-red-500">Supervisor Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -471,9 +487,9 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Degree Name</mat-label>
                                     <input matInput type="text" formControlName="degree_name">
+                                    <mat-hint *ngIf="this.fourthFormGroup.get('degree_name').hasError('required')"
+                                        class="text-xs text-red-500">Degree Name is required</mat-hint>
                                 </mat-form-field>
-                                <mat-hint *ngIf="this.fourthFormGroup.get('degree_name').hasError('required')"
-                                    class="text-xs text-red-500">Degree Name is required</mat-hint>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
@@ -564,9 +580,6 @@
                                     <input matInput type="text" id="emergency_contact_name"
                                         name="emergency_contact_name" formControlName="emergency_contact_name"
                                         placeholder="Emergency Contact Name/Relation" value="emergency_contact_name">
-                                    <mat-hint
-                                        *ngIf="this.fifthFormGroup.get('emergency_contact_name').hasError('required')"
-                                        class="text-xs text-red-500">Town/City is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -598,10 +611,11 @@
             </mat-horizontal-stepper>
         </div>
     </main>
-    <header class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+    <header
+        class="mr-4 mb-4 flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
         <button *ngIf="isBack" class="ml-4 " mat-flat-button class="bg-amber-600 text-white" data-bs-dismiss="modal"
-            (click)="discard()">
-            Discard
+            (click)="stepper.previous()">
+            Back
         </button>
         <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
             (click)="stepper.next()">

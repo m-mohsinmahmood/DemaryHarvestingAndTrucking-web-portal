@@ -23,8 +23,8 @@ export const applicants = [
     // personal info
     dob: "5-10-2020",
     martialStatus: "Married",
-    address1: "Michigan Streets",
-    address2: "Michigan Streets",
+    address1: "Michigan Street",
+    address2: "Michigan Street",
     town: "Michigan Town Central",
     state: "Michigan",
     postalCode: "2222",

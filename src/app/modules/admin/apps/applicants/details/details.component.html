@@ -6,15 +6,23 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div 
+        <div
             class="flex sm:flex-row flex-col gap-3 sm:items-center text-4xl font-extrabold tracking-tigh w-full cursor-pointer">
             <div class="flex items-center" *ngIf="applicant$ | async as applicantInfo">
-                <mat-icon (click)="backHandler()" class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                <mat-icon (click)="backHandler()" class="icon-size-6 text-secondary"
+                    [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                <img *ngIf="applicantInfo?.applicant_info.avatar" class="inline-block h-16 w-16 rounded-full" src="{{applicantInfo.applicant_info.avatar}}"
+                    alt="">
+                <img *ngIf="applicantInfo?.applicant_info.avatar == ''" class="inline-block h-16 w-16 rounded-full"
+                    src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                    alt="">
                 <span class="ml-1 capitalize text-2xl font-extrabold tracking-tight">{{
                     applicantInfo?.applicant_info.first_name}} {{
                     applicantInfo?.applicant_info.last_name }}
                 </span>
-                <mat-hint class="text-{{score == '0' ? 'slate' : score < '30' ? 'red' : score < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4"> {{score}}% </mat-hint>
+                <mat-hint
+                    class="text-{{applicantInfo.applicant_info.ranking == '0' ? 'slate' : applicantInfo.applicant_info.ranking < '30' ? 'red' : applicantInfo.applicant_info.ranking < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4">
+                    {{applicantInfo.applicant_info.ranking}}% </mat-hint>
             </div>
         </div>
         <!-- Actions -->
@@ -35,10 +43,12 @@
 
             </div>
             <div class="buttons-wrapper-1">
-                <button class="mr-1" mat-flat-button [color]="'primary'" (click)="composeEmail(8)" [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
+                <button class="mr-1" mat-flat-button [color]="'primary'" (click)="composeEmail(8)"
+                    [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
                     <span class="whitespace-normal">Advance to offer</span>
                 </button>
-                <button class="m-1" mat-flat-button [color]="'warn'" (click)="composeEmail(-1)" [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
+                <button class="m-1" mat-flat-button [color]="'warn'" (click)="composeEmail(-1)"
+                    [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
                     <span class="">Reject</span>
                 </button>
 
@@ -100,7 +110,6 @@
         <div *ngIf="applicant$ | async as applicantInfo" class="sm:w-4/12 md:w-4/12">
             <div class="bg-gray-100 rounded-lg mx-2 shadow">
                 <div class="flex flex-col py-4 px-2 mt-9">
-                    
                     <div *ngFor="let item of applicant.applicant_status_bar; index as i">
                         <div
                             class="last-of-type:h-2 flex relative {{item.show? 'min-h-14': 'min-h-0'}} {{item.active? 'opacity-100':'opacity-50'}}">
@@ -115,25 +124,31 @@
                                 <div class="timeline-track"></div>
                             </div>
                             <div *ngIf="item.show" class="flex-1 flex flex-row px-4">
-                                
-                                <div 
-                                    class="w-8/12 flex flex-col">
+
+                                <div class="w-8/12 flex flex-col">
                                     <span class="flex items-center text-md font-sans font-normal">{{item.step}}
-                                        <div [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
-                                            <mat-icon matTooltip="Compose Email"  (click)="composeEmail(i)"
+                                        <div
+                                            [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
+                                            <mat-icon matTooltip="Compose Email" (click)="composeEmail(i)"
                                                 *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
                                                 class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'">
                                             </mat-icon>
-                                            <mat-icon matTooltip="Make Employee" (click)="confirmAcceptRejectOffer('Accept')"
-                                                *ngIf="i == 8"
-                                                class="ml-2 mt-2 icon-size-5" [svgIcon]="'heroicons_outline:check-circle'">
+                                            <mat-icon matTooltip="Make Employee"
+                                                (click)="confirmAcceptRejectOffer('Accept')" *ngIf="i == 8"
+                                                class="ml-2 mt-2 icon-size-5"
+                                                [svgIcon]="'heroicons_outline:check-circle'">
                                             </mat-icon>
-                                            <mat-icon matTooltip="Offer Rejected" (click)="confirmAcceptRejectOffer('Reject')"
-                                                *ngIf="i == 8"
+                                            <mat-icon matTooltip="Offer Rejected"
+                                                (click)="confirmAcceptRejectOffer('Reject')" *ngIf="i == 8"
                                                 class="ml-2 mt-2 icon-size-5" [svgIcon]="'heroicons_outline:x-circle'">
                                             </mat-icon>
                                         </div>
                                     </span>
+                                    <mat-hint
+                                        *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection != 'null'  && applicantInfo?.applicant_info?.reason_for_rejection && i == 9 "
+                                        class="my-1 text-red-600 text-md font-semibold">
+                                        {{applicantInfo?.applicant_info?.reason_for_rejection}}
+                                    </mat-hint>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}

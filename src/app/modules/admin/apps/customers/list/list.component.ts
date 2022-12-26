@@ -102,7 +102,7 @@ export class CustomersListComponent implements OnInit {
                 this.page = 1;
                 this._customersService.getCustomers(
                     1,
-                    10,
+                    50,
                     '',
                     '',
                     this.searchResult,
@@ -218,7 +218,7 @@ export class CustomersListComponent implements OnInit {
         this.page = 1;
         !this.customerFiltersForm.value.type ? (this.customerFiltersForm.value.type = '') : ('');
         !this.customerFiltersForm.value.status ? (this.customerFiltersForm.value.status = '') : ('');
-        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.customerFiltersForm.value)
+        this._customersService.getCustomers(1, 50, '', '', this.searchResult, this.customerFiltersForm.value)
     }
 
     removeFilters() {
@@ -226,7 +226,7 @@ export class CustomersListComponent implements OnInit {
         this.customerFiltersForm.reset();
         this.customerFiltersForm.value.type = '';
         this.customerFiltersForm.value.status = '';
-        this._customersService.getCustomers(1, 10, '', '', this.searchResult, this.customerFiltersForm.value)
+        this._customersService.getCustomers(1, 50, '', '', this.searchResult, this.customerFiltersForm.value)
     }
 
     initFiltersForm() {

@@ -1,54 +1,33 @@
-export interface InventoryProduct {
-    id: string;
+export interface Machineries {
+    id?: string;
+    type: string;
+    status: boolean;
     name: string;
-    photo: string;
-    odometer: string;
-    serviceRecords: [];
-    purchaseCompany: string;
-    purchaseDate: Date;
-    purchasePrice: number;
-    value: number;
+
+    company_id: string;
+    color: string;
+    year: string;
     make: string;
     model: string;
-    titleName: string;
-    titleNumber: number;
-    year: number;
-    vinNumber: string;
-    saleTradeDate: Date;
-    saleTradePrice: number;
-    documents: [];
-    groupDocuments: [];
-}
+    
+    serial_number:string;
+    engine_hours: string;
+    eh_reading: string;
+    separator_hours: string;
+    sh_reading: string;
 
-export interface InventoryPagination {
-    length: number;
-    size: number;
-    page: number;
-    lastPage: number;
-    startIndex: number;
-    endIndex: number;
-}
+    insurance_status: string;
+    liability: string;
+    collision: string;
+    comprehensive: string;
 
-export interface InventoryCategory {
-    id: string;
-    parentId: string;
-    name: string;
-    slug: string;
-}
+    purchase_price: string;
+    date_of_purchase: string;
+    sales_price: string;
+    date_of_sales: string;
 
-export interface InventoryBrand {
-    id: string;
-    name: string;
-    slug: string;
-}
-
-export interface InventoryTag {
-    id?: string;
-    title?: string;
-}
-
-export interface InventoryVendor {
-    id: string;
-    name: string;
-    slug: string;
+    estimated_market_value: string;
+    source_of_market_value: string;
+    date_of_market_value: string;
+    pictures:string;
 }

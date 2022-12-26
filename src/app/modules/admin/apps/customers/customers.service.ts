@@ -527,7 +527,7 @@ export class CustomersService {
                     this.isLoadingCustomer.next(false);
                 },
                 () => {
-                    this.getCustomers(1, 10, '', '', '', filters);
+                    this.getCustomers(1, 50, '', '', '', filters);
                 }
             );
     }

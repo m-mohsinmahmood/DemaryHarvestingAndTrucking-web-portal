@@ -30,26 +30,8 @@ export class EmployeeResolver implements Resolve<any>
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Employee>
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
     {
-        return this._employeeService.getEmployeeById(route.paramMap.get('id'))
-                   .pipe(
-                       // Error here means the requested product is not available
-                       catchError((error) => {
-
-                           // Log the error
-                           console.error(error);
-
-                           // Get the parent url
-                           const parentUrl = state.url.split('/').slice(0, -1).join('/');
-
-                           // Navigate to there
-                           this._router.navigateByUrl(parentUrl);
-
-                           // Throw an error
-                           return throwError(error);
-                       })
-                   );
     }
 }
 
@@ -102,9 +84,8 @@ export class EmployeesResolver implements Resolve<any>
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pagination: EmployeePagination; products: Employee[] }>
+    resolve()
     {
-        return this._employeeService.getEmployees();
     }
 }
 @Injectable({

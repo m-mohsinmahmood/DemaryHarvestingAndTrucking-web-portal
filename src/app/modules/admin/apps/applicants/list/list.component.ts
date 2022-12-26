@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,14 +11,21 @@ import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.s
 import { UpdateComponent } from '../update/update.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import { FilterComponent } from './../filter/filter.component';
-import { date_format } from 'JSON/date-format';
+import { date_format, date_format_2 } from 'JSON/date-format';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
 import moment from 'moment';
 import { states } from './../../../../../../JSON/state';
-
+@Directive({
+    selector: '[birthdayFormat]',
+    providers: [
+        { provide: MAT_DATE_FORMATS, useValue: date_format_2 },
+    ],
+})
+export class BirthDateFormat {
+}
 
 @Component({
     selector: 'app-employee',
@@ -65,7 +72,7 @@ export class ApplicantsListComponent
     limit: number;
     pageSize = 50;
     currentPage = 0;
-    pageSizeOptions: number[] = [5, 10, 25, 50];
+    pageSizeOptions: number[] = [50, 100, 150, 200];
     isEdit: boolean;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -81,7 +88,7 @@ export class ApplicantsListComponent
     created_at: any;
     sortActive;
     sortDirection;
-    states: string[]= [];
+    states: string[] = [];
 
 
     // #endregion
@@ -124,7 +131,7 @@ export class ApplicantsListComponent
                 this.page = 1;
                 this._applicantService.getApplicants(
                     1,
-                    10,
+                    this.pageSize,
                     '',
                     '',
                     this.searchResult,
@@ -140,6 +147,9 @@ export class ApplicantsListComponent
 
     initFiltersForm() {
         this.applicantFiltersForm = this._formBuilder.group({
+            date: [''],
+            status: [''],
+            ranking: [''],
             state: [''],
             created_at: [''],
         });
@@ -173,7 +183,7 @@ export class ApplicantsListComponent
         this.page = 1;
         this._applicantService.getApplicants(
             this.page,
-            this.limit,
+            this.pageSize,
             sort.active,
             sort.direction,
             this.searchResult,
@@ -186,8 +196,8 @@ export class ApplicantsListComponent
     //#region  Pagination
     pageChanged(event) {
         this.page = event.pageIndex + 1;
-        this.limit = event.pageSize;
-        this._applicantService.getApplicants(this.page, this.limit, '', '', this.searchResult,this.applicantFiltersForm.value);
+        this.pageSize = event.pageSize;
+        this._applicantService.getApplicants(this.page, this.pageSize, '', '', this.searchResult, this.applicantFiltersForm.value);
     }
     //#endregion
 
@@ -211,6 +221,9 @@ export class ApplicantsListComponent
         this.page = 1;
         !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
         !this.applicantFiltersForm.value.created_at ? (this.applicantFiltersForm.value.created_at = '') : ('');
+        !this.applicantFiltersForm.value.status ? (this.applicantFiltersForm.value.status = '') : ('');
+        !this.applicantFiltersForm.value.date ? (this.applicantFiltersForm.value.date = '') : ('');
+        !this.applicantFiltersForm.value.ranking ? (this.applicantFiltersForm.value.ranking = '') : ('');
         this.created_at.value ? (this.applicantFiltersForm.value.created_at = this.created_at.value) : ''
         this._applicantService.getApplicants(
             1,
@@ -227,6 +240,9 @@ export class ApplicantsListComponent
         this.applicantFiltersForm.reset();
         this.applicantFiltersForm.value.state = '';
         this.applicantFiltersForm.value.created_at = '';
+        this.applicantFiltersForm.value.status = '';
+        this.applicantFiltersForm.value.ranking = '';
+        this.applicantFiltersForm.value.date = '';
         this.created_at.setValue('');
         this._applicantService.getApplicants(
             1,
@@ -249,8 +265,8 @@ export class ApplicantsListComponent
         datepicker.close();
     }
 
-     //#region Confirmation Customer Crops Delete Dialog
-     confirmDeleteDialog(applicantId: string): void {
+    //#region Confirmation Customer Crops Delete Dialog
+    confirmDeleteDialog(applicantId: string): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this Applicant?',

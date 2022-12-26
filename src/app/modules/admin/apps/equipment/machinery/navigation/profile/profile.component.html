@@ -1,0 +1,310 @@
+<div *ngIf="(machinery$ | async) as machinery">
+
+    <div class="parent-class overflow-y-auto mb-16 flex flex-row gap-4 p-4">
+
+        <!-- Profile Data -->
+        <div class="w-8/12">
+            <div class="justify-end flex">
+                <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                    (click)="allExpandState = true" matTooltip="Expand All">
+                    <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-down'"></mat-icon>
+                </button>
+
+                <button *ngIf="allExpandState == true" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                    (click)="allExpandState = false" matTooltip="Collapse All">
+                    <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-up'"></mat-icon>
+                </button>
+            </div>
+
+            <div class="my-4">
+                <mat-accordion class="bg-gray-100">
+                    <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false" class="bg-gray-100">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                                Profile Data
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="border-gray-200 px-4 py-5 sm:p-0">
+                            <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Type
+                                    </dt>
+                                    <dd
+                                        class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.type}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Company ID
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.company_id}}
+                                    </dd>
+                                </div>
+
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Color
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.color}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Year
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.year | date: "YYYY"}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Make
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.make}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Model
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.model}}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <!-- Registration, Title and Insurance-->
+            <div class="my-4">
+
+                <mat-accordion class="bg-gray-100">
+                    <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false" class="bg-gray-100">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                                Registration, Title and Insurance
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="border-gray-200 px-4 py-5 sm:p-0">
+                            <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gr    ay-500">
+                                        Serial Number
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.serial_number}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        EH Reading
+                                    </dt>
+                                    <dd
+                                        class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.eh_reading}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gr    ay-500">
+                                        Engine Hours
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.engine_hours}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Separator Hours
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.separator_hours}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        SH Reading
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.sh_reading}}
+                                    </dd>
+                                </div>
+
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Insurance status
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.insurance_status}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Liability
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.liability}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Collision
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.collision}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Comprehensive
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.comprehensive}}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <!-- Current / Historical Market Value -->
+            <div class="my-4">
+
+                <mat-accordion class="bg-gray-100">
+                    <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false" class="bg-gray-100">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="font-sans font-semibold text-lg tracking-tight flex items-center">
+                                Current / Historical Market Value
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="border-gray-200 px-4 py-5 sm:p-0">
+                            <dl class="px-4 sm:divide-y sm:divide-gray-200">
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Purchase/Trade/Lease Price
+                                    </dt>
+                                    <dd
+                                        class="font-normal text-sm mt-1 text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.purchase_price}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Date of Purchase/Trade/Lease
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.date_of_purchase | date: "MMM-dd-YYYY"}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Sales/Trade Price
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.sales_price}}
+                                    </dd>
+                                </div>
+
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Date of Sale/Trade
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.date_of_sales | date: "MMM-dd-YYYY"}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Estimated Market Value
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.estimated_market_value}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Source of Market Value
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.source_of_market_value}}
+                                    </dd>
+                                </div>
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Date of Market Value
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{machinery.date_of_market_value | date: "MMM-dd-YYYY"}}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+        </div>
+
+        <!-- Images  -->
+        <div class="block w-4/12 images-gallery">
+            <img class="py-4" src="assets\images\apps\equipment\Rectangle 1834.png">
+            <img class="py-4" src="assets\images\apps\equipment\Rectangle 1834.png">
+
+        </div>
+
+
+
+    </div>
+
+</div>

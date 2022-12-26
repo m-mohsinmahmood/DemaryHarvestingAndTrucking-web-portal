@@ -65,7 +65,7 @@
                                 Status
                             </div>
                             <div class="hidden sm:block" mat-sort-header="calendar_year">
-                                Calendar Year
+                                Year
                             </div>
                             <div>Actions</div>
                         </div>
@@ -165,8 +165,8 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline">
-                            <mat-label>Calendar Year</mat-label>
-                            <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
+                            <mat-label>Year</mat-label>
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Year"
                                 [formControl]="calendar_year">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"

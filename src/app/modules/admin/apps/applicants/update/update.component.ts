@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { Applicant } from '../applicants.types';
@@ -21,6 +21,8 @@ import {
     MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { states } from 'JSON/state';
+import { countryList } from 'JSON/country';
 
 export const MY_FORMATS = {
     parse: {
@@ -103,10 +105,17 @@ export class UpdateComponent implements OnInit {
     calendar_year;
     applicantObjDataCal: any;
     date = new FormControl(moment());
-    //   avatar: string = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
     routeID: string;
     avatar: string = '';
     isEdit: boolean;
+    states: string[] = [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+    imagePreview: string;
+    isImage: boolean = true;
+    formValid: boolean;
+    isState: boolean = false;
     //#endregion
 
     constructor(
@@ -128,8 +137,22 @@ export class UpdateComponent implements OnInit {
         this.initApplicantForm();
         this.initObservables();
         this.initCalendar();
+        this.formUpdates();
+        this.states = states;
+        this.countries = countryList;
 
-        console.log("abcd", this.data.applicantData);
+        //Auto Complete functions for State and Country
+        this.stateOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
+
+
         this.isEdit = this.data.isEdit;
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -140,14 +163,25 @@ export class UpdateComponent implements OnInit {
                 }
             });
     }
+
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
+    }
+
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
     // #region initializing forms
     initApplicantForm() {
-        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             cell_phone_number: ['', [Validators.required]],
             home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
@@ -155,6 +189,7 @@ export class UpdateComponent implements OnInit {
             marital_status: ['', [Validators.required]],
             languages: ['', [Validators.required]],
             rank_speaking_english: ['', [Validators.required]],
+
         });
 
         this.secondFormGroup = this._formBuilder.group({
@@ -162,10 +197,10 @@ export class UpdateComponent implements OnInit {
             address_2: [''],
             town_city: ['', [Validators.required]],
             county_providence: ['', [Validators.required]],
-            state: ['', [Validators.required]],
             postal_code: ['', [Validators.required]],
+            state: [''],
             country: ['', [Validators.required]],
-            avatar: [''],
+            avatar: ['', [Validators.required]],
         });
 
         this.thirdFormGroup = this._formBuilder.group({
@@ -198,6 +233,7 @@ export class UpdateComponent implements OnInit {
         this.fifthFormGroup = this._formBuilder.group({
             us_phone_number: [''],
             blood_type: [''],
+            unique_fact: [''],
             emergency_contact_name: [''],
             emergency_contact_phone: [''],
 
@@ -231,15 +267,11 @@ export class UpdateComponent implements OnInit {
             this.sixthFormGroup,
         ];
 
-        if (this.data.applicantData !== null) {
-            const { applicantObjData } = this.data.applicantData;
-            console.log("applicantObjData1", this.data.applicantData.first_name);
-
-            console.log("applicantObjData1", this.data.applicantData);
+        if (this.data?.applicantData) {
             this.firstFormGroup.patchValue({
                 id: this.data.applicantData?.id,
                 first_name: this.data.applicantData?.first_name,
-                last_name: this.data.applicantData.last_name,
+                last_name: this.data.applicantData?.last_name,
                 email: this.data.applicantData.email,
                 cell_phone_number: this.data.applicantData.cell_phone_number,
                 home_phone_number: this.data.applicantData.home_phone_number,
@@ -261,11 +293,11 @@ export class UpdateComponent implements OnInit {
                 avatar: this.data.applicantData.avatar,
             });
             this.thirdFormGroup.patchValue({
-                question_1: this.data.applicantData.question_1,
-                question_2: this.data.applicantData.question_2,
-                question_3: this.data.applicantData.question_3,
-                question_4: this.data.applicantData.question_4,
-                question_5: this.data.applicantData.question_5,
+                question_1: this.data.applicantData.question_1.toString(),
+                question_2: this.data.applicantData.question_2.toString(),
+                question_3: this.data.applicantData.question_3.toString(),
+                question_4: this.data.applicantData.question_4.toString(),
+                question_5: this.data.applicantData.question_5.toString(),
                 authorized_to_work: this.data.applicantData.authorized_to_work.toString(),
                 us_citizen: this.data.applicantData.us_citizen.toString(),
                 cdl_license: this.data.applicantData.cdl_license.toString(),
@@ -273,7 +305,7 @@ export class UpdateComponent implements OnInit {
                 tractor_license: this.data.applicantData.tractor_license.toString(),
                 passport: this.data.applicantData.passport.toString(),
                 work_experience_description: this.data.applicantData.work_experience_description,
-                employment_period: this.data.applicantData.employment_period,
+                employment_period: this.data.applicantData.employment_period.toString(),
 
 
 
@@ -356,7 +388,10 @@ export class UpdateComponent implements OnInit {
             // this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
             this.updateApplicant(this.form.value);
         } else {
-            this._applicantService.createApplicant(this.form.value);
+            var formData: FormData = new FormData();
+            formData.append('image', this.secondFormGroup.get('avatar').value);
+            formData.append('form', JSON.stringify(this.form.value));
+            this._applicantService.createApplicant(formData);
         }
     }
     updateApplicant(applicantData: any): void {
@@ -398,17 +433,48 @@ export class UpdateComponent implements OnInit {
             : (this.isSubmit = false);
     }
 
-    showPreview(event) {
-        const file = (event.target as HTMLInputElement).files[0];
-        this.fourthFormGroup.patchValue({
-            avatar: file,
-        });
-        this.fourthFormGroup.get('avatar').updateValueAndValidity();
-        // File Preview
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.imageURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
+    //#region Upload Image
+    uploadImage(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] &&
+            event.target.files[0].type.includes('image/')
+        ) {
+            this.isImage = true;
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.imageURL = _event.target.result;
+                this.secondFormGroup.controls['avatar']?.setValue(event.target.files[0]);
+                //this.imageURL.markAsDirty();
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.isImage = false;
+        }
     }
+    //#endregion
+
+    //#region Form Value Updates
+    formUpdates() {
+        this.secondFormGroup?.valueChanges.subscribe((_formValues => {
+            if (_formValues["country"] === "United States of America") {
+                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
+                this.isState = true;
+            }
+            else {
+                this.isState = false;
+                this.secondFormGroup.controls['state'].setValue('');
+                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+            }
+        }));
+    }
+    //#endregion
+    //#endregion
+
+    //#region Form Country/State Validation
+
+    formValidation(e) {
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
+      }
+    //#endregion
 }

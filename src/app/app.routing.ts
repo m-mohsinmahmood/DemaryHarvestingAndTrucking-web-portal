@@ -113,6 +113,13 @@ export const appRoutes: Route[] = [
                 },
                 loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
+                //employment page
+                {path:'employment', data: {
+                    layout: 'empty'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
+
+
                 // Error
                 {path: 'error', children: [
                     {path: '404', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.module').then(m => m.Error404Module)},

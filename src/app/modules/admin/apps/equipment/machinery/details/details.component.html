@@ -1,367 +1,73 @@
-<div class=" sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
-
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 overflow-y-hidden bg-card dark:bg-transparent">
     <!-- Header -->
-    <div class="relative flex flex-col xs:items-center sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b bg-gray-900 ">
-        <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    <div class="border-b">
+        <div *ngIf="machinery$ | async; let machinery"
+            class="overflow-auto relative px-4 md:px-4 flex flex-col sm:flex-row flex-0 sm:items-center justify-between">
+            <!-- Title -->
+            <div class="flex flex-row">
+                <button mat-icon-button (click)="toggleDrawer()" class="z-0">
+                    <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+                </button>
+                <div (click)="backHandler()"
+                    class="flex gap-3 items-center text-2xl font-extrabold tracking-tight cursor-pointer">
+                    <mat-icon w-24 h-24 class="text-secondary"
+                        [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
+                    <span class="ml-1">{{ machinery?.name }} </span>
+                </div>
+            </div>
+            <div class="flex float-right justify-end p-4">
+                <button class="ml-4 float-right justify-end" mat-flat-button [color]="'primary'"
+                    (click)="openUpdateDialog(machinery)">
+                    <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                    <span class="ml-2 mr-1">Edit</span>
+                </button>
+            </div>
+
         </div>
-        <!-- Title -->
-        <div (click)="backHandler()" class="flex gap-3 items-center text-4xl font-extrabold tracking-tight">
-            <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <img *ngIf="vehicleDetails.photo" class="inline-block h-14 w-14 rounded-full" src="{{vehicleDetails.photo}}" alt="">
-            <img *ngIf="vehicleDetails.photo == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
-            <span class="ml-1 capitalize text-white">{{vehicleDetails.name}}</span>
-        </div>
-        <div class="flex justify-end gap-4 px-4 py-5 sm:px-6 flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" mat-flat-button [color]="'warn'">
-                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1">Delete</span>
-            </button>
-            <button (click)="openUpdateDialog()" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" mat-flat-button
-                [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-                <span class="ml-2 mr-1">Update</span>
-            </button>
-        </div>
-        <!-- Actions -->
     </div>
 
-    <!-- Main -->
-    <div class="tab bg-white shadow overflow-hidden sm:rounded-lg">
-        <!-- General Information -->
-        <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="General Information">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Name</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.name}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Model</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.model}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Purchase Company </dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.purchaseCompany}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Purchase Date</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.purchaseDate}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Purchase Price</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.purchasePrice}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Sale Trade Date</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.saleTradeDate}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part Sale Trade Price</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.saleTradePrice}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Part VIN Number</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.vinNumber}}</dd>
-                        </div>
-                        <!-- <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Role</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.role}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Position</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.position}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Salary</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.harvestYear}}</dd>
-                        </div>
-                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-lg font-extrabold text-gray-500">Current Employee</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{vehicleDetails.currentEmployee}}</dd>
-                        </div> -->
-                    </dl>
-                </div>
-            </mat-tab>
-            <!-- Government Docs -->
-            <mat-tab label="Government Docs">
-                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-auto overflow-hidden">
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                            <ng-container>
-                                <div class="grid">
-                                    <!-- Header -->
-                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div class="">
-                                        </div>
-                                        <div name="'date'">Doc Name</div>
-                                        <div class="hidden sm:block" name="'Number'">
-                                            Number
-                                        </div>
-                                        <div class="hidden sm:block" name="'note'">
-                                            Note
-                                        </div>
-                                    </div>
-                                    <!-- Rows -->
-                                    <ng-container *ngIf="employeeGovernemtDocs.length > 0">
-                                        <ng-container *ngFor="let file of employeeGovernemtDocs; trackBy:trackByFn">
-                                            <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                                <!-- Doc Image -->
-                                                <div class="relative">
-                                                    <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                    <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white" [class.bg-red-600]="file.type === 'PDF'" [class.bg-blue-600]="file.type === 'DOC'" [class.bg-green-600]="file.type === 'XLS'" [class.bg-gray-600]="file.type === 'TXT'"
-                                                        [class.bg-amber-600]="file.type === 'JPG'">
-                                                        {{file.type.toUpperCase()}}
-                                                    </div>
-                                                </div>
-                                                <!-- Date -->
-                                                <div class="flex items-center">
-                                                    {{file.name}}
-                                                </div>
-                                                <!-- Doc Number -->
-                                                <div class="flex items-center hidden sm:block">
-                                                    {{"9988-53003-5662"}}
-                                                </div>
-                                                <!-- Doc Note -->
-                                                <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
-                                                    <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
-                                                </div>
-                                                <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                            </div>
-                                        </ng-container>
-                                    </ng-container>
-                                </div>
-                            </ng-container>
-                        </div>
+    <div style="height: 100%" class="bg-card dark:bg-transparent">
+        <mat-drawer-container class="sub-nav-component bg-card divide-x" style="height: 100%" autosize>
+            <mat-drawer #drawer class="sub-sidenav bg-card" [mode]="drawerMode" [opened]="drawerOpened">
+                <div class="flex" *ngFor="let route of routes; let i = index">
+
+                    <div *ngIf="route.title != 'Fuels/Miles'">
+                        <button style="padding: 15px"
+                            [style.background-color]="route.title === selectedIndex? '#d4d7dd': 'transparent'"
+                            matTooltip="{{ route.title }}" matTooltipPosition="right"
+                            [ngClass]="route.title === selectedIndex? 'opacity-100': 'opacity-80'" mat-button
+                            class="my-1 justify-start w-full" (click)="routeHandler(route)">
+                            <mat-icon svgIcon="{{ route.icon }}" class="icon-size-5 text-primary"></mat-icon>
+                            <span style="font-size: 13px;font-weight: bold;margin-left: 10px;"></span>
+                        </button>
                     </div>
                 </div>
-            </mat-tab>
-            <!-- Company Docs -->
-            <mat-tab label="Company Docs ">
-                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-auto overflow-hidden">
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                            <ng-container>
-                                <div class="grid">
-                                    <!-- Header -->
-                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div class="">
-                                        </div>
-                                        <div name="'date'">Doc Name</div>
-                                        <div class="hidden sm:block" name="'Number'">
-                                            Number
-                                        </div>
-                                        <div class="hidden sm:block" name="'note'">
-                                            Note
-                                        </div>
-                                    </div>
-                                    <!-- Rows -->
-                                    <ng-container *ngIf="employeeCompanyDocs.length > 0">
-                                        <ng-container *ngFor="let file of employeeCompanyDocs; trackBy:trackByFn">
-                                            <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                                <!-- Doc Image -->
-                                                <div class="relative">
-                                                    <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                    <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white" [class.bg-red-600]="file.type === 'PDF'" [class.bg-blue-600]="file.type === 'DOC'" [class.bg-green-600]="file.type === 'XLS'" [class.bg-gray-600]="file.type === 'TXT'"
-                                                        [class.bg-amber-600]="file.type === 'JPG'">
-                                                        {{file.type.toUpperCase()}}
-                                                    </div>
-                                                </div>
-                                                <!-- Date -->
-                                                <div class="flex items-center">
-                                                    {{file.name}}
-                                                </div>
-                                                <!-- Doc Number -->
-                                                <div class="flex items-center hidden sm:block">
-                                                    {{"9988-53003-5662"}}
-                                                </div>
-                                                <!-- Doc Note -->
-                                                <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
-                                                    <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
-                                                </div>
-                                                <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                            </div>
-                                        </ng-container>
-                                    </ng-container>
-                                </div>
-                            </ng-container>
+            </mat-drawer>
+
+            <div class="flex sub-sidenav-content bg-light">
+                <div class="w-full h-full">
+                    <div class="tab bg-white overflow-auto h-full mb-28">
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Profile'">
+                                <app-machinery-profile></app-machinery-profile>
+                            </ng-template>
                         </div>
-                    </div>
-                </div>
-            </mat-tab>
 
-            <!-- Work Record Tab -->
-
-            <mat-tab label="Work Records ">
-                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-auto overflow-hidden">
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                            <ng-container>
-                                <div class="grid">
-                                    <!-- Header -->
-                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div class=""></div>
-                                        <div name="'date'">Date</div>
-                                        <div class="hidden sm:block" name="'Number'">
-                                            Number
-                                        </div>
-                                        <div class="hidden sm:block" name="'note'">
-                                            Note
-                                        </div>
-                                    </div>
-                                    <!-- Rows -->
-                                    <ng-container>
-                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                            <!-- Doc Image -->
-                                            <div class="relative">
-                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-                                                    {{" PDF ".toUpperCase()}}
-                                                </div>
-                                            </div>
-                                            <!-- Date -->
-                                            <div class="flex items-center">
-                                                {{"23/8/2022"}}
-                                            </div>
-                                            <!-- Doc Number -->
-                                            <div class="flex items-center hidden sm:block">
-                                                {{"9988-53003-5662"}}
-                                            </div>
-                                            <!-- Doc Note -->
-                                            <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
-                                                <div class="min-w-4 ml-2">{{"Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note "}}</div>
-                                            </div>
-                                            <!-- Download -->
-                                            <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                        </div>
-                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                            <!-- Doc Image -->
-                                            <div class="relative">
-                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-                                                    {{" PDF ".toUpperCase()}}
-                                                </div>
-                                            </div>
-                                            <!-- Date -->
-                                            <div class="flex items-center">
-                                                {{"23/8/2022"}}
-                                            </div>
-                                            <!-- Doc Number -->
-                                            <div class="flex items-center hidden sm:block">
-                                                {{"9988-53003-5662"}}
-                                            </div>
-                                            <!-- Doc Note -->
-                                            <div class="hidden truncate sm:block lg:flex items-center">
-                                                <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
-                                            </div>
-                                            <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </ng-container>
-                            <ng-template #noProducts>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Location'">
+                                <app-machinery-location></app-machinery-location>
+                            </ng-template>
+                        </div>
+                        <div>
+                            <ng-template [ngIf]="selectedIndex === 'Maintenance & Repair'">
+                                <app-machinery-main-repair></app-machinery-main-repair>
                             </ng-template>
                         </div>
                     </div>
                 </div>
-            </mat-tab>
-            <!-- Payroll -->
-            <mat-tab label="Payroll ">
-                <div class="border-t h-screen border-gray-200 px-4 py-5 sm:p-0 ">
-                    <div class="flex flex-auto overflow-hidden">
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                            <ng-container>
-                                <div class="grid">
-                                    <!-- Header -->
-                                    <div class="employee-detail-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                        <div class=""></div>
-                                        <div name="'date'">Date</div>
-                                        <div class="hidden sm:block" name="'Number'">
-                                            Number
-                                        </div>
-                                        <div class="hidden sm:block" name="'note'">
-                                            Note
-                                        </div>
-                                    </div>
-                                    <!-- Rows -->
-                                    <ng-container>
-                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                            <!-- Doc Image -->
-                                            <div class="relative">
-                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-                                                    {{" PDF ".toUpperCase()}}
-                                                </div>
-                                            </div>
-                                            <!-- Date -->
-                                            <div class="flex items-center">
-                                                {{"23/7/2022"}}
-                                            </div>
-                                            <!-- Doc Number -->
-                                            <div class="flex items-center hidden sm:block">
-                                                {{"9988-53003-5662"}}
-                                            </div>
+            </div>
+        </mat-drawer-container>
 
-                                            <!-- Doc Note -->
-                                            <div class="hidden truncate whitespace-normal	 sm:block lg:flex items-center">
-                                                <div class="min-w-4 ml-2">{{"Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note Some Random Note "}}</div>
-                                            </div>
-                                            <!-- Download -->
-                                            <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                        </div>
-                                        <div class="employee-detail-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                            <!-- Doc Image -->
-                                            <div class="relative">
-                                                <mat-icon class="icon-size-6 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
-                                                <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-                                                    {{" PDF ".toUpperCase()}}
-                                                </div>
-                                            </div>
-                                            <!-- Date -->
-                                            <div class="flex items-center">
-                                                {{"23/8/2022"}}
-                                            </div>
-                                            <!-- Doc Number -->
-                                            <div class="flex items-center hidden sm:block">
-                                                {{"9988-53003-5662"}}
-                                            </div>
-                                            <!-- Doc Note -->
-                                            <div class="hidden truncate sm:block lg:flex items-center">
-                                                <div class="min-w-4 ml-2">{{"Some Random Note"}}</div>
-                                            </div>
-                                            <a href="" class="flex items-center underline text-blue-500">
-                                                Download
-                                                <mat-icon class="" [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-                                            </a>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </ng-container>
-                            <ng-template #noProducts>
-                                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
-                            </ng-template>
-                        </div>
-                    </div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
+        <!-- Main -->
     </div>
 </div>

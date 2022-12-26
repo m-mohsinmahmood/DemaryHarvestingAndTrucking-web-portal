@@ -22,6 +22,9 @@
     min-width: none !important;
 }
 
-
+::ng-deep .status-bar .min-h-14:last-of-type
+{
+    display: none !important;
+}
 
 

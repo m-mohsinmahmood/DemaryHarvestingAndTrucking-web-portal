@@ -1,27 +1,27 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { ChangeDetectorRef, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { states } from './../../../../../JSON/state';
 import { HelpModalComponent } from './help-modal/help-modal.component';
+import { countryList } from 'JSON/country';
 
 @Component({
     selector: 'app-applicantpage',
-      templateUrl: './applicantpage.component.html',
-      styleUrls: ['./applicantpage.component.scss'],
+    templateUrl: './applicantpage.component.html',
+    styleUrls: ['./applicantpage.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class ApplicantpageComponent implements OnInit
-{
+export class ApplicantpageComponent implements OnInit {
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
@@ -46,9 +46,14 @@ export class ApplicantpageComponent implements OnInit
     formArr = [];
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
     calendar_year: any;
-    isLoading:boolean = false;
-    states: string[]= [];
-
+    isLoading: boolean = false;
+    states: string[] = [];
+    countries: string[] = [];
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
+    isImage: boolean = true;
+    isState: boolean = false;
+    //#endregion
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -59,8 +64,7 @@ export class ApplicantpageComponent implements OnInit
         private _matDialog: MatDialog,
 
         breakpointObserver: BreakpointObserver
-    )
-    {
+    ) {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
@@ -72,19 +76,43 @@ export class ApplicantpageComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.initfarmGroups();
+        this.formUpdates();
         this.states = states;
+        this.countries = countryList;
+
+
+        //Auto Complete functions for State and Country
+        this.stateOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterStates(value.state || '')),
+        );
+
+        this.countryOptions = this.secondFormGroup.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
     }
+    //Auto Complete functions for State and Country
+
+    private _filterStates(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.states.filter(state => state.toLowerCase().includes(filterValue));
+    }
+
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+    }
+
     // #region initializing forms
     initfarmGroups() {
-        console.log("this.data", this.data);
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email  : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             cell_phone_number: ['', [Validators.required]],
             home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
@@ -98,10 +126,10 @@ export class ApplicantpageComponent implements OnInit
             address_2: [''],
             town_city: ['', [Validators.required]],
             county_providence: ['', [Validators.required]],
-            state: ['', []],
+            state: ['',],
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
-            avatar: [''],
+            avatar: ['', [Validators.required]],
         });
         this.thirdFormGroup = this._formBuilder.group({
             question_1: ['', [Validators.required]],
@@ -169,14 +197,14 @@ export class ApplicantpageComponent implements OnInit
             });
         });
         this._applicantService.isLoadingApplicant.next(true);
-        this._applicantService.createApplicant(this.form.value);
+        var formData: FormData = new FormData();
+        formData.append('image', this.secondFormGroup.get('avatar').value);
+        formData.append('form', JSON.stringify(this.form.value));
+        this._applicantService.createApplicant(formData);
         this._router.navigateByUrl("/pages/landing-page")
     }
-    updateApplicant(applicantData: any): void {
-        this._applicantService.updateApplicant(applicantData);
-    }
     initCalendar() {
-            this.calendar_year = new FormControl(moment());
+        this.calendar_year = new FormControl(moment());
     }
     //#region Calendar Year Function
     chosenYearHandler(
@@ -211,15 +239,15 @@ export class ApplicantpageComponent implements OnInit
     /**
      * Discard the message
      */
-    discard(): void {}
+    discard(): void { }
     /**
      * Save the message as a draft
      */
-    saveAsDraft(): void {}
+    saveAsDraft(): void { }
     /**
      * Send the message
      */
-    send(): void {}
+    send(): void { }
     selectionChange(event) {
         if (event.selectedIndex == 0) {
             this.isBack = false;
@@ -230,22 +258,9 @@ export class ApplicantpageComponent implements OnInit
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
     }
-    showPreview(event) {
-        const file = (event.target as HTMLInputElement).files[0];
-        this.fourthFormGroup.patchValue({
-            avatar: file,
-        });
-        this.fourthFormGroup.get('avatar').updateValueAndValidity();
-        // File Preview
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.imageURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
-    }
 
     //#region Open Help Modal
-      openHelpDialog(): void {
+    openHelpDialog(): void {
         const dialogRef = this._matDialog.open(HelpModalComponent, {
             data: {},
         });
@@ -254,5 +269,42 @@ export class ApplicantpageComponent implements OnInit
         });
     }
 
+    //#endregion
+
+    //#region Upload Image
+    uploadImage(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] &&
+            event.target.files[0].type.includes('image/')
+        ) {
+            this.isImage = true;
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.imageURL = _event.target.result;
+                this.secondFormGroup.controls['avatar']?.setValue(event.target.files[0]);
+                //this.imageURL.markAsDirty();
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.isImage = false;
+        }
+    }
+    //#endregion
+
+    //#region Form Value Updates
+    formUpdates() {
+        this.secondFormGroup?.valueChanges.subscribe((_formValues => {
+            if (_formValues["country"] === "United States of America") {
+                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
+                this.isState = true;
+            }
+            else {
+                this.isState = false;
+                this.secondFormGroup.controls['state'].setValue('');
+                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+            }
+        }));
+    }
     //#endregion
 }

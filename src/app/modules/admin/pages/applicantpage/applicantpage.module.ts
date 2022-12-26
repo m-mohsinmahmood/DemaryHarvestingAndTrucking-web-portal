@@ -35,6 +35,7 @@ import { ApplicantpageComponent } from './applicantpage.component';
 import { activitiesRoutes } from './applicantpage.routing';
 import { HelpModalComponent } from './help-modal/help-modal.component';
 import { QuillModule } from 'ngx-quill';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ RouterModule.forChild(activitiesRoutes),
         MatButtonToggleModule,
         FuseDrawerModule,
         QuillModule,
+        MatAutocompleteModule
 
     ]
 })

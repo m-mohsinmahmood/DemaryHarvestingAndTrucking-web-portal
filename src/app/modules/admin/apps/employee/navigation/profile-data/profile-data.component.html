@@ -1,19 +1,201 @@
 <!-- Header -->
-
-    <!-- Actions -->
-    <div class="overflow-y-hidden">
-        <div class="flex justify-start items-start border-b mb-2 mx-4">
-            <p class="text-black py-3 text-2xl font-extrabold tracking-tight">Profile Data</p>
+<div class="overflow-y-hidden">
+    <div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b">
+        <!-- Title -->
+        <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
+            <span class="ml-1 capitalize">Profile Data </span>
         </div>
-        <!-- Image-->
-        <div class="flex flex-row justify-start items-center  mb-0">
-            <img class="inline-block h-15 w-15 rounded-full ml-15" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
-            <div class="flex flex-col justify-center items-center rounded-lg p-4 bg-gray-100 ml-2 border border-black">
-                <p class="text-base font-normal text-gray-400">Number of years</p>
-                <p class="text-base font-normal text-gray-400">3+</p>
+        <div class="flex justify-end gap-4 px-4 sm:px-6 flex-shrink-0 items-center  sm:mt-0 sm:ml-4">
+            <button
+                class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                mat-flat-button [color]="'primary'" (click)="openUpdateDialog()">
+                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                <span class="ml-2 mr-1">Edit</span>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="employeeProfileData$ | async as employeeProfileData">
+        <div
+            class="sm:ml-12 md:ml-12 mt-2 ml-4 w-2/12 flex flex-col justify-center items-center rounded-lg p-4 bg-gray-100 ml-2 border border-black">
+            <p class="text-base font-normal text-gray-400">Number of years</p>
+            <p class="text-base font-normal text-gray-400">3+</p>
+        </div>
+        <div class="mt-4 grid sm:gap-3 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
+                <mat-label>{{employeeProfileData.date_of_birth | date: 'MMM dd YYY'}}</mat-label>
             </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Age:</mat-label>
+                <mat-label>{{employeeProfileData.age}}</mat-label>
+            </div>
+
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Marital Status: </mat-label>
+                <mat-label class="">{{employeeProfileData.marital_status}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Language Spoken: </mat-label>
+                <mat-label class="">{{employeeProfileData.languages}}</mat-label>
+            </div>
+
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Education Degree Name:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.degree_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Blood Type: </mat-label>
+                <mat-label class="">{{employeeProfileData.blood_type}}</mat-label>
+            </div>
+
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Authorized to Work in US:
+                </mat-label>
+                <mat-label class="">
+                    <mat-icon class="
+                        greenActiveIcon
+                    " [svgIcon]="
+                        'heroicons_solid:check-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">US Citizen: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee?.us_citizen === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee?.us_citizen === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">CDL License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee?.cdl_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee?.cdl_license === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Lorry License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee?.lorry_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee?.lorry_license === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Tractor License: </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee?.tractor_license === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee?.tractor_license== true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Do You have a Passport:
+                </mat-label>
+                <mat-label class="">
+                    <mat-icon class="{{
+                        employee?.passport === true
+                            ? 'greenActiveIcon'
+                            : 'redInActiveIcon'
+                    }}" [svgIcon]="
+                        employee?.passport === true
+                            ? 'heroicons_solid:check-circle'
+                            : 'heroicons_solid:x-circle'
+                    ">check-circle</mat-icon>
+                </mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
+                    Name:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.supervisor_name}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
+                    Phone
+                    Number: </mat-label>
+                <mat-label class="">+1 {{ employeeProfileData.supervisor_contact}}</mat-label>
+            </div>
+
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Work Experience Description:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.work_experience_description}}</mat-label>
+            </div>
+            <div> </div>
+
+            <div class="my-4">
+                <p class="font-semibold text-3xl my-0">Self Ranking</p>
+            </div>
+            <div></div>
+
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Speaking English:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.rank_speaking_english}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Farm Eq.
+                    Experience:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.question_1}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Harvest Eq.
+                    Experience: </mat-label>
+                <mat-label class="">{{employeeProfileData.question_2}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Driving Trucks Ability:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.question_3}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Welding Ability:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.question_4}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Mechanical Ability:
+                </mat-label>
+                <mat-label class="">{{employeeProfileData.question_5}}</mat-label>
+            </div>
+
+
         </div>
-        <form [formGroup]="selectedProductForm" class="">
+    </div>
+
+    <!-- Image-->
+
+
+    <!-- <form [formGroup]="selectedProductForm" class="">
         <div class="px-10 py-5 min-h-128">
             <div class="flex sm:flex-row sm:justify-center flex-col  sm:mb-3 mb-6">
                 <div class=" sm:w-6/12 w-full h-10 sm:m-2 sm:mb-0 mb-6">
@@ -133,5 +315,5 @@
 
 
         </div>
-        </form>
-    </div>
+        </form> -->
+</div>

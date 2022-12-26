@@ -40,6 +40,7 @@ export class RecruiterremarksComponent implements OnInit {
     referenceForm: FormGroup
     status_step;
     applicantData;
+    score: string;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -123,6 +124,7 @@ export class RecruiterremarksComponent implements OnInit {
             first_interviewer_id: this.applicantData?.first_interviewer_id,
             status_message: ['First Interview Completed'],
             status_step:['3'],
+            ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
@@ -132,6 +134,7 @@ export class RecruiterremarksComponent implements OnInit {
             second_interviewer_id: this.applicantData?.second_interviewer_id,
             status_message: ['Second Interview Completed'],
             status_step:['4'],
+            ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
@@ -141,6 +144,7 @@ export class RecruiterremarksComponent implements OnInit {
             third_interviewer_id: this.applicantData?.third_interviewer_id,
             status_message: ['Third Interview Completed'],
             status_step:['5'],
+            ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
@@ -150,6 +154,7 @@ export class RecruiterremarksComponent implements OnInit {
             reference_interviewer_id: this.applicantData?.reference_interviewer_id,
             status_message: ['Reference Call Completed'],
             status_step:['6'],
+            ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
         
@@ -274,16 +279,58 @@ export class RecruiterremarksComponent implements OnInit {
     submit(interViewer: string): void {
         if(interViewer === 'First'){
             this.firstInterviewForm.value.status_step = '3'
-            this._applicantService.patchApplicant(this.firstInterviewForm.value , true);
+            this.calculateScore(this.firstInterviewForm);
+            this._applicantService.patchApplicant(this.firstInterviewForm.value , true , false);
         }else if(interViewer === 'Second'){
             this.secondInterviewForm.value.status_step = '4'
-            this._applicantService.patchApplicant(this.secondInterviewForm.value , true);
+            this.calculateScore(this.secondInterviewForm);
+            this._applicantService.patchApplicant(this.secondInterviewForm.value , true , false);
         }else if(interViewer === 'Third'){
             this.thirdFormGroup.value.status_step = '5'
-            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true);
+            this.calculateScore(this.thirdInterviewForm);
+            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true , false);
         }else if(interViewer === 'Reference'){
             this.referenceForm.value.status_step = '6'
-            this._applicantService.patchApplicant(this.referenceForm.value , true);
+            this.calculateScore(this.referenceForm);
+            this._applicantService.patchApplicant(this.referenceForm.value , true , false);
+        }
+    }
+     //#region Calculate Score
+     calculateScore(form) {
+        let firstRanking = this.firstInterviewForm.controls['first_call_ranking'].value;
+        let secondRanking = this.secondInterviewForm.controls['second_call_ranking'].value;
+        let thirdRanking = this.thirdInterviewForm.controls['third_call_ranking'].value;
+        let refRanking = this.referenceForm.controls['reference_call_ranking'].value;
+        this.score = "0";
+        if (firstRanking && secondRanking && thirdRanking && refRanking){
+
+            this.score = (((+firstRanking + +secondRanking + +thirdRanking + +refRanking) / 40) * 100).toFixed(2) 
+            form.controls['ranking'].setValue(this.score);
+        }
+        else if (firstRanking && secondRanking && refRanking ){
+
+            this.score = (((+firstRanking + +secondRanking + +refRanking) / 30) * 100).toFixed(2)
+            form.controls['ranking'].setValue(this.score);
+        }
+        else if (firstRanking && refRanking ){
+
+            this.score = (((+firstRanking + +refRanking) / 20) * 100).toFixed(2)
+            form.controls['ranking'].setValue(this.score);
+        }
+        else if (firstRanking && secondRanking && thirdRanking){
+
+            this.score = (((+firstRanking + +secondRanking + +thirdRanking) / 30) * 100).toFixed(2)
+            form.controls['ranking'].setValue(this.score);
+        }
+        else if (firstRanking && secondRanking){
+
+            this.score = (((+firstRanking + +secondRanking) / 20) * 100).toFixed(2)
+            form.controls['ranking'].setValue(this.score);
+        }
+        else if (firstRanking){
+
+            this.score = (((+firstRanking) / 10) * 100).toFixed(2)
+            form.controls['ranking'].setValue(this.score);
         }
     }
 

@@ -16,20 +16,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from 'app/shared/shared.module';
-import { VehicleComponent } from 'app/modules/admin/apps/equipment/vehicle/vehicle.component';
-import { VehicleListComponent } from 'app/modules/admin/apps/equipment/vehicle/list/vehicle.component';
-import { VehicleDetailComponent } from 'app/modules/admin/apps/equipment/vehicle/details/details.component';
 import { MachineryComponent } from 'app/modules/admin/apps/equipment/machinery/machinery.component';
 import { MachineryListComponent } from 'app/modules/admin/apps/equipment/machinery/list/machinery.component';
-import { PropertyComponent } from 'app/modules/admin/apps/equipment/property/property.component';
-import { PropertyListComponent } from 'app/modules/admin/apps/equipment/property/list/property.component';
-import { PartComponent } from 'app/modules/admin/apps/equipment/part/part.component';
-import { PartListComponent } from 'app/modules/admin/apps/equipment/part/list/part.component';
 import { equipmentRoutes } from 'app/modules/admin/apps/equipment/equipment.routing';
-import { AddModalComponent } from './vehicle/add-modal/add-modal.component';
-import { UpdateAddComponent } from './vehicle/update-add/update-add.component';
 import { UpdateAddMachineryComponent } from './machinery/update/update-add.component';
-
+import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -37,32 +28,57 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MachineryDetailComponent } from './machinery/details/details.component';
-import { UpdateAddPartsComponent } from './part/update/update-add.component';
-import { PartsDetailComponent } from './part/details/details.component';
-import { UpdateAddPropertyComponent } from './property/update/update-add.component';
-import { PropertyDetailComponent } from './property/details/details.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MotorizedComponent } from './motorized/motorized.component';
+import { MotorizedDetailComponent } from './motorized/details/details.component';
+import { MotorizedListComponent } from './motorized/list/motorized.component';
+import { NonMotorizedComponent } from './non-motorized/non-motorized.component';
+import { NonMotorizedDetailComponent } from './non-motorized/details/details.component';
+import { NonMotorizedListComponent } from './non-motorized/list/non-motorized.component';
+import { MachineryProfileComponent } from './machinery/navigation/profile/profile.component';
+import { NonMotorizedProfileComponent } from './non-motorized/navigation/profile/profile.component';
+import { MachineryMainRepairComponent } from './machinery/navigation/main-repair/main-repair.component';
+import { NonMotorizedMainRepairComponent } from './non-motorized/navigation/main-repair/main-repair.component';
+import { NonMotorizedLocationComponent } from './non-motorized/navigation/location/location.component';
+import { MachineryLocationComponent } from './machinery/navigation/location/location.component';
+import { MotorizedProfileComponent } from './motorized/navigation/profile/profile.component';
+import { MotorizedMainRepairComponent } from './motorized/navigation/main-repair/main-repair.component';
+import { MotorizedLocationComponent } from './motorized/navigation/location/location.component';
+import { FuelsMilesComponent } from './motorized/navigation/fuels-miles/fuels-miles.component';
+import { UpdateAddMotorizedComponent } from './motorized/update/update-add.component';
+import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-add.component';
+import { BirthDateFormat } from './machinery/update/update-add.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
 @NgModule({
     declarations: [
-        VehicleComponent,
-        VehicleListComponent,
-        VehicleDetailComponent,
         MachineryComponent,
         MachineryListComponent,
-        PropertyComponent,
-        PropertyListComponent,
-        PartComponent,
-        PartListComponent,
-        AddModalComponent,
-        UpdateAddComponent,
         UpdateAddMachineryComponent,
         MachineryDetailComponent,
-        UpdateAddPartsComponent,
-        PartsDetailComponent,
-        UpdateAddPropertyComponent,
-        PropertyDetailComponent,
+        NonMotorizedProfileComponent,
+        MotorizedMainRepairComponent,
+        MotorizedProfileComponent,
+        MachineryMainRepairComponent,
+        NonMotorizedMainRepairComponent,
+        NonMotorizedProfileComponent,
+        NonMotorizedLocationComponent,
+        MotorizedLocationComponent,
+        MachineryLocationComponent,
+        MachineryProfileComponent,
+        MotorizedComponent,
+        MotorizedDetailComponent,
+        MotorizedListComponent,
+        NonMotorizedComponent,
+        NonMotorizedDetailComponent,
+        NonMotorizedListComponent,
+        FuelsMilesComponent,
+        UpdateAddMotorizedComponent,
+        UpdateAddNonMotorizedComponent,
+        BirthDateFormat
+        
 
     ],
     imports     : [
@@ -105,6 +121,9 @@ import { PropertyDetailComponent } from './property/details/details.component';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
+        FuseDrawerModule,
+        MatSidenavModule,
+        MatToolbarModule
     ]
 })
 export class EquipmentModule
