@@ -19,7 +19,6 @@ import {
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export const MY_FORMATS = {
   parse: {
@@ -50,7 +49,7 @@ export const MY_FORMATS_2 = {
   ],
 })
 export class BirthDateFormat {
-}
+} 
 
 
 @Component({
