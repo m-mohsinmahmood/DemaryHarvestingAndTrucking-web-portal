@@ -1,0 +1,10 @@
+$mobile: 767px;
+
+
+
+.benefits-cards{
+    @media screen and (max-width: $mobile) {
+        width:14rem;
+
+    }
+}
