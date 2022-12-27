@@ -37,13 +37,16 @@ import { HelpModalComponent } from './help-modal/help-modal.component';
 import { QuillModule } from 'ngx-quill';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { BirthDateFormat } from './applicantpage.component';
+import { FullDate } from './applicantpage.component';
 
 
 @NgModule({
     declarations: [
         ApplicantpageComponent,
         HelpModalComponent,
+        BirthDateFormat,
+        FullDate
 
     ],
     imports     : [
