@@ -40,8 +40,39 @@
         </div>
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
-        <router-outlet *ngIf="true"></router-outlet>
+        <router-outlet *ngIf="true">
 
+        </router-outlet>
+
+         <!-- /////////////////FOOOTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR//////////////////////////////////// -->
+
+
+    <div class="flex item-center justify-center w-full pb-16" style="background-color:#31558C">
+        <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-12 pb-8">
+            <div class="footer-col flex flex-col md:w-5/12 items-left py-8 gap-y-6">
+                <img class="w-40 h-auto font-light" src="assets\images\pages\top-navigation-assets\Group 35423.png">
+                <div class="flex flex-row items-center icon-footer">
+                    <mat-icon class="text-white h-auto pr-2" [svgIcon]="'heroicons_outline:map'"> </mat-icon>
+                    <p class="text-white pt-4">1664 East Florence Blvd Suite 4 <br>#505 Casa Grande AZ 85122</p>
+                </div>
+
+                <div class="flex flex-row items-center icon-footer">
+                    <mat-icon class="envelope-icon text-white h-auto pr-2" [svgIcon]="'heroicons_outline:at-symbol'"> </mat-icon>
+                    <p class="text-white">dht@dht-usa.com</p>
+                </div>
+            </div>
+
+
+            <div class="footer-col flex flex-col md:w-3/12 items-left py-8 gap-y-6">
+            </div>
+
+            <div class="footer-col flex flex-col md:w-4/12 items-left py-8 gap-y-6">
+            </div>
+
+
+
+        </div>
+    </div>
 
     </div>
 
