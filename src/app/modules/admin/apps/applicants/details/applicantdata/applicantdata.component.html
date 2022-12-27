@@ -16,13 +16,13 @@
 
 <div class="flex justify-end mb-2">
 
-    <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = true"
-        matTooltip="Expand All">
+    <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+        (click)="allExpandState = true" matTooltip="Expand All">
         <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-down'"></mat-icon>
     </button>
 
-    <button *ngIf="allExpandState == true" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="allExpandState = false"
-        matTooltip="Collapse All">
+    <button *ngIf="allExpandState == true" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+        (click)="allExpandState = false" matTooltip="Collapse All">
         <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:chevron-double-up'"></mat-icon>
     </button>
 </div>
@@ -60,23 +60,6 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             {{ applicantInfo?.applicant_info?.email }}
-                        </dd>
-                    </div>
-
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Cell Phone number
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            +1 {{ applicantInfo?.applicant_info?.cell_phone_number }}
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Home Phone Number
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            +1 {{ applicantInfo?.applicant_info?.home_phone_number }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -117,6 +100,39 @@
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             {{applicantInfo?.applicant_info?.rank_speaking_english}}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            US Citizen
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            <mat-icon class="{{
+                            applicantInfo?.applicant_info?.us_citizen === true
+                                ? 'greenActiveIcon'
+                                : 'redInActiveIcon'
+                        }}" [svgIcon]="
+                        applicantInfo?.applicant_info?.us_citizen === true
+                                ? 'heroicons_solid:check-circle'
+                                : 'heroicons_solid:x-circle'
+                        ">check-circle</mat-icon>
+                        </dd>
+                    </div>
+
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Passport
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            <mat-icon class="{{
+                            applicantInfo?.applicant_info?.passport === true
+                                ? 'greenActiveIcon'
+                                : 'redInActiveIcon'
+                        }}" [svgIcon]="
+                        applicantInfo?.applicant_info?.passport === true
+                                ? 'heroicons_solid:check-circle'
+                                : 'heroicons_solid:x-circle'
+                        ">check-circle</mat-icon>
                         </dd>
                     </div>
                 </dl>
@@ -164,7 +180,8 @@
                             State
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.state == 'undefined'? '-' : applicantInfo?.applicant_info?.state }}
+                            {{ applicantInfo?.applicant_info?.state == 'undefined'? '-' :
+                            applicantInfo?.applicant_info?.state }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -182,7 +199,23 @@
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             {{ applicantInfo?.applicant_info?.town_city }}
                         </dd>
-                    </div>  
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Cell Phone number
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            +1 {{ applicantInfo?.applicant_info?.cell_phone_number }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Home Phone Number
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            +1 {{ applicantInfo?.applicant_info?.home_phone_number }}
+                        </dd>
+                    </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
                             Postal Code
@@ -209,6 +242,136 @@
                 <dl class="sm:divide-y sm:divide-gray-200">
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
+                            Current Employer
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_employer }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Current position title
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_position_title }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Brief description of current role
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_description_of_role }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Current employement period start Date
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_employement_period_start | date: 'MMM-dd-YYYY' }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Current employement period end Date
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_employement_period_end | date: 'MMM-dd-YYYY'}}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Current Supervisor/Reference
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_supervisor_reference }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Current supervisor phone number
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_supervisor_phone_number}}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Can we contact current Supervisor/Reference
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.current_contact_supervisor }}
+                        </dd>
+                    </div>
+
+
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous Employer
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_employer }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous position title
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_position_title }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Brief description of Previous role
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_description_of_role }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous employement period start date
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_employement_period_start | date: 'MMM-dd-YYYY' }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous employement period end date
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_employement_period_end | date: 'MMM-dd-YYYY' }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous Supervisor/Reference
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_supervisor_reference }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Previous supervisor phone number
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_supervisor_phone_number}}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Can we contact previous Supervisor/Reference
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.previous_contact_supervisor }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
                             Authorized to Work in US
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
@@ -223,25 +386,44 @@
                         ">check-circle</mat-icon>
                         </dd>
                     </div>
+
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            US Citizen
+                            Do you have lorry license
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
-                            applicantInfo?.applicant_info?.us_citizen === true
+                            applicantInfo?.applicant_info?.lorry_license === true
                                 ? 'greenActiveIcon'
                                 : 'redInActiveIcon'
                         }}" [svgIcon]="
-                        applicantInfo?.applicant_info?.us_citizen === true
+                        applicantInfo?.applicant_info?.lorry_license === true
                                 ? 'heroicons_solid:check-circle'
                                 : 'heroicons_solid:x-circle'
                         ">check-circle</mat-icon>
                         </dd>
                     </div>
+
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            Tractor License
+                            Do you have CDL license
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            <mat-icon class="{{
+                            applicantInfo?.applicant_info?.cdl_license === true
+                                ? 'greenActiveIcon'
+                                : 'redInActiveIcon'
+                        }}" [svgIcon]="
+                        applicantInfo?.applicant_info?.cdl_license === true
+                                ? 'heroicons_solid:check-circle'
+                                : 'heroicons_solid:x-circle'
+                        ">check-circle</mat-icon>
+                        </dd>
+                    </div>
+
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Do you have Tractor License
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             <mat-icon class="{{
@@ -255,48 +437,6 @@
                         ">check-circle</mat-icon>
                         </dd>
                     </div>
-
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Passport
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            <mat-icon class="{{
-                            applicantInfo?.applicant_info?.passport === true
-                                ? 'greenActiveIcon'
-                                : 'redInActiveIcon'
-                        }}" [svgIcon]="
-                        applicantInfo?.applicant_info?.passport === true
-                                ? 'heroicons_solid:check-circle'
-                                : 'heroicons_solid:x-circle'
-                        ">check-circle</mat-icon>
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Work Experience Description
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.work_experience_description }}
-                        </dd>
-                    </div>
-
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
-
-                        <dt class="text-sm font-bold text-gray-500">
-
-                            Employment Period
-
-                        </dt>
-
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-
-                            {{ applicantInfo?.applicant_info?.employment_period }}
-
-                        </dd>
-
-                    </div>
-
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
                             Operating Farm Equipment
@@ -338,8 +478,14 @@
                             {{ applicantInfo?.applicant_info?.question_5 }} out of 5
                         </dd>
                     </div>
-
-
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Work Experience Description
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.work_experience_description }}
+                        </dd>
+                    </div>
                 </dl>
             </div>
         </mat-expansion-panel>
@@ -356,28 +502,28 @@
             </mat-expansion-panel-header>
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                 <dl class="sm:divide-y sm:divide-gray-200">
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            Supervisor Name
+                            Trade School/College
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                            {{ applicantInfo?.applicant_info?.supervisor_name }}
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-7 sm:px-6 flex justify-between items-center">
-                        <dt class="text-sm font-bold text-gray-500">
-                            Supervisor Contact
-                        </dt>
-                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
-                           +1 {{ applicantInfo?.applicant_info?.supervisor_contact }}
+                            {{ applicantInfo?.applicant_info?.school_college }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
-                            Education Degree Name
+                            Degree Name
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
                             {{ applicantInfo?.applicant_info?.degree_name }}
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Graduation Year
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.graduation_year | date: 'YYYY' }}
                         </dd>
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
@@ -396,13 +542,21 @@
                             {{ applicantInfo?.applicant_info?.hear_about_dht }}
                         </dd>
                     </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
+                            Tell us something interesting (Unique) about yourself
+                        </dt>
+                        <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ applicantInfo?.applicant_info?.unique_fact }}
+                        </dd>
+                    </div>
                 </dl>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
 
     <!--Interview Results-->
-    <mat-accordion class="bg-gray-100">
+    <!-- <mat-accordion class="bg-gray-100">
         <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true"
             (closed)="panelOpenState = false" class="bg-gray-100 my-3">
             <mat-expansion-panel-header>
@@ -456,5 +610,5 @@
                 </dl>
             </div>
         </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
 </div>

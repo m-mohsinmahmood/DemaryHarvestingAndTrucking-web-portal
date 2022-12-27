@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Directive, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { ChangeDetectorRef, Inject } from '@angular/core';
@@ -9,15 +9,56 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable, startWith } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { states } from './../../../../../JSON/state';
 import { HelpModalComponent } from './help-modal/help-modal.component';
 import { countryList } from 'JSON/country';
 
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY',
+    },
+    display: {
+        dateInput: 'YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+  };
+  export const MY_FORMATS_2 = {
+    parse: {
+        dateInput: 'LL',
+    },
+    display: {
+        dateInput: 'LL',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+  };
+  @Directive({
+    selector: '[birthdayFormat]',
+    providers: [
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2 },
+    ],
+  })
+  export class BirthDateFormat {
+  }
+
 @Component({
     selector: 'app-applicantpage',
     templateUrl: './applicantpage.component.html',
     styleUrls: ['./applicantpage.component.scss'],
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
@@ -45,7 +86,7 @@ export class ApplicantpageComponent implements OnInit {
     isEdit: boolean = true;
     formArr = [];
     data: 'routeIDa9beac0d-1ea0-42af-bc36-ca839f27271f';
-    calendar_year: any;
+    graduation_year: any;
     isLoading: boolean = false;
     states: string[] = [];
     countries: string[] = [];
@@ -79,6 +120,7 @@ export class ApplicantpageComponent implements OnInit {
     ngOnInit(): void {
         this.initfarmGroups();
         this.formUpdates();
+        this.initCalendar();
         this.states = states;
         this.countries = countryList;
 
@@ -113,13 +155,13 @@ export class ApplicantpageComponent implements OnInit {
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-            cell_phone_number: ['', [Validators.required]],
-            home_phone_number: [''],
             date_of_birth: ['', [Validators.required]],
             age: ['', [Validators.required]],
             marital_status: ['', [Validators.required]],
             languages: ['', [Validators.required]],
             rank_speaking_english: ['', [Validators.required]],
+            passport: ['', [Validators.required]],
+            us_citizen: ['', [Validators.required]],
         });
         this.secondFormGroup = this._formBuilder.group({
             address_1: ['', [Validators.required]],
@@ -129,34 +171,55 @@ export class ApplicantpageComponent implements OnInit {
             state: ['',],
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
+            cell_phone_number: ['', [Validators.required]],
+            home_phone_number: [''],
             avatar: ['', [Validators.required]],
         });
         this.thirdFormGroup = this._formBuilder.group({
+            current_employer: [''],
+            current_position_title: [''],
+            current_description_of_role: [''],
+            current_employement_period_start: [''],
+            current_employement_period_end: [''],
+            current_supervisor_reference: [''],
+            current_supervisor_phone_number: [''],
+            current_contact_supervisor: [''],
+
+            previous_employer: ['', [Validators.required]],
+            previous_position_title: ['', [Validators.required]],
+            previous_description_of_role: ['', [Validators.required]],
+            previous_employement_period_start: ['', [Validators.required]],
+            previous_employement_period_end: ['', [Validators.required]],
+            previous_supervisor_reference: ['', [Validators.required]],
+            previous_supervisor_phone_number: ['', [Validators.required]],
+            previous_contact_supervisor: ['', [Validators.required]],
+
+            authorized_to_work: ['', [Validators.required]],
+            cdl_license: ['', [Validators.required]],
+            lorry_license: ['', [Validators.required]],
+            tractor_license: ['', [Validators.required]],
+
             question_1: ['', [Validators.required]],
             question_2: ['', [Validators.required]],
             question_3: ['', [Validators.required]],
             question_4: ['', [Validators.required]],
             question_5: ['', [Validators.required]],
-            authorized_to_work: ['', [Validators.required]],
-            us_citizen: ['', [Validators.required]],
-            cdl_license: ['', [Validators.required]],
-            lorry_license: ['', [Validators.required]],
-            tractor_license: ['', [Validators.required]],
-            passport: ['', [Validators.required]],
+
             work_experience_description: ['', [Validators.required]],
-            employment_period: ['', [Validators.required]],
+
+
         });
         this.fourthFormGroup = this._formBuilder.group({
-            supervisor_name: ['', [Validators.required]],
-            supervisor_contact: ['', [Validators.required]],
+            school_college: ['', [Validators.required]],
             degree_name: ['', [Validators.required]],
+            graduation_year: [moment(), [Validators.required]],
             reason_for_applying: ['', [Validators.required]],
             hear_about_dht: ['', [Validators.required]],
+            unique_fact: [''],
         });
         this.fifthFormGroup = this._formBuilder.group({
             us_phone_number: [''],
             blood_type: [''],
-            unique_fact: [''],
             emergency_contact_name: [''],
             emergency_contact_phone: [''],
         });
@@ -204,19 +267,20 @@ export class ApplicantpageComponent implements OnInit {
         this._router.navigateByUrl("/pages/landing-page")
     }
     initCalendar() {
-        this.calendar_year = new FormControl(moment());
+        this.graduation_year = new FormControl(moment());
     }
     //#region Calendar Year Function
     chosenYearHandler(
         normalizedYear: Moment,
         datepicker: MatDatepicker<Moment>
     ) {
-        const ctrlValue = moment(this.calendar_year.value);
+        const ctrlValue = moment(this.graduation_year.value);
         ctrlValue.year(normalizedYear.year());
-        this.calendar_year.setValue(ctrlValue);
-        this.form.value.calendar_year = ctrlValue;
+        this.graduation_year.setValue(ctrlValue);
+        this.fourthFormGroup.value.graduation_year = ctrlValue;
         datepicker.close();
     }
+    //#endregion
     showFlashMessage(type: 'success' | 'error'): void {
         // Show the message
         this.flashMessage = type;
@@ -254,7 +318,7 @@ export class ApplicantpageComponent implements OnInit {
         } else {
             this.isBack = true;
         }
-        event.selectedIndex == 5
+        event.selectedIndex == 4
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
     }
@@ -294,8 +358,8 @@ export class ApplicantpageComponent implements OnInit {
 
     //#region Form Value Updates
     formUpdates() {
-        this.secondFormGroup?.valueChanges.subscribe((_formValues => {
-            if (_formValues["country"] === "United States of America") {
+        this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
+            if (_formValue === "United States of America") {
                 this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
             }

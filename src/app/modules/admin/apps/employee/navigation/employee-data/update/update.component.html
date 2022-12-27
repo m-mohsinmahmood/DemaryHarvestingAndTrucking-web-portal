@@ -46,24 +46,6 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
-                                    <mat-label>Cell Phone Number</mat-label>
-                                    <span matPrefix>+1 &nbsp;</span>
-                                    <input maxlength="14" appPhoneMask type="text" matInput
-                                        formControlName="cell_phone_number">
-                                    <mat-hint *ngIf="this.firstFormGroup.get('cell_phone_number').hasError('required')"
-                                        class="text-xs text-red-500">Cell Phone Number is required</mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div>
-                                <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
-                                    <mat-label> Home Phone Number</mat-label>
-                                    <span matPrefix>+1 &nbsp;</span>
-                                    <input maxlength="14" appPhoneMask type="text" matInput
-                                        formControlName="home_phone_number">
-                                </mat-form-field>
-                            </div>
-                            <div>
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Date Of Birth</mat-label>
                                     <input id="date" name="date" formControlName="date_of_birth" matInput
@@ -102,8 +84,12 @@
                                     <mat-select formControlName="languages" class="languages overflow-hidden" multiple>
                                         <mat-option value="English">English</mat-option>
                                         <mat-option value="Spanish">Spanish</mat-option>
-                                        <mat-option value="Chinese">Chinese</mat-option>
-                                        <mat-option value="Arabic">Arabic</mat-option>
+                                        <mat-option value="Portuguese">Portuguese</mat-option>
+                                        <mat-option value="Russian">Russian</mat-option>
+                                        <mat-option value="French">French</mat-option>
+                                        <mat-option value="Italian">Italian</mat-option>
+                                        <mat-option value="Ukrainian">Ukrainian</mat-option>
+                                        <mat-option value="German">German</mat-option>
                                         <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                     <mat-hint *ngIf="this.firstFormGroup.get('languages').hasError('required')"
@@ -124,6 +110,29 @@
                                     <mat-hint
                                         *ngIf="this.firstFormGroup.get('rank_speaking_english').hasError('required')"
                                         class="text-xs text-red-500">Rank Speaking English field is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Passport?</mat-label>
+                                    <mat-select matNativeControl formControlName="passport">
+                                        <mat-option value="true"> Yes</mat-option>
+                                        <mat-option value="false">No</mat-option>
+                                    </mat-select>
+                                    <mat-hint *ngIf="this.thirdFormGroup.get('passport').hasError('required')"
+                                        class="text-xs text-red-500">Passport is required</mat-hint>
+    
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Are you a US Citizen?</mat-label>
+                                    <mat-select formControlName="us_citizen">
+                                        <mat-option value="true"> Yes</mat-option>
+                                        <mat-option value="false">No</mat-option>
+                                    </mat-select>
+                                    <mat-hint *ngIf="this.thirdFormGroup.get('us_citizen').hasError('required')"
+                                        class="text-xs text-red-500">Are you a US Citizen? field is required</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -246,6 +255,24 @@
                                         placeholder="Town/City" value="city">
                                     <mat-hint *ngIf="this.secondFormGroup.get('town_city').hasError('required')"
                                         class="text-xs text-red-500">Town/City is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
+                                    <mat-label>Cell Phone Number</mat-label>
+                                    <span matPrefix>+1 &nbsp;</span>
+                                    <input maxlength="14" appPhoneMask type="text" matInput
+                                        formControlName="cell_phone_number">
+                                    <mat-hint *ngIf="this.firstFormGroup.get('cell_phone_number').hasError('required')"
+                                        class="text-xs text-red-500">Cell Phone Number is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
+                                    <mat-label> Home Phone Number</mat-label>
+                                    <span matPrefix>+1 &nbsp;</span>
+                                    <input maxlength="14" appPhoneMask type="text" matInput
+                                        formControlName="home_phone_number">
                                 </mat-form-field>
                             </div>
                             <div>
@@ -420,11 +447,8 @@
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('us_citizen').hasError('required')"
                                     class="text-xs text-red-500">Are you a US Citizen? field is required</mat-hint>
-
                             </mat-form-field>
                         </div>
-
-
                         <div>
                             <mat-form-field appearance="outline" class="w-full">
                                 <mat-label>Employment Period</mat-label>

@@ -40,8 +40,7 @@ import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterr
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { BirthDateFormat } from './update/update.component';
 import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
-
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
     declarations: [
@@ -104,7 +103,8 @@ import { ComposeEmailDialogComponent } from './details/compose-email-dialog/comp
         // MatDialogModule,
         // MatTabsModule,
         FuseDrawerModule,
-        QuillModule
+        QuillModule,
+        MatToolbarModule
 
     ],
 

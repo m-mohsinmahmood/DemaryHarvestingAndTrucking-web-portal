@@ -46,6 +46,18 @@ export class TopNavigationComponent implements OnDestroy
     navigateHome(){
         this.router.navigateByUrl('pages/landing-page');
     }
+    navigateEmployment(){
+        this.router.navigateByUrl('pages/employment');
+    }
+
+    navigateServices(){
+        this.router.navigateByUrl('pages/services');
+    }
+    navigateContactUs(){
+        this.router.navigateByUrl('pages/contact-us');
+    }
+    
+    
     openDialog() {
         // this.router.navigateByUrl('pages/applicant');
         const dialogRef = this._matDialog.open(ApplyNowComponent, {

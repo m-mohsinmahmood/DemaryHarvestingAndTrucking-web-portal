@@ -5,3 +5,23 @@
 .greenActiveIcon {
     color: #16a34a;
 }
+
+#fileInput {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    left: 0px;
+    top: 0px;
+}
+
+.pictures-fields-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #B7BFC9 !important;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+    padding: 0px !important;
+}
