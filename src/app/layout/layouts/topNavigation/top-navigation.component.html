@@ -12,9 +12,9 @@
             </div>
             <div class="col-2 w-6/12 md:w-8/12 sm:flex items-center justify-end font-bold gap-2 py-8 hidden">
                 <button class="max-w-16 py-4 font-bold text-xl"  (click)="navigateHome()" mat-button>Home</button>
-                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Trucking</button>
-                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Farming</button>
-                <button class="min-w-16 py-4 font-bold text-xl" mat-button>Employment</button>
+                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateEmployment()" mat-button>Employment</button>
+                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateServices()" mat-button>Services</button>
+                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateContactUs()" mat-button>Contact Us</button>
                 <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button type="button" (click)="openDialog()">
                     Join Us
                     <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
