@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApplyNowComponent } from 'app/modules/admin/pages/landing-page/apply-now/apply-now.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -12,6 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TopNavigationComponent implements OnDestroy
 {
+    isScreenSmall = true;
+
+    showAlert: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -20,6 +23,9 @@ export class TopNavigationComponent implements OnDestroy
     constructor(
         private router: Router,
         private _matDialog: MatDialog,
+        private _activatedRoute: ActivatedRoute,
+        private _router: Router,
+ 
 
 
     )
@@ -30,6 +36,11 @@ export class TopNavigationComponent implements OnDestroy
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
+    ngOnInit(): void
+    {
+        
+    }
+
     /**
      * On destroy
      */
@@ -39,6 +50,22 @@ export class TopNavigationComponent implements OnDestroy
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Toggle navigation
+     *
+     * @param name
+     */
+    toggleNavigation(name: string): void
+    {
+       this.isScreenSmall = !this.isScreenSmall;
+    }
+
+
     navigate(){
         this.router.navigateByUrl('pages/applicant');
     }
