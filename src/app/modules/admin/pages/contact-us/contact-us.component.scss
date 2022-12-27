@@ -1,0 +1,24 @@
+.custom-heading-color {
+    color: #31558C;
+}
+
+.link-color{
+    color:#3A8BA5;
+}
+
+.sub-headings-gray
+{
+    color:#858585;
+}
+
+.mission-section
+{
+    background-image:url('../../../../../assets/images/pages/contact-us/Rectangle18.png');
+    height:40em; background-size:cover; width:auto;
+    background-position:50% 50%;
+}
+
+::ng-deep .mat-form-field-prefix
+{
+    top: 0px !important;
+}

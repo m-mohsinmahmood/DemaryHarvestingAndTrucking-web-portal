@@ -113,12 +113,25 @@ export const appRoutes: Route[] = [
                 },
                 loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
+                
+                 //services page
+                 {path:'services', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
+
+                //Contact US page
+                {path:'contact-us', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
+
+
                 //employment page
                 {path:'employment', data: {
-                    layout: 'empty'
+                    layout: 'top-navigation'
                 },
                 loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
-
 
                 // Error
                 {path: 'error', children: [
