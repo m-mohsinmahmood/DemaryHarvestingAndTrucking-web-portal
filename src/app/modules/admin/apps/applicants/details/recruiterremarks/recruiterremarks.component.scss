@@ -2,3 +2,18 @@
 {
     float: right !important;
 }
+
+::ng-deep .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    position: static !important;
+    display: block !important; 
+    align-items: center !important;
+    width: 88px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    margin-top: 20px !important;
+   
+}
+::ng-deep .mat-form-field-infix p {
+    font-weight: 700 !important;
+    font-size: medium !important;
+}

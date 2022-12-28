@@ -118,6 +118,7 @@ export class ApplicantpageComponent implements OnInit {
     countryOptions: Observable<string[]>;
     isImage: boolean = true;
     isState: boolean = false;
+    resumePreview: string = '';
     //#endregion
 
     constructor(
@@ -203,8 +204,8 @@ export class ApplicantpageComponent implements OnInit {
             current_employer: [''],
             current_position_title: [''],
             current_description_of_role: [''],
-            current_employement_period_start: [''],
-            current_employement_period_end: [''],
+            current_employment_period_start: [''],
+            current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
             current_contact_supervisor: [false],
@@ -212,17 +213,16 @@ export class ApplicantpageComponent implements OnInit {
             previous_employer: ['', [Validators.required]],
             previous_position_title: ['', [Validators.required]],
             previous_description_of_role: ['', [Validators.required]],
-            previous_employement_period_start: ['', [Validators.required]],
-            previous_employement_period_end: ['', [Validators.required]],
+            previous_employment_period_start: ['', [Validators.required]],
+            previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
             previous_supervisor_phone_number: ['', [Validators.required]],
             previous_contact_supervisor: ['', [Validators.required]],
-
+            resume: [''],
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],
             lorry_license: ['', [Validators.required]],
             tractor_license: ['', [Validators.required]],
-
             question_1: ['', [Validators.required]],
             question_2: ['', [Validators.required]],
             question_3: ['', [Validators.required]],
@@ -286,6 +286,9 @@ export class ApplicantpageComponent implements OnInit {
         this._applicantService.isLoadingApplicant.next(true);
         var formData: FormData = new FormData();
         formData.append('image', this.secondFormGroup.get('avatar').value);
+        if (this.thirdFormGroup.get('resume').value){
+            formData.append('resume', this.thirdFormGroup.get('resume').value);
+        }
         formData.append('form', JSON.stringify(this.form.value));
         this._applicantService.createApplicant(formData);
         this._router.navigateByUrl("/pages/landing-page")
@@ -305,37 +308,15 @@ export class ApplicantpageComponent implements OnInit {
         datepicker.close();
     }
     //#endregion
-    showFlashMessage(type: 'success' | 'error'): void {
-        // Show the message
-        this.flashMessage = type;
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-        // Hide it after 3 seconds
-        setTimeout(() => {
-            this.flashMessage = null;
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }, 3000);
-    }
     saveAndClose(): void {
-        // Save the message as a draft
         this._router.navigateByUrl("/pages/landing-page")
-        this.saveAsDraft();
         // Close the dialog
         // this.matDialogRef.close();
     }
-    /**
-     * Discard the message
-     */
-    discard(): void { }
-    /**
-     * Save the message as a draft
-     */
-    saveAsDraft(): void { }
-    /**
-     * Send the message
-     */
-    send(): void { }
+    discard(): void{
+
+    }
+
     selectionChange(event) {
         if (event.selectedIndex == 0) {
             this.isBack = false;
@@ -376,6 +357,24 @@ export class ApplicantpageComponent implements OnInit {
             reader.readAsDataURL(event.target.files[0]);
         } else {
             this.isImage = false;
+        }
+    }
+    //#endregion
+
+    //#region Upload Resume
+    uploadResume(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] 
+        ) {
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.resumePreview = event.target.files[0].name
+                this.thirdFormGroup.controls['resume']?.setValue(event.target.files[0]);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+
         }
     }
     //#endregion
