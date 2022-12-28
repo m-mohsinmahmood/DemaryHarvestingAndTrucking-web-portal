@@ -1,4 +1,5 @@
 $mobile: 767px;
+$medium: 768px;
 
 
 
@@ -7,4 +8,17 @@ $mobile: 767px;
         width:14rem;
 
     }
+}
+::ng-deep .carousel li
+{
+    @media screen and (min-width: $medium) {
+        padding-bottom: 40% !important;
+
+    }
+}
+
+
+.custom-bg-color {
+    background-color: #31558C;
+
 }

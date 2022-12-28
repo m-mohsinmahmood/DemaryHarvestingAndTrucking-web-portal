@@ -133,7 +133,7 @@
         </div>
 
         <!--  -->
-        
+
 
 
         <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pb-24">
@@ -205,7 +205,58 @@
         </div>
     </div>
 
+    <div class="bg-transparent">
+        <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="5000" maxWidth="auto"
+            proportion="25" slides="5" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
+            [useMouseWheel]="false" orientation="ltr">
+            <mat-carousel-slide #matCarouselSlide overlayColor="#00000040" [hideOverlay]="false">
+                <div class="container flex flex-col md:flex-row mx-auto w-9/12">
+                    <div class="md:w-1/2 flex flex-col bold items-center justify-center rounded-sm">
+                        <img class="rounded-sm" src="assets\images\pages\employment\Image.png">
+                    </div>
+                    <div class="md:w-1/2 flex flex-col">
+                        <div class="flex flex-col bold justify-center custom-bg-color rounded-sm p-4 md:p-8 ">
+                            <h1 class="text-2xl text-white md:p-12">
+                                DHT is one Riverview's most trusted vendors. They provide Custom Harvesting Services for
+                                Riverview. They have been with us for multiple years, and we plan on continuing that
+                                relationship. DHT has outstanding employees, and their equipment is top of class. If you
+                                need a vendor that provides outstanding service at the right price you should hire DHT.
+                            </h1>
+                        </div>
+                        <div class="flex flex-row gap-8">
+                            <img class="rounded-sm w-80 h-auto" src="assets\images\pages\employment\Image.png">
+                            <img class="rounded-sm w-80 h-auto" src="assets\images\pages\employment\Image.png">
 
+                        </div>
+                    </div>
+
+                </div>
+            </mat-carousel-slide>
+            <mat-carousel-slide #matCarouselSlide overlayColor="#00000040" [hideOverlay]="false">
+                <div class="container flex flex-col md:flex-row mx-auto w-9/12">
+                    <div class="md:w-1/2 flex flex-col bold items-center justify-center rounded-sm">
+                        <img class="rounded-sm" src="assets\images\pages\employment\Image.png">
+                    </div>
+                    <div class="md:w-1/2 flex flex-col">
+                        <div class="flex flex-col bold justify-center custom-bg-color rounded-sm p-4 md:p-8 ">
+                            <h1 class="text-2xl text-white md:p-12">
+                                DHT is one Riverview's most trusted vendors. They provide Custom Harvesting Services for
+                                Riverview. They have been with us for multiple years, and we plan on continuing that
+                                relationship. DHT has outstanding employees, and their equipment is top of class. If you
+                                need a vendor that provides outstanding service at the right price you should hire DHT.
+                            </h1>
+                        </div>
+                        <div class="flex flex-row gap-8 m-auto">
+                            <img class="rounded-sm w-80 h-auto" src="assets\images\pages\employment\Image.png">
+                            <img class="rounded-sm w-80 h-auto" src="assets\images\pages\employment\Image.png">
+
+                        </div>
+                    </div>
+
+                </div>
+            </mat-carousel-slide>
+        </mat-carousel>
+    </div>
 
     <!-- FAQs Section -->
 

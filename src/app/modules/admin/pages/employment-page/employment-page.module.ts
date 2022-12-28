@@ -35,6 +35,8 @@ import { QuillModule } from 'ngx-quill';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EmploymentPageComponent } from './employment-page.component';
 import { activitiesRoutes } from './employment-page.routing';
+import { MatCarouselModule } from 'ng-mat-carousel';
+
 
 
 @NgModule({
@@ -83,7 +85,9 @@ RouterModule.forChild(activitiesRoutes),
         MatButtonToggleModule,
         FuseDrawerModule,
         QuillModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatCarouselModule.forRoot(),
+
 
     ]
 })
