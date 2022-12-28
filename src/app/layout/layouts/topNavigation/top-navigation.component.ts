@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplyNowComponent } from 'app/modules/admin/pages/landing-page/apply-now/apply-now.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector     : 'top-navigation-layout',
@@ -16,11 +17,14 @@ export class TopNavigationComponent implements OnDestroy
 
     showAlert: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    form: FormGroup;
 
     /**
      * Constructor
      */
     constructor(
+        private _formBuilder: FormBuilder,
+
         private router: Router,
         private _matDialog: MatDialog,
         private _activatedRoute: ActivatedRoute,
@@ -38,8 +42,21 @@ export class TopNavigationComponent implements OnDestroy
 
     ngOnInit(): void
     {
-        
+        this.initSubscriptionForm();
     }
+    initSubscriptionForm() {
+        this.form = this._formBuilder.group({
+          id: [''],
+         
+          email: ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        
+    
+    
+        });
+      }
+      onSubmit(){
+        
+      }
 
     /**
      * On destroy

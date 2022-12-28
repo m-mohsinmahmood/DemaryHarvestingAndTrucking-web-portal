@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FuseNavigationModule } from '@fuse/components/navigation';
 import { FuseFullscreenModule } from '@fuse/components/fullscreen/fullscreen.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -23,7 +25,10 @@ import { FuseFullscreenModule } from '@fuse/components/fullscreen/fullscreen.mod
         SharedModule,
         MatIconModule,
         FuseNavigationModule,
-        FuseFullscreenModule
+        FuseFullscreenModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
     exports     : [
         TopNavigationComponent
