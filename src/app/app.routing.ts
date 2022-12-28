@@ -37,6 +37,53 @@ export const appRoutes: Route[] = [
         ]
     },
 
+    // Auth routes for static pages
+    {
+        path: '',
+        component: LayoutComponent,
+
+        data: {
+            layout: 'top-navigation'
+        },
+        children   : [
+        // Pages
+            {path: 'pages', children: [
+
+                //landing page
+                {path: 'landing-page', data: {
+                    layout: 'top-navigation'
+                },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+                //applicant page
+                {path:'applicant', data: {
+                    layout: 'empty'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+
+                
+                 //services page
+                 {path:'services', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
+
+                //Contact US page
+                {path:'contact-us', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
+
+
+                //employment page
+                {path:'employment', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
+
+                ]},
+        ]
+    },
+
     // Auth routes for authenticated users
     {
         path: '',
@@ -102,36 +149,36 @@ export const appRoutes: Route[] = [
 
                 // Coming Soon
                 {path: 'coming-soon', loadChildren: () => import('app/modules/admin/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)},
-                //landing page
-                {path: 'landing-page', data: {
-                    layout: 'top-navigation'
-                },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+                // //landing page
+                // {path: 'landing-page', data: {
+                //     layout: 'top-navigation'
+                // },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
 
-                //applicant page
-                {path:'applicant', data: {
-                    layout: 'empty'
-                },
-                loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+                // //applicant page
+                // {path:'applicant', data: {
+                //     layout: 'empty'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
 
                 
-                 //services page
-                 {path:'services', data: {
-                    layout: 'top-navigation'
-                },
-                loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
+                //  //services page
+                //  {path:'services', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
 
-                //Contact US page
-                {path:'contact-us', data: {
-                    layout: 'top-navigation'
-                },
-                loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
+                // //Contact US page
+                // {path:'contact-us', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
 
 
-                //employment page
-                {path:'employment', data: {
-                    layout: 'top-navigation'
-                },
-                loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
+                // //employment page
+                // {path:'employment', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
 
                 // Error
                 {path: 'error', children: [
