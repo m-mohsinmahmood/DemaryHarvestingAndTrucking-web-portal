@@ -213,7 +213,7 @@ export class UpdateComponent implements OnInit {
             current_employement_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
-            current_contact_supervisor: [''],
+            current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
             previous_position_title: ['', [Validators.required]],
