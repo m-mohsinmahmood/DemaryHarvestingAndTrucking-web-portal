@@ -513,7 +513,7 @@ export class UpdateComponent implements OnInit {
     //#region Form Value Updates
     formUpdates() {
         this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
-            if (_formValue["country"] === "United States of America") {
+            if (_formValue === "United States of America") {
                 this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
             }
