@@ -142,13 +142,13 @@ export class ApplicantpageComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.initfarmGroups();
+        this.initForm();
         this.formUpdates();
         this.initCalendar();
         this.states = states;
         this.countries = countryList;
 
-
+        
         //Auto Complete functions for State and Country
         this.stateOptions = this.secondFormGroup.valueChanges.pipe(
             startWith(''),
@@ -173,7 +173,7 @@ export class ApplicantpageComponent implements OnInit {
     }
 
     // #region initializing forms
-    initfarmGroups() {
+    initForm() {
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
@@ -207,7 +207,7 @@ export class ApplicantpageComponent implements OnInit {
             current_employement_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
-            current_contact_supervisor: [''],
+            current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
             previous_position_title: ['', [Validators.required]],
