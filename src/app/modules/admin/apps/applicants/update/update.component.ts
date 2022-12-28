@@ -117,6 +117,7 @@ export class UpdateComponent implements OnInit {
     formValid: boolean;
     isState: boolean = false;
     graduation_year: any;
+    resumePreview: string = '';
     //#endregion
 
     constructor(
@@ -223,6 +224,7 @@ export class UpdateComponent implements OnInit {
             previous_supervisor_reference: ['', [Validators.required]],
             previous_supervisor_phone_number: ['', [Validators.required]],
             previous_contact_supervisor: ['', [Validators.required]],
+            resume: [''],
 
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],
@@ -330,7 +332,7 @@ export class UpdateComponent implements OnInit {
                 previous_supervisor_reference: this.data.applicantData.previous_supervisor_reference,
                 previous_supervisor_phone_number: this.data.applicantData.previous_supervisor_phone_number,
                 previous_contact_supervisor: this.data.applicantData.previous_contact_supervisor.toString(),
-
+                resume: this.data.applicantData.resume,
                 question_1: this.data.applicantData.question_1.toString(),
                 question_2: this.data.applicantData.question_2.toString(),
                 question_3: this.data.applicantData.question_3.toString(),
@@ -427,6 +429,9 @@ export class UpdateComponent implements OnInit {
         } else {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
+            if (this.thirdFormGroup.get('resume').value){
+                formData.append('resume', this.thirdFormGroup.get('resume').value);
+            }
             formData.append('form', JSON.stringify(this.form.value));
             this._applicantService.createApplicant(formData);
         }
@@ -483,6 +488,24 @@ export class UpdateComponent implements OnInit {
             reader.readAsDataURL(event.target.files[0]);
         } else {
             this.isImage = false;
+        }
+    }
+    //#endregion
+
+    //#region Upload Resume
+    uploadResume(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0]
+        ) {
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.resumePreview = event.target.files[0].name
+                this.thirdFormGroup.controls['resume']?.setValue(event.target.files[0]);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+
         }
     }
     //#endregion

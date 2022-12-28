@@ -173,24 +173,10 @@
                         <mat-hint *ngIf="!isImage" class="flex items-center justify-center text-md text-red-500">Only
                             Image files can be uploaded</mat-hint>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
-                            <!-- <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Calendar Year</mat-label>
-                                    <input readonly matInput [matDatepicker]="dp" placeholder="Calendar Year"
-                                        [formControl]="calendar_year">
-                                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp startView="multi-year"
-                                        (yearSelected)="chosenYearHandler($event, dp)"
-                                        panelClass="example-month-picker">
-                                    </mat-datepicker>
-                                    <mat-hint *ngIf="this.secondFormGroup.get('calendar_year').hasError('required')" class="text-xs text-red-500">Calendar Year is required</mat-hint>
-                                </mat-form-field>
-                            </div> -->
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 1</mat-label>
-                                    <textarea matInput type="text" id="Address 1" formControlName="address_1"
-                                        placeholder="Address 1"> </textarea>
+                                    <textarea matInput type="text" id="Address 1" formControlName="address_1"> </textarea>
                                     <mat-hint *ngIf="this.secondFormGroup.get('address_1').hasError('required')"
                                         class="text-xs text-red-500">Address 1 is required</mat-hint>
                                 </mat-form-field>
@@ -198,16 +184,14 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 2</mat-label>
-                                    <textarea matInput type="text" id="Address 2" formControlName="address_2"
-                                        placeholder="Address 2"> </textarea>
+                                    <textarea matInput type="text" id="Address 2" formControlName="address_2"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Country</mat-label>
                                     <input (ngModelChange)="formValidation($event)" type="text" aria-label="country"
-                                        matInput formControlName="country" [matAutocomplete]="country"
-                                        placeholder="Country">
+                                        matInput formControlName="country" [matAutocomplete]="country">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
@@ -235,7 +219,7 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>County/Providence</mat-label>
                                     <input matInput type="text" id="county" name="county"
-                                        formControlName="county_providence" placeholder="County/Providence">
+                                        formControlName="county_providence">
                                     <mat-hint *ngIf="this.secondFormGroup.get('county_providence').hasError('required')"
                                         class="text-xs text-red-500">County/Providence is required</mat-hint>
                                 </mat-form-field>
@@ -244,7 +228,7 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Town/City</mat-label>
                                     <input matInput type="text" id="city" name="city" formControlName="town_city"
-                                        placeholder="Town/City" value="city">
+                                        value="city">
                                     <mat-hint *ngIf="this.secondFormGroup.get('town_city').hasError('required')"
                                         class="text-xs text-red-500">Town/City is required</mat-hint>
                                 </mat-form-field>
@@ -271,35 +255,13 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Postal Code</mat-label>
-                                    <input matInput id="postal-code" name="postal-code" formControlName="postal_code"
-                                        placeholder="Postal Code">
+                                    <input matInput id="postal-code" name="postal-code" formControlName="postal_code">
                                     <mat-hint *ngIf="this.secondFormGroup.get('postal_code').hasError('required')"
                                         class="text-xs text-red-500">
                                         Postal Code is required
                                     </mat-hint>
                                 </mat-form-field>
                             </div>
-                            <!-- <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Self Rating</mat-label>
-                                    <mat-select formControlName="self_rating" class="languages overflow-hidden">
-                                        <mat-option value="Fluent">Fluent</mat-option>
-                                        <mat-option value="Native">Native speaker</mat-option>
-                                        <mat-option value="Average">Average</mat-option>
-                                        <mat-option value="Above Average">Above average</mat-option>
-                                        <mat-option value="Poor">Poor</mat-option>
-                                    </mat-select>
-                                    <mat-hint *ngIf="this.secondFormGroup.get('self_rating').hasError('required')" class="text-xs text-red-500">Self Rating is required</mat-hint>
-                                </mat-form-field>
-                            </div> -->
-                            <!-- <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Please tell us something unique about yourself</mat-label>
-                                    <input matInput type="text" name="unique_fact" formControlName="unique_fact"
-                                        placeholder="Please tell us something unique about yourself">
-                                        <mat-hint *ngIf="this.secondFormGroup.get('unique_fact').hasError('required')" class="text-xs text-red-500">Please tell us something unique about yourself field is required</mat-hint>
-                                </mat-form-field>
-                            </div> -->
                         </div>
                     </form>
                 </mat-step>
@@ -327,20 +289,6 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <!-- <mat-form-field class="w-full" appearance="outline">
-                                    <mat-label>Current Employement Period</mat-label>
-                                    <mat-date-range-input [rangePicker]="picker1">
-                                        <input readonly formControlName="current_employement_period_start" matStartDate
-                                            placeholder="Start date">
-                                        <input readonly formControlName="current_employement_period_end" matEndDate
-                                            placeholder="End date">
-                                    </mat-date-range-input>
-                                    <input id="date" name="date" formControlName="current_employement_period" matInput
-                                        [matDatepicker]="picker1" readonly>
-                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker1></mat-datepicker>
-                                </mat-form-field> -->
-
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Current Employement Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker">
@@ -414,25 +362,9 @@
                                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker8></mat-date-range-picker>
                                     <mat-hint
-                                    *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required') && this.thirdFormGroup.get('previous_employement_period_end').hasError('required')"
+                                    *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required') || this.thirdFormGroup.get('previous_employement_period_end').hasError('required')"
                                     class="text-xs text-red-500">Date range field is required</mat-hint>
                                   </mat-form-field>
-
-
-                                <!-- <mat-form-field class="w-full" appearance="outline">
-                                    <mat-label>Previous Employement Period</mat-label>
-                                    <mat-date-range-input [rangePicker]="picker2">
-                                        <input readonly formControlName="previous_employement_period_start" matStartDate
-                                            placeholder="Start date">
-                                        <input readonly formControlName="previous_employement_period_end" matEndDate
-                                            placeholder="End date">
-                                    </mat-date-range-input>
-                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker2></mat-datepicker>
-                                    <mat-hint
-                                        *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required')"
-                                        class="text-xs text-red-500">Date range field is required</mat-hint>
-                                </mat-form-field> -->
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
@@ -470,13 +402,12 @@
                             </div>
                             <div></div>
                             <div>
-                                <mat-form-field class="w-full">
-                                    <mat-toolbar>
-                                        <mat-label class="pictures-fields-label text-gray-900">Upload Resume</mat-label>
-                                        <input matInput />
-                                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
-                                    </mat-toolbar>
-                                    <input type="file" id="fileInput" name="fileInput" accept="" multiple />
+                                <mat-form-field appearance="outline"  (click)="fileUpload.click()" class="w-full">
+                                        <mat-label>Upload Resume</mat-label>
+                                        <input matInput [value]=this.resumePreview/>
+                                        <input for="file" name="fileInput" id="fileInput" type='file'accept="file"
+                                        (change)="uploadResume($event)" #fileUpload />      
+                                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>                          
                                 </mat-form-field>
                             </div>
                         </div>
@@ -605,9 +536,8 @@
                         <div>
                             <mat-form-field class="w-full mt-4" appearance="outline">
                                 <mat-label>Please provide a description of your most relevant work experiences and/or
-                                    job skills (and how you think the relate to DHT job requirements).</mat-label>
-                                <textarea matInput type="text" formControlName="work_experience_description"
-                                    placeholder="Brief Description of work experience"> </textarea>
+                                    job skills (and how you think they relate to DHT job requirements).</mat-label>
+                                <textarea matInput type="text" formControlName="work_experience_description"> </textarea>
                                 <mat-hint
                                     *ngIf="this.thirdFormGroup.get('work_experience_description').hasError('required')"
                                     class="text-xs text-red-500">Brief Description of work experience field is required
@@ -639,7 +569,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Graduation Year</mat-label>
-                                    <input readonly matInput [matDatepicker]="dp" placeholder="Year"
+                                    <input readonly matInput [matDatepicker]="dp"
                                         [formControl]="graduation_year">
                                     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                                     <mat-datepicker #dp startView="multi-year"
@@ -690,8 +620,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Tell us something interesting (unique) about yourself</mat-label>
-                                    <textarea matInput type="text" id="unique_fact" formControlName="unique_fact"
-                                        placeholder="Tell us something interesting (unique) about yourself"> </textarea>
+                                    <textarea matInput type="text" id="unique_fact" formControlName="unique_fact"> </textarea>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('unique_fact').hasError('required')"
                                         class="text-xs text-red-500">Tell us something interesting (unique) about
                                         yourself is

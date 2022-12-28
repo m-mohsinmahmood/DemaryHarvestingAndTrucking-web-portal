@@ -372,6 +372,18 @@
                     </div>
                     <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                         <dt class="text-sm font-bold text-gray-500">
+                            Resume
+                        </dt>
+                        <dd *ngIf="applicantInfo?.applicant_info?.resume == null || applicantInfo?.applicant_info?.resume  == 'https://dhtstorageaccountdev.blob.core.windows.net/applicants/applicants/'"
+                            class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                            {{ 'N/A' }}
+                        </dd>
+                        <dd class="cursor-pointer font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end" *ngIf="applicantInfo?.applicant_info?.resume != null && applicantInfo?.applicant_info?.resume  != 'https://dhtstorageaccountdev.blob.core.windows.net/applicants/applicants/'" (click)="downloadResume(applicantInfo?.applicant_info?.resume)">
+                            <mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
+                        </dd>
+                    </div>
+                    <div class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                        <dt class="text-sm font-bold text-gray-500">
                             Authorized to Work in US
                         </dt>
                         <dd class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
