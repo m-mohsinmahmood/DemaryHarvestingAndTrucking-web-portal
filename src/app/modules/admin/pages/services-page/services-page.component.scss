@@ -22,3 +22,16 @@
     background-color: #31558C;
 
 }
+::ng-deep .carousel-slide-overlay{
+    background-color: transparent !important;
+}
+$mobile: 767px;
+$medium: 768px;
+
+::ng-deep .carousel li
+{
+    @media screen and (min-width: $medium) {
+        padding-bottom: 40% !important;
+
+    }
+}
