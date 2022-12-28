@@ -9,13 +9,7 @@ import { ApplyNowComponent } from '../landing-page/apply-now/apply-now.component
   styleUrls: ['./employment-page.component.scss']
 })
 export class EmploymentPageComponent implements OnInit {
-  slides = [
-    {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, 
-    {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'},
-    {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, 
-    {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, 
-    {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}
-  ];
+  
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 

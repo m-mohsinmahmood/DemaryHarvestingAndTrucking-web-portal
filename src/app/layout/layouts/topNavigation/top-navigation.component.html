@@ -5,7 +5,7 @@
     [name]="'mainNavigation'" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-       
+
         <div class="flex flex-col items-left w-full p-4">
             <div class="relative w-24 h-24 font-bold">
                 <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateHome()" mat-button>Home</button>
@@ -15,8 +15,7 @@
                     mat-button>Services</button>
                 <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateContactUs()" mat-button>Contact
                     Us</button>
-                    <button class="min-w-16 py-4 font-bold text-xl" 
-                    (click)="navigateHome()" mat-button>Log In</button>
+                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateHome()" mat-button>Log In</button>
 
                 <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
                     type="button" (click)="openDialog()">
@@ -24,10 +23,10 @@
                     <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
                 </button>
 
-                
 
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color mt-4" mat-flat-button
-                    type="button" >
+
+                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color mt-4"
+                    mat-flat-button type="button">
                     Get Quote
                 </button>
             </div>
@@ -72,7 +71,7 @@
                     (click)="navigateHome()" mat-button>Log In</button>
 
                 <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
-                    type="button" >
+                    type="button">
                     Get Quote
                 </button>
 
@@ -122,9 +121,35 @@
 
 
                 <div class="footer-col flex flex-col md:w-3/12 items-left py-8 gap-y-6">
+                    <h1 class="text-xl font-semibold text-white">QUICK LINKS</h1>
+                    <a class="text-xl text-white" href="/pages/employment">Employment</a>
+                    <a class="text-xl text-white" href="/pages/services">Services</a>
+
+                    <a class="text-xl text-white" href="/pages/contact-us">Contact us</a>
+
                 </div>
 
-                <div class="footer-col flex flex-col md:w-4/12 items-left py-8 gap-y-6">
+                <div class="footer-col flex flex-col md:w-4/12 items-left py-8 gap-y-3">
+                    <h1 class="text-xl font-semibold text-white">SUBSCRIBE TO NEWSLETTER</h1>
+                    <form [formGroup]="form" class="flex flex-col flex-auto sm:grid">
+                        <div class="md:grid">
+
+                            <div class="subscribe-email" >
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Enter yourEmail</mat-label>
+                                    <input matInput type="email" formControlName="email">
+
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="subscribe-btn w-1/2"
+                    mat-flat-button color="primary"
+                   (click)="onSubmit()">
+                   Subscribe
+               </button>
+
                 </div>
 
 

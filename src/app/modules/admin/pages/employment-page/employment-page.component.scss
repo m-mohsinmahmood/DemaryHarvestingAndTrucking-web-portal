@@ -29,3 +29,6 @@ $medium: 768px;
     color:#fff !important;
   
   }
+::ng-deep .carousel-slide-overlay{
+    background-color: transparent !important;
+}
