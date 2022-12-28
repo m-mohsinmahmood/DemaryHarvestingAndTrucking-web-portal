@@ -291,11 +291,11 @@
                             </div>
                             <div>
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
-                                    <mat-label>Current Employement Period</mat-label>
+                                    <mat-label>Current Employment Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker">
-                                        <input matStartDate formControlName="current_employement_period_start"
+                                        <input matStartDate formControlName="current_employment_period_start"
                                             placeholder="Start date">
-                                        <input matEndDate formControlName="current_employement_period_end"
+                                        <input matEndDate formControlName="current_employment_period_end"
                                             placeholder="End date">
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -355,15 +355,15 @@
                             </div>
                             <div>
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
-                                    <mat-label>Previous Employement Period</mat-label>
+                                    <mat-label>Previous Employment Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker8">
-                                      <input matStartDate formControlName="previous_employement_period_start" placeholder="Start date">
-                                      <input matEndDate formControlName="previous_employement_period_end" placeholder="End date">
+                                      <input matStartDate formControlName="previous_employment_period_start" placeholder="Start date">
+                                      <input matEndDate formControlName="previous_employment_period_end" placeholder="End date">
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker8></mat-date-range-picker>
                                     <mat-hint
-                                    *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required') || this.thirdFormGroup.get('previous_employement_period_end').hasError('required')"
+                                    *ngIf="this.thirdFormGroup.get('previous_employment_period_start').hasError('required') || this.thirdFormGroup.get('previous_employment_period_end').hasError('required')"
                                     class="text-xs text-red-500">Date range field is required</mat-hint>
                                   </mat-form-field>
                             </div>
