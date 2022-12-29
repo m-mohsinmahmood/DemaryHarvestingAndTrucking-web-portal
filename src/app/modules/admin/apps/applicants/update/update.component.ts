@@ -23,6 +23,7 @@ import {
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { states } from 'JSON/state';
 import { countryList } from 'JSON/country';
+import { boolean, invalid } from 'joi';
 
 export const MY_FORMATS = {
     parse: {
@@ -117,6 +118,7 @@ export class UpdateComponent implements OnInit {
     formValid: boolean;
     isState: boolean = false;
     graduation_year: any;
+    validCountry: boolean =false;
     //#endregion
 
     constructor(
@@ -464,6 +466,8 @@ export class UpdateComponent implements OnInit {
         event.selectedIndex == 4
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
+
+            
     }
 
     //#region Upload Image
@@ -507,7 +511,21 @@ export class UpdateComponent implements OnInit {
     //#region Form Country/State Validation
 
     formValidation(e) {
-        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
+        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false);
+        if(this.countries.includes(e))
+            {
+                this.validCountry=true; 
+                this.secondFormGroup.controls['country'].setErrors(null);
+
+
+            }
+        else {
+            this.validCountry=false;
+            this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
+
+        }
+       
     }
+    
     //#endregion
 }

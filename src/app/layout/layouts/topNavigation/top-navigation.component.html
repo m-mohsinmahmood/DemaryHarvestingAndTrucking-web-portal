@@ -134,7 +134,7 @@
                     <form [formGroup]="form" class="flex flex-col flex-auto sm:grid">
                         <div class="md:grid">
 
-                            <div class="subscribe-email" >
+                            <div class="subscribe-email">
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Enter yourEmail</mat-label>
                                     <input matInput type="email" formControlName="email">
@@ -144,11 +144,9 @@
                             </div>
                         </div>
                     </form>
-                    <button class="subscribe-btn w-1/2"
-                    mat-flat-button color="primary"
-                   (click)="onSubmit()">
-                   Subscribe
-               </button>
+                    <button class="subscribe-btn w-1/2" mat-flat-button color="primary" (click)="onSubmit()">
+                        Subscribe
+                    </button>
 
                 </div>
 
@@ -156,6 +154,22 @@
 
             </div>
         </div>
+        <div class="flex flex-col md:flex-row mx-auto sm:w-full gap-8 pb-8" style="background-color:#31558C">
+
+            <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-4 pb-4 border-t border-white justify-between">
+                    <div class="flex flex-row items-center icon-footer ">
+                        <p class="text-white pt-4">© 2022 DHT. All Rights Reserved.</p>
+                    </div>
+
+                    <div class="flex flex-row items-center icon-footer gap-x-4">
+                        <a href=""><img src="assets\logo\fb.png" class="footer-icons text-white h-auto pr-2"></a>
+                        <a href=""><img src="assets\logo\insta.png" class="footer-icons text-white h-auto pr-2"></a>
+                        <a href=""><img src="assets\logo\LinkedIn.png" class="footer-icons text-white h-auto pr-2"></a>
+                        <a href=""><img src="assets\logo\Twitter.png" class="footer-icons text-white h-auto pr-2"></a>
+                    </div>
+            </div>
+        </div>
+
 
     </div>
 

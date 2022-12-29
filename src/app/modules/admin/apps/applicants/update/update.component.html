@@ -1,4 +1,4 @@
-<div class="flex flex-col max-w-250 md:min-w-160 md:min-h-30 max-h-32 md:max-h-screen -m-6 add-update-applicant-form">
+<div class="flex flex-col max-w-250 md:min-w-160 md:max-h-screen -m-6 add-update-applicant-form">
     <header
         class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
         <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
@@ -6,7 +6,7 @@
             <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </header>
-    <main class="mb-auto">
+    <main class="mb-auto overflow-y-auto ">
         <div class="modal-body  p-4">
             <ng-container [ngSwitch]="stepperOrientation | async">
                 <div *ngSwitchCase="'horizontal'"></div>
@@ -207,7 +207,7 @@
                                     <mat-label>Country</mat-label>
                                     <input (ngModelChange)="formValidation($event)" type="text" aria-label="country"
                                         matInput formControlName="country" [matAutocomplete]="country"
-                                        placeholder="Country">
+                                        placeholder="Country" style="text-transform:capitalize">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
@@ -215,6 +215,9 @@
                                     </mat-autocomplete>
                                     <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
                                         class="text-xs text-red-500">Country is required</mat-hint>
+                                
+                                    <mat-hint *ngIf="!validCountry"
+                                        class="text-xs text-red-500">Select Country from given list only</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
