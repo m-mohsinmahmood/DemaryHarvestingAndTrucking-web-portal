@@ -134,18 +134,29 @@
     top: 0px;
     height: 4rem;
 }
-.pictures-fields-label
-{
+
+.pictures-fields-label {
     font-size: 14px;
     font-weight: 500;
-    color:#B7BFC9 !important;
+    color: #B7BFC9 !important;
 }
-.mat-toolbar-row, .mat-toolbar-single-row
-{
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
     padding: 0px !important;
 }
 
-::ng-deep .mat-form-field-wrapper 
-{
+::ng-deep .mat-form-field-wrapper {
     margin: 0.25em 0 !important;
+}
+
+.macDevice ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+.macDevice ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }

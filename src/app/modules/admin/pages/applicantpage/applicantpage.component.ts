@@ -118,6 +118,8 @@ export class ApplicantpageComponent implements OnInit {
     countryOptions: Observable<string[]>;
     isImage: boolean = true;
     isState: boolean = false;
+    validCountry: boolean =false;
+
     //#endregion
 
     constructor(
@@ -142,6 +144,8 @@ export class ApplicantpageComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        console.log(navigator.platform.indexOf('Mac') > -1);
+
         this.initForm();
         this.formUpdates();
         this.initCalendar();
@@ -394,5 +398,25 @@ export class ApplicantpageComponent implements OnInit {
             }
         }));
     }
+    isMacintosh() {
+        return navigator.platform.indexOf('Mac') > -1
+      }
+      
     //#endregion
+
+    formValidation(e) {
+        if(this.countries.includes(e))
+            {
+                this.validCountry=true; 
+                this.secondFormGroup.controls['country'].setErrors(null);
+
+
+            }
+        else {
+            this.validCountry=false;
+            this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
+
+        }
+       
+    }
 }
