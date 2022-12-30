@@ -194,7 +194,7 @@ export class ApplicantService {
             );
     }
 
-    createApplicant(data: any) {
+    createApplicant(data: any ,landingPage: boolean) {
         this._httpClient
             .post(`api-1/applicants`, data)
             .pipe(take(1))
@@ -218,7 +218,9 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicants();
+                    if (!landingPage){
+                        this.getApplicants();
+                    }
                 }
             );
     }

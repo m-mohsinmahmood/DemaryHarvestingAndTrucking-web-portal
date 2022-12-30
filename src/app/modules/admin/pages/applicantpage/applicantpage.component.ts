@@ -291,7 +291,7 @@ export class ApplicantpageComponent implements OnInit {
         var formData: FormData = new FormData();
         formData.append('image', this.secondFormGroup.get('avatar').value);
         formData.append('form', JSON.stringify(this.form.value));
-        this._applicantService.createApplicant(formData);
+        this._applicantService.createApplicant(formData,true);
         this._router.navigateByUrl("/pages/landing-page")
     }
     initCalendar() {

@@ -215,7 +215,6 @@
                                     </mat-autocomplete>
                                     <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
                                         class="text-xs text-red-500">Country is required</mat-hint>
-                                
                                     <mat-hint *ngIf="!validCountry"
                                         class="text-xs text-red-500"> Select Country from given list only</mat-hint>
                                 </mat-form-field>
@@ -417,7 +416,7 @@
                                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker8></mat-date-range-picker>
                                     <mat-hint
-                                    *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required') && this.thirdFormGroup.get('previous_employement_period_end').hasError('required')"
+                                    *ngIf="this.thirdFormGroup.get('previous_employement_period_start').hasError('required') || this.thirdFormGroup.get('previous_employement_period_end').hasError('required')"
                                     class="text-xs text-red-500">Date range field is required</mat-hint>
                                   </mat-form-field>
 

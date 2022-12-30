@@ -430,7 +430,7 @@ export class UpdateComponent implements OnInit {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
             formData.append('form', JSON.stringify(this.form.value));
-            this._applicantService.createApplicant(formData);
+            this._applicantService.createApplicant(formData, false);
         }
     }
     updateApplicant(applicantData: any): void {
@@ -516,13 +516,10 @@ export class UpdateComponent implements OnInit {
             {
                 this.validCountry=true; 
                 this.secondFormGroup.controls['country'].setErrors(null);
-
-
             }
         else {
             this.validCountry=false;
             this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
-
         }
        
     }
