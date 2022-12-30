@@ -118,6 +118,7 @@ export class UpdateComponent implements OnInit {
     formValid: boolean;
     isState: boolean = false;
     graduation_year: any;
+    resumePreview: string = '';
     validCountry: boolean =false;
     //#endregion
 
@@ -211,8 +212,8 @@ export class UpdateComponent implements OnInit {
             current_employer: [''],
             current_position_title: [''],
             current_description_of_role: [''],
-            current_employement_period_start: [''],
-            current_employement_period_end: [''],
+            current_employment_period_start: [''],
+            current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
             current_contact_supervisor: [false],
@@ -220,11 +221,12 @@ export class UpdateComponent implements OnInit {
             previous_employer: ['', [Validators.required]],
             previous_position_title: ['', [Validators.required]],
             previous_description_of_role: ['', [Validators.required]],
-            previous_employement_period_start: ['', [Validators.required]],
-            previous_employement_period_end: ['', [Validators.required]],
+            previous_employment_period_start: ['', [Validators.required]],
+            previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
             previous_supervisor_phone_number: ['', [Validators.required]],
             previous_contact_supervisor: ['', [Validators.required]],
+            resume: [''],
 
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],
@@ -318,8 +320,8 @@ export class UpdateComponent implements OnInit {
                 current_employer: this.data.applicantData.current_employer,
                 current_position_title: this.data.applicantData.current_position_title,
                 current_description_of_role: this.data.applicantData.current_description_of_role,
-                current_employement_period_start: this.data.applicantData.current_employement_period_start,
-                current_employement_period_end: this.data.applicantData.current_employement_period_end,
+                current_employment_period_start: this.data.applicantData.current_employment_period_start,
+                current_employment_period_end: this.data.applicantData.current_employment_period_end,
                 current_supervisor_reference: this.data.applicantData.current_supervisor_reference,
                 current_supervisor_phone_number: this.data.applicantData.current_supervisor_phone_number,
                 current_contact_supervisor: this.data.applicantData.current_contact_supervisor.toString(),
@@ -327,12 +329,12 @@ export class UpdateComponent implements OnInit {
                 previous_employer: this.data.applicantData.previous_employer,
                 previous_position_title: this.data.applicantData.previous_position_title,
                 previous_description_of_role: this.data.applicantData.previous_description_of_role,
-                previous_employement_period_start: this.data.applicantData.previous_employement_period_start,
-                previous_employement_period_end: this.data.applicantData.previous_employement_period_end,
+                previous_employment_period_start: this.data.applicantData.previous_employment_period_start,
+                previous_employment_period_end: this.data.applicantData.previous_employment_period_end,
                 previous_supervisor_reference: this.data.applicantData.previous_supervisor_reference,
                 previous_supervisor_phone_number: this.data.applicantData.previous_supervisor_phone_number,
                 previous_contact_supervisor: this.data.applicantData.previous_contact_supervisor.toString(),
-
+                resume: this.data.applicantData.resume,
                 question_1: this.data.applicantData.question_1.toString(),
                 question_2: this.data.applicantData.question_2.toString(),
                 question_3: this.data.applicantData.question_3.toString(),
@@ -429,6 +431,9 @@ export class UpdateComponent implements OnInit {
         } else {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
+            if (this.thirdFormGroup.get('resume').value){
+                formData.append('resume', this.thirdFormGroup.get('resume').value);
+            }
             formData.append('form', JSON.stringify(this.form.value));
             this._applicantService.createApplicant(formData, false);
         }
@@ -491,10 +496,28 @@ export class UpdateComponent implements OnInit {
     }
     //#endregion
 
+    //#region Upload Resume
+    uploadResume(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0]
+        ) {
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.resumePreview = event.target.files[0].name
+                this.thirdFormGroup.controls['resume']?.setValue(event.target.files[0]);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+
+        }
+    }
+    //#endregion
+
     //#region Form Value Updates
     formUpdates() {
         this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
-            if (_formValue["country"] === "United States of America") {
+            if (_formValue === "United States of America") {
                 this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
             }

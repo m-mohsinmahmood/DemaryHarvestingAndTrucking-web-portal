@@ -1,0 +1,27 @@
+.timeline-track{
+    // display: flex;
+    flex-grow: 1;
+    // background-color: blue;
+    width: 1px;
+    background-color: #9fa2a4;
+    box-shadow: 0 4px 8px #8db8e4;
+
+}
+.send-button{
+    min-height: 25px !important;
+}
+.background-grey{
+    background-color: #E9E9E9 !important;
+}
+@media only screen and (min-width: 991px) {
+    .custom-width-tabs
+{
+    width: 10.56rem !important;
+}
+.custom-aspect-tabs
+{
+    --tw-aspect-h: 2 !important;
+
+}
+    
+}

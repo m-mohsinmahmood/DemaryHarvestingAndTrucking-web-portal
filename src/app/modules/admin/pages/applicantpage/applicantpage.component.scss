@@ -126,6 +126,11 @@
 }
 
 #fileInput {
+    display: none;
+}
+
+::ng-deep .mat-form-field-wrapper 
+{
     position: absolute;
     cursor: pointer;
     z-index: 10;

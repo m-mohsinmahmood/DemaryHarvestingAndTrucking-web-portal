@@ -16,7 +16,8 @@ export class AccountManagementComponent implements OnInit {
   roles = [{ role: 'Combine Operator', status: false, formRole: 'combineOperatorStatus' },
   { role: 'Tractor/Cart Operator', status: false, formRole: 'tractorCartOperatorStatus' },
   { role: 'Truck Driver', status: false, formRole: 'truckDriverStatus' },
-  { role: 'Tractor/Farming Operator', status: false, formRole: 'farmingTractorOperatorStatus' }
+  { role: 'Tractor/Farming Operator', status: false, formRole: 'farmingTractorOperatorStatus' },
+  { role: 'Recruiter', status: false, formRole: 'recruiterStatus' }
   ]
   @Input() employeeRole: any
 
@@ -64,7 +65,7 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Update Employee array
   updateEmployeeRole() {
-    if (this.employeeRole.length > 0) {
+    if (this.employeeRole && this.employeeRole.length > 0) {
       this.employeeRoleUpdate = this.employeeRole.split(',');
       if (this.employeeRoleUpdate.includes('Combine Operator')) {
         this.roles[0].status = true;
@@ -77,6 +78,9 @@ export class AccountManagementComponent implements OnInit {
       }
       if (this.employeeRoleUpdate.includes('Tractor/Farming Operator')) {
         this.roles[3].status = true;
+      }
+      if (this.employeeRoleUpdate.includes('Recruiter')) {
+        this.roles[4].status = true;
       }
     }
   }
@@ -103,6 +107,7 @@ export class AccountManagementComponent implements OnInit {
       tractorCartOperatorStatus: ['' || (this.roles[1].status ? true : false)],
       truckDriverStatus: ['' || (this.roles[2].status ? true : false)],
       farmingTractorOperatorStatus: ['' || (this.roles[3].status ? true : false)],
+      recruiterStatus: ['' || (this.roles[4].status ? true : false)],
     });
   }
 

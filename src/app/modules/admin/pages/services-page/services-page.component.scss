@@ -35,3 +35,9 @@ $medium: 768px;
 
     }
 }
+
+::ng-deep .carousel-indicators > button
+{
+    width: 20px !important;
+    min-height: 20px !important;
+}
