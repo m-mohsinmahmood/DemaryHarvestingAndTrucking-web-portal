@@ -32,4 +32,8 @@ export class ContactUsComponent implements OnInit {
     });
   }
 
+  onSubmit(): void {
+    console.log(this.form.value);
+}
+
 }
