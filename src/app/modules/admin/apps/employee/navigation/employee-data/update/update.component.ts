@@ -174,7 +174,7 @@ export class UpdateEmployeeComponent implements OnInit {
             address_1: ['' || this.data.employeeData.address_1, [Validators.required]],
             address_2: ['' || this.data.employeeData.address_2],
             town_city: ['' || this.data.employeeData.town_city, [Validators.required]],
-            county_providence: ['' || this.data.employeeData.county_province, [Validators.required]],
+            county_providence: ['' || this.data.employeeData.county_providence, [Validators.required]],
             state: ['' || this.data.employeeData.state],
             postal_code: ['' || this.data.employeeData.postal_code, [Validators.required]],
             country: ['' || this.data.employeeData.country, [Validators.required]],

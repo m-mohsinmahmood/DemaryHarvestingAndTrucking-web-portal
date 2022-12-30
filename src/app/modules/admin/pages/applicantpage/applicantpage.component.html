@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full h-full relative bg-white">
+<div class="flex flex-col w-full h-full relative bg-white {{isMacintosh() ? 'macDevice' : 'nonMacDevice'}}">
     <div class="flex items-center justify-between ml-4">
         <div>
             <img class="h-20 w-20" src="../../../../../assets/logo/dht-logo.svg" />
@@ -193,8 +193,8 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Country</mat-label>
-                                    <input type="text" aria-label="country" matInput formControlName="country"
-                                        [matAutocomplete]="country">
+                                    <input (ngModelChange)="formValidation($event)" type="text" aria-label="country" matInput formControlName="country"
+                                        [matAutocomplete]="country" placeholder="Country">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
@@ -202,6 +202,8 @@
                                     </mat-autocomplete>
                                     <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
                                         class="text-xs text-red-500">Country is required</mat-hint>
+                                        <mat-hint *ngIf="!validCountry"
+                                        class="text-xs text-red-500"> Select Country from given list only</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

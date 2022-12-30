@@ -119,6 +119,8 @@ export class ApplicantpageComponent implements OnInit {
     isImage: boolean = true;
     isState: boolean = false;
     resumePreview: string = '';
+    validCountry: boolean =false;
+
     //#endregion
 
     constructor(
@@ -143,6 +145,8 @@ export class ApplicantpageComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        console.log(navigator.platform.indexOf('Mac') > -1);
+
         this.initForm();
         this.formUpdates();
         this.initCalendar();
@@ -290,7 +294,7 @@ export class ApplicantpageComponent implements OnInit {
             formData.append('resume', this.thirdFormGroup.get('resume').value);
         }
         formData.append('form', JSON.stringify(this.form.value));
-        this._applicantService.createApplicant(formData);
+        this._applicantService.createApplicant(formData,true);
         this._router.navigateByUrl("/pages/landing-page")
     }
     initCalendar() {
@@ -393,5 +397,25 @@ export class ApplicantpageComponent implements OnInit {
             }
         }));
     }
+    isMacintosh() {
+        return navigator.platform.indexOf('Mac') > -1
+      }
+      
     //#endregion
+
+    formValidation(e) {
+        if(this.countries.includes(e))
+            {
+                this.validCountry=true; 
+                this.secondFormGroup.controls['country'].setErrors(null);
+
+
+            }
+        else {
+            this.validCountry=false;
+            this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
+
+        }
+       
+    }
 }
