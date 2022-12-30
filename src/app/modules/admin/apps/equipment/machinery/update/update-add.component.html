@@ -194,7 +194,7 @@
                         <input matInput />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*" multiple
                     (change)="uploadImage($event)"  />
                 </mat-form-field>            
             </div>
@@ -205,7 +205,8 @@
                         <input matInput />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*" multiple
+                    (change)="uploadImage($event)"  />
                 </mat-form-field>            
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0 pic-3">
@@ -215,7 +216,8 @@
                         <input matInput />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*" multiple
+                    (change)="uploadImage($event)" />
                 </mat-form-field>            
             </div>
             <!-- </div> -->
