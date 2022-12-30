@@ -83,6 +83,8 @@ export class UpdateAddMachineryComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     year;
+        isImage: boolean = true;
+
 
 
     //#region Observables
@@ -121,6 +123,7 @@ export class UpdateAddMachineryComponent implements OnInit {
             });
     }
 
+    //#region init form
     initForm() {
         // Create the form
         this.form = this._formBuilder.group({
@@ -188,7 +191,7 @@ export class UpdateAddMachineryComponent implements OnInit {
         }
 
     }
-
+//#endregion
     //#region Init Observables
     initObservables() {
         this.isLoadingMachinery$ = this._machineryService.isLoadingMachinery$;
@@ -202,7 +205,10 @@ export class UpdateAddMachineryComponent implements OnInit {
         if (this.data) {
             this._machineryService.updateMachinery(this.form.value);
         } else {
-            this._machineryService.createMachinery(this.form.value);
+            var formData: FormData = new FormData();
+            formData.append('image', this.form.get('pictures').value);
+            formData.append('form', JSON.stringify(this.form.value));
+            this._machineryService.createMachinery(formData);
         }
     }
 
@@ -238,6 +244,27 @@ export class UpdateAddMachineryComponent implements OnInit {
         datepicker.close();
     }
 
+    //#endregion
+
+       //#region Upload Image
+    uploadImage(event: any) {
+        if (
+            event.target.files &&
+            event.target.files[0] &&
+            event.target.files[0].type.includes('image/')
+        ) {
+            this.isImage = true;
+            const reader = new FileReader();
+            reader.onload = (_event: any) => {
+                this.imageURL = _event.target.result;
+                this.form.controls['pictures']?.setValue(event.target.files[0]);
+                //this.imageURL.markAsDirty();
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.isImage = false;
+        }
+    }
     //#endregion
 
 

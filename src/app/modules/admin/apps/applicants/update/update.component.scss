@@ -138,9 +138,7 @@
     margin-bottom: 2px !important;
 }
 
-::ng-deep .add-update-applicant-form {
-    min-height: 600px !important;
-}
+
 
 ::ng-deep .mat-form-field-prefix {
     top: 0px !important;
@@ -163,6 +161,9 @@
     background: #22c55e !important;
 }
 
+::ng-deep .mat-form-field-hint-wrapper{
+    display: grid !important;
+}
 
 // Upload Resume 
 
@@ -174,4 +175,34 @@
     margin: 0.25em 0 !important;
 }
 
-//
+.main-class-scroll
+{
+    min-height: 615px;
+    max-height: 615px;
+}
+
+::ng-deep .add-update-applicant-form {
+    min-height: 600px !important;
+}
+
+$mobile: 767px;
+$medium: 768px;
+
+::ng-deep .add-update-applicant-form 
+{
+    @media screen and (min-width: $medium) {
+    min-height: 600px !important;
+    height: 800px;
+
+    }
+}
+
+::ng-deep .add-update-applicant-form 
+{
+    @media screen and (max-width: $mobile) {
+    min-height: 400px !important;
+    height: 600px;
+
+
+    }
+}
