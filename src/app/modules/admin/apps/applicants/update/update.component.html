@@ -191,8 +191,7 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Country</mat-label>
                                     <input (ngModelChange)="formValidation($event)" type="text" aria-label="country"
-                                        matInput formControlName="country" [matAutocomplete]="country"
-                                        placeholder="Country" style="text-transform:capitalize">
+                                        matInput formControlName="country" [matAutocomplete]="country">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
@@ -207,7 +206,7 @@
                             <div>
                                 <mat-form-field class="w-full" appearance="outline">
                                     <mat-label>Select State</mat-label>
-                                    <input (ngModelChange)="formValidation($event)" type="text" aria-label="state" matInput formControlName="state"
+                                    <input type="text" aria-label="state" matInput formControlName="state"
                                         [matAutocomplete]="state">
                                     <mat-autocomplete #state="matAutocomplete">
                                         <mat-option *ngFor="let state of stateOptions | async" [value]="state">
