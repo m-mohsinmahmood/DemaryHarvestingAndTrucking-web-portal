@@ -297,7 +297,6 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             },
 
         });
-
         dialogRef.afterClosed().subscribe(dialogResult => {
             if (dialogResult && type === "Accept") {
                 this._applicantService.patchApplicant({
@@ -305,7 +304,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     prev_status_message: "Results",
                     status_message: "Results",
                     status_step: "10.1"
-                }, false, false);
+                }, false, false,this.applicant.applicant_info);
             }
             else if (dialogResult && type === "Reject") {
                 this._applicantService.patchApplicant({

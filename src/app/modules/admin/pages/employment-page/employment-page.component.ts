@@ -9,6 +9,7 @@ import { ApplyNowComponent } from '../landing-page/apply-now/apply-now.component
   styleUrls: ['./employment-page.component.scss']
 })
 export class EmploymentPageComponent implements OnInit {
+  
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -18,6 +19,7 @@ export class EmploymentPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
   }
 
   openDialog() {

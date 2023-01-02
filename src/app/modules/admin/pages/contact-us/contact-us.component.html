@@ -16,7 +16,7 @@
     <div class="container flex flex-col md:flex-row columns-1 mx-auto w-9/12 gap-8 py-16">
         <div class="md:w-8/12 mx-auto">
             <form [formGroup]="form" class="flex flex-col flex-auto sm:grid">
-                <ng-template matStepLabel>Personal Information</ng-template>
+                <ng-template matStepLabel></ng-template>
                 <div class="md:grid md:grid-cols-1 md:gap-4">
                     <div>
                         <mat-form-field appearance="outline" class="w-full">
@@ -63,6 +63,11 @@
 
                 </div>
             </form>
+            <button class="custom-btn-color w-full"
+             mat-flat-button color="primary"
+            (click)="onSubmit()">
+            Submit
+        </button>
         </div>
 
     </div>

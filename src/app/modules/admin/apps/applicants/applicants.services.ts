@@ -194,7 +194,7 @@ export class ApplicantService {
             );
     }
 
-    createApplicant(data: any) {
+    createApplicant(data: any ,landingPage: boolean) {
         this._httpClient
             .post(`api-1/applicants`, data)
             .pipe(take(1))
@@ -218,7 +218,9 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicants();
+                    if (!landingPage){
+                        this.getApplicants();
+                    }
                 }
             );
     }
@@ -249,7 +251,7 @@ export class ApplicantService {
                 }
             );
     }
-    patchApplicant(data: any, recruiterRemarks: boolean, skipEmail: boolean) {
+    patchApplicant(data: any, recruiterRemarks: boolean, skipEmail: boolean, applicantInfo?: any) {
         let newData;
         let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
         if (recruiterRemarks) {
@@ -259,7 +261,7 @@ export class ApplicantService {
         } else {
             const { body, recruiter_id, subject, to, ...applicant_data } = data;
             const { id, status_step, status_message,reason_for_rejection, ...email_data } = data;
-            newData = Object.assign({}, { applicant_data }, { email_data }, {skipEmail});
+            newData = Object.assign({}, { applicant_data }, { email_data }, {skipEmail}, {applicantInfo});
         }
 
         this._httpClient

@@ -605,65 +605,7 @@
         </div>
     </div>
 
-    <!-- Timeliine BLOCK-->
-    <div class="sm:5/12 md:w-5/12 px-2 mt-">
-        <div class="h-auto bg-gray-100
-         rounded m-2 p-1 shadow-lg">
-            <div class="flex flex-col py-4 px-2">
-                <div class=" last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
-                    *ngFor="let item of items;index as i">
-                    <div class="flex flex-col items-center min-w-12">
-                        <div class="flex border-2 border-solid border-white rounded-full w-{{
-                                item.status === false ? '4' : '8'
-                            }} h-{{
-                                item.status === false ? '4' : '8'
-                            }} bg-white
-                           bg-{{ item.status === 'a' ? 'green' : '' }}-400
-                           bg-{{ item.status === 'b' ? 'green' : '' }}-400
-                           bg-{{ item.status === 'c' ? 'green' : '' }}-400
-                           bg-{{ item.status === 'd1' ? 'green' : '' }}-400
-                           bg-{{ item.status === 'e1' ? 'green' : '' }}-400
-                           bg-{{ item.status === false ? 'green' : '' }}-400
-                           "></div>
-                        <div class="timeline-track"></div>
-                    </div>
-                    <div class="flex-1 flex flex-row px-4">
-                        <div class="w-8/12 flex flex-col">
-                            <ng-template [ngIf]="item.name !== ''">
-                                <span class="text-md font-sans font-normal text-gray-400">{{ item.content }}</span>
-                            </ng-template>
-                            <ng-template [ngIf]="item.name === ''">
-                                <span class="text-md font-sans font-normal text-gray-400 mt-2">{{ item.content }}</span>
-                            </ng-template>
-                            <span class="text-md text-black">{{
-                                item.name === "rejected" ? "" : item.name
-                                }}</span>
-
-                            <button class="bg-white w-36 h-7 rounded-full text-sm" *ngIf="item.status === 'a'"
-                                (click)="openComposeDialog()">
-                                <mat-icon [svgIcon]="'heroicons_outline:pencil'" class="icon-size-3 mr-2"></mat-icon>
-                                Send email
-                                <mat-icon [svgIcon]="'heroicons_outline:chevron-right'" class="icon-size-3 ml-2">
-                                </mat-icon>
-                            </button>
-                        </div>
-                        <div class=" w-4/12 flex justify-end font-mono text-xs">
-                            {{item.date}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-row justify-center items-center mb-5">
-                <button
-                    class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44">
-                    <span>Advance to offer</span>
-                </button>
-                <button
-                    class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28">
-                    <span>Reject</span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Status Bar-->
+    
+    <app-onboarding-status-bar [items] = "items"></app-onboarding-status-bar>
 </div>
