@@ -123,7 +123,7 @@ export class RecruiterremarksComponent implements OnInit {
             "· What is the most important aspect of the job, money, environment, travel, learning something new, the nature of the work? \n· Does applicant have a girlfriend/married/children? \n· Have you ever completed foreign work tour? \n· Do you have a trade certiﬁcate, or special training? Any college? \n· What is your biggest accomplishment to date? (later – 3rd interview) \n· What were your duties in prior job? \n· What can you offer to the company? (later – 3rd interview) \n· Is this person eager to get the job, have a team spirit and willing to help others?"
             : this.applicantData?.first_call_remarks,
             first_call_ranking: this.applicantData?.first_call_ranking,
-            first_interviewer_id: this.applicantData?.first_interviewer_id,
+            first_interviewer_id: this.applicantData?.first_interviewer_name,
             status_message: ['First Interview Completed'],
             status_step:['3'],
             ranking: this.applicantData?.ranking,
@@ -135,7 +135,7 @@ export class RecruiterremarksComponent implements OnInit {
             "· Have you ever had roommates and what problems does that present? \n· What mistakes do supervisors most commonly make? \n· Does he seem arrogant and insubordinate? \n· What are your expectations from this job experience? \n· Does he understand the priority is getting the job done? \n· What implements, trailers, wagons have you pulled and for how long? \n· What model combine have you operated/platforms/crops and for how long? \n· What trucks/lorries have you driven for how long? Describe loads? \n· How concerned are you about the quality of your performance and others? \n· Do you have any licenses? \n· What mechanical experience? \n· What repairs have you done on gear you’ve operated? \n· Any work history or training as a mechanic?"
             : this.applicantData?.second_call_remarks, 
             second_call_ranking: this.applicantData?.second_call_ranking,
-            second_interviewer_id: this.applicantData?.second_interviewer_id,
+            second_interviewer_id: this.applicantData?.second_interviewer_name,
             status_message: ['Second Interview Completed'],
             status_step:['4'],
             ranking: this.applicantData?.ranking,
@@ -147,7 +147,7 @@ export class RecruiterremarksComponent implements OnInit {
             "· Three to four weeks of company orientation, training, or administrative tasks with minimal pay. \n· Weather impacts work schedule which requires ﬂexibility.\n· Explain compensation\n· Pre-employment and random drug and alcohol tests\n· Explain Reprimand process.\n· Living conditions.\n· Arizona heat, living and working with others 24/7 so must share company vehicles and housing.\n· Don’t come if you can’t complete the season, are strictly interested in how much money you make, or drinking and partying is a priority for you?\n· Importance of keeping living area and vehicle clean. (Cleaning charge.) \n· Explain onboarding process.\n· Explain the process for using a Smart Phone for data entry.\n· Explain TEAM online training prior to arrival. (Web Portal and Mobile App)\n· Explain Visa process, consulate interview and reimbursement.\n· CDL training prior to arrival.\n· Explain travel and reimbursement.\n· Explain the importance for maintaining contact with recruiter/company.\n· If we hire you, will you accept the job. If yes, make an offer.\n· Applicant must accept job within three days."
             : this.applicantData?.third_call_remarks,
             third_call_ranking: this.applicantData?.third_call_ranking,
-            third_interviewer_id: this.applicantData?.third_interviewer_id,
+            third_interviewer_id: this.applicantData?.third_interviewer_name,
             status_message: ['Third Interview Completed'],
             status_step:['5'],
             ranking: this.applicantData?.ranking,
@@ -159,7 +159,7 @@ export class RecruiterremarksComponent implements OnInit {
             "· What duties did he/she have and the quality of work? \n· Was the applicant dependable, any tardiness or absence?\n· How were his human relations? Did he get along with co-workers and customers?\n· How was his stewardship? Does he take care of the gear, tools, or supplies for which he is responsible?\n· Is the applicant cooperative, does he readily and enthusiastically perform the work he is assigned?\n· Would you rehire this person? Yes - No"
             : this.applicantData?.reference_call_remarks,
             reference_call_ranking: this.applicantData?.reference_call_ranking,
-            reference_interviewer_id: this.applicantData?.reference_interviewer_id,
+            reference_interviewer_id: this.applicantData?.reference_interviewer_name,
             status_message: ['Reference Call Completed'],
             status_step:['6'],
             ranking: this.applicantData?.ranking,
@@ -229,28 +229,28 @@ export class RecruiterremarksComponent implements OnInit {
                 id: this.applicantData?.id,
                 //first_call_remarks: this.applicantData?.first_call_remarks,
                 first_call_ranking: this.applicantData?.first_call_ranking,
-                first_interviewer_id: this.applicantData?.first_interviewer_id,
+                first_interviewer_id: this.applicantData?.first_interviewer_name,
             });
 
             this.secondInterviewForm.patchValue({
                 id: this.applicantData?.id,            
                // second_call_remarks: this.applicantData?.second_call_remarks,
                 second_call_ranking: this.applicantData?.second_call_ranking,
-                second_interviewer_id: this.applicantData?.second_interviewer_id,
+                second_interviewer_id: this.applicantData?.second_interviewer_name,
             });
 
             this.thirdInterviewForm.patchValue({
                 id: this.applicantData?.id,            
                 //third_call_remarks: this.applicantData?.third_call_remarks,
                 third_call_ranking: this.applicantData?.third_call_ranking,
-                third_interviewer_id: this.applicantData?.third_interviewer_id,
+                third_interviewer_id: this.applicantData?.third_interviewer_name,
             });
             
             this.referenceForm.patchValue({
                 id: this.applicantData?.id,            
                 //reference_call_remarks: this.applicantData?.reference_call_remarks,
                 reference_call_ranking: this.applicantData?.reference_call_ranking,
-                reference_interviewer_id: this.applicantData?.reference_interviewer_id,
+                reference_interviewer_id: this.applicantData?.reference_interviewer_name,
             })
             this._changeDetectorRef.markForCheck();
         }
