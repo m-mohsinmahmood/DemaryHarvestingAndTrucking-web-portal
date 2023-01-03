@@ -312,9 +312,12 @@
 
         </div>
         <div class="block w-4/12 images-gallery">
-            <img class="py-4" src="assets\images\apps\equipment\Rectangle 1834.png">
-            <img class="py-4" src="assets\images\apps\equipment\Rectangle 1834.png">
+            <div class="mb-4" >
+                <img class="py-4" *ngFor="let picture of pictures"
+                    src="{{picture}}" alt=" " />
+            </div>
 
+           
         </div>
     </div>
 

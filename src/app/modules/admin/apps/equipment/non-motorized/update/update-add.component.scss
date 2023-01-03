@@ -1,51 +1,41 @@
 
 #fileInput {
-    position: absolute;
-    cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    left: 0px;
-    top: 0px;
-    height: 4rem;
-}
-.pictures-fields-label
-{
-    font-size: 14px;
-    font-weight: 500;
-    color:#B7BFC9 !important;
-}
-.mat-toolbar-row, .mat-toolbar-single-row
-{
-    padding: 0px !important;
-}
-
-::ng-deep .mat-form-field-wrapper 
-{
-    margin: 0.25em 0 !important;
-}
-.pic-3 
-{
-    margin-top: 20px !important;
-}
-
-@keyframes spinner {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.spinner:before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    border-top-color: #000000;
-    animation: spinner .8s linear infinite;
-}
+    display: none;
+ }
+ 
+ 
+ ::ng-deep .mat-form-field-wrapper 
+ {
+     margin: 0.25em 0 !important;
+ }
+ .pic-3 
+ {
+     margin-top: 20px !important;
+ }
+ 
+ @keyframes spinner {
+     to {
+         transform: rotate(360deg);
+     }
+ }
+ 
+ .spinner:before {
+     content: '';
+     box-sizing: border-box;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 20px;
+     height: 20px;
+     margin-top: -10px;
+     margin-left: -10px;
+     border-radius: 50%;
+     border: 2px solid #ffffff;
+     border-top-color: #000000;
+     animation: spinner .8s linear infinite;
+ }
+ 
+ ::ng-deep .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-subscript-wrapper .mat-hint
+ {
+     color: red !important;
+ }

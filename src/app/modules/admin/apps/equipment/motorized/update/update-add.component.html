@@ -1,6 +1,6 @@
 <div class="flex flex-col h-screen 2xl:max-h-screen md:min-w-160 -m-6">
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
-        <div class="text-lg font-medium">            
+        <div class="text-lg font-medium">
             {{ this.data? "Edit Motorized Vehicle" : "Add New Motorized Vehicle" }}
         </div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
@@ -14,15 +14,17 @@
                 <mat-form-field appearance="outline">
                     <mat-label class="sm:w-4/12">Name</mat-label>
                     <input matInput formControlName="name" />
-                    <mat-hint *ngIf="this.form.get('name').hasError('required')" class="text-xs text-red-500">Name is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('name').hasError('required')" class="text-xs text-red-500">Name is
+                        required</mat-hint>
                 </mat-form-field>
             </div>
-            
+
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label class="w-4/12">Type</mat-label>
                     <input matInput formControlName="type" />
-                    <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is
+                        required</mat-hint>
 
                 </mat-form-field>
             </div>
@@ -65,7 +67,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Company ID</mat-label>
                     <input matInput formControlName="company_id" />
-                    <mat-hint *ngIf="this.form.get('company_id').hasError('required')" class="text-xs text-red-500">Company ID is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('company_id').hasError('required')"
+                        class="text-xs text-red-500">Company ID is required</mat-hint>
 
                 </mat-form-field>
             </div>
@@ -78,11 +81,9 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field MY_FORMATS appearance="outline" class="w-full">
                     <mat-label>Year</mat-label>
-                    <input readonly matInput [matDatepicker]="dp" placeholder="Year"
-                        [formControl]="year">
+                    <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="year">
                     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                    <mat-datepicker #dp startView="multi-year"
-                        (yearSelected)="chosenYearHandler($event, dp)"
+                    <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
                         panelClass="example-month-picker">
                     </mat-datepicker>
                 </mat-form-field>
@@ -91,7 +92,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Make</mat-label>
                     <input matInput formControlName="make" />
-                    <mat-hint *ngIf="this.form.get('make').hasError('required')" class="text-xs text-red-500">Make field is required</mat-hint>
+                    <mat-hint *ngIf="this.form.get('make').hasError('required')" class="text-xs text-red-500">Make field
+                        is required</mat-hint>
                 </mat-form-field>
             </div>
 
@@ -157,7 +159,8 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                     <mat-label>Date of Purchase</mat-label>
-                    <input id="date2" readonly="readonly" name="date2" formControlName="date_of_purchase" matInput [matDatepicker]="picker2">
+                    <input id="date2" readonly="readonly" name="date2" formControlName="date_of_purchase" matInput
+                        [matDatepicker]="picker2">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -172,7 +175,8 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                     <mat-label>Date of Sales</mat-label>
-                    <input id="date3" readonly="readonly" name="date3" formControlName="date_of_sales" matInput [matDatepicker]="picker3">
+                    <input id="date3" readonly="readonly" name="date3" formControlName="date_of_sales" matInput
+                        [matDatepicker]="picker3">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
@@ -193,41 +197,99 @@
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                     <mat-label>Date of Market Value</mat-label>
-                    <input id="date4" readonly="readonly" name="date4" formControlName="date_of_market_value" matInput [matDatepicker]="picker5">
+                    <input id="date4" readonly="readonly" name="date4" formControlName="date_of_market_value" matInput
+                        [matDatepicker]="picker5">
                     <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
                     <mat-datepicker #picker5></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field>
+                <mat-form-field appearance="outline" (click)="file1Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 1</mat-label>
+                    <input matInput [value]=this.pictures1Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures1')" #file1Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures1').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+
+                <mat-form-field appearance="outline" (click)="file2Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 2</mat-label>
+                    <input matInput [value]=this.pictures2Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures2')" #file2Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures2').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+
+                <mat-form-field appearance="outline" (click)="file3Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 3</mat-label>
+                    <input matInput [value]=this.pictures3Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures3')" #file3Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures3').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
+            </div>
+
+
+
+
+
+            <!-- <mat-form-field>
                     <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 1</mat-label>
-                        <input matInput />
+                        <mat-label *ngIf="(this.pictures1Preview==='')" class="pictures-fields-label">Picture
+                            1</mat-label>
+                        <input matInput [value]=this.pictures1Preview />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
-                </mat-form-field>            
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
+                        (change)="uploadImage($event, 'pictures1')" />
+                    <mat-hint *ngIf="this.form.get('pictures1').hasError('incorrect')"
+                        class="pl-2 text-xs image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field>
                     <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 2</mat-label>
-                        <input matInput />
+                        <mat-label *ngIf="(this.pictures2Preview==='')" class="pictures-fields-label">Picture
+                            2</mat-label>
+                        <input matInput [value]=this.pictures2Preview />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
-                </mat-form-field>            
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
+                        (change)="uploadImage($event, 'pictures2')" />
+                    <mat-hint *ngIf="this.form.get('pictures2').hasError('incorrect')"
+                        class="pl-2 text-xs image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0 pic-3">
                 <mat-form-field>
                     <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 3</mat-label>
-                        <input matInput />
+                        <mat-label *ngIf="(this.pictures3Preview==='')" class="pictures-fields-label">Picture
+                            3</mat-label>
+                        <input matInput [value]=this.pictures3Preview />
                         <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                     </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
-                </mat-form-field>            
-            </div>
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
+                        (change)="uploadImage($event, 'pictures3')" />
+                    <mat-hint *ngIf="this.form.get('pictures3').hasError('incorrect')"
+                        class="pl-2 text-xs image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field> -->
+
             <!-- </div> -->
         </div>
     </form>
@@ -247,4 +309,3 @@
     </div>
 
 </div>
-

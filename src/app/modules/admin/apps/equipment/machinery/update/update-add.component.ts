@@ -84,8 +84,10 @@ export class UpdateAddMachineryComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     year;
-    isImage: boolean = true;
-    picsArr: string[];
+    pictures1Preview:string= '';
+    pictures2Preview:string= '';
+    pictures3Preview:string= '';
+
 
 
 
@@ -123,6 +125,8 @@ export class UpdateAddMachineryComponent implements OnInit {
                     this._machineryService.closeDialog.next(false);
                 }
             });
+
+
     }
 
     //#region init form
@@ -154,7 +158,10 @@ export class UpdateAddMachineryComponent implements OnInit {
             estimated_market_value: [''],
             source_of_market_value: [''],
             date_of_market_value: [''],
-            pictures: ['']
+            pictures1: [''],
+            pictures2: [''],
+            pictures3: ['']
+
 
         });
         if (this.data) {
@@ -202,14 +209,15 @@ export class UpdateAddMachineryComponent implements OnInit {
     //#endregion
 
     onSubmit(): void {
-        console.log("form", this.form.value)
         this._machineryService.isLoadingMachinery.next(true);
         if (this.data) {
             this._machineryService.updateMachinery(this.form.value);
         } else {
             var formData: FormData = new FormData();
-            formData.append('image', this.form.get('pictures').value);
             formData.append('form', JSON.stringify(this.form.value));
+            formData.append('image', this.form.get('pictures1').value);
+            formData.append('image', this.form.get('pictures2').value);
+            formData.append('image', this.form.get('pictures3').value);
             this._machineryService.createMachinery(formData);
         }
     }
@@ -249,24 +257,39 @@ export class UpdateAddMachineryComponent implements OnInit {
     //#endregion
 
     //#region Upload Image
-    uploadImage(event: any) {
+    uploadImage(event: any, picture) {
+        
         if (
             event.target.files &&
             event.target.files[0] &&
             event.target.files[0].type.includes('image/')
         ) {
-            this.isImage = true;
             const reader = new FileReader();
-            reader.onload = (_event: any) => {
-                this.imageURL = _event.target.result;
-                this.form.controls['pictures']?.setValue(event.target.files[0]);
-                //this.imageURL.markAsDirty();
-            };
-            reader.readAsDataURL(event.target.files[0]);
+            if (picture === 'pictures1') {
+                reader.onload = (_event: any) => {
+                    this.pictures1Preview = event.target.files[0].name
+                    this.form.controls['pictures1']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            } else  if (picture === 'pictures2') {
+                reader.onload = (_event: any) => {
+                    this.pictures2Preview = event.target.files[0].name
+                    this.form.controls['pictures2']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            } else  if (picture === 'pictures3') {
+                reader.onload = (_event: any) => {
+                    this.pictures3Preview = event.target.files[0].name
+
+                    this.form.controls['pictures3']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
         } else {
-            this.isImage = false;
+            this.form.controls[picture].setErrors({'incorrect': true});
+
         }
-        console.log(event.target.files)
     }
     //#endregion
 
