@@ -32,59 +32,57 @@
     white-space: normal;
 }
 
- ::ng-deep .personal-info-form .mat-form-field .mat-form-field-flex {
+::ng-deep .personal-info-form .mat-form-field .mat-form-field-flex {
     height: 62px !important;
 }
 
- ::ng-deep .mat-form-field .mat-input-element {
-   
+::ng-deep .mat-form-field .mat-input-element {}
+
+::ng-deep .mat-form-field .mat-form-field-label {
+    color: slategray !important;
 }
 
- ::ng-deep .mat-form-field .mat-form-field-label {
-    color: slategray!important;
-}
-
- ::ng-deep .mat-form-field .mat-form-field-underline {
+::ng-deep .mat-form-field .mat-form-field-underline {
     background-color: slategray;
 }
 
- ::ng-deep .mat-form-field .mat-form-field-ripple {
+::ng-deep .mat-form-field .mat-form-field-ripple {
     background-color: slategray;
 }
 
- ::ng-deep .mat-form-field .mat-form-field-required-marker {
+::ng-deep .mat-form-field .mat-form-field-required-marker {
     color: slategray;
 }
 
- ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-    color: #0e0704!important;
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: #0e0704 !important;
 }
 
- ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
     background-color: #0e0704;
 }
 
- ::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
+::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
     color: #0e0704;
 }
 
- ::ng-deep .mat-form-field.mat-focused .mat-input-element {
+::ng-deep .mat-form-field.mat-focused .mat-input-element {
     color: #0e0704;
 }
 
- ::ng-deep .mat-form-field.mat-form-field-invalid .mat-input-element {
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-input-element {
     color: #0e0704;
 }
 
- ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
-    color: #0e0704!important;
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #0e0704 !important;
 }
 
- ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
     color: #0e0704;
 }
 
- ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
     background-color: #0e0704;
 }
 
@@ -131,6 +129,7 @@
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
 }
+
 ::ng-deep .phone-number-outline .mat-form-field-outline-start {
     width: 28px !important;
 }
@@ -139,13 +138,9 @@
     margin-bottom: 2px !important;
 }
 
-::ng-deep .add-update-applicant-form
-{
-    min-height: 600px !important;
-}
 
-::ng-deep .mat-form-field-prefix
-{
+
+::ng-deep .mat-form-field-prefix {
     top: 0px !important;
 }
 
@@ -164,4 +159,50 @@
 
 ::ng-deep .mat-step-header .mat-step-icon-state-edit {
     background: #22c55e !important;
-  }
+}
+
+::ng-deep .mat-form-field-hint-wrapper{
+    display: grid !important;
+}
+
+// Upload Resume 
+
+#fileInput {
+   display: none;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    margin: 0.25em 0 !important;
+}
+
+.main-class-scroll
+{
+    min-height: 615px;
+    max-height: 615px;
+}
+
+::ng-deep .add-update-applicant-form {
+    min-height: 600px !important;
+}
+
+$mobile: 767px;
+$medium: 768px;
+
+::ng-deep .add-update-applicant-form 
+{
+    @media screen and (min-width: $medium) {
+    min-height: 600px !important;
+    height: 800px;
+
+    }
+}
+
+::ng-deep .add-update-applicant-form 
+{
+    @media screen and (max-width: $mobile) {
+    min-height: 400px !important;
+    height: 600px;
+
+
+    }
+}

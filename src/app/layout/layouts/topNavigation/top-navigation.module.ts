@@ -6,6 +6,10 @@ import { TopNavigationComponent } from 'app/layout/layouts/topNavigation/top-nav
 import { MatMenuModule} from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { FuseNavigationModule } from '@fuse/components/navigation';
+import { FuseFullscreenModule } from '@fuse/components/fullscreen/fullscreen.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -19,7 +23,12 @@ import { MatIconModule } from '@angular/material/icon';
         MatMenuModule,
         MatButtonModule,
         SharedModule,
-        MatIconModule
+        MatIconModule,
+        FuseNavigationModule,
+        FuseFullscreenModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
     exports     : [
         TopNavigationComponent

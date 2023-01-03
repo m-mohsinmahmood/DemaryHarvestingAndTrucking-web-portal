@@ -39,4 +39,8 @@ export class ApplicantdataComponent implements OnInit {
         });
         this.applicant$ = this._applicantService.applicant$;
     }
+
+    downloadResume(link) {
+        window.open(link, "_blank");
+    }
 }

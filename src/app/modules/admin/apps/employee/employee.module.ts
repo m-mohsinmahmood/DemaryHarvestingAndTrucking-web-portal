@@ -44,6 +44,7 @@ import { UpdateProfileData } from './navigation/profile-data/update-profile-data
 import { ConfirmDialogComponent } from './navigation/account-management/confirm-dialog/confirm-dialog.component';
 import { UpdateEmployeeComponent } from './navigation/employee-data/update/update.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { OnboardingStatusBarComponent } from './navigation/onboarding/onboarding-status-bar/onboarding-status-bar.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
       MailboxComposeComponent,
       UpdateProfileData,
       ConfirmDialogComponent,
-      UpdateEmployeeComponent
+      UpdateEmployeeComponent,
+      OnboardingStatusBarComponent
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

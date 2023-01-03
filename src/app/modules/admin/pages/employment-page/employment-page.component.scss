@@ -1,0 +1,67 @@
+$mobile: 767px;
+$medium: 768px;
+
+
+
+.benefits-cards {
+    @media screen and (max-width: $mobile) {
+        width: 14rem;
+
+    }
+}
+
+::ng-deep .carousel li {
+    @media screen and (min-width: $medium) {
+        padding-bottom: 42% !important;
+
+    }
+}
+::ng-deep .carousel li {
+    @media screen and (max-width: $mobile) {
+        padding-bottom: 200% !important;
+
+    }
+}
+
+.custom-height-img {
+    @media screen and (min-width: $medium) {
+        height: 36rem;
+    }
+}
+
+.custom-bg-color {
+    background-color: #31558C;
+
+}
+
+
+.custom-btn-color {
+    background-color: #34548A !important;
+    color: #fff !important;
+
+}
+
+::ng-deep .carousel-slide-overlay {
+    background-color: transparent !important;
+}
+
+ul.a {
+    list-style-type: circle;
+}
+
+ul.b {
+    list-style-type: square;
+}
+
+::ng-deep .carousel-indicators > button
+{
+    width: 20px !important;
+    min-height: 20px !important;
+}
+
+::ng-deep .carousel > button:last-of-type{
+    right: 10px !important ;
+}
+::ng-deep .carousel > button:first-of-type{
+    left: 10px !important;
+}
