@@ -19,6 +19,46 @@
                         <ng-template matStepLabel>Personal Information</ng-template>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
                             <div>
+                                <!-- Phone -->
+                                <div
+                                    *ngFor="let phoneNumber of firstFormGroup.get('phoneNumbers')['controls']; let i = index; let first = first">
+                                    <div class="flex">
+                                        <mat-form-field
+                                            [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
+                                            appearance="outline" class="w-full">
+                                            <mat-label>International Phone Number</mat-label>
+                                            <input maxlength="14" appPhoneMask class="text-sm mb-1" type="number" matInput
+                                                [formControl]="phoneNumber.get('phoneNumber')"
+                                                [placeholder]="'International Phone Number'">
+                                            <mat-select [formControl]="phoneNumber.get('country')" matPrefix>
+                                                <mat-select-trigger>
+                                                    <span class="flex items-center">
+                                                        <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
+                                                            [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                                            [style.backgroundSize]="'24px 3876px'"
+                                                            [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"></span>
+                                                        <span
+                                                            class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(phoneNumber.get('country').value).code}}</span>
+                                                    </span>
+                                                </mat-select-trigger>
+                                                <ng-container *ngFor="let country of countries">
+                                                    <mat-option [value]="country.iso">
+                                                        <span class="flex items-center">
+                                                            <span class="w-6 h-4 overflow-hidden"
+                                                                [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                                                [style.backgroundSize]="'24px 3876px'"
+                                                                [style.backgroundPosition]="country.flagImagePos"></span>
+                                                            <span class="ml-2">{{country.name}}</span>
+                                                            <span class="ml-2 font-medium">{{country.code}}</span>
+                                                        </span>
+                                                    </mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>First Name</mat-label>
                                     <input matInput type="text" formControlName="first_name">
@@ -176,7 +216,8 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 1</mat-label>
-                                    <textarea matInput type="text" id="Address 1" formControlName="address_1"> </textarea>
+                                    <textarea matInput type="text" id="Address 1"
+                                        formControlName="address_1"> </textarea>
                                     <mat-hint *ngIf="this.secondFormGroup.get('address_1').hasError('required')"
                                         class="text-xs text-red-500">Address 1 is required</mat-hint>
                                 </mat-form-field>
@@ -184,7 +225,8 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 2</mat-label>
-                                    <textarea matInput type="text" id="Address 2" formControlName="address_2"> </textarea>
+                                    <textarea matInput type="text" id="Address 2"
+                                        formControlName="address_2"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -199,8 +241,8 @@
                                     </mat-autocomplete>
                                     <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
                                         class="text-xs text-red-500">Country is required</mat-hint>
-                                    <mat-hint *ngIf="!validCountry"
-                                        class="text-xs text-red-500"> Select Country from given list only</mat-hint>
+                                    <mat-hint *ngIf="!validCountry" class="text-xs text-red-500"> Select Country from
+                                        given list only</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -213,8 +255,8 @@
                                             {{state}}
                                         </mat-option>
                                     </mat-autocomplete>
-                                    <mat-hint *ngIf="!isState"
-                                    class="text-xs text-red-500">Select Country as United States of America to enable State </mat-hint>
+                                    <mat-hint *ngIf="!isState" class="text-xs text-red-500">Select Country as United
+                                        States of America to enable State </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -358,15 +400,17 @@
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Previous Employment Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker8">
-                                      <input matStartDate formControlName="previous_employment_period_start" placeholder="Start date">
-                                      <input matEndDate formControlName="previous_employment_period_end" placeholder="End date">
+                                        <input matStartDate formControlName="previous_employment_period_start"
+                                            placeholder="Start date">
+                                        <input matEndDate formControlName="previous_employment_period_end"
+                                            placeholder="End date">
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker8></mat-date-range-picker>
                                     <mat-hint
-                                    *ngIf="this.thirdFormGroup.get('previous_employment_period_start').hasError('required') || this.thirdFormGroup.get('previous_employment_period_end').hasError('required')"
-                                    class="text-xs text-red-500">Date range field is required</mat-hint>
-                                  </mat-form-field>
+                                        *ngIf="this.thirdFormGroup.get('previous_employment_period_start').hasError('required') || this.thirdFormGroup.get('previous_employment_period_end').hasError('required')"
+                                        class="text-xs text-red-500">Date range field is required</mat-hint>
+                                </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
@@ -404,12 +448,12 @@
                             </div>
                             <div></div>
                             <div>
-                                <mat-form-field appearance="outline"  (click)="fileUpload.click()" class="w-full">
-                                        <mat-label>Upload Resume</mat-label>
-                                        <input matInput [value]=this.resumePreview/>
-                                        <input for="file" name="fileInput" id="fileInput" type='file'accept="file"
-                                        (change)="uploadResume($event)" #fileUpload />      
-                                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>                          
+                                <mat-form-field appearance="outline" (click)="fileUpload.click()" class="w-full">
+                                    <mat-label>Upload Resume</mat-label>
+                                    <input matInput [value]=this.resumePreview />
+                                    <input for="file" name="fileInput" id="fileInput" type='file' accept="file"
+                                        (change)="uploadResume($event)" #fileUpload />
+                                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -539,7 +583,8 @@
                             <mat-form-field class="w-full mt-4" appearance="outline">
                                 <mat-label>Please provide a description of your most relevant work experiences and/or
                                     job skills (and how you think they relate to DHT job requirements).</mat-label>
-                                <textarea matInput type="text" formControlName="work_experience_description"> </textarea>
+                                <textarea matInput type="text"
+                                    formControlName="work_experience_description"> </textarea>
                                 <mat-hint
                                     *ngIf="this.thirdFormGroup.get('work_experience_description').hasError('required')"
                                     class="text-xs text-red-500">Brief Description of work experience field is required
@@ -571,8 +616,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Graduation Year</mat-label>
-                                    <input readonly matInput [matDatepicker]="dp"
-                                        [formControl]="graduation_year">
+                                    <input readonly matInput [matDatepicker]="dp" [formControl]="graduation_year">
                                     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                                     <mat-datepicker #dp startView="multi-year"
                                         (yearSelected)="chosenYearHandler($event, dp)"
@@ -622,14 +666,15 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Tell us something interesting (unique) about yourself</mat-label>
-                                    <textarea matInput type="text" id="unique_fact" formControlName="unique_fact"> </textarea>
+                                    <textarea matInput type="text" id="unique_fact"
+                                        formControlName="unique_fact"> </textarea>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('unique_fact').hasError('required')"
                                         class="text-xs text-red-500">Tell us something interesting (unique) about
                                         yourself is
                                         required</mat-hint>
                                 </mat-form-field>
                             </div>
-                          
+
                         </div>
                     </form>
                 </mat-step>

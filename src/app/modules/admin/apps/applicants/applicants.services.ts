@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
-import { applicantNavigationLeft,applicantNavigationRight } from './applicantnavigation';
+import { BehaviorSubject, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
+import { applicantNavigationLeft, applicantNavigationRight } from './applicantnavigation';
 import {
     HttpClient,
     HttpErrorResponse,
@@ -27,13 +27,14 @@ export class ApplicantService {
     private _applicantsdata: BehaviorSubject<Applicant[] | null> = new BehaviorSubject(null);
     public applicantNavigationLeft = applicantNavigationLeft;
     public applicantNavigationRight = applicantNavigationRight;
+    private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
 
     //#region Close Dialog
     closeDialog: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     readonly closeDialog$: Observable<boolean> =
         this.closeDialog.asObservable();
-   //#endregion
+    //#endregion
 
     // #region Applicants & Applicant
 
@@ -62,8 +63,6 @@ export class ApplicantService {
     readonly isLoadingApplicants$: Observable<boolean> =
         this.isLoadingApplicants.asObservable();
 
-    
-    
     // #endregion
 
     // #region Applicants & Applicant
@@ -88,13 +87,14 @@ export class ApplicantService {
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
-    ) {}
+    ) { }
 
     /**
      * Getter for pagination
      */
-    get pagination$(): Observable<ApplicantPagination> {
-        return this._pagination.asObservable();
+
+    get countries$(): Observable<Country[]> {
+        return this._countries.asObservable();
     }
 
     get applicantdata$(): Observable<Applicant[]> {
@@ -136,14 +136,14 @@ export class ApplicantService {
         let params = new HttpParams();
         params = params.set('search', search);
         return this._httpClient
-            .get<any>(`api-1/dropdowns?entity=allRecruiters`, {params})
+            .get<any>(`api-1/dropdowns?entity=allRecruiters`, { params })
             .pipe(take(1))
     }
 
     //#endregion
 
     //#region Applicant API's 
-    getApplicants(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '',date: ''},
+    getApplicants(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '', date: '' },
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -153,9 +153,9 @@ export class ApplicantService {
         params = params.set('order', order);
         params = params.set('state', filters.state);
         params = params.set('created_at', filters.created_at);
-        params = params.set('status', filters.status );
-        params = params.set('ranking', filters.ranking );
-        params = params.set('date', filters.date );
+        params = params.set('status', filters.status);
+        params = params.set('ranking', filters.ranking);
+        params = params.set('date', filters.date);
         return this._httpClient
             .get<any>(`api-1/applicants`, {
                 params,
@@ -176,9 +176,8 @@ export class ApplicantService {
     getApplicantById(id: string) {
         return this._httpClient
             .get(`api-1/applicants?id=${id}`)
-            .pipe(take(1))
-            ;
-            
+            .pipe(take(1));
+
     }
 
     getApplicantByIdNew(id: string) {
@@ -194,7 +193,7 @@ export class ApplicantService {
             );
     }
 
-    createApplicant(data: any ,landingPage: boolean) {
+    createApplicant(data: any, landingPage: boolean) {
         this._httpClient
             .post(`api-1/applicants`, data)
             .pipe(take(1))
@@ -218,7 +217,7 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    if (!landingPage){
+                    if (!landingPage) {
                         this.getApplicants();
                     }
                 }
@@ -256,12 +255,12 @@ export class ApplicantService {
         let url = recruiterRemarks ? `?type=recruiter` : `?type=status_bar`;
         if (recruiterRemarks) {
             const { ...applicant_data } = data;
-            newData = Object.assign({}, { applicant_data },{skipEmail});
+            newData = Object.assign({}, { applicant_data }, { skipEmail });
             console.log('Recruiter', newData);
         } else {
             const { body, recruiter_id, subject, to, ...applicant_data } = data;
-            const { id, status_step, status_message,reason_for_rejection, ...email_data } = data;
-            newData = Object.assign({}, { applicant_data }, { email_data }, {skipEmail}, {applicantInfo});
+            const { id, status_step, status_message, reason_for_rejection, ...email_data } = data;
+            newData = Object.assign({}, { applicant_data }, { email_data }, { skipEmail }, { applicantInfo });
         }
 
         this._httpClient
@@ -296,7 +295,7 @@ export class ApplicantService {
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
-                    this.isLoadingApplicant.next(true);                   
+                    this.isLoadingApplicant.next(true);
                 },
                 (err) => {
                     this.handleError(err);
@@ -306,6 +305,16 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 }
             );
+    }
+    //#endregion
+
+    //#region get countries
+    getCountries(): Observable<Country[]> {
+        return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
+            tap((countries) => {
+                this._countries.next(countries);
+            })
+        );
     }
     //#endregion
 }

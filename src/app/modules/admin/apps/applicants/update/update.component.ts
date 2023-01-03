@@ -5,6 +5,7 @@ import {
     FormGroup,
     Validators,
     FormControl,
+    FormArray,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
@@ -13,7 +14,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
-import { Applicant } from '../applicants.types';
+import { Applicant, Country } from '../applicants.types';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {
     DateAdapter,
@@ -23,7 +24,6 @@ import {
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { states } from 'JSON/state';
 import { countryList } from 'JSON/country';
-import { boolean, invalid } from 'joi';
 
 export const MY_FORMATS = {
     parse: {
@@ -78,12 +78,17 @@ export class BirthDateFormat {
 
 // @Inject(MAT_DIALOG_DATA)
 export class UpdateComponent implements OnInit {
+
+    //#region Observables
     applicant$: Observable<Applicant>;
     isLoadingApplicant$: Observable<boolean>;
     applicants$: Observable<Applicant[]>;
     isLoadingApplicants$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
+    countries: Country[];
+    countryCodeLength: any = 1;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
 
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
@@ -110,7 +115,7 @@ export class UpdateComponent implements OnInit {
     avatar: string = '';
     isEdit: boolean;
     states: string[] = [];
-    countries: string[] = [];
+    countryList: string[] = [];
     stateOptions: Observable<string[]>;
     countryOptions: Observable<string[]>;
     imagePreview: string;
@@ -119,7 +124,9 @@ export class UpdateComponent implements OnInit {
     isState: boolean = false;
     graduation_year: any;
     resumePreview: string = '';
-    validCountry: boolean =false;
+    validCountry: boolean = false;
+    countryCode: Country[];
+
     //#endregion
 
     constructor(
@@ -143,7 +150,7 @@ export class UpdateComponent implements OnInit {
         this.initCalendar();
         this.formUpdates();
         this.states = states;
-        this.countries = countryList;
+        this.countryList = countryList;
 
         //Auto Complete functions for State and Country
         this.stateOptions = this.secondFormGroup.valueChanges.pipe(
@@ -166,6 +173,27 @@ export class UpdateComponent implements OnInit {
                     this._applicantService.closeDialog.next(false);
                 }
             });
+
+        const phoneNumbersFormGroups = [];
+        phoneNumbersFormGroups?.push(
+            this._formBuilder.group({
+                country: ['us'],
+                phoneNumber: [''],
+            })
+        );
+        phoneNumbersFormGroups.forEach((phoneNumbersFormGroup) => {
+            (this.firstFormGroup.get('phoneNumbers') as FormArray)?.push(phoneNumbersFormGroup);
+        });
+
+        this._applicantService.countries$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((codes: Country[]) => {
+                this.countries = codes;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
     }
 
     //Auto Complete functions for State and Country
@@ -177,12 +205,13 @@ export class UpdateComponent implements OnInit {
 
     private _filterCountries(value: string): string[] {
         const filterValue = value.toLowerCase();
-        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+        return this.countryList.filter(country => country.toLowerCase().includes(filterValue));
     }
     // #region initializing forms
     initApplicantForm() {
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
+            phoneNumbers: this._formBuilder.array([]),
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
@@ -431,7 +460,7 @@ export class UpdateComponent implements OnInit {
         } else {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
-            if (this.thirdFormGroup.get('resume').value){
+            if (this.thirdFormGroup.get('resume').value) {
                 formData.append('resume', this.thirdFormGroup.get('resume').value);
             }
             formData.append('form', JSON.stringify(this.form.value));
@@ -472,7 +501,6 @@ export class UpdateComponent implements OnInit {
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
 
-            
     }
 
     //#region Upload Image
@@ -535,17 +563,29 @@ export class UpdateComponent implements OnInit {
 
     formValidation(e) {
         typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false);
-        if(this.countries.includes(e))
-            {
-                this.validCountry=true; 
-                this.secondFormGroup.controls['country'].setErrors(null);
-            }
-        else {
-            this.validCountry=false;
-            this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
+        if (this.countryList.includes(e)) {
+            this.validCountry = true;
+            this.secondFormGroup.controls['country'].setErrors(null);
         }
-       
+        else {
+            this.validCountry = false;
+            this.secondFormGroup.controls['country'].setErrors({ 'incorrect': true });
+        }
+
     }
-    
+
+    //#endregion
+
+    //#region Country code
+    getCountryByIso(iso: string): Country {
+        const country = this.countries.find(country => country.iso === iso);
+        this.countryCodeLength = country.code.length
+        return country;
+    }
+
+
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
     //#endregion
 }
