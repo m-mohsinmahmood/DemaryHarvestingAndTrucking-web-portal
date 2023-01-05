@@ -52,7 +52,7 @@ export class EmploymentPageComponent implements OnInit {
                 ) {
                   video.pause();
                 } else if (video.paused) {
-                  video.play();
+                  video.controls;
                 }
               });
             },
