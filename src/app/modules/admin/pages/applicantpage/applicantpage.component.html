@@ -296,9 +296,9 @@
                                     <mat-label>Current Employment Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker">
                                         <input matStartDate formControlName="current_employment_period_start"
-                                            placeholder="Start date">
+                                            placeholder="Start date" readonly>
                                         <input matEndDate formControlName="current_employment_period_end"
-                                            placeholder="End date">
+                                            placeholder="End date" readonly>
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker></mat-date-range-picker>
@@ -359,8 +359,8 @@
                                 <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                     <mat-label>Previous Employment Period</mat-label>
                                     <mat-date-range-input [rangePicker]="picker8">
-                                      <input matStartDate formControlName="previous_employment_period_start" placeholder="Start date">
-                                      <input matEndDate formControlName="previous_employment_period_end" placeholder="End date">
+                                      <input matStartDate formControlName="previous_employment_period_start" placeholder="Start date" readonly>
+                                      <input matEndDate formControlName="previous_employment_period_end" placeholder="End date" readonly>
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker8></mat-date-range-picker>
