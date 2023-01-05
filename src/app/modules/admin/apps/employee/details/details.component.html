@@ -15,9 +15,9 @@
         <!-- Title -->
         <div *ngIf="employee$ | async; let employee" (click)="backHandler()" class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2">
             <mat-icon class="icon-size-6 text-secondary" [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-            <img *ngIf="employee.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employee.avatar}}" alt="">
-            <img *ngIf="employee.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
-            <span class="ml-1 capitalize">{{employee?.first_name}} {{employee?.last_name}}   </span>
+            <img *ngIf="employee?.employee_info?.avatar" class="inline-block h-14 w-14 rounded-full" src="{{employee?.employee_info?.avatar}}" alt="">
+            <img *ngIf="employee?.employee_info?.avatar == ''" class="inline-block h-12 w-14 rounded-full" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="">
+            <span class="ml-1 capitalize">{{employee?.employee_info?.first_name}} {{employee?.employee_info?.last_name}}   </span>
         </div>
     </div>
     </div>
@@ -51,13 +51,13 @@
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Onboarding'">
-                                <app-onboarding>
+                                <app-onboarding [employee] = "employee">
                                 </app-onboarding>
                             </ng-template>
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Account Management'">
-                                <app-account-management [employeeRole] = "employeeRole">
+                                <app-account-management [employee] = "employee">
                                 </app-account-management>
                             </ng-template>
                         </div>
