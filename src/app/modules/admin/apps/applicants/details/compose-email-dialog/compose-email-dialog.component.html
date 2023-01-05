@@ -24,11 +24,11 @@
                     value="Second Interview Completed">Second Interview
                 </mat-option>
                 <mat-option *ngIf="current_status_step == 4 && !data.makeOffer && !data.reject"
-                    value="Third Interview Completed">Third Interview
+                    value="Reference Call Completed">Reference Call
                 </mat-option>
                 <mat-option
-                    *ngIf="(current_status_step == 3 || current_status_step == 4 || current_status_step == 5) && !data.reject"
-                    value="Reference Call Completed">Reference Call</mat-option>
+                    *ngIf="(current_status_step == 4 || current_status_step == 5) && !data.reject"
+                    value="Third Interview Completed">Third Interview</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not
                     Qualified</mat-option>
@@ -92,11 +92,13 @@
                     Discard
                 </button>
                 <!-- Skip -->
-                <button [disabled]="data.form.invalid|| this.formValid"  class="mr-2" mat-flat-button [color]="'warn'" (click)="skip()">
+                <button [disabled]="data.form.invalid|| this.formValid" class="mr-2" mat-flat-button [color]="'warn'"
+                    (click)="skip()">
                     <span class=" ">Skip</span>
                 </button>
                 <!-- Send -->
-                <button [disabled]="data.form.invalid || this.formValid"   class="" mat-flat-button [color]="'primary'" (click)="send()">
+                <button [disabled]="data.form.invalid || this.formValid" class="" mat-flat-button [color]="'primary'"
+                    (click)="send()">
                     <span class=" ">Save</span>
                 </button>
             </div>
