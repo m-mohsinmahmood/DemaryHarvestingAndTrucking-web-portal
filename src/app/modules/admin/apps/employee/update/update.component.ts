@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -8,12 +8,56 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EmployeeService } from '../employee.service';
 import { Country } from 'app/modules/admin/apps/employee/employee.types';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+export const MY_FORMATS = {
+  parse: {
+      dateInput: 'YYYY',
+  },
+  display: {
+      dateInput: 'YYYY',
+      monthYearLabel: 'YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const MY_FORMATS_2 = {
+  parse: {
+      dateInput: 'LL',
+  },
+  display: {
+      dateInput: 'LL',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+@Directive({
+  selector: '[birthdayFormat]',
+  providers: [
+      { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2 },
+  ],
+})
+export class BirthDateFormat {
+}
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.scss']
+  styleUrls: ['./update.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+        provide: DateAdapter,
+        useClass: MomentDateAdapter,
+        deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+
+]
 })
 // @Inject(MAT_DIALOG_DATA)
 
@@ -68,6 +112,7 @@ export class UpdateComponent implements OnInit {
    //this.avatar = employee.avatar;
    this.employees = emp;
    this.form.patchValue(emp);
+   console.log("emp",this.form);
     const internationalPhoneNumbersFormGroups = [];
     if ( this.employees.internationalPhoneNumber.length > 0 )
     {
