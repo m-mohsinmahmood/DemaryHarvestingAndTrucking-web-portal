@@ -34,12 +34,10 @@ export class LandingPageFullscreenComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // // Create the form
-        // this.comingSoonForm = this._formBuilder.group({
-        //     email: ['', [Validators.required, Validators.email]]
-        // });
+        // this.playPauseVideo();
+        
     }
- 
+
     openDialog() {
         // this.router.navigateByUrl('pages/applicant');
         const dialogRef = this._matDialog.open(ApplyNowComponent, {
@@ -58,34 +56,37 @@ export class LandingPageFullscreenComponent implements OnInit {
      * Sign in
      */
     register(): void {
-        // // Return if the form is invalid
-        // if ( this.comingSoonForm.invalid )
-        // {
-        //     return;
-        // }
-
-        // // Disable the form
-        // this.comingSoonForm.disable();
-
-        // // Hide the alert
-        // this.showAlert = false;
-
-        // Do your action here...
-        // Emulate server delay
-        // setTimeout(() => {
-
-        //     // Re-enable the form
-        //     this.comingSoonForm.enable();
-
-        //     // Reset the form
-        //     this.comingSoonNgForm.resetForm();
-
-        //     // Set the alert
-        //     this.alert = {
-        //         type   : 'success',
-        //         message: 'You have been registered to the list.'
-        //     };
-
-        // }, 1000);
     }
+
+    //#region play and pause vidoe sound
+    playPauseVideo() {
+        let videos = document.querySelectorAll("video");
+        videos.forEach((video) => {
+          // We can only control playback without insteraction if video is mute
+          video.muted = true;
+          // Play is a promise so we need to check we have it
+          let playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then((_) => {
+              let observer = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (
+                      entry.intersectionRatio !== 1 &&
+                      !video.paused
+                    ) {
+                      video.pause();
+                    } else if (video.paused) {
+                      video.play();
+                    }
+                  });
+                },
+                { threshold: 0.2 }
+              );
+              observer.observe(video);
+            });
+          }
+        });
+      }
+    //#endregion
 }

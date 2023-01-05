@@ -86,6 +86,9 @@ export class TopNavigationComponent implements OnDestroy
     navigate(){
         this.router.navigateByUrl('pages/applicant');
     }
+    navigateToLogin(){
+        this.router.navigateByUrl('sign-in');
+    }
 
     navigateHome(){
         this.router.navigateByUrl('pages/landing-page');
