@@ -2,14 +2,8 @@ import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Applicant } from '../../applicants.types';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import moment from 'moment';
 import { ApplicantService } from '../../applicants.services';
-
-
-
 @Component({
     selector: 'app-recruiterremarks',
     templateUrl: './recruiterremarks.component.html',
@@ -149,7 +143,7 @@ export class RecruiterremarksComponent implements OnInit {
             third_call_ranking: this.applicantData?.third_call_ranking,
             third_interviewer_id: this.applicantData?.third_interviewer_name,
             status_message: ['Third Interview Completed'],
-            status_step:['5'],
+            status_step:['6'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -161,7 +155,7 @@ export class RecruiterremarksComponent implements OnInit {
             reference_call_ranking: this.applicantData?.reference_call_ranking,
             reference_interviewer_id: this.applicantData?.reference_interviewer_name,
             status_message: ['Reference Call Completed'],
-            status_step:['6'],
+            status_step:['5'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -293,14 +287,15 @@ export class RecruiterremarksComponent implements OnInit {
             this.secondInterviewForm.value.status_step = '4'
             this.calculateScore(this.secondInterviewForm);
             this._applicantService.patchApplicant(this.secondInterviewForm.value , true , false);
-        }else if(interViewer === 'Third'){
-            this.thirdFormGroup.value.status_step = '5'
-            this.calculateScore(this.thirdInterviewForm);
-            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true , false);
         }else if(interViewer === 'Reference'){
-            this.referenceForm.value.status_step = '6'
+            this.referenceForm.value.status_step = '5'
             this.calculateScore(this.referenceForm);
             this._applicantService.patchApplicant(this.referenceForm.value , true , false);
+        }
+        else if(interViewer === 'Third'){
+            this.thirdFormGroup.value.status_step = '6'
+            this.calculateScore(this.thirdInterviewForm);
+            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true , false);
         }
     }
      //#region Calculate Score
