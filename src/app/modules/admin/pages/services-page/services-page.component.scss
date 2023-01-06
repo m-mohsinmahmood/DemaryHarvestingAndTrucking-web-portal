@@ -41,3 +41,19 @@ $medium: 768px;
     width: 20px !important;
     min-height: 20px !important;
 }
+
+::ng-deep .carousel > button:last-of-type{
+    right: 20px !important ;
+    top: 30% !important;
+}
+::ng-deep .carousel > button:first-of-type{
+    left: 20px !important;
+    top: 30% !important;
+
+
+}
+::ng-deep .carousel .mat-icon
+{
+    font-size: 50px !important;
+
+}
