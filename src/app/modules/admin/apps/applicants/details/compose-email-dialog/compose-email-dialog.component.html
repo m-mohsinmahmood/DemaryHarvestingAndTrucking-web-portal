@@ -27,7 +27,7 @@
                     value="Reference Call Completed">Reference Call
                 </mat-option>
                 <mat-option
-                    *ngIf="(current_status_step == 4 || current_status_step == 5) && !data.reject"
+                    *ngIf="(current_status_step == 4 || current_status_step == 5) && !data.makeOffer && !data.reject"
                     value="Third Interview Completed">Third Interview</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not

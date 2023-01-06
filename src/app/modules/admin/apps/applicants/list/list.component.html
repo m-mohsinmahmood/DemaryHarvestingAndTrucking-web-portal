@@ -123,9 +123,9 @@
                                         </div>
                                         <!-- Status -->
                                         <div class="hidden sm:block">
-                                            <div matTooltip="{{ applicant.status_message == 'Results'? 'Hired' : applicant.status_message  }}" matTooltipPosition="above"
+                                            <div matTooltip="{{ applicant.status_step == '10.1'? 'Hired' : applicant.status_message == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '10.4'? 'Rejected' : applicant.status_message }}" matTooltipPosition="above"
                                                 class="truncate justify-center items-center">
-                                                {{ applicant.status_message == 'Results'? 'Hired' : applicant.status_message  }}
+                                                {{ applicant.status_step == '10.1'? 'Hired' : applicant.status_message == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '10.4'? 'Rejected' : applicant.status_message }}
                                             </div>
                                         </div>
 
@@ -212,8 +212,8 @@
                                 <mat-option value="Preliminary Review">Preliminary Review</mat-option>
                                 <mat-option value="First Interview Completed">First Interview Completed</mat-option>
                                 <mat-option value="Second Interview Completed">Second Interview Completed</mat-option>
-                                <mat-option value="Third Interview Completed">Third Interview Completed</mat-option>
                                 <mat-option value="Reference Call Completed">Reference Call Completed</mat-option>
+                                <mat-option value="Third Interview Completed">Third Interview Completed</mat-option>
                                 <mat-option value="Recruiter Decision Made">Recruiter Decision Made</mat-option>
                                 <mat-option value="Offer Made">Offer Made</mat-option>
                                 <mat-option value="Offer Accepted">Offer Accepted</mat-option>
