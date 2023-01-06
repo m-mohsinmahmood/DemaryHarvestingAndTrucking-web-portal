@@ -34,7 +34,7 @@ export class LandingPageFullscreenComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.playPauseVideo();
+        // this.playPauseVideo();
         
     }
 

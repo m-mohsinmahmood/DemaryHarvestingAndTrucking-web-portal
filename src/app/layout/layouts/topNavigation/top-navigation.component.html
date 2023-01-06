@@ -7,26 +7,26 @@
     <ng-container fuseVerticalNavigationContentHeader>
 
         <div class="flex flex-col items-left w-full p-4">
-            <div class="relative w-24 h-24 font-bold">
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateHome()" mat-button>Home</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateEmployment()"
+            <div class="relative w-24 h-24 font-medium">
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateHome()" mat-button>Home</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateEmployment()"
                     mat-button>Employment</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateServices()"
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateServices()"
                     mat-button>Services</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateContactUs()" mat-button>Contact
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateContactUs()" mat-button>Contact
                     Us</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateToLogin()" mat-button>Log In</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateToLogin()" mat-button>Log In</button>
 
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
+                <!-- <button class="min-w-16 py-4 ml-2 pl-8 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
                     type="button" (click)="openDialog()">
                     Join Us
                     <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
-                </button>
+                </button> -->
 
 
 
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color mt-4"
-                    mat-flat-button type="button">
+                <button class="min-w-16 py-4 ml-2 font-medium text-xl join-us-btn custom-btn-color mt-4"
+                    mat-flat-button type="button" (click)="navigateContactUs()">
                     Get Quote
                 </button>
             </div>
@@ -44,19 +44,19 @@
             <div class="col-1 w-3/12 md:w-4/12 px-2 items-center">
                 <img src="assets\logo\Logo.svg" class="py-10 w-32 h-auto">
             </div>
-            <div class="col-2 w-6/12 md:w-8/12 sm:flex items-center justify-end font-bold gap-2 py-8 hidden">
-                <button class="max-w-16 py-4 font-bold text-xl" (click)="navigateHome()" mat-button>Home</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateEmployment()"
+            <div class="col-2 w-6/12 md:w-8/12 sm:flex items-center justify-end font-medium gap-2 py-8 hidden">
+                <button class="max-w-16 py-4 font-medium text-xl" (click)="navigateHome()" mat-button>Home</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateEmployment()"
                     mat-button>Employment</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateServices()"
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateServices()"
                     mat-button>Services</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateContactUs()" mat-button>Contact
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateContactUs()" mat-button>Contact
                     Us</button>
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
+                <!-- <button class="min-w-16 py-4 ml-2 pl-8 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
                     type="button" (click)="openDialog()">
                     Join Us
                     <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
-                </button>
+                </button> -->
 
                 <!-- <button mat-button [matMenuTriggerFor]="home">Home</button> -->
                 <!-- <mat-menu #menu="matMenu">
@@ -66,12 +66,12 @@
 
             </div>
 
-            <div class="col-2 w-3/12 md:w-8/12 sm:flex items-center justify-end font-bold gap-2 py-8 hidden">
-                <button class="max-w-18 font-bold text-xl p-4" style="border: 1px solid #1E293B !Important;"
+            <div class="col-2 w-3/12 md:w-8/12 sm:flex items-center justify-end font-medium gap-2 py-8 hidden">
+                <button class="max-w-18 font-medium text-xl p-4" style="border: 1px solid #1E293B !Important;"
                     (click)="navigateToLogin()" mat-button>Log In</button>
 
-                <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
-                    type="button">
+                <button class="min-w-16 py-4 ml-2 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
+                    type="button" (click)="navigateContactUs()">
                     Get Quote
                 </button>
 
@@ -162,10 +162,10 @@
                     </div>
 
                     <div class="flex flex-row items-center icon-footer gap-x-4">
-                        <a href=""><img src="assets\logo\fb.png" class="footer-icons text-white h-auto pr-2"></a>
-                        <a href=""><img src="assets\logo\insta.png" class="footer-icons text-white h-auto pr-2"></a>
-                        <a href=""><img src="assets\logo\LinkedIn.png" class="footer-icons text-white h-auto pr-2"></a>
-                        <a href=""><img src="assets\logo\Twitter.png" class="footer-icons text-white h-auto pr-2"></a>
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\fb.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\insta.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\LinkedIn.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\Twitter.png" class="footer-icons text-white h-auto pr-2">
                     </div>
             </div>
         </div>

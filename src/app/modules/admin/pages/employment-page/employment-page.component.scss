@@ -60,8 +60,17 @@ ul.b {
 }
 
 ::ng-deep .carousel > button:last-of-type{
-    right: 10px !important ;
+    right: 20px !important ;
+    top: 38% !important;
 }
 ::ng-deep .carousel > button:first-of-type{
-    left: 10px !important;
+    left: 20px !important;
+    top: 38% !important;
+
+
+}
+::ng-deep .carousel .mat-icon
+{
+    font-size: 50px !important;
+
 }

@@ -1,14 +1,16 @@
 <div class="flex flex-col flex-auto bg-white">
 
-    <video loop muted autoplay="true" onload="this.play()" controls="true" onloadedmetadata="this.muted = false" id="myVideo">
+    <video loop muted autoplay="true" oncanplay="this.play()" controls="true" onloadedmetadata="this.muted = true"
+        id="myVideo">
         <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
         <p><i class="far fa-times-circle"></i> No Preview Available</p>
     </video>
 
     <div class="heading-title h-auto flex flex-col items-left justify-start ">
-        <h1 class="md:w-6/12 md:text-6xl sm:text-2xl text-xl font-bold sm:p-8 text-white">DHT's mission is to consistently deliver
-            superior agricultural and trucking services for our customers</h1>
-            <!-- <button class="w-36 sm:m-8 mt-2 custom-btn-color" mat-flat-button type="button" (click)="openDialog()">Apply Now
+        <h1 class="md:w-6/12 md:text-6xl sm:text-2xl text-xl font-bold sm:p-8 text-white">DHT's mission is to
+            consistently deliver superior agricultural, equipment rental, and transportation services for our customers
+        </h1>
+        <!-- <button class="w-36 sm:m-8 mt-2 custom-btn-color" mat-flat-button type="button" (click)="openDialog()">Apply Now
             </button> -->
 
     </div>
@@ -25,8 +27,9 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
                     style="background-color:#31558C;">
                     <mat-icon class="text-white rounded-full" stroke="#fff"
-                        [svgIcon]="'heroicons_solid:share'"></mat-icon></div>
-                <h1 class="text-center item-center text-2xl font-bold" style="color:#31558C">Custom Agricultural
+                        [svgIcon]="'heroicons_solid:share'"></mat-icon>
+                </div>
+                <h1 class="text-center item-center text-4xl font-bold" style="color:#31558C">Custom Agricultural
                     Services</h1>
                 <p class="text-center item-center">DHT provide services such as harvesting, farming, trucking and
                     leasing equipment across most Southern and Midwest states.</p>
@@ -37,7 +40,7 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:printer'"></mat-icon></div>
-                <h1 class="text-center item-center text-2xl font-bold" style="color:#31558C">Best-in-Class Equipment
+                <h1 class="text-center item-center text-4xl font-bold" style="color:#31558C">Best-in-Class Equipment
                 </h1>
                 <p class="text-center item-center">DHT owns a large portfolio of some of the most technologically
                     advanced agricultural equipment such as, two dozen Case IH 8250 combines, a fleet of 22 semi-trucks,
@@ -50,7 +53,7 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:globe-alt'"></mat-icon></div>
-                <h1 class="text-center item-center text-2xl font-bold" style="color:#31558C">Innovative Technology</h1>
+                <h1 class="text-center item-center text-4xl font-bold" style="color:#31558C">Innovative Technology</h1>
                 <p class="text-center item-center">DHT has built an innovative software technology platform to support
                     operations, improve efficiencies, and provide customers with customized reporting solutions.</p>
 
@@ -59,7 +62,7 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:user'"></mat-icon></div>
-                <h1 class="text-center item-center text-2xl font-bold" style="color:#31558C">Well-Trained and Passionate
+                <h1 class="text-center item-center text-4xl font-bold" style="color:#31558C">Well-Trained and Passionate
                     Employees</h1>
                 <p class="text-center item-center">DHT recruits and hires experienced and well-trained employees who are
                     passionate about the agricultural business.</p>
@@ -82,7 +85,7 @@
         </div>
 
         <div class="flex flex-col bold md:w-1/2 justify-center bg-gray-100 rounded-sm p-8">
-            <h1 class="text-2xl font-bold">"Our vision is to continue to build on DHT's track record of success and
+            <h1 class="text-4xl font-bold">"Our vision is to continue to build on DHT's track record of success and
                 further our reputation as one of the best custom agricultural services companies in the industry."</h1>
         </div>
 
