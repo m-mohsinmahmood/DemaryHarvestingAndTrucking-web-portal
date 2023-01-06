@@ -10,6 +10,7 @@ import { FuseNavigationModule } from '@fuse/components/navigation';
 import { FuseFullscreenModule } from '@fuse/components/fullscreen/fullscreen.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        MatTooltipModule
     ],
     exports     : [
         TopNavigationComponent
