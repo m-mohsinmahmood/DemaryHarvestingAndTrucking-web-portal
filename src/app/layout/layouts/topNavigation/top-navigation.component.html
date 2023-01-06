@@ -15,7 +15,7 @@
                     mat-button>Services</button>
                 <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateContactUs()" mat-button>Contact
                     Us</button>
-                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateHome()" mat-button>Log In</button>
+                <button class="min-w-16 py-4 font-bold text-xl" (click)="navigateToLogin()" mat-button>Log In</button>
 
                 <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
                     type="button" (click)="openDialog()">
@@ -68,7 +68,7 @@
 
             <div class="col-2 w-3/12 md:w-8/12 sm:flex items-center justify-end font-bold gap-2 py-8 hidden">
                 <button class="max-w-18 font-bold text-xl p-4" style="border: 1px solid #1E293B !Important;"
-                    (click)="navigateHome()" mat-button>Log In</button>
+                    (click)="navigateToLogin()" mat-button>Log In</button>
 
                 <button class="min-w-16 py-4 ml-2 pl-8 font-bold text-xl join-us-btn custom-btn-color" mat-flat-button
                     type="button">
@@ -154,7 +154,7 @@
 
             </div>
         </div>
-        <div class="flex flex-col md:flex-row mx-auto sm:w-full gap-8 pb-8" style="background-color:#31558C">
+        <div class="flex flex-col md:flex-row mx-auto w-full gap-8 pb-8" style="background-color:#31558C">
 
             <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-4 pb-4 border-t border-white justify-between">
                     <div class="flex flex-row items-center icon-footer ">

@@ -64,11 +64,11 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.emails = [
       { id: '1', subject: 'DHT Employment Application Received!', email: 'Dear ' + this.data.applicant.first_name + ',</br> Thank you for your completing DHT’s online application.  We are currently reviewing your application and will be reaching out soon with further instructions on next steps Thanks,' },
-      { id: '2', subject: 'DHT Interview Request', email: 'Dear ' + this.data.applicant.first_name + ',</br>We are pleased  to inform you that DHT is interested in scheduling an interview to learn more about you.  We would ask that you please click the link below to schedule a day/time that works best for you to speak with one of our company representatives.</br>Kind regards,' },
-      { id: '3', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>Thank you for your completing DHT’s online application.  We have had a significant number of online applications this year and have offered all currently available positions to other candidates.  However, if you are interested, we have a waiting list that has been created to fill positions of applicants that are not able to complete the employment process.  If you are interested in being placed on this list, please email Matt Demaray at Matt@DHT-USA.com.</br>Kind regards,' },
-      { id: '4', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>Thank you for your completing DHT’s online application, but at present your qualifications do not match any currently available positions at DHT.  We will keep your application on file should any new opportunities arise.</br>Kind regards,' },
-      { id: '5', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT and are pleased to inform you that someone from DHT will soon be reaching out to speak with your references.  Upon completion, you will be promptly notified to discuss next steps and answer any questions you may have.</br>Kind regards,' },
-      { id: '6', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  We have had a significant number of online applications this year and unfortunately, have offered all currently available positions to other candidates.  However, if you are interested, we have a waiting list that has been created to fill positions of applicants that are not able to complete the employment process.  If you are interested in being placed on this list, please email Matt Demaray at Matt@DHT-USA.com.</br>Kind regards,' },
+      { id: '2', subject: 'DHT Interview Request', email: 'Dear ' + this.data.applicant.first_name + ',</br>We are pleased  to inform you that DHT is interested in scheduling an interview to learn more about you.  We would ask that you please click the link below to schedule a day/time that works best for you to speak with one of our company representatives.</br></br>Kind regards,</br>' },
+      { id: '3', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>Thank you for your completing DHT’s online application.  We have had a significant number of online applications this year and have offered all currently available positions to other candidates.  However, if you are interested, we have a waiting list that has been created to fill positions of applicants that are not able to complete the employment process.  If you are interested in being placed on this list, please email Matt Demaray at Matt@DHT-USA.com.</br></br>Kind regards,</br>' },
+      { id: '4', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>Thank you for your completing DHT’s online application, but at present your qualifications do not match any currently available positions at DHT.  We will keep your application on file should any new opportunities arise.</br></br>Kind regards,</br>' },
+      { id: '5', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT and are pleased to inform you that someone from DHT will soon be reaching out to speak with your references.  Upon completion, you will be promptly notified to discuss next steps and answer any questions you may have.</br></br>Kind regards,</br>' },
+      { id: '6', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  We have had a significant number of online applications this year and unfortunately, have offered all currently available positions to other candidates.  However, if you are interested, we have a waiting list that has been created to fill positions of applicants that are not able to complete the employment process.  If you are interested in being placed on this list, please email Matt Demaray at Matt@DHT-USA.com.</br></br>Kind regards,</br>' },
       { id: '7', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we feel that your qualifications do not currently match any available positions at DHT.  We will keep your application on file should any new opportunities arise.' },
       { id: '8', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we are excited to inform you that DHT has decided to offer you a position as a [insert position they selected from drop down list].  DHT’s Administrative Director, Bill Demaray, will be contacting you shortly by email to discuss the required pre-employment (onboarding) enrollment steps. We look forward to meeting and working with you soon.' },
       { id: '9', subject: 'DHT Application Processed', email: 'Dear ' + this.data.applicant.first_name + ', </br>We thank you for the time you’ve spent interviewing with DHT.  After careful consideration, we feel that your qualifications do not currently match any available positions at DHT.  We will keep your application on file should any new opportunities arise.' },
@@ -338,7 +338,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         else if (_formValues['status_message'] === "Third Interview Completed") {
           
           this.reason_for_rejection = false;
-          this.next_status_step = 5;
+          this.next_status_step = 6;
           this.email_text = this.emails[1].email;
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
           this.data.form.patchValue({
@@ -346,7 +346,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[1].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '5',
+            status_step: '6',
             status_message: "Third Interview Completed"
           },
             {
@@ -358,14 +358,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         else if (_formValues['status_message'] === 'Reference Call Completed') {
           
           this.reason_for_rejection = false;
-          this.next_status_step = 6;
+          this.next_status_step = 5;
           this.email_text = this.emails[4].email;
           this.data.form.patchValue({
             subject: this.emails[4].subject,
             body: this.emails[4].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '6',
+            status_step: '5',
             status_message: "Reference Call Completed"
           },
             {

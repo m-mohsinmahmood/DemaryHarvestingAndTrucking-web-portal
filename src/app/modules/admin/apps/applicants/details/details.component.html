@@ -21,7 +21,7 @@
                     applicantInfo?.applicant_info.last_name }}
                 </span>
                 <mat-hint
-                    class="text-{{applicantInfo.applicant_info.ranking == '0' ? 'slate' : applicantInfo.applicant_info.ranking < '30' ? 'red' : applicantInfo.applicant_info.ranking < '70' ? 'yellow' : 'green' }}-500 text-lg ml-4">
+                    class="text-{{applicantInfo.applicant_info.ranking == 0 ? 'slate' : applicantInfo.applicant_info.ranking < 30 ? 'red' : applicantInfo.applicant_info.ranking < 70 ? 'yellow' : 'green' }}-500 text-lg ml-4">
                     {{applicantInfo.applicant_info.ranking}}% </mat-hint>
             </div>
         </div>
@@ -157,11 +157,11 @@
                                         {{applicantInfo?.applicant_info.second_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.second_interviewer_name + ")"}}
                                     </mat-hint>
-                                    <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
+                                    <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.third_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
                                     </mat-hint>
-                                    <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
+                                    <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
                                         "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
                                     </mat-hint>
