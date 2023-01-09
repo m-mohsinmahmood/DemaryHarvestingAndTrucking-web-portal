@@ -295,7 +295,6 @@ export class ApplicantpageComponent implements OnInit {
         }
         formData.append('form', JSON.stringify(this.form.value));
         this._applicantService.createApplicant(formData,true);
-        this._router.navigateByUrl("/pages/landing-page")
     }
     initCalendar() {
         this.graduation_year = new FormControl(moment());
