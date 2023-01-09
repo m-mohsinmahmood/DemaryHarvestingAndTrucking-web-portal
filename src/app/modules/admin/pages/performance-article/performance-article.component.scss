@@ -1,0 +1,49 @@
+$mobile: 767px;
+$medium: 768px;
+
+
+
+::ng-deep .carousel li {
+    @media screen and (min-width: $medium) {
+        padding-bottom: 42% !important;
+
+    }
+}
+::ng-deep .carousel li {
+    @media screen and (max-width: $mobile) {
+        padding-bottom: 47% !important;
+
+    }
+}
+
+::ng-deep .carousel-indicators > button
+{
+    width: 20px !important;
+    min-height: 20px !important;
+}
+
+::ng-deep .carousel > button:last-of-type{
+    right: 20px !important ;
+    top: 38% !important;
+    background-color: #fff !important;
+    padding: 1rem;
+
+}
+::ng-deep .carousel > button:first-of-type{
+    left: 20px !important;
+    top: 38% !important;
+    background-color: #fff !important;
+    padding: 1rem;
+
+
+
+}
+::ng-deep .carousel .mat-icon
+{
+    font-size: 50px !important;
+
+}
+
+::ng-deep .carousel-slide-overlay {
+    background-color: transparent !important;
+}
