@@ -63,31 +63,41 @@ export class OnboardingStatusBarComponent implements OnInit {
 
   //#region Verify Docs
   verifyDocs(index, type) {
-    const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-      data: {
-        message: type === "Accept" ? "Are you sure you want to verify this document?" : "Are you sure you want to put this Applicant in Rejected Offer list?",
-        title: type === "Accept" ? "Verify Document" : "Offer Rejected",
-        hideDeleteIcon: true,
-        deleteText: type === "Accept" ? "Verify" : "Reject"
-      },
-
-    });
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult === true) {
-        this._employeeService.patchEmployee({
-          id: this.employee?.employee_info.employee_id,
-          prev_status_step: this.employee?.employee_info.status_step,
-          prev_status_message: this.employee?.employee_info.status_message,
-          status_message: "Verified",
-          status_step: +this.employee?.employee_info.status_step + 1,
+      const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+        data: {
+          message: type === "Accept" ? "Are you sure you want to verify this document?" : "Are you sure you want to reject this document?",
+          title: type === "Accept" ? "Verify Document" : "Reject Document",
+          hideDeleteIcon: true,
+          deleteText: type === "Accept" ? "Verify" : "Reject"
+        },
+      });
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult === true && type === 'Accept') {
+          this._employeeService.patchEmployee({
+            id: this.employee?.employee_info.employee_id,
+            prev_status_step: this.employee?.employee_info.status_step,
+            prev_status_message: this.employee?.employee_info.status_message,
+            status_message: "Verified",
+            status_step: +this.employee?.employee_info.status_step + 1,
+          });
         }
-        );
-      }
-      else if (dialogResult && type === "Reject") {
+        else if (dialogResult === true && type === 'Reject'){
+          this._employeeService.patchEmployee({
+            id: this.employee?.employee_info.employee_id,
+            prev_status_step: this.employee?.employee_info.status_step - 1,
+            prev_status_message: this.employee?.employee_info.prev_status_message,
+            status_message: "",
+            status_step: +this.employee?.employee_info.status_step - 1,
+            rejected: true,
+          });
+
+        }
+        
 
       }
-    });
-  }
+      );
+    }
+  
 
 
   //#endregion

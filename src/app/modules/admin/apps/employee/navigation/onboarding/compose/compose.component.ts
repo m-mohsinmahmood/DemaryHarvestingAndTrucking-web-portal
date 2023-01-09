@@ -91,9 +91,8 @@ export class MailboxComposeComponent implements OnInit {
     //#region Patch form 
     patchForm() {
         const { employee } = this.data;
-        debugger;
         this.current_status_step = employee.status_step;
-        this.data.decisionMadeForm ? this.current_status_message = "Results" : this.current_status_message = employee.status_message;
+        this.current_status_message = employee.status_message;
         this.data.form.patchValue({
             to: employee.email,
             id: employee.employee_id,
@@ -109,8 +108,8 @@ export class MailboxComposeComponent implements OnInit {
         else if (this.current_status_step == '4'){
             this.patchEmail(5,1)
         }
-        else if (this.current_status_step == '6'){
-            this.patchEmail(7,2)
+        else if (this.current_status_step == '7'){
+            this.patchEmail(8,2)
         }
         else if (this.current_status_step == '8'){
             this.patchEmail(9,3)
