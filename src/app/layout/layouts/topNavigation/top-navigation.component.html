@@ -1,0 +1,176 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+<!-- Mobile navigation -->
+<fuse-vertical-navigation class="dark bg-gray-900 print:hidden md:hidden flex" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+
+        <div class="flex flex-col items-left w-full p-4">
+            <div class="relative w-24 h-24 font-medium">
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateHome()" mat-button>Home</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateEmployment()"
+                    mat-button>Employment</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateServices()"
+                    mat-button>Services</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateContactUs()" mat-button>Contact
+                    Us</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateToLogin()" mat-button>Log In</button>
+
+                <!-- <button class="min-w-16 py-4 ml-2 pl-8 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
+                    type="button" (click)="openDialog()">
+                    Join Us
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
+                </button> -->
+
+
+
+                <button class="min-w-16 py-4 ml-2 font-medium text-xl join-us-btn custom-btn-color mt-4"
+                    mat-flat-button type="button" (click)="navigateContactUs()">
+                    Get Quote
+                </button>
+            </div>
+
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full bg-white">
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <div
+            class="top-navigation-menu hidden md:flex flex-row columns-2 w-full md:w-12/12 lg:w-9/12 m-auto justify-between">
+            <div class="col-1 w-3/12 md:w-4/12 px-2 items-center">
+                <img src="assets\logo\Logo.svg" class="py-10 w-32 h-auto">
+            </div>
+            <div class="col-2 w-6/12 md:w-8/12 sm:flex items-center justify-end font-medium gap-2 py-8 hidden">
+                <button class="max-w-16 py-4 font-medium text-xl" (click)="navigateHome()" mat-button>Home</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateEmployment()"
+                    mat-button>Employment</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateServices()"
+                    mat-button>Services</button>
+                <button class="min-w-16 py-4 font-medium text-xl" (click)="navigateContactUs()" mat-button>Contact
+                    Us</button>
+                <!-- <button class="min-w-16 py-4 ml-2 pl-8 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
+                    type="button" (click)="openDialog()">
+                    Join Us
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-right'"></mat-icon>
+                </button> -->
+
+                <!-- <button mat-button [matMenuTriggerFor]="home">Home</button> -->
+                <!-- <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item>Item 2</button>
+                </mat-menu> -->
+
+            </div>
+
+            <div class="col-2 w-3/12 md:w-8/12 sm:flex items-center justify-end font-medium gap-2 py-8 hidden">
+                <button class="max-w-18 font-medium text-xl p-4" style="border: 1px solid #1E293B !Important;"
+                    (click)="navigateToLogin()" mat-button>Log In</button>
+
+                <button class="min-w-16 py-4 ml-2 font-medium text-xl join-us-btn custom-btn-color" mat-flat-button
+                    type="button" (click)="navigateContactUs()">
+                    Get Quote
+                </button>
+
+
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div
+            class="relative flex flex-0 items-center w-full h-16 px-4  z-0 shadow dark:shadow-none border-b border-gray-300 bg-card dark:bg-transparent print:hidden md:hidden flex">
+            <!-- Navigation toggle button -->
+            <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+                <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+            </button>
+            <div class="flex justify-center px-2 mx-auto items-center justify-center">
+                <img src="assets\logo\Logo.svg" class="py-2 w-24 h-auto">
+            </div>
+            <!-- Components -->
+        </div>
+
+
+
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <router-outlet *ngIf="true">
+
+        </router-outlet>
+
+        <!-- /////////////////FOOOTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR//////////////////////////////////// -->
+
+
+        <div class="flex item-center justify-center w-full pb-16" style="background-color:#31558C">
+            <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-12 pb-8">
+                <div class="footer-col flex flex-col md:w-5/12 items-left py-8 gap-y-6">
+                    <img class="w-40 h-auto font-light" src="assets\images\pages\top-navigation-assets\Group 35423.png">
+                    <div class="flex flex-row items-center icon-footer">
+                        <mat-icon class="text-white h-auto pr-2" [svgIcon]="'heroicons_outline:map'"> </mat-icon>
+                        <p class="text-white pt-4">1664 East Florence Blvd Suite 4 <br>#505 Casa Grande AZ 85122</p>
+                    </div>
+
+                    <div class="flex flex-row items-center icon-footer">
+                        <mat-icon class="envelope-icon text-white h-auto pr-2"
+                            [svgIcon]="'heroicons_outline:at-symbol'"> </mat-icon>
+                        <p class="text-white">dht@dht-usa.com</p>
+                    </div>
+                </div>
+
+
+                <div class="footer-col flex flex-col md:w-3/12 items-left py-8 gap-y-6">
+                    <h1 class="text-xl font-semibold text-white">QUICK LINKS</h1>
+                    <a class="text-xl text-white" href="/pages/employment">Employment</a>
+                    <a class="text-xl text-white" href="/pages/services">Services</a>
+
+                    <a class="text-xl text-white" href="/pages/contact-us">Contact us</a>
+
+                </div>
+
+                <div class="footer-col md:w-4/12 items-left py-8 gap-y-3">
+                    <h1 class="text-xl font-semibold text-white">SUBSCRIBE TO NEWSLETTER</h1>
+                    <form [formGroup]="form" class="flex flex-col flex-auto sm:grid mt-4">
+                        <div class="md:grid">
+
+                            <div class="subscribe-email">
+                                <mat-form-field class="w-full" appearance="outline">
+                                    <mat-label>Enter your email address</mat-label>
+                                    <input matInput type="email" formControlName="email">
+
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="subscribe-btn w-1/2" mat-flat-button color="primary" (click)="onSubmit()">
+                        Subscribe
+                    </button>
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row mx-auto w-full gap-8 pb-8" style="background-color:#31558C">
+
+            <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-4 pb-4 border-t border-white justify-between">
+                    <div class="flex flex-row items-center icon-footer ">
+                        <p class="text-white pt-4">© 2022 DHT. All Rights Reserved.</p>
+                    </div>
+
+                    <div class="flex flex-row items-center icon-footer gap-x-4">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\fb.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\insta.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\LinkedIn.png" class="footer-icons text-white h-auto pr-2">
+                        <img matTooltip="Coming Soon" matTooltipPosition="above" src="assets\logo\Twitter.png" class="footer-icons text-white h-auto pr-2">
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

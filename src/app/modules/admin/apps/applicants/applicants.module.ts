@@ -21,25 +21,40 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { QuillModule } from 'ngx-quill';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { applicantsRoutes } from 'app/modules/admin/apps/applicants/applicants.routing';
 import { ApplicantsComponent } from 'app/modules/admin/apps/applicants/applicants.component';
 import { ApplicantsListComponent } from 'app/modules/admin/apps/applicants/list/list.component';
 import { ApplicantDetailComponent } from 'app/modules/admin/apps/applicants/details/details.component';
-import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { FilterComponent } from './filter/filter.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { ApplicantdataComponent } from './details/applicantdata/applicantdata.component';
+import { RecruiterremarksComponent } from './details/recruiterremarks/recruiterremarks.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { BirthDateFormat } from './update/update.component';
+import { ComposeEmailDialogComponent } from './details/compose-email-dialog/compose-email-dialog.component'
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
     declarations: [
         ApplicantsComponent,
         ApplicantsListComponent,
         ApplicantDetailComponent,
-        AddComponent,
         UpdateComponent,
+        FilterComponent,
+        ApplicantdataComponent,
+        RecruiterremarksComponent,
+        BirthDateFormat,
+        ComposeEmailDialogComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(applicantsRoutes),
         MatDialogModule,
         MatButtonModule,
@@ -63,9 +78,36 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatMomentDateModule,
         MatTabsModule,
         MatExpansionModule,
-        SharedModule
-    ]
+        SharedModule,
+        MatAutocompleteModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        // MatButtonModule,
+        // MatCheckboxModule,
+        // MatFormFieldModule,
+        // MatIconModule,
+        // MatInputModule,
+        // MatMenuModule,
+        // MatPaginatorModule,
+        // MatProgressBarModule,
+        // MatRippleModule,
+        // MatSortModule,
+        // MatSelectModule,
+        // MatSlideToggleModule,
+        // MatTooltipModule,
+        MatSidenavModule,
+        MatDividerModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
+        // SharedModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        FuseDrawerModule,
+        QuillModule,
+        MatToolbarModule
+
+    ],
+
 })
-export class ApplicantsModule
-{
+export class ApplicantsModule {
 }

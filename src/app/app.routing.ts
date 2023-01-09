@@ -37,6 +37,53 @@ export const appRoutes: Route[] = [
         ]
     },
 
+    // Auth routes for static pages
+    {
+        path: '',
+        component: LayoutComponent,
+
+        data: {
+            layout: 'top-navigation'
+        },
+        children   : [
+        // Pages
+            {path: 'pages', children: [
+
+                //landing page
+                {path: 'landing-page', data: {
+                    layout: 'top-navigation'
+                },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+                //applicant page
+                {path:'applicant', data: {
+                    layout: 'empty'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+
+                
+                 //services page
+                 {path:'services', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
+
+                //Contact US page
+                {path:'contact-us', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
+
+
+                //employment page
+                {path:'employment', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
+
+                ]},
+        ]
+    },
+
     // Auth routes for authenticated users
     {
         path: '',
@@ -83,7 +130,12 @@ export const appRoutes: Route[] = [
             // Apps
             {path: 'apps', children: [
                 {path: 'ecommerce', loadChildren: () => import('app/modules/admin/apps/ecommerce/ecommerce.module').then(m => m.ECommerceModule)},
-                {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)}
+                {path: 'employee', loadChildren: () => import('app/modules/admin/apps/employee/employee.module').then(m => m.EmployeeModule)},
+                {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)},
+                {path: 'customers', loadChildren: () => import('app/modules/admin/apps/customers/customers.module').then(m => m.CustomersModule)},
+                {path: 'applicants', loadChildren: () => import('app/modules/admin/apps/applicants/applicants.module').then(m => m.ApplicantsModule)},
+                {path: 'equipment', loadChildren: () => import('app/modules/admin/apps/equipment/equipment.module').then(m => m.EquipmentModule)},
+                {path: 'crops', loadChildren: () => import('app/modules/admin/apps/crops/crops.module').then(m => m.CropsModule)},
             ]},
 
             // Pages
@@ -97,6 +149,36 @@ export const appRoutes: Route[] = [
 
                 // Coming Soon
                 {path: 'coming-soon', loadChildren: () => import('app/modules/admin/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)},
+                // //landing page
+                // {path: 'landing-page', data: {
+                //     layout: 'top-navigation'
+                // },loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+                // //applicant page
+                // {path:'applicant', data: {
+                //     layout: 'empty'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+
+                
+                //  //services page
+                //  {path:'services', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/services-page/services-page.module').then(m=>m.ServicesPageModule)},
+
+                // //Contact US page
+                // {path:'contact-us', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/contact-us/contact-us.module').then(m=>m.ContactUsModule)},
+
+
+                // //employment page
+                // {path:'employment', data: {
+                //     layout: 'top-navigation'
+                // },
+                // loadChildren:()=> import('app/modules/admin/pages/employment-page/employment-page.module').then(m=>m.EmploymentPageModule)},
 
                 // Error
                 {path: 'error', children: [
@@ -158,7 +240,7 @@ export const appRoutes: Route[] = [
                 {path: 'colors', loadChildren: () => import('app/modules/admin/ui/colors/colors.module').then(m => m.ColorsModule)},
 
                 // Confirmation Dialog
-                {path: 'confirmation-dialog', loadChildren: () => import('app/modules/admin/ui/confirmation-dialog/confirmation-dialog.module').then(m => m.ConfirmationDialogModule)},
+                //{path: 'confirmation-dialog', loadChildren: () => import('app/modules/admin/ui/confirmation-dialog/confirmation-dialog.module').then(m => m.ConfirmationDialogModule)},
 
                 // Datatable
                 {path: 'datatable', loadChildren: () => import('app/modules/admin/ui/datatable/datatable.module').then(m => m.DatatableModule)},
@@ -194,5 +276,35 @@ export const appRoutes: Route[] = [
             {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.module').then(m => m.Error404Module)},
             {path: '**', redirectTo: '404-not-found'}
         ]
-    }
+    },
+
+    //plain-pages
+     // Admin routes
+    //  {
+    //     path       : '',
+    //     canActivate: [AuthGuard],
+    //     canActivateChild: [AuthGuard],
+    //     component  : LayoutComponent,
+    //     data: {
+    //         layout: 'empty'
+    //     },
+    //     resolve    : {
+    //         initialData: InitialDataResolver,
+    //     },
+    //     children   : [
+
+    //         // Pages
+    //         {path: 'pages', children: [
+    //              //landing page
+    //             {path: 'landing-page', loadChildren: () => import('app/modules/admin/pages/landing-page/landing-page.module').then(m => m.LandingPageModule)},
+
+    //             //applicant page
+    //             {path:'applicant',
+    //             loadChildren:()=> import('app/modules/admin/pages/applicantpage/applicantpage.module').then(m=>m.ApplicantPageModule)},
+    //         ]},
+
+           
+           
+    //     ]
+    // }
 ];

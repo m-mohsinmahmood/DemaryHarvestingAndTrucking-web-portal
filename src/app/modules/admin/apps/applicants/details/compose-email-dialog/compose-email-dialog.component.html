@@ -1,0 +1,109 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Compose Email</div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+    <!-- Header -->
+    <!-- Compose form -->
+    <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="data.form">
+        <!-- Rejection Reason -->
+        <mat-form-field *ngIf="data.reject || reason_for_rejection" appearance="outline">
+            <mat-label>Reason for rejection</mat-label>
+            <textarea matInput formControlName="reason_for_rejection"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Next Step</mat-label>
+            <mat-select formControlName="status_message">
+                <mat-option *ngIf="current_status_step == 2 && !data.makeOffer && !data.reject"
+                    value="First Interview Completed">First Interview
+                </mat-option>
+                <mat-option *ngIf="current_status_step == 3 && !data.makeOffer && !data.reject"
+                    value="Second Interview Completed">Second Interview
+                </mat-option>
+                <mat-option *ngIf="current_status_step == 4 && !data.makeOffer && !data.reject"
+                    value="Reference Call Completed">Reference Call
+                </mat-option>
+                <mat-option
+                    *ngIf="(current_status_step == 4 || current_status_step == 5) && !data.makeOffer && !data.reject"
+                    value="Third Interview Completed">Third Interview</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not
+                    Qualified</mat-option>
+                <mat-option *ngIf="data.makeOffer || data.recruiterDecision" value="Offer Made">Make Offer</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- MAT AUTOCOMPLETE -->
+        <mat-form-field *ngIf="[3, 4, 5, 6].includes(next_status_step)" appearance="outline" fxFlex>
+            <mat-label>Recruiter Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownRecruiters()"
+                [matAutocomplete]="recruiters" (keyup)="recruiter_search$.next($event.target.value)" matInput
+                formControlName="recruiter_id" name="name" placeholder="Recruiter Name" required />
+        </mat-form-field>
+        <mat-autocomplete #recruiters="matAutocomplete" [displayWith]="displayRecruiterForAutoComplete"
+            (optionSelected)="recruiterSelect($event.option.value)">
+            <div *ngIf="allRecruiters | withLoading | async as allRecruiters">
+                <ng-template [ngIf]="allRecruiters.value">
+                    <mat-option *ngFor="let allRecruiter of allRecruiters.value.recruiters" [value]="allRecruiter">{{
+                        allRecruiter.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allRecruiters?.loading">
+                    <mat-option>
+                        <div style="display: flex; justify-content: center;text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allRecruiters?.value?.recruiters?.length == 0">
+                    <mat-option disabled> No Recruiter(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- MAT AUTOCOMPLETE -->
+
+        <!-- To -->
+        <mat-form-field disabled appearance="outline">
+            <mat-label>To</mat-label>
+            <input disabled="true" matInput [formControlName]="'to'">
+        </mat-form-field>
+        <!-- To -->
+
+        <!-- Subject -->
+        <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <input matInput [formControlName]="'subject'">
+        </mat-form-field>
+        <!-- Subject -->
+
+        <!-- Body -->
+        <quill-editor class="mt-2" [(ngModel)]="email_text" [ngModelOptions]="{ standalone: true }"
+            [modules]="quillModules"></quill-editor>
+        <!-- Body -->
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end mt-8">
+            <div class="flex items-center">
+                <!-- Discard -->
+                <button class="mr-2 bg-amber-600 text-white" mat-stroked-button (click)="discard()">
+                    Discard
+                </button>
+                <!-- Skip -->
+                <button [disabled]="data.form.invalid|| this.formValid" class="mr-2" mat-flat-button [color]="'warn'"
+                    (click)="skip()">
+                    <span class=" ">Skip</span>
+                </button>
+                <!-- Send -->
+                <button [disabled]="data.form.invalid || this.formValid" class="" mat-flat-button [color]="'primary'"
+                    (click)="send()">
+                    <span class=" ">Save</span>
+                </button>
+            </div>
+        </div>
+        <!-- Actions -->
+    </form>
+    <!-- Compose form -->
+</div>

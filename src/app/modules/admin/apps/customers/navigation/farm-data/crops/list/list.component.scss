@@ -1,0 +1,45 @@
+.farm-data-crops {
+    grid-template-columns: 50% 50%;
+    @screen sm {
+        grid-template-columns: 25% 25% 25% 20%;
+    }
+    @screen md {
+        grid-template-columns: 40% 20% 20% 15%;
+    }
+    @screen lg {
+        grid-template-columns: 40% 20% 20% 15%;
+    }
+}
+
+::ng-deep .mat-tab-body-wrapper {
+    height: 100% !important;
+}
+
+::ng-deep .tab_group {
+    height: 100% !important;
+}
+
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+.summary-pg-rows-height {
+    max-height: 22rem !important;
+}
+
+.rows-wrapper {
+    height: 16.9rem !important;
+}
+.mat-filter {
+    background-color: #f1f5f9 !important;
+    color: #4f46e5 !important;
+}
+
+.mat-filter-applied {
+    background-color: green;
+    color: #fff;
+}

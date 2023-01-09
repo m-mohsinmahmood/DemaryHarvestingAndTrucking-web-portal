@@ -1,0 +1,59 @@
+.custom-btn-color {
+    background-color: #34548A !important;
+    color: #fff !important;
+
+}
+
+.custom-heading-color {
+    color: #31558C;
+}
+
+.services-counter {
+    font-size: 96px;
+    font-weight: 400;
+    line-height: 116px;
+    letter-spacing: 0.005em;
+    text-align: left;
+    color: rgba(79, 70, 229, 0.15);
+
+}
+
+.custom-bg-color {
+    background-color: #31558C;
+
+}
+::ng-deep .carousel-slide-overlay{
+    background-color: transparent !important;
+}
+$mobile: 767px;
+$medium: 768px;
+
+::ng-deep .carousel li
+{
+    @media screen and (min-width: $medium) {
+        padding-bottom: 40% !important;
+
+    }
+}
+
+::ng-deep .carousel-indicators > button
+{
+    width: 20px !important;
+    min-height: 20px !important;
+}
+
+::ng-deep .carousel > button:last-of-type{
+    right: 20px !important ;
+    top: 30% !important;
+}
+::ng-deep .carousel > button:first-of-type{
+    left: 20px !important;
+    top: 30% !important;
+
+
+}
+::ng-deep .carousel .mat-icon
+{
+    font-size: 50px !important;
+
+}

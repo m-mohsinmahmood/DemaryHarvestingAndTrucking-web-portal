@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- uat
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.17.1'
+  displayName: 'Installing Node.js'
+  
+- script: |
+    npm install -g @angular/cli@13.0.2
+    npm install
+    ng build
+  displayName: "npm install and build"
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: 'dist/fuse'
+    config_file_location: '/'
+    skip_app_build: true
+    skip_api_build: true
+    azure_static_web_apps_api_token: '304ab93ca947e38af9ede16ef0ea1839dc47ec08f3b33b6b8bd38fa46ac5ddd72-8e26d7e1-4e6e-4c18-957c-af0df21e2253010144222'

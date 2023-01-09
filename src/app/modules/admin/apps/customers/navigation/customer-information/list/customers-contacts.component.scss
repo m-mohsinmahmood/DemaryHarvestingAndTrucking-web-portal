@@ -1,0 +1,25 @@
+.contact-grid {
+    grid-template-columns: 50% 50%;
+    @screen sm {
+        grid-template-columns: 10% 10% 15% 15% 15% 15% 15%;
+    }
+    @screen md {
+        grid-template-columns: 10% 10% 10% 12% 12% 12% 15%;
+    }
+    @screen lg {
+        grid-template-columns: 10% 10% 15% 10% 15% 20% 15%;
+    }
+}
+
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+.mat-sort-header-content
+{
+    text-align: left !important;
+}

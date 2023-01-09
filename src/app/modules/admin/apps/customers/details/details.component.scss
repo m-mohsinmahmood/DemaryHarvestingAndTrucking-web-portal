@@ -8,11 +8,11 @@
 
 .sub-nav-component {
     width: 100%;
-    height: 100vh;
+    height: 78vh;
 }
 
 .sub-sidenav-content {
-    height: 100vh;
+    height: 78vh;
     width: 100%;
     overflow-x: clip;
 }
@@ -21,8 +21,13 @@
     padding: 5px;
     border-right: none !important;
     max-width: 270px;
+    // z-index: 0;
 }
 
+// to make it look under filter
+.mat-drawer.mat-drawer-side {
+    z-index: 0 !important;
+}
 .opacity-8 {
     opacity: 80%;
 }
@@ -36,8 +41,8 @@
     padding: 7px;
     border-radius: 50%;
     transition: 0.3s;
-    width: 35px !important;
-    height: 35px !important;
+    width: 40px !important;
+    height: 40px !important;
 }
 
 .subnav-menu-icon:hover {
@@ -46,14 +51,30 @@
 
 .crops-grid,
 .farms-grid {
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 18% 18% 18% 18% 18%;
     @screen sm {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
     @screen md {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
     @screen lg {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 18% 18% 18% 18% 18%;
     }
+}
+.mat-drawer-inner-container div:nth-child(5),
+.mat-drawer-inner-container div:nth-child(6),
+.mat-drawer-inner-container div:nth-child(7),
+.mat-drawer-inner-container div:nth-child(8)
+
+{
+    // pointer-events: none;
+
+
+}
+::ng-deep .mat-select-panel
+{
+    min-width: calc(100% + 17px) !important;
+    margin-left: 7px !important;
+
 }

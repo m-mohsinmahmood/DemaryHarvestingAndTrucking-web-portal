@@ -48,7 +48,7 @@ export class SettingsTeamComponent implements OnInit
                 role  : 'write'
             },
             {
-                avatar: 'assets/images/avatars/female-03.jpg',
+                avatar: 'assets/images/avatars/male-02.jpg',
                 name  : 'Trudy Berg',
                 email : 'trudyberg@mail.us',
                 role  : 'read'

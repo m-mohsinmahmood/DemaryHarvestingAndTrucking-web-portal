@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { assign, cloneDeep } from 'lodash-es';
 import { FuseMockApiService, FuseMockApiUtils } from '@fuse/lib/mock-api';
-import { employees as employeesData , countries as countriesData} from 'app/mock-api/apps/employee/data';
+import { employees as employeesData , countries as countriesData, documents as documentsData} from 'app/mock-api/apps/employee/data';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,7 @@ export class EmployeeMockApi
 {
     private _employees: any[] = employeesData;
     private _countries: any[] = countriesData;
-
+    private _documents: any[] = documentsData;
 
 
     /**
@@ -234,5 +234,75 @@ export class EmployeeMockApi
             this._fuseMockApiService
             .onGet('api/apps/employee/countries')
             .reply(() => [200, cloneDeep(this._countries)]);
+
+            this._fuseMockApiService
+        .onGet('api/apps/employee/details')
+        .reply(({request}) => {
+           console.log('customer mockapi2');
+            // Clone the items
+            let items = cloneDeep(this._documents);
+            const itemss = cloneDeep(this._documents);
+
+            // See if a folder id exist
+            const folderId = request.params.get('folderId') ?? null;
+            console.log('FolderId:',folderId);
+
+            // Filter the items by folder id. If folder id is null,
+            // that means we want to root items which have folder id
+            // of null
+            items = items.filter(item => item.folderId === folderId);
+            console.log('Items:',items);
+            console.log('Itemss:',itemss);
+            //  const filess: any = {};
+            // if(folderId){
+            //      filess = items.filter(item => item.type !== 'folder');
+            // }
+            // Separate the items by folders and files
+            const folders = itemss.filter(item => item.type === 'folder');
+            console.log('Folders:',folders);
+            // const folderss = itemss.filter(item => item.type === 'folder');
+            const files = items.filter(item => item.type !== 'folder');
+
+            // Sort the folders and files alphabetically by filename
+            // folders.sort((a, b) => a.name.localeCompare(b.name));
+            folders.sort((a, b) => a.name.localeCompare(b.name));
+            files.sort((a, b) => a.name.localeCompare(b.name));
+
+            // Figure out the path and attach it to the response
+            // Prepare the empty paths array
+            const pathItems = cloneDeep(this._documents);
+            const path = [];
+
+            // Prepare the current folder
+            // let currentFolder = null;
+
+            // Get the current folder and add it as the first entry
+            // if ( folderId )
+            // {
+            //     currentFolder = pathItems.find(item => item.id === folderId);
+            //     path.push(currentFolder);
+            // }
+
+            // Start traversing and storing the folders as a path array
+            // until we hit null on the folder id
+            // while ( currentFolder?.folderId )
+            // {
+            //     currentFolder = pathItems.find(item => item.id === currentFolder.folderId);
+            //     if ( currentFolder )
+            //     {
+            //         path.unshift(currentFolder);
+            //     }
+            // }
+
+            return [
+                200,
+                {
+                    folders,
+                    files,
+                    path
+                }
+            ];
+        });
+
     }
 }

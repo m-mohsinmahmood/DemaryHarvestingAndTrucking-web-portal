@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false
+    production: false,
+    // baseUrl: 'https://dht-dev.azure-api.net/dht-dev',
+    azureUrl: 'https://dht-dev.azurewebsites.net/api/',
+    baseUrl:  'http://localhost:7071/api'
 };
 
 /*

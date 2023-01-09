@@ -1,0 +1,219 @@
+<div class="flex flex-col flex-auto bg-white">
+
+    <!-- Employee Compensation Section -->
+    <div class="container flex flex-col md:flex-row columns-1 mx-auto w-9/12 gap-8 py-16">
+        <div class="flex flex-col bold w-1/1 justify-start gap-y-8 text-center">
+            <h1 class="text-4xl">Contact Us</h1>
+            <p class="text-lg">
+                We are continually looking for opportunities to expand our harvesting, trucking, equipment rental, and
+                farming businesses by adding new customers. If interested in a quote or learning more, please contact us
+                by completing the form.
+            </p>
+
+        </div>
+
+    </div>
+    <div class="container flex flex-col md:flex-row columns-1 mx-auto w-9/12 gap-8 py-16">
+        <div class="md:w-8/12 mx-auto">
+            <form [formGroup]="form" class="flex flex-col flex-auto sm:grid">
+                <ng-template matStepLabel></ng-template>
+                <div class="md:grid md:grid-cols-1 md:gap-4">
+                    <div>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label> Name</mat-label>
+                            <input matInput type="text" formControlName="name">
+
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="email" formControlName="email">
+
+
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field class="phone-number-outline" appearance="outline" class="w-full">
+                            <mat-label>Cell Phone Number</mat-label>
+                            <span matPrefix>+1 &nbsp;</span>
+                            <input maxlength="14" appPhoneMask type="text" matInput formControlName="cell_phone_number">
+
+                        </mat-form-field>
+
+                    </div>
+                    <h1 class="text-left text-2xl">Type of Inquiry</h1>
+                    <div class="md:flex lg:flex align-center my-1.5">
+                        <mat-radio-group class="grid grid-cols-1" formControlName="inquiry_type">
+                            <mat-radio-button value="Custom Harvesting">Custom Harvesting</mat-radio-button>
+                            <mat-radio-button value="Combine/Tractor Rental">Combine/Tractor Rental</mat-radio-button>
+                            <mat-radio-button value="Custom Farming">Custom Farming</mat-radio-button>
+                            <mat-radio-button value="Commercial Trucking">Commercial Trucking</mat-radio-button>
+                            <mat-radio-button value="Other">Other</mat-radio-button>
+
+                        </mat-radio-group>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Write Message</mat-label>
+                            <textarea matInput type="text" formControlName="message"></textarea>
+
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </form>
+            <button class="custom-btn-color w-full" mat-flat-button color="primary" (click)="onSubmit()">
+                Submit
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Meet our Leadership Team -->
+    <div class="container flex flex-col mx-auto gap-8 pt-16 w-full columns-1" style="background-color:#F1F5F9">
+
+        <div class="flex justify-center gap-y-8 items-center m-auto w-9/12">
+            <h1 class="text-4xl text-center">Meet our Leadership Team</h1>
+        </div>
+
+
+        <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-8">
+            <div
+                class="our-values flex flex-col md:w-1/5 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <img class="text-center justify-center w-24 h-auto"
+                    src="assets\images\pages\contact-us\Ellipse 176.png">
+                <h1 class="text-2xl text-center custom-heading-color">Tim Demaray</h1>
+                <p class="text-center">CEO</p>
+                <p class="text-center sub-headings-gray">Email: <a class="link-color"
+                        href="mailto:tim@dht-usa.com">tim@dht-usa.com</a></p>
+
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/5 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <img class="text-center justify-center w-24 h-auto"
+                    src="assets\images\pages\contact-us\Ellipse 177.png">
+                <h1 class="text-2xl text-center custom-heading-color">Bill Demaray</h1>
+                <p class="text-center">Administrative Director</p>
+                <p class="text-center sub-headings-gray">Email: <a class="link-color"
+                        href="mailto:bill@dht-usa.com">bill@dht-usa.com</a></p>
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/5 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <img class="text-center justify-center w-24 h-auto" src="assets\images\pages\contact-us\empty.png">
+                <h1 class="text-2xl text-center custom-heading-color">Mike Kennedy</h1>
+                <p class="text-center">Operation Director</p>
+                <p class="text-center sub-headings-gray">Email: <a class="link-color"
+                        href="mailto:mike@dht-usa.com">mike@dht-usa.com</a></p>
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/5 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <img class="text-center justify-center w-24 h-auto" src="assets\images\pages\contact-us\empty.png">
+                <h1 class="text-2xl text-center custom-heading-color">Craig Rynhart</h1>
+                <p class="text-center">Operation Director</p>
+                <p class="text-center sub-headings-gray">Email: <a class="link-color"
+                        href="mailto:craig@dht-usa.com">craig@dht-usa.com</a></p>
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/5 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <img class="text-center justify-center w-24 h-auto rounded-full"
+                    src="assets\images\pages\contact-us\MicrosoftTeams-image (3).png">
+                <h1 class="text-2xl text-center custom-heading-color">Matt Demaray</h1>
+                <p class="text-center">Business Director</p>
+                <p class="text-center sub-headings-gray">Email: <a class="link-color"
+                        href="mailto:matt@dht-usa.com">matt@dht-usa.com</a></p>
+
+            </div>
+
+        </div>
+
+        <!--  -->
+        <div class="flex justify-center gap-y-8 items-center m-auto w-9/12">
+            <h1 class="text-4xl text-center">Our Offices</h1>
+        </div>
+        <!--  -->
+
+
+        <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 md:pb-24 md:px-0 md:pt-0 p-8">
+            <div
+                class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
+                    style="background-color:#31558C;">
+                    <mat-icon class="text-white rounded-full" stroke="#fff"
+                        [svgIcon]="'heroicons_solid:share'"></mat-icon>
+                </div>
+                <h1 class="text-2xl text-center custom-heading-color">Corporate Office</h1>
+                <p class="text-center">1664 East Florence Blvd Suite 4 #505 Casa Grande AZ 85122<br>Phone: 520-518-7777</p>
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
+                    style="background-color:#31558C;">
+                    <mat-icon class="text-white rounded-full" stroke="#fff"
+                        [svgIcon]="'heroicons_solid:share'"></mat-icon>
+                </div>
+                <h1 class="text-2xl text-center custom-heading-color">Minnesota Office</h1>
+                <p class="text-center">Sharon Demaray – Office Manager 7635 West 148 Street Suite 251 Apple Valley, MN
+                    55124
+                </p>
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
+                    style="background-color:#31558C;">
+                    <mat-icon class="text-white rounded-full" stroke="#fff"
+                        [svgIcon]="'heroicons_solid:share'"></mat-icon>
+                </div>
+                <h1 class="text-2xl text-center custom-heading-color">Northern Region<br>Operations Center</h1>
+                <p class="text-center">120 E Dakota Ave Columbia, South Dakota 57433</p>
+
+
+            </div>
+
+            <div
+                class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-2">
+                <div class="w-16 h-16 flex justify-center rounded-full items-center text-center m-auto"
+                    style="background-color:#31558C;">
+                    <mat-icon class="text-white rounded-full" stroke="#fff"
+                        [svgIcon]="'heroicons_solid:share'"></mat-icon>
+                </div>
+                <h1 class="text-2xl text-center custom-heading-color">Southern Region<br>Operations Center</h1>
+                <p class="text-center">2082 North Curry Road Casa Grande, AZ 85194</p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Our Mission Section -->
+    <div
+        class="mission-section container flex flex-row md:flex-row justify-center items-center mx-auto gap-8 w-full columns-1">
+
+        <div class="bold justify-center gap-y-8 text-center	 m-auto w-9/12 py-28">
+            <h1 class="text-6xl text-white font-bold">Our Mission</h1>
+
+            <h3 class="font-bold text-6xl font-bold pt-16 text-white	">DHT's mission is to consistently deliver superior
+                agricultural, equipment rental, and transportation services for our customers</h3>
+        </div>
+
+
+    </div>
+    <!--End of Our Mission Section -->
+
+
+</div>

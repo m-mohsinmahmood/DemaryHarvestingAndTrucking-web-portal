@@ -1,0 +1,611 @@
+<!-- Header -->
+<div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b">
+    <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
+        <span class="ml-1 capitalize">Onboarding</span>
+    </div>
+</div>
+
+<div class="flex sm:flex-row flex-col">
+    <!-- FOLDERS BLOCK -->
+
+    <div class="sm:w-7/12 md:w-7/12 m-2 px-2 flex sm:flex-col flex-col">
+        <div class="flex flex-wrap justify-center sm:justify-center md:justify-start mb-2 gap-2 ">
+            <div class="custom-width-tabs w-22 sm:h-18 md:h-22 mb-1 shadow rounded-md bg-gray-100 border-{{item.folder === block? '2': ''}} border-{{item.folder === block ? 'gray' : '' }}-400"
+                *ngFor="let item of folders" (click)="onClick(item)">
+
+                <a class=" inset-0 flex flex-col p-4 cursor-pointer ">
+                    <div class="custom-aspect-tabs aspect-w-9 aspect-h-6">
+                        <div class="flex items-center justify-center">
+                            <mat-icon class="icon-size-5 text-hint"
+                                [svgIcon]="item.folder === block? 'heroicons_solid:folder-open' : 'heroicons_outline:folder'">
+                            </mat-icon>
+                        </div>
+                    </div>
+                    <div class="text-center text-sm font-medium">
+                        <div class="">{{item.folder}}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-gray-100 flex sm:flex-row rounded-md p-4 shadow">
+            <div class="w-2/12 flex justify-center items-center">
+                <img class=" h-12 w-12 rounded-full"
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                    alt="">
+            </div>
+            <div class="w-10/12 flex justify-start items-center pl-2">
+                <div class="">
+                    <p class="font-semibold text-xl leading-7">Richardo Copper</p>
+                    <p class="text-base font-sans font-normal leading-6 text-gray-400">Applied for <span
+                            class="text-black">Vehicle Operator</span> on August 25, 2020</p>
+                </div>
+            </div>
+        </div>
+        <!-- DOI BLOCK -->
+        <div *ngIf="block === 'DOI'">
+            <div class="flex flex-col sm:flex-row bg-gray-100
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4 ">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Passport</p>
+                        <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:
+                            </mat-label>
+                            <mat-label>USA</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>123456789XX</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Approval Letter</p>
+                        <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>John</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Contract</p>
+                        <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>John</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-797B</p>
+                        <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOT BLOCK -->
+        <div *ngIf="block === 'DOT'">
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">DOT Physical</p>
+                        <!-- <p class="text-sm font-normal text-gray-500">Provided by Administrator</p> -->
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>USA</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Test Admin Entered
+                        </p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>USA</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Auto License (State)</p>
+                        <!-- <p class="text-sm font-normal text-gray-500">Provided by Administrator</p> -->
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">State:</mat-label>
+                            <mat-label>New York</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">CDL Drivers License</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">State:</mat-label>
+                            <mat-label>New York</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payroll BLOCK -->
+        <div *ngIf="block === 'Payroll'">
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Bank Info</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Routing:
+                            </mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Account:
+                            </mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">W-4 (USA Only)</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Social Security</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>112022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DHS BLOCK -->
+        <div *ngIf="block === 'DHS'">
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">AG Work Agreement</p>
+                        <p class="text-sm font-normal text-gray-500">Entererd by Admin</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Work Itinerary</p>
+                        <p class="text-sm font-normal text-gray-500">Entererd by Admin</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">VISA</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Control Number:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Nationality:
+                            </mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Red Stamped#:
+                            </mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issuing Post:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-9</p>
+                        <p class="text-sm font-normal text-gray-500">Complete Document</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-94</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
+                            </mat-label>
+                            <mat-label>Jamie</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">E-Verify Cert</p>
+                        <p class="text-sm font-normal text-gray-500">Entered By Admin</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Arrival Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">First day of work:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Department Document</p>
+                        <p class="text-sm font-normal text-gray-500">Entered By Admin</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Last day of work:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Departure Date:
+                            </mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENTS BLOCK -->
+        <div *ngIf="block === 'Documents'">
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Handbook</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Equipment Agreement</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Policy</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Reprimand Policy</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex bg-gray-100 flex-col sm:flex-row
+             rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                    <div>
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Departure Document</p>
+                    </div>
+                </div>
+                <div class="sm:w-6/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                            <mat-label>11-11-2022</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Sign:</mat-label>
+                            <mat-label>ABC</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Status Bar-->
+    
+    <app-onboarding-status-bar [items] = "items"></app-onboarding-status-bar>
+</div>

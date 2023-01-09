@@ -1,0 +1,167 @@
+// .form {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+// }
+
+// .interview-results-form {
+//     min-width: 150px;
+//     max-height: 520px;
+//     overflow-y: scroll;
+// }
+
+// .personal-info-form {
+//     min-width: 150px;
+//     max-height: 520px;
+//     overflow-y: scroll;
+//     // background-color: aqua;
+// }
+
+// .example-full-width {
+//     width: 80%;
+// }
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+}
+
+::ng-deep .example-radio-group .mat-radio-button .mat-radio-label .mat-radio-label-content {
+    white-space: normal;
+}
+
+ ::ng-deep .personal-info-form .mat-form-field .mat-form-field-flex {
+    height: 62px !important;
+}
+
+ ::ng-deep .mat-form-field .mat-input-element {
+   
+}
+
+ ::ng-deep .mat-form-field .mat-form-field-label {
+    color: slategray!important;
+}
+
+ ::ng-deep .mat-form-field .mat-form-field-underline {
+    background-color: slategray;
+}
+
+ ::ng-deep .mat-form-field .mat-form-field-ripple {
+    background-color: slategray;
+}
+
+ ::ng-deep .mat-form-field .mat-form-field-required-marker {
+    color: slategray;
+}
+
+ ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: #0e0704!important;
+}
+
+ ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #0e0704;
+}
+
+ ::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
+    color: #0e0704;
+}
+
+ ::ng-deep .mat-form-field.mat-focused .mat-input-element {
+    color: #0e0704;
+}
+
+ ::ng-deep .mat-form-field.mat-form-field-invalid .mat-input-element {
+    color: #0e0704;
+}
+
+ ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #0e0704!important;
+}
+
+ ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+    color: #0e0704;
+}
+
+ ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+    background-color: #0e0704;
+}
+
+// .interview-results-form .mat-form-field+.mat-form-field {
+//     margin-left: 8px;
+// }
+.interview-results-form form {
+    margin-bottom: 20px;
+}
+
+.interview-results-form form>* {
+    margin: 5px 0;
+}
+
+.interview-results-form .mat-radio-button {
+    margin: 0 12px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    color: white;
+    text-align: center;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}
+::ng-deep .phone-number-outline .mat-form-field-outline-start {
+    width: 28px !important;
+}
+
+::ng-deep .phone-number-outline .mat-form-field-infix input {
+    margin-bottom: 2px !important;
+}
+
+::ng-deep .add-update-applicant-form
+{
+    min-height: 600px !important;
+}
+
+::ng-deep .mat-form-field-prefix
+{
+    top: 0px !important;
+}
+
+// ::ng-deep .mat-select-panel:nth-of-type(1)
+// {
+//     min-width: calc(100% + 16px) !important;
+//     margin-left: 8px !important;
+// }
+
+
+// ::ng-deep .mat-select-panel-wrap:nth-child(odd) 
+// {
+//     min-width: calc(100% + 17px) !important;
+//     margin-left: 32px !important;
+// }
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background: #22c55e !important;
+  }

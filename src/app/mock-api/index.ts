@@ -1,5 +1,9 @@
+import { ActivitiesMockApi } from 'app/mock-api/pages/activities/api';
+import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { AuthMockApi } from 'app/mock-api/common/auth/api';
 import { ChatMockApi } from 'app/mock-api/apps/chat/api';
+import { ContactsMockApi } from 'app/mock-api/apps/contacts/api';
+import { CryptoMockApi } from 'app/mock-api/dashboards/crypto/api';
 import { ECommerceInventoryMockApi } from 'app/mock-api/apps/ecommerce/inventory/api';
 import { FileManagerMockApi } from 'app/mock-api/apps/file-manager/api';
 import { FinanceMockApi } from 'app/mock-api/dashboards/finance/api';
@@ -8,13 +12,26 @@ import { MessagesMockApi } from 'app/mock-api/common/messages/api';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { NotificationsMockApi } from 'app/mock-api/common/notifications/api';
 import { ProjectMockApi } from 'app/mock-api/dashboards/project/api';
+import { SearchMockApi } from 'app/mock-api/common/search/api';
 import { ShortcutsMockApi } from 'app/mock-api/common/shortcuts/api';
 import { UserMockApi } from 'app/mock-api/common/user/api';
-
+import { ECommerceInventoryMockApi2 } from './apps/vehicle/inventory/api';
+import { EmployeeMockApi } from './apps/employee/api';
+import { ApplicantMockApi } from './apps/applicants/api';
+import { CustomersInventoryMockApi } from 'app/mock-api/apps/customers/api';
+import { VehicleMockApi } from 'app/mock-api/apps/equipment/vehicle/api';
+import { MachineryMockApi } from 'app/mock-api/apps/equipment/machinery/api';
+import { PropertyMockApi } from './apps/equipment/property/api';
+import { PartsMockApi } from './apps/equipment/parts-tools/api';
 export const mockApiServices = [
+    ActivitiesMockApi,
+    AnalyticsMockApi,
     AuthMockApi,
     ChatMockApi,
+    ContactsMockApi,
+    CryptoMockApi,
     ECommerceInventoryMockApi,
+    ECommerceInventoryMockApi2,
     FileManagerMockApi,
     FinanceMockApi,
     IconsMockApi,
@@ -22,6 +39,14 @@ export const mockApiServices = [
     NavigationMockApi,
     NotificationsMockApi,
     ProjectMockApi,
+    SearchMockApi,
     ShortcutsMockApi,
-    UserMockApi
+    UserMockApi,
+    CustomersInventoryMockApi,
+    EmployeeMockApi,
+    ApplicantMockApi,
+    VehicleMockApi,
+    MachineryMockApi,
+    PropertyMockApi,
+    PartsMockApi
 ];

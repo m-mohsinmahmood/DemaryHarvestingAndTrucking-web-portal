@@ -1,0 +1,34 @@
+.customer-grid {
+    grid-template-columns: 50% 20% 20%;
+    @screen sm {
+        grid-template-columns: 10% 10% 8% 10% 10% 10% 10% 8% 5%;
+    }
+    @screen md {
+        grid-template-columns: 10% 8% 10% 10% 10% 10% 5% 5% 5%;
+    }
+    @screen lg {
+        grid-template-columns: 10% 10% 8% 11% 5% 5% 13% 8% 3% 5% 4%;
+    }
+}
+
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+.mat-sort-header-content
+{
+    text-align: left !important;
+}
+.mat-filter {
+    background-color: #f1f5f9 !important;
+    color: #4f46e5 !important;
+}
+
+.mat-filter-applied {
+    background-color: green;
+    color: #fff;
+}

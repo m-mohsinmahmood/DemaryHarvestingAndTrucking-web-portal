@@ -7,12 +7,13 @@ import {
     ViewEncapsulation,
     Inject,
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
+import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import {
     MatDialog,
     MatDialogRef,
@@ -47,83 +48,121 @@ const companyDocs = [
     selector: 'employee-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    styles: [
-        /* language=SCSS */
-        `
-            .employee-detail-grid {
-                grid-template-columns: 10% 50% 30%;
-
-                @screen sm {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen md {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-                @screen lg {
-                    grid-template-columns: 3% 20% 20% 40% 10%;
-                }
-            }
-        `,
-    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeDetailComponent implements OnInit, OnDestroy {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    //#region  Observables
+    employee$: Observable<any>;
+    isLoadingEmployee$: Observable<any>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    //#endregion
+
+    //#region Variables
     isLoading: boolean = false;
     routeID; // URL ID
     employees: any;
     note: string;
     file: string;
+    routes = [];
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
+    employee: Employee;
+    // Sidebar stuff
+    drawerMode: 'over' | 'side' = 'side';
+    drawerOpened: boolean = true;
+    selectedIndex: string = "Employee Data";
+    employeeRole: any;
 
-    /*
-    *
-     * Constructor
-     */
+    //#endregion
+
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
         private _matDialog: MatDialog,
-        private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
-        private _router: Router
-    ) {}
+        private _router: Router,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    ) { }
 
-    /**
-     * On init
-     */
+    //#region Life Cycle Hooks
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
-        });
+        })
 
-        // Get the employee by id
-        this._employeeService
-            .getEmployeeById(this.routeID)
-            .subscribe((employee) => {
-                this.employees = employee;
-            });
+        this.routes = this._employeeService.navigationLabels;
     }
 
-    /**
-     * On destroy
-     */
+    ngAfterViewInit(): void {
+        this.initApis(this.routeID);
+        this.initObservables();
+        this.initSideNavigation();
+    }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+    //#endregion
+
+    //#region Initialize Observables
+    initObservables() {
+        // Data
+        this.employee$ = this._employeeService.employee$;
+        this._employeeService.employee$.subscribe((value) => {
+            this.employeeRole = (value?.role);
+        })
+        // Loader
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+    }
+    //#endregion
+
+    //#region Initial APIs
+    initApis(id: string) {
+        this._employeeService.getEmployeeById(id);
+    }
+    //#endregion
+
+    //#region Initialize Side Navigation
+    initSideNavigation() {
+        this.routes = this._employeeService.navigationLabels;
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                } else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
+            });
+    }
+
+    //#endregion
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    //#region Inner Navigation Routing
+    routeHandler(index) {
+        const { title } = index;
+        if (title === this.selectedIndex) {
+            return;
+        }
+        // this.isLoading = true;
+        this.selectedIndex = title;
+    };
+
+    toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+    };
+    //#endregion
+
+    //#region Update Dialog
     openUploadDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(UploadDocModal, {
@@ -150,6 +189,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     backHandler(): void {
         this._router.navigate(['/apps/employee/']);
     }
+
 }
 
 @Component({
@@ -163,7 +203,7 @@ export class UploadDocModal {
         public dialogRef: MatDialogRef<UploadDocModal>,
         private _formBuilder: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.form = this._formBuilder.group({
@@ -172,7 +212,7 @@ export class UploadDocModal {
         });
     }
 
-    onSubmit(): void {}
+    onSubmit(): void { }
 
     discard(): void {
         // Close the dialog

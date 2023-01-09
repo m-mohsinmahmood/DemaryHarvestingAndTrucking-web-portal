@@ -1,0 +1,238 @@
+<div class="flex flex-col h-screen 2xl:max-h-screen md:min-w-160 -m-6">
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">
+            {{ this.data? "Edit Machinery" : "Add New Machinery" }}
+
+        </div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </header>
+
+    <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-4/12">Name</mat-label>
+                    <input matInput formControlName="name" />
+                    <mat-hint *ngIf="this.form.get('name').hasError('required')" class="text-xs text-red-500">Name is required</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="w-4/12">Type</mat-label>
+                    <input matInput formControlName="type" />
+                    <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is required</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option value="true">Active</mat-option>
+                        <mat-option value="false">In Active</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Company ID</mat-label>
+                    <input matInput formControlName="company_id" />
+                    <mat-hint *ngIf="this.form.get('company_id').hasError('required')" class="text-xs text-red-500">Company ID is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Color</mat-label>
+                    <input matInput formControlName="color" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field MY_FORMATS appearance="outline" class="w-full">
+                    <mat-label>Year</mat-label>
+                    <input readonly matInput [matDatepicker]="dp" placeholder="Year"
+                        [formControl]="year">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event, dp)"
+                        panelClass="example-month-picker">
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Make</mat-label>
+                    <input matInput formControlName="make" />
+                    <mat-hint *ngIf="this.form.get('make').hasError('required')" class="text-xs text-red-500">Make field is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Model</mat-label>
+                    <input matInput formControlName="model" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Serial Number</mat-label>
+                    <input matInput formControlName="serial_number" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Engine Hours</mat-label>
+                    <input matInput formControlName="engine_hours" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">EH Reading</mat-label>
+                    <input matInput formControlName="eh_reading" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Separator Hours</mat-label>
+                    <input matInput formControlName="separator_hours" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>SH Reading</mat-label>
+                    <input matInput formControlName="sh_reading" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Insurance Status</mat-label>
+                    <input matInput formControlName="insurance_status" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Liability</mat-label>
+                    <input matInput formControlName="liability" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Collision</mat-label>
+                    <input matInput formControlName="collision" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Comprehensive</mat-label>
+                    <input matInput formControlName="comprehensive" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Purchase Price</mat-label>
+                    <input matInput formControlName="purchase_price" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Purchase</mat-label>
+                    <input id="date2" readonly="readonly" name="date2" formControlName="date_of_purchase" matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Sales Price</mat-label>
+                    <input matInput formControlName="sales_price" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Sales</mat-label>
+                    <input id="date3" readonly="readonly" name="date3" formControlName="date_of_sales" matInput [matDatepicker]="picker3">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Estimated Market Value</mat-label>
+                    <input matInput formControlName="estimated_market_value" />
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label class="sm:w-2/12">Source of Market Value</mat-label>
+                    <input matInput formControlName="source_of_market_value" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                    <mat-label>Date of Market Value</mat-label>
+                    <input id="date4" readonly="readonly" name="date4" formControlName="date_of_market_value" matInput [matDatepicker]="picker5">
+                    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                    <mat-datepicker #picker5></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field>
+                    <mat-toolbar>
+                        <mat-label class="pictures-fields-label text-gray-900">Picture 1</mat-label>
+                        <input matInput />
+                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    </mat-toolbar>
+                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
+                    (change)="uploadImage($event)"  />
+                </mat-form-field>            
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field>
+                    <mat-toolbar>
+                        <mat-label class="pictures-fields-label text-gray-900">Picture 2</mat-label>
+                        <input matInput />
+                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    </mat-toolbar>
+                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
+                </mat-form-field>            
+            </div>
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0 pic-3">
+                <mat-form-field>
+                    <mat-toolbar>
+                        <mat-label class="pictures-fields-label text-gray-900">Picture 3</mat-label>
+                        <input matInput />
+                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    </mat-toolbar>
+                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
+                </mat-form-field>            
+            </div>
+            <!-- </div> -->
+        </div>
+    </form>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+            <!-- Discard -->
+            <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
+                Discard
+            </button>
+            <button [class.spinner]="isLoadingMachinery$ | async"
+                [disabled]="form.invalid || ((isLoadingMachinery$) | async)" mat-flat-button color="primary"
+                (click)="onSubmit()">
+                {{ this.data? "Update" : "Save" }}
+            </button>
+        </div>
+    </div>
+
+</div>

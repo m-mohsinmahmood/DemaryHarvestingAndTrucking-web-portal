@@ -1,0 +1,94 @@
+.farm-data-farms {
+    grid-template-columns: 60% 40%;
+    @screen sm {
+        grid-template-columns: 15% 15% 20% 10% 15% 10%;
+    }
+    @screen md {
+        grid-template-columns: 25% 25 25% 25%;
+    }
+    @screen lg {
+        grid-template-columns: 15% 20% 20% 20% 15% 10%;
+    }
+}
+
+.farm-data-crops {
+    grid-template-columns: 50% 50%;
+    @screen sm {
+        grid-template-columns: 30% 30% 30% 10%;
+    }
+    @screen md {
+        grid-template-columns: 30% 30% 30% 10%;
+    }
+    @screen lg {
+        grid-template-columns: 30% 30% 30% 10%;
+    }
+}
+
+.real-farm-data-grid {
+    grid-template-columns: 40% 40% 25%;
+    @screen sm {
+        grid-template-columns: 40% 40% 25%;
+    }
+    @screen md {
+        grid-template-columns: 40% 40% 25%;
+    }
+    @screen lg {
+        grid-template-columns: 40% 40% 25%;
+    }
+}
+
+.farm-data-destination {
+    grid-template-columns: 60% 40%;
+    @screen sm {
+        grid-template-columns: 15% 35% 10% 15% 10%;
+    }
+    @screen md {
+        grid-template-columns: 25% 25 25% 25%;
+    }
+    @screen lg {
+        grid-template-columns: 20% 20% 20% 20% 10%;
+    }
+}
+
+::ng-deep .mat-tab-body-wrapper {
+    height: 100% !important;
+}
+
+::ng-deep .tab_group {
+    height: 100% !important;
+}
+
+.redInActiveIcon {
+    color: #dc2626;
+}
+
+.greenActiveIcon {
+    color: #16a34a;
+}
+
+.summary-pg-rows-height {
+    max-height: 22rem !important;
+}
+
+.rows-wrapper {
+    height: 16.9rem !important;
+}
+
+$mobile: 600px;
+
+.rows-wrapper {
+    @media screen and (max-width: $mobile) {
+        height: 14.4rem !important;
+    }
+}
+
+.fuse-alert-container
+{
+    z-index: 99999 !important;
+    position: relative !important;
+}
+
+// to make it look under filter (was occuring specifically in mobile)
+::ng-deep .mat-tab-header {
+    z-index: 0 !important;
+}

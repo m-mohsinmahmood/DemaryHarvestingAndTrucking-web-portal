@@ -19,13 +19,13 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 
 export class UpdateComponent implements OnInit {
 
-  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors']
+  roles: string[] = ['Crew Chiefs', 'Mechanics', 'Dispatcher', 'Recruiters', 'Training Instructors'];
 
   form: FormGroup;
-  employees:any;
+  employees: any;
   imageURL: string = '';
   previews: string[] = [];
-  avatar: string = "";
+  avatar: string = '';
   internationalPhoneNumber: string [] = [];
   countries: Country[];
   countryCodeLength: any = '0';
@@ -37,7 +37,7 @@ export class UpdateComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public _employeeService: EmployeeService,
     private _changeDetectorRef: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) public data: {id:string},
+    @Inject(MAT_DIALOG_DATA) public data: {id: string},
 
    ) {
 
@@ -64,11 +64,10 @@ export class UpdateComponent implements OnInit {
     });
 
    // Get the employee by id
-   this._employeeService.getEmployeeById(this.data.id).subscribe((employee) => {
-   this.avatar = employee.avatar;
-   this.employees = employee;
-   this.form.patchValue(employee);
-  });
+   let emp = this._employeeService.getEmployeeById(this.data.id)
+   //this.avatar = employee.avatar;
+   this.employees = emp;
+   this.form.patchValue(emp);
     const internationalPhoneNumbersFormGroups = [];
     if ( this.employees.internationalPhoneNumber.length > 0 )
     {
@@ -121,7 +120,7 @@ export class UpdateComponent implements OnInit {
   }
 
   ngAfterContentChecked(): void {
-    this._changeDetectorRef.detectChanges()
+    this._changeDetectorRef.detectChanges();
    }
 
   onSubmit(): void {
@@ -134,13 +133,13 @@ export class UpdateComponent implements OnInit {
     this.form.patchValue({
       avatar: file
     });
-    this.form.get('avatar').updateValueAndValidity()
+    this.form.get('avatar').updateValueAndValidity();
     // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
-    }
-    reader.readAsDataURL(file)
+    };
+    reader.readAsDataURL(file);
   }
 
 
@@ -185,7 +184,7 @@ export class UpdateComponent implements OnInit {
      getCountryByIso(iso: string): Country
      {
         const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length
+        this.countryCodeLength = country.code.length;
         return country;
      }
 
