@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http';
 import { AlertService } from 'app/core/alert/alert.service';
 import { ApplicantFilters } from 'app/modules/admin/apps/applicants/applicants.types';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -87,7 +88,9 @@ export class ApplicantService {
      */
     constructor(
         private _httpClient: HttpClient,
-        private _alertSerice: AlertService
+        private _alertSerice: AlertService,
+        public _router: Router,
+
     ) {}
 
     /**
@@ -220,6 +223,9 @@ export class ApplicantService {
                 () => {
                     if (!landingPage){
                         this.getApplicants();
+                    } else if(landingPage){
+                        this._router.navigateByUrl("/pages/employment");
+
                     }
                 }
             );
