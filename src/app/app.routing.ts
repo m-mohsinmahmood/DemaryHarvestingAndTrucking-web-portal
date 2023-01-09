@@ -62,6 +62,13 @@ export const appRoutes: Route[] = [
 
                 
                  //services page
+                 {path:'article', data: {
+                    layout: 'top-navigation'
+                },
+                loadChildren:()=> import('app/modules/admin/pages/performance-article/performance-article.module').then(m=>m.PerformanceArticleModule)},
+
+
+                 //services page
                  {path:'services', data: {
                     layout: 'top-navigation'
                 },
