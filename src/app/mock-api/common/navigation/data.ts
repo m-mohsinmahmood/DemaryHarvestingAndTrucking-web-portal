@@ -72,6 +72,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     link: "/apps/applicants",
   },
   {
+    id: "employee",
+    title: "Employees",
+    type: "basic",
+    icon: "heroicons_outline:user-circle",
+    link: "/apps/employee",
+  },
+  {
     id: "crops",
     title: "Crops",
     type: "basic",
@@ -107,12 +114,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ],
   },
-  // {
-  //   id: "employee",
-  //   title: "Employees",
-  //   type: "basic",
-  //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/employee",
-  // }
+
 
 ]

@@ -68,12 +68,11 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     routes = [];
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
-    employee: Employee;
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = "Employee Data";
-    employeeRole: any;
+    employee: any;
 
     //#endregion
 
@@ -111,9 +110,9 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     initObservables() {
         // Data
         this.employee$ = this._employeeService.employee$;
-        this._employeeService.employee$.subscribe((value) => {
-            this.employeeRole = (value?.role);
-        })
+        this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+            this.employee = res;
+        });
         // Loader
         this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
     }

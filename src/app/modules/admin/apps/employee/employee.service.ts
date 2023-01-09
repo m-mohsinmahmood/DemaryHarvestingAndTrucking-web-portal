@@ -254,8 +254,12 @@ export class EmployeeService {
     //#region Patch Employee
 
     patchEmployee(data: any) {
+        let newData;
+            const { body,subject, to, ...employee_data } = data;
+            const { id, status_step, prev_status_message,prev_status_step, status_message, ...email_data } = data;
+            newData = Object.assign({}, { employee_data }, { email_data });
         this._httpClient
-            .patch(`api-1/employee`, data)
+            .patch(`api-1/employee`, newData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -276,7 +280,7 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    // this.getEmployeeById(data);
+                    this.getEmployeeById(newData.employee_data.id);
                 }
             );
     }

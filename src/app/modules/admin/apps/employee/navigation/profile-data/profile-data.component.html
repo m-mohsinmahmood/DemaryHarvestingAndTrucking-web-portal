@@ -23,30 +23,30 @@
         <div class="mt-4 grid sm:gap-3 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
-                <mat-label>{{employeeProfileData.date_of_birth | date: 'MMM dd YYY'}}</mat-label>
+                <mat-label>{{employeeProfileData?.employee_info.date_of_birth | date: 'MMM dd YYY'}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Age:</mat-label>
-                <mat-label>{{employeeProfileData.age}}</mat-label>
+                <mat-label>{{employeeProfileData?.employee_info.age}}</mat-label>
             </div>
 
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Marital Status: </mat-label>
-                <mat-label class="">{{employeeProfileData.marital_status}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.marital_status}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Language Spoken: </mat-label>
-                <mat-label class="">{{employeeProfileData.languages}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.languages}}</mat-label>
             </div>
 
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Education Degree Name:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.degree_name}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.degree_name}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Blood Type: </mat-label>
-                <mat-label class="">{{employeeProfileData.blood_type}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.blood_type}}</mat-label>
             </div>
 
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
@@ -135,19 +135,19 @@
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
                     Name:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.supervisor_name}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.supervisor_name}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Most Recent Job - Supervisor
                     Phone
                     Number: </mat-label>
-                <mat-label class="">+1 {{ employeeProfileData.supervisor_contact}}</mat-label>
+                <mat-label class="">+1 {{ employeeProfileData?.employee_info.supervisor_contact}}</mat-label>
             </div>
 
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Work Experience Description:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.work_experience_description}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.work_experience_description}}</mat-label>
             </div>
             <div> </div>
 
@@ -159,33 +159,33 @@
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Speaking English:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.rank_speaking_english}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.rank_speaking_english}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Farm Eq.
                     Experience:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.question_1}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.question_1}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Operating Harvest Eq.
                     Experience: </mat-label>
-                <mat-label class="">{{employeeProfileData.question_2}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.question_2}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Driving Trucks Ability:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.question_3}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.question_3}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Welding Ability:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.question_4}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.question_4}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Rank Mechanical Ability:
                 </mat-label>
-                <mat-label class="">{{employeeProfileData.question_5}}</mat-label>
+                <mat-label class="">{{employeeProfileData?.employee_info.question_5}}</mat-label>
             </div>
 
 
