@@ -6,18 +6,17 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
-    selector     : 'auth-sign-in',
-    templateUrl  : './sign-in.component.html',
+    selector: 'auth-sign-in',
+    templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class AuthSignInComponent implements OnInit
-{
+export class AuthSignInComponent implements OnInit {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
+        type: 'success',
         message: ''
     };
     signInForm: FormGroup;
@@ -31,8 +30,7 @@ export class AuthSignInComponent implements OnInit
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -42,12 +40,11 @@ export class AuthSignInComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['', [Validators.required, Validators.email]],
-            password  : ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
             rememberMe: ['']
         });
     }
@@ -59,11 +56,9 @@ export class AuthSignInComponent implements OnInit
     /**
      * Sign in
      */
-    signIn(): void
-    {
+    signIn(): void {
         // Return if the form is invalid
-        if ( this.signInForm.invalid )
-        {
+        if (this.signInForm.invalid) {
             return;
         }
 
@@ -98,7 +93,7 @@ export class AuthSignInComponent implements OnInit
 
                     // Set the alert
                     this.alert = {
-                        type   : 'error',
+                        type: 'error',
                         message: 'Wrong email or password'
                     };
 
