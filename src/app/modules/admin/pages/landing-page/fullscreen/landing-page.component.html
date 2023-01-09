@@ -1,6 +1,6 @@
 <div class="flex flex-col flex-auto bg-white">
 
-    <video loop muted autoplay="false" controls="true" onloadedmetadata="this.muted = false"
+    <video loop muted autoplay="false" controls="true" onload="this.pause()" onloadedmetadata="this.muted = false"
         id="myVideo">
         <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
         <p><i class="far fa-times-circle"></i> No Preview Available</p>
@@ -73,19 +73,19 @@
     </div>
 
 
-    <div class="container flex flex-col md:flex-row columns-2 mx-auto w-9/12 pt-24 pb-8">
-        <div class="md:w-1/2 flex flex-col bold items-center justify-center rounded-sm">
+    <div class="container flex flex-col md:flex-row columns-2 mx-auto w-9/12 pt-24 mb-8 overflow-hidden">
+        <div class="md:w-1/2 flex flex-col bold items-center justify-center rounded-sm flex-1	">
             <img class="rounded-sm" src="assets\images\pages\landing-page\tim.png">
-            <h1 class="text-white -mt-36 sm:-mt-22 p-4 text-sm">Read the full article here, <a
-                    href="https://www.macdon.com/stories/flexdraper-headers/travelling-man">https://www.macdon.com/stories/flexdraper-headers/travelling-man</a>
+            <h1 class="text-white -mt-36 sm:-mt-30 p-2 text-sm">Read the full article here, <a
+                    href="https://www.macdon.com/stories/flexdraper-headers/travelling-man" target="_blank" class="text-blue-600">https://www.macdon.com/stories/flexdraper-headers/travelling-man</a>
                 featured in MacDon Performance Magazine’s Fall 2018 Issue. Please note, this article has been edited by
                 Bill Demaray DHT Administration Director."
             </h1>
 
         </div>
 
-        <div class="flex flex-col bold md:w-1/2 justify-center bg-gray-100 rounded-sm p-8">
-            <h1 class="text-4xl font-bold">"Our vision is to continue to build on DHT's track record of success and
+        <div class="flex flex-col bold md:w-1/2 justify-center bg-gray-100 rounded-sm p-4 flex-1	">
+            <h1 class="lg:text-3xl text-xl font-bold">"Our vision is to continue to build on DHT's track record of success and
                 further our reputation as one of the best custom agricultural services companies in the industry."</h1>
         </div>
 
@@ -98,19 +98,19 @@
     <div class="flex flex-col md:flex-row mx-auto sm:w-9/12 gap-8 pt-12 pb-8">
         <div
             class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
-            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35594.png">
+            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Frame 35471.svg">
             <h1 class="text-2xl">Customer-Focused</h1>
         </div>
 
         <div
             class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
-            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35606.png">
+            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Frame 35470.svg">
             <h1 class="text-2xl">Trustworthy</h1>
         </div>
 
         <div
             class="our-values flex flex-col md:w-1/4 shadow-lg rounded-lg bg-white justify-center items-center p-4 py-8 gap-y-6">
-            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Group 35596.png">
+            <img class="w-24 h-auto" src="assets\images\pages\landing-page\Frame 35469.svg">
             <h1 class="text-2xl">Teamwork</h1>
         </div>
 
