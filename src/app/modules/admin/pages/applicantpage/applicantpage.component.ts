@@ -119,11 +119,12 @@ export class ApplicantpageComponent implements OnInit {
     isImage: boolean = true;
     isState: boolean = false;
     resumePreview: string = '';
-    validCountry: boolean = false;
     countryCode: Country[];
     countries: Country[];
     countryCodeLength: any = 1;
-    validState: boolean =false;
+    validCountry: boolean = false;
+    validState: boolean = false;
+    step: number = 0;
     //#endregion
 
     constructor(
@@ -343,6 +344,7 @@ export class ApplicantpageComponent implements OnInit {
     }
 
     selectionChange(event) {
+        this.step = event.selectedIndex; 
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {
@@ -408,13 +410,14 @@ export class ApplicantpageComponent implements OnInit {
     formUpdates() {
         this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
             if (_formValue === "United States of America") {
-                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
+                // this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
+                this.secondFormGroup.controls['state'].setValue('');
             }
             else {
                 this.isState = false;
-                this.secondFormGroup.controls['state'].setValue('');
-                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+                // this.secondFormGroup.controls['state'].setValue('');
+                // this.secondFormGroup.controls['state'].disable({ emitEvent: false });
             }
         }));
     }

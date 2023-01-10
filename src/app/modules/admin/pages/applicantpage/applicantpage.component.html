@@ -212,7 +212,7 @@
                             <div *ngIf="isState">
                                 <mat-form-field class="w-full" appearance="outline">
                                     <mat-label>State</mat-label>
-                                    <input [required]="true" (ngModelChange)="formValidation($event, 'state')" type="text" aria-label="state" matInput formControlName="state"
+                                    <input (ngModelChange)="formValidation($event, 'state')" type="text" aria-label="state" matInput formControlName="state"
                                         [matAutocomplete]="state">
                                     <mat-autocomplete #state="matAutocomplete">
                                         <mat-option *ngFor="let state of stateOptions | async" [value]="state">
@@ -792,6 +792,7 @@
             Back
         </button>
         <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+        [disabled]="step === 1 && isState && !validState"
             (click)="stepper.next()">
             Next
         </button>
