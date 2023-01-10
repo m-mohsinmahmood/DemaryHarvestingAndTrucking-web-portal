@@ -27,7 +27,7 @@
                                     <mat-label>First Name</mat-label>
                                     <input matInput type="text" formControlName="first_name">
                                     <mat-hint *ngIf="this.firstFormGroup.get('first_name').hasError('required')"
-                                        class="uppercasecase text-md text-red-500">First Name is required</mat-hint>
+                                        class="uppercase text-md text-red-500">First Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -35,7 +35,7 @@
                                     <mat-label>Last Name</mat-label>
                                     <input matInput type="text" formControlName="last_name">
                                     <mat-hint *ngIf="this.firstFormGroup.get('last_name').hasError('required')"
-                                        class="uppercasecase text-md text-red-500">Last Name is required</mat-hint>
+                                        class="uppercase text-md text-red-500">Last Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -43,11 +43,11 @@
                                     <mat-label>Email</mat-label>
                                     <input matInput type="email" formControlName="email">
                                     <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')"
-                                        class="uppercasecase text-md text-red-500">
+                                        class="uppercase text-md text-red-500">
                                         Email is required
                                     </mat-hint>
                                     <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('pattern')"
-                                        class="uppercasecase text-md text-red-500">
+                                        class="uppercase text-md text-red-500">
                                         Please provide a valid email address
                                     </mat-hint>
                                 </mat-form-field>
