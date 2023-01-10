@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve,RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
-import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
+import { Country } from './applicants.types';
 
 
 @Injectable({
