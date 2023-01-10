@@ -18,7 +18,7 @@ $medium: 768px;
 }
 ::ng-deep .carousel li {
     @media screen and (max-width: $mobile) {
-        padding-bottom: 200% !important;
+        padding-bottom: 45% !important;
 
     }
 }
@@ -74,3 +74,10 @@ ul.b {
     font-size: 50px !important;
 
 }
+
+
+// ::ng-deep .mat-panel-title {
+//     @media screen and (max-width: $mobile) {
+//         font-size: 0.7rem !important;
+//     }
+// }

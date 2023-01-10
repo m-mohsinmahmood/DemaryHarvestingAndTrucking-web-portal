@@ -35,6 +35,12 @@ $medium: 768px;
 
     }
 }
+::ng-deep .carousel li {
+    @media screen and (max-width: $mobile) {
+        padding-bottom: 50% !important;
+
+    }
+}
 
 ::ng-deep .carousel-indicators > button
 {
@@ -56,4 +62,25 @@ $medium: 768px;
 {
     font-size: 50px !important;
 
+}
+
+
+::ng-deep .carousel > button:first-of-type{
+    @media screen and (max-width: $mobile) {
+        left: 10px !important;
+        top: 40% !important;
+        background-color: #fff;
+        padding: 1rem;
+    
+    }
+}
+
+::ng-deep .carousel > button:last-of-type{
+    @media screen and (max-width: $mobile) {
+        right: 10px !important;
+        top: 40% !important;
+        background-color: #fff;
+        padding: 1rem;
+    
+    }
 }
