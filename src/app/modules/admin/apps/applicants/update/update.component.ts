@@ -254,8 +254,8 @@ export class UpdateComponent implements OnInit {
         });
 
         this.fourthFormGroup = this._formBuilder.group({
-            school_college: ['', [Validators.required]],
-            degree_name: ['', [Validators.required]],
+            school_college: [''],
+            degree_name: [''],
             graduation_year: [moment(), [Validators.required]],
             reason_for_applying: ['', [Validators.required]],
             hear_about_dht: ['', [Validators.required]],
