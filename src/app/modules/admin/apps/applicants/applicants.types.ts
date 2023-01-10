@@ -95,3 +95,12 @@ export interface ApplicantFilters {
   ranking: string;
   date: string;
 }
+
+export interface Country
+{
+    id: string;
+    iso: string;
+    name: string;
+    code: string;
+    flagImagePos: string;
+}
