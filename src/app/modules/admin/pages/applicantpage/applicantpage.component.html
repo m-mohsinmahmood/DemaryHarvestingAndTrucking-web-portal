@@ -195,32 +195,36 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Country</mat-label>
-                                    <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
-                                        matInput formControlName="country" [matAutocomplete]="country"
-                                        placeholder="Country">
+                                    <input (ngModelChange)="formValidation($event,'country')" type="text"
+                                        aria-label="country" matInput formControlName="country"
+                                        [matAutocomplete]="country" placeholder="Country">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
                                         </mat-option>
                                     </mat-autocomplete>
-                                    <mat-hint *ngIf="this.secondFormGroup.get('country').hasError('required')"
-                                        class="text-xs text-red-500">Country is required</mat-hint>
-                                    <mat-hint *ngIf="!validCountry" class="ml-2 text-xs text-red-500"> Select Country from
-                                        given list only</mat-hint>
+                                    <mat-hint class="flex flex-col">
+                                        <span *ngIf="this.secondFormGroup.get('country').hasError('required')"
+                                            class="text-xs text-red-500">Country is required
+                                        </span>
+                                        <span *ngIf="!validCountry" class="text-xs text-red-500"> Select Country from
+                                            given list only
+                                        </span>
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div *ngIf="isState">
                                 <mat-form-field class="w-full" appearance="outline">
                                     <mat-label>State</mat-label>
-                                    <input (ngModelChange)="formValidation($event, 'state')" type="text" aria-label="state" matInput formControlName="state"
-                                        [matAutocomplete]="state">
+                                    <input (ngModelChange)="formValidation($event, 'state')" type="text"
+                                        aria-label="state" matInput formControlName="state" [matAutocomplete]="state">
                                     <mat-autocomplete #state="matAutocomplete">
                                         <mat-option *ngFor="let state of stateOptions | async" [value]="state">
                                             {{state}}
                                         </mat-option>
                                     </mat-autocomplete>
                                     <mat-hint *ngIf="!validState" class="text-xs text-red-500">
-                                        Select State from given list only 
+                                        Select State from given list only
                                     </mat-hint>
                                 </mat-form-field>
                             </div>
@@ -283,8 +287,13 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
-                                        class="text-xs text-red-500">Cell Phone Number is required</mat-hint>
+                                    <mat-hint class="flex flex-col">
+                                        <span *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
+                                            class="text-xs text-red-500"> Cell Phone Number is required
+                                        </span>
+                                        <span class="text-xs text-green-500">Select your Country's Prefix
+                                        </span>
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <!-- Home Phone -->
@@ -322,6 +331,7 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
+                                    <mat-hint class="text-xs text-green-500">Select your Country's Prefix</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -415,6 +425,7 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
+                                    <mat-hint class="text-xs text-green-500">Select your Country's Prefix</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -515,10 +526,15 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint
-                                        *ngIf="this.thirdFormGroup.get('previous_supervisor_phone_number').hasError('required')"
-                                        class="text-xs text-red-500">Supervisor phone number field is
-                                        required</mat-hint>
+                                    <mat-hint class="flex flex-col">
+                                        <span
+                                            *ngIf="this.thirdFormGroup.get('previous_supervisor_phone_number').hasError('required')"
+                                            class="text-xs text-red-500">Supervisor phone number field is
+                                            required
+                                        </span>
+                                        <span class="text-xs text-green-500">Select your Country's Prefix
+                                        </span>
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -693,16 +709,12 @@
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Trade School/College</mat-label>
                                     <input matInput type="text" formControlName="school_college">
-                                    <mat-hint *ngIf="this.fourthFormGroup.get('school_college').hasError('required')"
-                                        class="text-xs text-red-500">Trade School/College is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Degree Name</mat-label>
                                     <input matInput type="text" formControlName="degree_name">
-                                    <mat-hint *ngIf="this.fourthFormGroup.get('degree_name').hasError('required')"
-                                        class="text-xs text-red-500">Degree Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

@@ -122,11 +122,12 @@ export class UpdateComponent implements OnInit {
     isState: boolean = false;
     graduation_year: any;
     resumePreview: string = '';
-    validCountry: boolean = false;
     countryCode: Country[];
     countries: Country[];
     countryCodeLength: any = 1;
-    validState: boolean =false;
+    validCountry: boolean = false;
+    validState: boolean = false;
+    step: number = 0;
     //#endregion
 
     constructor(
@@ -254,8 +255,8 @@ export class UpdateComponent implements OnInit {
         });
 
         this.fourthFormGroup = this._formBuilder.group({
-            school_college: ['', [Validators.required]],
-            degree_name: ['', [Validators.required]],
+            school_college: [''],
+            degree_name: [''],
             graduation_year: [moment(), [Validators.required]],
             reason_for_applying: ['', [Validators.required]],
             hear_about_dht: ['', [Validators.required]],
@@ -493,6 +494,7 @@ export class UpdateComponent implements OnInit {
     }
 
     selectionChange(event) {
+        this.step = event.selectedIndex; 
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {
@@ -547,13 +549,13 @@ export class UpdateComponent implements OnInit {
     formUpdates() {
         this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
             if (_formValue === "United States of America") {
-                this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
+                this.secondFormGroup.controls['state'].setValue('');
             }
             else {
                 this.isState = false;
-                this.secondFormGroup.controls['state'].setValue('');
-                this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+                // this.secondFormGroup.controls['state'].setValue('');
+                // this.secondFormGroup.controls['state'].disable({ emitEvent: false });
             }
         }));
     }
