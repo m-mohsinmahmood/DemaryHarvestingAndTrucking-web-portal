@@ -2860,13 +2860,6 @@ export const countries = [
         flagImagePos: '-1px -1599px'
     },
     {
-        id          : '48c1e060-e685-4e91-8de8-725f42576e6c',
-        iso         : 'bs',
-        name        : 'Bahamas',
-        code        : '+1',
-        flagImagePos: '-1px -460px'
-    },
-    {
         id          : 'ee23ffb8-9540-4630-948e-ceba52fa54ce',
         iso         : 'bh',
         name        : 'Bahrain',

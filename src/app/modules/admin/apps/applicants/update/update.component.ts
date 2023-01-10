@@ -13,7 +13,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
-import { Applicant } from '../applicants.types';
+import { Applicant, Country } from '../applicants.types';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {
     DateAdapter,
@@ -23,7 +23,6 @@ import {
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { states } from 'JSON/state';
 import { countryList } from 'JSON/country';
-import { boolean, invalid } from 'joi';
 
 export const MY_FORMATS = {
     parse: {
@@ -78,6 +77,8 @@ export class BirthDateFormat {
 
 // @Inject(MAT_DIALOG_DATA)
 export class UpdateComponent implements OnInit {
+
+    //#region Observables
     applicant$: Observable<Applicant>;
     isLoadingApplicant$: Observable<boolean>;
     applicants$: Observable<Applicant[]>;
@@ -87,6 +88,8 @@ export class UpdateComponent implements OnInit {
 
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
+
+    //#endregion
 
     // #region local variables
     form: FormGroup;
@@ -110,8 +113,8 @@ export class UpdateComponent implements OnInit {
     avatar: string = '';
     isEdit: boolean;
     states: string[] = [];
-    countries: string[] = [];
     stateOptions: Observable<string[]>;
+    countryList: string[] = [];
     countryOptions: Observable<string[]>;
     imagePreview: string;
     isImage: boolean = true;
@@ -119,7 +122,11 @@ export class UpdateComponent implements OnInit {
     isState: boolean = false;
     graduation_year: any;
     resumePreview: string = '';
-    validCountry: boolean =false;
+    validCountry: boolean = false;
+    countryCode: Country[];
+    countries: Country[];
+    countryCodeLength: any = 1;
+    validState: boolean =false;
     //#endregion
 
     constructor(
@@ -143,7 +150,7 @@ export class UpdateComponent implements OnInit {
         this.initCalendar();
         this.formUpdates();
         this.states = states;
-        this.countries = countryList;
+        this.countryList = countryList;
 
         //Auto Complete functions for State and Country
         this.stateOptions = this.secondFormGroup.valueChanges.pipe(
@@ -166,6 +173,7 @@ export class UpdateComponent implements OnInit {
                     this._applicantService.closeDialog.next(false);
                 }
             });
+
     }
 
     //Auto Complete functions for State and Country
@@ -177,7 +185,7 @@ export class UpdateComponent implements OnInit {
 
     private _filterCountries(value: string): string[] {
         const filterValue = value.toLowerCase();
-        return this.countries.filter(country => country.toLowerCase().includes(filterValue));
+        return this.countryList.filter(country => country.toLowerCase().includes(filterValue));
     }
     // #region initializing forms
     initApplicantForm() {
@@ -204,7 +212,9 @@ export class UpdateComponent implements OnInit {
             state: [''],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
+            cell_phone_country_code: ['us'],
             home_phone_number: [''],
+            home_phone_country_code: ['us'],
             avatar: ['', [Validators.required]],
         });
 
@@ -216,6 +226,7 @@ export class UpdateComponent implements OnInit {
             current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
+            current_supervisor_country_code: ['us'],
             current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
@@ -225,6 +236,7 @@ export class UpdateComponent implements OnInit {
             previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
             previous_supervisor_phone_number: ['', [Validators.required]],
+            previous_supervisor_country_code: ['us'],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
 
@@ -400,6 +412,15 @@ export class UpdateComponent implements OnInit {
     initObservables() {
         this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
         this.closeDialog$ = this._applicantService.closeDialog$;
+
+        this._applicantService.countries$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((codes: Country[]) => {
+                this.countries = codes;
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
     }
     //#endregion
 
@@ -417,6 +438,7 @@ export class UpdateComponent implements OnInit {
     //#endregion
 
     submit(): void {
+        //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
             Object.entries(f.value).forEach((element) => {
@@ -425,13 +447,21 @@ export class UpdateComponent implements OnInit {
             });
         });
         this._applicantService.isLoadingApplicant.next(true);
+
+        //Filtered and replace country iso with country code in form
+        this.getCountryByCode('cell_phone_country_code');
+        this.getCountryByCode('home_phone_country_code');
+        this.getCountryByCode('current_supervisor_country_code');
+        this.getCountryByCode('previous_supervisor_country_code');
+
+        // checks for updated applicant
         if (this.data && this.data.isEdit) {
             // this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
             this.updateApplicant(this.form.value);
         } else {
             var formData: FormData = new FormData();
             formData.append('image', this.secondFormGroup.get('avatar').value);
-            if (this.thirdFormGroup.get('resume').value){
+            if (this.thirdFormGroup.get('resume').value) {
                 formData.append('resume', this.thirdFormGroup.get('resume').value);
             }
             formData.append('form', JSON.stringify(this.form.value));
@@ -472,7 +502,6 @@ export class UpdateComponent implements OnInit {
             ? (this.isSubmit = true)
             : (this.isSubmit = false);
 
-            
     }
 
     //#region Upload Image
@@ -529,23 +558,48 @@ export class UpdateComponent implements OnInit {
         }));
     }
     //#endregion
-    //#endregion
 
-    //#region Form Country/State Validation
-
-    formValidation(e) {
-        typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false);
-        if(this.countries.includes(e))
-            {
-                this.validCountry=true; 
+    //#region Country Form Validation
+    formValidation(e, type) {
+        if (type === "country") {
+            if (this.countryList.includes(e)) {
+                this.validCountry = true;
                 this.secondFormGroup.controls['country'].setErrors(null);
             }
-        else {
-            this.validCountry=false;
-            this.secondFormGroup.controls['country'].setErrors({'incorrect': true});
+            else {
+                this.validCountry = false;
+                this.secondFormGroup.controls['country'].setErrors({ 'incorrect': true });
+            }
         }
-       
+        else if (type === "state") {
+            if (this.states.includes(e)) {
+                this.validState = true;
+                this.secondFormGroup.controls['state'].setErrors(null);
+            }
+            else {
+                this.validState = false;
+                this.secondFormGroup.controls['state'].setErrors({ 'incorrect': true });
+            }
+        }
     }
-    
+    //#endregion
+
+    //#region Country code
+    getCountryByIso(iso: string): Country {
+        const country = this.countries.find(country => country.iso === iso);
+        this.countryCodeLength = country.code.length
+        return country;
+    }
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
+    //#endregion
+
+    //#region Filter country iso and replace with code
+    getCountryByCode(formValue: string) {
+        let country_code;
+        country_code = this.countries.find(country => country.iso === this.form.get(formValue).value)
+        this.form.get(formValue).setValue(country_code.code);
+    }
     //#endregion
 }
