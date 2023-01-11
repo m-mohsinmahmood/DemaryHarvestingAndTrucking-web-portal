@@ -15,13 +15,13 @@
         <div class="py-3 center mx-auto">
             <div class="px-4 py-5 rounded-lg text-center w-48">
                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" [src]="imageURL">
+                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center" [src]="imageURL">
                 </div>
                 <div class="mb-4" *ngIf="imageURL ==='' && avatar ">
-                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt=" " />
+                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center" src="{{avatar}}" alt=" " />
                 </div>
                 <div class="mb-4" *ngIf="imageURL ==='' && avatar === ''">
-                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
+                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center" src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Avatar Upload" />
                 </div>
                 <label class="cursor-pointer mt-6">
                         <span class="mt-4 text-base leading-normal px-4 py-2 bg-blue-500 text-white text-sm rounded-full" >Upload Photo</span>

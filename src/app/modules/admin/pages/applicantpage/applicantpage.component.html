@@ -51,9 +51,8 @@
                                         Please provide a valid email address
                                     </mat-hint>
                                     <mat-hint class="uppercase text-md text-red-500"
-                                    *ngIf="this.firstFormGroup.get('email').hasError('emailAlreadyExists')"
-                                  >
-                                    Email already exists
+                                        *ngIf="this.firstFormGroup.get('email').hasError('emailAlreadyExists')">
+                                        Email already exists
                                     </mat-hint>
                                 </mat-form-field>
                             </div>
@@ -155,15 +154,15 @@
                         <div class="py-3 center mx-auto flex md:justify-center sm:justify-start items-center">
                             <div class="px-4 py-5 rounded-lg text-center w-48">
                                 <div class="imagePreview mb-4" *ngIf="imageURL && imageURL !== ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center"
                                         [src]="imageURL">
                                 </div>
                                 <div class="mb-4" *ngIf="imageURL ==='' && secondFormGroup.get('avatar').value ">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center"
                                         src="{{secondFormGroup.get('avatar').value}}" alt=" " />
                                 </div>
                                 <div class="mb-4" *ngIf="imageURL ==='' && secondFormGroup.get('avatar').value === ''">
-                                    <img class="w-28 h-28 mx-auto rounded-full object-cover object-center"
+                                    <img class="w-24 h-24 mx-auto rounded-full object-cover object-center"
                                         src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
                                         alt="Avatar Upload" />
                                 </div>
@@ -299,7 +298,8 @@
                                         <span *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
                                             class="text-md text-red-500 uppercase"> Cell Phone Number is required
                                         </span>
-                                        <span *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz'  || this.secondFormGroup.get('cell_phone_country_code').hasError('pattern')"
+                                        <span
+                                            *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz'  || this.secondFormGroup.get('cell_phone_country_code').hasError('pattern')"
                                             class="text-md text-red-500 uppercase">Country Code is required
                                         </span>
                                     </mat-hint>
@@ -541,15 +541,8 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="flex flex-col">
-                                        <span
-                                            *ngIf="this.thirdFormGroup.get('previous_supervisor_phone_number').hasError('required')"
-                                            class="uppercase text-md text-red-500">Supervisor phone number field is
-                                            required
-                                        </span>
-                                        <span  *ngIf="this.thirdFormGroup.get('previous_supervisor_country_code').value == 'zz'"
-                                        class="uppercase text-md text-red-500">Country Code is required
-                                        </span>
+                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
+                                        Code
                                     </mat-hint>
                                 </mat-form-field>
                             </div>

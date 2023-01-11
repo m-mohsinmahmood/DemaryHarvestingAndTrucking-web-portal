@@ -236,8 +236,8 @@ export class UpdateComponent implements OnInit {
             previous_employment_period_start: ['', [Validators.required]],
             previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
-            previous_supervisor_phone_number: ['', [Validators.required]],
-            previous_supervisor_country_code: ['zz', [Validators.required]],
+            previous_supervisor_phone_number: [''],
+            previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
 
