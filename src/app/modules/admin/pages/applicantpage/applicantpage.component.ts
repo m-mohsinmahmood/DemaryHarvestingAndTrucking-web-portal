@@ -1,12 +1,12 @@
 import { Component, Directive, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { ChangeDetectorRef, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil, debounceTime } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -184,7 +184,7 @@ export class ApplicantpageComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], [this.emailValidator.bind(this)]],
             date_of_birth: ['', [Validators.required]],
             age: ['', [Validators.required]],
             marital_status: ['', [Validators.required]],
@@ -344,7 +344,7 @@ export class ApplicantpageComponent implements OnInit {
     }
 
     selectionChange(event) {
-        this.step = event.selectedIndex; 
+        this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {
@@ -451,7 +451,7 @@ export class ApplicantpageComponent implements OnInit {
         }
     }
     //#endregion
-    
+
     //#region Country code
     getCountryByIso(iso: string): Country {
         const country = this.countries.find(country => country.iso === iso);
@@ -470,4 +470,26 @@ export class ApplicantpageComponent implements OnInit {
         this.form.get(formValue).setValue(country_code.code);
     }
     //#endregion
+
+    //#region Email Exists 
+    emailValidator(control: AbstractControl) {
+        // return async (control: AbstractControl): Promise<Observable<ValidationErrors>> => {
+        //   return (await this._applicantService
+        //     .checkIfEmailExists(control.value)) 
+        //     .pipe(
+        //       map((result: boolean) =>
+        //         result ? { emailAlreadyExists: true } : null
+        //       )
+        //     );
+        // };
+        this._applicantService.checkIfEmailExists(control.value)
+            .subscribe((result: boolean) => {
+                console.log("Sub",result)
+                result ? { emailAlreadyExists: true } : null
+            
+            });
+               
+        
+    }
 }
+

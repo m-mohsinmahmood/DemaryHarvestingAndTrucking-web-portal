@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { applicantNavigationLeft, applicantNavigationRight } from './applicantnavigation';
 import {
@@ -305,6 +305,15 @@ export class ApplicantService {
                 this._countries.next(countries);
             })
         );
+    }
+    //#endregion
+
+    //#region Async Validator 
+    checkIfEmailExists(email: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('email', email);
+        return this._httpClient
+            .get(`http://localhost:7071/api/async-validators`, { params })
     }
     //#endregion
 }

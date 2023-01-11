@@ -50,6 +50,11 @@
                                         class="uppercase text-md text-red-500">
                                         Please provide a valid email address
                                     </mat-hint>
+                                    <mat-error
+                                    *ngIf="firstFormGroup.get('email').hasError('emailAlreadyExists')"
+                                  >
+                                    Email already <strong>exists</strong>
+                                  </mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
