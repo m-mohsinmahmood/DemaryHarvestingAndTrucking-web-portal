@@ -46,6 +46,10 @@
                                         class="text-md uppercase text-red-500">
                                         Please provide a valid email address
                                     </mat-hint>
+                                    <mat-hint class="uppercase text-md text-red-500"
+                                        *ngIf="this.firstFormGroup.get('email').hasError('emailAlreadyExists')">
+                                        Email already exists
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -112,7 +116,8 @@
                                     </mat-select>
                                     <mat-hint
                                         *ngIf="this.firstFormGroup.get('rank_speaking_english').hasError('required')"
-                                        class="text-md uppercase text-red-500">Rank Speaking English field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Rank Speaking English field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -170,7 +175,8 @@
                         <mat-hint *ngIf="this.secondFormGroup.get('avatar').hasError('required')"
                             class="flex items-center mb-4 justify-center text-md uppercase text-red-500">Image is
                             required</mat-hint>
-                        <mat-hint *ngIf="!isImage" class="flex items-center justify-center text-md uppercase text-red-500">Only
+                        <mat-hint *ngIf="!isImage"
+                            class="flex items-center justify-center text-md uppercase text-red-500">Only
                             Image files can be uploaded</mat-hint>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
                             <div>
@@ -204,7 +210,8 @@
                                         <span *ngIf="this.secondFormGroup.get('country').hasError('required')"
                                             class="text-md uppercase text-red-500">Country is required
                                         </span>
-                                        <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
+                                        <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select
+                                            Country from
                                             given list only
                                         </span>
                                     </mat-hint>
@@ -213,9 +220,8 @@
                             <div *ngIf="isState">
                                 <mat-form-field class="w-full" appearance="outline">
                                     <mat-label>State</mat-label>
-                                    <input (ngModelChange)="formValidation($event, 'state')"
-                                        type="text" aria-label="state" matInput formControlName="state"
-                                        [matAutocomplete]="state">
+                                    <input (ngModelChange)="formValidation($event, 'state')" type="text"
+                                        aria-label="state" matInput formControlName="state" [matAutocomplete]="state">
                                     <mat-autocomplete #state="matAutocomplete">
                                         <mat-option *ngFor="let state of stateOptions | async" [value]="state">
                                             {{state}}
@@ -290,9 +296,12 @@
                                         <mat-hint class="flex flex-col">
                                             <span
                                                 *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
-                                                class="text-md uppercase text-red-500 uppercasecase"> Cell Phone Number is required
+                                                class="text-md uppercase text-red-500 uppercasecase"> Cell Phone Number
+                                                is required
                                             </span>
-                                            <span class="text-md uppercase text-green-500 uppercasecase">Select your Country's Prefix
+                                            <span
+                                                *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz' || this.secondFormGroup.get('cell_phone_country_code').hasError('pattern')"
+                                                class="text-md text-red-500 uppercase">Country Code is required
                                             </span>
                                         </mat-hint>
                                     </mat-form-field>
@@ -333,7 +342,8 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's Prefix</mat-hint>
+                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
+                                        Code</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -427,7 +437,8 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's Prefix</mat-hint>
+                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
+                                        Code</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -445,7 +456,8 @@
                                     <mat-label>Previous Employer</mat-label>
                                     <input matInput type="text" formControlName="previous_employer">
                                     <mat-hint *ngIf="this.thirdFormGroup.get('previous_employer').hasError('required')"
-                                        class="text-md uppercase text-red-500">Previous Employer field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Previous Employer field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -454,7 +466,8 @@
                                     <input matInput type="text" formControlName="previous_position_title">
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_position_title').hasError('required')"
-                                        class="text-md uppercase text-red-500">Position/Title field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Position/Title field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -464,7 +477,8 @@
                                         formControlName="previous_description_of_role"> </textarea>
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_description_of_role').hasError('required')"
-                                        class="text-md uppercase text-red-500">Description of role field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Description of role field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -489,7 +503,8 @@
                                     <input matInput type="text" formControlName="previous_supervisor_reference">
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_supervisor_reference').hasError('required')"
-                                        class="text-md uppercase text-red-500">Supervisor/Reference field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Supervisor/Reference field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
 
@@ -535,7 +550,9 @@
                                             class="text-md uppercase text-red-500">Supervisor phone number field is
                                             required
                                         </span>
-                                        <span class="text-md uppercase text-green-500">Select your Country's Prefix
+                                        <span
+                                            *ngIf="this.thirdFormGroup.get('previous_supervisor_country_code').value == 'zz'"
+                                            class="uppercase text-md text-red-500">Country Code is required
                                         </span>
                                     </mat-hint>
                                 </mat-form-field>
@@ -549,7 +566,8 @@
                                     </mat-select>
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_contact_supervisor').hasError('required')"
-                                        class="text-md uppercase text-red-500">Can we contact Supervisor/Reference field is
+                                        class="text-md uppercase text-red-500">Can we contact Supervisor/Reference field
+                                        is
                                         required</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -572,7 +590,8 @@
                                     <mat-option value="false">No</mat-option>
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('authorized_to_work').hasError('required')"
-                                    class="text-md uppercase text-red-500">Do you have a Lorry License? field is required
+                                    class="text-md uppercase text-red-500">Do you have a Lorry License? field is
+                                    required
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -584,7 +603,8 @@
                                     <mat-option value="false">No</mat-option>
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('lorry_license').hasError('required')"
-                                    class="text-md uppercase text-red-500">Do you have a Lorry License? field is required
+                                    class="text-md uppercase text-red-500">Do you have a Lorry License? field is
+                                    required
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -596,7 +616,8 @@
                                     <mat-option value="false">No</mat-option>
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('cdl_license').hasError('required')"
-                                    class="text-md uppercase text-red-500">Do you have a CDL License? field is required</mat-hint>
+                                    class="text-md uppercase text-red-500">Do you have a CDL License? field is
+                                    required</mat-hint>
                             </mat-form-field>
                         </div>
                         <div>
@@ -607,7 +628,8 @@
                                     <mat-option value="false">No</mat-option>
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('tractor_license').hasError('required')"
-                                    class="text-md uppercase text-red-500">Do you have a Tractor License? field is required
+                                    class="text-md uppercase text-red-500">Do you have a Tractor License? field is
+                                    required
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -625,7 +647,8 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_1').hasError('required')"
-                                    class="text-md uppercase text-red-500"> Operating Farm Equipment field is required</mat-hint>
+                                    class="text-md uppercase text-red-500"> Operating Farm Equipment field is
+                                    required</mat-hint>
                             </mat-radio-group>
                         </div>
                         <div class="md:flex lg:flex align-center my-1.5">
@@ -639,7 +662,8 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_2').hasError('required')"
-                                    class="text-md uppercase text-red-500">Operating Harvesting Equipment field is required
+                                    class="text-md uppercase text-red-500">Operating Harvesting Equipment field is
+                                    required
                                 </mat-hint>
                             </mat-radio-group>
                         </div>
@@ -654,7 +678,8 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_3').hasError('required')"
-                                    class="text-md uppercase text-red-500">Driving Trucks (ie. Artic and/or Semi's) field is
+                                    class="text-md uppercase text-red-500">Driving Trucks (ie. Artic and/or Semi's)
+                                    field is
                                     required</mat-hint>
                             </mat-radio-group>
                         </div>
@@ -669,7 +694,8 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_4').hasError('required')"
-                                    class="text-md uppercase text-red-500">Welding Experience field is required</mat-hint>
+                                    class="text-md uppercase text-red-500">Welding Experience field is
+                                    required</mat-hint>
                             </mat-radio-group>
                         </div>
                         <div class="md:flex lg:flex align-center my-1.5">
@@ -683,7 +709,8 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_5').hasError('required')"
-                                    class="text-md uppercase text-red-500">Mechanical Experience field is required</mat-hint>
+                                    class="text-md uppercase text-red-500">Mechanical Experience field is
+                                    required</mat-hint>
                             </mat-radio-group>
                         </div>
                         <div>
@@ -694,7 +721,8 @@
                                     formControlName="work_experience_description"> </textarea>
                                 <mat-hint
                                     *ngIf="this.thirdFormGroup.get('work_experience_description').hasError('required')"
-                                    class="text-md uppercase text-red-500">Brief Description of work experience field is required
+                                    class="text-md uppercase text-red-500">Brief Description of work experience field is
+                                    required
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -743,7 +771,8 @@
                                     </mat-select>
                                     <mat-hint
                                         *ngIf="this.fourthFormGroup.get('reason_for_applying').hasError('required')"
-                                        class="text-md uppercase text-red-500">Reasons for applying field is required</mat-hint>
+                                        class="text-md uppercase text-red-500">Reasons for applying field is
+                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -762,7 +791,8 @@
                                         <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('hear_about_dht').hasError('required')"
-                                        class="text-md uppercase text-red-500">How did you hear about DHT? field is required
+                                        class="text-md uppercase text-red-500">How did you hear about DHT? field is
+                                        required
                                     </mat-hint>
                                 </mat-form-field>
                             </div>
@@ -772,7 +802,8 @@
                                     <textarea matInput type="text" id="unique_fact"
                                         formControlName="unique_fact"> </textarea>
                                     <mat-hint *ngIf="this.fourthFormGroup.get('unique_fact').hasError('required')"
-                                        class="text-md uppercase text-red-500">Tell us something interesting (unique) about
+                                        class="text-md uppercase text-red-500">Tell us something interesting (unique)
+                                        about
                                         yourself is
                                         required</mat-hint>
                                 </mat-form-field>
@@ -806,8 +837,7 @@
                 Discard
             </button>
             <button *ngIf="!isSubmit" class="ml-4 " mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
-            [disabled]="step === 1 && isState && !validState"
-                (click)="stepper.next()">
+                [disabled]="step === 1 && isState && !validState" (click)="stepper.next()">
                 Next
             </button>
             <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"

@@ -299,7 +299,7 @@
                                         <span *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
                                             class="text-md text-red-500 uppercase"> Cell Phone Number is required
                                         </span>
-                                        <span *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz'" 
+                                        <span *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz'  || this.secondFormGroup.get('cell_phone_country_code').hasError('pattern')"
                                             class="text-md text-red-500 uppercase">Country Code is required
                                         </span>
                                     </mat-hint>
@@ -341,7 +341,7 @@
                                         </ng-container>
                                     </mat-select>
                                     <mat-hint class="text-md uppercase text-green-500">Select your Country's
-                                        Prefix</mat-hint>
+                                        Code</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -436,7 +436,7 @@
                                         </ng-container>
                                     </mat-select>
                                     <mat-hint class="text-md uppercase text-green-500">Select your Country's
-                                        Prefix</mat-hint>
+                                        Code</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

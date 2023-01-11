@@ -313,16 +313,13 @@ export class ApplicantService {
         let params = new HttpParams();
         params = params.set('email', email);
         let resp: any = await lastValueFrom(this._httpClient
-            .get(`http://localhost:7071/api/async-validators`, { params }))
-        console.log("================== resp ==================", resp);
+            .get(`api-1/async-validators`, { params }))
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (resp?.emailAlreadyExists) {
-                    resolve(resp);
-                } else {
-                    resolve(null);
-                }
-            }, 1000);
+            if (resp?.emailAlreadyExists) {
+                resolve(resp);
+            } else {
+                resolve(null);
+            }
         });
     }
     //#endregion

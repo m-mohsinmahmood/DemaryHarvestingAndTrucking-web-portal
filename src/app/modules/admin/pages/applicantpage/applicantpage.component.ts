@@ -203,9 +203,9 @@ export class ApplicantpageComponent implements OnInit {
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
-            cell_phone_country_code: ['zz', [Validators.required]],
+            cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
             home_phone_number: [''],
-            home_phone_country_code: ['zz', [Validators.required]],
+            home_phone_country_code: ['zz',],
             avatar: ['', [Validators.required]],
         });
         this.thirdFormGroup = this._formBuilder.group({
@@ -420,11 +420,6 @@ export class ApplicantpageComponent implements OnInit {
                 // this.secondFormGroup.controls['state'].setValue('');
                 // this.secondFormGroup.controls['state'].disable({ emitEvent: false });
             }
-        }));
-
-        this.firstFormGroup?.get('email').valueChanges.subscribe((_formValue => {
-            console.log("EMAIL FORM VALUE", this.firstFormGroup?.get('email'));
-
         }));
     }
     isMacintosh() {
