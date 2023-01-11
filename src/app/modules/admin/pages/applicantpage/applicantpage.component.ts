@@ -203,9 +203,9 @@ export class ApplicantpageComponent implements OnInit {
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
-            cell_phone_country_code: ['us'],
+            cell_phone_country_code: ['zz', [Validators.required]],
             home_phone_number: [''],
-            home_phone_country_code: ['us'],
+            home_phone_country_code: ['zz', [Validators.required]],
             avatar: ['', [Validators.required]],
         });
         this.thirdFormGroup = this._formBuilder.group({
@@ -216,7 +216,7 @@ export class ApplicantpageComponent implements OnInit {
             current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
-            current_supervisor_country_code: ['us'],
+            current_supervisor_country_code: ['zz'],
             current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
@@ -226,7 +226,7 @@ export class ApplicantpageComponent implements OnInit {
             previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
             previous_supervisor_phone_number: ['', [Validators.required]],
-            previous_supervisor_country_code: ['us'],
+            previous_supervisor_country_code: ['zz', [Validators.required]],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
             authorized_to_work: ['', [Validators.required]],

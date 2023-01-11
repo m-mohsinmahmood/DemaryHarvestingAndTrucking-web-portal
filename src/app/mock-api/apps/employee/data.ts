@@ -400,6 +400,13 @@ export const employees = [
 
   export const countries = [
     {
+        id          : '',
+        iso         : 'zz',
+        name        : '',
+        code        : '',
+        flagImagePos: '-30px -2772px'
+    },
+    {
         id          : '19430ee3-b0fe-4987-a7c8-74453ad5504d',
         iso         : 'af',
         name        : 'Afghanistan',
