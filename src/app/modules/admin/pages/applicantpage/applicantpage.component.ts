@@ -459,6 +459,7 @@ export class ApplicantpageComponent implements OnInit {
     //#region Country code
     getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
+        console.log("LENGTH", country.code.length);
         if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length;
         else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length;
         else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length;
