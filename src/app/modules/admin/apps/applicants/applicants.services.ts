@@ -95,7 +95,7 @@ export class ApplicantService {
             errorMessage = `Error: ${error.error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.error.message,
@@ -106,7 +106,7 @@ export class ApplicantService {
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.message,
@@ -182,7 +182,7 @@ export class ApplicantService {
 
     createApplicant(data: any, landingPage: boolean) {
         this._httpClient
-            .post(`api-1/applicants`, data)
+            .post(`api-1/applicant`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
