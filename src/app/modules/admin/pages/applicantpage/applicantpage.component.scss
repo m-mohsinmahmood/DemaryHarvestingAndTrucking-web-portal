@@ -134,8 +134,7 @@
     display: none;
 }
 
-::ng-deep .mat-form-field-wrapper 
-{
+::ng-deep .mat-form-field-wrapper {
     position: absolute;
     cursor: pointer;
     z-index: 10;
@@ -183,8 +182,31 @@
 ::ng-deep .countryCode3 .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-outline .mat-form-field-outline-start {
     width: 85px !important;
 }
+
 ::ng-deep .noCountryCode .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-outline .mat-form-field-outline-start {
     width: 54px !important;
 }
 
 
+// Save button spinner
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}

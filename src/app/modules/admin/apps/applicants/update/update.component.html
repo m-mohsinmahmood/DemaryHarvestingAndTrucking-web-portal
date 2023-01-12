@@ -182,8 +182,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 1</mat-label>
-                                    <textarea matInput type="text" 
-                                        formControlName="address_1"> </textarea>
+                                    <textarea matInput type="text" formControlName="address_1"> </textarea>
                                     <mat-hint *ngIf="this.secondFormGroup.get('address_1').hasError('required')"
                                         class="text-md uppercase text-red-500">Address 1 is required</mat-hint>
                                 </mat-form-field>
@@ -191,8 +190,7 @@
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Address 2</mat-label>
-                                    <textarea matInput type="text"
-                                        formControlName="address_2"> </textarea>
+                                    <textarea matInput type="text" formControlName="address_2"> </textarea>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -541,7 +539,7 @@
                                 </mat-form-field>
                             </div>
                             <!-- Previous Supervisor Phone Number -->
-                            <div class="mt-4 flex">
+                            <div class="md:mt-3 lg:mt-3 sm:mt-6 flex">
                                 <mat-form-field
                                     [ngClass]="previousSupervisorCountryCodeLength === 2 ? 'countryCode1' : previousSupervisorCountryCodeLength === 3 ? 'countryCode2' : previousSupervisorCountryCodeLength === 4 ? 'countryCode3' : 'noCountryCode'"
                                     class="w-full">
@@ -651,7 +649,7 @@
                             </mat-form-field>
                         </div>
 
-                        <h3 class="text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With
+                        <h3 class="mt-2 text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With
                             5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-auto md:w-8/12 lg:w-96">
@@ -857,7 +855,8 @@
                 [disabled]="step === 1 && isState && !validState" (click)="stepper.next()">
                 Next
             </button>
-            <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+            <button *ngIf="isSubmit" class="ml-4" [class.spinner]="isLoadingApplicant$ | async"
+                [disabled]="((isLoadingApplicant$) | async)" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
                 (click)="submit()">
                 Save
             </button>
