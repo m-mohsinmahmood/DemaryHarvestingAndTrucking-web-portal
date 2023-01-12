@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, delay, lastValueFrom, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { applicantNavigationLeft, applicantNavigationRight } from './applicantnavigation';
 import {
@@ -95,7 +95,7 @@ export class ApplicantService {
             errorMessage = `Error: ${error.error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.error.message,
@@ -106,7 +106,7 @@ export class ApplicantService {
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.message,
@@ -305,6 +305,22 @@ export class ApplicantService {
                 this._countries.next(countries);
             })
         );
+    }
+    //#endregion
+
+    //#region Async Validator 
+    async checkIfEmailExists(email: string): Promise<any> {
+        let params = new HttpParams();
+        params = params.set('email', email);
+        let resp: any = await lastValueFrom(this._httpClient
+            .get(`api-1/async-validators`, { params }))
+        return new Promise((resolve, reject) => {
+            if (resp?.emailAlreadyExists) {
+                resolve(resp);
+            } else {
+                resolve(null);
+            }
+        });
     }
     //#endregion
 }
