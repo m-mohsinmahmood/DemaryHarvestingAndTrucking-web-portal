@@ -16,7 +16,6 @@ import { states } from './../../../../../JSON/state';
 import { HelpModalComponent } from './help-modal/help-modal.component';
 import { countryList } from 'JSON/country';
 import { Country } from './applicants.types';
-import { ContentObserver } from '@angular/cdk/observers';
 
 
 export const MY_FORMATS = {
@@ -122,6 +121,10 @@ export class ApplicantpageComponent implements OnInit {
     resumePreview: string = '';
     countryCode: Country[];
     countries: Country[];
+    cellPhoneCountryCodeLength: any = 1;
+    homePhoneCountryCodeLength: any = 1;
+    currentSupervisorCountryCodeLength: any = 1;
+    previousSupervisorCountryCodeLength: any = 1;
     countryCodeLength: any = 1;
     validCountry: boolean = false;
     validState: boolean = false;
@@ -454,9 +457,13 @@ export class ApplicantpageComponent implements OnInit {
     //#endregion
 
     //#region Country code
-    getCountryByIso(iso: string): Country {
+    getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length
+        if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length;
+        else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length;
+        else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length;
+        else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length;
+
         return country;
     }
     trackByFn(index: number, item: any): any {
