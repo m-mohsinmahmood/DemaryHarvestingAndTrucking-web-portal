@@ -2,10 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Alert } from 'app/core/alert/alert.model';
 import { Subject, takeUntil } from 'rxjs';
+import { fuseAnimations } from '@fuse/animations';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    animations   : fuseAnimations,
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
