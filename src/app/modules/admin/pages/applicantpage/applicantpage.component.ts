@@ -1,12 +1,12 @@
 import { Component, Directive, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { ChangeDetectorRef, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { Router } from '@angular/router';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil, debounceTime, lastValueFrom } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -92,7 +92,6 @@ export class ApplicantpageComponent implements OnInit {
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
     employees: any;
     flashMessage: 'success' | 'error' | null = null;
@@ -114,17 +113,27 @@ export class ApplicantpageComponent implements OnInit {
     isLoading: boolean = false;
     states: string[] = [];
     countryList: string[] = [];
-    stateOptions: Observable<string[]>;
-    countryOptions: Observable<string[]>;
     isImage: boolean = true;
     isState: boolean = false;
     resumePreview: string = '';
     countryCode: Country[];
     countries: Country[];
+    cellPhoneCountryCodeLength: any = 1;
+    homePhoneCountryCodeLength: any = 1;
+    currentSupervisorCountryCodeLength: any = 1;
+    previousSupervisorCountryCodeLength: any = 1;
     countryCodeLength: any = 1;
     validCountry: boolean = false;
     validState: boolean = false;
     step: number = 0;
+    //#endregion
+
+    //#region Observables
+    isLoadingApplicant$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
     //#endregion
 
     constructor(
@@ -184,7 +193,7 @@ export class ApplicantpageComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], this.asyncValidator.bind(this)],
             date_of_birth: ['', [Validators.required]],
             age: ['', [Validators.required]],
             marital_status: ['', [Validators.required]],
@@ -202,9 +211,9 @@ export class ApplicantpageComponent implements OnInit {
             postal_code: ['', [Validators.required]],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
-            cell_phone_country_code: ['us'],
+            cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
             home_phone_number: [''],
-            home_phone_country_code: ['us'],
+            home_phone_country_code: ['zz',],
             avatar: ['', [Validators.required]],
         });
         this.thirdFormGroup = this._formBuilder.group({
@@ -215,7 +224,7 @@ export class ApplicantpageComponent implements OnInit {
             current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
-            current_supervisor_country_code: ['us'],
+            current_supervisor_country_code: ['zz'],
             current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
@@ -224,8 +233,8 @@ export class ApplicantpageComponent implements OnInit {
             previous_employment_period_start: ['', [Validators.required]],
             previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
-            previous_supervisor_phone_number: ['', [Validators.required]],
-            previous_supervisor_country_code: ['us'],
+            previous_supervisor_phone_number: [''],
+            previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
             authorized_to_work: ['', [Validators.required]],
@@ -285,6 +294,8 @@ export class ApplicantpageComponent implements OnInit {
     }
     // #endregion
     submit(): void {
+        this._applicantService.isLoadingApplicant.next(true);
+
         //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -313,6 +324,9 @@ export class ApplicantpageComponent implements OnInit {
     }
     //#region Init Observables
     initObservables() {
+        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$
+        this.closeDialog$ = this._applicantService.closeDialog$;
+
         this._applicantService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((codes: Country[]) => {
@@ -336,15 +350,10 @@ export class ApplicantpageComponent implements OnInit {
     //#endregion
     saveAndClose(): void {
         this._router.navigateByUrl("/pages/landing-page")
-        // Close the dialog
-        // this.matDialogRef.close();
     }
-    discard(): void {
-
-    }
-
+    
     selectionChange(event) {
-        this.step = event.selectedIndex; 
+        this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {
@@ -451,11 +460,16 @@ export class ApplicantpageComponent implements OnInit {
         }
     }
     //#endregion
-    
+
     //#region Country code
-    getCountryByIso(iso: string): Country {
+    getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length
+        console.log("LENGTH", country.code.length);
+        if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length;
+        else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length;
+        else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length;
+        else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length;
+
         return country;
     }
     trackByFn(index: number, item: any): any {
@@ -470,4 +484,12 @@ export class ApplicantpageComponent implements OnInit {
         this.form.get(formValue).setValue(country_code.code);
     }
     //#endregion
+
+    //#region Email Exists 
+    asyncValidator = (control: FormControl) => {
+        return this._applicantService.checkIfEmailExists(control.value);
+    }
+    //#endregion
 }
+
+

@@ -74,15 +74,3 @@
 
 <!-- Quick chat -->
 <!-- <quick-chat #quickChat="quickChat"></quick-chat> -->
-<div *ngIf="showAlert" class="fixed z-999 pointer-events-none top-0 left-0 w-full h-full">
-    <div class="flex z-999 absolute justify-end items-end w-full h-full">
-        <div class="static pointer-events-auto box-border z-999 flex flex-col justify-end max-w-full max-h-full">
-            <div [@shake]="alertInfo.shake" [@slideInRight]="alertInfo.slideInRight">
-                <fuse-alert [type]="alertInfo.type" [appearance]="'border'" [dismissed]="false" class="mb-2 mr-2 shadow-2xl">
-                    <span fuseAlertTitle>{{alertInfo.title}}</span>
-                    <span>{{alertInfo.message}}</span>
-                </fuse-alert>
-            </div>
-        </div>
-    </div>
-</div>

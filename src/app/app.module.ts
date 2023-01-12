@@ -14,7 +14,8 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from '../app/interceptors/interceptor';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FuseAlertModule } from '@fuse/components/alert';
 
 
 
@@ -34,6 +35,7 @@ const routerConfig: ExtraOptions = {
         HttpClientModule,
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
+        FuseAlertModule,
         FuseConfigModule.forRoot(appConfig),
         FuseMockApiModule.forRoot(mockApiServices),
 

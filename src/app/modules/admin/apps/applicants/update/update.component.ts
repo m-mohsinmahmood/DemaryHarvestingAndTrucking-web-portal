@@ -124,7 +124,10 @@ export class UpdateComponent implements OnInit {
     resumePreview: string = '';
     countryCode: Country[];
     countries: Country[];
-    countryCodeLength: any = 1;
+    cellPhoneCountryCodeLength: any = 1;
+    homePhoneCountryCodeLength: any = 1;
+    currentSupervisorCountryCodeLength: any = 1;
+    previousSupervisorCountryCodeLength: any = 1;
     validCountry: boolean = false;
     validState: boolean = false;
     step: number = 0;
@@ -166,6 +169,7 @@ export class UpdateComponent implements OnInit {
 
 
         this.isEdit = this.data.isEdit;
+        //To close dialog
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
@@ -194,7 +198,7 @@ export class UpdateComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], this.asyncValidator.bind(this)],
             date_of_birth: ['', [Validators.required]],
             age: ['', [Validators.required]],
             marital_status: ['', [Validators.required]],
@@ -213,9 +217,9 @@ export class UpdateComponent implements OnInit {
             state: [''],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
-            cell_phone_country_code: ['us'],
+            cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
             home_phone_number: [''],
-            home_phone_country_code: ['us'],
+            home_phone_country_code: ['zz'],
             avatar: ['', [Validators.required]],
         });
 
@@ -227,7 +231,7 @@ export class UpdateComponent implements OnInit {
             current_employment_period_end: [''],
             current_supervisor_reference: [''],
             current_supervisor_phone_number: [''],
-            current_supervisor_country_code: ['us'],
+            current_supervisor_country_code: ['zz'],
             current_contact_supervisor: [false],
 
             previous_employer: ['', [Validators.required]],
@@ -236,8 +240,8 @@ export class UpdateComponent implements OnInit {
             previous_employment_period_start: ['', [Validators.required]],
             previous_employment_period_end: ['', [Validators.required]],
             previous_supervisor_reference: ['', [Validators.required]],
-            previous_supervisor_phone_number: ['', [Validators.required]],
-            previous_supervisor_country_code: ['us'],
+            previous_supervisor_phone_number: [''],
+            previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
 
@@ -439,6 +443,8 @@ export class UpdateComponent implements OnInit {
     //#endregion
 
     submit(): void {
+        this._applicantService.isLoadingApplicant.next(true);
+
         //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -447,8 +453,6 @@ export class UpdateComponent implements OnInit {
                 this.form.addControl(element[0], control);
             });
         });
-        this._applicantService.isLoadingApplicant.next(true);
-
         //Filtered and replace country iso with country code in form
         this.getCountryByCode('cell_phone_country_code');
         this.getCountryByCode('home_phone_country_code');
@@ -490,11 +494,12 @@ export class UpdateComponent implements OnInit {
 
     discard(): void {
         // Close the dialog
+        this._applicantService.isLoadingApplicant.next(false);
         this.matDialogRef.close();
     }
 
     selectionChange(event) {
-        this.step = event.selectedIndex; 
+        this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {
             this.isBack = false;
         } else {
@@ -586,10 +591,16 @@ export class UpdateComponent implements OnInit {
     }
     //#endregion
 
+
+
     //#region Country code
-    getCountryByIso(iso: string): Country {
+    getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length
+        if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length
+        else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length
+        else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length
+        else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length
+
         return country;
     }
     trackByFn(index: number, item: any): any {
@@ -602,6 +613,12 @@ export class UpdateComponent implements OnInit {
         let country_code;
         country_code = this.countries.find(country => country.iso === this.form.get(formValue).value)
         this.form.get(formValue).setValue(country_code.code);
+    }
+    //#endregion
+
+    //#region Email Exists 
+    asyncValidator = (control: FormControl) => {
+        return this._applicantService.checkIfEmailExists(control.value);
     }
     //#endregion
 }
