@@ -95,7 +95,7 @@ export class ApplicantService {
             errorMessage = `Error: ${error.error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.error.message,
@@ -106,7 +106,7 @@ export class ApplicantService {
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.message,

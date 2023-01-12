@@ -203,7 +203,7 @@
                                     <mat-label>Country</mat-label>
                                     <input (ngModelChange)="formValidation($event,'country')" type="text"
                                         aria-label="country" matInput formControlName="country"
-                                        [matAutocomplete]="country" placeholder="Country">
+                                        [matAutocomplete]="country">
                                     <mat-autocomplete #country="matAutocomplete">
                                         <mat-option *ngFor="let country of countryOptions | async" [value]="country">
                                             {{country}}
@@ -262,13 +262,15 @@
                             <!-- Cell Phone -->
                             <div class="flex">
                                 <mat-form-field
-                                    [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
-                                    appearance="outline" class="w-full">
-                                    <mat-label>Cell Phone Number</mat-label>
-                                    <input *ngIf="secondFormGroup.get('cell_phone_country_code').value == 'us' "
+                                    [ngClass]="cellPhoneCountryCodeLength === 2 ? 'countryCode1' : cellPhoneCountryCodeLength === 3 ? 'countryCode2' : cellPhoneCountryCodeLength === 4 ? 'countryCode3' : 'noCountryCode'"
+                                    class="w-full">
+                                    <mat-label class="mt-1 ml-2.5">Cell Phone Number</mat-label>
+                                    <input class="h-6"
+                                        *ngIf="secondFormGroup.get('cell_phone_country_code').value == 'us' "
                                         maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="cell_phone_number">
-                                    <input *ngIf="secondFormGroup.get('cell_phone_country_code').value != 'us'"
+                                    <input class="h-6"
+                                        *ngIf="secondFormGroup.get('cell_phone_country_code').value != 'us'"
                                         maxlength="14" type="text" matInput formControlName="cell_phone_number">
                                     <mat-select formControlName="cell_phone_country_code" matPrefix>
                                         <mat-select-trigger>
@@ -276,9 +278,10 @@
                                                 <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
                                                     [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
                                                     [style.backgroundSize]="'24px 3876px'"
-                                                    [style.backgroundPosition]="getCountryByIso(secondFormGroup.get('cell_phone_country_code').value).flagImagePos"></span>
+                                                    [style.backgroundPosition]="getCountryByIso(secondFormGroup.get('cell_phone_country_code').value , 1).flagImagePos"></span>
                                                 <span
-                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(secondFormGroup.get('cell_phone_country_code').value).code}}</span>
+                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(secondFormGroup.get('cell_phone_country_code').value
+                                                    , 1).code}}</span>
                                             </span>
                                         </mat-select-trigger>
                                         <ng-container *ngFor="let country of countries">
@@ -294,13 +297,15 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="flex flex-col">
+                                    <mat-hint class="flex flex-col ml-3">
                                         <span *ngIf="this.secondFormGroup.get('cell_phone_number').hasError('required')"
-                                            class="text-md text-red-500 uppercase"> Cell Phone Number is required
+                                            class="font-normal text-md text-red-500 uppercase"> Cell Phone Number is
+                                            required
                                         </span>
                                         <span
                                             *ngIf="this.secondFormGroup.get('cell_phone_country_code').value == 'zz'  || this.secondFormGroup.get('cell_phone_country_code').hasError('pattern')"
-                                            class="text-md text-red-500 uppercase">Country Code is required
+                                            class="font-normal text-md text-red-500 uppercase mt-1">Country Code is
+                                            required
                                         </span>
                                     </mat-hint>
                                 </mat-form-field>
@@ -308,13 +313,15 @@
                             <!-- Home Phone -->
                             <div class="flex">
                                 <mat-form-field
-                                    [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
-                                    appearance="outline" class="w-full">
-                                    <mat-label>Home Phone Number</mat-label>
-                                    <input *ngIf="secondFormGroup.get('home_phone_country_code').value == 'us' "
+                                    [ngClass]="homePhoneCountryCodeLength === 2 ? 'countryCode1' : homePhoneCountryCodeLength === 3 ? 'countryCode2' : homePhoneCountryCodeLength === 4 ? 'countryCode3' : 'noCountryCode'"
+                                    class="w-full">
+                                    <mat-label class="mt-1 ml-2.5">Home Phone Number</mat-label>
+                                    <input class="h-6"
+                                        *ngIf="secondFormGroup.get('home_phone_country_code').value == 'us' "
                                         maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="home_phone_number">
-                                    <input *ngIf="secondFormGroup.get('home_phone_country_code').value != 'us'"
+                                    <input class="h-6"
+                                        *ngIf="secondFormGroup.get('home_phone_country_code').value != 'us'"
                                         maxlength="14" type="text" matInput formControlName="home_phone_number">
                                     <mat-select formControlName="home_phone_country_code" matPrefix>
                                         <mat-select-trigger>
@@ -322,9 +329,10 @@
                                                 <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
                                                     [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
                                                     [style.backgroundSize]="'24px 3876px'"
-                                                    [style.backgroundPosition]="getCountryByIso(secondFormGroup.get('home_phone_country_code').value).flagImagePos"></span>
+                                                    [style.backgroundPosition]="getCountryByIso(secondFormGroup.get('home_phone_country_code').value , 2).flagImagePos"></span>
                                                 <span
-                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(secondFormGroup.get('home_phone_country_code').value).code}}</span>
+                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(secondFormGroup.get('home_phone_country_code').value
+                                                    , 2).code}}</span>
                                             </span>
                                         </mat-select-trigger>
                                         <ng-container *ngFor="let country of countries">
@@ -340,8 +348,13 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
-                                        Code</mat-hint>
+                                    <mat-hint>
+                                        <span class="ml-3 font-normal text-md uppercase text-green-500">
+                                            Select your
+                                            Country's
+                                            Code
+                                        </span>
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -369,13 +382,13 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Position/Title</mat-label>
+                                    <mat-label>Current Position/Title</mat-label>
                                     <input matInput type="text" formControlName="current_position_title">
                                 </mat-form-field>
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Brief description of role </mat-label>
+                                    <mat-label>Brief Description Of Current Role </mat-label>
                                     <textarea matInput type="text"
                                         formControlName="current_description_of_role"> </textarea>
                                 </mat-form-field>
@@ -395,20 +408,31 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Supervisor/Reference</mat-label>
+                                    <mat-label>Current Supervisor/Reference</mat-label>
                                     <input matInput type="text" formControlName="current_supervisor_reference">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Can we contact Current Supervisor/Reference?</mat-label>
+                                    <mat-select matNativeControl formControlName="current_contact_supervisor">
+                                        <mat-option value="true"> Yes</mat-option>
+                                        <mat-option value="false">No</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <!-- Current Supervisor Phone Number -->
                             <div class="flex">
                                 <mat-form-field
-                                    [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
-                                    appearance="outline" class="w-full">
-                                    <mat-label>Supervisor phone number</mat-label>
-                                    <input *ngIf="thirdFormGroup.get('current_supervisor_country_code').value == 'us' "
+                                    [ngClass]="currentSupervisorCountryCodeLength === 2 ? 'countryCode1' : currentSupervisorCountryCodeLength === 3 ? 'countryCode2' : currentSupervisorCountryCodeLength === 4 ? 'countryCode3' : 'noCountryCode'"
+                                    class="w-full">
+                                    <mat-label class="ml-2.5">Current Supervisor Phone Number</mat-label>
+                                    <input class="h-6"
+                                        *ngIf="thirdFormGroup.get('current_supervisor_country_code').value == 'us' "
                                         maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="current_supervisor_phone_number">
-                                    <input *ngIf="thirdFormGroup.get('current_supervisor_country_code').value != 'us'"
+                                    <input class="h-6"
+                                        *ngIf="thirdFormGroup.get('current_supervisor_country_code').value != 'us'"
                                         maxlength="14" type="text" matInput
                                         formControlName="current_supervisor_phone_number">
                                     <mat-select formControlName="current_supervisor_country_code" matPrefix>
@@ -417,9 +441,10 @@
                                                 <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
                                                     [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
                                                     [style.backgroundSize]="'24px 3876px'"
-                                                    [style.backgroundPosition]="getCountryByIso(thirdFormGroup.get('current_supervisor_country_code').value).flagImagePos"></span>
+                                                    [style.backgroundPosition]="getCountryByIso(thirdFormGroup.get('current_supervisor_country_code').value , 3).flagImagePos"></span>
                                                 <span
-                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(thirdFormGroup.get('current_supervisor_country_code').value).code}}</span>
+                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(thirdFormGroup.get('current_supervisor_country_code').value
+                                                    , 3).code}}</span>
                                             </span>
                                         </mat-select-trigger>
                                         <ng-container *ngFor="let country of countries">
@@ -435,17 +460,13 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
-                                        Code</mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Can we contact Supervisor/Reference?</mat-label>
-                                    <mat-select matNativeControl formControlName="current_contact_supervisor">
-                                        <mat-option value="true"> Yes</mat-option>
-                                        <mat-option value="false">No</mat-option>
-                                    </mat-select>
+                                    <mat-hint>
+                                        <span class="ml-3 font-normal text-md uppercase text-green-500">
+                                            Select your
+                                            Country's
+                                            Code
+                                        </span>
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
                             <div></div>
@@ -460,7 +481,7 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Position/Title</mat-label>
+                                    <mat-label>Previous Position/Title</mat-label>
                                     <input matInput type="text" formControlName="previous_position_title">
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_position_title').hasError('required')"
@@ -470,7 +491,7 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Brief description of role </mat-label>
+                                    <mat-label>Brief Description Of Previous Role </mat-label>
                                     <textarea matInput type="text"
                                         formControlName="previous_description_of_role"> </textarea>
                                     <mat-hint
@@ -497,24 +518,41 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Supervisor/Reference</mat-label>
+                                    <mat-label>Previous Supervisor/Reference</mat-label>
                                     <input matInput type="text" formControlName="previous_supervisor_reference">
                                     <mat-hint
                                         *ngIf="this.thirdFormGroup.get('previous_supervisor_reference').hasError('required')"
-                                        class="uppercase text-md text-red-500">Supervisor/Reference field is
+                                        class="uppercase text-md text-red-500">Previous Supervisor/Reference field is
+                                        required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Can we contact Previous Supervisor/Reference?</mat-label>
+                                    <mat-select matNativeControl formControlName="previous_contact_supervisor">
+                                        <mat-option value="true"> Yes</mat-option>
+                                        <mat-option value="false">No</mat-option>
+                                    </mat-select>
+                                    <mat-hint
+                                        *ngIf="this.thirdFormGroup.get('previous_contact_supervisor').hasError('required')"
+                                        class="uppercase text-md text-red-500">Can we contact Previous
+                                        Supervisor/Reference field
+                                        is
                                         required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <!-- Previous Supervisor Phone Number -->
                             <div class="flex">
                                 <mat-form-field
-                                    [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
-                                    appearance="outline" class="w-full">
-                                    <mat-label>Supervisor phone number</mat-label>
-                                    <input *ngIf="thirdFormGroup.get('previous_supervisor_country_code').value == 'us' "
+                                    [ngClass]="previousSupervisorCountryCodeLength === 2 ? 'countryCode1' : previousSupervisorCountryCodeLength === 3 ? 'countryCode2' : previousSupervisorCountryCodeLength === 4 ? 'countryCode3' : 'noCountryCode'"
+                                    class="w-full">
+                                    <mat-label class="ml-2.5">Previous Supervisor Phone Number</mat-label>
+                                    <input class="h-6"
+                                        *ngIf="thirdFormGroup.get('previous_supervisor_country_code').value == 'us' "
                                         maxlength="14" appPhoneMask type="text" matInput
                                         formControlName="previous_supervisor_phone_number">
-                                    <input *ngIf="thirdFormGroup.get('previous_supervisor_country_code').value != 'us'"
+                                    <input class="h-6"
+                                        *ngIf="thirdFormGroup.get('previous_supervisor_country_code').value != 'us'"
                                         maxlength="14" type="text" matInput
                                         formControlName="previous_supervisor_phone_number">
                                     <mat-select formControlName="previous_supervisor_country_code" matPrefix>
@@ -523,9 +561,9 @@
                                                 <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
                                                     [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
                                                     [style.backgroundSize]="'24px 3876px'"
-                                                    [style.backgroundPosition]="getCountryByIso(thirdFormGroup.get('previous_supervisor_country_code').value).flagImagePos"></span>
+                                                    [style.backgroundPosition]="getCountryByIso(thirdFormGroup.get('previous_supervisor_country_code').value,4).flagImagePos"></span>
                                                 <span
-                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(thirdFormGroup.get('previous_supervisor_country_code').value).code}}</span>
+                                                    class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(thirdFormGroup.get('previous_supervisor_country_code').value,4).code}}</span>
                                             </span>
                                         </mat-select-trigger>
                                         <ng-container *ngFor="let country of countries">
@@ -541,23 +579,13 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-select>
-                                    <mat-hint class="text-md uppercase text-green-500">Select your Country's
-                                        Code
+                                    <mat-hint>
+                                        <span class="ml-3 font-normal text-md uppercase text-green-500">
+                                            Select your
+                                            Country's
+                                            Code
+                                        </span>
                                     </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div>
-                                <mat-form-field appearance="outline" class="w-full">
-                                    <mat-label>Can we contact Supervisor/Reference?</mat-label>
-                                    <mat-select matNativeControl formControlName="previous_contact_supervisor">
-                                        <mat-option value="true"> Yes</mat-option>
-                                        <mat-option value="false">No</mat-option>
-                                    </mat-select>
-                                    <mat-hint
-                                        *ngIf="this.thirdFormGroup.get('previous_contact_supervisor').hasError('required')"
-                                        class="uppercase text-md text-red-500">Can we contact Supervisor/Reference field
-                                        is
-                                        required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div></div>
@@ -639,7 +667,7 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_1').hasError('required')"
-                                    class="uppercase text-md text-red-500"> Operating Farm Equipment field is
+                                    class="uppercase text-md text-red-500"> This field is
                                     required</mat-hint>
                             </mat-radio-group>
                         </div>
@@ -654,7 +682,7 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_2').hasError('required')"
-                                    class="uppercase text-md text-red-500">Operating Harvesting Equipment field is
+                                    class="uppercase text-md text-red-500">This field is
                                     required
                                 </mat-hint>
                             </mat-radio-group>
@@ -670,7 +698,7 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_3').hasError('required')"
-                                    class="uppercase text-md text-red-500">Driving Trucks (ie. Artic and/or Semi's)
+                                    class="uppercase text-md text-red-500">This
                                     field is
                                     required</mat-hint>
                             </mat-radio-group>
@@ -686,7 +714,7 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_4').hasError('required')"
-                                    class="uppercase text-md text-red-500">Welding Experience field is
+                                    class="uppercase text-md text-red-500">This field is
                                     required</mat-hint>
                             </mat-radio-group>
                         </div>
@@ -701,7 +729,7 @@
                                 <mat-radio-button value="4">4</mat-radio-button>
                                 <mat-radio-button value="5">5</mat-radio-button>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('question_5').hasError('required')"
-                                    class="uppercase text-md text-red-500">Mechanical Experience field is
+                                    class="uppercase text-md text-red-500">This field is
                                     required</mat-hint>
                             </mat-radio-group>
                         </div>

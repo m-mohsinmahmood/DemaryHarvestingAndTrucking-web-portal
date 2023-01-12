@@ -124,7 +124,10 @@ export class UpdateComponent implements OnInit {
     resumePreview: string = '';
     countryCode: Country[];
     countries: Country[];
-    countryCodeLength: any = 1;
+    cellPhoneCountryCodeLength: any = 1;
+    homePhoneCountryCodeLength: any = 1;
+    currentSupervisorCountryCodeLength: any = 1;
+    previousSupervisorCountryCodeLength: any = 1;
     validCountry: boolean = false;
     validState: boolean = false;
     step: number = 0;
@@ -213,7 +216,7 @@ export class UpdateComponent implements OnInit {
             state: [''],
             country: ['', [Validators.required]],
             cell_phone_number: ['', [Validators.required]],
-            cell_phone_country_code: ['zz',[Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
+            cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
             home_phone_number: [''],
             home_phone_country_code: ['zz'],
             avatar: ['', [Validators.required]],
@@ -586,10 +589,16 @@ export class UpdateComponent implements OnInit {
     }
     //#endregion
 
+
+
     //#region Country code
-    getCountryByIso(iso: string): Country {
+    getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
-        this.countryCodeLength = country.code.length
+        if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length
+        else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length
+        else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length
+        else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length
+
         return country;
     }
     trackByFn(index: number, item: any): any {
