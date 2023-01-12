@@ -92,7 +92,6 @@ export class ApplicantpageComponent implements OnInit {
     panelOpenState = false;
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     form: FormGroup;
     employees: any;
     flashMessage: 'success' | 'error' | null = null;
@@ -114,8 +113,6 @@ export class ApplicantpageComponent implements OnInit {
     isLoading: boolean = false;
     states: string[] = [];
     countryList: string[] = [];
-    stateOptions: Observable<string[]>;
-    countryOptions: Observable<string[]>;
     isImage: boolean = true;
     isState: boolean = false;
     resumePreview: string = '';
@@ -129,6 +126,14 @@ export class ApplicantpageComponent implements OnInit {
     validCountry: boolean = false;
     validState: boolean = false;
     step: number = 0;
+    //#endregion
+
+    //#region Observables
+    isLoadingApplicant$: Observable<boolean>;
+    closeDialog$: Observable<boolean>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    stateOptions: Observable<string[]>;
+    countryOptions: Observable<string[]>;
     //#endregion
 
     constructor(
@@ -289,6 +294,8 @@ export class ApplicantpageComponent implements OnInit {
     }
     // #endregion
     submit(): void {
+        this._applicantService.isLoadingApplicant.next(true);
+
         //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -317,6 +324,9 @@ export class ApplicantpageComponent implements OnInit {
     }
     //#region Init Observables
     initObservables() {
+        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$
+        this.closeDialog$ = this._applicantService.closeDialog$;
+
         this._applicantService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((codes: Country[]) => {
@@ -340,13 +350,8 @@ export class ApplicantpageComponent implements OnInit {
     //#endregion
     saveAndClose(): void {
         this._router.navigateByUrl("/pages/landing-page")
-        // Close the dialog
-        // this.matDialogRef.close();
     }
-    discard(): void {
-
-    }
-
+    
     selectionChange(event) {
         this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {

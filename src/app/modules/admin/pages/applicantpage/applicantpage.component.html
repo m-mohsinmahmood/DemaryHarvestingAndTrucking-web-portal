@@ -857,7 +857,10 @@
             [disabled]="step === 1 && isState && !validState" (click)="stepper.next()">
             Next
         </button>
-        <button *ngIf="isSubmit" class="ml-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+        <button *ngIf="isSubmit" class="ml-4" 
+            [class.spinner]="isLoadingApplicant$ | async"
+            [disabled]="((isLoadingApplicant$) | async)"
+            mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
             (click)="submit()">
             Save
         </button>

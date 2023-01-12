@@ -169,6 +169,7 @@ export class UpdateComponent implements OnInit {
 
 
         this.isEdit = this.data.isEdit;
+        //To close dialog
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
@@ -442,6 +443,8 @@ export class UpdateComponent implements OnInit {
     //#endregion
 
     submit(): void {
+        this._applicantService.isLoadingApplicant.next(true);
+
         //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -450,8 +453,6 @@ export class UpdateComponent implements OnInit {
                 this.form.addControl(element[0], control);
             });
         });
-        this._applicantService.isLoadingApplicant.next(true);
-
         //Filtered and replace country iso with country code in form
         this.getCountryByCode('cell_phone_country_code');
         this.getCountryByCode('home_phone_country_code');
@@ -493,6 +494,7 @@ export class UpdateComponent implements OnInit {
 
     discard(): void {
         // Close the dialog
+        this._applicantService.isLoadingApplicant.next(false);
         this.matDialogRef.close();
     }
 
