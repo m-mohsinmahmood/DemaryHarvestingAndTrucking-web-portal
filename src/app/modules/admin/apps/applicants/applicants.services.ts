@@ -182,7 +182,7 @@ export class ApplicantService {
 
     createApplicant(data: any, landingPage: boolean) {
         this._httpClient
-            .post(`api-1/applicant`, data)
+            .post(`api-1/applicants`, data)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
