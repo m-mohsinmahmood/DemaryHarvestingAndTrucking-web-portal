@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
@@ -8,12 +7,10 @@ import {
     Inject,
 } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import {
     MatDialog,
     MatDialogRef,
@@ -174,16 +171,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    openUpdateDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent, {
-            data: { id: this.routeID },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
+    //#endregion
 
     backHandler(): void {
         this._router.navigate(['/apps/employee/']);

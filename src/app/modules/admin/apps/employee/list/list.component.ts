@@ -20,23 +20,17 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import {
     debounceTime,
-    map,
-    merge,
     Observable,
     Subject,
     Subscription,
-    switchMap,
-    takeUntil,
 } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import {
     EmployeePagination,
     Employee,
 } from 'app/modules/admin/apps/employee/employee.types';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { AddComponent } from '../add/add.component';
-import { read, utils, writeFile } from 'xlsx';
+import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { countryList } from './../../../../../../JSON/country';
@@ -50,17 +44,13 @@ import { countryList } from './../../../../../../JSON/country';
     animations: fuseAnimations,
 })
 export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild(MatPaginator) private _paginator: MatPaginator;
-    @ViewChild(MatSort) private _sort: MatSort;
-
+    
     //#region observable
-    employeesdata$: Observable<Employee[]>;
     employeeList$: Observable<Employee[]>;
     employee$: Observable<Employee[]>;
     isLoadingEmployeeList$: Observable<boolean>;
     isLoadingEmployee$: Observable<boolean>;
     //#endregion
-
 
     //#region variables
     page: number;
@@ -69,7 +59,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
-
     search: Subscription;
     searchResult: string;
     importEmployeeList: any[] = [];
@@ -89,8 +78,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         'Not Being Considered',
     ];
     isLoading: boolean = false;
-    pagination: EmployeePagination;
-    searchInputControl: FormControl = new FormControl();
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
 
@@ -118,11 +105,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         private _matDialog: MatDialog
     ) { }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    //#region life-cycle methods
+   
+    //#region LifeCycle Hooks
     ngOnInit(): void {
         this.countries = countryList;
      
@@ -237,12 +221,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     //#endregion
-
-    openEditDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(AddComponent);
-        dialogRef.afterClosed().subscribe((result) => { });
-    }
 
     //#region Sort Function
     sortData(sort: any) {

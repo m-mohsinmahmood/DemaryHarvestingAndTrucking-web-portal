@@ -29,6 +29,7 @@ export class OnboardingComponent implements OnInit {
   //#region observables
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   employee$: Observable<any>;
+  employeeDocs$: Observable<any>;
   //#endregion
 
   constructor(
@@ -42,13 +43,9 @@ export class OnboardingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRouteParams();
-    this.getEmployeeById();
-    this.employee$ = this._employeeService.employee$;
-    this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
-      this.employee = res;
-    });
-
-
+    this.initApi();
+    this.initObservables();
+    
     this.items = [
       { content: 'Applicant accepts offer', name: '', date: '15/02/2022', status: 'a', active: true },
       { content: 'Applicant to set up a new DHT Account', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: false },
@@ -112,8 +109,19 @@ export class OnboardingComponent implements OnInit {
   }
 
   //#region Get Applicant By id 
-  getEmployeeById() {
+  initApi() {
     this._employeeService.getEmployeeById(this.routeID);
+    this._employeeService.getEmployeeDocs(this.routeID);
+  }
+  //#endregion
+
+  //#region Initilize Observables 
+  initObservables(){
+    this.employeeDocs$ = this._employeeService.employeeDocuments$
+    this.employee$ = this._employeeService.employee$;
+    this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+      this.employee = res;
+    });
   }
   //#endregion
 
