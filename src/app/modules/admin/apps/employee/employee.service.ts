@@ -315,4 +315,33 @@ export class EmployeeService {
             );
     }
     //#endregion
+
+    //#region Patch employee docs
+    patchEmployeeDocuments(employeeId: string, employeeDoc: any) {
+        this._httpClient
+            .patch(`api-1/employee-documents`, employeeDoc)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingEmployeeDocuments.next(false);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Document has been submitted',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.isLoadingEmployeeDocuments.next(false);
+                },
+                () => {
+                    this.getEmployeeDocs(employeeId);
+                }
+            );
+    }
+
+    //#endregion
 }

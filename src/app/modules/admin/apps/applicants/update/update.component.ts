@@ -5,7 +5,6 @@ import {
     FormGroup,
     Validators,
     FormControl,
-    FormArray,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
@@ -85,9 +84,7 @@ export class UpdateComponent implements OnInit {
     applicants$: Observable<Applicant[]>;
     isLoadingApplicants$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
-    countryCodeLength: any = 1;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-    //#endregion
 
     roles: string[] = ['single', 'Married', 'Divorced'];
     stepperOrientation: Observable<StepperOrientation>;
@@ -116,8 +113,8 @@ export class UpdateComponent implements OnInit {
     avatar: string = '';
     isEdit: boolean;
     states: string[] = [];
-    countryList: string[] = [];
     stateOptions: Observable<string[]>;
+    countryList: string[] = [];
     countryOptions: Observable<string[]>;
     imagePreview: string;
     isImage: boolean = true;
@@ -134,7 +131,6 @@ export class UpdateComponent implements OnInit {
     validCountry: boolean = false;
     validState: boolean = false;
     step: number = 0;
-
     //#endregion
 
     constructor(

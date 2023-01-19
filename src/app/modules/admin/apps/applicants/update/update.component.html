@@ -19,46 +19,6 @@
                         <ng-template matStepLabel>Personal Information</ng-template>
                         <div class="md:grid md:grid-cols-2 md:gap-4">
                             <div>
-                                <!-- Phone -->
-                                <div
-                                    *ngFor="let phoneNumber of firstFormGroup.get('phoneNumbers')['controls']; let i = index; let first = first">
-                                    <div class="flex">
-                                        <mat-form-field
-                                            [ngClass]="countryCodeLength === 2 ? 'countryCode1' : countryCodeLength === 3 ? 'countryCode2' : 'countryCode3'"
-                                            appearance="outline" class="w-full">
-                                            <mat-label>International Phone Number</mat-label>
-                                            <input maxlength="14" appPhoneMask class="text-sm mb-1" type="number" matInput
-                                                [formControl]="phoneNumber.get('phoneNumber')"
-                                                [placeholder]="'International Phone Number'">
-                                            <mat-select [formControl]="phoneNumber.get('country')" matPrefix>
-                                                <mat-select-trigger>
-                                                    <span class="flex items-center">
-                                                        <span class="hidden sm:flex w-6 h-4 mr-1 overflow-hidden"
-                                                            [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
-                                                            [style.backgroundSize]="'24px 3876px'"
-                                                            [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"></span>
-                                                        <span
-                                                            class="sm:mx-0.5 font-medium text-default">{{getCountryByIso(phoneNumber.get('country').value).code}}</span>
-                                                    </span>
-                                                </mat-select-trigger>
-                                                <ng-container *ngFor="let country of countries">
-                                                    <mat-option [value]="country.iso">
-                                                        <span class="flex items-center">
-                                                            <span class="w-6 h-4 overflow-hidden"
-                                                                [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'"
-                                                                [style.backgroundSize]="'24px 3876px'"
-                                                                [style.backgroundPosition]="country.flagImagePos"></span>
-                                                            <span class="ml-2">{{country.name}}</span>
-                                                            <span class="ml-2 font-medium">{{country.code}}</span>
-                                                        </span>
-                                                    </mat-option>
-                                                </ng-container>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
                                 <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>First Name</mat-label>
                                     <input matInput type="text" formControlName="first_name">
@@ -863,10 +823,6 @@
                                         required</mat-hint>
                                 </mat-form-field>
                             </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> employee-onboarding
                         </div>
                     </form>
                 </mat-step>
