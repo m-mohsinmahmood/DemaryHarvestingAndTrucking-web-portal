@@ -12,7 +12,7 @@ import { AlertService } from 'app/core/alert/alert.service';
 export class EmployeeService {
     // Private
     public navigationLabels = employeeNavigation;
-    public  _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
+    public _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
     private _documents: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
     private _item: BehaviorSubject<Item | null> = new BehaviorSubject(null);
@@ -38,11 +38,21 @@ export class EmployeeService {
     readonly isLoadingEmployee$: Observable<boolean> = this.isLoadingEmployee.asObservable();
     // #endregion
 
+    //#region Employeee Documents
+    // Data
+    private employeeDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly employeeDocuments$: Observable<any | null> = this.employeeDocuments.asObservable();
+
+    // Loaders
+    private isLoadingEmployeeDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingEmployeeDocuments$: Observable<any | null> = this.isLoadingEmployeeDocuments.asObservable();
+    //#endregion
+
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
-    ) {}
-    
+    ) { }
+
     //#region Getter
 
     get countries$(): Observable<Country[]> {
@@ -158,7 +168,7 @@ export class EmployeeService {
                 }
             );
     }
-    updateEmployee(id:string,data: any) {
+    updateEmployee(id: string, data: any) {
         this._httpClient
             .put(`api-1/employee`, data)
             .pipe(take(1))
@@ -254,8 +264,12 @@ export class EmployeeService {
     //#region Patch Employee
 
     patchEmployee(data: any) {
+        let newData;
+        const { body, subject, to, ...employee_data } = data;
+        const { id, status_step, prev_status_message, prev_status_step, status_message, ...email_data } = data;
+        newData = Object.assign({}, { employee_data }, { email_data });
         this._httpClient
-            .patch(`api-1/employee`, data)
+            .patch(`api-1/employee`, newData)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -276,7 +290,27 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    // this.getEmployeeById(data);
+                    this.getEmployeeById(newData.employee_data.id);
+                }
+            );
+    }
+    //#endregion
+
+    // Employee Documents Api functions
+
+    //#region get employee docs
+    getEmployeeDocs(id: string) {
+        return this._httpClient
+            .get(`api-1/employee-documents?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingEmployeeDocuments.next(true);
+                    this.employeeDocuments.next(res);
+                    this.isLoadingEmployeeDocuments.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
                 }
             );
     }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, lastValueFrom, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { applicantNavigationLeft, applicantNavigationRight } from './applicantnavigation';
 import {
@@ -23,13 +23,10 @@ export class ApplicantService {
     }
     // Private
 
-    private _pagination: BehaviorSubject<ApplicantPagination | null> = new BehaviorSubject(null);
-    private _applicantdata: BehaviorSubject<Applicant | null> = new BehaviorSubject(null);
     private _applicantsdata: BehaviorSubject<Applicant[] | null> = new BehaviorSubject(null);
     public applicantNavigationLeft = applicantNavigationLeft;
     public applicantNavigationRight = applicantNavigationRight;
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
-
 
     //#region Close Dialog
     closeDialog: BehaviorSubject<boolean> =
@@ -66,6 +63,24 @@ export class ApplicantService {
         this.isLoadingApplicants.asObservable();
 
     //#endregion
+    // #endregion
+
+    // #region Applicants & Applicant
+    // Data
+    // private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    // readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
+
+    // private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    // readonly applicant$: Observable<any | null> = this.applicant.asObservable();
+
+    // // Loaders
+    // private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
+
+    // private isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
+    // #endregion
+
     /**
      * Constructor
      */
@@ -73,6 +88,7 @@ export class ApplicantService {
         private _httpClient: HttpClient,
         private _alertSerice: AlertService,
         public _router: Router,
+
 
     ) { }
 
