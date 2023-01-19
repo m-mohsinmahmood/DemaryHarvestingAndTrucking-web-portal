@@ -12,6 +12,8 @@ import { LandingPageFullscreenComponent } from 'app/modules/admin/pages/landing-
 import { LandingPageClassicComponent } from 'app/modules/admin/pages/landing-page/classic/landing-page.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ApplyNowComponent } from './apply-now/apply-now.component';
+import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
+
 
 const routes: Routes = [
     {
@@ -41,7 +43,8 @@ const routes: Routes = [
         FuseCardModule,
         FuseAlertModule,
         SharedModule,
-        MatExpansionModule
+        MatExpansionModule,
+        NgxYoutubePlayerModule
     ]
 })
 export class LandingPageModule

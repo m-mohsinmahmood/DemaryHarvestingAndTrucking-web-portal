@@ -7,6 +7,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
+
 @Component({
     selector: 'landing-page-classic',
     templateUrl: './landing-page.component.html',
@@ -14,7 +15,16 @@ import { Subject, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
+
 export class LandingPageFullscreenComponent implements OnInit {
+    id = '907p_2UhZCU?controls=0&showinfo=0';
+    playerVars = {
+      cc_lang_pref: 'en',
+    };
+    version = '...';
+    private player;
+    public ytEvent;
+
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -22,6 +32,7 @@ export class LandingPageFullscreenComponent implements OnInit {
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _matDialog: MatDialog,
+        
 
     ) {
     }
@@ -34,9 +45,17 @@ export class LandingPageFullscreenComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // this.playPauseVideo();
-        
+        this.player.setPlayerStyle(this.player.PlayerStyle.CHROMELESS);
+
+         
     }
+    onStateChange(event) {
+        this.ytEvent = event.data;
+      }
+      savePlayer(player) {
+        this.player = player;
+      }
+
 
     openDialog() {
         // this.router.navigateByUrl('pages/applicant');

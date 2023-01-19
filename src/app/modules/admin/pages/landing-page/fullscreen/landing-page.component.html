@@ -1,6 +1,14 @@
 <div class="flex flex-col flex-auto bg-white">
 
-    <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
+    <!-- <youtube-player class="" style="width:1920px; height:1080px;"
+    [videoId]="id"
+    (ready)="savePlayer($event)"
+    (change)="onStateChange($event)"
+          [playerVars]="{ controls: 1, showinfo: 0, rel: 0, autoplay: 1, modestbranding: 0}"
+          >
+        </youtube-player> -->
+        
+        <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
         id="myVideo" poster="">
         <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
         <p><i class="far fa-times-circle"></i> No Preview Available</p>
@@ -33,8 +41,7 @@
                 </div>
                 <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Custom Agricultural
                     Services</h1>
-                <p class="text-center item-center">DHT provide services such as harvesting, farming, trucking and
-                    leasing equipment across most Southern and Midwest states.</p>
+                <p class="text-center item-center">DHT provides services such as harvesting, farming, trucking, and equipment rentals country wide.</p>
 
             </div>
 
@@ -141,8 +148,7 @@
                 SeDelle Demaray near Jamestown ND. Their son, Tim, joined in 1977, eventually taking over and building
                 the company into an industry leader.</p>
             <p class="lg:text-2xl text-xl">Today, the company operates a large fleet of combines and trucks country wide.</p>
-            <p class="lg:text-2xl text-xl">Today DHT has two primary regional operating centers, one in Casa Grande, AZ and the
-                other in Aberdeen, South Dakota.</p>
+            <p class="lg:text-2xl text-xl">DHT has two primary regional operating centers, one in Casa Grande, AZ and the other in Aberdeen, South Dakota.</p>
 
         </div>
 

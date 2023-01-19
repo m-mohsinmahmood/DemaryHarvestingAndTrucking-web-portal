@@ -34,3 +34,74 @@
   color:#fff !important;
 
 }
+youtube-player iframe{
+  width: 1920px !important;
+  height: 1080px !important;
+
+}
+
+/* Rules for Stylus
+ * https://addons.mozilla.org/en-US/firefox/addon/styl-us/
+ */
+
+/* Hide the annoying (i) button on the top-right corner */
+.ytp-chrome-top-buttons {
+  display: none;
+}
+
+/* Display the controls and title only on hover */
+.ytp-chrome-top,
+.ytp-chrome-bottom {
+  opacity: 0;
+  background-color: #30303080;
+  position: absolute;
+  width: 100% !important;
+  left: 0 !important;
+}
+.ytp-chrome-top:hover,
+.ytp-chrome-bottom:hover {
+  opacity: 1;
+}
+
+/* Position the background for the title and controls */
+.ytp-chrome-top {
+  background-position: top;
+}
+.ytp-chrome-bottom {
+  background-position: bottom;
+}
+
+/* Change the padding of the title */
+.ytp-title-text {
+  padding: 10px 20px 5px !important;
+}
+
+/* Display the title on hover, without being fullscreen */
+.ytp-hide-info-bar .ytp-chrome-top {
+  height: auto;
+}
+.ytp-hide-info-bar .ytp-chrome-top .ytp-title {
+  display: flex;
+}
+
+/* Hide the dark gradient on the title and controls */
+.ytp-gradient-top,
+.ytp-gradient-bottom {
+  display: none;
+}
+
+/* Limit the width of the title on the description area */
+.watch-title-container {
+  max-width: 370px;
+}
+
+/* Hide the 'More Videos' button and suggestions on pause */
+button.ytp-button.ytp-expand,
+.ytp-pause-overlay {
+  display: none !important;
+}
+
+/* Hide suggestions at the end of the video when in fullscreen */
+.ytp-ce-top-left-quad.ytp-ce-size-1280 {
+  display: none;
+}
