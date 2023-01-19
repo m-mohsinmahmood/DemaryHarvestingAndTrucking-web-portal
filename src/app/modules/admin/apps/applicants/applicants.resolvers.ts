@@ -4,7 +4,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -32,4 +31,3 @@ export class ContactsCountriesResolver implements Resolve<any>
         return this._applicantService.getCountries();
     }
 }
-

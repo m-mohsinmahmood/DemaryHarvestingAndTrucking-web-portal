@@ -19,7 +19,7 @@ export class AccountManagementComponent implements OnInit {
   { role: 'Tractor/Farming Operator', status: false, formRole: 'farmingTractorOperatorStatus' },
   { role: 'Recruiter', status: false, formRole: 'recruiterStatus' }
   ]
-  @Input() employeeRole: any
+  @Input() employee: any
 
   //#region  Observables
   employee$: Observable<any>;
@@ -65,8 +65,8 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Update Employee array
   updateEmployeeRole() {
-    if (this.employeeRole && this.employeeRole.length > 0) {
-      this.employeeRoleUpdate = this.employeeRole.split(',');
+    if (this.employee.role.role && this.employee.role.role.length > 0) {
+      this.employeeRoleUpdate = this.employee.role.role.split(',');
       if (this.employeeRoleUpdate.includes('Combine Operator')) {
         this.roles[0].status = true;
       }

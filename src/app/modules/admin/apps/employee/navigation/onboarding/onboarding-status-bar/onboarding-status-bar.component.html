@@ -1,60 +1,66 @@
-<div class="sm:5/12 md:w-12/12 px-2 mt-">
-    <div class="h-auto bg-gray-100
-     rounded m-2 p-1 shadow-lg">
-        <div class="flex flex-col py-4 px-2">
-            <div class=" last-of-type:h-2 flex relative min-h-14 {{i < this.statusStep? 'opacity-100':'opacity-50'}}"
-                *ngFor="let item of items;index as i">
-                <div class="flex flex-col items-center min-w-12">
-                    <div class="flex border-2 border-solid border-white rounded-full w-{{
-                            item.status === false ? '4' : '8'
-                        }} h-{{
-                            item.status === false ? '4' : '8'
-                        }} bg-white
-                       bg-{{ item.status === 'a' ? 'green' : '' }}-400
-                       bg-{{ item.status === 'b' ? 'green' : '' }}-400
-                       bg-{{ item.status === 'c' ? 'green' : '' }}-400
-                       bg-{{ item.status === 'd1' ? 'green' : '' }}-400
-                       bg-{{ item.status === 'e1' ? 'green' : '' }}-400
-                       bg-{{ item.status === false ? 'green' : '' }}-400
-                       "></div>
-                    <div class="timeline-track"></div>
-                </div>
-                <div class="flex-1 flex flex-row px-4">
-                    <div class="w-8/12 flex flex-col">
-                        <ng-template [ngIf]="item.name !== ''">
-                            <span class="text-md font-sans font-normal text-gray-400">{{ item.content }}</span>
-                        </ng-template>
-                        <ng-template [ngIf]="item.name === ''">
-                            <span class="text-md font-sans font-normal text-gray-400 mt-2">{{ item.content }}</span>
-                        </ng-template>
-                        <span class="text-md text-black">{{
-                            item.name === "rejected" ? "" : item.name
-                            }}</span>
-
-                        <button class="bg-white w-36 h-7 rounded-full text-sm" *ngIf="item.status === 'a'"
-                            (click)="openComposeDialog()">
-                            <mat-icon [svgIcon]="'heroicons_outline:pencil'" class="icon-size-3 mr-2"></mat-icon>
-                            Send email
-                            <mat-icon [svgIcon]="'heroicons_outline:chevron-right'" class="icon-size-3 ml-2">
+<div *ngIf="employee">
+    <div class="bg-gray-100 rounded-lg mx-2 shadow">
+        <div class="flex flex-col py-4 px-2 mt-2">
+            <div *ngFor="let item of employee.employee_status_bar; index as i">
+                <div
+                    class="last-of-type:h-2 flex relative {{item.show? 'min-h-14': 'min-h-0'}} {{item.active? 'opacity-100':'opacity-50'}}">
+                    <div *ngIf="item.show" class="flex flex-col items-center min-w-12">
+                        <div class="flex justify-center items-center border-2 border-solid border-white rounded-full  w-{{this.results.includes(item.step)? '4': '8'}} h-{{this.results.includes(item.step)? '4': '8'}}
+                            bg-green-400">
+                            <mat-icon class="{{ item.status == true ? 'visible': 'invisible' }}"
+                                [svgIcon]="'heroicons_outline:check'" [ngStyle]="{'color':'white'}">
                             </mat-icon>
-                        </button>
+                        </div>
+                        <div class="timeline-track"></div>
                     </div>
-                    <div class=" w-4/12 flex justify-end font-mono text-xs">
-                        {{item.date}}
+                    <div *ngIf="item.show" class="flex-1 flex flex-row px-4">
+
+                        <div class="w-8/12 flex flex-col">
+                            <span class="flex items-center text-md font-sans font-normal">{{item.step}}
+                                <div
+                                    [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
+                                    <mat-icon matTooltip="Compose Email" (click)="composeEmail(i)"
+                                        *ngIf="i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13 || i == 15" class="ml-2 icon-size-5"
+                                        [svgIcon]="'heroicons_outline:envelope'">
+                                    </mat-icon>
+                                    <mat-icon  matTooltip="Verify" (click)="verifyDocs(i,'Accept')"
+                                        *ngIf="(i == 2 || i == 4 || i == 6 || i == 8 || i == 10 || i == 12 || i == 14) && item.showIcons" class="ml-2 icon-size-5"
+                                        [svgIcon]="'heroicons_outline:check-circle'">
+                                    </mat-icon>
+                                    <mat-icon  matTooltip="Verify" (click)="verifyDocs(i,'Reject')"
+                                    *ngIf="(i == 2 || i == 4 || i == 6  || i == 8 || i == 10 || i == 12 || i == 14) && item.showIcons" class="ml-2 icon-size-5"
+                                    [svgIcon]="'heroicons_outline:x-circle'">
+                                </mat-icon>
+                                </div>
+                            </span>
+                            <!-- <mat-hint
+                                *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection != 'null'  && applicantInfo?.applicant_info?.reason_for_rejection && i == 9 "
+                                class="my-1 text-red-600 text-md font-semibold">
+                                {{applicantInfo?.applicant_info?.reason_for_rejection}}
+                            </mat-hint>
+                            <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
+                                {{applicantInfo?.applicant_info.first_interviewer_name === null ?
+                                "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}
+                            </mat-hint>
+                            <mat-hint *ngIf="i == 3" class="my-1 text-md font-semibold">
+                                {{applicantInfo?.applicant_info.second_interviewer_name === null ?
+                                "" : "(" + applicantInfo?.applicant_info.second_interviewer_name + ")"}}
+                            </mat-hint>
+                            <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
+                                {{applicantInfo?.applicant_info.third_interviewer_name === null ?
+                                "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
+                            </mat-hint>
+                            <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
+                                {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
+                                "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
+                            </mat-hint> -->
+                        </div>
+                        <div class="mt-1 w-4/12 flex justify-end font-mono text-xs">
+                            {{item?.date | date: "MM-dd-YYYY"}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="flex flex-row justify-center items-center mb-5">
-            <button
-                class="hover:bg-blue-700 bg-blue-700 text-white font-sans hover:text-white py-2 px-2 rounded mr-2 w-44">
-                <span>Advance to offer</span>
-            </button>
-            <button
-                class="bg-transparent hover:bg-red-500 text-red-500 font-sans hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded w-28">
-                <span>Reject</span>
-            </button>
         </div>
     </div>
 </div>
