@@ -257,7 +257,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           id: this.employee?.employee_info.employee_id,
           prev_status_step: this.employee?.employee_info.status_step,
           prev_status_message: this.employee?.employee_info.prev_status_message,
-          status_message: "",
+          status_message: "Inprogress",
           status_step: +this.employee?.employee_info.status_step,
           rejected: true,
         });

@@ -118,7 +118,7 @@ export class MailboxComposeComponent implements OnInit {
             this.patchEmail(11,4)
         }
         else if (this.current_status_step == '12'){
-            this.patchEmail(13,5)
+            this.patchEmail(13,6)
         }
         else if (this.current_status_step == '14'){
             this.patchEmail(15,6)
