@@ -151,6 +151,10 @@ export class OnboardingComponent implements OnInit {
     this.block = foldename.folder;
   }
 
+  downloadDocument(doc){
+    window.open(doc, "_blank");
+  }
+
   
 
 }

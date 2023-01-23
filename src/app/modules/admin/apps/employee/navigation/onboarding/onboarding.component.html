@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.passport_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.approval_letter_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.contract_w4 " class="flex bg-gray-100 flex-col sm:flex-row
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.contract_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.b797_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
@@ -198,12 +198,12 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs.b797_sign}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs.dot_physical_sign}}</mat-label>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.dot_physical_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -220,28 +220,28 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs.dot_physical_name}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs.drug_test_name}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
                                     Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs.dot_physical_expiration_date}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs.drug_test_expiration_date}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs.dot_physical_issue_date| date: 'MMMM-dd-YYYY' }}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs.drug_test_issue_date| date: 'MMMM-dd-YYYY' }}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs.dot_physical_sign}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs.drug_test_sign}}</mat-label>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.drug_test_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -284,7 +284,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.auto_license_issue_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -320,7 +320,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.cdl_license_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
@@ -359,7 +359,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.bank_acc_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.contract_w4 " class="flex bg-gray-100 flex-col sm:flex-row
@@ -384,7 +384,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.w4_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
 
@@ -417,7 +417,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.social_sec_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
@@ -449,7 +449,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.work_agreement_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -526,7 +526,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.visa_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -552,7 +552,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.i9_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -577,7 +577,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.i94_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -609,7 +609,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.cert_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div class="flex bg-gray-100 flex-col sm:flex-row
@@ -642,7 +642,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.department_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
@@ -671,7 +671,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.handbook_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -696,7 +696,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.rules_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.additional_compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -721,7 +721,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.drug_policy_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.additional_compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -746,7 +746,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.reprimand_policy_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -772,7 +772,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
