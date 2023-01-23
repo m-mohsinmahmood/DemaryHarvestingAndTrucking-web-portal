@@ -63,7 +63,7 @@
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Payroll'">
-                                <app-payroll>
+                                <app-payroll [employee] = "employee">
                                 </app-payroll>
                             </ng-template>
                         </div>

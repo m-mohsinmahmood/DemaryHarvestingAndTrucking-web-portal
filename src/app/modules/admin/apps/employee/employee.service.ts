@@ -48,6 +48,15 @@ export class EmployeeService {
     readonly isLoadingEmployeeDocuments$: Observable<any | null> = this.isLoadingEmployeeDocuments.asObservable();
     //#endregion
 
+    //#Employee Dwr Region
+    private employeeDwr: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly employeeDwr$: Observable<any | null> = this.employeeDwr.asObservable();
+
+    private isLoadingEmployeeDwr: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingEmployeeDwr$: Observable<any | null> = this.isLoadingEmployeeDwr.asObservable();
+
+    //#endregion
+
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
@@ -344,4 +353,21 @@ export class EmployeeService {
     }
 
     //#endregion
+
+    getPayrollById(id: string) {
+        return this._httpClient
+            .get(`api-1/employee-payroll?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingEmployeeDwr.next(true);
+                    this.employeeDwr.next(res);
+                    this.isLoadingEmployeeDwr.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
 }
