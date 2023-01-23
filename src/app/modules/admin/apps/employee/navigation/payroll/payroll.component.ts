@@ -57,4 +57,13 @@ export class PayrollComponent implements OnInit {
   }
   //#endregion
 
+  totalWage(a:any,b:any)
+  {
+    return (
+      (
+      parseFloat((a).replace(/\$/g, '')) * 
+      parseFloat((b).replace(/\$/g, ''))
+      ).toFixed(2));
+  }
+
 }

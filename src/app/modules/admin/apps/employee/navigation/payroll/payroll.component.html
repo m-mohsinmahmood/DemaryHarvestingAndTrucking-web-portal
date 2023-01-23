@@ -74,7 +74,7 @@
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hourly_rate}}</div>
-                                        <div class="truncate hidden sm:block">Lorium</div>
+                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
                                         <div class="truncate  rounded-full h-7 w-26 bg-blue-200 flex  justify-center items-center">Verified</div>
 
                                         <!-- Action -->
