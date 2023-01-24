@@ -124,9 +124,13 @@ export class EmployeeService {
                 }
             );
     }
-    getEmployeeById(id: string) {
+    getEmployeeById(id: string, h2a: string = 'false') {
+        let params = new HttpParams();
+        params = params.set('h2a', h2a);
         return this._httpClient
-            .get(`api-1/employee?id=${id}`)
+            .get(`api-1/employee?id=${id}`, {
+                params,
+            })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -263,7 +267,7 @@ export class EmployeeService {
 
     //#region Patch Employee
 
-    patchEmployee(data: any) {
+    patchEmployee(data: any, h2a: string) {
         let newData;
         const { body, subject, to, ...employee_data } = data;
         const { id, status_step, prev_status_message, prev_status_step, status_message, ...email_data } = data;
@@ -290,7 +294,7 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    this.getEmployeeById(newData.employee_data.id);
+                    this.getEmployeeById(newData.employee_data.id,h2a);
                 }
             );
     }
