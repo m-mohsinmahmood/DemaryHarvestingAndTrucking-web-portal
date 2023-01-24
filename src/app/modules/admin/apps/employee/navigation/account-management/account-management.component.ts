@@ -96,7 +96,7 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Initial APIs
   initApis(id: string) {
-    this._employeeService.getEmployeeById(id);
+    this._employeeService.getEmployeeById(id, 'false');
   }
   //#endregion
 
@@ -138,7 +138,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          })
+          }, 'false')
         }
         else {
           event.source.checked = true;
@@ -150,7 +150,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          })
+          }, 'false')
         }
         else {
           event.source.checked = false;
