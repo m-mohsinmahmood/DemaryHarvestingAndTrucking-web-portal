@@ -102,9 +102,8 @@
                             <div mat-sort-header="last_name">Last Name</div>
                             <div mat-sort-header="role" class="hidden sm:block">Role</div>
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
-                            <div mat-sort-header="us_phone_number" class="hidden sm:block">US Phone Number</div>
-                            <div mat-sort-header="home_phone_number" class="hidden sm:block">
-                                Foreign Phone Number
+                            <div mat-sort-header="cell_phone_number" class="hidden sm:block">
+                                Cell Phone Number
                             </div>
                             <div mat-sort-header="status" class="hidden sm:block">Staus</div>
                             <div>Details</div>
@@ -131,10 +130,7 @@
                                             </div>
                                         </div>
                                         <div class="hidden sm:block">
-                                            +1 {{ employee.us_phone_number }}
-                                        </div>
-                                        <div class="hidden sm:block">
-                                            +1 {{ employee.cell_phone_number }}
+                                         {{employee.cell_phone_country_code}} {{ employee.cell_phone_number }}
                                         </div>
                                         <div class="hidden sm:block">
                                             <mat-icon class="{{
