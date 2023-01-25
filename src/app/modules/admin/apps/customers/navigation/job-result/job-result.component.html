@@ -1,6 +1,6 @@
 <!--Resources Nested Tabs-->
 <div class="sm:rounded-lg overflow-auto	">
-    <mat-tab-group mat-align-tabs="start">
+    <mat-tab-group mat-align-tabs="start" (selectedIndexChange)="getRelativeTabJobs($event)">
         <!-- Custom Harvesting-->
         <mat-tab label="Custom Harvesting">
             <div class="flex justify-end py-4">
