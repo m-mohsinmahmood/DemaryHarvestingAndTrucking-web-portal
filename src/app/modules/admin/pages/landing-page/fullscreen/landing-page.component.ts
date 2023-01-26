@@ -17,7 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 
 export class LandingPageFullscreenComponent implements OnInit {
-    id = '907p_2UhZCU?controls=0&showinfo=0';
+    id = 'Cn_c4EFBuEo';
     playerVars = {
       cc_lang_pref: 'en',
     };
