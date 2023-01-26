@@ -14,46 +14,26 @@
                         <div class="timeline-track"></div>
                     </div>
                     <div *ngIf="item.show" class="flex-1 flex flex-row px-4">
-
-                        <div class="w-8/12 flex flex-col">
+                        <div class="w-6/12 flex flex-col">
                             <span class="flex items-center text-md font-sans font-normal">{{item.step}}
-                                <div
-                                    [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
-                                    <mat-icon matTooltip="Compose Email" (click)="composeEmail(i)"
-                                        *ngIf="i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13 || i == 15" class="ml-2 icon-size-5"
-                                        [svgIcon]="'heroicons_outline:envelope'">
-                                    </mat-icon>
-                                    <mat-icon  matTooltip="Verify" (click)="verifyDocs(i,'Accept',statusBar)"
-                                        *ngIf="(i == 2 || i == 4 || i == 6 || i == 8 || i == 10 || i == 12 || i == 14) && item.showIcons" class="ml-2 icon-size-5"
-                                        [svgIcon]="'heroicons_outline:check-circle'">
-                                    </mat-icon>
-                                    <mat-icon  matTooltip="Reject" (click)="verifyDocs(i,'Reject',item.statusBar)"
-                                    *ngIf="(i == 2 || i == 4 || i == 6  || i == 8 || i == 10 || i == 12 || i == 14) && item.showIcons" class="ml-2 icon-size-5"
-                                    [svgIcon]="'heroicons_outline:x-circle'">
-                                </mat-icon>
-                                </div>
                             </span>
-                            <!-- <mat-hint
-                                *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection != 'null'  && applicantInfo?.applicant_info?.reason_for_rejection && i == 9 "
-                                class="my-1 text-red-600 text-md font-semibold">
-                                {{applicantInfo?.applicant_info?.reason_for_rejection}}
-                            </mat-hint>
-                            <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
-                                {{applicantInfo?.applicant_info.first_interviewer_name === null ?
-                                "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}
-                            </mat-hint>
-                            <mat-hint *ngIf="i == 3" class="my-1 text-md font-semibold">
-                                {{applicantInfo?.applicant_info.second_interviewer_name === null ?
-                                "" : "(" + applicantInfo?.applicant_info.second_interviewer_name + ")"}}
-                            </mat-hint>
-                            <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
-                                {{applicantInfo?.applicant_info.third_interviewer_name === null ?
-                                "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
-                            </mat-hint>
-                            <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
-                                {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
-                                "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
-                            </mat-hint> -->
+                        </div>
+                        <div class="mt-1 w-2/12 flex font-mono text-xs">
+                            <div
+                                [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
+                                <mat-icon matTooltip="Compose Email" (click)="composeEmail(i)"
+                                    *ngIf="i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13 || i == 15 || i == 17"
+                                    class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'">
+                                </mat-icon>
+                                <mat-icon matTooltip="Verify" (click)="verifyDocs(i,'Accept',statusBar)"
+                                    *ngIf="(i == 2 || i == 4 || i == 6 || i == 8 || i == 10 || i == 12 || i == 14 || i == 16 ) && item.showIcons"
+                                    class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:check-circle'">
+                                </mat-icon>
+                                <mat-icon matTooltip="Reject" (click)="verifyDocs(i,'Reject',item.statusBar)"
+                                    *ngIf="(i == 2 || i == 4 || i == 6  || i == 8 || i == 10 || i == 12 || i == 14 || i == 16 ) && item.showIcons"
+                                    class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:x-circle'">
+                                </mat-icon>
+                            </div>
                         </div>
                         <div class="mt-1 w-4/12 flex justify-end font-mono text-xs">
                             {{item?.date | date: "MM-dd-YYYY"}}
