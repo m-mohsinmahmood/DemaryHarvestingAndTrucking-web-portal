@@ -1,19 +1,21 @@
 <div class="flex flex-col flex-auto bg-white">
 
-    <!-- <youtube-player class="" style="width:1920px; height:1080px;"
+    <youtube-player class="" style="width:1920px; height:1080px;"
     [videoId]="id"
     (ready)="savePlayer($event)"
     (change)="onStateChange($event)"
-          [playerVars]="{ controls: 1, showinfo: 0, rel: 0, autoplay: 1, modestbranding: 0}"
+          [playerVars]="{ controls: 1,
+            mute: 1,
+            autoplay: 1}"
           >
-        </youtube-player> -->
+        </youtube-player>
         
-        <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
+        <!-- <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
         id="myVideo" poster="">
         <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
         <p><i class="far fa-times-circle"></i> No Preview Available</p>
 
-    </video>
+    </video> -->
     <h1 class="-mt-12 pl-8 text-right text-white pr-8">Video credit: Will Bruce, DHT employee from New Zealand</h1>
 
     <div class="heading-title h-auto flex flex-col items-left justify-start ">
