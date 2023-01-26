@@ -65,8 +65,8 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Update Employee array
   updateEmployeeRole() {
-    if (this.employee.role.role && this.employee.role.role.length > 0) {
-      this.employeeRoleUpdate = this.employee.role.role.split(',');
+    if (this.employee.employee_info.role && this.employee.employee_info.role.length > 0) {
+      this.employeeRoleUpdate = this.employee.employee_info.role.split(',');
       if (this.employeeRoleUpdate.includes('Combine Operator')) {
         this.roles[0].status = true;
       }
@@ -88,7 +88,7 @@ export class AccountManagementComponent implements OnInit {
   //#region Initialize Observables
   initObservables() {
     // Data
-    this.employee$ = this._employeeService.employee$;
+    //this.employee$ = this._employeeService.employee$;
     // Loader
     this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
   }
@@ -96,7 +96,7 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Initial APIs
   initApis(id: string) {
-    this._employeeService.getEmployeeById(id, 'false');
+    //this._employeeService.getEmployeeById(id, 'false');
   }
   //#endregion
 

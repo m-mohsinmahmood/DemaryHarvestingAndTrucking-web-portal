@@ -121,7 +121,7 @@
                                             {{ employee?.last_name }}
                                         </div>
                                         <div class="flex items-center hidden sm:block truncate">
-                                            {{ employee.role }}
+                                            {{ employee.role? employee.role : "-" }}
                                         </div>
                                         <div class="hidden truncate sm:block lg:flex items-center"
                                             matTooltip="{{ employee.email }}" matTooltipPosition="above">
