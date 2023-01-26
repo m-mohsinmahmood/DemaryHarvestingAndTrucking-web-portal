@@ -5,14 +5,14 @@
         <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
             <span class="ml-1 capitalize">Profile Data </span>
         </div>
-        <div class="flex justify-end gap-4 px-4 sm:px-6 flex-shrink-0 items-center  sm:mt-0 sm:ml-4">
+        <!-- <div class="flex justify-end gap-4 px-4 sm:px-6 flex-shrink-0 items-center  sm:mt-0 sm:ml-4">
             <button
                 class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 mat-flat-button [color]="'primary'" (click)="openUpdateDialog()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                 <span class="ml-2 mr-1">Edit</span>
             </button>
-        </div>
+        </div> -->
     </div>
     <div *ngIf="employeeProfileData$ | async as employeeProfileData">
         <div

@@ -63,7 +63,7 @@ export const items = [
     {
         id         : '157adb9a-14f8-4559-ac93-8be893c9f80a',
         folderId   : null,
-        name       : 'DMCA notice #42',
+        name       : 'Work Rules',
         createdBy  : 'Bill Demaray',
         createdAt  : 'May 8, 2021',
         modifiedAt : 'May 8, 2021',
