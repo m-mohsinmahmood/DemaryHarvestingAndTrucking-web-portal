@@ -53,9 +53,7 @@ export class H2aRateListComponent implements OnInit {
     //#endregion
 
     //#region Variables
-    searchform: FormGroup = new FormGroup({
-        search: new FormControl(),
-    });
+  
     search: Subscription;
     sortActive: any;
     sortDirection: any;
@@ -66,6 +64,10 @@ export class H2aRateListComponent implements OnInit {
     searchResult: string;
     page: number;
     limit: number;
+    searchform: FormGroup = new FormGroup({
+        search: new FormControl(),
+    });
+    
     //#endregion
 
     constructor(
@@ -79,7 +81,6 @@ export class H2aRateListComponent implements OnInit {
         this.initApis();
         this.initObservables();
 
-        console.log(this.h2aRateList$);
     }
 
     ngOnDestroy(): void {
@@ -113,10 +114,7 @@ export class H2aRateListComponent implements OnInit {
     //#endregion
 
     //#region Add/Edit/Import Dialog
-    // openAddDialog(): void {
-    //     const dialogRef = this._matDialog.open(AddCropsComponent);
-    //     dialogRef.afterClosed().subscribe((result) => { });
-    // }
+  
     openEditDialog(event): void {
         this.isEdit = true;
         const dialogRef = this._matDialog.open(EditH2aRatesComponent, {
@@ -131,13 +129,6 @@ export class H2aRateListComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((result) => { });
     }
-    // openImportDialog(): void {
-    //     const dialogRef = this._matDialog.open(ImportCropsComponent, {});
-    //     dialogRef.afterClosed().subscribe((result) => {
-
-    //     });
-    // }
-
     //#endregion
 
     //#region Sort Function
@@ -163,45 +154,4 @@ export class H2aRateListComponent implements OnInit {
     }
     //#endregion
 
-    //#region Export/Download Template Function
-    // handleExport() {
-    //     let allCrops;
-    //     this._h2aRatesService.getCropExport(this.sortActive, this.sortDirection, this.searchResult,)
-    //         .pipe(takeUntil(this._unsubscribeAll))
-    //         .subscribe((value) => {
-    //             allCrops = value
-    //             const headings = [['Crop Name', 'Variety', 'Bushel Weight']];
-    //             const wb = utils.book_new();
-    //             const ws: any = utils.json_to_sheet([]);
-    //             utils.sheet_add_aoa(ws, headings);
-    //             utils.sheet_add_json(ws, allCrops, {
-    //                 origin: 'A2',
-    //                 skipHeader: true,
-    //             });
-    //             utils.book_append_sheet(wb, ws, 'Report');
-    //             writeFile(wb, 'Crop Data.xlsx');
-    //         })
-
-    // }
-
-    downloadTemplate() {
-        window.open('https://dhtstorageaccountdev.blob.core.windows.net/bulkcreate/Crops_Data.xlsx', "_blank");
-    }
-
-    
-    //#region Copy Crop Id
-    // copyCropId(val: string) {
-    //     let selBox = document.createElement('textarea');
-    //     selBox.style.position = 'fixed';
-    //     selBox.style.left = '0';
-    //     selBox.style.top = '0';
-    //     selBox.style.opacity = '0';
-    //     selBox.value = val;
-    //     document.body.appendChild(selBox);
-    //     selBox.focus();
-    //     selBox.select();
-    //     document.execCommand('copy');
-    //     document.body.removeChild(selBox);
-    // }
-    //#endregion
 }

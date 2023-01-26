@@ -9,12 +9,12 @@
 .crops-grid {
     grid-template-columns: 60% 40%;
     @screen sm {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 50% 30% 20%;
     }
     @screen md {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns:  50% 30% 20%;
     }
     @screen lg {
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns:  50% 30% 20%;
     }
 }

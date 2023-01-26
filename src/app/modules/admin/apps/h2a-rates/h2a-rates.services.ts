@@ -135,7 +135,7 @@ export class H2aRatesService {
             );
     }
 
-    updateCrop(rateData: any) {
+    updateH2aRate(rateData: any) {
         this._httpClient
             .put(`api-1/h2a-rates`, rateData)
             .pipe(take(1))
