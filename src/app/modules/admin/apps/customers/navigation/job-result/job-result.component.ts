@@ -73,6 +73,12 @@ export class JobResultComponent implements OnInit {
       this._customerService.getFarmingJobs(this.routeID, 'farming');
       console.log(this.customFarmingJobs$);
     }
+    else 
+    {
+      this._customerService.getHarvestingJobs(this.routeID, 'harvesting');
+      this._customerService.getTruckingJobs(this.routeID, 'trucking');
+      this._customerService.getFarmingJobs(this.routeID, 'farming');
+    }
   }
 
   //#endregion

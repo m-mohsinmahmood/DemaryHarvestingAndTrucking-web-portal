@@ -1,5 +1,5 @@
 <!-- Header -->
-<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen pop-up-good-fit -m-6">
     <!-- Title -->
     <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">
@@ -9,11 +9,11 @@
         </button>
     </header>
     <div class="flex items-center justify-center mt-2">
-        <div class="text-2xl font-medium underline decoration-solid">
+        <div class="text-2xl font-medium underline decoration-solid p-4 sm:p-0">
             Are you a good fit for DHT?
         </div>
     </div>
-    <div class="p-4">
+    <div class="p-4 overflow-y-auto mb-8 sm:mb-0">
         <div class="text-lg font-medium underline decoration-solid">
             What to Expect
         </div>
@@ -42,7 +42,7 @@
         </ul>
     </div>
     <div class="flex flex-0 sm:flex-row items-center justify-center sm:justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">  
-        <div class="flex gap-2 items-center sm:flex-row flex-col-reverse mt-4 sm:mt-0">
+        <div class="flex gap-2 items-center sm:flex-row flex-col-reverse mt-4 sm:mt-0 pb-16 sm:pb-0">
             <!-- Discard -->
             <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
                 Discard
