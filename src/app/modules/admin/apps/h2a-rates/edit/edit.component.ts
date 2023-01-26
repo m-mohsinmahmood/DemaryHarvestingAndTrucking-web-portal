@@ -17,6 +17,7 @@ export class EditH2aRatesComponent implements OnInit {
     //#endregion
     form: FormGroup;
 
+
     constructor(
         private _h2aRatesService: H2aRatesService,
         private _formBuilder: FormBuilder,
@@ -50,7 +51,7 @@ export class EditH2aRatesComponent implements OnInit {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
-            state: [''],
+            state: [{ value: '', disabled: true },],
             hourly_rate: [''],
         });
         if (this.data && this.data.rateData.isEdit) {
@@ -65,14 +66,14 @@ export class EditH2aRatesComponent implements OnInit {
     // createCrop(cropData: any): void {
     //     this._h2aRatesService.createCrop(cropData);
     // }
-    updateCrop(rateData: any): void {
-        this._h2aRatesService.updateCrop(rateData);
+    updateH2aRate(rateData: any): void {
+        this._h2aRatesService.updateH2aRate(rateData);
     }
 
     onSubmit(): void {
         this._h2aRatesService.is_loading_h2aRate.next(true);
         if (this.data && this.data.rateData.isEdit) {
-            this.updateCrop(this.form.value);
+            this.updateH2aRate(this.form.value);
         } else {
             // this.createCrop(this.form.value);
         }
