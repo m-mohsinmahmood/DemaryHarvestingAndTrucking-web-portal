@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
@@ -13,7 +14,9 @@ export class PayrollComponent implements OnInit {
   //#region Observable
   employeeDwr$: Observable<Employee>;
   routeID; // URL ID
-  @Input () employee: any;
+  @Input() employee: any;
+  form: FormGroup;
+
 
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -22,6 +25,8 @@ export class PayrollComponent implements OnInit {
   constructor(
     private _employeeService: EmployeeService,
     public activatedRoute: ActivatedRoute,
+    private _formBuilder: FormBuilder,
+
 
 
 
@@ -31,12 +36,32 @@ export class PayrollComponent implements OnInit {
     this.getRouteParams();
     this.initApis();
     this.initObservables();
-    console.log(this.employeeDwr$);
+    this.initForm();
+    // this.formUpdates();
+    this.form.controls['payroll_period_end'].valueChanges.subscribe(
+      () => {
+        this.submit();     
+      }
+  );
   }
 
-  
+  initForm() {
+    this.form = this._formBuilder.group({
+      payroll_period_start: [''],
+      payroll_period_end: ['']
+    });
+  }
+
+  submit(): void {
+    if(this.form.get('payroll_period_end').value !== null){
+
+    console.log(this.form.get('payroll_period_start').value.format('D-MM-YYYY'), this.form.get('payroll_period_end').value.format('D-MM-YYYY'));
+    }
+  }
+
+
   //#region route params function
-  getRouteParams(){
+  getRouteParams() {
     this.activatedRoute.params.subscribe((params) => {
       this.routeID = params.Id;
     });
@@ -57,12 +82,11 @@ export class PayrollComponent implements OnInit {
   }
   //#endregion
 
-  totalWage(a:any,b:any)
-  {
+  totalWage(a: any, b: any) {
     return (
       (
-      parseFloat((a).replace(/\$/g, '')) * 
-      parseFloat((b).replace(/\$/g, ''))
+        parseFloat((a).replace(/\$/g, '')) *
+        parseFloat((b).replace(/\$/g, ''))
       ).toFixed(2));
   }
 

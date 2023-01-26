@@ -1,6 +1,6 @@
 <!--Resources Nested Tabs-->
 <div class="sm:rounded-lg overflow-auto	">
-    <mat-tab-group mat-align-tabs="start">
+    <mat-tab-group mat-align-tabs="start" (selectedIndexChange)="getRelativeTabJobs($event)">
         <!-- Custom Harvesting-->
         <mat-tab label="Custom Harvesting">
             <div class="flex justify-end py-4">
@@ -29,7 +29,7 @@
                           Details
                         </mat-panel-title>
                       </mat-expansion-panel-header>
-                      <div class="grid-cols-1 table-auto py-5 justify-between gap-x-8 sm:w-180 m-auto">
+                      <div *ngIf="customHarvestingJobs$ | async as harvestingJobs" class="grid-cols-1 table-auto py-5 justify-between gap-x-8 sm:w-180 m-auto">
                         <div class="grid grid-cols-2 justify-center py-1">
                             <mat-label class="text-lg text-gray-500">Total Net Pounds</mat-label>
                             <mat-label class="text-right">161616</mat-label>
@@ -71,7 +71,7 @@
                         </div>
                          <div class="grid grid-cols-2 justify-center py-1">
                             <mat-label class="text-lg text-gray-500">Total Loads</mat-label>
-                            <mat-label class="text-right">1234</mat-label>
+                            <mat-label class="text-right">{{harvestingJobs.total_loads}}</mat-label>
 
                         </div>
                          <div class="grid grid-cols-2 justify-center py-1">
@@ -159,7 +159,7 @@
                     </mat-expansion-panel>
                   </mat-accordion>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+            <div class="mt-4 px-4 py-5 sm:p-0" *ngIf="customHarvestingJobs$ | async as harvestingJobs">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -197,9 +197,10 @@
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                            <div  *ngIf="customHarvestingJobs$ | async as harvestingJobs">
+                                            <div *ngFor="let harvestingJob of harvestingJobs.harvestingJobs" class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    "1231"
+                                                    {{harvestingJob.field_name}}
                                                 </div>
 
                                                 <!-- Harvest Year -->
@@ -209,30 +210,37 @@
 
                                                 <!-- Email -->
                                                 <div class="sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.destination}} 
                                                     </div>
                                                 </div>
 
                                                 <!-- Contact -->
                                                 <div class="sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Hyperlink" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.id}} 
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"1234" </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        "1234" 
+                                                    </div>
                                                 </div>
 
                                                 <div class="lg:block">
                                                     <div class="min-w-4 ml-2">"1234" </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"1234" </div>
-                                                </div>
-                                                <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Verified" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.load_miles}} 
                                                     </div>
                                                 </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2 capitalize">{{harvestingJob.status}}
+                                                    </div>
+                                                </div>
+                                            </div>
                                             </div>
                                         </ng-container>
                                     </ng-container>
@@ -264,7 +272,7 @@
                             <ng-container>
                                 <div class="grid">
                                     <!-- Header -->
-                                    <div class="job-result-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="job-result-custom-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                         <div class="hidden sm:block">
                                             Load Date
                                         </div>
@@ -296,46 +304,59 @@
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                <div class="truncate">
-                                                    "Jun 23, 2022"
+                                            <div *ngIf="commercialTruckingJobs$ | async as ctJobs">
+                                                <div *ngFor="let truckingJob of ctJobs.truckingJobs" class="job-result-custom-trucking-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    <div class="truncate">
+                                                    {{truckingJob.load_date | date: "dd-MM-YYYY"}}
                                                 </div>
 
                                                 <!-- Harvest Year -->
                                                 <div class="hidden sm:block">
-                                                    "Lorium"
+                                                    {{truckingJob.disp_first_name}} {{truckingJob.disp_last_name}}
                                                 </div>
 
                                                 <!-- Email -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{truckingJob.dr_first_name}} {{truckingJob.dr_last_name}}
+ 
                                                     </div>
                                                 </div>
 
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Hyperlink" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{truckingJob.id}} 
+ 
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" </div>
+                                                    <div class="min-w-4 ml-2">                                                        
+                                                        {{truckingJob.cargo}} 
+                                                    </div>
                                                 </div>
 
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        {{truckingJob.dest_city}}
+
+                                                    </div>
                                                 </div>
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">"Lorium" </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Verified" 
+                                                    <div class="min-w-4 ml-2 capitalize" >
+                                                        {{truckingJob.status }}
+ 
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">"Invoice" 
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </ng-container>
                                     </ng-container>
@@ -404,54 +425,68 @@
                                     <!-- Rows -->
                                     <ng-container>
                                         <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]" class="job-result-custom-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                            <div *ngIf="customFarmingJobs$ | async as farmingJobs">
+                                            <div *ngFor="let farmingJob of farmingJobs.farmingJobs" class="job-result-custom-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    "Lorium"
+                                                    {{farmingJob.load_date | date: "dd-MM-YYYY"}}
                                                 </div>
 
                                                 <!-- Harvest Year -->
                                                 <div class="hidden sm:block">
-                                                    "Lorium"
+                                                    {{farmingJob.service}}
                                                 </div>
 
                                                 <!-- Email -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.farm_name}}
+ 
                                                     </div>
                                                 </div>
 
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.field_name}}
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" </div>
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.acres}}
+                                                    </div>
                                                 </div>
 
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" </div>
-                                                </div>
-                                                <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.gps_acres}}
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" 
+                                                    <div class="min-w-4 ml-2 capitalize">
+                                                        {{farmingJob.start_time}}
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.end_time}}
+ 
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">"Lorium" </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Verified" 
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.status}}
+ 
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">"Invoice" 
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </ng-container>
                                     </ng-container>
@@ -473,13 +508,348 @@
         <!-- Summary -->
         <mat-tab label="Summary">
             <div>
-                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Combine Summary Table </header>
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight text-center"> Combine Summary Table </header>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0">
+
+            <div>
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Custom Harvesting </header>
+            </div>
+            <div class="mt-4 px-4 py-5 sm:p-0" *ngIf="customHarvestingJobs$ | async as harvestingJobs">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
-                  
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="job-result-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="sm:block">
+                                            Field
+                                        </div>
+                                        <div class="sm:block pl-2">
+                                            Load Date
+                                        </div>
+                                        <div class="sm:block pl-2">
+                                            Destination
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            Tickets
+                                        </div>
+                                        <div class="sm:block">
+                                            Net Pounds</div>
+
+                                        <div class="hidden sm:block">
+                                            Net Bushels
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Load Miles
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Status
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div  *ngIf="customHarvestingJobs$ | async as harvestingJobs">
+                                            <div *ngFor="let harvestingJob of harvestingJobs.harvestingJobs" class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    {{harvestingJob.field_name}}
+                                                </div>
+
+                                                <!-- Harvest Year -->
+                                                <div class="sm:block">
+                                                    "Jun 23, 2022"
+                                                </div>
+
+                                                <!-- Email -->
+                                                <div class="sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.destination}} 
+                                                    </div>
+                                                </div>
+
+                                                <!-- Contact -->
+                                                <div class="sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.id}} 
+                                                    </div>
+                                                </div>
+                                                <!-- Active -->
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        "1234" 
+                                                    </div>
+                                                </div>
+
+                                                <div class="lg:block">
+                                                    <div class="min-w-4 ml-2">"1234" </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{harvestingJob.load_miles}} 
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2 capitalize">{{harvestingJob.status}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div>
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Commercial Trucking </header>
+            </div>
+            <div class="flex flex-auto overflow-hidden">
+                <!-- Products list -->
+                <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                    <ng-container>
+                        <ng-container>
+                            <div class="grid">
+                                <!-- Header -->
+                                <div class="job-result-custom-trucking-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                    <div class="hidden sm:block">
+                                        Load Date
+                                    </div>
+                                    <div class="hidden sm:block pl-2">
+                                        Dispatcher
+                                    </div>
+                                    <div class="hidden sm:block pl-2">
+                                        Driver
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        Ticket Number
+                                    </div>
+                                    <div class="sm:block">
+                                        Cargo</div>
+
+                                    <div class="hidden sm:block">
+                                        City
+                                    </div>
+                                    <div class="hidden sm:block pl-2">
+                                        State
+                                    </div>
+                                    <div class="hidden sm:block pl-2">
+                                        Status
+                                    </div>
+                                    <div class="hidden sm:block pl-2">
+                                        Invoice
+                                    </div>
+                                </div>
+                                <!-- Rows -->
+                                <ng-container>
+                                    <ng-container>
+                                        <div *ngIf="commercialTruckingJobs$ | async as ctJobs">
+                                            <div *ngFor="let truckingJob of ctJobs.truckingJobs" class="job-result-custom-trucking-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                {{truckingJob.load_date | date: "dd-MM-YYYY"}}
+                                            </div>
+
+                                            <!-- Harvest Year -->
+                                            <div class="hidden sm:block">
+                                                {{truckingJob.disp_first_name}} {{truckingJob.disp_last_name}}
+                                            </div>
+
+                                            <!-- Email -->
+                                            <div class="hidden sm:block items-center">
+                                                <div class="min-w-4 ml-2">
+                                                    {{truckingJob.dr_first_name}} {{truckingJob.dr_last_name}}
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Contact -->
+                                            <div class="hidden sm:block items-center">
+                                                <div class="min-w-4 ml-2">
+                                                    {{truckingJob.id}} 
+
+                                                </div>
+                                            </div>
+                                            <!-- Active -->
+                                            <div class="hidden lg:block">
+                                                <div class="min-w-4 ml-2">                                                        
+                                                    {{truckingJob.cargo}} 
+                                                </div>
+                                            </div>
+
+                                            <div class="hidden lg:block">
+                                                <div class="min-w-4 ml-2">
+                                                    {{truckingJob.dest_city}}
+
+                                                </div>
+                                            </div>
+                                            <div class="hidden lg:block">
+                                                <div class="min-w-4 ml-2">"Lorium" </div>
+                                            </div>
+                                            <div class="hidden lg:block">
+                                                <div class="min-w-4 ml-2 capitalize" >
+                                                    {{truckingJob.status }}
+
+                                                </div>
+                                            </div>
+                                            <div class="hidden lg:block">
+                                                <div class="min-w-4 ml-2">"Invoice" 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                            <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #noProducts>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                    </ng-template>
+
+                </div>
+
+            </div>
+
+            <div>
+                <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Custom Farming </header>
+            </div>
+
+            <div class="mt-4 px-4 py-5 sm:p-0">
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div class="job-result-custom-farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                        <div class="hidden sm:block">
+                                            Date
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Service
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Farm
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            Field
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Acres
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            GPS Acres
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Start Time
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            End Time
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Tractor Engine Hours
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Status
+                                        </div>
+                                        <div class="hidden lg:block">
+                                            Invoice
+                                        </div>
+                                    </div>
+                                    <!-- Rows -->
+                                    <ng-container>
+                                        <ng-container>
+                                            <div *ngIf="customFarmingJobs$ | async as farmingJobs">
+                                            <div *ngFor="let farmingJob of farmingJobs.farmingJobs" class="job-result-custom-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                <div class="truncate">
+                                                    {{farmingJob.load_date | date: "dd-MM-YYYY"}}
+                                                </div>
+
+                                                <!-- Harvest Year -->
+                                                <div class="hidden sm:block">
+                                                    {{farmingJob.service}}
+                                                </div>
+
+                                                <!-- Email -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.farm_name}}
+ 
+                                                    </div>
+                                                </div>
+
+                                                <!-- Contact -->
+                                                <div class="hidden sm:block items-center">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.field_name}}
+                                                    </div>
+                                                </div>
+                                                <!-- Active -->
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.acres}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.gps_acres}}
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2 capitalize">
+                                                        {{farmingJob.start_time}}
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.end_time}}
+ 
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">"Lorium" </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">
+                                                        {{farmingJob.status}}
+ 
+                                                    </div>
+                                                </div>
+                                                <div class="hidden lg:block">
+                                                    <div class="min-w-4 ml-2">"Invoice" 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProducts>
+                            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+                        </ng-template>
+
+                    </div>
 
                 </div>
             </div>
