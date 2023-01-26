@@ -5,4 +5,16 @@
   .list li {
     display: flex;
   }
+
+$mobile: 767px;
+$medium: 768px;
+
+
+
+.pop-up-good-fit {
+    @media screen and (max-width: $mobile) {
+        max-height: 85vh !important;
+
+    }
+}
   
