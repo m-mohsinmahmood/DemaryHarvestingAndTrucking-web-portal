@@ -4,15 +4,15 @@
     grid-template-columns: 30% 30% 30%;
 
     @screen sm {
-        grid-template-columns: 8% 8% 10% 8% 8% 8% 8% 10% 8% 10%;
+        grid-template-columns: 8% 8% 10% 8% 8% 8% 15% 10% 8% 10%;
     }
 
     @screen md {
-        grid-template-columns: 8% 8% 12% 8% 10% 8% 8% 10% 10% 10%;
+        grid-template-columns: 8% 8% 12% 8% 10% 8% 15% 10% 10% 10%;
     }
 
     @screen lg {
-        grid-template-columns: 8% 8% 12% 8% 10% 8% 8% 10% 10% 10%;
+        grid-template-columns: 8% 8% 12% 8% 10% 8% 15% 10% 10% 10%;
     }
 }
 

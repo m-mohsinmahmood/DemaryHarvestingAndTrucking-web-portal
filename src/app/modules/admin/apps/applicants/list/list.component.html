@@ -67,9 +67,6 @@
                             <div mat-sort-header="home_phone_number" class="hidden sm:block">
                                 Phone Number
                             </div>
-                            <div mat-sort-header="created_at" class="hidden sm:block">
-                                Year
-                            </div>
                             <div mat-sort-header="ranking" class="hidden sm:block">
                                 Ranking
                             </div>
@@ -116,11 +113,7 @@
                                         <div class="capitalize hidden sm:block truncate">
                                             {{applicant.cell_phone_country_code}} {{ applicant.cell_phone_number }}
                                         </div>
-                                        <!-- Created At -->
-                                        <div class="capitalize hidden sm:block truncate">
-                                            {{ applicant.created_at | date: "YYYY" }}
-                                        </div>
-                                        <!-- Created At -->
+                                        <!-- Rnking -->
                                         <div class="capitalize hidden sm:block truncate">
                                             {{ applicant.ranking? applicant.ranking + '%' : '0%' }}
                                         </div>
