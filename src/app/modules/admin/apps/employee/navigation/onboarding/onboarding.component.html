@@ -373,13 +373,13 @@
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
-                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.w4_sign}}</mat-label>
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number of Dependents:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.w4_no_of_dependents}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
-                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number of Dependents:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.w4_no_of_dependents}}</mat-label>
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.w4_sign}}</mat-label>
                             </div>
                         </div>
                     </div>
@@ -745,9 +745,9 @@
                 <div class="flex bg-gray-100 flex-col sm:flex-row
              rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                        <div>
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Departure Document
-                            </p>
+                        <div class="flex items-center">
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Departure Document</p>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.departure_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -763,9 +763,6 @@
                                 <mat-label>{{employeeDocs?.employee_docs?.departure_sign}}</mat-label>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.departure_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
 
