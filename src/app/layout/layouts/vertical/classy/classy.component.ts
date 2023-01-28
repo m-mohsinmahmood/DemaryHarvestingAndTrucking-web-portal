@@ -7,8 +7,6 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
-import { AlertService } from 'app/core/alert/alert.service';
-import { Alert } from 'app/core/alert/alert.model';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
@@ -23,9 +21,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
     navigation: Navigation;
     user: User;
 
-    alertInfo: Alert = null;
-    showAlert: boolean = false;
-
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -36,7 +31,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         private _router: Router,
         private _navigationService: NavigationService,
         private _userService: UserService,
-        private _alertService: AlertService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService
     )
@@ -86,22 +80,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
-        
-        //#region Alert Configuration
-        // Subscribe to alert show/hide
-        this._alertService.show_alert$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((show) => {
-            this.showAlert = show;
-        });
-
-        // Subscribe to alert information
-        this._alertService.alert_info$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((_alertInfo) => {
-            this.alertInfo = _alertInfo;
-        });
-        //#endregion
     }
 
     /**

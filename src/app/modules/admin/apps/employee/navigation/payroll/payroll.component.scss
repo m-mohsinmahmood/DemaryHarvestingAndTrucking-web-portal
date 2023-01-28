@@ -22,3 +22,7 @@
         grid-template-columns: 15% 15% 20% 20% 15% 10%;
     }
 }
+::ng-deep .mat-form-field-wrapper
+{
+    padding: 0px !important;
+}

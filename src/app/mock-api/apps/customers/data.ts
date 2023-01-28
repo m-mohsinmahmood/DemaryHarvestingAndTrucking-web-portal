@@ -2368,7 +2368,7 @@ export const documents = [
     {
         id         : '157adb9a-14f8-4559-ac93-8be893c9f80a',
         folderId   : '6da8747f-b474-4c9a-9eba-5ef212285500',
-        name       : 'DMCA notice #42',
+        name       : 'Work Rules',
         createdBy  : 'Brian Hughes',
         createdAt  : 'May 8, 2021',
         modifiedAt : 'May 8, 2021',

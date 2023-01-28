@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { applicantNavigationLeft, applicantNavigationRight } from './applicantnavigation';
 import {
@@ -23,13 +23,10 @@ export class ApplicantService {
     }
     // Private
 
-    private _pagination: BehaviorSubject<ApplicantPagination | null> = new BehaviorSubject(null);
-    private _applicantdata: BehaviorSubject<Applicant | null> = new BehaviorSubject(null);
     private _applicantsdata: BehaviorSubject<Applicant[] | null> = new BehaviorSubject(null);
     public applicantNavigationLeft = applicantNavigationLeft;
     public applicantNavigationRight = applicantNavigationRight;
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
-
 
     //#region Close Dialog
     closeDialog: BehaviorSubject<boolean> =
@@ -66,6 +63,24 @@ export class ApplicantService {
         this.isLoadingApplicants.asObservable();
 
     //#endregion
+    // #endregion
+
+    // #region Applicants & Applicant
+    // Data
+    // private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+    // readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
+
+    // private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    // readonly applicant$: Observable<any | null> = this.applicant.asObservable();
+
+    // // Loaders
+    // private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
+
+    // private isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    // readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
+    // #endregion
+
     /**
      * Constructor
      */
@@ -73,6 +88,7 @@ export class ApplicantService {
         private _httpClient: HttpClient,
         private _alertSerice: AlertService,
         public _router: Router,
+
 
     ) { }
 
@@ -95,7 +111,7 @@ export class ApplicantService {
             errorMessage = `Error: ${error.error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.error.message,
@@ -106,7 +122,7 @@ export class ApplicantService {
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             this._alertSerice.showAlert({
                 type: 'error',
-                shake: false,
+                shake: true,
                 slideRight: true,
                 title: 'Error',
                 message: error.message,
@@ -249,10 +265,9 @@ export class ApplicantService {
             console.log('Recruiter', newData);
         } else {
             const { body, recruiter_id, subject, to, ...applicant_data } = data;
-            const { id, status_step, status_message, reason_for_rejection, ...email_data } = data;
+            const { id, status_step, status_message, reason_for_rejection,prev_status_message, ...email_data } = data;
             newData = Object.assign({}, { applicant_data }, { email_data }, { skipEmail }, { applicantInfo });
         }
-
         this._httpClient
             .patch(`api-1/applicants${url}`, newData)
             .pipe(take(1))
@@ -305,6 +320,22 @@ export class ApplicantService {
                 this._countries.next(countries);
             })
         );
+    }
+    //#endregion
+
+    //#region Async Validator 
+    async checkIfEmailExists(email: string): Promise<any> {
+        let params = new HttpParams();
+        params = params.set('email', email);
+        let resp: any = await lastValueFrom(this._httpClient
+            .get(`api-1/async-validators`, { params }))
+        return new Promise((resolve, reject) => {
+            if (resp?.emailAlreadyExists) {
+                resolve(resp);
+            } else {
+                resolve(null);
+            }
+        });
     }
     //#endregion
 }

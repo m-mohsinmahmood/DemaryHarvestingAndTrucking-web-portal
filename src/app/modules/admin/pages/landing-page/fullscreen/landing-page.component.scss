@@ -34,3 +34,11 @@
   color:#fff !important;
 
 }
+::ng-deep .ytp-chrome-top{
+visibility: hidden !important;}
+youtube-player iframe
+{
+    aspect-ratio: 16 / 9;
+    width: 100% !important;
+    height: auto !important;
+}

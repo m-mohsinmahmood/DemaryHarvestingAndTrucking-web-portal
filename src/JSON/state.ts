@@ -2,7 +2,6 @@ export const states = [
     'Alaska',
     'Alabama',
     'Arkansas',
-    'American Samoa',
     'Arizona',
     'California',
     'Colorado',

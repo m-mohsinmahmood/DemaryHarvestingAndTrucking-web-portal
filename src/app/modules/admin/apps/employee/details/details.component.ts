@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
@@ -8,12 +7,10 @@ import {
     Inject,
 } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { UpdateComponent } from '../update/update.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import {
     MatDialog,
     MatDialogRef,
@@ -68,12 +65,11 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     routes = [];
     employeeGovernemtDocs: any[] = governmentDocs;
     employeeCompanyDocs: any[] = companyDocs;
-    employee: Employee;
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     selectedIndex: string = "Employee Data";
-    employeeRole: any;
+    employee: any;
 
     //#endregion
 
@@ -111,9 +107,9 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     initObservables() {
         // Data
         this.employee$ = this._employeeService.employee$;
-        this._employeeService.employee$.subscribe((value) => {
-            this.employeeRole = (value?.role);
-        })
+        this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+            this.employee = res;
+        });
         // Loader
         this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
     }
@@ -121,7 +117,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
 
     //#region Initial APIs
     initApis(id: string) {
-        this._employeeService.getEmployeeById(id);
+        this._employeeService.getEmployeeById(id, 'false');
     }
     //#endregion
 
@@ -175,16 +171,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    openUpdateDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UpdateComponent, {
-            data: { id: this.routeID },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
+    //#endregion
 
     backHandler(): void {
         this._router.navigate(['/apps/employee/']);

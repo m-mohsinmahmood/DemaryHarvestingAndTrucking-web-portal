@@ -1,36 +1,18 @@
-// ::ng-deep .countryCode1 .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex {
-//     border-radius:25px;
-//     // height:100px
-// }
 
-// .titlee{
-//     font-size: 40px !important;
-// }
-
-// ::ng-deep .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex{
-//         border-radius: 25px !important;
-//     }
-
-// .mat-form-field-appearance-outline .mat-form-field-outline {
-//     background-color: #FFFFFF66;
-//     border-radius: 10em;
-//     color: transparent;
-//     opacity: 0.5;
-// }
 
 .applicant-grid {
-    grid-template-columns: 40% 30% 10%;
+    grid-template-columns: 30% 30% 30%;
 
     @screen sm {
-        grid-template-columns: 8% 8% 10% 8% 8% 8% 8% 10% 10%;
+        grid-template-columns: 8% 8% 10% 8% 8% 8% 15% 10% 8% 10%;
     }
 
     @screen md {
-        grid-template-columns: 8% 8% 15% 8% 10% 8% 8% 10% 10%;
+        grid-template-columns: 8% 8% 12% 8% 10% 8% 15% 10% 10% 10%;
     }
 
     @screen lg {
-        grid-template-columns: 8% 8% 15% 8% 10% 8% 8% 10% 10%;
+        grid-template-columns: 8% 8% 12% 8% 10% 8% 15% 10% 10% 10%;
     }
 }
 

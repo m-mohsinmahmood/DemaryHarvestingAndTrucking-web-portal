@@ -72,6 +72,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     link: "/apps/applicants",
   },
   {
+    id: "employee",
+    title: "Employees",
+    type: "basic",
+    icon: "heroicons_outline:user-circle",
+    link: "/apps/employee",
+  },
+  {
     id: "crops",
     title: "Crops",
     type: "basic",
@@ -114,5 +121,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
   //   icon: "heroicons_outline:user-circle",
   //   link: "/apps/employee",
   // }
+  {
+    id: "h2a-rates",
+    title: "H2A Rates",
+    type: "basic",
+    icon: "heroicons_outline:cog",
+    link: "/apps/h2a-rates",
+  },
 
 ]

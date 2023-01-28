@@ -8,8 +8,13 @@
     color:#fff !important;
 
 }
-.subscribe-email .mat-form-field-flex{
+.subscribe-email .mat-form-field-outline{
 background-color: #fff !important;
+border-radius: 4px;
+}
+.subscribe-email .mat-form-field-appearance-outline .mat-form-field-label
+{
+    top: 2.2em !important
 }
 
 .subscribe-btn{

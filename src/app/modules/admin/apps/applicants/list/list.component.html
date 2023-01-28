@@ -67,14 +67,14 @@
                             <div mat-sort-header="home_phone_number" class="hidden sm:block">
                                 Phone Number
                             </div>
-                            <div mat-sort-header="created_at" class="hidden sm:block">
-                                Year
-                            </div>
                             <div mat-sort-header="ranking" class="hidden sm:block">
                                 Ranking
                             </div>
                             <div mat-sort-header="status_message" class="hidden sm:block">
                                 Status
+                            </div>
+                            <div mat-sort-header="created_at" class="hidden sm:block">
+                                Applied Date
                             </div>
                             <div class="">Actions</div>
                         </div>
@@ -113,11 +113,7 @@
                                         <div class="capitalize hidden sm:block truncate">
                                             {{applicant.cell_phone_country_code}} {{ applicant.cell_phone_number }}
                                         </div>
-                                        <!-- Created At -->
-                                        <div class="capitalize hidden sm:block truncate">
-                                            {{ applicant.created_at | date: "YYYY" }}
-                                        </div>
-                                        <!-- Created At -->
+                                        <!-- Rnking -->
                                         <div class="capitalize hidden sm:block truncate">
                                             {{ applicant.ranking? applicant.ranking + '%' : '0%' }}
                                         </div>
@@ -127,6 +123,10 @@
                                                 class="truncate justify-center items-center">
                                                 {{ applicant.status_step == '10.1'? 'Hired' : applicant.status_message == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '10.4'? 'Rejected' : applicant.status_message }}
                                             </div>
+                                        </div>
+
+                                        <div class="capitalize hidden sm:block truncate">
+                                            {{ applicant.created_at | date: "MM/dd/yyyy" }}
                                         </div>
 
                                         <!-- Details button -->

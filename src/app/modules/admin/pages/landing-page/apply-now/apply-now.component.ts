@@ -30,7 +30,7 @@ export class ApplyNowComponent implements OnInit {
     {"id": "1", "listItem": "The US Department of Labor sets our minimum wage rates, and these rates differ by state and are adjusted periodically. Current rates provided during recruiting process."},
     {"id": "2", "listItem": "Modest living and kitchen facilities will be provided."},
     {"id": "3", "listItem": "One half airfare is reimbursed at the halfway point of the contract and the remaining amount will be reimbursed upon the completion of the contract."},
-    {"id": "4", "listItem": "Workmen's compensation insurance is provided in the event of injury while working"},
+    {"id": "4", "listItem": "Workmen's compensation insurance is provided in the event of injury while working."},
     {"id": "5", "listItem": "Consulate fees will be reimbursed for approved candidates."},
 
   ] 
