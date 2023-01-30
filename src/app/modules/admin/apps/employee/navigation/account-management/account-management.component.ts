@@ -19,7 +19,7 @@ export class AccountManagementComponent implements OnInit {
   { role: 'Tractor/Farming Operator', status: false, formRole: 'farmingTractorOperatorStatus' },
   { role: 'Recruiter', status: false, formRole: 'recruiterStatus' }
   ]
-  @Input() employeeRole: any
+  @Input() employee: any
 
   //#region  Observables
   employee$: Observable<any>;
@@ -65,8 +65,8 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Update Employee array
   updateEmployeeRole() {
-    if (this.employeeRole && this.employeeRole.length > 0) {
-      this.employeeRoleUpdate = this.employeeRole.split(',');
+    if (this.employee.employee_info.role && this.employee.employee_info.role.length > 0) {
+      this.employeeRoleUpdate = this.employee.employee_info.role.split(',');
       if (this.employeeRoleUpdate.includes('Combine Operator')) {
         this.roles[0].status = true;
       }
@@ -88,7 +88,7 @@ export class AccountManagementComponent implements OnInit {
   //#region Initialize Observables
   initObservables() {
     // Data
-    this.employee$ = this._employeeService.employee$;
+    //this.employee$ = this._employeeService.employee$;
     // Loader
     this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
   }
@@ -96,7 +96,7 @@ export class AccountManagementComponent implements OnInit {
 
   //#region Initial APIs
   initApis(id: string) {
-    this._employeeService.getEmployeeById(id);
+    //this._employeeService.getEmployeeById(id, 'false');
   }
   //#endregion
 
@@ -138,7 +138,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          })
+          }, 'false')
         }
         else {
           event.source.checked = true;
@@ -150,7 +150,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          })
+          }, 'false')
         }
         else {
           event.source.checked = false;

@@ -303,7 +303,10 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     id: this.applicant.applicant_info.id,
                     prev_status_message: "Results",
                     status_message: "Results",
-                    status_step: "10.1"
+                    status_step: "10.1",
+                    to: this.applicant.applicant_info.email,
+                    subject: 'Employee Portal Credentials',
+                    body:  'Dear ' + this.applicant.applicant_info.first_name + ', </br>We thank you for accepting our offer.</br></br>Use the following credentials to login to employee portal.</br></br> Email:' + this.applicant.applicant_info.email + '</br>Password: dht@123',
                 }, false, false,this.applicant.applicant_info);
             }
             else if (dialogResult && type === "Reject") {

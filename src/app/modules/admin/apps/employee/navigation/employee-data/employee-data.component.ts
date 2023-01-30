@@ -58,7 +58,7 @@ export class EmployeeDataComponent implements OnInit {
 
   //#region Initialize APIs
   initApi() {
-    this._employeeService.getEmployeeById(this.routeID);
+    this._employeeService.getEmployeeById(this.routeID, 'false');
   }
   //#endregion
 

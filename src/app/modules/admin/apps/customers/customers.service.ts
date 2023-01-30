@@ -315,6 +315,52 @@ export class CustomersService {
         this.isLoadingFarmingRate.asObservable();
     //#endregion
 
+    //#region Observables Customer Farming Jobs
+    customFarmingJobs: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customFarmingJobs$: Observable<Customers[] | null> =
+        this.customFarmingJobs.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingFarmingJobs: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingFarmingJobs$: Observable<boolean> =
+        this.isLoadingFarmingJobs.asObservable();
+
+    
+    //#region Observables Customer Trucking Jobs
+    commercialTruckingJobs: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly commercialTruckingJobs$: Observable<Customers[] | null> =
+        this.commercialTruckingJobs.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingTruckingJobs: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingTruckingJobs$: Observable<boolean> =
+        this.isLoadingTruckingJobs.asObservable();
+
+    
+    //#region Observables Customer Harvesting Jobs
+    customHarvestingJobs: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customHarvestingJobs$: Observable<Customers[] | null> =
+        this.customHarvestingJobs.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingHarvestingJobs: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingHarvestingJobs$: Observable<boolean> =
+        this.isLoadingHarvestingJobs.asObservable();
+
+
+
     //#region Observables Dropdowns
     // Data
     // private dropdownCustomerCrops: BehaviorSubject<any[] | null> =
@@ -2090,6 +2136,69 @@ export class CustomersService {
                 tap((response: any) => {
                     // this._documents.next(response);
                 })
+            );
+    }
+
+    getFarmingJobs( id:string, data)
+    {
+        let params = new HttpParams();
+        params = params.set('data', data);
+
+        return this._httpClient
+            .get(`api-1/customer-job-result?customer_id=${id}`, {params})
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingFarmingJobs.next(true);
+                    this.customFarmingJobs.next(res);
+                    this.isLoadingFarmingJobs.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+
+    getTruckingJobs( id:string, data)
+    {
+        let params = new HttpParams();
+        params = params.set('data', data);
+
+        return this._httpClient
+            .get(`api-1/customer-job-result?customer_id=${id}`,  {params})
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingTruckingJobs.next(true);
+                    this.commercialTruckingJobs.next(res);
+                    this.isLoadingTruckingJobs.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+
+
+    getHarvestingJobs( id:string, data)
+    {
+        let params = new HttpParams();
+        params = params.set('data', data);
+
+        return this._httpClient
+            .get(`api-1/customer-job-result?customer_id=${id}`,  {params})
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingHarvestingJobs.next(true);
+                    this.customHarvestingJobs.next(res);
+                    this.isLoadingHarvestingJobs.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
             );
     }
 }
