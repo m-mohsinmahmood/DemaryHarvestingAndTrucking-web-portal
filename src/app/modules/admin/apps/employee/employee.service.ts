@@ -279,8 +279,8 @@ export class EmployeeService {
     patchEmployee(data: any, h2a: string) {
         let newData;
         const { body, subject, to, ...employee_data } = data;
-        const { id, status_step, prev_status_message, prev_status_step, status_message, ...email_data } = data;
-        newData = Object.assign({}, { employee_data }, { email_data });
+        const { id, status_step, prev_status_message, prev_status_step, status_message,  ...email_data } = data;
+        newData = Object.assign({}, { employee_data }, { email_data } , {h2a});
         this._httpClient
             .patch(`api-1/employee`, newData)
             .pipe(take(1))

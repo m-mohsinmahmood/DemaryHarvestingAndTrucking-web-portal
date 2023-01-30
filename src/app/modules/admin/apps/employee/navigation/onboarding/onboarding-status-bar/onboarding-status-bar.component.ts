@@ -239,7 +239,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           prev_status_message: this.employee?.employee_info.status_message,
           status_message: "Verified",
           status_step: +this.employee?.employee_info.status_step + 1,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
       }
       else if (dialogResult === true && type === 'Reject') {
         var formData: FormData = new FormData();
@@ -259,7 +259,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           status_message: "Inprogress",
           status_step: +this.employee?.employee_info.status_step,
           rejected: true,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
 
       }
 
