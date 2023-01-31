@@ -44,128 +44,141 @@
             </div> -->
             <!-- DOI BLOCK -->
             <div *ngIf="block === 'DOI'">
-                    <div *ngIf="this.employee?.employee_info?.passport_driver_license" class="flex flex-col sm:flex-row bg-gray-100 rounded-md mt-2 sm:h-auto px-4 shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4 ">
-                            <div>
-                                <div class="flex items-center">
-                                    <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Passport</p>
-                                    <mat-icon *ngIf="employeeDocs?.employee_docs?.passport_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.passport_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
-                                </div>
-                                <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                <div *ngIf="this.employee?.employee_info?.passport_driver_license"
+                    class="flex flex-col sm:flex-row bg-gray-100 rounded-md mt-2 sm:h-auto px-4 shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4 ">
+                        <div>
+                            <div class="flex items-center">
+                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Passport</p>
+                                <mat-icon *ngIf="employeeDocs?.employee_docs?.passport_doc"
+                                    (click)="downloadDocument(employeeDocs?.employee_docs?.passport_doc)" matSuffix
+                                    [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                             </div>
+                            <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                         </div>
-                        <div class="sm:w-6/12 md:w-8/12">
-                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:
-                                    </mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.passport_country}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Passport
-                                        Number:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.passport_number}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
-                                        Date:
-                                    </mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.passport_expiration_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature
-                                    </mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.passport_sign}}</mat-label>
-                                </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.passport_country}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Passport
+                                    Number:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.passport_number}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
+                                    Date:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.passport_expiration_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.passport_sign}}</mat-label>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="this.employee?.employee_info?.approval_letter" class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                            <div>
-                                <div class="flex items-center">
-                                    <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Approval Letter</p>
-                                    <mat-icon *ngIf="employeeDocs?.employee_docs?.approval_letter_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.approval_letter_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
-                                </div>
-                                <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                </div>
+                <div *ngIf="this.employee?.employee_info?.approval_letter"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div>
+                            <div class="flex items-center">
+                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Approval Letter
+                                </p>
+                                <mat-icon *ngIf="employeeDocs?.employee_docs?.approval_letter_doc"
+                                    (click)="downloadDocument(employeeDocs?.employee_docs?.approval_letter_doc)"
+                                    matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                             </div>
+                            <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                         </div>
-                        <div class="sm:w-6/12 md:w-8/12">
-                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.approval_letter_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.approval_letter_sign}}</mat-label>
-                                </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.approval_letter_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.approval_letter_sign}}</mat-label>
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="this.employee?.employee_info?.contract_w4 || this.employee?.employee_info?.contract " class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                            <div>
-                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Contract</p>
-                                <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
-                            </div>
+                </div>
+                <div *ngIf="this.employee?.employee_info?.contract_w4 || this.employee?.employee_info?.contract "
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Contract</p>
+                            <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                         </div>
-                        <div class="sm:w-6/12 md:w-8/12">
-                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.contract_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.contract_sign}}</mat-label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="mt-4">
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.contract_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.contract_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
-                        </div> -->
                     </div>
-                    <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                            <div>
-                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-797B</p>
-                                <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.contract_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.contract_sign}}</mat-label>
                             </div>
                         </div>
-                        <div class="sm:w-6/12 md:w-8/12">
-                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.b797_number}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
-                                        Date:
-                                    </mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.b797_expiration_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.b797_sign}}</mat-label>
-                                </div>
+                    </div>
+                </div>
+                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-797B</p>
+                            <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+                        </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.b797_number}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
+                                    Date:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.b797_expiration_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.b797_sign}}</mat-label>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.b797_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.b797_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
-                        </div>
-                    </div>              
+                    </div>
+                    <div class="mt-4">
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.b797_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.b797_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                    </div>
+                </div>
             </div>
 
             <!-- DOT BLOCK -->
             <div *ngIf="block === 'DOT'">
-                <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
+                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div>
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">DOT Physical</p>
@@ -183,12 +196,14 @@
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
                                     Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.dot_physical_expiration_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.dot_physical_expiration_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.dot_physical_issue_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.dot_physical_issue_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -198,7 +213,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.dot_physical_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.dot_physical_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.dot_physical_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.dot_physical_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
@@ -226,7 +243,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.drug_test_issue_date| date: 'MMMM-dd-YYYY' }}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.drug_test_issue_date| date: 'MMMM-dd-YYYY'
+                                    }}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -236,14 +254,20 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.drug_test_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.drug_test_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.drug_test_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.drug_test_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.passport_driver_license" class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
+                <div *ngIf="this.employee?.employee_info?.passport_driver_license"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Foreign Drivers License </p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.foreign_driver_license_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.foreign_driver_license_issue_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Foreign Drivers
+                                License </p>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.foreign_driver_license_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.foreign_driver_license_doc)"
+                                matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -261,7 +285,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.foreign_driver_license_issue_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.foreign_driver_license_issue_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -276,7 +301,9 @@
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drivers License</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.cdl_license_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.cdl_license_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.cdl_license_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.cdl_license_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -294,11 +321,12 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.cdl_license_issue_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.cdl_license_issue_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                <mat-label
-                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">License Type</mat-label>
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">License
+                                    Type</mat-label>
                                 <mat-label>{{employeeDocs?.employee_docs?.license_type}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
@@ -318,7 +346,9 @@
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Bank Info</p>
-                            <mat-icon  *ngIf="employeeDocs?.employee_docs?.bank_acc_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.bank_acc_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.bank_acc_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.bank_acc_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -361,8 +391,8 @@
                                 <mat-label>{{employeeDocs?.employee_docs?.w4_name}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                <mat-label
-                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number of Dependents:</mat-label>
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number of
+                                    Dependents:</mat-label>
                                 <mat-label>{{employeeDocs?.employee_docs?.w4_no_of_dependents}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
@@ -376,13 +406,14 @@
                         <mat-icon *ngIf="employeeDocs?.employee_docs?.w4_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.w4_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div> -->
                 </div>
-                <div *ngIf="this.employee?.employee_info?.driver_license_ss_card"
-                    class="flex bg-gray-100 flex-col sm:flex-row
+                <div *ngIf="this.employee?.employee_info?.driver_license_ss_card" class="flex bg-gray-100 flex-col sm:flex-row
              rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Social Security</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.social_sec_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.social_sec_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.social_sec_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.social_sec_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -424,7 +455,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.work_agreement_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.work_agreement_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
@@ -434,7 +466,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.work_agreement_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.work_agreement_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.work_agreement_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.work_agreement_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
@@ -450,7 +484,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.itinerary_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.itinerary_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:
@@ -460,7 +495,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.itinerary_doc"(click)="downloadDocument(employeeDocs?.employee_docs?.itinerary_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.itinerary_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.itinerary_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="this.employee?.employee_info?.visa" class="flex bg-gray-100 flex-col sm:flex-row
@@ -468,7 +505,9 @@
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">VISA</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.visa_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.visa_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=" ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.visa_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.visa_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class=" ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -481,13 +520,15 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.visa_issue_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_issue_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Expiration
                                     Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.visa_expiration_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_expiration_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Nationality:
@@ -535,7 +576,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.i9_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.i9_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.i9_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.i9_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
@@ -560,7 +603,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.i94_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.i94_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.i94_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.i94_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
@@ -576,13 +621,15 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Arrival Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.cert_arrival_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.cert_arrival_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">First day of
                                     work:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.cert_first_day | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.cert_first_day | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -592,7 +639,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.cert_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.cert_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.cert_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.cert_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
                 <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
@@ -610,12 +659,14 @@
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Last day of
                                     work:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.department_last_day | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.department_last_day | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Departure Date:
                                 </mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.department_departure_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.department_departure_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -625,7 +676,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <mat-icon *ngIf="employeeDocs?.employee_docs?.department_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.department_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.department_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.department_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div>
                 </div>
             </div>
@@ -644,7 +697,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.handbook_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.handbook_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -669,7 +723,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.rules_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.rules_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -687,7 +742,9 @@
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Policy</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.drug_policy_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.drug_policy_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.drug_policy_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.drug_policy_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -695,7 +752,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.drug_policy_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.drug_policy_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -710,7 +768,9 @@
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Reprimand Policy</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.reprimand_policy_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.reprimand_policy_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.reprimand_policy_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.reprimand_policy_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -718,7 +778,8 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.reprimand_policy_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.reprimand_policy_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -728,37 +789,14 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs " class="flex bg-gray-100 flex-col sm:flex-row
-                rounded-md mt-2 px-4  shadow">
-                       <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                           <div class="flex items-center">
-                               <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Equipment Policy</p>
-                               <mat-icon *ngIf="employeeDocs?.employee_docs?.equipment_policy_doc" 
-                               (click)="downloadDocument(employeeDocs?.employee_docs?.equipment_policy_doc)"  
-                               matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
-                           </div>
-                       </div>
-                       <div class="sm:w-6/12 md:w-8/12">
-                           <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                               <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                   <mat-label
-                                       class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                   <mat-label>{{employeeDocs?.employee_docs?.equipment_policy_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                               </div>
-                               <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                   <mat-label
-                                       class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                   <mat-label>{{employeeDocs?.employee_docs?.equipment_policy_sign}}</mat-label>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                <div class="flex bg-gray-100 flex-col sm:flex-row
-             rounded-md mt-2 px-4  shadow">
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs "
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div class="flex items-center">
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Departure Document</p>
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.departure_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Equipment Policy</p>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.equipment_policy_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.equipment_policy_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
                         </div>
                     </div>
                     <div class="sm:w-6/12 md:w-8/12">
@@ -766,7 +804,33 @@
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
                                     class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                <mat-label>{{employeeDocs?.employee_docs?.departure_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.equipment_policy_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.equipment_policy_sign}}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs" class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div class="flex items-center">
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Departure Policy</p>
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.departure_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                        </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.departure_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                 <mat-label
@@ -778,30 +842,33 @@
                 </div>
                 <div *ngIf="this.employee?.employee_info?.cdl_training " class="flex bg-gray-100 flex-col sm:flex-row
                 rounded-md mt-2 px-4  shadow">
-                       <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
-                           <div>
-                               <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">CDL Training
-                               </p>
-                           </div>
-                       </div>
-                       <div class="sm:w-6/12 md:w-8/12">
-                           <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                               <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                   <mat-label
-                                       class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
-                                   <mat-label>{{employeeDocs?.employee_docs?.cdl_training_date | date: 'MMMM-dd-YYYY'}}</mat-label>
-                               </div>
-                               <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                   <mat-label
-                                       class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                   <mat-label>{{employeeDocs?.employee_docs?.cdl_training_sign}}</mat-label>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="mt-4">
-                           <mat-icon *ngIf="employeeDocs?.employee_docs?.cdl_training_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)"  matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
-                       </div>
-                   </div>
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">CDL Training
+                            </p>
+                        </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.cdl_training_date | date:
+                                    'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.cdl_training_sign}}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <mat-icon *ngIf="employeeDocs?.employee_docs?.cdl_training_doc"
+                            (click)="downloadDocument(employeeDocs?.employee_docs?.departure_doc)" matSuffix
+                            [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
+                    </div>
+                </div>
             </div>
         </ng-container>
     </div>

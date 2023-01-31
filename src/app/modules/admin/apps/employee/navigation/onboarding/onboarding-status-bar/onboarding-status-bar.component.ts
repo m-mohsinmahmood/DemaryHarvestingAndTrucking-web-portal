@@ -251,6 +251,7 @@ export class OnboardingStatusBarComponent implements OnInit {
         formData.append('email', this.email.email);
         formData.append('subject', this.email.subject);
         formData.append('emailBody', this.email.emailBody);
+        formData.append('h2a', this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
         this._employeeService.patchEmployeeDocuments(this.routeID, formData);
         this._employeeService.patchEmployee({
           id: this.employee?.employee_info.employee_id,

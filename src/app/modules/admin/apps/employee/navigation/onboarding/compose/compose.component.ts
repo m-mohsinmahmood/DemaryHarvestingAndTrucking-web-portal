@@ -192,7 +192,7 @@ export class MailboxComposeComponent implements OnInit {
             },
             {
                 id: '8', subject: 'DHT “Onboarding Process” (Step 8 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for completing the recent compliance documents.</br></br>In advance of your arrival, we ask all employees to review the attached CDL training instructions and website to help study and prepare for their CDL test.</br></br>CDL Training Instructions</br></br>CDL Training Videos Website </br></br>Kind regards, '
+                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for completing the recent compliance documents.</br></br>In advance of your arrival, we ask all employees to review the attached CDL training instructions and website to help study and prepare for their CDL test.</br></br>CDL Training Instructions</br>CDL Training Videos Website </br></br>Kind regards, '
             },
             {
                 id: '9', subject: 'DHT “Onboarding Process” (Step 9 of 9)',
