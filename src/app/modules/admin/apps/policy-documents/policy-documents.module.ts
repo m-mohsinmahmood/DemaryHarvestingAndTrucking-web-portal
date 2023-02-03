@@ -22,50 +22,24 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SharedModule } from 'app/shared/shared.module';
-import { EmployeeComponent } from 'app/modules/admin/apps/employee/employee.component';
-import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list.component';
-import { EmployeeDetailComponent } from './details/details.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { employeeRoutes } from 'app/modules/admin/apps/employee/employee.routing';
+import { policyDocumentsRoutes } from './policy-documents.routing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { UploadDocModal } from './details/details.component';
-import { EmployeeDataComponent } from './navigation/employee-data/employee-data.component';
-import { ProfileDataComponent } from './navigation/profile-data/profile-data.component';
-import { OnboardingComponent } from './navigation/onboarding/onboarding.component';
-import { AccountManagementComponent } from './navigation/account-management/account-management.component';
-import { PayrollComponent } from './navigation/payroll/payroll.component';
-import { DocumentsComponent } from './navigation/documents/documents.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
-import { MailboxComposeComponent } from './navigation/onboarding/compose/compose.component';
 import { QuillModule } from 'ngx-quill';
-import { UpdateProfileData } from './navigation/profile-data/update-profile-data/update.component';
-import { ConfirmDialogComponent } from './navigation/account-management/confirm-dialog/confirm-dialog.component';
-import { UpdateEmployeeComponent } from './navigation/employee-data/update/update.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { OnboardingStatusBarComponent } from './navigation/onboarding/onboarding-status-bar/onboarding-status-bar.component';
-import { UploadDocumentComponent } from './navigation/documents/upload-document/upload-document.component';
+import { ListComponent } from './list/list.component';
+import { PolicyDocumentsComponent } from './policy-documents.component';
+import { UploadPolicyDocumentComponent } from './list/upload-policy-document/upload-policy-document.component';
 
 @NgModule({
     declarations: [
-      EmployeeComponent,
-      EmployeeListComponent,
-      EmployeeDetailComponent,
-      UploadDocModal,
-      EmployeeDataComponent,
-      ProfileDataComponent,
-      OnboardingComponent,
-      AccountManagementComponent,
-      PayrollComponent,
-      DocumentsComponent,
-      MailboxComposeComponent,
-      UpdateProfileData,
-      ConfirmDialogComponent,
-      UpdateEmployeeComponent,
-      OnboardingStatusBarComponent,
-      UploadDocumentComponent
+        PolicyDocumentsComponent,
+        ListComponent,
+        UploadPolicyDocumentComponent,
     ],
     imports     : [
-        RouterModule.forChild(employeeRoutes),
+        RouterModule.forChild(policyDocumentsRoutes),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -95,6 +69,6 @@ import { UploadDocumentComponent } from './navigation/documents/upload-document/
         MatAutocompleteModule,
     ]
 })
-export class EmployeeModule
+export class PolicyDocumentsModule
 {
 }

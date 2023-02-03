@@ -144,7 +144,7 @@ export const appRoutes: Route[] = [
                 {path: 'equipment', loadChildren: () => import('app/modules/admin/apps/equipment/equipment.module').then(m => m.EquipmentModule)},
                 {path: 'crops', loadChildren: () => import('app/modules/admin/apps/crops/crops.module').then(m => m.CropsModule)},
                 {path: 'h2a-rates', loadChildren: () => import('app/modules/admin/apps/h2a-rates/h2a-rates.module').then(m => m.H2aModule)},
-
+                {path: 'policy-documents', loadChildren: () => import('app/modules/admin/apps/policy-documents/policy-documents.module').then(m => m.PolicyDocumentsModule)},
             ]},
 
             // Pages

@@ -57,6 +57,14 @@ export class EmployeeService {
 
     //#endregion
 
+    //#region Policy Documents 
+    private policyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly policyDocuments$: Observable<any | null> = this.policyDocuments.asObservable();
+
+    isLoadingPolicyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingPolicyDocuments$: Observable<any | null> = this.isLoadingPolicyDocuments.asObservable();
+    //#endregion
+
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
@@ -275,12 +283,11 @@ export class EmployeeService {
     //#endregion
 
     //#region Patch Employee
-
     patchEmployee(data: any, h2a: string) {
         let newData;
         const { body, subject, to, ...employee_data } = data;
-        const { id, status_step, prev_status_message, prev_status_step, status_message,  ...email_data } = data;
-        newData = Object.assign({}, { employee_data }, { email_data } , {h2a});
+        const { id, status_step, prev_status_message, prev_status_step, status_message, ...email_data } = data;
+        newData = Object.assign({}, { employee_data }, { email_data }, { h2a });
         this._httpClient
             .patch(`api-1/employee`, newData)
             .pipe(take(1))
@@ -303,7 +310,7 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    this.getEmployeeById(newData.employee_data.id,h2a);
+                    this.getEmployeeById(newData.employee_data.id, h2a);
                 }
             );
     }
@@ -358,6 +365,7 @@ export class EmployeeService {
 
     //#endregion
 
+    //#region Payroll 
     getPayrollById(id: string) {
         return this._httpClient
             .get(`api-1/employee-payroll?id=${id}`)
@@ -373,5 +381,57 @@ export class EmployeeService {
                 }
             );
     }
+    //#endregion
+    
+    // Policy Documents 
+
+    //#region Get Policy Documents
+    getPolicyDocuments() {
+        return this._httpClient
+            .get(`api-1/policy-documents`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(true);
+                    this.policyDocuments.next(res);
+                    this.isLoadingPolicyDocuments.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    //#endregion
+
+    //#region Patch Policy Documents
+    addPolicyDocument(data: any) {
+        this._httpClient
+            .post(`api-1/policy-documents`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Policy Documents',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingPolicyDocuments.next(false);
+                },
+                () => {
+                    // this.getPolicyDocuments(data);
+                }
+            );
+    }
+
+    //#endregion
 
 }

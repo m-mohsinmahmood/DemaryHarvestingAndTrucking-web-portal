@@ -3,8 +3,10 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Documents, Item } from '../../employee.types';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
 
 @Component({
     selector: 'app-documents',
@@ -18,29 +20,20 @@ export class DocumentsComponent implements OnInit {
     documents: any;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     activeID: any;
+    policyDocument$: Observable<any[]>;
 
     constructor(
         private _employeeService: EmployeeService,
         private _activatedRoute: ActivatedRoute,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _matDialog: MatDialog,
+
     ) {}
 
     ngOnInit(): void {
         this.initApis();
-
-        // Subscribe to media query change
-        this._fuseMediaWatcherService
-            .onMediaQueryChange$('(min-width: 1440px)')
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((state) => {
-                // Calculate the drawer mode
-                this.drawerMode = state.matches ? 'side' : 'over';
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
     }
 
     /**
@@ -53,33 +46,24 @@ export class DocumentsComponent implements OnInit {
         // Mark for check
         this._changeDetectorRef.markForCheck();
     }
-    getFiles(id: any): void{
-        this.activeID = id;
-        this._employeeService.getItems(id).subscribe((a) => {});
-    }
+   
    // #region Init Api's
     initApis(): void {
-        // Get the items
-        this._employeeService.documents$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((documents: Documents) => {
-                this.documents = documents;
-                if (this.documents.files.length < 1) {
-                    this.getFiles(this.documents.folders[0].id);
-                }
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the item
-        this._employeeService.item$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((item: Item) => {
-                this.selectedItem = item;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // Get Documents
+        this.policyDocument$ = this._employeeService.policyDocuments$;
+        this._employeeService.getPolicyDocuments();
     }
+    //#endregion
+    
+    //#region Upload Document Popup
+    uploadDocument(){
+        const dialogRef = this._matDialog.open(UploadDocumentComponent, {
+            data: {},
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+          });
+    }
+
     //#endregion
 }
