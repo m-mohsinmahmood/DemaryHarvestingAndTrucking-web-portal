@@ -148,10 +148,11 @@
                 <div *ngIf="employee?.employee_info.country != 'United States of America'"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
-                        <div class="flex items-center">
+                        <div>
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-797B</p>
+                            <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
+
                         </div>
-                        <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                     </div>
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
                         <mat-icon *ngIf="employeeDocs?.employee_docs?.b797_doc"
@@ -828,7 +829,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs && employee?.employee_info.country != 'United States of America'"
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">

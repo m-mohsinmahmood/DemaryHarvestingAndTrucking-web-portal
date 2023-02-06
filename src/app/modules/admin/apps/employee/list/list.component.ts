@@ -34,6 +34,8 @@ import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { countryList } from './../../../../../../JSON/country';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+
 
 @Component({
     selector: 'app-employee',
@@ -53,7 +55,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
 
     //#region variables
-    page: number;
+    page: number = 1;
     pageSize = 50;
     pageSizeOptions: number[] = [50, 100, 150, 200];
     searchform: FormGroup = new FormGroup({
@@ -139,7 +141,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.searchResult = data.search;
                 this.page = 1;
                 this._employeeService.getEmployees(
-                    1,
+                    this.page,
                     this.pageSize,
                     '',
                     '',
@@ -248,6 +250,21 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+     //#region Confirmation Customer Crops Delete Dialog
+     confirmDeleteDialog(id: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Employee?',
+                title: 'Employee',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._employeeService.deleteEmployee(id, this.page, this.pageSize);
+        });
+    }
+    //#endregion
 
 }
 

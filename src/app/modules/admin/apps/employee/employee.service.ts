@@ -217,9 +217,9 @@ export class EmployeeService {
             );
     }
 
-    deleteEmployee(id: string) {
+    deleteEmployee(id: string, page , limit) {
         this._httpClient
-            .delete(`api-1/employee?employeeId=${id}`)
+            .delete(`api-1/employee?id=${id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -229,7 +229,7 @@ export class EmployeeService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getEmployees();
+                    this.getEmployees(page , limit);
                     this.isLoadingEmployee.next(false);
                 }
             );
@@ -244,7 +244,6 @@ export class EmployeeService {
             })
         );
     }
-
     //#endregion
 
     //#region get Items
@@ -382,7 +381,6 @@ export class EmployeeService {
             );
     }
     //#endregion
-    
     // Policy Documents 
 
     //#region Get Policy Documents

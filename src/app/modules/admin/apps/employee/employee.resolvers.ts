@@ -44,7 +44,9 @@ export class ContactsCountriesResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _applicantService: ApplicantService)
+    constructor(
+        private _applicantService: ApplicantService,
+        private _employeeService: EmployeeService)
     {
     }
 
@@ -60,7 +62,7 @@ export class ContactsCountriesResolver implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Country[]>
     {
-        return this._applicantService.getCountries();
+        return this._employeeService.getCountries();
     }
 }
 @Injectable({

@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Directive, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { EmployeeService } from './../../../employee.service';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
     FormBuilder,
@@ -15,63 +16,15 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import moment, { Moment } from 'moment';
 import { Applicant, Country } from '../../../employee.types';
 import { MatDatepicker } from '@angular/material/datepicker';
-import {
-    DateAdapter,
-    MAT_DATE_FORMATS,
-    MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { states } from 'JSON/state';
 import { countryList } from 'JSON/country';
 
-export const MY_FORMATS = {
-    parse: {
-        dateInput: 'YYYY',
-    },
-    display: {
-        dateInput: 'YYYY',
-        monthYearLabel: 'YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
-export const MY_FORMATS_2 = {
-    parse: {
-        dateInput: 'LL',
-    },
-    display: {
-        dateInput: 'LL',
-        monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
-@Directive({
-    selector: '[birthdayFormat]',
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS_2 },
-    ],
-})
-export class BirthDateFormat {
-}
+
 
 @Component({
     selector: 'app-update',
     templateUrl: './update.component.html',
     styleUrls: ['./update.component.scss'],
-    providers: [
-        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-        // application's root module. We provide it at the component level here, due to limitations of
-        // our example generation script.
-        {
-            provide: DateAdapter,
-            useClass: MomentDateAdapter,
-            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-        },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-
-    ],
-
 })
 
 
@@ -79,10 +32,10 @@ export class BirthDateFormat {
 export class UpdateEmployeeComponent implements OnInit {
 
     //#region Observables
-    applicant$: Observable<Applicant>;
-    isLoadingApplicant$: Observable<boolean>;
-    applicants$: Observable<Applicant[]>;
-    isLoadingApplicants$: Observable<boolean>;
+    employee$: Observable<any>;
+    isLoadingEmployee$: Observable<boolean>;
+    employees$: Observable<any[]>;
+    isLoadingEmployees$: Observable<boolean>;
     closeDialog$: Observable<boolean>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -137,6 +90,7 @@ export class UpdateEmployeeComponent implements OnInit {
         public matDialogRef: MatDialogRef<UpdateEmployeeComponent>,
         private _formBuilder: FormBuilder,
         public _applicantService: ApplicantService,
+        public _employeeService: EmployeeService,
         private _changeDetectorRef: ChangeDetectorRef,
         public _router: Router,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -145,7 +99,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-        this.routeID = data.applicant_info ? data.applicant_info.id : '';
+        
     }
 
     ngOnInit(): void {
@@ -156,7 +110,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.formUpdates();
         this.states = states;
         this.countryList = countryList;
-        
+
         //Auto Complete functions for State and Country
         this.stateOptions = this.secondFormGroup.valueChanges.pipe(
             startWith(''),
@@ -171,12 +125,12 @@ export class UpdateEmployeeComponent implements OnInit {
 
         this.isEdit = this.data.isEdit;
         //To close dialog
-        this._applicantService.closeDialog$
+        this._employeeService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
                 if (res) {
                     this.matDialogRef.close();
-                    this._applicantService.closeDialog.next(false);
+                    this._employeeService.closeDialog.next(false);
                 }
             });
 
@@ -196,17 +150,17 @@ export class UpdateEmployeeComponent implements OnInit {
     // #region initializing forms
     initApplicantForm() {
         this.firstFormGroup = this._formBuilder.group({
-            id: [''],
-            first_name: ['' || this.data.employeeData?.employee_info?.first_name , [Validators.required]],
-            last_name: [''  || this.data.employeeData?.employee_info?.last_name , [Validators.required]],
-            email: ['' || this.data.employeeData?.employee_info?.email , [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-            date_of_birth: [''  || this.data.employeeData?.employee_info?.date_of_birth , [Validators.required]],
-            age: ['' || this.data.employeeData?.employee_info?.age , [Validators.required]],
-            marital_status: [''  || this.data.employeeData?.employee_info?.marital_status , [Validators.required]],
-            languages: [''  || this.data.employeeData?.employee_info?.languages.replace(/\s/g, '').split(',') , [Validators.required]],
-            rank_speaking_english: [''  || this.data.employeeData?.employee_info?.rank_speaking_english , [Validators.required]],
-            passport: [''  || this.data.employeeData?.employee_info?.passport.toString() , [Validators.required]],
-            us_citizen: [''  || this.data.employeeData?.employee_info?.us_citizen.toString() , [Validators.required]],
+            id: [this.data.id],
+            first_name: ['' || this.data.employeeData?.employee_info?.first_name, [Validators.required]],
+            last_name: ['' || this.data.employeeData?.employee_info?.last_name, [Validators.required]],
+            email: ['' || this.data.employeeData?.employee_info?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            date_of_birth: ['' || this.data.employeeData?.employee_info?.date_of_birth, [Validators.required]],
+            age: ['' || this.data.employeeData?.employee_info?.age, [Validators.required]],
+            marital_status: ['' || this.data.employeeData?.employee_info?.marital_status, [Validators.required]],
+            languages: ['' || this.data.employeeData?.employee_info?.languages.replace(/\s/g, '').split(','), [Validators.required]],
+            rank_speaking_english: ['' || this.data.employeeData?.employee_info?.rank_speaking_english, [Validators.required]],
+            passport: ['' || this.data.employeeData?.employee_info?.passport.toString(), [Validators.required]],
+            us_citizen: ['' || this.data.employeeData?.employee_info?.us_citizen.toString(), [Validators.required]],
         });
 
         this.secondFormGroup = this._formBuilder.group({
@@ -218,75 +172,59 @@ export class UpdateEmployeeComponent implements OnInit {
             state: ['' || this.data.employeeData?.employee_info?.state],
             country: ['' || this.data.employeeData?.employee_info?.country, [Validators.required]],
             cell_phone_number: ['' || this.data.employeeData?.employee_info?.cell_phone_number, [Validators.required]],
-            cell_phone_country_code: ['zz' , [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
+            cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
             home_phone_number: ['' || this.data.employeeData?.employee_info?.home_phone_number],
             home_phone_country_code: ['zz'],
             avatar: ['' || this.data.employeeData?.employee_info?.avatar, [Validators.required]],
         });
-        
+
         this.thirdFormGroup = this._formBuilder.group({
             current_employer: ['' || this.data.employeeData?.employee_info?.current_employer],
-            current_position_title: ['' || this.data.employeeData?.employee_info?.current_position_title ],
+            current_position_title: ['' || this.data.employeeData?.employee_info?.current_position_title],
             current_description_of_role: ['' || this.data.employeeData?.employee_info?.current_description_of_role],
             current_employment_period_start: ['' || this.data.employeeData?.employee_info?.current_employment_period_start],
             current_employment_period_end: ['' || this.data.employeeData?.employee_info?.current_employment_period_end],
             current_supervisor_reference: ['' || this.data.employeeData?.employee_info?.current_supervisor_reference],
             current_supervisor_phone_number: ['' || this.data.employeeData?.employee_info?.current_supervisor_phone_number],
             current_supervisor_country_code: ['zz'],
-            current_contact_supervisor: [false || this.data.employeeData?.employee_info?.current_contact_supervisor.toString()] ,
+            current_contact_supervisor: [false || this.data.employeeData?.employee_info?.current_contact_supervisor.toString()],
 
-            previous_employer: [''|| this.data.employeeData?.employee_info?.previous_employer , [Validators.required]],
-            previous_position_title: [''|| this.data.employeeData?.employee_info?.previous_position_title, [Validators.required]],
-            previous_description_of_role: [''|| this.data.employeeData?.employee_info?.previous_description_of_role, [Validators.required]],
-            previous_employment_period_start: [''|| this.data.employeeData?.employee_info?.previous_employment_period_start, [Validators.required]],
-            previous_employment_period_end: [''|| this.data.employeeData?.employee_info?.previous_employment_period_end, [Validators.required]],
-            previous_supervisor_reference: [''|| this.data.employeeData?.employee_info?.previous_supervisor_reference, [Validators.required]],
-            previous_supervisor_phone_number: [''|| this.data.employeeData?.employee_info?.previous_supervisor_phone_number],
+            previous_employer: ['' || this.data.employeeData?.employee_info?.previous_employer, [Validators.required]],
+            previous_position_title: ['' || this.data.employeeData?.employee_info?.previous_position_title, [Validators.required]],
+            previous_description_of_role: ['' || this.data.employeeData?.employee_info?.previous_description_of_role, [Validators.required]],
+            previous_employment_period_start: ['' || this.data.employeeData?.employee_info?.previous_employment_period_start, [Validators.required]],
+            previous_employment_period_end: ['' || this.data.employeeData?.employee_info?.previous_employment_period_end, [Validators.required]],
+            previous_supervisor_reference: ['' || this.data.employeeData?.employee_info?.previous_supervisor_reference, [Validators.required]],
+            previous_supervisor_phone_number: ['' || this.data.employeeData?.employee_info?.previous_supervisor_phone_number],
             previous_supervisor_country_code: ['zz'],
-            previous_contact_supervisor: [''|| this.data.employeeData?.employee_info?.previous_contact_supervisor.toString(), [Validators.required]],
-            resume: [''|| this.data.employeeData?.employee_info?.resume],
+            previous_contact_supervisor: ['' || this.data.employeeData?.employee_info?.previous_contact_supervisor.toString(), [Validators.required]],
+            resume: ['' || this.data.employeeData?.employee_info?.resume],
 
-            authorized_to_work: [''|| this.data.employeeData?.employee_info?.authorized_to_work.toString(), [Validators.required]],
-            cdl_license: [''|| this.data.employeeData?.employee_info?.cdl_license.toString(), [Validators.required]],
-            lorry_license: [''|| this.data.employeeData?.employee_info?.lorry_license.toString(), [Validators.required]],
-            tractor_license: [''|| this.data.employeeData?.employee_info?.tractor_license.toString(), [Validators.required]],
-            work_experience_description: [''|| this.data.employeeData?.employee_info?.work_experience_description.toString(), [Validators.required]],
+            authorized_to_work: ['' || this.data.employeeData?.employee_info?.authorized_to_work.toString(), [Validators.required]],
+            cdl_license: ['' || this.data.employeeData?.employee_info?.cdl_license.toString(), [Validators.required]],
+            lorry_license: ['' || this.data.employeeData?.employee_info?.lorry_license.toString(), [Validators.required]],
+            tractor_license: ['' || this.data.employeeData?.employee_info?.tractor_license.toString(), [Validators.required]],
+            work_experience_description: ['' || this.data.employeeData?.employee_info?.work_experience_description.toString(), [Validators.required]],
 
-            question_1: [''|| this.data.employeeData?.employee_info?.question_1, [Validators.required]],
-            question_2: [''|| this.data.employeeData?.employee_info?.question_2, [Validators.required]],
-            question_3: [''|| this.data.employeeData?.employee_info?.question_3, [Validators.required]],
-            question_4: [''|| this.data.employeeData?.employee_info?.question_4, [Validators.required]],
-            question_5: [''|| this.data.employeeData?.employee_info?.question_5, [Validators.required]],
+            question_1: ['' || this.data.employeeData?.employee_info?.question_1, [Validators.required]],
+            question_2: ['' || this.data.employeeData?.employee_info?.question_2, [Validators.required]],
+            question_3: ['' || this.data.employeeData?.employee_info?.question_3, [Validators.required]],
+            question_4: ['' || this.data.employeeData?.employee_info?.question_4, [Validators.required]],
+            question_5: ['' || this.data.employeeData?.employee_info?.question_5, [Validators.required]],
         });
 
         this.fourthFormGroup = this._formBuilder.group({
-            school_college: [''|| this.data.employeeData?.employee_info?.school_college],
-            degree_name: [''|| this.data.employeeData?.employee_info?.degree_name],
+            school_college: ['' || this.data.employeeData?.employee_info?.school_college],
+            degree_name: ['' || this.data.employeeData?.employee_info?.degree_name],
             graduation_year: ['' || this.data.employeeData?.employee_info?.graduation_year, [Validators.required]],
-            reason_for_applying: [''|| this.data.employeeData?.employee_info?.reason_for_applying.replace(/\s/g, '').split(','), [Validators.required]],
-            hear_about_dht: [''|| this.data.employeeData?.employee_info?.hear_about_dht, [Validators.required]],
-            unique_fact: [''|| this.data.employeeData?.employee_info?.unique_fact],
-
-
+            reason_for_applying: ['' || this.data.employeeData?.employee_info?.reason_for_applying.replace(/\s/g, ' ').split(','), [Validators.required]],
+            hear_about_dht: ['' || this.data.employeeData?.employee_info?.hear_about_dht, [Validators.required]],
+            unique_fact: ['' || this.data.employeeData?.employee_info?.unique_fact],
         });
 
         this.sixthFormGroup = this._formBuilder.group({
-            first_phone_call: [''],
-            first_call_remarks: [''],
-            first_call_ranking: [''],
-            first_interviewer_id: [''],
-            reference_phone_call: [''],
-            reference_call_remarks: [''],
-            reference_call_ranking: [''],
-            reference_interviewer_id: [''],
-            second_phone_call: [''],
-            second_call_remarks: [''],
-            second_call_ranking: [''],
-            second_interviewer_id: [''],
-            third_phone_call: [''],
-            third_call_remarks: [''],
-            third_call_ranking: [''],
-            third_interviewer_id: [''],
+            status_step: [''],
+            status_message: [''],
         });
 
         this.formArr = [
@@ -314,9 +252,9 @@ export class UpdateEmployeeComponent implements OnInit {
 
     //#region Init Observables
     initObservables() {
-        this.isLoadingApplicant$ = this._applicantService.isLoadingApplicant$;
-        this.closeDialog$ = this._applicantService.closeDialog$;
-        this._applicantService.countries$
+        this.closeDialog$ = this._employeeService.closeDialog$;
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
+        this._employeeService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((codes: Country[]) => {
                 this.countries = codes;
@@ -331,8 +269,7 @@ export class UpdateEmployeeComponent implements OnInit {
     initCalendar() {
         //Calender Year Initilize
         if (this.data) {
-            this.graduation_year = new FormControl(this.data.graduation_year);
-            console.log("im in calendar", this.data);
+            this.graduation_year = new FormControl(moment(this.data.employeeData.employee_info.graduation_year).format('YYYY'));
 
         } else {
             this.graduation_year = new FormControl(moment());
@@ -341,8 +278,7 @@ export class UpdateEmployeeComponent implements OnInit {
     //#endregion
 
     submit(): void {
-        this._applicantService.isLoadingApplicant.next(true);
-
+        this._employeeService.isLoadingEmployee.next(true);
         //Merge all stepper forms in one form
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
@@ -358,24 +294,13 @@ export class UpdateEmployeeComponent implements OnInit {
         this.getCountryByCode('previous_supervisor_country_code');
 
         // checks for updated applicant
-        if (this.data && this.data.isEdit) {
-            // this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
-            this.updateApplicant(this.form.value);
-        } else {
-            var formData: FormData = new FormData();
-            formData.append('image', this.secondFormGroup.get('avatar').value);
-            if (this.thirdFormGroup.get('resume').value) {
-                formData.append('resume', this.thirdFormGroup.get('resume').value);
-            }
-            formData.append('form', JSON.stringify(this.form.value));
-            this._applicantService.createApplicant(formData, false);
-        }
-    }
-    updateApplicant(applicantData: any): void {
-        this._applicantService.updateApplicant(applicantData);
-    }
+        var formData: FormData = new FormData();
+        formData.append('form', JSON.stringify(this.form.value));
+        formData.append('image', this.secondFormGroup.get('avatar').value);
+        formData.append('resume', this.thirdFormGroup.get('resume').value);
+        this._employeeService.updateEmployee(this.data.id,formData);
 
-
+    }
 
     //#region Calendar Year Function
     chosenYearHandler(
@@ -392,7 +317,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
     discard(): void {
         // Close the dialog
-        this._applicantService.isLoadingApplicant.next(false);
+        this._employeeService.isLoadingEmployee.next(false);
         this.matDialogRef.close();
     }
 
@@ -464,7 +389,6 @@ export class UpdateEmployeeComponent implements OnInit {
 
     //#region Country Form Validation
     formValidation(e, type) {
-        debugger
         if (type === "country") {
             if (this.countryList.includes(e)) {
                 this.validCountry = true;
@@ -506,19 +430,19 @@ export class UpdateEmployeeComponent implements OnInit {
     //#endregion
 
     //#region Patch Country Code
-    patchCountryCode(){       
+    patchCountryCode() {
         // const cell_phone_country_code = ;
         // const home_phone_country_code = ;
         // const current_supervisor_country_code = ;
         // const previous_supervisor_country_code = this.countries.find(country => country.code === this.data.employeeData?.employee_info?.previous_supervisor_country_code);
         this.secondFormGroup.patchValue({
             cell_phone_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.cell_phone_country_code).iso,
-            home_phone_country_code:    this.countries.find(country => country.code === this.data.employeeData?.employee_info?.home_phone_country_code).iso
+            home_phone_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.home_phone_country_code).iso
         })
-        this.thirdFormGroup.patchValue({
-            current_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.current_supervisor_country_code).iso,
-            previous_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.previous_supervisor_country_code).iso
-        })
+        // this.thirdFormGroup.patchValue({
+        //     current_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.current_supervisor_country_code).iso,
+        //     previous_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.previous_supervisor_country_code).iso
+        // })
     }
 
     //#region Filter country iso and replace with code
