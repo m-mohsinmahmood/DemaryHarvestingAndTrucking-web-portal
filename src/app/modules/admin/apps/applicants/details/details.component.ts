@@ -340,5 +340,5 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     expandAll() {
         this.panelOpenState = true;
-    }
+    } 
 }

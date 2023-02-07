@@ -18,7 +18,7 @@
     <!-- <div class="flex sm:justify-start justify-center py-2 border-t mx-4">
             <img class="inline-block h-24 w-24 rounded-full sm:ml-20" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="">
         </div> -->
-    <div *ngIf="(employeeData$ | async) as employee" 
+    <div *ngIf="(employeeData$ | async) as employee"
         class="flex flex-col flex-auto sm:p-0 p-6 sm:grid overflow-y-auto mt-6">
         <div class="grid sm:gap-3 sm:grid-cols-2 grid-cols-1 py-0 sm:pl-12 md:pl-12 pl-2 pr-2 min-h-100">
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
@@ -34,16 +34,18 @@
                 <mat-label>{{employee?.employee_info.email}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
+                <mat-label>{{employee?.employee_info.date_of_birth | date: "MMM-dd-YYYY"}}</mat-label>
+            </div>
+            <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Cell Phone Number:</mat-label>
-                <mat-label>{{ employee?.employee_info.cell_phone_country_code}}  {{ employee?.employee_info.cell_phone_number}}</mat-label>
+                <mat-label>{{getCountryCode(employee?.employee_info.cell_phone_country_code)}} {{
+                    employee?.employee_info.cell_phone_number}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Home Phone Number: </mat-label>
-                <mat-label >{{ employee?.employee_info.home_phone_country_code}} {{ employee?.employee_info.home_phone_number}}</mat-label>
-            </div>
-            <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Date of Birth:</mat-label>
-                <mat-label>{{employee?.employee_info.date_of_birth | date: "MMM-dd-YYYY"}}</mat-label>
+                <mat-label>{{getCountryCode (employee?.employee_info.home_phone_country_code)}} {{
+                    employee?.employee_info.home_phone_number}}</mat-label>
             </div>
             <div class="flex flex-row sm:items-center sm:p-0 p-2">
                 <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Age:</mat-label>

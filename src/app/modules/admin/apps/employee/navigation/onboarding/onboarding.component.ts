@@ -14,8 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 export class OnboardingComponent implements OnInit {
 
   //#region Variables
-  folders = [];
-  block: string = 'DOI';
+  folders: any  = [];
+  block: string = '';
   routeID; // URL ID
   statusStep: string = '2';
   statusMessage: string = 'Application Submitted';
@@ -76,13 +76,19 @@ export class OnboardingComponent implements OnInit {
       body: ['', [Validators.required]]
     });
 
-    this.folders = [
-      { folder: 'DOI' },
-      { folder: 'DOT' },
+    this.folders = this.employee?.employee_info.country == 'United States of America'? [
+      { folder: 'Department of Transportation (DOT)' },
       { folder: 'Payroll' },
-      { folder: 'DHS' },
-      { folder: 'Documents' },
-    ];
+      { folder: 'Department of Labor (DOL)' },
+      { folder: 'DHT Onboarding Documents' },
+    ]:[
+      { folder: 'Department of Immigration (DOI)' },
+      { folder: 'Department of Transportation (DOT)' },
+      { folder: 'Payroll' },
+      { folder: 'Department of Labor (DOL)' },
+      { folder: 'DHT Onboarding Documents' },
+    ]
+    this.employee?.employee_info.country == 'United States of America'? this.block = 'Department of Transportation (DOT)' : this.block =  'Department of Immigration (DOI)'
   }
 
   //#region Get Applicant By id 

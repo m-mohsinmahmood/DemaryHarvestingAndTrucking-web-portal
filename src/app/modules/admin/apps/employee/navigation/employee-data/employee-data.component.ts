@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
 import { UpdateEmployeeComponent } from './update/update.component';
 
@@ -16,6 +16,7 @@ export class EmployeeDataComponent implements OnInit {
   employeeData;
   isEditMode: boolean = false;
   routeID; // URL ID
+
   //#endregion
 
   //#region Observables
@@ -28,7 +29,7 @@ export class EmployeeDataComponent implements OnInit {
     private _employeeService: EmployeeService,
     private _matDialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-
+    private _changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   //#region Lifecycle Functions
@@ -50,7 +51,7 @@ export class EmployeeDataComponent implements OnInit {
   initObservables() {
     this.isLoadingEmployeeData$ = this._employeeService.isLoadingEmployee$;
     this.employeeData$ = this._employeeService.employee$;
-    this.employeeData$.subscribe((value)=>{
+    this.employeeData$.subscribe((value) => {
       this.employeeData = value;
     })
   }
@@ -66,12 +67,19 @@ export class EmployeeDataComponent implements OnInit {
     const dialogRef = this._matDialog.open(UpdateEmployeeComponent, {
       data: {
         id: this.routeID,
-        employeeData : this.employeeData,
-    },
+        employeeData: this.employeeData,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('Compose dialog was closed!');
     });
   }
+
+  //#region find country code 
+  getCountryCode(country_code) {
+    if (country_code)
+     return '+' + country_code?.split("+")[1];
+  }
+  //#endregion
 }

@@ -199,6 +199,7 @@ export class UpdateEmployeeComponent implements OnInit {
             previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['' || this.data.employeeData?.employee_info?.previous_contact_supervisor.toString(), [Validators.required]],
             resume: ['' || this.data.employeeData?.employee_info?.resume],
+            employment_period: [''|| this.data.employeeData?.employee_info?.employment_period],
 
             authorized_to_work: ['' || this.data.employeeData?.employee_info?.authorized_to_work.toString(), [Validators.required]],
             cdl_license: ['' || this.data.employeeData?.employee_info?.cdl_license.toString(), [Validators.required]],
@@ -293,7 +294,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.getCountryByCode('current_supervisor_country_code');
         this.getCountryByCode('previous_supervisor_country_code');
 
-        // checks for updated applicant
+        // Form Data
         var formData: FormData = new FormData();
         formData.append('form', JSON.stringify(this.form.value));
         formData.append('image', this.secondFormGroup.get('avatar').value);
@@ -431,25 +432,22 @@ export class UpdateEmployeeComponent implements OnInit {
 
     //#region Patch Country Code
     patchCountryCode() {
-        // const cell_phone_country_code = ;
-        // const home_phone_country_code = ;
-        // const current_supervisor_country_code = ;
-        // const previous_supervisor_country_code = this.countries.find(country => country.code === this.data.employeeData?.employee_info?.previous_supervisor_country_code);
         this.secondFormGroup.patchValue({
-            cell_phone_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.cell_phone_country_code).iso,
-            home_phone_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.home_phone_country_code).iso
+            cell_phone_country_code: this.data.employeeData?.employee_info?.cell_phone_country_code?.split("+")[0],
+            home_phone_country_code: this.data.employeeData?.employee_info?.home_phone_country_code?.split("+")[0]
         })
-        // this.thirdFormGroup.patchValue({
-        //     current_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.current_supervisor_country_code).iso,
-        //     previous_supervisor_country_code: this.countries.find(country => country.code === this.data.employeeData?.employee_info?.previous_supervisor_country_code).iso
-        // })
+        this.thirdFormGroup.patchValue({
+            current_supervisor_country_code:  this.data.employeeData?.employee_info?.current_supervisor_country_code?.split("+")[0],
+            previous_supervisor_country_code:  this.data.employeeData?.employee_info?.previous_supervisor_country_code?.split("+")[0]
+        })
     }
+    //#endregion
 
     //#region Filter country iso and replace with code
     getCountryByCode(formValue: string) {
         let country_code;
         country_code = this.countries.find(country => country.iso === this.form.get(formValue).value)
-        this.form.get(formValue).setValue(country_code.code);
+        this.form.get(formValue).setValue(country_code.iso + country_code.code);
     }
     //#endregion
 

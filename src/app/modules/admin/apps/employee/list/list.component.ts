@@ -265,6 +265,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
     //#endregion
+    getCountryCode(country_code){
+        if (country_code)
+        return  '+' + country_code?.split("+")[1];
+    }
 
 }
 

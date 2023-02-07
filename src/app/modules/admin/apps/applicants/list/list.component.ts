@@ -6,11 +6,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, map, merge, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
+import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { UpdateComponent } from '../update/update.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
-import { FilterComponent } from './../filter/filter.component';
 import { date_format, date_format_2 } from 'JSON/date-format';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -67,7 +66,6 @@ export class ApplicantsListComponent
         'N/A',
         'Not Being Considered',
     ];
-    countries: string[] = [];
     page: number;
     limit: number;
     pageSize = 50;
@@ -89,8 +87,6 @@ export class ApplicantsListComponent
     sortActive;
     sortDirection;
     states: string[] = [];
-
-
     // #endregion
 
     /**
@@ -100,7 +96,8 @@ export class ApplicantsListComponent
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _applicantService: ApplicantService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
+
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -278,6 +275,13 @@ export class ApplicantsListComponent
             if (dialogResult)
                 this._applicantService.deleteApplicant(applicantId);
         });
+    }
+    //#endregion
+
+    //#region find country code 
+    getCountryCode(country_code) {
+        if (country_code)
+        return  '+' + country_code?.split("+")[1];
     }
     //#endregion
 }

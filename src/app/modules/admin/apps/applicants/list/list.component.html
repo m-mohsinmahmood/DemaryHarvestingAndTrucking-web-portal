@@ -111,7 +111,7 @@
                                         </div>
                                         <!-- US Phone number -->
                                         <div class="capitalize hidden sm:block truncate">
-                                            {{applicant.cell_phone_country_code}} {{ applicant.cell_phone_number }}
+                                            {{getCountryCode(applicant.cell_phone_country_code)}} {{ applicant.cell_phone_number }}
                                         </div>
                                         <!-- Rnking -->
                                         <div class="capitalize hidden sm:block truncate">
