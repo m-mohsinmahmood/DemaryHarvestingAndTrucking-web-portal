@@ -229,7 +229,7 @@ export class ApplicantService {
                 }
             );
     }
-    updateApplicant(data: any) {
+    updateApplicant(data: any, id?) {
         this._httpClient
             .put(`api-1/applicants`, data)
             .pipe(take(1))
@@ -252,7 +252,12 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicants();
+                    if (id){
+                        this.getApplicantByIdNew(id);
+                    }
+                    else {
+                        this.getApplicants();
+                    }
                 }
             );
     }
