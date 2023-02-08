@@ -1,6 +1,7 @@
 <!--Resources Nested Tabs-->
 <div class="sm:rounded-lg overflow-y-hidden">
-    <mat-tab-group mat-align-tabs="start" class="mat-tabs-wrapper-invoice bg-gray-100 p-8">
+    <mat-tab-group mat-align-tabs="start" class="mat-tabs-wrapper-invoice bg-gray-100 p-8"
+        (selectedIndexChange)="getRelativeTabInvoices($event)">
         <!-- Harvesting-->
         <mat-tab label="Harvesting">
             <div class="flex justify-end py-4">
@@ -9,15 +10,17 @@
                     <span class="ml-2 mr-1">Export To PDF</span>
                 </button>
 
-                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="enableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                     <span class="ml-2 mr-1">Edit</span>
                 </button>
-        
+
                 <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
                     <span class="ml-2 mr-1">Cancel</span>
                 </button>
-                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
+                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="disableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                     <span class="ml-2 mr-1">Save</span>
                 </button>
@@ -25,7 +28,7 @@
             <div class="mt-4 px-4 py-5 sm:p-0" id="MyDIv">
                 <!-- Main -->
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="justify-center p-8 table-auto gap-6">
-                    <div class="grid grid-cols-2 gap-6 px-8">
+                    <div class="grid grid-cols-2 gap-6 px-8" *ngIf="customer$ | async as customer">
 
                         <div class="flex flex-col justify-start">
                             <mat-label class="text-2xl font-extrabold text-gray-500 w-1/2">Title</mat-label>
@@ -55,9 +58,9 @@
                         <div>
 
                         </div>
-                        <mat-label *ngIf="!isEditMode">BIll To</mat-label>
+                        <mat-label *ngIf="!isEditMode">{{customer?.customer_name}}</mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>BIll To:</mat-label>
+                            <mat-label>{{customer?.customer_name}}</mat-label>
                             <input matInput formControlName="billTo">
                         </mat-form-field>
 
@@ -69,9 +72,9 @@
                         </mat-form-field>
 
 
-                        <mat-label *ngIf="!isEditMode">Address</mat-label>
+                        <mat-label *ngIf="!isEditMode">{{customer?.address}}</mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>Address:</mat-label>
+                            <mat-label>{{customer?.address}}</mat-label>
                             <input matInput formControlName="addressInInvoice">
                         </mat-form-field>
 
@@ -102,7 +105,8 @@
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto pt-8">
                         <ng-container>
                             <ng-container>
-                                <div class="grid bg-white">
+                                <div class="grid bg-white"
+                                    *ngIf="customHarvestingList$ | async as customHarvestingList">
                                     <!-- Header -->
                                     <div class="harvesting-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                         matSort matSortDisableClear>
@@ -127,16 +131,22 @@
                                         <div class="hidden sm:block pl-2">
                                             Amount
                                         </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Action
+                                        </div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]"
+                                    <ng-container
+                                        *ngIf="customHarvestingList.harvestingInvoicesList.length > 0;else noInvoices">
+                                        <ng-container
+                                            *ngFor="let harvestingInvoice of customHarvestingList.harvestingInvoicesList">
+                                            <div
                                                 class="harvesting-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label
+                                                        *ngIf="!isEditMode">{{harvestingInvoice.service_type}}</mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{harvestingInvoice.service_type}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -145,9 +155,10 @@
 
                                                 <!-- Harvest Year -->
                                                 <div class="sm:block truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label
+                                                        *ngIf="!isEditMode">{{harvestingInvoice.farm_name}}</mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{harvestingInvoice.farm_name}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -155,9 +166,10 @@
                                                 <!-- Email -->
                                                 <div class="sm:block items-center truncate">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{harvestingInvoice.crop_name}}</mat-label>
                                                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                            <mat-label>Lorum</mat-label>
+                                                            <mat-label>{{harvestingInvoice.crop_name}}</mat-label>
                                                             <input matInput formControlName="next15Days">
                                                         </mat-form-field>
                                                     </div>
@@ -166,42 +178,60 @@
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{harvestingInvoice.quantity_type}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{harvestingInvoice.quantity_type}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{harvestingInvoice.quantity}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{harvestingInvoice.quantity}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
 
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{harvestingInvoice.rate}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{harvestingInvoice.rate}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label *ngIf="!isEditMode">
+                                                            {{harvestingInvoice.amount}}
+                                                        </mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>
+                                                                {{harvestingInvoice.amount}}
+                                                            </mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
+
+                                                <div class="hidden sm:block">
+                                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditHarvestingDialog(harvestingInvoice)"
+                                                        matTooltip="Edit" matTooltipPosition="above">
+                                                        <mat-icon class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </ng-container>
                                     </ng-container>
@@ -210,9 +240,9 @@
                                     [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
                             </ng-container>
                         </ng-container>
-                        <ng-template #noProducts>
+                        <ng-template #noInvoices>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
-                                are no products!</div>
+                                are no Invoices!</div>
                         </ng-template>
 
                     </div>
@@ -249,7 +279,7 @@
                     </div>
                 </form>
                 <div class="justify-start md:-mt-30 md:pb-30 md:pl-8">
-                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddHarvestingDialog()">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                         <span class="ml-1 sm:ml-2">Add Item</span>
                     </button>
@@ -263,15 +293,17 @@
         <mat-tab label="Farming">
 
             <div class="flex justify-end py-4">
-                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="enableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                     <span class="ml-2 mr-1">Edit</span>
                 </button>
-        
+
                 <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
                     <span class="ml-2 mr-1">Cancel</span>
                 </button>
-                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
+                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="disableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                     <span class="ml-2 mr-1">Save</span>
                 </button>
@@ -279,7 +311,7 @@
             <div class="mt-4 px-4 py-5 sm:p-0">
                 <!-- Main -->
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="justify-center p-8 table-auto gap-6">
-                    <div class="grid grid-cols-2 gap-6 px-8">
+                    <div class="grid grid-cols-2 gap-6 px-8" *ngIf="customer$ | async as customer">
 
                         <div class="flex flex-col justify-start">
                             <mat-label class="text-2xl font-extrabold text-gray-500 w-1/2">Title</mat-label>
@@ -309,9 +341,9 @@
                         <div>
 
                         </div>
-                        <mat-label *ngIf="!isEditMode">BIll To</mat-label>
+                        <mat-label *ngIf="!isEditMode">{{customer.customer_name}}</mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>BIll To:</mat-label>
+                            <mat-label>{{customer.customer_name}}</mat-label>
                             <input matInput formControlName="billTo">
                         </mat-form-field>
 
@@ -323,9 +355,9 @@
                         </mat-form-field>
 
 
-                        <mat-label *ngIf="!isEditMode">Address</mat-label>
+                        <mat-label *ngIf="!isEditMode">{{customer.address}}</mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>Address:</mat-label>
+                            <mat-label>{{customer.address}}</mat-label>
                             <input matInput formControlName="addressInInvoice">
                         </mat-form-field>
 
@@ -354,9 +386,9 @@
 
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto pt-8">
-                        <ng-container>
+                        <ng-container >
                             <ng-container>
-                                <div class="grid bg-white">
+                                <div class="grid bg-white" *ngIf="customFarmingList$ | async as customFarmingList">
                                     <!-- Header -->
                                     <div class="farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                         matSort matSortDisableClear>
@@ -378,16 +410,24 @@
                                         <div class="hidden sm:block pl-2">
                                             Amount
                                         </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Invoice
+                                        </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Action
+                                        </div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]"
+                                    <ng-container *ngIf="customFarmingList.farmingInvoicesList.length > 0;else noInvoices">
+                                        <ng-container *ngIf="customFarmingList$ | async as customFarmingList">
+                                            <div *ngFor="let farmingInvoice of customFarmingList.farmingInvoicesList"
                                                 class="farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label *ngIf="!isEditMode">{{farmingInvoice.date| date:
+                                                        "dd-MMM-yyyy"}}</mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{farmingInvoice.date | date:
+                                                            "dd-MMM-yyyy"}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -396,9 +436,10 @@
 
                                                 <!-- Harvest Year -->
                                                 <div class="sm:block truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label
+                                                        *ngIf="!isEditMode">{{farmingInvoice.equipment_type}}</mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{farmingInvoice.equipment_type}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -406,9 +447,10 @@
                                                 <!-- Email -->
                                                 <div class="sm:block items-center truncate">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{farmingInvoice.quantity_type}}</mat-label>
                                                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                            <mat-label>Lorum</mat-label>
+                                                            <mat-label>{{farmingInvoice.quantity_type}}</mat-label>
                                                             <input matInput formControlName="next15Days">
                                                         </mat-form-field>
                                                     </div>
@@ -417,41 +459,57 @@
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{farmingInvoice.quantity}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{farmingInvoice.quantity}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{farmingInvoice.rate}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{farmingInvoice.rate}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
 
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label *ngIf="!isEditMode">
+                                                            {{farmingInvoice.amount}}
+                                                        </mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>
+                                                                {{farmingInvoice.amount}}
+
+                                                            </mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
                                                         <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>Lorum</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
+                                                </div>
+                                                <div class="hidden sm:block">
+                                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditFarmingDialog(farmingInvoice)"
+                                                        matTooltip="Edit" matTooltipPosition="above">
+                                                        <mat-icon class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -461,9 +519,9 @@
                                     [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
                             </ng-container>
                         </ng-container>
-                        <ng-template #noProducts>
+                        <ng-template #noInvoices>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
-                                are no products!</div>
+                                are no Invoices!</div>
                         </ng-template>
 
                     </div>
@@ -499,7 +557,7 @@
                     </div>
                 </form>
                 <div class="justify-start md:-mt-30 md:pb-30 md:pl-8">
-                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddFarmingDialog()">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                         <span class="ml-1 sm:ml-2">Add Item</span>
                     </button>
@@ -511,15 +569,17 @@
         <!--Trucking-->
         <mat-tab label="Trucking">
             <div class="flex justify-end py-4">
-                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="enableEditButton()">
+                <button *ngIf="!isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="enableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                     <span class="ml-2 mr-1">Edit</span>
                 </button>
-        
+
                 <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'warn'" (click)="disableEditButton()">
                     <span class="ml-2 mr-1">Cancel</span>
                 </button>
-                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'" (click)="disableEditButton()">
+                <button *ngIf="isEditMode" class="ml-4" mat-flat-button [color]="'primary'"
+                    (click)="disableEditButton()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                     <span class="ml-2 mr-1">Save</span>
                 </button>
@@ -527,7 +587,7 @@
             <div class="mt-4 px-4 py-5 sm:p-0">
                 <!-- Main -->
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="justify-center p-8 table-auto gap-6">
-                    <div class="grid grid-cols-2 gap-6 px-8">
+                    <div class="grid grid-cols-2 gap-6 px-8" *ngIf="customer$ | async as customer">
 
                         <div class="flex flex-col justify-start">
                             <mat-label class="text-2xl font-extrabold text-gray-500 w-1/2">Title</mat-label>
@@ -557,9 +617,14 @@
                         <div>
 
                         </div>
-                        <mat-label *ngIf="!isEditMode">BIll To</mat-label>
+                        <mat-label *ngIf="!isEditMode">
+                            {{customer.customer_name}}
+                        </mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>BIll To:</mat-label>
+                            <mat-label>
+                                {{customer.customer_name}}
+
+                            </mat-label>
                             <input matInput formControlName="billTo">
                         </mat-form-field>
 
@@ -571,9 +636,12 @@
                         </mat-form-field>
 
 
-                        <mat-label *ngIf="!isEditMode">Address</mat-label>
+                        <mat-label *ngIf="!isEditMode">
+                            {{customer.address}}
+
+                        </mat-label>
                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                            <mat-label>Address:</mat-label>
+                            <mat-label>{{customer.address}}</mat-label>
                             <input matInput formControlName="addressInInvoice">
                         </mat-form-field>
 
@@ -604,7 +672,7 @@
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto pt-8">
                         <ng-container>
                             <ng-container>
-                                <div class="grid bg-white">
+                                <div class="grid bg-white" *ngIf="customTruckingList$ | async as customTruckingList">
                                     <!-- Header -->
                                     <div class="invoice-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                         matSort matSortDisableClear>
@@ -621,7 +689,7 @@
                                             City / State
                                         </div>
                                         <div class="hidden sm:block">
-                                            Rate Type 
+                                            Rate Type
                                         </div>
 
                                         <div class="hidden sm:block">
@@ -630,16 +698,22 @@
                                         <div class="hidden sm:block pl-2">
                                             Amount
                                         </div>
+                                        <div class="hidden sm:block pl-2">
+                                            Action
+                                        </div>
                                     </div>
                                     <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngFor="let number of [0,1,2,3,4]"
+                                    <ng-container *ngIf="customTruckingList.truckingInvoicesList.length > 0;else noInvoices3">
+                                        <ng-container *ngIf="customTruckingList$ | async as customTruckingList">
+                                            <div *ngFor="let truckingInvoice of customTruckingList.truckingInvoicesList"
                                                 class="invoice-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label *ngIf="!isEditMode">
+                                                        {{truckingInvoice.date | date : "dd-MMM-yyyy"}}
+                                                    </mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{truckingInvoice.date | date :
+                                                            "dd-MMM-yyyy"}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -648,9 +722,10 @@
 
                                                 <!-- Harvest Year -->
                                                 <div class="sm:block truncate">
-                                                    <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                    <mat-label
+                                                        *ngIf="!isEditMode">{{truckingInvoice.billing_id}}</mat-label>
                                                     <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
+                                                        <mat-label>{{truckingInvoice.billing_id}}</mat-label>
                                                         <input matInput formControlName="next15Days">
                                                     </mat-form-field>
                                                 </div>
@@ -658,9 +733,10 @@
                                                 <!-- Email -->
                                                 <div class="sm:block items-center truncate">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{truckingInvoice.cargo}}</mat-label>
                                                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                            <mat-label>Lorum</mat-label>
+                                                            <mat-label>{{truckingInvoice.cargo}}</mat-label>
                                                             <input matInput formControlName="next15Days">
                                                         </mat-form-field>
                                                     </div>
@@ -669,41 +745,55 @@
                                                 <!-- Contact -->
                                                 <div class="hidden sm:block items-center">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{truckingInvoice.city}}/{{truckingInvoice.state}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{truckingInvoice.city}}/{{truckingInvoice.state}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <!-- Active -->
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{truckingInvoice.rate_type}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{truckingInvoice.rate_type}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
 
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{truckingInvoice.rate}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{truckingInvoice.rate}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <div class="hidden sm:block">
                                                     <div class="min-w-4 ml-2">
-                                                        <mat-label *ngIf="!isEditMode">Lorum</mat-label>
-                                                    <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                        <mat-label>Lorum</mat-label>
-                                                        <input matInput formControlName="next15Days">
-                                                    </mat-form-field>
+                                                        <mat-label
+                                                            *ngIf="!isEditMode">{{truckingInvoice.amount}}</mat-label>
+                                                        <mat-form-field *ngIf="isEditMode" appearance="outline">
+                                                            <mat-label>{{truckingInvoice.amount}}</mat-label>
+                                                            <input matInput formControlName="next15Days">
+                                                        </mat-form-field>
                                                     </div>
+                                                </div>
+
+                                                <div class="hidden sm:block">
+                                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
+                                                        mat-stroked-button
+                                                        (click)="openEditTruckingDialog(truckingInvoice)"
+                                                        matTooltip="Edit" matTooltipPosition="above">
+                                                        <mat-icon class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -713,9 +803,9 @@
                                     [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
                             </ng-container>
                         </ng-container>
-                        <ng-template #noProducts>
+                        <ng-template #noInvoices3>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
-                                are no products!</div>
+                                are no Invoices!</div>
                         </ng-template>
 
                     </div>
@@ -723,7 +813,7 @@
                     <div class="grid grid-cols-2">
                         <div class="justify-start">
                         </div>
-                        
+
                         <div class="grid grid-cols-1 gap-y-2">
                             <mat-label *ngIf="!isEditMode">Balance</mat-label>
                             <mat-form-field *ngIf="isEditMode" appearance="outline">
@@ -753,7 +843,7 @@
 
                 </form>
                 <div class="justify-start md:-mt-30 md:pb-30 md:pl-8">
-                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+                    <button class="ml-2" mat-flat-button [color]="'primary'" (click)="openAddTruckingDialog()">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                         <span class="ml-1 sm:ml-2">Add Item</span>
                     </button>

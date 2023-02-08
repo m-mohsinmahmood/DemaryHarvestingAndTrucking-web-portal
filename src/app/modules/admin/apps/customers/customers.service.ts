@@ -329,7 +329,7 @@ export class CustomersService {
     readonly isLoadingFarmingJobs$: Observable<boolean> =
         this.isLoadingFarmingJobs.asObservable();
 
-    
+
     //#region Observables Customer Trucking Jobs
     commercialTruckingJobs: BehaviorSubject<Customers[] | null> =
         new BehaviorSubject(null);
@@ -344,7 +344,7 @@ export class CustomersService {
     readonly isLoadingTruckingJobs$: Observable<boolean> =
         this.isLoadingTruckingJobs.asObservable();
 
-    
+
     //#region Observables Customer Harvesting Jobs
     customHarvestingJobs: BehaviorSubject<Customers[] | null> =
         new BehaviorSubject(null);
@@ -358,6 +358,112 @@ export class CustomersService {
 
     readonly isLoadingHarvestingJobs$: Observable<boolean> =
         this.isLoadingHarvestingJobs.asObservable();
+
+
+
+    //#region Observables Customer Farming Invoicing
+    farmingInvoices: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly farmingInvoices$: Observable<Customers[] | null> =
+        this.farmingInvoices.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingFarmingInvoices: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingFarmingInvoices$: Observable<boolean> =
+        this.isLoadingFarmingInvoices.asObservable();
+
+
+
+    //#region Observables Customer Trucking Invoicing
+    truckingInvoices: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly truckingInvoices$: Observable<Customers[] | null> =
+        this.truckingInvoices.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingTruckingInvoices: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingTruckingInvoices$: Observable<boolean> =
+        this.isLoadingTruckingInvoices.asObservable();
+
+
+    //#region Observables Customer Harvesting Invoicing
+    harvestingInvoices: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly harvestingInvoices$: Observable<Customers[] | null> =
+        this.harvestingInvoices.asObservable();
+    //#endregion
+
+    // Loaders
+    private isLoadingHarvestingInvoices: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingHarvestingInvoices$: Observable<boolean> =
+        this.isLoadingHarvestingInvoices.asObservable();
+
+
+    //#region Observables Customer Harvesting List
+    customHarvestingInvoiceList: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customHarvestingInvoiceList$: Observable<Customers[] | null> =
+        this.customHarvestingInvoiceList.asObservable();
+    //#endregion
+
+    // Loaders
+    isLoadingCustomHarvestingInvoiceList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomHarvestingInvoiceList$: Observable<boolean> =
+        this.isLoadingCustomHarvestingInvoiceList.asObservable();
+
+    //#region Observables Customer Harvesting List
+    customFarmingInvoiceList: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customFarmingInvoiceList$: Observable<Customers[] | null> =
+        this.customFarmingInvoiceList.asObservable();
+    //#endregion
+
+    // Loaders
+    isLoadingCustomFarmingInvoiceList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomFarmingInvoiceList$: Observable<boolean> =
+        this.isLoadingCustomFarmingInvoiceList.asObservable();
+
+    //#region Observables Customer Harvesting List
+    customTruckingInvoiceList: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customTruckingInvoiceList$: Observable<Customers[] | null> =
+        this.customTruckingInvoiceList.asObservable();
+    //#endregion
+
+    // Loaders
+    isLoadingCustomTruckingInvoiceList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomTruckingInvoiceList$: Observable<boolean> =
+        this.isLoadingCustomTruckingInvoiceList.asObservable();
+
+
+
+    //#region Observables Customer Harvesting Invoicing
+    customHarvestingInvoice: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly customHarvestingInvoice$: Observable<Customers[] | null> =
+        this.customHarvestingInvoice.asObservable();
+    //#endregion
+
+    // Loaders
+    isLoadingCustomHarvestingInvoice: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCustomHarvestingInvoice$: Observable<boolean> =
+        this.isLoadingCustomHarvestingInvoice.asObservable();
 
 
 
@@ -677,7 +783,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomers(1,limit,sort,order,search,filters);
+                    this.getCustomers(1, limit, sort, order, search, filters);
                 }
             );
     }
@@ -874,7 +980,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerContact(customerID,1,limit,sort,order,search);
+                    this.getCustomerContact(customerID, 1, limit, sort, order, search);
                 }
             );
     }
@@ -1084,7 +1190,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerFarm(customerID,1,limit,sort,order,search);
+                    this.getCustomerFarm(customerID, 1, limit, sort, order, search);
                 }
             );
     }
@@ -1289,7 +1395,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerField(customerID,1,limit,sort,order,search,filters);
+                    this.getCustomerField(customerID, 1, limit, sort, order, search, filters);
                 }
             );
     }
@@ -1474,7 +1580,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerCrops(customerID,1,limit,sort,order,search,filters);
+                    this.getCustomerCrops(customerID, 1, limit, sort, order, search, filters);
                 }
             );
     }
@@ -1662,7 +1768,7 @@ export class CustomersService {
                     this.closeDialog.next(false);
                 },
                 () => {
-                    this.getCustomerDestination(customerID,1,limit,sort,order,search,filters);
+                    this.getCustomerDestination(customerID, 1, limit, sort, order, search, filters);
                 }
             );
     }
@@ -2139,13 +2245,14 @@ export class CustomersService {
             );
     }
 
-    getFarmingJobs( id:string, data)
-    {
+    //#region Customer Jobs
+
+    getFarmingJobs(id: string, data) {
         let params = new HttpParams();
         params = params.set('data', data);
 
         return this._httpClient
-            .get(`api-1/customer-job-result?customer_id=${id}`, {params})
+            .get(`api-1/customer-job-result?customer_id=${id}`, { params })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -2160,13 +2267,12 @@ export class CustomersService {
     }
 
 
-    getTruckingJobs( id:string, data)
-    {
+    getTruckingJobs(id: string, data) {
         let params = new HttpParams();
         params = params.set('data', data);
 
         return this._httpClient
-            .get(`api-1/customer-job-result?customer_id=${id}`,  {params})
+            .get(`api-1/customer-job-result?customer_id=${id}`, { params })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -2182,13 +2288,12 @@ export class CustomersService {
 
 
 
-    getHarvestingJobs( id:string, data)
-    {
+    getHarvestingJobs(id: string, data) {
         let params = new HttpParams();
         params = params.set('data', data);
 
         return this._httpClient
-            .get(`api-1/customer-job-result?customer_id=${id}`,  {params})
+            .get(`api-1/customer-job-result?customer_id=${id}`, { params })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -2201,4 +2306,402 @@ export class CustomersService {
                 }
             );
     }
+
+    //#endregion
+
+    //#region Customer Invoicing 
+
+    // getFarmingInvoices(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingFarmingInvoices.next(true);
+    //                 this.farmingInvoices.next(res);
+    //                 this.isLoadingFarmingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+    // getTruckingInvoices(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingTruckingInvoices.next(true);
+    //                 this.truckingInvoices.next(res);
+    //                 this.isLoadingTruckingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+
+    // getHarvestingInvoices(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingHarvestingInvoices.next(true);
+    //                 this.harvestingInvoices.next(res);
+    //                 this.isLoadingHarvestingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+    //#endregion
+
+
+
+    //#region Customer Invoicing 
+
+     getFarmingInvoiceList(id: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        return this._httpClient
+            .get(`api-1/customer-farming-invoice?customer_id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomFarmingInvoiceList.next(true);
+                    this.customFarmingInvoiceList.next(res);
+                    this.isLoadingCustomFarmingInvoiceList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    // getTruckingList(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingTruckingInvoices.next(true);
+    //                 this.truckingInvoices.next(res);
+    //                 this.isLoadingTruckingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+
+    getHarvestingInvoiceList(id: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        return this._httpClient
+            .get(`api-1/customer-harvesting-invoice?customer_id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomHarvestingInvoiceList.next(true);
+                    this.customHarvestingInvoiceList.next(res);
+                    this.isLoadingCustomHarvestingInvoiceList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    getTruckingInvoiceList(id: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+        return this._httpClient
+            .get(`api-1/customer-trucking-invoice?customer_id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomTruckingInvoiceList.next(true);
+                    this.customTruckingInvoiceList.next(res);
+                    this.isLoadingCustomTruckingInvoiceList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    //#endregion
+
+
+
+
+
+    //#region Customer Custom Invoicing 
+
+    //  getFarmingInvoices(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingFarmingInvoices.next(true);
+    //                 this.farmingInvoices.next(res);
+    //                 this.isLoadingFarmingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+    // getTruckingInvoices(id: string, data) {
+    //     let params = new HttpParams();
+    //     params = params.set('data', data);
+
+    //     return this._httpClient
+    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.isLoadingTruckingInvoices.next(true);
+    //                 this.truckingInvoices.next(res);
+    //                 this.isLoadingTruckingInvoices.next(false);
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //             }
+    //         );
+    // }
+
+
+    createHarvestingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        this._httpClient
+            .post(`api-1/customer-harvesting-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getHarvestingInvoiceList(data.customer_id , sort, order, search);
+                }
+            );
+    }
+
+    updateHarvestingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+            this._httpClient
+            .put(`api-1/customer-harvesting-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getHarvestingInvoiceList(data.customer_id, sort, order, search);
+                }
+            );
+    }
+
+
+
+
+    createFarmingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        this._httpClient
+            .post(`api-1/customer-farming-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getFarmingInvoiceList(data.customer_id , sort, order, search);
+                }
+            );
+    }
+
+    updateFarmingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+            this._httpClient
+            .put(`api-1/customer-farming-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getFarmingInvoiceList(data.customer_id, sort, order, search);
+                }
+            );
+    }
+
+
+
+
+
+    createTruckingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        this._httpClient
+            .post(`api-1/customer-trucking-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getTruckingInvoiceList(data.customer_id , sort, order, search);
+                }
+            );
+    }
+
+    updateTruckingInvoice(data: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '') {
+            this._httpClient
+            .put(`api-1/customer-trucking-invoice`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCustomHarvestingInvoice.next(false);
+                },
+                () => {
+                    this.getTruckingInvoiceList(data.customer_id, sort, order, search);
+                }
+            );
+    }
+
+
+    //#endregion
+
 }

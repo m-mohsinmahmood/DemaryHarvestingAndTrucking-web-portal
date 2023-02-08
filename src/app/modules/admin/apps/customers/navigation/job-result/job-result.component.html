@@ -224,12 +224,12 @@
                                                 <!-- Active -->
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">
-                                                        "1234" 
+                                                        {{harvestingJob.net_pounds}} 
                                                     </div>
                                                 </div>
 
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"1234" </div>
+                                                    <div class="min-w-4 ml-2">{{harvestingJob.net_bushel}} </div>
                                                 </div>
                                                 <div class="hidden lg:block">
                                                     <div class="min-w-4 ml-2">
@@ -428,7 +428,7 @@
                                             <div *ngIf="customFarmingJobs$ | async as farmingJobs">
                                             <div *ngFor="let farmingJob of farmingJobs.farmingJobs" class="job-result-custom-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                 <div class="truncate">
-                                                    {{farmingJob.load_date | date: "dd-MM-YYYY"}}
+                                                    {{farmingJob.created_at | date: "dd-MM-YYYY"}}
                                                 </div>
 
                                                 <!-- Harvest Year -->
@@ -474,7 +474,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <div class="min-w-4 ml-2">"Lorium" </div>
+                                                    <div class="min-w-4 ml-2">{{farmingJob.engine_hours}}</div>
                                                 </div>
                                                 <div class="lg:block">
                                                     <div class="min-w-4 ml-2 capitalize">
