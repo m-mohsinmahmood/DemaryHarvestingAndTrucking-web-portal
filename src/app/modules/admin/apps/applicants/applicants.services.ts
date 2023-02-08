@@ -306,6 +306,14 @@ export class ApplicantService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingApplicant.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Delete Applicant',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);

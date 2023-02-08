@@ -251,7 +251,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
 
      //#region Confirmation Customer Crops Delete Dialog
-     confirmDeleteDialog(id: string): void {
+     confirmDeleteDialog(id: string , fb_id: string): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this Employee?',
@@ -261,7 +261,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult)
-                this._employeeService.deleteEmployee(id, this.page, this.pageSize);
+                this._employeeService.deleteEmployee(id, fb_id, this.page, this.pageSize);
         });
     }
     //#endregion

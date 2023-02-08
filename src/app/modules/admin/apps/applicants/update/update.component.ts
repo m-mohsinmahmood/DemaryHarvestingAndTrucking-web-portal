@@ -333,7 +333,6 @@ export class UpdateComponent implements OnInit {
         this._applicantService.isLoadingApplicant.next(true);
 
         //Merge all stepper forms in one form
-        debugger;
         this.form = this._formBuilder.group({});
         this.formArr.forEach((f) => {
             Object.entries(f.value).forEach((element) => {
@@ -457,7 +456,6 @@ export class UpdateComponent implements OnInit {
 
     //#region Country Form Validation
     formValidation(e, type) {
-        debugger;
         if (type === "country") {
             if (this.countryList.includes(e)) {
                 this.validCountry = true;

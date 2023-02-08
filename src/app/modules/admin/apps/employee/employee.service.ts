@@ -217,13 +217,21 @@ export class EmployeeService {
             );
     }
 
-    deleteEmployee(id: string, page , limit) {
+    deleteEmployee(id: string, fb_id:string, page , limit) {
         this._httpClient
-            .delete(`api-1/employee?id=${id}`)
+            .delete(`api-1/employee?id=${id}&fb_id=${fb_id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
                     this.isLoadingEmployee.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Delete Employee',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
