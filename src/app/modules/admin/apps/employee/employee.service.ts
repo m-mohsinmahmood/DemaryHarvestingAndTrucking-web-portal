@@ -392,9 +392,9 @@ export class EmployeeService {
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments() {
+    getPolicyDocuments(id: string) {
         return this._httpClient
-            .get(`api-1/policy-documents`)
+            .get(`api-1/policy-documents?id=${id}&type=${'personalized'}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -410,7 +410,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Patch Policy Documents
-    addPolicyDocument(data: any) {
+    addPolicyDocument(data: any, employee_id:string) {
         this._httpClient
             .post(`api-1/policy-documents`, data)
             .pipe(take(1))
@@ -433,7 +433,28 @@ export class EmployeeService {
                     this.isLoadingPolicyDocuments.next(false);
                 },
                 () => {
-                    // this.getPolicyDocuments(data);
+                    this.getPolicyDocuments(employee_id);
+                }
+            );
+    }
+
+    //#endregion
+
+    //#region Delete Policy Documents
+    deletePolicyDocument(id: string) {
+        this._httpClient
+            .delete(`api-1/policy-documents?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getPolicyDocuments(id);
+                    this.isLoadingPolicyDocuments.next(false);
                 }
             );
     }

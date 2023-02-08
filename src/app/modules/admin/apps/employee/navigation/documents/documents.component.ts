@@ -7,6 +7,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Documents, Item } from '../../employee.types';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-documents',
@@ -21,6 +22,8 @@ export class DocumentsComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     activeID: any;
     policyDocument$: Observable<any[]>;
+    routeID: any;
+
 
     constructor(
         private _employeeService: EmployeeService,
@@ -29,11 +32,20 @@ export class DocumentsComponent implements OnInit {
         private _router: Router,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _matDialog: MatDialog,
+        public activatedRoute: ActivatedRoute,
 
-    ) {}
+
+    ) { }
 
     ngOnInit(): void {
+        this.getParamsId();
         this.initApis();
+    }
+
+    getParamsId() {
+        this.activatedRoute.params.subscribe((params) => {
+            this.routeID = params.Id;
+        });
     }
 
     /**
@@ -46,24 +58,48 @@ export class DocumentsComponent implements OnInit {
         // Mark for check
         this._changeDetectorRef.markForCheck();
     }
-   
-   // #region Init Api's
+
+    // #region Init Api's
     initApis(): void {
         // Get Documents
         this.policyDocument$ = this._employeeService.policyDocuments$;
-        this._employeeService.getPolicyDocuments();
+        this._employeeService.getPolicyDocuments(this.routeID);
     }
     //#endregion
-    
+
     //#region Upload Document Popup
-    uploadDocument(){
+    uploadDocument() {
+
         const dialogRef = this._matDialog.open(UploadDocumentComponent, {
-            data: {},
-          });
-          dialogRef.afterClosed().subscribe((result) => {
+            data: this.routeID,
+        });
+        dialogRef.afterClosed().subscribe((result) => {
             console.log('Compose dialog was closed!');
-          });
+        });
     }
 
+    //#endregion
+
+    //#region Delete confirmation
+    confirmDeleteDialog(id: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Document?',
+                title: 'Policy Document',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._employeeService.deletePolicyDocument(id);
+        });
+    }
+
+    //#endregion
+    
+    //#region Download Document
+    downloadDocument(url) {
+        window.open(url, "_blank");
+    }
     //#endregion
 }

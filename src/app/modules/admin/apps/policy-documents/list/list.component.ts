@@ -22,70 +22,68 @@ export class ListComponent implements OnInit {
   policyDocument$: Observable<any[]>;
 
   constructor(
-      private _policyDocument: PolicyDocumentsService,
-      private _activatedRoute: ActivatedRoute,
-      private _changeDetectorRef: ChangeDetectorRef,
-      private _router: Router,
-      private _matDialog: MatDialog,
+    private _policyDocument: PolicyDocumentsService,
+    private _activatedRoute: ActivatedRoute,
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _router: Router,
+    private _matDialog: MatDialog,
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-      this.initApis();
+    this.initApis();
   }
 
   /**
    * On backdrop clicked
    */
   onBackdropClicked(): void {
-      // Go back to the list
-      this._router.navigate(['./'], { relativeTo: this._activatedRoute });
+    // Go back to the list
+    this._router.navigate(['./'], { relativeTo: this._activatedRoute });
 
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
+    // Mark for check
+    this._changeDetectorRef.markForCheck();
   }
- 
- // #region Init Api's
+
+  // #region Init Api's
   initApis(): void {
-      // Get Documents
-      this.policyDocument$ = this._policyDocument.policyDocuments$;
-      this._policyDocument.getPolicyDocuments();
+    // Get Documents
+    this.policyDocument$ = this._policyDocument.policyDocuments$;
+    this._policyDocument.getPolicyDocuments();
   }
   //#endregion
-  
+
   //#region Upload Document Popup
-  uploadDocument(){
-      const dialogRef = this._matDialog.open(UploadPolicyDocumentComponent, {
-          data: {},
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          console.log('Compose dialog was closed!');
-        });
+  uploadDocument() {
+    const dialogRef = this._matDialog.open(UploadPolicyDocumentComponent, {
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('Compose dialog was closed!');
+    });
   }
   //#endregion
 
   //#region Delete confirmation
   confirmDeleteDialog(id: string): void {
     const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-        data: {
-            message: 'Are you sure you want to delete this Document?',
-            title: 'Policy Document',
-        },
+      data: {
+        message: 'Are you sure you want to delete this Document?',
+        title: 'Policy Document',
+      },
     });
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
-        if (dialogResult)
-            this._policyDocument.deletePolicyDocument(id);
+      if (dialogResult)
+        this._policyDocument.deletePolicyDocument(id);
     });
-}
+  }
 
   //#endregion
 
   //#region Download Document
-  downloadDocument(url){
+  downloadDocument(url) {
     window.open(url, "_blank");
-
   }
-
   //#endregion
 }

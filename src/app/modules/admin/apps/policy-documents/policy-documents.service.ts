@@ -62,7 +62,7 @@ export class PolicyDocumentsService {
     //#region Get Policy Documents
     getPolicyDocuments() {
         return this._httpClient
-            .get(`api-1/policy-documents`)
+            .get(`api-1/policy-documents?type=${'global'}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

@@ -36,8 +36,10 @@ export class UploadPolicyDocumentComponent implements OnInit {
 
   initForm() {
     this.documentForm = this._formBuilder.group({
+      employee_id: [''],
       name: ['', Validators.required],
       document: ['', Validators.required],
+      type: ['global'],
     });
   }
 
