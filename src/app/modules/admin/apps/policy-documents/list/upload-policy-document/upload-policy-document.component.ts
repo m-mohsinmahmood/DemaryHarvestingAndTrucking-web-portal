@@ -15,6 +15,21 @@ export class UploadPolicyDocumentComponent implements OnInit {
   isLoadingPolicyDocument$: Observable<boolean>;
   closeDialog$: Observable<boolean>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  policyDocument$: Observable<any[]>;
+  policyDocument: any;
+
+  policyDocuments: any[] = [
+    {value: 'Ag Work Agreement'},
+    {value: 'Work Itinerary'},
+    {value: 'W-4'},
+    {value: 'Employee Handbook'},
+    {value: 'Dht Work Rules'},
+    {value: 'Drug Policy'},
+    {value: 'Reprimand Policy'},
+    {value: 'Departure Policy'},
+    {value: 'Equipment Policy'},
+    {value: 'Cdl Training Instructions'},
+  ];
 
 
   constructor(
@@ -26,7 +41,9 @@ export class UploadPolicyDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.initApi();
     this.initObservables();
+    this.filterDocuments();
   }
 
   ngOnDestroy(): void {
@@ -43,8 +60,15 @@ export class UploadPolicyDocumentComponent implements OnInit {
     });
   }
 
+  initApi(){
+    this._policyService.getPolicyDocuments();
+  }
+
   initObservables() {
     this.isLoadingPolicyDocument$ = this._policyService.isLoadingPolicyDocuments$;
+    this._policyService.policyDocuments$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res)=>{
+      this.policyDocument = res
+    });
     this.closeDialog$ = this._policyService.closeDialog$;
     this._policyService.closeDialog$
     .pipe(takeUntil(this._unsubscribeAll))
@@ -55,6 +79,12 @@ export class UploadPolicyDocumentComponent implements OnInit {
       }
     })
 
+  }
+
+  filterDocuments(){
+    this.policyDocument.policy_docs.map((value) => {
+      this.policyDocuments = this.policyDocuments.filter(policy => policy.value !== value.document_name);
+    })
   }
 
 
@@ -70,6 +100,7 @@ export class UploadPolicyDocumentComponent implements OnInit {
     formData.append('form',JSON.stringify(this.documentForm.value) );
     formData.append('doc', this.documentForm.get('document')?.value);
     this._policyService.addPolicyDocument(formData);
+    this.filterDocuments();
   }
 
   //#endregion
