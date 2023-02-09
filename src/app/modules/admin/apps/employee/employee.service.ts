@@ -441,7 +441,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Delete Policy Documents
-    deletePolicyDocument(id: string) {
+    deletePolicyDocument(id: string, employee_id: string) {
         this._httpClient
             .delete(`api-1/policy-documents?id=${id}`)
             .pipe(take(1))
@@ -453,7 +453,7 @@ export class EmployeeService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getPolicyDocuments(id);
+                    this.getPolicyDocuments(employee_id);
                     this.isLoadingPolicyDocuments.next(false);
                 }
             );

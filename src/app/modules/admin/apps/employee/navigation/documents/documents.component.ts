@@ -91,7 +91,7 @@ export class DocumentsComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((dialogResult) => {
             if (dialogResult)
-                this._employeeService.deletePolicyDocument(id);
+                this._employeeService.deletePolicyDocument(id,this.routeID);
         });
     }
 
