@@ -743,10 +743,13 @@
                         </div>
                         <div>
                             <mat-form-field appearance="outline" class="w-full">
-                                <mat-label>Please select your preferred Employment Period</mat-label>
+                                <mat-label>Please choose which employment period you prefer?
+                                </mat-label>
                                 <mat-select matNativeControl formControlName="employment_period">
-                                    <mat-option value="March 15th through January 15th">March 15th through January 15th </mat-option>
-                                    <mat-option value="July 1st through January 15th">July 1st through January 15th</mat-option>
+                                    <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th, 2024 </mat-option>
+                                    <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th, 2024</mat-option>
+                                    <mat-option value="Either option works for me (no preference)">Either option works for me (no preference)</mat-option>
+
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('employment_period').hasError('required')"
                                     class="text-md uppercase text-red-500">Employment Period field is

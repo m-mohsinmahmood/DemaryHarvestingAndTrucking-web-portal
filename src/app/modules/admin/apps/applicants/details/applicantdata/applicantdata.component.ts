@@ -38,7 +38,7 @@ export class ApplicantdataComponent implements OnInit {
         window.open(link, "_blank");
     }
     getCountryCode(country_code){
-        if (country_code)
+        if (country_code && country_code != 'zz')
         return  '+' + country_code?.split("+")[1];
     }
 }

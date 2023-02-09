@@ -99,7 +99,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-        
+
     }
 
     ngOnInit(): void {
@@ -199,7 +199,7 @@ export class UpdateEmployeeComponent implements OnInit {
             previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['' || this.data.employeeData?.employee_info?.previous_contact_supervisor.toString(), [Validators.required]],
             resume: ['' || this.data.employeeData?.employee_info?.resume],
-            employment_period: [''|| this.data.employeeData?.employee_info?.employment_period],
+            employment_period: ['' || this.data.employeeData?.employee_info?.employment_period],
 
             authorized_to_work: ['' || this.data.employeeData?.employee_info?.authorized_to_work.toString(), [Validators.required]],
             cdl_license: ['' || this.data.employeeData?.employee_info?.cdl_license.toString(), [Validators.required]],
@@ -299,7 +299,7 @@ export class UpdateEmployeeComponent implements OnInit {
         formData.append('form', JSON.stringify(this.form.value));
         formData.append('image', this.secondFormGroup.get('avatar').value);
         formData.append('resume', this.thirdFormGroup.get('resume').value);
-        this._employeeService.updateEmployee(this.data.id,formData);
+        this._employeeService.updateEmployee(this.data.id, formData);
 
     }
 
@@ -424,6 +424,7 @@ export class UpdateEmployeeComponent implements OnInit {
         else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length
 
         return country;
+
     }
     trackByFn(index: number, item: any): any {
         return item.id || index;
@@ -437,8 +438,8 @@ export class UpdateEmployeeComponent implements OnInit {
             home_phone_country_code: this.data.employeeData?.employee_info?.home_phone_country_code?.split("+")[0]
         })
         this.thirdFormGroup.patchValue({
-            current_supervisor_country_code:  this.data.employeeData?.employee_info?.current_supervisor_country_code?.split("+")[0],
-            previous_supervisor_country_code:  this.data.employeeData?.employee_info?.previous_supervisor_country_code?.split("+")[0]
+            current_supervisor_country_code: this.data.employeeData?.employee_info?.current_supervisor_country_code?.split("+")[0],
+            previous_supervisor_country_code: this.data.employeeData?.employee_info?.previous_supervisor_country_code?.split("+")[0]
         })
     }
     //#endregion

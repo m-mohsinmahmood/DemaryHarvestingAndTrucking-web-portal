@@ -196,7 +196,7 @@ export class UpdateComponent implements OnInit {
             id: ['' || this.data?.applicantData?.id],
             first_name: ['' || this.data?.applicantData?.first_name, [Validators.required]],
             last_name: ['' || this.data?.applicantData?.last_name, [Validators.required]],
-            email: ['' || this.data?.applicantData?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], !this.data?.isEdit? this.asyncValidator.bind(this) : ''],
+            email: ['' || this.data?.applicantData?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], !this.data?.isEdit ? this.asyncValidator.bind(this) : ''],
             date_of_birth: ['' || this.data?.applicantData?.date_of_birth, [Validators.required]],
             age: ['' || this.data?.applicantData?.age, [Validators.required]],
             marital_status: ['' || this.data?.applicantData?.marital_status, [Validators.required]],
@@ -321,7 +321,7 @@ export class UpdateComponent implements OnInit {
     initCalendar() {
         //Calender Year Initilize
         if (this.data) {
-            this.graduation_year = new FormControl(this.data.graduation_year);
+            this.graduation_year = new FormControl(this.data?.applicantData?.graduation_year);
 
         } else {
             this.graduation_year = new FormControl(moment());
@@ -362,7 +362,7 @@ export class UpdateComponent implements OnInit {
         formData.append('image', this.secondFormGroup.get('avatar').value);
         formData.append('resume', this.thirdFormGroup.get('resume').value);
         if (this.data && this.data.isEdit) {
-            this._applicantService.updateApplicant(formData,this.data?.applicantData?.id);
+            this._applicantService.updateApplicant(formData, this.data?.applicantData?.id);
         }
         else {
             this._applicantService.createApplicant(formData, false);
@@ -490,6 +490,7 @@ export class UpdateComponent implements OnInit {
         else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length
 
         return country;
+
     }
     trackByFn(index: number, item: any): any {
         return item.id || index;

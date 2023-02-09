@@ -238,7 +238,7 @@ export class ApplicantpageComponent implements OnInit {
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
             employment_period: ['', [Validators.required]],
-            
+
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],
             lorry_license: ['', [Validators.required]],
@@ -353,7 +353,7 @@ export class ApplicantpageComponent implements OnInit {
     saveAndClose(): void {
         this._router.navigateByUrl("/pages/landing-page")
     }
-    
+
     selectionChange(event) {
         this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {
@@ -426,7 +426,7 @@ export class ApplicantpageComponent implements OnInit {
             }
             else {
                 this.isState = false;
-                
+
             }
         }));
     }

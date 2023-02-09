@@ -78,7 +78,7 @@ export class EmployeeDataComponent implements OnInit {
 
   //#region find country code 
   getCountryCode(country_code) {
-    if (country_code)
+    if (country_code && country_code != 'zz')
      return '+' + country_code?.split("+")[1];
   }
   //#endregion
