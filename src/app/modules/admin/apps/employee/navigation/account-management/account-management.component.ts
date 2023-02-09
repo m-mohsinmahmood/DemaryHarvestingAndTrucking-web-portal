@@ -138,7 +138,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          }, 'false')
+          }, this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true')
         }
         else {
           event.source.checked = true;
@@ -150,7 +150,7 @@ export class AccountManagementComponent implements OnInit {
           this._employeeService.patchEmployee({
             id: this.routeID,
             role: this.employeeRoleUpdate
-          }, 'false')
+          }, this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true')
         }
         else {
           event.source.checked = false;
