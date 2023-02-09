@@ -229,7 +229,7 @@ export class ApplicantService {
                 }
             );
     }
-    updateApplicant(data: any) {
+    updateApplicant(data: any, id?) {
         this._httpClient
             .put(`api-1/applicants`, data)
             .pipe(take(1))
@@ -252,7 +252,12 @@ export class ApplicantService {
                     this.isLoadingApplicant.next(false);
                 },
                 () => {
-                    this.getApplicants();
+                    if (id){
+                        this.getApplicantByIdNew(id);
+                    }
+                    else {
+                        this.getApplicants();
+                    }
                 }
             );
     }
@@ -301,6 +306,14 @@ export class ApplicantService {
             .subscribe(
                 (res: any) => {
                     this.isLoadingApplicant.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Delete Applicant',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);

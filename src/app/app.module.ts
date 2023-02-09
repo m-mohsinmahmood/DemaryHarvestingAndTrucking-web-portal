@@ -16,7 +16,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from '../app/interceptors/interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FuseAlertModule } from '@fuse/components/alert';
-import { H2aRatesComponent } from './modules/admin/apps/h2a-rates/h2a-rates.component';
 
 
 
@@ -27,7 +26,7 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,

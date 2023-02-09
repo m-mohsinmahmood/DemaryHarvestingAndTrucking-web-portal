@@ -112,7 +112,7 @@ export class UpdateProfileData implements OnInit {
   submit(): void {
     this._employeeService.isLoadingEmployee.next(true);
     this.form.value['languages'] = this.form.value['languages'].join(', ');
-    this._employeeService.updateEmployee(this.data.id,this.form.value);
+    this._employeeService.updateEmployee("id",this.form.value);
   }
 
   //#endregion

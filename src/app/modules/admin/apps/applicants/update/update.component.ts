@@ -128,7 +128,7 @@ export class UpdateComponent implements OnInit {
     homePhoneCountryCodeLength: any = 1;
     currentSupervisorCountryCodeLength: any = 1;
     previousSupervisorCountryCodeLength: any = 1;
-    validCountry: boolean = false;
+    validCountry: boolean = true;
     validState: boolean = false;
     step: number = 0;
     //#endregion
@@ -145,12 +145,13 @@ export class UpdateComponent implements OnInit {
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 860px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-        this.routeID = data.applicant_info ? data.applicant_info.id : '';
     }
 
     ngOnInit(): void {
+        this.isEdit = this.data.isEdit;
         this.initApplicantForm();
         this.initObservables();
+        this.isEdit ? this.patchCountryCode() : '';
         this.initCalendar();
         this.formUpdates();
         this.states = states;
@@ -167,8 +168,6 @@ export class UpdateComponent implements OnInit {
             map(value => this._filterCountries(value.country || '')),
         );
 
-
-        this.isEdit = this.data.isEdit;
         //To close dialog
         this._applicantService.closeDialog$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -178,7 +177,6 @@ export class UpdateComponent implements OnInit {
                     this._applicantService.closeDialog.next(false);
                 }
             });
-
     }
 
     //Auto Complete functions for State and Country
@@ -195,78 +193,78 @@ export class UpdateComponent implements OnInit {
     // #region initializing forms
     initApplicantForm() {
         this.firstFormGroup = this._formBuilder.group({
-            id: [''],
-            first_name: ['', [Validators.required]],
-            last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], this.asyncValidator.bind(this)],
-            date_of_birth: ['', [Validators.required]],
-            age: ['', [Validators.required]],
-            marital_status: ['', [Validators.required]],
-            languages: ['', [Validators.required]],
-            rank_speaking_english: ['', [Validators.required]],
-            passport: ['', [Validators.required]],
-            us_citizen: ['', [Validators.required]],
+            id: ['' || this.data?.applicantData?.id],
+            first_name: ['' || this.data?.applicantData?.first_name, [Validators.required]],
+            last_name: ['' || this.data?.applicantData?.last_name, [Validators.required]],
+            email: ['' || this.data?.applicantData?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], !this.data?.isEdit ? this.asyncValidator.bind(this) : ''],
+            date_of_birth: ['' || this.data?.applicantData?.date_of_birth, [Validators.required]],
+            age: ['' || this.data?.applicantData?.age, [Validators.required]],
+            marital_status: ['' || this.data?.applicantData?.marital_status, [Validators.required]],
+            languages: ['' || this.data?.applicantData?.languages.replace(/\s/g, '').split(','), [Validators.required]],
+            rank_speaking_english: ['' || this.data?.applicantData?.rank_speaking_english, [Validators.required]],
+            passport: ['' || this.data?.applicantData?.passport.toString(), [Validators.required]],
+            us_citizen: ['' || this.data?.applicantData?.us_citizen.toString(), [Validators.required]],
         });
 
         this.secondFormGroup = this._formBuilder.group({
-            address_1: ['', [Validators.required]],
-            address_2: [''],
-            town_city: ['', [Validators.required]],
-            county_providence: ['', [Validators.required]],
-            postal_code: ['', [Validators.required]],
-            state: [''],
-            country: ['', [Validators.required]],
-            cell_phone_number: ['', [Validators.required]],
+            address_1: ['' || this.data?.applicantData?.address_1, [Validators.required]],
+            address_2: ['' || this.data?.applicantData?.address_2],
+            town_city: ['' || this.data?.applicantData?.town_city, [Validators.required]],
+            county_providence: ['' || this.data?.applicantData?.county_providence, [Validators.required]],
+            postal_code: ['' || this.data?.applicantData?.postal_code, [Validators.required]],
+            state: ['' || this.data?.applicantData?.state],
+            country: ['' || this.data?.applicantData?.country, [Validators.required]],
+            cell_phone_number: ['' || this.data?.applicantData?.cell_phone_number, [Validators.required]],
             cell_phone_country_code: ['zz', [Validators.required, Validators.pattern("^(?:(?!zz).)*$")]],
-            home_phone_number: [''],
+            home_phone_number: ['' || this.data?.applicantData?.home_phone_number],
             home_phone_country_code: ['zz'],
-            avatar: ['', [Validators.required]],
+            avatar: ['' || this.data?.applicantData?.avatar, [Validators.required]],
+
         });
 
         this.thirdFormGroup = this._formBuilder.group({
-            current_employer: [''],
-            current_position_title: [''],
-            current_description_of_role: [''],
-            current_employment_period_start: [''],
-            current_employment_period_end: [''],
-            current_supervisor_reference: [''],
-            current_supervisor_phone_number: [''],
+            current_employer: ['' || this.data?.applicantData?.current_employer],
+            current_position_title: ['' || this.data?.applicantData?.current_position_title],
+            current_description_of_role: ['' || this.data?.applicantData?.current_description_of_role],
+            current_employment_period_start: ['' || this.data?.applicantData?.current_employment_period_start],
+            current_employment_period_end: ['' || this.data?.applicantData?.current_employment_period_end],
+            current_supervisor_reference: ['' || this.data?.applicantData?.current_supervisor_reference],
+            current_supervisor_phone_number: ['' || this.data?.applicantData?.current_supervisor_phone_number],
             current_supervisor_country_code: ['zz'],
-            current_contact_supervisor: [false],
+            current_contact_supervisor: [false || this.data?.applicantData?.current_contact_supervisor.toString()],
 
-            previous_employer: ['', [Validators.required]],
-            previous_position_title: ['', [Validators.required]],
-            previous_description_of_role: ['', [Validators.required]],
-            previous_employment_period_start: ['', [Validators.required]],
-            previous_employment_period_end: ['', [Validators.required]],
-            previous_supervisor_reference: ['', [Validators.required]],
-            previous_supervisor_phone_number: [''],
+            previous_employer: ['' || this.data?.applicantData?.previous_employer, [Validators.required]],
+            previous_position_title: ['' || this.data?.applicantData?.previous_position_title, [Validators.required]],
+            previous_description_of_role: ['' || this.data?.applicantData?.previous_description_of_role, [Validators.required]],
+            previous_employment_period_start: ['' || this.data?.applicantData?.previous_employment_period_start, [Validators.required]],
+            previous_employment_period_end: ['' || this.data?.applicantData?.previous_employment_period_end, [Validators.required]],
+            previous_supervisor_reference: ['' || this.data?.applicantData?.previous_supervisor_reference, [Validators.required]],
+            previous_supervisor_phone_number: ['' || this.data?.applicantData?.previous_supervisor_phone_number],
             previous_supervisor_country_code: ['zz'],
-            previous_contact_supervisor: ['', [Validators.required]],
-            resume: [''],
+            previous_contact_supervisor: [false || this.data?.applicantData?.previous_contact_supervisor.toString(), [Validators.required]],
+            resume: ['' || this.data?.applicantData?.resume],
+            employment_period: ['' || this.data?.applicantData?.employment_period, [Validators.required]],
 
-            authorized_to_work: ['', [Validators.required]],
-            cdl_license: ['', [Validators.required]],
-            lorry_license: ['', [Validators.required]],
-            tractor_license: ['', [Validators.required]],
-            work_experience_description: ['', [Validators.required]],
+            authorized_to_work: ['' || this.data?.applicantData?.authorized_to_work.toString(), [Validators.required]],
+            cdl_license: ['' || this.data?.applicantData?.cdl_license.toString(), [Validators.required]],
+            lorry_license: ['' || this.data?.applicantData?.lorry_license.toString(), [Validators.required]],
+            tractor_license: ['' || this.data?.applicantData?.tractor_license.toString(), [Validators.required]],
+            work_experience_description: ['' || this.data?.applicantData?.work_experience_description.toString(), [Validators.required]],
 
-            question_1: ['', [Validators.required]],
-            question_2: ['', [Validators.required]],
-            question_3: ['', [Validators.required]],
-            question_4: ['', [Validators.required]],
-            question_5: ['', [Validators.required]],
+            question_1: ['' || this.data?.applicantData?.question_1, [Validators.required]],
+            question_2: ['' || this.data?.applicantData?.question_2, [Validators.required]],
+            question_3: ['' || this.data?.applicantData?.question_3, [Validators.required]],
+            question_4: ['' || this.data?.applicantData?.question_4, [Validators.required]],
+            question_5: ['' || this.data?.applicantData?.question_5, [Validators.required]],
         });
 
         this.fourthFormGroup = this._formBuilder.group({
-            school_college: [''],
-            degree_name: [''],
-            graduation_year: [moment(), [Validators.required]],
-            reason_for_applying: ['', [Validators.required]],
-            hear_about_dht: ['', [Validators.required]],
-            unique_fact: [''],
-
-
+            school_college: ['' || this.data?.applicantData?.school_college],
+            degree_name: ['' || this.data?.applicantData?.degree_name],
+            graduation_year: [moment() || this.data?.applicantData?.graduation_year],
+            reason_for_applying: ['' || this.data?.applicantData?.reason_for_applying.replace(/\s/g, ' ').split(','), [Validators.required]],
+            hear_about_dht: ['' || this.data?.applicantData?.hear_about_dht, [Validators.required]],
+            unique_fact: ['' || this.data?.applicantData?.unique_fact],
         });
 
         this.fifthFormGroup = this._formBuilder.group({
@@ -279,22 +277,8 @@ export class UpdateComponent implements OnInit {
 
         });
         this.sixthFormGroup = this._formBuilder.group({
-            first_phone_call: [''],
-            first_call_remarks: [''],
-            first_call_ranking: [''],
-            first_interviewer_id: [''],
-            reference_phone_call: [''],
-            reference_call_remarks: [''],
-            reference_call_ranking: [''],
-            reference_interviewer_id: [''],
-            second_phone_call: [''],
-            second_call_remarks: [''],
-            second_call_ranking: [''],
-            second_interviewer_id: [''],
-            third_phone_call: [''],
-            third_call_remarks: [''],
-            third_call_ranking: [''],
-            third_interviewer_id: [''],
+            status_step: ['' || this.data?.applicantData?.status_step],
+            status_message: ['' || this.data?.applicantData?.status_message],
         });
 
         this.formArr = [
@@ -302,105 +286,9 @@ export class UpdateComponent implements OnInit {
             this.secondFormGroup,
             this.thirdFormGroup,
             this.fourthFormGroup,
-            this.fifthFormGroup,
-            this.sixthFormGroup,
+            this.isEdit ? this.sixthFormGroup : this.fifthFormGroup
         ];
 
-        if (this.data?.applicantData) {
-            this.firstFormGroup.patchValue({
-                id: this.data.applicantData?.id,
-                first_name: this.data.applicantData?.first_name,
-                last_name: this.data.applicantData?.last_name,
-                email: this.data.applicantData.email,
-                date_of_birth: this.data.applicantData.date_of_birth,
-                age: this.data.applicantData.age,
-                marital_status: this.data.applicantData.marital_status,
-                rank_speaking_english: this.data.applicantData.rank_speaking_english,
-                languages: this.data.applicantData.languages.replace(/\s/g, '').split(','),
-                // status: this.data.applicantData.status,
-                us_citizen: this.data.applicantData.us_citizen.toString(),
-                passport: this.data.applicantData.passport.toString(),
-            });
-            this.secondFormGroup.patchValue({
-                address_1: this.data.applicantData.address_1,
-                address_2: this.data.applicantData.address_2,
-                town_city: this.data.applicantData.town_city,
-                county_providence: this.data.applicantData.county_providence,
-                state: this.data.applicantData.state,
-                postal_code: this.data.applicantData.postal_code,
-                country: this.data.applicantData.country,
-                cell_phone_number: this.data.applicantData.cell_phone_number,
-                home_phone_number: this.data.applicantData.home_phone_number,
-                avatar: this.data.applicantData.avatar,
-            });
-            this.thirdFormGroup.patchValue({
-                current_employer: this.data.applicantData.current_employer,
-                current_position_title: this.data.applicantData.current_position_title,
-                current_description_of_role: this.data.applicantData.current_description_of_role,
-                current_employment_period_start: this.data.applicantData.current_employment_period_start,
-                current_employment_period_end: this.data.applicantData.current_employment_period_end,
-                current_supervisor_reference: this.data.applicantData.current_supervisor_reference,
-                current_supervisor_phone_number: this.data.applicantData.current_supervisor_phone_number,
-                current_contact_supervisor: this.data.applicantData.current_contact_supervisor.toString(),
-
-                previous_employer: this.data.applicantData.previous_employer,
-                previous_position_title: this.data.applicantData.previous_position_title,
-                previous_description_of_role: this.data.applicantData.previous_description_of_role,
-                previous_employment_period_start: this.data.applicantData.previous_employment_period_start,
-                previous_employment_period_end: this.data.applicantData.previous_employment_period_end,
-                previous_supervisor_reference: this.data.applicantData.previous_supervisor_reference,
-                previous_supervisor_phone_number: this.data.applicantData.previous_supervisor_phone_number,
-                previous_contact_supervisor: this.data.applicantData.previous_contact_supervisor.toString(),
-                resume: this.data.applicantData.resume,
-                question_1: this.data.applicantData.question_1.toString(),
-                question_2: this.data.applicantData.question_2.toString(),
-                question_3: this.data.applicantData.question_3.toString(),
-                question_4: this.data.applicantData.question_4.toString(),
-                question_5: this.data.applicantData.question_5.toString(),
-
-                authorized_to_work: this.data.applicantData.authorized_to_work.toString(),
-                cdl_license: this.data.applicantData.cdl_license.toString(),
-                lorry_license: this.data.applicantData.lorry_license.toString(),
-                tractor_license: this.data.applicantData.tractor_license.toString(),
-                work_experience_description: this.data.applicantData.work_experience_description,
-                employment_period: this.data.applicantData.employment_period.toString(),
-
-            });
-            this.fourthFormGroup.patchValue({
-                school_college: this.data.applicantData.school_college,
-                graduation_year: this.data.applicantData.graduation_year,
-                degree_name: this.data.applicantData.degree_name,
-                reason_for_applying: this.data.applicantData.reason_for_applying,
-                hear_about_dht: this.data.applicantData.hear_about_dht,
-                unique_fact: this.data.applicantData.unique_fact,
-
-            });
-            // this.fifthFormGroup.patchValue({
-            //     us_phone_number: this.data.applicantData.us_phone_number,
-            //     blood_type: this.data.applicantData.blood_type,
-            //     emergency_contact_name: this.data.applicantData.emergency_contact_name,
-            //     emergency_contact_phone: this.data.applicantData.emergency_contact_phone,
-
-            // });
-            this.sixthFormGroup.patchValue({
-                first_call_remarks: this.data.applicantData.first_call_remarks,
-                first_call_ranking: this.data.applicantData.first_call_ranking,
-                first_interviewer_id: this.data.applicantData.first_interviewer_id,
-
-                reference_call_remarks: this.data.applicantData.reference_call_remarks,
-                reference_call_ranking: this.data.applicantData.reference_call_ranking,
-                reference_interviewer_id: this.data.applicantData.reference_interviewer_id,
-
-                second_call_remarks: this.data.applicantData.second_call_remarks,
-                second_call_ranking: this.data.applicantData.second_call_ranking,
-                second_interviewer_id: this.data.applicantData.second_interviewer_id,
-
-                third_call_remarks: this.data.applicantData.third_call_remarks,
-                third_call_ranking: this.data.applicantData.third_call_ranking,
-                third_interviewer_id: this.data.applicantData.third_interviewer_id,
-            });
-            this._changeDetectorRef.markForCheck();
-        }
     }
     // #endregion
 
@@ -433,8 +321,7 @@ export class UpdateComponent implements OnInit {
     initCalendar() {
         //Calender Year Initilize
         if (this.data) {
-            this.graduation_year = new FormControl(this.data.graduation_year);
-            console.log("im in calendar", this.data);
+            this.graduation_year = new FormControl(this.data?.applicantData?.graduation_year);
 
         } else {
             this.graduation_year = new FormControl(moment());
@@ -453,31 +340,34 @@ export class UpdateComponent implements OnInit {
                 this.form.addControl(element[0], control);
             });
         });
+
         //Filtered and replace country iso with country code in form
         this.getCountryByCode('cell_phone_country_code');
         this.getCountryByCode('home_phone_country_code');
         this.getCountryByCode('current_supervisor_country_code');
         this.getCountryByCode('previous_supervisor_country_code');
 
-        // checks for updated applicant
+        //Replace null entries
+        const form = Object.fromEntries(
+            Object.entries(this.form.value).map(([key, value]) => [key, value === null ? "" : value])
+        );
+
+        if (form.current_contact_supervisor == '') {
+            form.current_contact_supervisor = false;
+        }
+
+        // Form Data
+        var formData: FormData = new FormData();
+        formData.append('form', JSON.stringify(form));
+        formData.append('image', this.secondFormGroup.get('avatar').value);
+        formData.append('resume', this.thirdFormGroup.get('resume').value);
         if (this.data && this.data.isEdit) {
-            // this.form.value['customer_type'] = this.form.value['customer_type'].join(', ');
-            this.updateApplicant(this.form.value);
-        } else {
-            var formData: FormData = new FormData();
-            formData.append('image', this.secondFormGroup.get('avatar').value);
-            if (this.thirdFormGroup.get('resume').value) {
-                formData.append('resume', this.thirdFormGroup.get('resume').value);
-            }
-            formData.append('form', JSON.stringify(this.form.value));
+            this._applicantService.updateApplicant(formData, this.data?.applicantData?.id);
+        }
+        else {
             this._applicantService.createApplicant(formData, false);
         }
     }
-    updateApplicant(applicantData: any): void {
-        this._applicantService.updateApplicant(applicantData);
-    }
-
-
 
     //#region Calendar Year Function
     chosenYearHandler(
@@ -559,8 +449,6 @@ export class UpdateComponent implements OnInit {
             }
             else {
                 this.isState = false;
-                // this.secondFormGroup.controls['state'].setValue('');
-                // this.secondFormGroup.controls['state'].disable({ emitEvent: false });
             }
         }));
     }
@@ -602,6 +490,7 @@ export class UpdateComponent implements OnInit {
         else if (index == 4 && country.code.length > 0) this.previousSupervisorCountryCodeLength = country.code.length
 
         return country;
+
     }
     trackByFn(index: number, item: any): any {
         return item.id || index;
@@ -611,14 +500,27 @@ export class UpdateComponent implements OnInit {
     //#region Filter country iso and replace with code
     getCountryByCode(formValue: string) {
         let country_code;
-        country_code = this.countries.find(country => country.iso === this.form.get(formValue).value)
-        this.form.get(formValue).setValue(country_code.code);
+        country_code = this.countries.find(country => country.iso === this.form.get(formValue).value);
+        this.form.get(formValue).setValue(country_code.iso + country_code.code);
     }
     //#endregion
 
     //#region Email Exists 
     asyncValidator = (control: FormControl) => {
         return this._applicantService.checkIfEmailExists(control.value);
+    }
+    //#endregion
+
+    //#region Patch Country Code
+    patchCountryCode() {
+        this.secondFormGroup.patchValue({
+            cell_phone_country_code: this.data.applicantData?.cell_phone_country_code?.split("+")[0],
+            home_phone_country_code: this.data.applicantData?.home_phone_country_code?.split("+")[0]
+        })
+        this.thirdFormGroup.patchValue({
+            current_supervisor_country_code: this.data.applicantData?.current_supervisor_country_code?.split("+")[0],
+            previous_supervisor_country_code: this.data.applicantData?.previous_supervisor_country_code?.split("+")[0]
+        })
     }
     //#endregion
 }

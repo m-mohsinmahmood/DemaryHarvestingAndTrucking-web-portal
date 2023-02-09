@@ -3,8 +3,11 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Documents, Item } from '../../employee.types';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-documents',
@@ -18,29 +21,31 @@ export class DocumentsComponent implements OnInit {
     documents: any;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     activeID: any;
+    policyDocument$: Observable<any[]>;
+    routeID: any;
+
 
     constructor(
         private _employeeService: EmployeeService,
         private _activatedRoute: ActivatedRoute,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
-    ) {}
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _matDialog: MatDialog,
+        public activatedRoute: ActivatedRoute,
+
+
+    ) { }
 
     ngOnInit(): void {
+        this.getParamsId();
         this.initApis();
+    }
 
-        // Subscribe to media query change
-        this._fuseMediaWatcherService
-            .onMediaQueryChange$('(min-width: 1440px)')
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((state) => {
-                // Calculate the drawer mode
-                this.drawerMode = state.matches ? 'side' : 'over';
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+    getParamsId() {
+        this.activatedRoute.params.subscribe((params) => {
+            this.routeID = params.Id;
+        });
     }
 
     /**
@@ -53,33 +58,48 @@ export class DocumentsComponent implements OnInit {
         // Mark for check
         this._changeDetectorRef.markForCheck();
     }
-    getFiles(id: any): void{
-        this.activeID = id;
-        this._employeeService.getItems(id).subscribe((a) => {});
-    }
-   // #region Init Api's
+
+    // #region Init Api's
     initApis(): void {
-        // Get the items
-        this._employeeService.documents$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((documents: Documents) => {
-                this.documents = documents;
-                if (this.documents.files.length < 1) {
-                    this.getFiles(this.documents.folders[0].id);
-                }
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // Get Documents
+        this.policyDocument$ = this._employeeService.policyDocuments$;
+        this._employeeService.getPolicyDocuments(this.routeID);
+    }
+    //#endregion
 
-        // Get the item
-        this._employeeService.item$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((item: Item) => {
-                this.selectedItem = item;
+    //#region Upload Document Popup
+    uploadDocument() {
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        const dialogRef = this._matDialog.open(UploadDocumentComponent, {
+            data: this.routeID,
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log('Compose dialog was closed!');
+        });
+    }
+
+    //#endregion
+
+    //#region Delete confirmation
+    confirmDeleteDialog(id: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Document?',
+                title: 'Policy Document',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._employeeService.deletePolicyDocument(id);
+        });
+    }
+
+    //#endregion
+    
+    //#region Download Document
+    downloadDocument(url) {
+        window.open(url, "_blank");
     }
     //#endregion
 }

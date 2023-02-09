@@ -76,7 +76,7 @@
                             <div mat-sort-header="created_at" class="hidden sm:block">
                                 Applied Date
                             </div>
-                            <div class="">Actions</div>
+                            <div>Actions</div>
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="applicantList$ | async as applicantList">
@@ -111,7 +111,7 @@
                                         </div>
                                         <!-- US Phone number -->
                                         <div class="capitalize hidden sm:block truncate">
-                                            {{applicant.cell_phone_country_code}} {{ applicant.cell_phone_number }}
+                                            {{getCountryCode(applicant.cell_phone_country_code)}} {{ applicant.cell_phone_number }}
                                         </div>
                                         <!-- Rnking -->
                                         <div class="capitalize hidden sm:block truncate">

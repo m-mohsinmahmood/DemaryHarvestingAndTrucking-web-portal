@@ -237,6 +237,8 @@ export class ApplicantpageComponent implements OnInit {
             previous_supervisor_country_code: ['zz'],
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
+            employment_period: ['', [Validators.required]],
+
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],
             lorry_license: ['', [Validators.required]],
@@ -351,7 +353,7 @@ export class ApplicantpageComponent implements OnInit {
     saveAndClose(): void {
         this._router.navigateByUrl("/pages/landing-page")
     }
-    
+
     selectionChange(event) {
         this.step = event.selectedIndex;
         if (event.selectedIndex == 0) {
@@ -419,14 +421,12 @@ export class ApplicantpageComponent implements OnInit {
     formUpdates() {
         this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
             if (_formValue === "United States of America") {
-                // this.secondFormGroup.controls['state'].enable({ emitEvent: false });
                 this.isState = true;
                 this.secondFormGroup.controls['state'].setValue('');
             }
             else {
                 this.isState = false;
-                // this.secondFormGroup.controls['state'].setValue('');
-                // this.secondFormGroup.controls['state'].disable({ emitEvent: false });
+
             }
         }));
     }
@@ -464,7 +464,6 @@ export class ApplicantpageComponent implements OnInit {
     //#region Country code
     getCountryByIso(iso: string, index): Country {
         const country = this.countries.find(country => country.iso === iso);
-        console.log("LENGTH", country.code.length);
         if (index == 1 && country.code.length > 0) this.cellPhoneCountryCodeLength = country.code.length;
         else if (index == 2 && country.code.length > 0) this.homePhoneCountryCodeLength = country.code.length;
         else if (index == 3 && country.code.length > 0) this.currentSupervisorCountryCodeLength = country.code.length;
@@ -481,7 +480,7 @@ export class ApplicantpageComponent implements OnInit {
     getCountryByCode(formValue: string) {
         let country_code;
         country_code = this.countries.find(country => country.iso === this.form.get(formValue).value)
-        this.form.get(formValue).setValue(country_code.code);
+        this.form.get(formValue).setValue(country_code.iso + country_code.code);
     }
     //#endregion
 

@@ -239,7 +239,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           prev_status_message: this.employee?.employee_info.status_message,
           status_message: "Verified",
           status_step: +this.employee?.employee_info.status_step + 1,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
       }
       else if (dialogResult === true && type === 'Reject') {
         var formData: FormData = new FormData();
@@ -251,6 +251,7 @@ export class OnboardingStatusBarComponent implements OnInit {
         formData.append('email', this.email.email);
         formData.append('subject', this.email.subject);
         formData.append('emailBody', this.email.emailBody);
+        formData.append('h2a', this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
         this._employeeService.patchEmployeeDocuments(this.routeID, formData);
         this._employeeService.patchEmployee({
           id: this.employee?.employee_info.employee_id,
@@ -259,7 +260,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           status_message: "Inprogress",
           status_step: +this.employee?.employee_info.status_step,
           rejected: true,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
 
       }
 
