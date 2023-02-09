@@ -31,6 +31,7 @@ export const countryList: string[] = [
     'Bulgaria',
     'Burkina Faso',
     'Burundi',
+    'Canada',
     'Cambodia',
     'Cameroon',
     'Cape Verde',
