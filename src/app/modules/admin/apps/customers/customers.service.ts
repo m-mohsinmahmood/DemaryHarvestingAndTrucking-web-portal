@@ -30,6 +30,7 @@ import {
 } from 'app/modules/admin/apps/customers/customers.types';
 import { customerNavigation } from './customerNavigation';
 import { Router } from '@angular/router';
+import { harvestingJobsFilters } from 'app/modules/admin/apps/customers/customers.types';
 @Injectable({
     providedIn: 'root',
 })
@@ -2288,9 +2289,19 @@ export class CustomersService {
 
 
 
-    getHarvestingJobs(id: string, data) {
+    getHarvestingJobs(id: string, data, filters: any = { farm_id : '', destinations: '', crop_id: '', created_at: ''},) {
         let params = new HttpParams();
         params = params.set('data', data);
+        if(filters.farm_id?.id){
+            params = params.set('farmsId', filters.farm_id?.id);
+        }else params = params.set('farmsId', '');
+
+        params = params.set('created_at', filters.created_at);
+        params = params.set('destinations', filters.destinations);
+
+        if(filters.crop_id?.id){
+            params = params.set('cropsId', filters.crop_id.id);
+        }else params = params.set('cropsId', '');
 
         return this._httpClient
             .get(`api-1/customer-job-result?customer_id=${id}`, { params })
