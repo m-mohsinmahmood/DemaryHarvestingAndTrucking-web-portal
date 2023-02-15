@@ -1,18 +1,15 @@
 <div class="flex flex-col flex-auto bg-white">
 
-    <youtube-player class="" id="myVideo"
-    [videoId]="id"
-    (ready)="savePlayer($event)"
-    (change)="onStateChange($event)"
-          [playerVars]="{ controls: 1,
+    <div class="temp-class"> <youtube-player class="" id="myVideo" [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)"
+        suggestedQuality="highres" 
+        [playerVars]="{ controls: 1,
             mute: 1,
             autoplay: 1,
-        rel:0,
-    loop:1}"
-          >
-        </youtube-player>
-        
-        <!-- <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
+            rel:0,
+            loop:1}">
+    </youtube-player> </div>
+
+    <!-- <video loop muted autoplay="true" controls="true" oncanplay="this.play()" onloadedmetadata="this.muted = true"
         id="myVideo" poster="">
         <source src="assets\images\pages\landing-page\Video 2.mp4" type="video/mp4">
         <p><i class="far fa-times-circle"></i> No Preview Available</p>
@@ -21,7 +18,8 @@
     <h1 class="-mt-12 pl-8 text-right text-white pr-8">Video credit: Will Bruce, DHT employee from New Zealand</h1>
 
     <div class="heading-title h-auto flex flex-col items-left justify-start ">
-        <h1 class="md:w-6/12 md:text-3xl xl:text-4xl sm:text-2xl text-xl font-bold sm:p-8 text-white">DHT's mission is to
+        <h1 class="md:w-6/12 md:text-3xl xl:text-4xl sm:text-2xl text-xl font-bold sm:p-8 text-white">DHT's mission is
+            to
             consistently deliver superior agricultural, equipment rental, and transportation services for our customers
         </h1>
         <!-- <button class="w-36 sm:m-8 mt-2 custom-btn-color" mat-flat-button type="button" (click)="openDialog()">Apply Now
@@ -45,7 +43,8 @@
                 </div>
                 <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Custom Agricultural
                     Services</h1>
-                <p class="text-center item-center">DHT provides services such as harvesting, farming, trucking, and equipment rentals country wide.</p>
+                <p class="text-center item-center">DHT provides services such as harvesting, farming, trucking, and
+                    equipment rentals country wide.</p>
 
             </div>
 
@@ -53,7 +52,8 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center mx-auto  mb-4"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:printer'"></mat-icon></div>
-                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Best-in-Class Equipment
+                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Best-in-Class
+                    Equipment
                 </h1>
                 <p class="text-center item-center">DHT owns a large portfolio of some of the most technologically
                     advanced agricultural equipment such as, two dozen Case IH 8250 combines, a fleet of 22 semi-trucks,
@@ -66,7 +66,8 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center mx-auto  mb-4"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:globe-alt'"></mat-icon></div>
-                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Innovative Technology</h1>
+                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Innovative Technology
+                </h1>
                 <p class="text-center item-center">DHT has built an innovative software technology platform to support
                     operations, improve efficiencies, and provide customers with customized reporting solutions.</p>
 
@@ -75,7 +76,8 @@
                 <div class="w-16 h-16 flex justify-center rounded-full items-center text-center mx-auto  mb-4"
                     style="background-color:#31558C;"><mat-icon class="text-white rounded-full" stroke="#fff"
                         [svgIcon]="'heroicons_solid:user'"></mat-icon></div>
-                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Well-Trained and Passionate
+                <h1 class="text-center item-center text-4xl font-bold mb-4" style="color:#31558C">Well-Trained and
+                    Passionate
                     Employees</h1>
                 <p class="text-center item-center">DHT recruits and hires experienced and well-trained employees who are
                     passionate about the agricultural business.</p>
@@ -93,15 +95,16 @@
     <div class="container flex flex-col md:flex-row columns-2 mx-auto w-9/12 pt-16 mb-8 overflow-hidden">
         <div class="md:w-1/2 flex flex-col bold items-center justify-center rounded-sm flex-1	">
             <img class="rounded-sm" src="assets\images\pages\landing-page\tim.png">
-            <h1 class="text-white -mt-36 sm:-mt-30 p-2 text-sm">Please read the article, <a
-                    href="/pages/article/" target="_blank" class="text-blue-600 ">Traveling Man</a>
-                    featured in MacDon Performance Magazine's Fall 2018 Issue.  Note, this article has been edited by DHT.
+            <h1 class="text-white -mt-36 sm:-mt-30 p-2 text-sm">Please read the article, <a href="/pages/article/"
+                    target="_blank" class="text-blue-600 ">Traveling Man</a>
+                featured in MacDon Performance Magazine's Fall 2018 Issue. Note, this article has been edited by DHT.
             </h1>
 
         </div>
 
         <div class="flex flex-col bold md:w-1/2 justify-center bg-gray-100 rounded-sm p-2 flex-1	">
-            <h1 class="lg:text-3xl md:text-2xl sm:text-xl font-bold text-center">"Our vision is to continue to build on DHT's track record of success and
+            <h1 class="lg:text-3xl md:text-2xl sm:text-xl font-bold text-center">"Our vision is to continue to build on
+                DHT's track record of success and
                 further our reputation as one of the best custom agricultural services companies in the industry."</h1>
         </div>
 
@@ -148,11 +151,14 @@
     <div class="container flex flex-col md:flex-row columns-2 mx-auto w-9/12 pt-12 pb-8 mb-16">
 
         <div class="flex flex-col bold md:w-1/2 justify-center rounded-sm p-4 gap-y-6">
-            <p class="lg:text-2xl text-xl">Demaray Harvesting and Trucking, LLC (“DHT”) was established in 1974 by Warren and
+            <p class="lg:text-2xl text-xl">Demaray Harvesting and Trucking, LLC (“DHT”) was established in 1974 by
+                Warren and
                 SeDelle Demaray near Jamestown ND. Their son, Tim, joined in 1977, eventually taking over and building
                 the company into an industry leader.</p>
-            <p class="lg:text-2xl text-xl">Today, the company operates a large fleet of combines and trucks country wide.</p>
-            <p class="lg:text-2xl text-xl">DHT has two primary regional operating centers, one in Casa Grande, AZ and the other in Aberdeen, South Dakota.</p>
+            <p class="lg:text-2xl text-xl">Today, the company operates a large fleet of combines and trucks country
+                wide.</p>
+            <p class="lg:text-2xl text-xl">DHT has two primary regional operating centers, one in Casa Grande, AZ and
+                the other in Aberdeen, South Dakota.</p>
 
         </div>
 
