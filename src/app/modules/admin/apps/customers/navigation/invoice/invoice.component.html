@@ -167,9 +167,9 @@
                                                 <div class="sm:block items-center truncate">
                                                     <div class="min-w-4 ml-2">
                                                         <mat-label
-                                                            *ngIf="!isEditMode">{{harvestingInvoice.crop_name}}</mat-label>
+                                                            *ngIf="!isEditMode">{{harvestingInvoice.crop}}</mat-label>
                                                         <mat-form-field *ngIf="isEditMode" appearance="outline">
-                                                            <mat-label>{{harvestingInvoice.crop_name}}</mat-label>
+                                                            <mat-label>{{harvestingInvoice.crop}}</mat-label>
                                                             <input matInput formControlName="next15Days">
                                                         </mat-form-field>
                                                     </div>

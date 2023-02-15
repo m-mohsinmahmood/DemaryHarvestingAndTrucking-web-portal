@@ -96,7 +96,7 @@ export class InvoiceComponent implements OnInit {
 
   //#region Init Apis on Tabs
   initApis() {
-    this._customerService.getHarvestingInvoiceList(this.routeID, 'harvestinglist');
+    this._customerService.getHarvestingInvoiceList(this.routeID);
     this._customerService.getCustomerById(this.routeID);
 
     console.log(this.customer$);
@@ -104,22 +104,22 @@ export class InvoiceComponent implements OnInit {
   }
   getRelativeTabInvoices(index: number) {
     if (index == 0) {
-      this._customerService.getHarvestingInvoiceList(this.routeID, 'harvestinglist');
+      this._customerService.getHarvestingInvoiceList(this.routeID);
       console.log(this.customHarvestingList$);
     }
     else if (index == 1) {
-      this._customerService.getFarmingInvoiceList(this.routeID, 'farming');
+      this._customerService.getFarmingInvoiceList(this.routeID);
       console.log(this.customFarmingList$);
     }
     else if (index == 2) {
-      this._customerService.getTruckingInvoiceList(this.routeID, 'trucking');
+      this._customerService.getTruckingInvoiceList(this.routeID);
       console.log(this.customTruckingList$);
 
     }
     else {
-      this._customerService.getHarvestingInvoiceList(this.routeID, 'harvestinglist');
-      this._customerService.getTruckingInvoiceList(this.routeID, 'trucking');
-      this._customerService.getFarmingInvoiceList(this.routeID, 'farming');
+      this._customerService.getHarvestingInvoiceList(this.routeID);
+      this._customerService.getTruckingInvoiceList(this.routeID,);
+      this._customerService.getFarmingInvoiceList(this.routeID,);
     }
   }
 
