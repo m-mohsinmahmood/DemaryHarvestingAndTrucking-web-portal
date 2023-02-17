@@ -232,8 +232,7 @@
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Test Admin
-                                Entered
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Test 
                             </p>
                         </div>
                     </div>
@@ -811,7 +810,7 @@
             <!-- DOCUMENTS BLOCK -->
             <div *ngIf="block === 'DHT Onboarding Documents'">
                 <!-- FOR USA Contract -->
-                <div *ngIf="this.employee?.employee_info?.contract_w4 || this.employee?.employee_info?.contract "
+                <div *ngIf="this.employee?.employee_info?.contract_w4"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div>
@@ -894,7 +893,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs || this.employee?.employee_info?.compliance_docs "
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -923,7 +922,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs || this.employee?.employee_info?.compliance_docs "
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -951,7 +950,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs || this.employee?.employee_info?.compliance_docs"
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -979,7 +978,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs || this.employee?.employee_info?.compliance_docs"
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">

@@ -71,7 +71,7 @@ export class MailboxComposeComponent implements OnInit {
             },
             {
                 id: '2', subject: 'DHT “Onboarding Process” (Step 2 of 7)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully uploading your Social Security Card  and Drivers license.  Next, we will need you to carefully review, read, and electronically sign the four compliance related documents below.  Your electronic signature will be used as verification that you’ve read and understood the contents of these documents. Thanks for your help in gathering this documentation.</br></br> Ag Work Agreement (DHS Documents Folder) </br> Work itinerary (DHS Documents Folder) </br> DHT work rules (Company Documents Folder) </br> Handbook (Company Documents Folder). Note, the DHT administrator will send you another email once these four documents have been successfully reviewed/signed.  We appreciate your patience with this process.</br></br> Kind regards,'
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully uploading your Social Security Card  and Drivers license.  Next, we will need you to carefully review, read, and electronically sign the four compliance related documents below.  Your electronic signature will be used as verification that you’ve read and understood the contents of these documents. Thanks for your help in gathering this documentation.</br></br>Ag Work Agreement (DHS Documents Folder) </br>Work itinerary (DHS Documents Folder) </br>DHT work rules (Company Documents Folder) </br>Handbook (Company Documents Folder)</br></br>Note, the DHT administrator will send you another email once these four documents have been successfully reviewed/signed.  We appreciate your patience with this process.</br></br> Kind regards,'
             },
             {
                 id: '3', subject: 'DHT “Onboarding Process” (Step 3 of 7)',
@@ -177,7 +177,7 @@ export class MailboxComposeComponent implements OnInit {
             },
             {
                 id: '4', subject: 'DHT “Onboarding Process” (Step 4 of 12)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully signing the required DHT and US Government compliance documentation. Next, we will we need you to review the attached DHT Employee Contract to make sure its contents are correct.  If this information is correct, please review, sign, and date the Contract.  Once complete, the DHT administrator will send you another email with more information regarding the next onboarding step which is to set up an online bank account.  We appreciate your patience with this process.</br></br>'
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully signing the required DHT and US Government compliance documentation. Next, we will we need you to review the attached DHT Employee Contract to make sure its contents are correct.  If this information is correct, please review, sign, and date the Contract.  Once complete, the DHT administrator will send you another email with more information regarding the next onboarding step which is to set up an online bank account.  We appreciate your patience with this process.</br></br>Kind regards,</br></br>'
             },
             {
                 id: '5', subject: 'DHT “Onboarding Process” (Step 5 of 12)',

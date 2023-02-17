@@ -103,7 +103,7 @@
                             <div mat-sort-header="cell_phone_number" class="hidden sm:block">
                                 Cell Phone Number
                             </div>
-                            <div mat-sort-header="status" class="hidden sm:block">Staus</div>
+                            <div mat-sort-header="status_step" class="hidden sm:block">Staus</div>
                             <div>Actions</div>
                         </div>
                         <!-- Rows -->
@@ -131,15 +131,7 @@
                                             {{getCountryCode(employee.cell_phone_country_code)}} {{ employee.cell_phone_number }}
                                         </div>
                                         <div class="hidden sm:block">
-                                            <mat-icon class="{{
-                                                employee.status === true
-                                                    ? 'greenActiveIcon'
-                                                    : 'redInActiveIcon'
-                                            }}" [svgIcon]="
-                                                employee.status === true
-                                                    ? 'heroicons_solid:check-circle'
-                                                    : 'heroicons_solid:x-circle'
-                                            ">check-circle</mat-icon>
+                                            {{getStatusCode(employee.status_step)}}
                                         </div>
                                         <!-- Details button -->
                                         <div class="flex">
