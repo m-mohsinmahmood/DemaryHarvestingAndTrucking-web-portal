@@ -164,40 +164,52 @@ export class MailboxComposeComponent implements OnInit {
     initH2aEmails() {
         this.h2a_emails = [
             {
-                id: '1', subject: 'DHT “Onboarding Process” (Step 1 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>We appreciate your interest in DHT and are looking forward to working with you this upcoming season. To complete your pre-employment (onboarding) process in compliance with US Government regulations, we are required to collect several forms.</br></br>This email is the first of several steps, you will need to complete to become employed by DHT.  Please note that all your personal information and documentation is confidential, protected and can be accessed anytime from your personal online DHT account.</br></br>Please visit your newly set-up DHT account at demarayharvesting.com and begin the process by uploading your Passport (DOI Document Folder) and Driver’s license (DOI Document Folder) information.  Thanks again for your patience and timely cooperation in gathering all required documentation.</br></br>Kind regards, '
+                id: '1', subject: 'DHT “Onboarding Process” (Step 1 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>We appreciate your interest in DHT and are looking forward to working with you this upcoming season. To complete your pre-employment (onboarding) process in compliance with US Government regulations, we are required to collect several forms.</br></br>This email is the first of several steps, you will need to complete to become employed by DHT. Please note that all your personal information and documentation is confidential, protected and can be accessed anytime from your personal online DHT account. Please visit your newly set-up DHT account and begin the process by uploading your Passport (DOI Document Folder), Driver’s license (DOI Document Folder), and Social Security Card (DOI Folder, when available, after arrival) to the Employee Dashboard (look for the Rocketship icon).</br></br>Thanks again for your patience and timely cooperation in gathering all required documentation.  Note, the DHT administrator will send you another email once these documents have been successfully uploaded and verified.  We appreciate your patience with this process.</br></br>Kind regards,</br></br>'
             },
             {
-                id: '2', subject: 'DHT “Onboarding Process” (Step 2 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for successfully uploading your passport and driver’s license.  Next, we will need you to carefully review, read, and electronically sign the four compliance related documents below.  Your electronic signature will be used as verification that you’ve read and understood the contents of these documents. Thanks for your help in gathering this documentation.</br></br> Ag Work Agreement(DHS Documents Folder) </br> Work Itinerary(DHS Documents Folder) </br> DHT Work Rules (Company Documents Folder) </br> Employee Handbook (Company Documents Folder)</br></br> Kind regards,'
+                id: '2', subject: 'DHT “Onboarding Process” (Step 2 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully uploading your Passport and Driver’s License. In advance of your scheduled start date, we ask all employees who do not currently have their CDL license to review and verify the CDL training instructions document located in the DHT folder in the web portal to help study and prepare for their CDL test upon arrival.</br></br>Kind regards,'
             },
             {
-                id: '3', subject: 'DHT “Onboarding Process” (Step 3 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for successfully signing the required DHT and US Government compliance documentation. Next, we will we need you to review the attached DHT Contract Letter to make sure its contents are correct.  If this information is correct, then review and electronically sign and date the DHT Contract.</br></br>DHT Contract (DOI Documents)</br></br>Kind regards, '
+                id: '3', subject: 'DHT “Onboarding Process” (Step 3 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for reviewing and verifying the CDL Training instructions.  Next, please visit your web portal to view and verify you have read the following eight (8) DHT Compliance documents.</br></br>1. Ag Work Agreement (DHT)</br>2. Work Itinerary (DHT)</br>3. Work Policies (DHT)</br>4. Employee Handbook (DHT)</br>5. Drug Policy (DHT)</br>6. Reprimand Policy (DHT)</br>7. Equipment Policy (DHT)</br>8.Departure Policy (DHT)</br></br>After this is complete, the DHT administrator will send you another email on next steps.  We appreciate your patience with this process. </br></br>Kind regards,</br></br> '
             },
             {
-                id: '4', subject: 'DHT “Onboarding Process” (Step 4 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for successfully signing the DHT Contract Letter.  Next, to ensure that there are no delays in getting paid, we require all employees set-up an online bank account before they arrive in the United States. In prior years, most of our employees have used a banking organization called Transferwise.  We have provided instructions to set-up a Transferwise account for your convenience, if interested.</br></br>Transferwise Applicant Instructions</br></br>Once you’ve successfully created an online bank account, you will need to visit your DHT online account at demarayharvesting.com to enter the appropriate bank account information.</br></br>Kind regards, '
+                id: '4', subject: 'DHT “Onboarding Process” (Step 4 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully signing the required DHT and US Government compliance documentation. Next, we will we need you to review the attached DHT Employee Contract to make sure its contents are correct.  If this information is correct, please review, sign, and date the Contract.  Once complete, the DHT administrator will send you another email with more information regarding the next onboarding step which is to set up an online bank account.  We appreciate your patience with this process.</br></br>'
             },
             {
-                id: '5', subject: 'DHT “Onboarding Process” (Step 5 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for successfully setting up your online bank account.  Next, we will need you to complete the VISA application (below).  Please note that we have attached some instructions that provide you with more detailed information on how to complete your VISA application.</br></br>As part of the VISA application process, you will need to request a VISA interview date.  After you’ve received an acceptable VISA interview date (e.g., an interview date that takes place prior to your start date), you will then need to enter the interview date/time into your online DHT account at demarayharvesting.com.</br></br> Visa applicant instructions. </br> </br> Visa Applicant (DHS Documents Folder)</br></br>Kind regards, '
+                id: '5', subject: 'DHT “Onboarding Process” (Step 5 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully signing the DHT Contract Letter. Next, to ensure that there are no delays in getting paid, we require all employees set-up an online bank account before they arrive in the United States. In prior years, most of our employees have used a banking organization called Transferwise. We have provided instructions in the Policy Documents folder (on the main navigation bar) to set-up a Transferwise account for your convenience, if interested.</br></br>Once you’ve successfully created an online bank account, you will need to visit your DHT web portal to enter the appropriate bank account information in the Payroll folder. Once complete, the DHT administrator will send you another email with more information regarding the next onboarding step.</br></br>Kind regards,</br</br>  '
             },
             {
-                id: '6', subject: 'DHT “Onboarding Process” (Step 6 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Congratulations on successfully completing your VISA application and setting up your interview date.  Attached is your DHT Approval Letter, which you will need to take with you when you attend your VISA interview.</br></br>DHT Approval Letter (DOI Documents)</br></br>Kind regards, '
+                id: '6', subject: 'DHT “Onboarding Process” (Step 6 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully setting up your online bank account. Next, we will need you to apply for your VISA application. Please note that we have uploaded some instructions to your Policy Document folder in the DHT web portal that provides you with more detailed information on how to complete your VISA application.  Importantly, you will need the OEI number from I-797B form in order to complete your VISA application.  As a reminder, the I-797B form will also need to be reviewed and verified in order to move to the next onboarding step.</br></br>As part of the VISA application process, you will need to request a VISA interview date.  NOTE:  PLEASE DO NOT SCHEDULE AN INTERVIEW DATE LESS THAN THREE WEEKS PRIOR TO YOUR ARRIVAL DATE.  IF YOU ARE NOT ABLE TO DO THIS, PLEASE REVIEW THE VISA INSTRUCTIONS IN THE POLICY DOCUMENTS FOLDER FOR NEXT STEPS.</br></br>After you’ve received an acceptable VISA interview date (e.g., an interview date that takes place at least 3 weeks prior to your start date), you will then need to enter the interview date into your online DHT account located within the DOI folder.</br></br>Kind regards,</br></br>'
             },
             {
-                id: '7', subject: 'DHT “Onboarding Process” (Step 7 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for downloading the DHT Approval Letter.  You are almost finished with the pre-employment (onboarding) process.</br></br>Next, we will need you to carefully review, read, and electronically sign and date the two required DHT compliance documents below.  Thanks again for your help in completing this step.</br></br>Drug Policy (Company Documents Folder) </br>Reprimand Policy(Company Documents Folder) </br>Departure Policy (Company Documents Folder) </br>Equipment Policy (Company Documents Folder) </br></br>Kind regards, '
+                id: '7', subject: 'DHT “Onboarding Process” (Step 7 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Congratulations on successfully completing your VISA application and setting up your interview date. You are almost finished with the pre-employment (onboarding) process. Next, please review and verify your DHT Approval Letter located in the DOI folder in the web portal.  As a reminder, please remember to bring the 797B certificate, your Contract and the DHT approval letter with you to the VISA Interview.</br></br>Kind regards</br></br>'
             },
             {
-                id: '8', subject: 'DHT “Onboarding Process” (Step 8 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Thanks for completing the recent compliance documents.</br></br>In advance of your arrival, we ask all employees to review the attached CDL training instructions and website to help study and prepare for their CDL test.</br></br>CDL Training Instructions</br>CDL Training Videos Website </br></br>Kind regards, '
+                id: '8', subject: 'DHT “Onboarding Process” (Step 8 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thank you for verifying your Approval Letter.  Once you receive your VISA, please log-in to the web portal and upload the relevant information into the DOI folder.  Once verified by the administrator, the administrator will send you a follow-up email with applicable next steps.</br></br>Kind regards,</br></br>'
             },
             {
-                id: '9', subject: 'DHT “Onboarding Process” (Step 9 of 9)',
-                email: 'Dear ' + this.data.employee.first_name + ',</br>Congratulations you are now officially ready to start your DHT job in the upcoming Harvesting season.  Once you receive your VISA, please reach out to your recruiter to schedule your arrival date and make related travel arrangements.  We are excited to welcome you to the US and into the DHT family.  Please don’t hesitate to reach out if you have any further questions before your scheduled start date.  See you soon!</br></br>Kind regards, '
+                id: '9', subject: 'DHT “Onboarding Process” (Step 9 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thank you for successfully uploading your VISA information.</br></br>As a next step, please reach out to your recruiter to schedule your arrival date and make related travel arrangements. We are excited to welcome you to the US and into the DHT family.</br></br>Additionally, please note that after you’ve arrived in the U.S. you will be receiving five (5) additional documents (listed below) from the administrator that you will need to upload to the web portal.  Once these five (5) documents have been successfully uploaded, the administrator will send a follow-up email explaining the final onboarding steps.</br></br>1. I-94 (DOI)</br>2. I-9 (DOL)</br>3. Physical (DOT)</br>4. Drug Test (DOT)</br>5. E-Verify (DOL)</br></br>Kind regards,</br></br>'
+            },
+            {
+                id: '10', subject: 'DHT “Onboarding Process” (Step 10 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thanks for successfully uploading the five (5) additional H2A documents.  Next, once you receive your new Social Security card, you’ll need to upload this information into the DOL folder.  Once verified, the administrator will send you a follow-up email on applicable next steps.</br></br>Kind regards,</br></br>'
+            },
+            {
+                id: '11', subject: 'DHT “Onboarding Process” (Step 11 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Thank you for posting your Social Security Card information to the web portal.  The final step is to upload your American Drivers license information to the DOT folder and if applicable your CDL Drivers license information.  Once complete, you will receive a confirmation email from the administrator.</br></br>Kind regards,'
+            },
+            {
+                id: '12', subject: 'DHT “Onboarding Process” (Step 12 of 12)',
+                email: 'Dear ' + this.data.employee.first_name + ',</br></br>Congratulations you are now officially ready to start your DHT job in the upcoming Harvesting season!  We are looking forward to a great year!</br></br>Kind regards</br></br>'
             },
         ];
     }
@@ -212,7 +224,6 @@ export class MailboxComposeComponent implements OnInit {
         });
     }
     updateH2aEmailForm() {
-
         if (this.current_status_step == '2') {
             this.patchH2aEmail(3, 0)
         }
@@ -243,10 +254,15 @@ export class MailboxComposeComponent implements OnInit {
         else if (this.current_status_step == '20') {
             this.patchH2aEmail(21, 9)
         }
+        else if (this.current_status_step == '22') {
+            this.patchH2aEmail(23, 10)
+        }
+        else if (this.current_status_step == '24') {
+            this.patchH2aEmail(25, 11)
+        }
     }
 
     patchH2aEmail(step, emailIndex) {
-
         this.next_status_step = step;
         this.email_text = this.h2a_emails[emailIndex].email;
         this.data.form.patchValue(
