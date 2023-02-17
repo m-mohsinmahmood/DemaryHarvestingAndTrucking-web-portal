@@ -101,6 +101,33 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //#endregion
 
+    status_step = {
+        "2": "Account Activated",
+        "3": "Admin sending email to upload PP, DL, and SS docs",
+        "4": "Passport and Drivers License verified",
+        "5": "CDL training instructions posted",
+        "6": "CDL training instructions verified",
+        "7": "Compliance docs posted",
+        "8": "Compliance docs verified",
+        "9": "Employee Contract posted",
+        "10": "Employee Contract verified",
+        "11": "Bank account information requested",
+        "12": "Bank account details verified",
+        "13": "Visa Application Instructions posted",
+        "14": "VISA Interview Date and Consulate Details verified",
+        "15": "Approval Letter posted",
+        "16": "Approval Letter verified",
+        "17": "Waiting for VISA verification",
+        "18": "VISA is verified",
+        "19": "Waiting for further H2A required documentation",
+        "20": "Additional H2A documentation verified",
+        "21": "Social Security Card posted",
+        "22": "Social Security Card verified",
+        "23": "American and CDL (if applicable) Drivers license posted ",
+        "24": "Drivers license verified",
+        "25": "Onboarding complete",
+    };
+
     constructor(
         private _router: Router,
         private _employeeService: EmployeeService,
@@ -268,6 +295,9 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     getCountryCode(country_code){
         if (country_code && country_code != 'zz')
         return  '+' + country_code?.split("+")[1];
+    }
+    getStatusCode(status_step){
+        return this.status_step[status_step];
     }
 
 }
