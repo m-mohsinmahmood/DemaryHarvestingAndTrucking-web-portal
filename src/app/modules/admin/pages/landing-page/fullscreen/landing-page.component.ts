@@ -45,7 +45,7 @@ export class LandingPageFullscreenComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.player.setPlayerStyle(this.player.PlayerStyle.CHROMELESS);
+        // this.player.setPlayerStyle(this.player.PlayerStyle.CHROMELESS);
 
          
     }

@@ -39,6 +39,15 @@ export interface destinationFilters {
     calendar_year: string;
 }
 
+export interface harvestingJobsFilters {
+    farm_id: string;
+    destinations: string;
+    crops: string;
+    created_at: string;
+
+}
+
+
 export interface CustomerContacts {
     customer_id: string;
     company_name: string;
