@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   activeID: any;
   policyDocument$: Observable<any[]>;
+  routeID: any;
 
   constructor(
     private _policyDocument: PolicyDocumentsService,
@@ -32,18 +33,14 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initApis();
+    this.getParamsId();
   }
 
-  /**
-   * On backdrop clicked
-   */
-  onBackdropClicked(): void {
-    // Go back to the list
-    this._router.navigate(['./'], { relativeTo: this._activatedRoute });
-
-    // Mark for check
-    this._changeDetectorRef.markForCheck();
-  }
+  getParamsId() {
+    this._activatedRoute.params.subscribe((params) => {
+        this.routeID = params.Id;
+    });
+}
 
   // #region Init Api's
   initApis(): void {
@@ -56,7 +53,7 @@ export class ListComponent implements OnInit {
   //#region Upload Document Popup
   uploadDocument() {
     const dialogRef = this._matDialog.open(UploadPolicyDocumentComponent, {
-      data: {},
+      data: this.routeID,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log('Compose dialog was closed!');

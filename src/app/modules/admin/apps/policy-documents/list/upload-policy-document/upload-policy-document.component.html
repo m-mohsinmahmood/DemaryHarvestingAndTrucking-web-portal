@@ -14,7 +14,15 @@
             <mat-select formControlName="name">
                 <mat-option *ngFor="let policyDocument of policyDocuments" [value]="policyDocument.value">
                     {{policyDocument.value}}
-                  </mat-option>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" *ngIf="isEmploymentPeriod">
+            <mat-label>Select Employment Period</mat-label>
+            <mat-select formControlName="employment_period">
+                <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th,
+                    2024</mat-option>
+                <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th, 2024</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" (click)="fileUpload.click()" class="w-full">
@@ -34,7 +42,9 @@
                 </button>
 
                 <!-- Send -->
-                <button [class.spinner]="isLoadingPolicyDocument$ | async"  [disabled]="documentForm.invalid || (isLoadingPolicyDocument$ | async)  " class="" mat-flat-button [color]="'primary'" (click)="send()">
+                <button [class.spinner]="isLoadingPolicyDocument$ | async"
+                    [disabled]="documentForm.invalid || (isLoadingPolicyDocument$ | async)  " class="" mat-flat-button
+                    [color]="'primary'" (click)="send()">
                     <span class=" ">Save</span>
                 </button>
             </div>

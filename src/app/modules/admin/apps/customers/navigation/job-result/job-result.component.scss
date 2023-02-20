@@ -32,14 +32,14 @@
     grid-template-columns: 25% 35% 25%;
 
     @screen sm {
-        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 10% 10%;
     }
     @screen md {
-        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 10% 10%;
     }
 
     @screen lg {
-        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 5% 10%;
+        grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 10% 10%;
     }
 }
 
@@ -57,3 +57,26 @@
 //     marging
 
 //   }
+
+.mat-filter {
+    background-color: #f1f5f9 !important;
+    color: #4f46e5 !important;
+}
+
+.mat-filter-applied {
+    background-color: green;
+    color: #fff;
+}
+
+.mat-expansion-panel 
+{
+    background-color: #F5F5F5 !important;
+}
+
+.gray-custom-bg{
+    background-color: #F5F5F5;
+}
+::ng-deep .filters-job-result .mat-form-field-wrapper
+{
+    padding-bottom: 0.5rem !important;
+}

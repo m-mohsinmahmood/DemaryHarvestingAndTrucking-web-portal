@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                <div *ngIf="this.employee?.employee_info?.visa_consulate_details"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
@@ -186,7 +186,7 @@
 
             <!-- DOT BLOCK -->
             <div *ngIf="block === 'Department of Transportation (DOT)'">
-                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                <div *ngIf="this.employee?.employee_info?.h2a_documents"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
@@ -228,19 +228,19 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
-             rounded-md mt-2 px-4  shadow">
+                <div *ngIf="this.employee?.employee_info?.h2a_documents"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Test Admin
-                                Entered
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Drug Test 
                             </p>
                         </div>
                     </div>
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
                         <mat-icon *ngIf="employeeDocs?.employee_docs?.drug_test_doc"
                             (click)="downloadDocument(employeeDocs?.employee_docs?.drug_test_doc)" matSuffix
-                            [svgIcon]="'heroicons_outline:download'" class="ml-2"></mat-icon>
+                            [svgIcon]="'heroicons_outline:download'" class="ml-2">
+                        </mat-icon>
                     </div>
                     <div class="sm:w-5/12 md:w-8/12">
                         <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
@@ -275,7 +275,6 @@
                         <div class="flex items-center">
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Foreign Drivers
                                 License </p>
-
                         </div>
                     </div>
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
@@ -310,6 +309,51 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="this.employee?.employee_info?.american_license"
+                class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
+                    <div class="flex items-center">
+                        <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">American Drivers
+                            License </p>
+                    </div>
+                </div>
+                <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
+                    <mat-icon *ngIf="employeeDocs?.employee_docs?.american_license_doc"
+                        (click)="downloadDocument(employeeDocs?.employee_docs?.american_license_doc)"
+                        matSuffix [svgIcon]="'heroicons_outline:download'" class="ml-2">
+                    </mat-icon>
+                </div>
+                <div class="sm:w-5/12 md:w-8/12">
+                    <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label
+                                class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">State:</mat-label>
+                            <mat-label>{{employeeDocs?.employee_docs?.american_license_state}}</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label
+                                class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                            <mat-label>{{employeeDocs?.employee_docs?.american_license_number}}</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Issue Date:
+                            </mat-label>
+                            <mat-label>{{employeeDocs?.employee_docs?.american_license_issue_date | date:
+                                'MMMM-dd-YYYY'}}</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">License
+                                Type</mat-label>
+                            <mat-label>{{employeeDocs?.employee_docs?.american_license_type}}</mat-label>
+                        </div>
+                        <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                            <mat-label
+                                class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                            <mat-label>{{employeeDocs?.employee_docs?.american_license_sign}}</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div *ngIf="this.employee?.employee_info?.driver_license_ss_card " class="flex bg-gray-100 flex-col sm:flex-row
              rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
@@ -357,6 +401,56 @@
             </div>
             <!-- Payroll BLOCK -->
             <div *ngIf="block === 'Payroll'">
+                <div *ngIf="this.employee?.employee_info?.visa_consulate_details "
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
+                    <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div class="flex items-center">
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Visa Interview Date
+                                and Consulate Details</p>
+                        </div>
+                    </div>
+                    <div class="sm:w-6/12 md:w-8/12">
+                        <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Interview
+                                    Date:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_date | date: 'MMMM-dd-YYYY'}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name of
+                                    Embassy:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_embassy}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Street:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_street}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">City:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_city}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Country:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_country}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Phone Number:
+                                </mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_phone_number}}</mat-label>
+                            </div>
+                            <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                <mat-label
+                                    class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                <mat-label>{{employeeDocs?.employee_docs?.visa_interview_sign}}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div *ngIf="this.employee?.employee_info?.bank_account "
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
@@ -378,12 +472,12 @@
                                 <mat-label>{{employeeDocs?.employee_docs?.bank_acc_name}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Routing:
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Routing Number:
                                 </mat-label>
                                 <mat-label>{{employeeDocs?.employee_docs?.bank_acc_routing}}</mat-label>
                             </div>
                             <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Account:
+                                <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Account Number:
                                 </mat-label>
                                 <mat-label>{{employeeDocs?.employee_docs?.bank_acc_account}}</mat-label>
                             </div>
@@ -425,7 +519,7 @@
                         <mat-icon *ngIf="employeeDocs?.employee_docs?.w4_doc" (click)="downloadDocument(employeeDocs?.employee_docs?.w4_doc)" matSuffix [svgIcon]="'heroicons_outline:download'" class=""></mat-icon>
                     </div> -->
                 </div>
-                <div *ngIf="this.employee?.employee_info?.driver_license_ss_card"
+                <div *ngIf="this.employee?.employee_info?.driver_license_ss_card || this.employee?.employee_info?.passport_driver_license"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -579,7 +673,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                <div *ngIf="this.employee?.employee_info?.h2a_documents"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
@@ -608,8 +702,8 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'" class="flex bg-gray-100 flex-col sm:flex-row
-             rounded-md mt-2 px-4  shadow">
+                <div *ngIf="this.employee?.employee_info?.h2a_documents"
+                    class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
                             <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">I-94</p>
@@ -636,7 +730,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                <div *ngIf="this.employee?.employee_info?.h2a_documents"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
@@ -673,7 +767,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="employee?.employee_info.country != 'United States of America'"
+                <!-- <div *ngIf="employee?.employee_info.country != 'United States of America'"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
@@ -710,13 +804,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- DOCUMENTS BLOCK -->
             <div *ngIf="block === 'DHT Onboarding Documents'">
                 <!-- FOR USA Contract -->
-                <div *ngIf="this.employee?.employee_info?.contract_w4 || this.employee?.employee_info?.contract "
+                <div *ngIf="this.employee?.employee_info?.contract_w4"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
                         <div>
@@ -744,7 +838,8 @@
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div>
-                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Handbook</p>
+                            <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Employee Handbook
+                            </p>
                         </div>
                     </div>
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
@@ -798,7 +893,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs "
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -827,7 +922,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs "
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -855,7 +950,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs"
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">
@@ -883,7 +978,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs"
+                <div *ngIf="this.employee?.employee_info?.additional_compliance_docs  || (this.employee?.employee_info?.compliance_docs && employee?.employee_info.country != 'United States of America')"
                     class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                     <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                         <div class="flex items-center">

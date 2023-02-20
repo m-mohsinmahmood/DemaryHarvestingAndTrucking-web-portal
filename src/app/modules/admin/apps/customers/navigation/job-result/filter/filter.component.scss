@@ -1,0 +1,25 @@
+::ng-deep .mat-dialog-container {
+    border-radius: 0px !important;
+    padding: 0px;
+    // background-color: aqua;
+    position: relative;
+    max-height: 900px;
+    max-width: 250px;
+}
+::ng-deep  body.light .mat-dialog-container {
+    box-shadow: none;
+      background: rgb(255, 255, 255);
+        color: #1e293b;
+        // margin-left: 160px;
+        position: absolute;
+    width: inherit;
+    height: 900px;
+    right: 0%;
+    top: 0%;
+}
+// ::ng-deep element.style {
+//     max-width: 30vw;
+//     width: 200px;
+//     height: 200px;
+//     position: static;
+// }
