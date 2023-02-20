@@ -56,8 +56,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region variables
     page: number = 1;
-    pageSize = 50;
-    pageSizeOptions: number[] = [50, 100, 150, 200];
+    pageSize = 200;
+    pageSizeOptions: number[] = [50, 100, 150, 200,250,300,350,500];
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -102,14 +102,14 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
 
     status_step = {
-        "2": "Account Activated",
-        "3": "Admin sending email to upload PP, DL, and SS docs",
-        "4": "Passport and Drivers License verified",
-        "5": "CDL training instructions posted",
-        "6": "CDL training instructions verified",
-        "7": "Compliance docs posted",
-        "8": "Compliance docs verified",
-        "9": "Employee Contract posted",
+        "2":  "Account Activated",
+        "3":  "Admin sending email to upload PP, DL, and SS docs",
+        "4":  "Passport and Drivers License verified",
+        "5":  "CDL training instructions posted",
+        "6":  "CDL training instructions verified",
+        "7":  "Compliance docs posted",
+        "8":  "Compliance docs verified",
+        "9":  "Employee Contract posted",
         "10": "Employee Contract verified",
         "11": "Bank account information requested",
         "12": "Bank account details verified",
@@ -124,8 +124,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         "21": "Social Security Card posted",
         "22": "Social Security Card verified",
         "23": "American and CDL (if applicable) Drivers license posted ",
-        "24": "Drivers license verified",
-        "25": "Onboarding complete",
+        "24": "Onboarding completed",
+        "25": "Onboarding completed",
     };
 
     constructor(

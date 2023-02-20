@@ -118,7 +118,7 @@ export class EmployeeService {
 
 
     //#region Applicant API's 
-    getEmployees(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
+    getEmployees(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
