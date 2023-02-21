@@ -33,8 +33,6 @@ export class DocumentsComponent implements OnInit {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
-
-
     ) { }
 
     ngOnInit(): void {
@@ -47,59 +45,67 @@ export class DocumentsComponent implements OnInit {
             this.routeID = params.Id;
         });
     }
-
-    /**
-     * On backdrop clicked
-     */
-    onBackdropClicked(): void {
-        // Go back to the list
-        this._router.navigate(['./'], { relativeTo: this._activatedRoute });
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-    }
-
     // #region Init Api's
     initApis(): void {
         // Get Documents
         this.policyDocument$ = this._employeeService.policyDocuments$;
-        this._employeeService.getPolicyDocuments(this.routeID);
+        this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
     }
     //#endregion
 
     //#region Upload Document Popup
-    uploadDocument() {
+    // uploadDocument() {
 
-        const dialogRef = this._matDialog.open(UploadDocumentComponent, {
-            data: this.routeID,
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('Compose dialog was closed!');
-        });
-    }
+    //     const dialogRef = this._matDialog.open(UploadDocumentComponent, {
+    //         data: this.routeID,
+    //     });
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //         console.log('Compose dialog was closed!');
+    //     });
+    // }
 
     //#endregion
 
     //#region Delete confirmation
-    confirmDeleteDialog(id: string): void {
-        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-            data: {
-                message: 'Are you sure you want to delete this Document?',
-                title: 'Policy Document',
-            },
-        });
+    // confirmDeleteDialog(id: string): void {
+    //     const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+    //         data: {
+    //             message: 'Are you sure you want to delete this Document?',
+    //             title: 'Policy Document',
+    //         },
+    //     });
 
-        dialogRef.afterClosed().subscribe((dialogResult) => {
-            if (dialogResult)
-                this._employeeService.deletePolicyDocument(id,this.routeID);
-        });
-    }
+    //     dialogRef.afterClosed().subscribe((dialogResult) => {
+    //         if (dialogResult)
+    //             this._employeeService.deletePolicyDocument(id, this.routeID);
+    //     });
+    // }
 
     //#endregion
-    
+
     //#region Download Document
     downloadDocument(url) {
         window.open(url, "_blank");
+    }
+    //#endregion
+
+    //#region  Tab Change
+    tabChanged(event) {
+        switch (event.tab.textLabel) {
+            case 'Onboarding':
+                this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
+                break;
+            case 'CDL':
+                this._employeeService.getPolicyDocuments(this.routeID, 'cdl');
+                break;
+            case 'Work':
+                this._employeeService.getPolicyDocuments(this.routeID, 'work');
+                break;
+            case 'Miscellaneous':
+                this._employeeService.getPolicyDocuments(this.routeID, 'miscellaneous');
+                break;
+            default:
+        }
     }
     //#endregion
 }

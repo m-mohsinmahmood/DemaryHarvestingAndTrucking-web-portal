@@ -23,23 +23,22 @@ export class UploadPolicyDocumentComponent implements OnInit {
   policyDocumentsArray: any = ['Ag Work Agreement First Employment Period','Ag Work Agreement Second Employment Period','Work Itinerary First Employment Period','Work Itinerary Second Employment Period','I-797B First Employment Period',
   'I-797B Second Employment Period']
 
-  policyDocuments: any[] = [
-    { value: 'Ag Work Agreement First Employment Period' },
-    { value: 'Ag Work Agreement Second Employment Period' },
-    { value: 'Work Itinerary First Employment Period' },
-    { value: 'Work Itinerary Second Employment Period' },
-    { value: 'I-797B First Employment Period' },
-    { value: 'I-797B Second Employment Period' },
-    { value: 'W-4' },
-    { value: 'Employee Handbook' },
-    { value: 'Dht Work Rules' },
-    { value: 'Drug Policy' },
-    { value: 'Reprimand Policy' },
-    { value: 'Departure Policy' },
-    { value: 'Equipment Policy' },
-    { value: 'Cdl Training Instructions' },
-    
-  ];
+  // policyDocuments: any[] = [
+  //   { value: 'Ag Work Agreement First Employment Period' },
+  //   { value: 'Ag Work Agreement Second Employment Period' },
+  //   { value: 'Work Itinerary First Employment Period' },
+  //   { value: 'Work Itinerary Second Employment Period' },
+  //   { value: 'I-797B First Employment Period' },
+  //   { value: 'I-797B Second Employment Period' },
+  //   { value: 'W-4' },
+  //   { value: 'Employee Handbook' },
+  //   { value: 'Dht Work Rules' },
+  //   { value: 'Drug Policy' },
+  //   { value: 'Reprimand Policy' },
+  //   { value: 'Departure Policy' },
+  //   { value: 'Equipment Policy' },
+  //   { value: 'Cdl Training Instructions' },
+  // ];
 
 
   constructor(
@@ -70,11 +69,12 @@ export class UploadPolicyDocumentComponent implements OnInit {
       document: ['', Validators.required],
       type: ['global'],
       employment_period: [''],
+      category: [this.data.category]
     });
   }
 
   initApi() {
-    this._policyService.getPolicyDocuments();
+    this._policyService.getPolicyDocuments(this.data.category);
   }
 
   initObservables() {
@@ -96,7 +96,7 @@ export class UploadPolicyDocumentComponent implements OnInit {
 
   filterDocuments() {
     this.policyDocument.policy_docs.map((value) => {
-      this.policyDocuments = this.policyDocuments.filter(policy => policy.value !== value.document_name);
+      this.data.policyDocuments = this.data.policyDocuments.filter(policy => policy.value !== value.document_name);
     })
   }
 
@@ -112,7 +112,7 @@ export class UploadPolicyDocumentComponent implements OnInit {
     var formData: FormData = new FormData();
     formData.append('form', JSON.stringify(this.documentForm.value));
     formData.append('doc', this.documentForm.get('document')?.value);
-    this._policyService.addPolicyDocument(formData);
+    this._policyService.addPolicyDocument(formData,this.data.category);
     this.filterDocuments();
   }
 

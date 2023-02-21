@@ -12,7 +12,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Select Document </mat-label>
             <mat-select formControlName="name">
-                <mat-option *ngFor="let policyDocument of policyDocuments" [value]="policyDocument.value">
+                <mat-option *ngFor="let policyDocument of data.policyDocuments" [value]="policyDocument.value">
                     {{policyDocument.value}}
                 </mat-option>
             </mat-select>

@@ -107,11 +107,11 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     initObservables() {
         // Data
         this.employee$ = this._employeeService.employee$;
+        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
         this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
             this.employee = res;
         });
         // Loader
-        this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
     }
     //#endregion
 

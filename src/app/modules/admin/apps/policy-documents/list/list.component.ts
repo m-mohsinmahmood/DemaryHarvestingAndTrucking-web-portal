@@ -25,8 +25,6 @@ export class ListComponent implements OnInit {
   constructor(
     private _policyDocument: PolicyDocumentsService,
     private _activatedRoute: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _router: Router,
     private _matDialog: MatDialog,
 
   ) { }
@@ -38,49 +36,60 @@ export class ListComponent implements OnInit {
 
   getParamsId() {
     this._activatedRoute.params.subscribe((params) => {
-        this.routeID = params.Id;
+      this.routeID = params.Id;
     });
-}
+  }
 
   // #region Init Api's
   initApis(): void {
     // Get Documents
     this.policyDocument$ = this._policyDocument.policyDocuments$;
-    this._policyDocument.getPolicyDocuments();
+    this._policyDocument.getPolicyDocuments('onboarding');
   }
   //#endregion
 
-  //#region Upload Document Popup
-  uploadDocument() {
-    const dialogRef = this._matDialog.open(UploadPolicyDocumentComponent, {
-      data: this.routeID,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('Compose dialog was closed!');
-    });
-  }
-  //#endregion
+  // //#region Upload Document Popup
+  // uploadDocument() {
+  //   const dialogRef = this._matDialog.open(UploadPolicyDocumentComponent, {
+  //     data: this.routeID,
+  //   });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log('Compose dialog was closed!');
+  //   });
+  // }
+  // //#endregion
 
-  //#region Delete confirmation
-  confirmDeleteDialog(id: string): void {
-    const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-      data: {
-        message: 'Are you sure you want to delete this Document?',
-        title: 'Policy Document',
-      },
-    });
+  // //#region Delete confirmation
+  // confirmDeleteDialog(id: string): void {
+  //   const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+  //     data: {
+  //       message: 'Are you sure you want to delete this Document?',
+  //       title: 'Policy Document',
+  //     },
+  //   });
 
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      if (dialogResult)
-        this._policyDocument.deletePolicyDocument(id);
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((dialogResult) => {
+  //     if (dialogResult)
+  //       this._policyDocument.deletePolicyDocument(id);
+  //   });
+  // }
 
-  //#endregion
+  // //#endregion
 
-  //#region Download Document
-  downloadDocument(url) {
-    window.open(url, "_blank");
+  // //#region Download Document
+  // downloadDocument(url) {
+  //   window.open(url, "_blank");
+  // }
+  // //#endregion
+
+  //#region  Tab Change
+  tabChanged(event) {
+    switch (event.tab.textLabel) {
+      case 'Onboarding':
+        this._policyDocument.getPolicyDocuments('onboarding');
+        break;
+      default:
+    }
   }
   //#endregion
 }

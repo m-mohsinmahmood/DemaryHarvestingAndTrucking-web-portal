@@ -12,8 +12,9 @@
         <mat-form-field appearance="outline">
             <mat-label>Select Document </mat-label>
             <mat-select formControlName="name">
-                <mat-option value="Contract">Contract</mat-option>
-                <mat-option value="Approval Letter">Approval Letter</mat-option>
+                <mat-option *ngFor="let policyDocument of data.policyDocuments" [value]="policyDocument.value">
+                    {{policyDocument.value}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" (click)="fileUpload.click()" class="w-full">
