@@ -75,6 +75,7 @@ import { ImportCropsComponent } from './navigation/farm-data/crops/import-crops/
 import { ImportDestinationsComponent } from './navigation/farm-data/destinations/import-destinations/import-destinations.component';
 import { AddHarvestingItemComponent } from './navigation/invoice/add-harvesting-item/add-harvesting-item.component';
 import { AddFarmingItemComponent } from './navigation/invoice/add-farming-item/add-farming-item.component';
+import { AddRentalItemComponent } from './navigation/invoice/add-rental-item/add-rental-item.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -120,7 +121,8 @@ import { AddFarmingItemComponent } from './navigation/invoice/add-farming-item/a
         ImportCropsComponent,
         ImportDestinationsComponent,
         AddHarvestingItemComponent,
-        AddFarmingItemComponent
+        AddFarmingItemComponent,
+        AddRentalItemComponent
     ],
     imports: [
     RouterModule.forChild(customersRoutes),
