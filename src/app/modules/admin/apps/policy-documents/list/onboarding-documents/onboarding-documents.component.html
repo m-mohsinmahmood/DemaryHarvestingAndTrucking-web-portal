@@ -8,11 +8,11 @@
             [color]="'primary'" (click)="uploadDocument()">
             <mat-icon [svgIcon]="'heroicons_outline:upload'"></mat-icon>
             <span class="ml-2 mr-1">Upload Document</span>
-        </button>
+        </button>   
     </div>
 </div>
-<!-- Documents list -->
-<div>
+<div class="h-screen">
+    <!-- Documents list -->
     <ng-container *ngIf="onboardingDocuments">
         <div class="p-6 md:p-8 space-y-8">
             <!-- Files -->
@@ -63,4 +63,5 @@
             </div>
         </div>
     </ng-template>
+
 </div>

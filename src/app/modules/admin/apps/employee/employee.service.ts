@@ -384,6 +384,7 @@ export class EmployeeService {
                     this.isLoadingEmployeeDwr.next(false);
                 },
                 (err) => {
+                    this.isLoadingEmployeeDwr.next(false);
                     this.handleError(err);
                 }
             );

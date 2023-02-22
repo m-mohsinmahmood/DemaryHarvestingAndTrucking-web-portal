@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { Observable } from 'rxjs';
 import { PolicyDocumentsService } from '../../policy-documents.service';
 import { UploadPolicyDocumentComponent } from '../upload-policy-document/upload-policy-document.component';
 
@@ -12,19 +13,27 @@ import { UploadPolicyDocumentComponent } from '../upload-policy-document/upload-
 })
 export class WorkDocumentsComponent implements OnInit {
   routeID: any;
+  workDocument$: Observable<any>;
   policyDocuments: any[] = [
     { value: 'doc 1 ' },
     { value: 'doc 2' },
   ];
 
   constructor(
-    private _policyDocument: PolicyDocumentsService,
-    private _activatedRoute: ActivatedRoute,
+    private _policyDocumentService: PolicyDocumentsService,
     private _matDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
+    this.initObservable();
   }
+
+  // #region Init Api's
+  initObservable(): void {
+    // Get Documents
+    this.workDocument$ = this._policyDocumentService.policyDocuments$;
+  }
+  //#endregion
 
    //#region Upload Document Popup
   uploadDocument() {
@@ -52,7 +61,7 @@ export class WorkDocumentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult)
-        this._policyDocument.deletePolicyDocument(id,'work');
+        this._policyDocumentService.deletePolicyDocument(id,'work');
     });
   }
 

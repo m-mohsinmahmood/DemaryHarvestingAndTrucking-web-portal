@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { Observable } from 'rxjs';
 import { PolicyDocumentsService } from '../../policy-documents.service';
 import { UploadPolicyDocumentComponent } from '../upload-policy-document/upload-policy-document.component';
 
@@ -12,19 +13,28 @@ import { UploadPolicyDocumentComponent } from '../upload-policy-document/upload-
 })
 export class MiscellaneousDocumentsComponent implements OnInit {
   routeID: any;
+  miscellaneous$: Observable<any>;
   policyDocuments: any[] = [
     { value: 'doc 1 ' },
     { value: 'doc 2' },
   ];
 
   constructor(
-    private _policyDocument: PolicyDocumentsService,
+    private _policyDocumentService: PolicyDocumentsService,
     private _activatedRoute: ActivatedRoute,
     private _matDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
+    this.initObservable();
   }
+
+  // #region Init Api's
+  initObservable(): void {
+    // Get Documents
+    this.miscellaneous$ = this._policyDocumentService.policyDocuments$;
+  }
+  //#endregion
 
   
     //#region Upload Document Popup
@@ -53,7 +63,7 @@ export class MiscellaneousDocumentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult)
-        this._policyDocument.deletePolicyDocument(id,'miscellaneous');
+        this._policyDocumentService.deletePolicyDocument(id,'miscellaneous');
     });
   }
 

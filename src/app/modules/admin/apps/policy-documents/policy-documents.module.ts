@@ -35,6 +35,7 @@ import { OnboardingDocumentsComponent } from './list/onboarding-documents/onboar
 import { CdlDocumentsComponent } from './list/cdl-documents/cdl-documents.component';
 import { WorkDocumentsComponent } from './list/work-documents/work-documents.component';
 import { MiscellaneousDocumentsComponent } from './list/miscellaneous-documents/miscellaneous-documents.component';
+import { EmploymentPeriodDocumentsComponent } from './list/employment-period-documents/employment-period-documents.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { MiscellaneousDocumentsComponent } from './list/miscellaneous-documents/
         OnboardingDocumentsComponent,
         CdlDocumentsComponent,
         WorkDocumentsComponent,
-        MiscellaneousDocumentsComponent
+        MiscellaneousDocumentsComponent,
+        EmploymentPeriodDocumentsComponent
     ],
     imports     : [
         RouterModule.forChild(policyDocumentsRoutes),

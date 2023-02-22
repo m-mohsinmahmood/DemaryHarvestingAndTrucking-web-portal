@@ -17,7 +17,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" *ngIf="isEmploymentPeriod">
+        <mat-form-field appearance="outline" *ngIf="this.data.category == 'employment_period'">
             <mat-label>Select Employment Period</mat-label>
             <mat-select formControlName="employment_period">
                 <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th,

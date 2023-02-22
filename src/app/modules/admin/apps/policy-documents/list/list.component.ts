@@ -88,6 +88,18 @@ export class ListComponent implements OnInit {
       case 'Onboarding':
         this._policyDocument.getPolicyDocuments('onboarding');
         break;
+      case 'CDL':
+        this._policyDocument.getPolicyDocuments('cdl');
+        break;
+      case 'Miscellaneous':
+        this._policyDocument.getPolicyDocuments('miscellaneous');
+        break;
+      case 'Work':
+        this._policyDocument.getPolicyDocuments('work');
+        break;
+      case 'Employment Period':
+        this._policyDocument.getPolicyDocuments('employment_period');
+        break;
       default:
     }
   }
