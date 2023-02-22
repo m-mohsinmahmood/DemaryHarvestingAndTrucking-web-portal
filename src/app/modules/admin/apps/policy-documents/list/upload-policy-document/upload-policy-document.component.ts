@@ -72,9 +72,11 @@ export class UploadPolicyDocumentComponent implements OnInit {
   }
 
   filterDocuments() {
-    this.policyDocument.policy_docs.map((value) => {
-      this.data.policyDocuments = this.data.policyDocuments.filter(policy => policy.value !== value.document_name);
-    })
+    if (this.data.category != 'employment_period') {
+      this.policyDocument.policy_docs.map((value) => {
+        this.data.policyDocuments = this.data.policyDocuments.filter(policy => policy.value !== value.document_name);
+      })
+    }
   }
 
 
@@ -89,7 +91,7 @@ export class UploadPolicyDocumentComponent implements OnInit {
     var formData: FormData = new FormData();
     formData.append('form', JSON.stringify(this.documentForm.value));
     formData.append('doc', this.documentForm.get('document')?.value);
-    this._policyService.addPolicyDocument(formData,this.data.category);
+    this._policyService.addPolicyDocument(formData, this.data.category);
     this.filterDocuments();
   }
 

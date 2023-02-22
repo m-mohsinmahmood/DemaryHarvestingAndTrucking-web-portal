@@ -16,12 +16,9 @@ export class EmploymentPeriodDocumentsComponent implements OnInit {
   employmentPeriodDocument$: Observable<any[]>;
 
   policyDocuments: any[] = [
-    { value: 'Ag Work Agreement First Employment Period' },
-    { value: 'Ag Work Agreement Second Employment Period' },
-    { value: 'Work Itinerary First Employment Period' },
-    { value: 'Work Itinerary Second Employment Period' },
-    { value: 'I-797B First Employment Period' },
-    { value: 'I-797B Second Employment Period' },  
+    { value: 'Ag Work Agreement' },
+    { value: 'Work Itinerary' },
+    { value: 'I-797B' },
   ];
 
 
