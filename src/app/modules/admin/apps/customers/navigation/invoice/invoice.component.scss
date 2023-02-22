@@ -17,14 +17,14 @@
     grid-template-columns: 15% 15% 15%;
 
     @screen sm {
-        grid-template-columns: 15% 15% 15% 15% 8% 8% 8% 8%;
+        grid-template-columns: 15% 15% 15% 15% 8% 8% 8%;
     }
     @screen md {
-        grid-template-columns: 15% 15% 15% 15% 8% 8% 8% 8%;
+        grid-template-columns: 15% 15% 15% 15% 8% 8% 8%;
     }
 
     @screen lg {
-        grid-template-columns: 15% 15% 15% 15% 8% 8% 8% 8%;
+        grid-template-columns: 15% 15% 15% 15% 8% 8% 8%;
     }
 }
 
@@ -86,3 +86,51 @@ mat-form-field {
 //     marging
 
 //   }
+
+.job-result-custom-farming-grid-new {
+    grid-template-columns: 25% 35% 25%;
+
+    @screen sm {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 5% 10%;
+    }
+    @screen md {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 5% 10%;
+    }
+
+    @screen lg {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 5% 10%;
+    }
+}
+
+
+.total-grid-new{
+    grid-template-columns: 25% 35% 25%;
+
+    @screen sm {
+        grid-template-columns: 20% 20% 20% 20%;
+    }
+    @screen md {
+        grid-template-columns: 20% 20% 20% 20%;
+    }
+
+    @screen lg {
+        grid-template-columns: 20% 20% 20% 20%;
+    }
+}
+
+
+.details-summary-style
+{
+    border: 1px solid #DFE4EA;
+    border-radius: 4px;
+}
+.listing-detailed-styles
+{
+    border: 1px solid #DFE4EA;
+    border-radius: 4px;    
+}
+::ng-deep .mat-form-field-wrapper
+{
+    border-radius: 5px;    
+
+}
