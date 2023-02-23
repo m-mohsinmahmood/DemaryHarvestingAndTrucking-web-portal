@@ -50,15 +50,15 @@ export class AddRentalItemComponent implements OnInit {
 //#endregion
 
   onSubmit(): void {
-    this._customersService.isLoadingCustomRentalInvoiceList.next(true);
+    // this._customersService.isLoadingCustomRentalInvoiceList.next(true);
 
-    if (this.data && this.data.isEdit) {
-      this._customersService.updateRentalInvoice(this.form.value);
+    // if (this.data && this.data.isEdit) {
+    //   this._customersService.updateRentalInvoice(this.form.value);
 
-    } else {
-      this._customersService.createRentalInvoice(this.form.value);
-    }
-    console.log(this.form.value);
+    // } else {
+    //   this._customersService.createRentalInvoice(this.form.value);
+    // }
+    // console.log(this.form.value);
   }
 
   

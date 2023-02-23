@@ -117,6 +117,21 @@ mat-form-field {
         grid-template-columns: 20% 20% 20% 20%;
     }
 }
+.invoice-farming-grid
+{
+    grid-template-columns: 25% 35% 25%;
+
+    @screen sm {
+        grid-template-columns: 15% 15% 15% 15% 15%;
+    }
+    @screen md {
+        grid-template-columns: 15% 15% 15% 15% 15%;
+    }
+
+    @screen lg {
+        grid-template-columns: 18% 18% 18% 18% 18%;
+    }
+}
 
 
 .details-summary-style
@@ -133,4 +148,14 @@ mat-form-field {
 {
     border-radius: 5px;    
 
+}
+
+::ng-deep .mat-tab-group .mat-tab-header
+{
+border-bottom: 1px solid #e2e8f0 !important;
+
+}
+::ng-deep .mat-expansion-panel-content
+{
+    background-color: #fff !important;
 }

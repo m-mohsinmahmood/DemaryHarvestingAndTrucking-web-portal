@@ -55,7 +55,9 @@ this._customersService.closeDialog$.subscribe((res) => {
     this.matDialogRef.close({ 
       data: {
       description : this.form.value.description,
-      amount: this.form.value.amount
+      amount: this.form.value.amount,
+      rate:this.form.value.rate,
+      quantity:this.form.value.quantity
       }
     })
   }
@@ -68,23 +70,14 @@ this._customersService.closeDialog$.subscribe((res) => {
       id: [''],
       description      : [''],
       amount :[''],
+      rate:[''],
+      quantity:[''],
       customer_id: this.data.customer_id,
 
 
   
   });
-    if (this.data && this.data.isEdit) {
-      const { invoiceData, customer_id } = this.data;
-      this.form.patchValue({
-        customer_id: customer_id,
-        id: invoiceData.id,
-        description: invoiceData.description,
-        amount: invoiceData.amount,
-      });
-
-
-    }
-  }
+ }
  
  
   discard(): void {

@@ -494,6 +494,12 @@ export class CustomersService {
     readonly isLoadingCustomHarvestingInvoice$: Observable<boolean> =
         this.isLoadingCustomHarvestingInvoice.asObservable();
 
+    isLoadingCreateFarmingInvoice: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingCreateFarmingInvoice$: Observable<boolean> =
+        this.isLoadingCreateFarmingInvoice.asObservable();
+
     //#region Observables Customer Rental Invoicing
     customRentalInvoice: BehaviorSubject<Customers[] | null> =
         new BehaviorSubject(null);
@@ -2462,27 +2468,28 @@ export class CustomersService {
             );
     }
 
-    getJobResultsFarmingInvoice(id: string, operation, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end:''}) {
+    getJobResultsFarmingInvoice(id: string, operation, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end: '' }) {
         let params = new HttpParams();
-        params = params.set('operation', operation);        
-        params = params.set('service_type', filters.service_type);        
-        params = params.set('quantity_type', filters.quantity_type);        
-        params = params.set('from', filters.date_period_start);        
-        params = params.set('to', filters.date_period_end);        
+        params = params.set('operation', operation);
+        params = params.set('service_type', filters.service_type);
+        params = params.set('quantity_type', filters.quantity_type);
+        params = params.set('from', filters.date_period_start);
+        params = params.set('to', filters.date_period_end);
         return this._httpClient
             .get(`api-1/customer-invoices?customer_id=${id}`, { params })
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.isLoadingJobResultsFarmingInvoice.next(true);
-                    this.jobResultsFarmingInvoice.next(res);
-                    this.isLoadingJobResultsFarmingInvoice.next(false);
-                },
-                (err) => {
-                    this.handleError(err);
-                }
-            );
     }
+
+    getJobResultsTruckingInvoice(id: string, operation, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end: '' }) {
+        let params = new HttpParams();
+        params = params.set('operation', operation);
+        params = params.set('service_type', filters.service_type);
+        params = params.set('quantity_type', filters.quantity_type);
+        params = params.set('from', filters.date_period_start);
+        params = params.set('to', filters.date_period_end);
+        return this._httpClient
+            .get(`api-1/customer-invoices?customer_id=${id}`, { params })
+    }
+
 
 
 
@@ -2660,7 +2667,40 @@ export class CustomersService {
 
 
 
-    // createFarmingInvoice(data: any,
+    createFarmingInvoice(invoice: any, customer_id: any, operation: any,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        this._httpClient
+            .patch(`api-1/work-order-farming`, { invoice, operation, customerId: customer_id })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingCreateFarmingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingCreateFarmingInvoice.next(false);
+                },
+                () => {
+                    this.getFarmingInvoiceList(customer_id, sort, order, search);
+                }
+            );
+    }
+
+    // createFarmingInvoiceNew(data: any, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end:''},
     //     sort: string = '',
     //     order: 'asc' | 'desc' | '' = '',
     //     search: string = '',
@@ -2693,71 +2733,38 @@ export class CustomersService {
     //         );
     // }
 
-    createFarmingInvoiceNew(data: any, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end:''},
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = '',
-    ) {
-        this._httpClient
-            .post(`api-1/customer-farming-invoice`, data)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingCustomHarvestingInvoice.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingCustomHarvestingInvoice.next(false);
-                },
-                () => {
-                    this.getFarmingInvoiceList(data.customer_id, sort, order, search);
-                }
-            );
-    }
 
-
-    updateFarmingInvoice(data: any,
-        sort: string = '',
-        order: 'asc' | 'desc' | '' = '',
-        search: string = '') {
-        this._httpClient
-            .put(`api-1/customer-farming-invoice`, data)
-            .pipe(take(1))
-            .subscribe(
-                (res: any) => {
-                    this.closeDialog.next(true);
-                    this.isLoadingCustomHarvestingInvoice.next(false);
-                    //show notification based on message returned from the api
-                    this._alertSerice.showAlert({
-                        type: 'success',
-                        shake: false,
-                        slideRight: true,
-                        title: 'Success',
-                        message: res.message,
-                        time: 5000,
-                    });
-                },
-                (err) => {
-                    this.handleError(err);
-                    this.closeDialog.next(false);
-                    this.isLoadingCustomHarvestingInvoice.next(false);
-                },
-                () => {
-                    this.getFarmingInvoiceList(data.customer_id, sort, order, search);
-                }
-            );
-    }
+    // updateFarmingInvoice(data: any,
+    //     sort: string = '',
+    //     order: 'asc' | 'desc' | '' = '',
+    //     search: string = '') {
+    //     this._httpClient
+    //         .put(`api-1/customer-farming-invoice`, data)
+    //         .pipe(take(1))
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.closeDialog.next(true);
+    //                 this.isLoadingCustomHarvestingInvoice.next(false);
+    //                 //show notification based on message returned from the api
+    //                 this._alertSerice.showAlert({
+    //                     type: 'success',
+    //                     shake: false,
+    //                     slideRight: true,
+    //                     title: 'Success',
+    //                     message: res.message,
+    //                     time: 5000,
+    //                 });
+    //             },
+    //             (err) => {
+    //                 this.handleError(err);
+    //                 this.closeDialog.next(false);
+    //                 this.isLoadingCustomHarvestingInvoice.next(false);
+    //             },
+    //             () => {
+    //                 this.getFarmingInvoiceList(data.customer_id, sort, order, search);
+    //             }
+    //         );
+    // }
 
 
 
