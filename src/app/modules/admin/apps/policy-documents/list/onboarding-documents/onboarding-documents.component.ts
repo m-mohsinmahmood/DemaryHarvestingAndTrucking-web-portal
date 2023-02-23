@@ -25,6 +25,7 @@ export class OnboardingDocumentsComponent implements OnInit {
     { value: 'Equipment Policy' },
     { value: 'Cdl Training Instructions' },
     { value: 'VISA Application Instructions' },
+    { value: 'Transferwise Bank Set-up Instructions'}
   ];
 
 

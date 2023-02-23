@@ -124,7 +124,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         "21": "Social Security Card posted",
         "22": "Social Security Card verified",
         "23": "American and CDL (if applicable) Drivers license posted ",
-        "24": "Onboarding completed",
+        "24": "Drivers license verified",
         "25": "Onboarding completed",
     };
 
