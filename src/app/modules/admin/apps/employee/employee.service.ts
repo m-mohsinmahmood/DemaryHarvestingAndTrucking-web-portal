@@ -393,7 +393,7 @@ export class EmployeeService {
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments(id: string,category: string) {
+    getPolicyDocuments(id: string,category: string = '') {
         return this._httpClient
             .get(`api-1/policy-documents?id=${id}&type=${'personalized'}&category=${category}`)
             .pipe(take(1))

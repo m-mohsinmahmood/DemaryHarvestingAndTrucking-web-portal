@@ -5,6 +5,7 @@ import { MailboxComposeComponent } from './compose/compose.component';
 import { EmployeeService } from '../../employee.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { PolicyDocumentsService } from '../../../policy-documents/policy-documents.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -30,12 +31,16 @@ export class OnboardingComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   employee$: Observable<any>;
   employeeDocs$: Observable<any>;
+  personalizedDocument$: Observable<any[]>;
+  policyDocument$: Observable<any[]>;
+
   //#endregion
 
   constructor(
     private _matDialog: MatDialog,
     private _formBuilder: FormBuilder,
     private _employeeService: EmployeeService,
+    private _policyDocumentService: PolicyDocumentsService,
     public activatedRoute: ActivatedRoute,
   ) { }
 
@@ -94,6 +99,8 @@ export class OnboardingComponent implements OnInit {
   //#region Get Applicant By id 
   initApi() {
     this._employeeService.getEmployeeDocs(this.routeID);
+    this._employeeService.getPolicyDocuments(this.routeID);
+    this._policyDocumentService.getPolicyDocuments();
   }
   //#endregion
 
@@ -101,6 +108,9 @@ export class OnboardingComponent implements OnInit {
   async initObservables() {
     this.employeeDocs$ = this._employeeService.employeeDocuments$
     this.employee$ = this._employeeService.employee$;
+    this.personalizedDocument$ = this._employeeService.policyDocuments$;
+    this.policyDocument$ = this._policyDocumentService.policyDocuments$;
+
     await this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
       this.employee = res;
       this.employee?.employee_info?.country == 'United States of America' ? this.h2a = 'false' : this.h2a = 'true';
