@@ -60,7 +60,7 @@ export class PolicyDocumentsService {
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments(category: string) {
+    getPolicyDocuments(category: string = '') {
         return this._httpClient
             .get(`api-1/policy-documents?type=${'global'}&category=${category} `)
             .pipe(take(1))
