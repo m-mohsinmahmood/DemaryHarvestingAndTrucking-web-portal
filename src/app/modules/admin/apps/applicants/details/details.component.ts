@@ -127,6 +127,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             status_step: [''],
             prev_status_step: [''],
             prev_status_message: [''],
+            previous_status_message: [''],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]],
@@ -341,4 +342,15 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
     expandAll() {
         this.panelOpenState = true;
     } 
+
+    //#region Resume Onboarding
+    resumeOnboarding(){
+        debugger;
+        this._applicantService.patchApplicant({
+            id: this.applicant.applicant_info.id,
+            prev_status_message: "Resume Onboarding",
+            status_message: this.applicant.applicant_info.previous_status_message,
+        }, false, false,this.applicant.applicant_info);
+
+    }
 }
