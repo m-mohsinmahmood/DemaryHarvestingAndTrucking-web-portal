@@ -50,53 +50,32 @@ export class AddTruckingItemComponent implements OnInit {
 //#endregion
 
   onSubmit(): void {
-    this._customersService.isLoadingCustomFarmingInvoiceList.next(true);
-
-    if (this.data && this.data.isEdit) {
-      this._customersService.updateTruckingInvoice(this.form.value);
-
-    } else {
-      this._customersService.createTruckingInvoice(this.form.value);
-    }
-    console.log(this.form.value);
-  }
+    this.matDialogRef.close({ 
+      data: {
+      rate_type : this.form.value.rate_type,
+      amount: this.form.value.amount,
+      rate:this.form.value.rate,
+      quantity:this.form.value.quantity
+      }
+    })
+}
 
   
 //#region Form
 initForm() {
   // Create the form
   this.form = this._formBuilder.group({
-    id:[''],
-    date: [''],
-      billing_id: [''],
-      cargo: [''],
-      city: [''],
-      state: [''],
-      rate_type: [''],
-      rate: [''],
-      amount: [''],
+    id: [''],
+    rate_type      : [''],
+    amount :[''],
+    rate:[''],
+    quantity:[''],
     customer_id: this.data.customer_id,
 
 
 
 });
-  if (this.data && this.data.isEdit) {
-    const { invoiceData, customer_id } = this.data;
-    this.form.patchValue({
-      customer_id: customer_id,
-      id: invoiceData.id,
-      date: invoiceData.date,
-      billing_id: invoiceData.billing_id,
-      cargo: invoiceData.cargo,
-      city: invoiceData.city,
-      state: invoiceData.state,
-      rate_type: invoiceData.rate_type,
-      rate: invoiceData.rate,
-      amount: invoiceData.amount
-    });
 
-
-  }
 }
 
 
