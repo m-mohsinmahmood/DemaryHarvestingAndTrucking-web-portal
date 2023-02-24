@@ -424,6 +424,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[7].email,
             prev_status_step: '7',
             prev_status_message: "Offer Made",
+            previous_status_message: this.data.applicant.status_message,
             status_step: '9',
             status_message: "Offer Made"
           },
@@ -440,6 +441,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[5].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
+            previous_status_message: this.data.applicant.status_message,
             status_step: '10.2',
             status_message: "Waitlisted"
           },
@@ -458,6 +460,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[8].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
+            previous_status_message: this.data.applicant.status_message,
             status_step: '10.3',
             status_message: "Qualifications dont match current openings"
           },

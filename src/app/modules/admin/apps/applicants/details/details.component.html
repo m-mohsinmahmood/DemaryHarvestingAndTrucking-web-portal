@@ -152,6 +152,10 @@
                                         class="my-1 text-red-600 text-md font-semibold">
                                         {{applicantInfo?.applicant_info?.reason_for_rejection}}
                                     </mat-hint>
+                                    <button *ngIf="applicantInfo?.applicant_info?.status_message == 'Waitlisted' && i == 9 "
+                                     class="" mat-flat-button [color]="'primary'" (click)="resumeOnboarding()">
+                                        <span class="p-2">Resume Onboarding</span>
+                                    </button>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}
