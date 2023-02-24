@@ -4,8 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AddTruckingItemComponent } from './add-trucking-item/add-trucking-item.component';
-import html2canvas from 'html2canvas';
-import jspdf from 'jspdf';
 import { CustomersService } from '../../customers.service';
 import { AddHarvestingItemComponent } from './add-harvesting-item/add-harvesting-item.component';
 import { AddFarmingItemComponent } from './add-farming-item/add-farming-item.component';
@@ -13,7 +11,9 @@ import { firstValueFrom, lastValueFrom, Observable, skipWhile } from 'rxjs';
 import { Customers } from '../../customers.types';
 import { AddRentalItemComponent } from './add-rental-item/add-rental-item.component';
 import moment from 'moment';
-
+import { jsPDF } from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-invoice',
@@ -399,15 +399,28 @@ export class InvoiceComponent implements OnInit {
 
  
 
-  exportAsPDF(MyDIv) {
-    let data = document.getElementById('MyDIv');
-    html2canvas(data).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/png')  // 'image/jpeg' for lower quality output.
-      // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in landscape mode
-      let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
-      pdf.save('Filename.pdf');
+  async exportAsPDF(MyDiv) {
+    var pdf = new jsPDF('p', 'cm');
+    var pageWidth = pdf.internal.pageSize.width;
+    var pageHeight = pdf.internal.pageSize.height;
+    //#region Adding Filters and Chart to the PDF
+    let dataUrl1 = await htmlToImage.toPng(document.getElementById(MyDiv), { quality: 1, height: document.getElementById(MyDiv).offsetWidth, width: document.getElementById(MyDiv).offsetWidth });
+    pdf.addImage(dataUrl1, 'PNG', 0, 0, pageWidth, pageHeight);
+    //#endregion
+    //#region Adding Tables to PDF
+    pdf.addPage();
+    let head = [['Date', 'Service', 'Farm', 'Field', 'Acres', 'Hours', 'Status']];
+    let data = this.filteredFarmingJobs.map((item) => {
+      return Object.values(item);
+    })
+    pdf.text('Invoiced Customer Job Results', 1.38, 1, null, { fontSize: 16, bold: true });
+    autoTable(pdf, {
+      head: head,
+      body: data,
+      didDrawCell: (data) => { },
     });
+    //#endregion
+    pdf.save('Farming-Invoice.pdf')
   }
 
   totalAmount(){

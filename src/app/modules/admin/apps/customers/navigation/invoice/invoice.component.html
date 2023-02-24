@@ -436,10 +436,6 @@
                 </mat-tab>
 
                 <mat-tab label="Create Invoice">
-
-
-
-
                     <mat-accordion>
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="toggling-info-job-result my-4 bg-gray-100  py-1">
@@ -540,7 +536,7 @@
                             </div>
 
 
-                            <div id="MyDIv">
+                            <div id="MyDIv" class="p-4">
                                 <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
                                     *ngIf="customer$ | async as customer">
                                     <div class="flex flex-col gap-y-4">
@@ -563,25 +559,17 @@
                                             <mat-label>1234</mat-label>
                                         </div>
                                         <div class="flex flex-row">
-
-                                            <mat-label class="font-bold text-black">Date: </mat-label>
+                                            <mat-label class="text-lg font-extrabold text-black w-1/2">Date</mat-label>
                                             <mat-label>12/12/2022</mat-label>
                                         </div>
-
-
-                                        <mat-label>Notes: <span class="font-bold">
-                                                </span></mat-label>
-
-
-
-
+                                        <mat-label>Notes: 
+                                            <span class="font-bold">
+                                                AKssajsadhkashdkahskdjahskd khdasdjlakdj djpasojdaspjdas
+                                                dasdjaslj
+                                            </span>
+                                        </mat-label>
                                         <mat-label>Terms</mat-label>
-
-
                                         <mat-label>Date</mat-label>
-
-
-
                                         <mat-label>Deliver In: Next 15 Days</mat-label>
                                     </div>
 
@@ -730,63 +718,59 @@
                                                 </div>
 
                                                 <div class="hidden sm:block">
-                                                    Tractor Engine Hours
+                                                    Hours
                                                 </div>
                                                 <div class="sm:block text-center">
                                                     Status
-                                                </div>
-                                                <div class="lg:block">
-                                                    Invoice
                                                 </div>
                                             </div>
                                             <!-- Rows -->
                                             <ng-container *ngIf="filteredFarmingJobs.length > 0;else noInvoices">
                                                 <div *ngFor="let farmingJob of filteredFarmingJobs"
                                                     class="job-result-custom-farming-grid-new grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                                    
+                                                    <!-- Date -->
                                                     <div class="truncate">
-                                                        {{farmingJob.date | date: "dd-MM-YYYY"}}
+                                                        {{farmingJob.date}}
                                                     </div>
 
-                                                    <!-- Harvest Year -->
+                                                    <!-- Service -->
                                                     <div class="hidden sm:block">
                                                         {{farmingJob.service}}
                                                     </div>
 
-                                                    <!-- Email -->
+                                                    <!-- Farm -->
                                                     <div class="hidden sm:block items-center">
                                                         <div class="min-w-4 ml-2">
                                                             {{farmingJob.farm}}
-
                                                         </div>
                                                     </div>
 
-                                                    <!-- Contact -->
+                                                    <!-- Field -->
                                                     <div class="hidden sm:block items-center">
                                                         <div class="min-w-4 ml-2">
                                                             {{farmingJob.field}}
                                                         </div>
                                                     </div>
-                                                    <!-- Active -->
+
+                                                    <!-- Acres -->
                                                     <div class="hidden lg:block">
                                                         <div class="min-w-4 ml-2">
                                                             {{farmingJob.acres}}
                                                         </div>
                                                     </div>
 
-
+                                                    <!-- Hours -->
                                                     <div class="hidden lg:block">
-                                                        <div class="min-w-4 ml-2">{{farmingJob.ending_engine_hours /
-                                                            farmingJob.beginning_engine_hours}}</div>
+                                                        <div class="min-w-4 ml-2">{{farmingJob.hours}}</div>
                                                     </div>
+
+                                                    <!-- Status -->
                                                     <div class="lg:block">
                                                         <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
                                                             style="background: #4ADE80;">
                                                             {{farmingJob.work_order_status}}
 
-                                                        </div>
-                                                    </div>
-                                                    <div class="lg:block">
-                                                        <div class="min-w-4 ml-2">"Invoice"
                                                         </div>
                                                     </div>
                                                 </div>
@@ -905,8 +889,6 @@
                                     Create Invoice
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
-
-
 
                             <div class="flex flex-col justify-center items-center">
                                 <div class="flex flex-row gap-x-3 pt-2 w-full">
@@ -1150,8 +1132,6 @@
                                     Filtered Job Results
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
-
-                            
 
                             <div class="flex flex-col flex-auto sm:mb-6 overflow-hidden sm:overflow-y-auto pt-8">
                                 <ng-container>
