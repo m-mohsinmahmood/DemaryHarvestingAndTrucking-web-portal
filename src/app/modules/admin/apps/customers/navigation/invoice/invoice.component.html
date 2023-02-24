@@ -377,36 +377,36 @@
                                 <!-- Header -->
                                 <div class="invoice-farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
-                                    <div class="sm:block">Description</div>
-                                    <div class="hidden md:block">Quantity</div>
-                                    <div class="hidden md:block">Rate</div>
-                                    <div class="md:block">Amount</div>
-                                    <div class="md:block">Paid Status</div>
+                                    <div class="sm:block">Title</div>
+                                    <div class="hidden md:block">Date</div>
+                                    <div class="hidden md:block">Invoice ID</div>
+                                    <div class="md:block">Total Amount</div>
+                                    <div class="md:block">Action</div>
                                 </div>
                                 <!-- Rows -->
-                                <ng-container>
-                                    <ng-container *ngFor="let number of [0,1,2,3,4]">
-                                        <div
+                                <ng-container *ngIf="customFarmingInvoiceList$ | async as farmingInvoices">
+                                    <ng-container *ngIf="farmingInvoices.invoices?.length > 0; else noJobs ">
+                                        <div *ngFor="let farmingInvoice of farmingInvoices.invoices"
                                             class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
 
                                             <!-- Name -->
                                             <div class="truncate">
-                                                ABC
+                                                {{farmingInvoice.invoice_name}}
                                             </div>
 
                                             <!-- Make -->
                                             <div class="hidden sm:block">
-                                                10,220
+                                                {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
                                             </div>
 
                                             <!-- Model -->
                                             <div class="hidden md:block">
-                                                1,066
+                                                {{farmingInvoice.id}}
                                             </div>
 
                                             <!-- Odometer -->
                                             <div class="md:block">
-                                                30,000
+                                                {{farmingInvoice.total_amount}}
                                             </div>
                                             <!-- Odometer -->
                                             <div class="md:block">
@@ -428,6 +428,10 @@
                         </div>
 
                     </ng-container>
+                    <ng-template #noJobs>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no Invoices!</div>
+                    </ng-template>
 
                 </mat-tab>
 
@@ -446,18 +450,14 @@
                             </mat-expansion-panel-header>
 
 
-                            <div>
-                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight">
-                                    Create Invoice
-                                </header>
-                            </div>
+                          
 
                             <div class="flex flex-col justify-center items-center">
                                 <div class="flex flex-row gap-x-3 pt-2 w-full">
                                     <div class="w-inherit flex flex-col filters-job-result sm:w-3/4">
                                         <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFarmingFilters()"
-                                            class="flex flex-row flex-auto gap-x-8 justify-evenly">
-                                            <mat-form-field class="sm:w-1/4" appearance="outline">
+                                            class="flex flex-row flex-auto gap-x-8 justify-between">
+                                            <mat-form-field class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Service Type</mat-label>
                                                 <mat-select formControlName="service_type">
                                                     <mat-option value="Ripper">Ripper</mat-option>
@@ -479,7 +479,7 @@
                                                 </mat-select>
                                             </mat-form-field>
 
-                                            <mat-form-field class="sm:w-1/4" appearance="outline">
+                                            <mat-form-field class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Quantity Type</mat-label>
                                                 <!-- (ngModelChange)="quantityType()" -->
                                                 <mat-select formControlName="quantity_type">
@@ -490,7 +490,7 @@
                                             </mat-form-field>
 
 
-                                            <mat-form-field birthdayFormat class="sm:w-1/4" appearance="outline">
+                                            <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Payroll Period</mat-label>
                                                 <mat-date-range-input [rangePicker]="picker">
                                                     <input matStartDate formControlName="date_period_start"
@@ -504,7 +504,7 @@
 
                                         </form>
                                     </div>
-                                    <div class="flex flex-row items-start gap-x-3 pt-2  sm:w-1/4">
+                                    <div class="flex flex-row items-start gap-x-3 pt-2 justify-end sm:w-1/4">
                                         <div class="w-inherit flex items-center mt-1 mb-1">
                                             <button *ngIf="!farmingFilterBoolean" (click)="applyFarmingFilters()"
                                                 [disabled]="(!jobsFiltersForm.controls['service_type'].value && !jobsFiltersForm.controls['quantity_type'].value && !jobsFiltersForm.controls['date_period_start'].value && !jobsFiltersForm.controls['date_period_end'].value)"
@@ -526,13 +526,14 @@
 
                             </div>
 
-                            <div class="flex justify-end py-4">
-                                <button class="mr-16" mat-flat-button [color]="'primary' "(click)="exportAsPDF('MyDIv');">
+                            <div class="flex justify-end py-4 gap-x-2">
+                                <button class="" mat-flat-button [color]="'primary' "
+                                    (click)="exportAsPDF('MyDIv');">
                                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                                     <span class="ml-2 mr-1">Export as PDF</span>
                                 </button>
 
-                                <button class="mr-16" mat-flat-button [color]="'primary'" (click)="createInvoice()">
+                                <button class="" mat-flat-button [color]="'primary'" (click)="createInvoice()">
                                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                                     <span class="ml-2 mr-1">Create Invoice</span>
                                 </button>
@@ -543,8 +544,13 @@
                                 <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
                                     *ngIf="customer$ | async as customer">
                                     <div class="flex flex-col gap-y-4">
-                                        <mat-label class="text-2xl font-extrabold text-black w-1/2">Title</mat-label>
-                                        <mat-label class="text-base font-extrabold text-black w-1/2">Details</mat-label>
+                                        <mat-label class="font-bold text-black">Title</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Title</mat-label>
+                                            <input matInput formControlName="farmingTitle">
+                                        </mat-form-field>
+
+                                        <mat-label class="font-bold text-black">Details</mat-label>
                                         <mat-label>Bill To: <span class="font-bold">
                                                 {{customer.customer_name}} </span></mat-label>
                                         <mat-label>Address: <span class="font-bold">
@@ -553,19 +559,18 @@
                                     <div class="flex flex-col gap-y-2">
                                         <div class="flex flex-row">
                                             <mat-label
-                                                class="text-lg font-extrabold text-black w-1/2">Invoice</mat-label>
+                                                class="font-bold text-black">Invoice #</mat-label>
                                             <mat-label>1234</mat-label>
                                         </div>
                                         <div class="flex flex-row">
 
-                                            <mat-label class="text-lg font-extrabold text-black w-1/2">Date</mat-label>
+                                            <mat-label class="font-bold text-black">Date: </mat-label>
                                             <mat-label>12/12/2022</mat-label>
                                         </div>
 
 
                                         <mat-label>Notes: <span class="font-bold">
-                                                AKssajsadhkashdkahskdjahskd khdasdjlakdj djpasojdaspjdas
-                                                dasdjaslj</span></mat-label>
+                                                </span></mat-label>
 
 
 
@@ -699,12 +704,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
 
-                            <!-- Products list -->
-                            <div>
-                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
-                                    Filtered Job Results
-                                </header>
-                            </div>
+                            
 
                             <div class="flex flex-col flex-auto sm:mb-6 overflow-hidden sm:overflow-y-auto pt-8">
                                 <ng-container>
@@ -834,36 +834,36 @@
                                 <!-- Header -->
                                 <div class="invoice-farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
-                                    <div class="sm:block">Description</div>
-                                    <div class="hidden md:block">Quantity</div>
-                                    <div class="hidden md:block">Rate</div>
-                                    <div class="md:block">Amount</div>
-                                    <div class="md:block">Paid Status</div>
+                                    <div class="sm:block">Title</div>
+                                    <div class="hidden md:block">Date</div>
+                                    <div class="hidden md:block">Invoice ID</div>
+                                    <div class="md:block">Total Amount</div>
+                                    <div class="md:block">Action</div>
                                 </div>
                                 <!-- Rows -->
-                                <ng-container>
-                                    <ng-container *ngFor="let number of [0,1,2,3,4]">
-                                        <div
+                                <ng-container *ngIf="customFarmingInvoiceList$ | async as farmingInvoices">
+                                    <ng-container *ngIf="farmingInvoices.invoices?.length > 0; else noJobs ">
+                                        <div *ngFor="let farmingInvoice of farmingInvoices.invoices"
                                             class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
 
                                             <!-- Name -->
                                             <div class="truncate">
-                                                ABC
+                                                {{farmingInvoice.invoice_name}}
                                             </div>
 
                                             <!-- Make -->
                                             <div class="hidden sm:block">
-                                                10,220
+                                                {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
                                             </div>
 
                                             <!-- Model -->
                                             <div class="hidden md:block">
-                                                1,066
+                                                {{farmingInvoice.id}}
                                             </div>
 
                                             <!-- Odometer -->
                                             <div class="md:block">
-                                                30,000
+                                                {{farmingInvoice.total_amount}}
                                             </div>
                                             <!-- Odometer -->
                                             <div class="md:block">
@@ -885,6 +885,10 @@
                         </div>
 
                     </ng-container>
+                    <ng-template #noJobs>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no Invoices!</div>
+                    </ng-template>
 
                 </mat-tab>
 
@@ -903,18 +907,13 @@
                             </mat-expansion-panel-header>
 
 
-                            <div>
-                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight">
-                                    Create Invoice
-                                </header>
-                            </div>
 
                             <div class="flex flex-col justify-center items-center">
                                 <div class="flex flex-row gap-x-3 pt-2 w-full">
                                     <div class="w-inherit flex flex-col filters-job-result sm:w-3/4">
                                         <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFarmingFilters()"
-                                            class="flex flex-row flex-auto gap-x-8 justify-evenly">
-                                            <mat-form-field class="sm:w-1/4" appearance="outline">
+                                            class="flex flex-row flex-auto gap-x-8 justify-between">
+                                            <mat-form-field class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Service Type</mat-label>
                                                 <mat-select formControlName="service_type">
                                                     <mat-option value="Ripper">Ripper</mat-option>
@@ -936,7 +935,7 @@
                                                 </mat-select>
                                             </mat-form-field>
 
-                                            <mat-form-field class="sm:w-1/4" appearance="outline">
+                                            <mat-form-field class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Quantity Type</mat-label>
                                                 <!-- (ngModelChange)="quantityType()" -->
                                                 <mat-select formControlName="quantity_type">
@@ -947,7 +946,7 @@
                                             </mat-form-field>
 
 
-                                            <mat-form-field birthdayFormat class="sm:w-1/4" appearance="outline">
+                                            <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Payroll Period</mat-label>
                                                 <mat-date-range-input [rangePicker]="picker">
                                                     <input matStartDate formControlName="date_period_start"
@@ -961,7 +960,7 @@
 
                                         </form>
                                     </div>
-                                    <div class="flex flex-row items-start gap-x-3 pt-2  sm:w-1/4">
+                                    <div class="flex flex-row items-start gap-x-3 pt-2 sm:w-1/4 justify-end">
                                         <div class="w-inherit flex items-center mt-1 mb-1">
                                             <button *ngIf="!farmingFilterBoolean" (click)="applyFarmingFilters()"
                                                 [disabled]="(!jobsFiltersForm.controls['service_type'].value && !jobsFiltersForm.controls['quantity_type'].value && !jobsFiltersForm.controls['date_period_start'].value && !jobsFiltersForm.controls['date_period_end'].value)"
@@ -985,7 +984,7 @@
 
                             <div class="flex justify-end py-4">
 
-                                <button class="mr-16" mat-flat-button [color]="'primary'" (click)="createInvoice()">
+                                <button class="" mat-flat-button [color]="'primary'" (click)="createTruckingInvoice()">
                                     <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                                     <span class="ml-2 mr-1">Create Invoice</span>
                                 </button>
@@ -996,8 +995,13 @@
                             <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
                                 *ngIf="customer$ | async as customer">
                                 <div class="flex flex-col gap-y-4">
-                                    <mat-label class="text-2xl font-extrabold text-black w-1/2">Title</mat-label>
-                                    <mat-label class="text-base font-extrabold text-black w-1/2">Details</mat-label>
+                                    <mat-label class="font-bold text-black w-1/2">Title</mat-label>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Title</mat-label>
+                                        <input matInput formControlName="truckingTitle">
+                                    </mat-form-field>
+
+                                    <mat-label class="font-bold text-black">Details</mat-label>
                                     <mat-label>Bill To: <span class="font-bold">
                                             {{customer.customer_name}} </span></mat-label>
                                     <mat-label>Address: <span class="font-bold">
@@ -1005,19 +1009,18 @@
                                 </div>
                                 <div class="flex flex-col gap-y-2">
                                     <div class="flex flex-row">
-                                        <mat-label class="text-lg font-extrabold text-black w-1/2">Invoice</mat-label>
+                                        <mat-label class="font-bold text-black">Invoice #</mat-label>
                                         <mat-label>1234</mat-label>
                                     </div>
                                     <div class="flex flex-row">
 
-                                        <mat-label class="text-lg font-extrabold text-black w-1/2">Date</mat-label>
+                                        <mat-label class="font-bold text-black">Date: </mat-label>
                                         <mat-label>12/12/2022</mat-label>
                                     </div>
 
 
                                     <mat-label>Notes: <span class="font-bold">
-                                            AKssajsadhkashdkahskdjahskd khdasdjlakdj djpasojdaspjdas
-                                            dasdjaslj</span></mat-label>
+                                           </span></mat-label>
 
 
 
@@ -1148,12 +1151,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
 
-                            <!-- Products list -->
-                            <div>
-                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
-                                    Filtered Job Results
-                                </header>
-                            </div>
+                            
 
                             <div class="flex flex-col flex-auto sm:mb-6 overflow-hidden sm:overflow-y-auto pt-8">
                                 <ng-container>
@@ -1163,67 +1161,79 @@
                                             <div class="invoice-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                                 matSort matSortDisableClear>
                                                 <div class="sm:block">
-                                                    Date
+                                                    Load Date
+                                                </div>
+                                                <div class="hidden sm:block pl-2">
+                                                    Dispatcher
+                                                </div>
+                                                <div class="hidden sm:block pl-2">
+                                                    Driver
                                                 </div>
                                                 <div class="sm:block">
-                                                    Billing ID
-                                                </div>
-                                                <div class="sm:block">
-                                                    Cargo
+                                                    Ticket Number
                                                 </div>
                                                 <div class="hidden sm:block">
-                                                    City / State
-                                                </div>
-                                                <div class="hidden sm:block">
-                                                    Rate Type
-                                                </div>
+                                                    Cargo</div>
 
                                                 <div class="hidden sm:block">
-                                                    Rate
+                                                    City
                                                 </div>
-                                                <div class="hidden sm:block">
-                                                    Amount
+                                                <div class="hidden sm:block pl-2">
+                                                    State
+                                                </div>
+                                                <div class="sm:block pl-2">
+                                                    Status
                                                 </div>
 
                                             </div>
                                             <!-- Rows -->
-                                            <ng-container *ngIf="filteredFarmingJobs.length > 0;else noInvoices">
-                                                <div *ngFor="let farmingJob of filteredFarmingJobs"
+                                            <ng-container *ngIf="filteredTruckingJobs.length > 0;else noInvoices">
+                                                <div *ngFor="let truckingJob of filteredTruckingJobs"
                                                     class="invoice-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                                     <div class="truncate">
+                                                        {{truckingJob.load_date | date: "dd-MM-YYYY"}}
                                                     </div>
 
                                                     <!-- Harvest Year -->
                                                     <div class="hidden sm:block">
+                                                        {{truckingJob.dispatcher}}
                                                     </div>
 
                                                     <!-- Email -->
                                                     <div class="hidden sm:block items-center">
                                                         <div class="min-w-4 ml-2">
+                                                            {{truckingJob.driver}}
 
                                                         </div>
                                                     </div>
 
                                                     <!-- Contact -->
-                                                    <div class="hidden sm:block items-center">
+                                                    <div class="sm:block items-center">
                                                         <div class="min-w-4 ml-2">
+                                                            {{truckingJob.ticket_number}}
+
                                                         </div>
                                                     </div>
                                                     <!-- Active -->
                                                     <div class="hidden lg:block">
                                                         <div class="min-w-4 ml-2">
+                                                            {{truckingJob.cargo}}
                                                         </div>
                                                     </div>
 
-
                                                     <div class="hidden lg:block">
                                                         <div class="min-w-4 ml-2">
+                                                            {{truckingJob.destination_city}}
 
                                                         </div>
+                                                    </div>
+                                                    <div class="hidden lg:block">
+                                                        <div class="min-w-4 ml-2">{{truckingJob.destination_state }}</div>
                                                     </div>
                                                     <div class="lg:block">
                                                         <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
                                                             style="background: #4ADE80;">
+                                                            {{truckingJob.ticket_status }}
 
                                                         </div>
                                                     </div>
@@ -1294,7 +1304,7 @@
                             </mat-form-field>
                         </div>
                         <div class="grid">
-                            <mat-label class="text-lg font-extrabold text-black w-1/2">Invoice</mat-label>
+                            <mat-label class="text-lg font-extrabold text-black w-1/2">Invoice #</mat-label>
                             <mat-label *ngIf="!isEditMode">1234</mat-label>
                             <mat-form-field *ngIf="isEditMode" appearance="outline">
                                 <mat-label>Invoice#:</mat-label>
