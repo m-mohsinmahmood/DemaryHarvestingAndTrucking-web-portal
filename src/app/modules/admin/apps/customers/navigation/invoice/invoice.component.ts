@@ -4,8 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AddTruckingItemComponent } from './add-trucking-item/add-trucking-item.component';
-import html2canvas from 'html2canvas';
-import jspdf from 'jspdf';
 import { CustomersService } from '../../customers.service';
 import { AddHarvestingItemComponent } from './add-harvesting-item/add-harvesting-item.component';
 import { AddFarmingItemComponent } from './add-farming-item/add-farming-item.component';
@@ -13,7 +11,9 @@ import { firstValueFrom, lastValueFrom, Observable, skipWhile } from 'rxjs';
 import { Customers } from '../../customers.types';
 import { AddRentalItemComponent } from './add-rental-item/add-rental-item.component';
 import moment from 'moment';
-
+import { jsPDF } from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-invoice',
@@ -41,13 +41,16 @@ export class InvoiceComponent implements OnInit {
   truckingAmount: any;
 
   customHarvestingList$: any;
-  customFarmingList$: any;
-  customTruckingList$: any;
+  customFarmingInvoiceList$: any;
+  customTruckingInvoiceList$: any;
   customRentalList$: any;
   jobResultsFarmingInvoice$: any;
   isLoadingJobResultsFarmingInvoice: any;
   filteredFarmingArray: any[] = [];
   filteredFarmingJobs: any[] = [];
+  farmingTitleForm: FormGroup;
+  truckingTitleForm: FormGroup;
+
 
   filteredTruckingArray: any[] = [];
   filteredTruckingJobs: any[] = [];
@@ -94,7 +97,8 @@ export class InvoiceComponent implements OnInit {
 
   //#region Init Observables
   initObservables() {
-    // this.customFarmingList$ = this._customerService.customFarmingInvoiceList;
+    this.customFarmingInvoiceList$ = this._customerService.customFarmingInvoiceList$;
+    this.customTruckingInvoiceList$ = this._customerService.customTruckingInvoiceList$;
     // this.customTruckingList$ = this._customerService.customTruckingInvoiceList;
     // this.customHarvestingList$ = this._customerService.customHarvestingInvoiceList;
     // this.customRentalList$ = this._customerService.customRentalnvoiceList;
@@ -119,19 +123,22 @@ export class InvoiceComponent implements OnInit {
       console.log(this.customHarvestingList$);
     }
     else if (index == 1) {
+      this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
       let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
       this.filteredFarmingArray = result.totalAmount;
       this.filteredFarmingJobs = result.jobResults;
-      console.log(this.filteredFarmingArray, "here")
+      console.log(this.filteredFarmingArray, "here",this.customFarmingInvoiceList$);
 
     }
 
     else if (index == 2) {
+      this._customerService.getFarmingInvoiceList(this.routeID, 'getTruckingInvoices');
+
       let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
       this.filteredTruckingArray = result2.totalAmount;
       this.filteredTruckingJobs = result2.jobResults;
 
-      console.log(result2, "here22")
+      console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
 
     } 
     
@@ -250,6 +257,14 @@ export class InvoiceComponent implements OnInit {
       created_at: [''],
     });
 
+    this.farmingTitleForm = this._formBuilder.group({
+      farmingTitle: ['']
+    });
+
+    this.truckingTitleForm = this._formBuilder.group({
+      truckingTitle: ['']
+    });
+
 
   }
   //#region Create Invoice
@@ -257,12 +272,26 @@ export class InvoiceComponent implements OnInit {
     let invoiceObj = {
       invoice: this.filteredFarmingArray,
       total_amount: this.totalAmount(),
-      filters: this.jobsFiltersForm.value
+      filters: this.jobsFiltersForm.value,
+      title: this.farmingTitleForm.value,
     }
     this._customerService.createFarmingInvoice(invoiceObj, this.routeID, 'updateInvoicedWorkOrder');
 
     console.log("Invoice Object", invoiceObj);
   }
+
+  createTruckingInvoice() {
+    let invoiceObj = {
+      invoice: this.filteredTruckingArray,
+      total_amount: this.totalTruckingAmount(),
+      filters: this.truckingFiltersForm.value,
+      title: this.truckingTitleForm.value,
+    }
+    this._customerService.createTruckingInvoice(invoiceObj, this.routeID, 'updateInvoicedDeliveryTicket');
+
+    console.log("Invoice Object", invoiceObj);
+  }
+
 
   //#endregion
 
@@ -370,15 +399,28 @@ export class InvoiceComponent implements OnInit {
 
  
 
-  exportAsPDF(MyDIv) {
-    let data = document.getElementById('MyDIv');
-    html2canvas(data).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/png')  // 'image/jpeg' for lower quality output.
-      // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in landscape mode
-      let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
-      pdf.save('Filename.pdf');
+  async exportAsPDF(MyDiv) {
+    var pdf = new jsPDF('p', 'cm');
+    var pageWidth = pdf.internal.pageSize.width;
+    var pageHeight = pdf.internal.pageSize.height;
+    //#region Adding Filters and Chart to the PDF
+    let dataUrl1 = await htmlToImage.toPng(document.getElementById(MyDiv), { quality: 1, height: document.getElementById(MyDiv).offsetWidth, width: document.getElementById(MyDiv).offsetWidth });
+    pdf.addImage(dataUrl1, 'PNG', 0, 0, pageWidth, pageHeight);
+    //#endregion
+    //#region Adding Tables to PDF
+    pdf.addPage();
+    let head = [['Date', 'Service', 'Farm', 'Field', 'Acres', 'Hours', 'Status']];
+    let data = this.filteredFarmingJobs.map((item) => {
+      return Object.values(item);
+    })
+    pdf.text('Invoiced Customer Job Results', 1.38, 1, null, { fontSize: 16, bold: true });
+    autoTable(pdf, {
+      head: head,
+      body: data,
+      didDrawCell: (data) => { },
     });
+    //#endregion
+    pdf.save('Farming-Invoice.pdf')
   }
 
   totalAmount(){
