@@ -1,0 +1,67 @@
+<div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-t">
+    <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
+        <span class="ml-1 capitalize">Employment Period Documents</span>
+    </div>
+    <div class="flex justify-end gap-4 px-4 sm:px-6 flex-shrink-0 items-center  sm:mt-0 sm:ml-4">
+        <button class="" mat-flat-button
+            class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            [color]="'primary'" (click)="uploadDocument()">
+            <mat-icon [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+            <span class="ml-2 mr-1">Upload Document</span>
+        </button>
+    </div>
+</div>
+<!-- Documents list -->
+<div>
+    <ng-container *ngIf="employmentPeriodDocument$ | async as employmentPeriodDocument">
+        <div class="p-6 md:p-8 space-y-8">
+            <!-- Files -->
+            <ng-container *ngIf="employmentPeriodDocument?.policy_docs.length > 0; else noDocuments">
+                <div>
+                    <div class="flex flex-wrap -m-2 mt-2">
+                        <ng-container *ngFor="let doc of employmentPeriodDocument.policy_docs; trackBy:trackByFn">
+                            <a class="flex flex-col w-60 h-60 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                                <div class="aspect-w-9 aspect-h-6">
+                                    <div class="flex items-center justify-center">
+                                        <!-- Icons -->
+                                        <div class="relative">
+                                            <mat-icon class="icon-size-14 text-hint"
+                                                [svgIcon]="'iconsmind:file'"></mat-icon>
+                                            <div
+                                                class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                                DOC
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col flex-auto justify-center text-center text-lg font-medium">
+                                    <div class="truncate" [matTooltip]="doc.employment_period"  >
+                                        {{doc.document_name}} {{doc.employment_period}}
+                                    </div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between gap-3">
+                                    <mat-icon (click)="downloadDocument(doc.document_url)" class="icon-size-7"
+                                        [svgIcon]="'heroicons_outline:download'">
+                                    </mat-icon>
+                                    <mat-icon (click)="confirmDeleteDialog(doc.id)" class="icon-size-7"
+                                        [svgIcon]="'heroicons_outline:trash'">
+                                    </mat-icon>
+                                </div>
+                            </a>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+   
+    <!-- No documents template -->
+    <ng-template #noDocuments>
+        <div class="flex flex-auto flex-col items-center justify-center">
+            <mat-icon class="icon-size-24" [svgIcon]="'iconsmind:file_hide'"></mat-icon>
+            <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">There are no
+                documents!
+            </div>
+        </div>
+    </ng-template>
+</div>

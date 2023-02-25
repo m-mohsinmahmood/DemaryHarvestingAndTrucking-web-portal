@@ -60,9 +60,9 @@ export class PolicyDocumentsService {
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments() {
+    getPolicyDocuments(category: string = '') {
         return this._httpClient
-            .get(`api-1/policy-documents?type=${'global'}`)
+            .get(`api-1/policy-documents?type=${'global'}&category=${category} `)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -78,7 +78,7 @@ export class PolicyDocumentsService {
     //#endregion
 
     //#region Patch Policy Documents
-    addPolicyDocument(data: any) {
+    addPolicyDocument(data: any, category: string) {
         this._httpClient
             .post(`api-1/policy-documents`, data)
             .pipe(take(1))
@@ -90,7 +90,7 @@ export class PolicyDocumentsService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Policy Documents',
+                        title: 'Company Documents',
                         message: res.message,
                         time: 5000,
                     });
@@ -101,14 +101,14 @@ export class PolicyDocumentsService {
                     this.isLoadingPolicyDocuments.next(false);
                 },
                 () => {
-                     this.getPolicyDocuments();
+                     this.getPolicyDocuments(category);
                 }
             );
     }
     //#endregion
 
     //#region Delete Policy Documents
-    deletePolicyDocument(id: string) {
+    deletePolicyDocument(id: string, category: string) {
         this._httpClient
             .delete(`api-1/policy-documents?id=${id}`)
             .pipe(take(1))
@@ -120,7 +120,7 @@ export class PolicyDocumentsService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getPolicyDocuments();
+                    this.getPolicyDocuments(category);
                     this.isLoadingPolicyDocuments.next(false);
                 }
             );

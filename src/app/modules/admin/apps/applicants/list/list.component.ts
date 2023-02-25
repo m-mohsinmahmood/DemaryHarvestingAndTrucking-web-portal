@@ -68,9 +68,9 @@ export class ApplicantsListComponent
     ];
     page: number;
     limit: number;
-    pageSize = 50;
+    pageSize = 200;
     currentPage = 0;
-    pageSizeOptions: number[] = [50, 100, 150, 200];
+    pageSizeOptions: number[] = [50, 100, 150, 200,250,300,350,400,450,500];
     isEdit: boolean;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),

@@ -145,7 +145,7 @@ export class ApplicantService {
     //#endregion
 
     //#region Applicant API's 
-    getApplicants(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '', date: '' },
+    getApplicants(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '', date: '' },
     ) {
         let params = new HttpParams();
         params = params.set('page', page);

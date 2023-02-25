@@ -384,6 +384,7 @@ export class EmployeeService {
                     this.isLoadingEmployeeDwr.next(false);
                 },
                 (err) => {
+                    this.isLoadingEmployeeDwr.next(false);
                     this.handleError(err);
                 }
             );
@@ -392,9 +393,9 @@ export class EmployeeService {
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments(id: string) {
+    getPolicyDocuments(id: string,category: string = '') {
         return this._httpClient
-            .get(`api-1/policy-documents?id=${id}&type=${'personalized'}`)
+            .get(`api-1/policy-documents?id=${id}&type=${'personalized'}&category=${category}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -410,7 +411,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Patch Policy Documents
-    addPolicyDocument(data: any, employee_id:string) {
+    addPolicyDocument(data: any, employee_id:string,category:string) {
         this._httpClient
             .post(`api-1/policy-documents`, data)
             .pipe(take(1))
@@ -422,7 +423,7 @@ export class EmployeeService {
                         type: 'success',
                         shake: false,
                         slideRight: true,
-                        title: 'Policy Documents',
+                        title: 'Company Documents',
                         message: res.message,
                         time: 5000,
                     });
@@ -433,7 +434,7 @@ export class EmployeeService {
                     this.isLoadingPolicyDocuments.next(false);
                 },
                 () => {
-                    this.getPolicyDocuments(employee_id);
+                    this.getPolicyDocuments(employee_id,category);
                 }
             );
     }
@@ -441,7 +442,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Delete Policy Documents
-    deletePolicyDocument(id: string, employee_id: string) {
+    deletePolicyDocument(id: string, employee_id: string,category:string) {
         this._httpClient
             .delete(`api-1/policy-documents?id=${id}`)
             .pipe(take(1))
@@ -453,7 +454,7 @@ export class EmployeeService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getPolicyDocuments(employee_id);
+                    this.getPolicyDocuments(employee_id,category);
                     this.isLoadingPolicyDocuments.next(false);
                 }
             );

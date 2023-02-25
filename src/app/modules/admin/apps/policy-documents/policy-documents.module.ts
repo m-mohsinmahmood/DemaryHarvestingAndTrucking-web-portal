@@ -31,12 +31,22 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ListComponent } from './list/list.component';
 import { PolicyDocumentsComponent } from './policy-documents.component';
 import { UploadPolicyDocumentComponent } from './list/upload-policy-document/upload-policy-document.component';
+import { OnboardingDocumentsComponent } from './list/onboarding-documents/onboarding-documents.component';
+import { CdlDocumentsComponent } from './list/cdl-documents/cdl-documents.component';
+import { WorkDocumentsComponent } from './list/work-documents/work-documents.component';
+import { MiscellaneousDocumentsComponent } from './list/miscellaneous-documents/miscellaneous-documents.component';
+import { EmploymentPeriodDocumentsComponent } from './list/employment-period-documents/employment-period-documents.component';
 
 @NgModule({
     declarations: [
         PolicyDocumentsComponent,
         ListComponent,
         UploadPolicyDocumentComponent,
+        OnboardingDocumentsComponent,
+        CdlDocumentsComponent,
+        WorkDocumentsComponent,
+        MiscellaneousDocumentsComponent,
+        EmploymentPeriodDocumentsComponent
     ],
     imports     : [
         RouterModule.forChild(policyDocumentsRoutes),

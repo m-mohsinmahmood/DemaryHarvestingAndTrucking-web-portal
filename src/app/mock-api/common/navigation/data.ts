@@ -123,7 +123,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
   },
   {
     id: "policy-documents",
-    title: "Policy Documents",
+    title: "Company Documents",
     type: "basic",
     icon: "heroicons_outline:document",
     link: "/apps/policy-documents",

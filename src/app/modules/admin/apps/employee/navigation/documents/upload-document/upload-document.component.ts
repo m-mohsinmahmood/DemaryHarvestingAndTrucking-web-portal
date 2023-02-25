@@ -1,5 +1,5 @@
 import { Subject, takeUntil, Observable } from 'rxjs';
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EmployeeService } from '../../../employee.service';
@@ -17,6 +17,7 @@ export class UploadDocumentComponent implements OnInit {
   isLoadingPolicyDocument$: Observable<boolean>;
   closeDialog$: Observable<boolean>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  policyDocument: any;
 
 
   constructor(
@@ -30,7 +31,10 @@ export class UploadDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.initApi();
     this.initObservables();
+    this.filterDocuments();
+
   }
 
   ngOnDestroy(): void {
@@ -38,19 +42,27 @@ export class UploadDocumentComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
- 
+
 
   initForm() {
     this.documentForm = this._formBuilder.group({
-      employee_id: [this.data],
+      employee_id: [this.data.employeeId],
       name: ['', Validators.required],
       document: ['', Validators.required],
       type: ['personalized'],
+      category: [this.data.category]
     });
+  }
+
+  initApi() {
+    this._employeeService.getPolicyDocuments(this.data.employeeId, this.data.category);
   }
 
   initObservables() {
     this.isLoadingPolicyDocument$ = this._employeeService.isLoadingPolicyDocuments$;
+    this._employeeService.policyDocuments$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+      this.policyDocument = res
+    });
     this.closeDialog$ = this._employeeService.closeDialog$;
     this._employeeService.closeDialog$
       .pipe(takeUntil(this._unsubscribeAll))
@@ -62,6 +74,13 @@ export class UploadDocumentComponent implements OnInit {
       })
 
   }
+
+  filterDocuments() {
+    this.policyDocument.policy_docs.map((value) => {
+      this.data.policyDocuments = this.data.policyDocuments.filter(policy => policy.value !== value.document_name);
+    })
+  }
+
 
 
   //#region Form Methods
@@ -75,7 +94,7 @@ export class UploadDocumentComponent implements OnInit {
     var formData: FormData = new FormData();
     formData.append('form', JSON.stringify(this.documentForm.value));
     formData.append('doc', this.documentForm.get('document')?.value);
-    this._employeeService.addPolicyDocument(formData,this.data);
+    this._employeeService.addPolicyDocument(formData, this.data.employeeId, this.data.category);
   }
 
   //#endregion
