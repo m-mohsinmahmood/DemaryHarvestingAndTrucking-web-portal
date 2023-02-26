@@ -1,0 +1,28 @@
+<!-- Header -->
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+    <!-- Title -->
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">
+           Confirmation
+        </div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </header>
+    <div class="flex justify-center items-center h-30">
+        <mat-icon
+        class="ml-8 text-indigo-600 w-20 h-20"></mat-icon>
+        <p class="w-11/12 flex justify-start items-center px-2 text-xl font-medium">Are you sure you want to mark it as Paid?</p>
+    </div>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+            <!-- Discard -->
+            <button  [mat-dialog-close]="false" cdkFocusInitial class="bg-amber-600" mat-flat-button [color]="'primary'" >
+                Discard
+            </button>
+            <button  [mat-dialog-close]="true" cdkFocusInitial class="text-white" mat-flat-button [ngClass]="'bg-green-600'">
+                Yes
+            </button>
+        </div>
+    </div>
+</div>

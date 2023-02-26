@@ -530,6 +530,21 @@ export class CustomersService {
         this.isLoadingJobResultsFarmingInvoice.asObservable();
 
 
+    //#region Observables Customer Rental Invoicing
+    payFarmingInvoiceOb: BehaviorSubject<Customers[] | null> =
+        new BehaviorSubject(null);
+    readonly payFarmingInvoiceOb$: Observable<Customers[] | null> =
+        this.payFarmingInvoiceOb.asObservable();
+    //#endregion
+
+    // Loaders
+    isLoadingPayFarmingInvoice: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingPayFarmingInvoice$: Observable<boolean> =
+        this.isLoadingPayFarmingInvoice.asObservable();
+
+
 
     //#region Observables Dropdowns
     // Data
@@ -2383,7 +2398,7 @@ export class CustomersService {
 
     //#endregion
 
-    //#region Customer Invoicing 
+    //#region Customer Invoicing
 
     // getFarmingInvoices(id: string, data) {
     //     let params = new HttpParams();
@@ -2447,14 +2462,14 @@ export class CustomersService {
 
 
 
-    //#region Customer Invoicing 
+    //#region Customer Invoicing
 
-    getFarmingInvoiceList(id: string,operation:any,
+    getFarmingInvoiceList(id: string, operation: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '') {
         return this._httpClient
-            .get(`api-1/customer-invoices?customer_id=${id}&operation=${operation}`, )
+            .get(`api-1/customer-invoices?customer_id=${id}&operation=${operation}`,)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -2512,12 +2527,12 @@ export class CustomersService {
             );
     }
 
-    getTruckingInvoiceList(id: string,operation:any,
+    getTruckingInvoiceList(id: string, operation: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
         search: string = '') {
         return this._httpClient
-            .get(`api-1/customer-invoices?customer_id=${id}&operation=${operation}`, )
+            .get(`api-1/customer-invoices?customer_id=${id}&operation=${operation}`,)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -2558,7 +2573,7 @@ export class CustomersService {
 
 
 
-    //#region Customer Custom Invoicing 
+    //#region Customer Custom Invoicing
 
     //  getFarmingInvoices(id: string, data) {
     //     let params = new HttpParams();
@@ -2704,39 +2719,99 @@ export class CustomersService {
 
 
 
+
     createTruckingInvoice(invoice: any, customer_id: any, operation: any,
-            sort: string = '',
-            order: 'asc' | 'desc' | '' = '',
-            search: string = '',
-        ) {
-            this._httpClient
-                .patch(`api-1/delivery_ticket_trucking`, { invoice, operation, customerId: customer_id })
-                .pipe(take(1))
-                .subscribe(
-                    (res: any) => {
-                        this.closeDialog.next(true);
-                        this.isLoadingTruckingInvoices.next(false);
-                        //show notification based on message returned from the api
-                        this._alertSerice.showAlert({
-                            type: 'success',
-                            shake: false,
-                            slideRight: true,
-                            title: 'Success',
-                            message: res.message,
-                            time: 5000,
-                        });
-                    },
-                    (err) => {
-                        this.handleError(err);
-                        this.closeDialog.next(false);
-                        this.isLoadingTruckingInvoices.next(false);
-                    },
-                    () => {
-                        this.getTruckingInvoiceList(customer_id, operation, sort, order, search);
-                    }
-                );
-        }
-    
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        this._httpClient
+            .patch(`api-1/delivery_ticket_trucking`, { invoice, operation, customerId: customer_id })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingTruckingInvoices.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingTruckingInvoices.next(false);
+                },
+                () => {
+                    this.getJobResultsTruckingInvoice(customer_id, operation);
+                }
+            );
+    }
+
+    payFarmingInvoice(invoice_id: any, operation: any, customer_id: any) {
+        this._httpClient
+            .patch(`api-1/work-order-farming`, { invoice_id, operation, customerId: customer_id })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingPayFarmingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingPayFarmingInvoice.next(false);
+                },
+                ()=> {
+                    this.getFarmingInvoiceList(customer_id, 'getFarmingInvoices');
+                }
+            );
+    }
+
+    payTruckingInvoice(invoice_id: any, operation: any, customer_id: any) {
+        this._httpClient
+            .patch(`api-1/delivery_ticket_trucking`, { invoice_id, operation, customerId: customer_id })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingPayFarmingInvoice.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingPayFarmingInvoice.next(false);
+                },
+                ()=> {
+                    this.getTruckingInvoiceList(customer_id, 'getTruckingInvoices');
+                }
+            );
+    }
+
+
     // updateTruckingInvoice(data: any,
     //     sort: string = '',
     //     order: 'asc' | 'desc' | '' = '',
