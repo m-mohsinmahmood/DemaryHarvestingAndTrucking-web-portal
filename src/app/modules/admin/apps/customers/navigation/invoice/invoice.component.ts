@@ -128,6 +128,7 @@ export class InvoiceComponent implements OnInit {
         }
         else if (index == 1) {
             this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
+
             let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
             this.filteredFarmingArray = result.totalAmount;
             this.filteredFarmingJobs = result.jobResults;
@@ -171,34 +172,6 @@ export class InvoiceComponent implements OnInit {
 
 
 
-
-    // openTruckingDialog(): void {
-    //   const dialogRef = this._matDialog.open(AddTruckingItemComponent, {
-    //     data: {
-    //       description: this.truckingFiltersForm.value.description,
-    //       amount: this.truckingFiltersForm.value.amount,
-    //       quantity: this.truckingFiltersForm.value.quantity,
-    //       rate: this.truckingFiltersForm.value.rate,
-    //     }
-    //   })
-
-    //   dialogRef.afterClosed().subscribe(res => {
-    //     // received data from dialog-component
-
-    //     this.filteredTruckingArray.push({
-    //       total_amount: res.data.amount,
-    //       description: res.data.description,
-    //       rate: res.data.rate,
-    //       quantity: res.data.quantity,
-    //     })
-    //     this.filteredTruckingArray = [...this.filteredTruckingArray];
-    //     this.cdr.detectChanges(); // Force change detection
-
-
-    //   })
-    // }
-
-
     openAddHarvestingDialog(): void {
         // Open the dialog
         const dialogRef = this._matDialog.open(AddHarvestingItemComponent, {
@@ -234,7 +207,6 @@ export class InvoiceComponent implements OnInit {
                 rate: res.data.rate,
                 quantity: res.data.quantity,
             })
-            console.log(this.totalFarmingAcres, this.filteredFarmingArray, "Hello");
             this.filteredFarmingArray = [...this.filteredFarmingArray];
             this.cdr.detectChanges(); // Force change detection
 
@@ -242,6 +214,36 @@ export class InvoiceComponent implements OnInit {
         })
 
     }
+
+
+    openAddTruckingDialog(): void {
+        const dialogRef = this._matDialog.open(AddTruckingItemComponent, {
+            data: {
+                rate_type: this.truckingFiltersForm.value.rate_type,
+                amount: this.truckingFiltersForm.value.amount,
+                quantity: this.truckingFiltersForm.value.quantity,
+                rate: this.truckingFiltersForm.value.rate,
+            }
+        })
+
+        dialogRef.afterClosed().subscribe(res => {
+            console.log(res.data, "resulttttt");
+
+            this.filteredTruckingArray.push({
+                total_amount: res.data.amount,
+                rate_type: res.data.rate_type,
+                rate: res.data.rate,
+                quantity: res.data.quantity,
+            })
+            this.filteredTruckingArray = [...this.filteredTruckingArray];
+            this.cdr.detectChanges(); // Force change detection
+
+
+        })
+
+    }
+
+
 
 
     initFiltersForm() {
@@ -370,33 +372,6 @@ export class InvoiceComponent implements OnInit {
 
 
 
-
-    openAddTruckingDialog(): void {
-        const dialogRef = this._matDialog.open(AddTruckingItemComponent, {
-            data: {
-                rate_type: this.truckingFiltersForm.value.rate_type,
-                amount: this.truckingFiltersForm.value.amount,
-                quantity: this.truckingFiltersForm.value.quantity,
-                rate: this.truckingFiltersForm.value.rate,
-            }
-        })
-
-        dialogRef.afterClosed().subscribe(res => {
-            console.log(res.data, "resulttttt");
-
-            this.filteredTruckingArray.push({
-                total_amount: res.data.amount,
-                rate_type: res.data.rate_type,
-                rate: res.data.rate,
-                quantity: res.data.quantity,
-            })
-            this.filteredTruckingArray = [...this.filteredTruckingArray];
-            this.cdr.detectChanges(); // Force change detection
-
-
-        })
-
-    }
 
 
 
