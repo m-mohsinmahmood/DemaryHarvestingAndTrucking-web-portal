@@ -300,7 +300,9 @@ export class InvoiceComponent implements OnInit {
             details: [''],
             notes: [''],
             terms: [''],
-            deliver_in: ['']
+            deliver_in: [''],
+            address:[''],
+            bill_to:['']
         });
 
         this.truckingTitleForm = this._formBuilder.group({
@@ -310,7 +312,9 @@ export class InvoiceComponent implements OnInit {
             details: [''],
             notes: [''],
             terms: [''],
-            deliver_in: ['']
+            deliver_in: [''],
+            address:[''],
+            bill_to:['']
         });
 
 
