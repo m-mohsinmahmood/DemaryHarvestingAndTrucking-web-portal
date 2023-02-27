@@ -363,7 +363,7 @@
 
         <!--Farming -->
         <mat-tab label="Farming">
-            <mat-tab-group mat-align-tabs="start" class="">
+            <mat-tab-group mat-align-tabs="start" class=""  (selectedIndexChange)="getFarmingTabApis($event)">
                 <mat-tab label="Invoices">
                     <ng-container>
                         <div>
@@ -442,7 +442,7 @@
 
                 <mat-tab label="Create Invoice">
                     <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="toggling-info-job-result my-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
@@ -541,10 +541,10 @@
                             </div>
 
 
-                            <div id="MyDIv" class="p-4">
+                            <div id="MyDIv" class="">
                                 <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
                                     *ngIf="customer$ | async as customer">
-                                    <div class="flex flex-col gap-y-4">
+                                    <div class="flex flex-col gap-y-4 sm:w-3/12">
                                         <form [formGroup]="farmingTitleForm">
 
                                             <mat-label class="sm:w-1/2">Title</mat-label>
@@ -560,7 +560,7 @@
                                         <mat-label>Address: <span class="font-bold">
                                                 {{customer.address}}</span></mat-label>
                                     </div>
-                                    <div class="flex flex-col gap-y-2">
+                                    <div class="flex flex-col gap-y-4 justify-end sm:w-3/12">
                                         <div class="flex flex-row">
                                             <mat-label class="">Invoice #</mat-label>
                                             <mat-label>{{this.farmingTitleForm.controls['invoice_no'].value}}</mat-label>
@@ -701,7 +701,7 @@
                     </mat-accordion>
 
                     <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="toggling-info-job-result mb-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
@@ -748,7 +748,7 @@
 
                                                     <!-- Date -->
                                                     <div class="truncate">
-                                                        {{farmingJob.date}}
+                                                        {{farmingJob.date | date: "dd-MM-YYYY"}}
                                                     </div>
 
                                                     <!-- Service -->
@@ -821,7 +821,7 @@
 
         <!--Trucking-->
         <mat-tab label="Trucking">
-            <mat-tab-group mat-align-tabs="start" class="">
+            <mat-tab-group mat-align-tabs="start" class="" (selectedIndexChange)="getTruckingTabApis($event)">
                 <mat-tab label="Invoices">
                     <ng-container>
                         <div>
@@ -904,7 +904,7 @@
 
 
                     <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="toggling-info-job-result my-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
@@ -915,7 +915,7 @@
                             <div class="flex flex-col justify-center items-center">
                                 <div class="flex flex-row gap-x-3 pt-2 w-full">
                                     <div class="w-inherit flex flex-col filters-job-result sm:w-3/4">
-                                        <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFarmingFilters()"
+                                        <form [formGroup]="truckingFiltersForm" (ngSubmit)="applyFarmingFilters()"
                                             class="flex flex-row flex-auto gap-x-8 justify-between">
                                             <mat-form-field class="sm:w-1/3" appearance="outline">
                                                 <mat-label>Service Type</mat-label>
@@ -998,7 +998,7 @@
 
                             <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
                                 *ngIf="customer$ | async as customer">
-                                <div class="flex flex-col gap-y-4">
+                                <div class="flex flex-col gap-y-4 sm:w-3/12">
                                     <form [formGroup]="truckingTitleForm">
 
                                         <mat-label class="sm:w-1/2">Title</mat-label>
@@ -1014,7 +1014,7 @@
                                     <mat-label>Address: <span class="font-bold">
                                             {{customer.address}}</span></mat-label>
                                 </div>
-                                <div class="flex flex-col gap-y-2">
+                                <div class="flex flex-col gap-y-2 justify-end sm:w-3/12">
                                     <div class="flex flex-row">
                                         <mat-label class="">Invoice #</mat-label>
                                         <mat-label> {{this.truckingTitleForm.controls['invoice_no'].value}}</mat-label>
@@ -1154,7 +1154,7 @@
                     </mat-accordion>
 
                     <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="toggling-info-job-result mb-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">

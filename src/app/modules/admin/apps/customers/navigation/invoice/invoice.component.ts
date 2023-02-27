@@ -58,7 +58,6 @@ export class InvoiceComponent implements OnInit {
     filteredTruckingJobs: any[] = [];
 
     farmingFilterBoolean: boolean = false;
-    panelOpenState = true;
 
 
 
@@ -73,6 +72,9 @@ export class InvoiceComponent implements OnInit {
     total: any;
     totalFarmingAcres: any;
     farmingObject = {};
+
+    panelOpenState = true;
+
 
 
     constructor(
@@ -127,23 +129,24 @@ export class InvoiceComponent implements OnInit {
             console.log(this.customHarvestingList$);
         }
         else if (index == 1) {
+
             this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
 
-            let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
-            this.filteredFarmingArray = result.totalAmount;
-            this.filteredFarmingJobs = result.jobResults;
-            console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
+            // let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
+            // this.filteredFarmingArray = result.totalAmount;
+            // this.filteredFarmingJobs = result.jobResults;
+            // console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
 
         }
 
         else if (index == 2) {
             this._customerService.getTruckingInvoiceList(this.routeID, 'getTruckingInvoices');
 
-            let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
-            this.filteredTruckingArray = result2.totalAmount;
-            this.filteredTruckingJobs = result2.jobResults;
+            // let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
+            // this.filteredTruckingArray = result2.totalAmount;
+            // this.filteredTruckingJobs = result2.jobResults;
 
-            console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
+            // console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
 
         }
 
@@ -160,6 +163,33 @@ export class InvoiceComponent implements OnInit {
 
         }
     }
+    async getFarmingTabApis(index: number){
+        if (index == 0) {
+            this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
+        } else if (index == 1)
+        {
+            let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
+            this.filteredFarmingArray = result.totalAmount;
+            this.filteredFarmingJobs = result.jobResults;
+        }
+        console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
+
+    }
+
+    async getTruckingTabApis(index: number){
+        if (index == 0) {
+            this._customerService.getTruckingInvoiceList(this.routeID, 'getTruckingInvoices');
+        } else if (index == 1)
+        {
+            let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
+            this.filteredTruckingArray = result2.totalAmount;
+            this.filteredTruckingJobs = result2.jobResults;
+
+        }
+        console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
+
+    }
+
 
 
     //#region route params function
@@ -197,10 +227,7 @@ export class InvoiceComponent implements OnInit {
         })
 
         dialogRef.afterClosed().subscribe(res => {
-            // received data from dialog-component
-            console.log(res.data.description, res.data.amount, "resulttttt");
-            this.totalFarmingAcres = parseFloat(this.totalFarmingAcres) + parseFloat(res.data.amount);
-
+            if(res){
             this.filteredFarmingArray.push({
                 total_amount: res.data.amount,
                 description: res.data.description,
@@ -209,6 +236,7 @@ export class InvoiceComponent implements OnInit {
             })
             this.filteredFarmingArray = [...this.filteredFarmingArray];
             this.cdr.detectChanges(); // Force change detection
+        }
 
 
         })
@@ -227,9 +255,9 @@ export class InvoiceComponent implements OnInit {
         })
 
         dialogRef.afterClosed().subscribe(res => {
-            console.log(res.data, "resulttttt");
-
-            this.filteredTruckingArray.push({
+            
+            if(res)
+            {this.filteredTruckingArray.push({
                 total_amount: res.data.amount,
                 rate_type: res.data.rate_type,
                 rate: res.data.rate,
@@ -237,6 +265,7 @@ export class InvoiceComponent implements OnInit {
             })
             this.filteredTruckingArray = [...this.filteredTruckingArray];
             this.cdr.detectChanges(); // Force change detection
+        }
 
 
         })
@@ -257,7 +286,7 @@ export class InvoiceComponent implements OnInit {
 
         this.truckingFiltersForm = this._formBuilder.group({
             service_type: [''],
-            quantity_type: ['acres'],
+            quantity_type: [''],
             date_period_start: [''],
             date_period_end: [''],
             created_at: [''],
@@ -294,6 +323,7 @@ export class InvoiceComponent implements OnInit {
             title: this.farmingTitleForm.value,
         }
         this._customerService.createFarmingInvoice(invoiceObj, this.routeID, 'updateInvoicedWorkOrder');
+        this.cdr.detectChanges();
         console.log("Invoice Object", invoiceObj);
     }
 
@@ -305,6 +335,7 @@ export class InvoiceComponent implements OnInit {
             title: this.truckingTitleForm.value,
         }
         this._customerService.createTruckingInvoice(invoiceObj, this.routeID, 'updateInvoicedDeliveryTicket');
+        this.cdr.detectChanges();
 
         console.log("Invoice Object", invoiceObj);
     }
