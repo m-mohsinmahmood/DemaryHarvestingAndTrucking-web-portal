@@ -72,7 +72,7 @@ export class InvoiceComponent implements OnInit {
     total: any;
     totalFarmingAcres: any;
     farmingObject = {};
-
+    selectedIndexInner: any;
     panelOpenState = true;
 
 
@@ -105,6 +105,8 @@ export class InvoiceComponent implements OnInit {
     initObservables() {
         this.customFarmingInvoiceList$ = this._customerService.customFarmingInvoiceList$;
         this.customTruckingInvoiceList$ = this._customerService.customTruckingInvoiceList$;
+        this.isLoadingCustomer$ = this._customerService.isLoadingCustomer$;
+
         // this.customTruckingList$ = this._customerService.customTruckingInvoiceList;
         // this.customHarvestingList$ = this._customerService.customHarvestingInvoiceList;
         // this.customRentalList$ = this._customerService.customRentalnvoiceList;
@@ -132,21 +134,20 @@ export class InvoiceComponent implements OnInit {
 
             this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
 
-            // let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
-            // this.filteredFarmingArray = result.totalAmount;
-            // this.filteredFarmingJobs = result.jobResults;
-            // console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
+            let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
+            this.filteredFarmingArray = result.totalAmount;
+            this.filteredFarmingJobs = result.jobResults;
+            console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
 
         }
 
         else if (index == 2) {
             this._customerService.getTruckingInvoiceList(this.routeID, 'getTruckingInvoices');
+            let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
+            this.filteredTruckingArray = result2.totalAmount;
+            this.filteredTruckingJobs = result2.jobResults;
 
-            // let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
-            // this.filteredTruckingArray = result2.totalAmount;
-            // this.filteredTruckingJobs = result2.jobResults;
-
-            // console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
+            console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
 
         }
 
@@ -168,9 +169,9 @@ export class InvoiceComponent implements OnInit {
             this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
         } else if (index == 1)
         {
-            let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
-            this.filteredFarmingArray = result.totalAmount;
-            this.filteredFarmingJobs = result.jobResults;
+            // let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
+            // this.filteredFarmingArray = result.totalAmount;
+            // this.filteredFarmingJobs = result.jobResults;
         }
         console.log(this.filteredFarmingArray, "here", this.customFarmingInvoiceList$);
 
@@ -181,9 +182,9 @@ export class InvoiceComponent implements OnInit {
             this._customerService.getTruckingInvoiceList(this.routeID, 'getTruckingInvoices');
         } else if (index == 1)
         {
-            let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
-            this.filteredTruckingArray = result2.totalAmount;
-            this.filteredTruckingJobs = result2.jobResults;
+            // let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
+            // this.filteredTruckingArray = result2.totalAmount;
+            // this.filteredTruckingJobs = result2.jobResults;
 
         }
         console.log(this.filteredTruckingJobs, "here22", this.customTruckingInvoiceList$)
@@ -316,6 +317,8 @@ export class InvoiceComponent implements OnInit {
     }
     //#region Create Invoice
     createInvoice() {
+        if(this.filteredFarmingArray.length > 0)
+        {
         let invoiceObj = {
             invoice: this.filteredFarmingArray,
             total_amount: this.totalAmount(),
@@ -323,11 +326,15 @@ export class InvoiceComponent implements OnInit {
             title: this.farmingTitleForm.value,
         }
         this._customerService.createFarmingInvoice(invoiceObj, this.routeID, 'updateInvoicedWorkOrder');
-        this.cdr.detectChanges();
+        this.selectedIndexInner = 0;
+        // this.cdr.detectChanges();
         console.log("Invoice Object", invoiceObj);
+    }
     }
 
     createTruckingInvoice() {
+        if(this.filteredTruckingArray.length > 0)
+        {
         let invoiceObj = {
             invoice: this.filteredTruckingArray,
             total_amount: this.totalTruckingAmount(),
@@ -335,9 +342,12 @@ export class InvoiceComponent implements OnInit {
             title: this.truckingTitleForm.value,
         }
         this._customerService.createTruckingInvoice(invoiceObj, this.routeID, 'updateInvoicedDeliveryTicket');
+        this.selectedIndexInner = 0;
+
         this.cdr.detectChanges();
 
         console.log("Invoice Object", invoiceObj);
+    }
     }
 
 
@@ -361,14 +371,15 @@ export class InvoiceComponent implements OnInit {
     async removeFarmingFilters() {
         this.jobsFiltersForm.reset();
         this.jobsFiltersForm.value.service_type = '';
-        this.jobsFiltersForm.value.created_at = '';
-        this.jobsFiltersForm.value.quantity_type = '';
+        this.jobsFiltersForm.value.quantity_type = 'acres';
         this.jobsFiltersForm.value.date_period_start = '';
         this.jobsFiltersForm.value.date_period_end = '';
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
         this.filteredFarmingArray = result.totalAmount;
         this.filteredFarmingJobs = result.jobResults;
-        this.farmingFilterBoolean = false;
+        this.farmingFilterBoolean = false ;
+        this.cdr.detectChanges();
+
 
     }
 
@@ -390,7 +401,6 @@ export class InvoiceComponent implements OnInit {
     async removeTruckingFilters() {
         this.truckingFiltersForm.reset();
         this.truckingFiltersForm.value.service_type = '';
-        this.truckingFiltersForm.value.created_at = '';
         this.truckingFiltersForm.value.quantity_type = '';
         this.truckingFiltersForm.value.date_period_start = '';
         this.truckingFiltersForm.value.date_period_end = '';
@@ -398,6 +408,7 @@ export class InvoiceComponent implements OnInit {
         this.filteredTruckingArray = result2.totalAmount;
         this.filteredTruckingJobs = result2.jobResults;
         this.farmingFilterBoolean = false;
+        this.cdr.detectChanges();
 
     }
 
@@ -451,6 +462,21 @@ export class InvoiceComponent implements OnInit {
         });
         return amount;
     }
+    totalFarmingInvoiceAmount() {
+        let amount = 0;
+        let arr: any[] = [];
+        this.customFarmingInvoiceList$.pipe(
+            skipWhile(data => data == null),
+          )
+          .subscribe((item) => {
+            arr = item.invoices;
+        });
+        arr.map((item) => {
+            amount = amount + parseFloat(item.total_amount);
+        });
+        return amount;
+    }
+
 
 
     totalTruckingAmount() {
@@ -462,6 +488,23 @@ export class InvoiceComponent implements OnInit {
         });
         return amount.toFixed(2);
     }
+
+    totalTruckingInvoiceAmount() {
+        let amount = 0;
+        let arr: any[] = [];
+        this.customTruckingInvoiceList$.pipe(
+            skipWhile(data => data == null),
+          )
+          .subscribe((item) => {
+            arr = item.invoices;
+        });
+        arr.map((item) => {
+            amount = amount + parseFloat(item.total_amount);
+        });
+        return amount;
+    }
+
+
 
     //#region Paid button
     payInvoice(msg, id) {

@@ -2710,7 +2710,7 @@ export class CustomersService {
                     this.isLoadingCreateFarmingInvoice.next(false);
                 },
                 () => {
-                    this.getFarmingInvoiceList(customer_id, operation, sort, order, search);
+                    this.getFarmingInvoiceList(customer_id, 'getFarmingInvoices', sort, order, search);
                 }
             );
     }
@@ -2748,7 +2748,7 @@ export class CustomersService {
                     this.isLoadingTruckingInvoices.next(false);
                 },
                 () => {
-                    this.getJobResultsTruckingInvoice(customer_id, operation);
+                    this.getTruckingInvoiceList(customer_id, 'getTruckingInvoices');
                 }
             );
     }

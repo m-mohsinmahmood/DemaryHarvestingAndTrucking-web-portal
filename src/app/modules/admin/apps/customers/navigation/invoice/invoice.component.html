@@ -363,13 +363,14 @@
 
         <!--Farming -->
         <mat-tab label="Farming">
-            <mat-tab-group mat-align-tabs="start" class=""  (selectedIndexChange)="getFarmingTabApis($event)">
+            <mat-tab-group mat-align-tabs="start" class="" [selectedIndex]="selectedIndexInner"
+                (selectedIndexChange)="getFarmingTabApis($event)">
                 <mat-tab label="Invoices">
                     <ng-container>
                         <div>
                             <div>
                                 <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
-                                    Invoices
+                                    Unpaid Invoices
                                 </header>
                             </div>
 
@@ -386,38 +387,40 @@
                                 <!-- Rows -->
                                 <ng-container *ngIf="customFarmingInvoiceList$ | async as farmingInvoices">
                                     <ng-container *ngIf="farmingInvoices.invoices?.length > 0; else noJobs ">
-                                        <div *ngFor="let farmingInvoice of farmingInvoices.invoices"
-                                            class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
+                                        <div *ngFor="let farmingInvoice of farmingInvoices.invoices">
+                                            <div *ngIf="farmingInvoice.status=='invoiced'">
+                                                <div
+                                                    class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
+                                                    <!-- Name -->
+                                                    <div class="truncate">
+                                                        {{farmingInvoice.invoice_name}}
+                                                    </div>
 
-                                            <!-- Name -->
-                                            <div class="truncate">
-                                                {{farmingInvoice.invoice_name}}
-                                            </div>
+                                                    <!-- Make -->
+                                                    <div class="hidden sm:block">
+                                                        {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                    </div>
 
-                                            <!-- Make -->
-                                            <div class="hidden sm:block">
-                                                {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
-                                            </div>
-
-                                            <!-- Model -->
-                                            <!-- <div class="hidden md:block">
+                                                    <!-- Model -->
+                                                    <!-- <div class="hidden md:block">
                                                 {{farmingInvoice.id}}
                                             </div> -->
 
-                                            <!-- Odometer -->
-                                            <div class="md:block">
-                                                {{farmingInvoice.total_amount}}
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        {{farmingInvoice.total_amount}}
+                                                    </div>
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        <button (click)="payInvoice('farming',farmingInvoice.id )"
+                                                            [disabled]="farmingInvoice.status=='paid'"
+                                                            class="{{ farmingInvoice.status =='invoiced' ? 'bg-green-300' : ''}}"
+                                                            mat-flat-button [color]="'green'">
+                                                            <span class="px-1 text-white">Pay</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <!-- Odometer -->
-                                            <div class="md:block">
-                                                <button (click)="payInvoice('farming',farmingInvoice.id )"
-                                                    [disabled]="farmingInvoice.status=='paid'"
-                                                    class="{{ farmingInvoice.status =='invoiced' ? 'bg-green-300' : ''}}"
-                                                    mat-flat-button [color]="'green'">
-                                                    <span class="px-1 text-white">Pay</span>
-                                                </button>
-                                            </div>
-
 
 
                                         </div>
@@ -426,7 +429,76 @@
                                 </ng-container>
                                 <div class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
-                                    <div class="flex justify-end ml-12 font-bold">Total: 1234567</div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
+                                    Paid Invoices
+                                </header>
+                            </div>
+
+                            <div class="grid mx-auto border">
+                                <!-- Header -->
+                                <div class="invoice-farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                                    matSort matSortDisableClear>
+                                    <div class="sm:block">Title</div>
+                                    <div class="hidden md:block">Date</div>
+                                    <!-- <div class="hidden md:block">Invoice ID</div> -->
+                                    <div class="md:block">Total Amount</div>
+                                    <div class="md:block">Action</div>
+                                </div>
+                                <!-- Rows -->
+                                <ng-container *ngIf="customFarmingInvoiceList$ | async as farmingInvoices">
+                                    <ng-container *ngIf="farmingInvoices.invoices?.length > 0; else noJobs ">
+                                        <div *ngFor="let farmingInvoice of farmingInvoices.invoices">
+                                            <div *ngIf="farmingInvoice.status=='paid'">
+                                                <div
+                                                    class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
+                                                    <!-- Name -->
+                                                    <div class="truncate">
+                                                        {{farmingInvoice.invoice_name}}
+                                                    </div>
+
+                                                    <!-- Make -->
+                                                    <div class="hidden sm:block">
+                                                        {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                    </div>
+
+                                                    <!-- Model -->
+                                                    <!-- <div class="hidden md:block">
+                                                {{farmingInvoice.id}}
+                                            </div> -->
+
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        {{farmingInvoice.total_amount}}
+                                                    </div>
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        <button (click)="payInvoice('farming',farmingInvoice.id )"
+                                                            [disabled]="farmingInvoice.status=='paid'"
+                                                            class="{{ farmingInvoice.status =='invoiced' ? 'bg-green-300' : 'hidden'}}"
+                                                            mat-flat-button [color]="'green'">
+                                                            <span class="px-1 text-white">Pay</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </ng-container>
+                                </ng-container>
+                                <div
+                                    class="justify-end grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5">
+                                    <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
+
+                                        <mat-label class="font-bold">Total: {{this.totalFarmingInvoiceAmount()}}</mat-label>
+
+
+                                    </div>
 
                                 </div>
                             </div>
@@ -442,8 +514,8 @@
 
                 <mat-tab label="Create Invoice">
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="toggling-info-job-result my-4 bg-gray-100  py-1">
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false" class="toggling-info-job-result my-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
                                     Create Invoice
@@ -492,7 +564,7 @@
 
 
                                             <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
-                                                <mat-label>Period</mat-label>
+                                                <mat-label>Invoice Period</mat-label>
                                                 <mat-date-range-input [rangePicker]="picker2">
                                                     <input matStartDate formControlName="date_period_start"
                                                         placeholder="Start date">
@@ -554,7 +626,8 @@
                                             </mat-form-field>
                                         </form>
 
-                                        <mat-label class="">Details: {{this.farmingTitleForm.controls['details'].value}}</mat-label>
+                                        <mat-label class="">Details:
+                                            {{this.farmingTitleForm.controls['details'].value}}</mat-label>
                                         <mat-label>Bill To: <span class="font-bold">
                                                 {{customer.customer_name}} </span></mat-label>
                                         <mat-label>Address: <span class="font-bold">
@@ -568,11 +641,13 @@
                                         <div class="flex flex-row">
 
                                             <mat-label class="">Date: </mat-label>
-                                            <mat-label> {{this.farmingTitleForm.controls['date'].value | date: "dd-MM-YYYY"}}</mat-label>
+                                            <mat-label> {{this.farmingTitleForm.controls['date'].value | date:
+                                                "dd-MM-YYYY"}}</mat-label>
                                         </div>
 
 
-                                        <mat-label>Notes: {{this.farmingTitleForm.controls['notes'].value}}<span class="font-bold">
+                                        <mat-label>Notes: {{this.farmingTitleForm.controls['notes'].value}}<span
+                                                class="font-bold">
                                             </span></mat-label>
 
 
@@ -582,7 +657,8 @@
 
 
 
-                                        <mat-label>Deliver In: {{this.farmingTitleForm.controls['deliver_in'].value}}</mat-label>
+                                        <mat-label>Deliver In:
+                                            {{this.farmingTitleForm.controls['deliver_in'].value}}</mat-label>
                                     </div>
 
 
@@ -661,7 +737,7 @@
                                         <div
                                             class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                             There
-                                            are no Invoices!</div>
+                                            are no Records!</div>
                                     </ng-template>
 
                                 </div>
@@ -701,8 +777,8 @@
                     </mat-accordion>
 
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="toggling-info-job-result mb-4 bg-gray-100  py-1">
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false" class="toggling-info-job-result mb-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
                                     Filtered Job Results
@@ -800,7 +876,7 @@
                                 <ng-template #noInvoices>
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         There
-                                        are no Invoices!</div>
+                                        are no Jobs!</div>
                                 </ng-template>
 
                             </div>
@@ -821,13 +897,13 @@
 
         <!--Trucking-->
         <mat-tab label="Trucking">
-            <mat-tab-group mat-align-tabs="start" class="" (selectedIndexChange)="getTruckingTabApis($event)">
+            <mat-tab-group mat-align-tabs="start" class="" [selectedIndex]="selectedIndexInner" (selectedIndexChange)="getTruckingTabApis($event)">
                 <mat-tab label="Invoices">
                     <ng-container>
                         <div>
                             <div>
                                 <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
-                                    Invoices
+                                    Unpaid Invoices
                                 </header>
                             </div>
 
@@ -844,50 +920,127 @@
                                 <!-- Rows -->
                                 <ng-container *ngIf="customTruckingInvoiceList$ | async as truckingInvoices">
                                     <ng-container *ngIf="truckingInvoices.invoices?.length > 0; else noJobs ">
-                                        <div *ngFor="let truckingInvoice of truckingInvoices.invoices"
-                                            class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
+                                        <div *ngFor="let truckingInvoice of truckingInvoices.invoices">
+                                            <div *ngIf="truckingInvoice.status=='invoiced'">
+                                                <div
+                                                    class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
 
-                                            <!-- Name -->
-                                            <div class="truncate">
-                                                {{truckingInvoice.invoice_name}}
-                                            </div>
 
-                                            <!-- Make -->
-                                            <div class="hidden sm:block">
-                                                {{truckingInvoice.created_at | date: "dd-MM-YYYY"}}
-                                            </div>
+                                                    <!-- Name -->
+                                                    <div class="truncate">
+                                                        {{truckingInvoice.invoice_name}}
+                                                    </div>
 
-                                            <!-- Model -->
-                                            <!-- <div class="hidden md:block">
+                                                    <!-- Make -->
+                                                    <div class="hidden sm:block">
+                                                        {{truckingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                    </div>
+
+                                                    <!-- Model -->
+                                                    <!-- <div class="hidden md:block">
                                                 {{truckingInvoice.id}}
                                             </div> -->
 
-                                            <!-- Odometer -->
-                                            <div class="md:block">
-                                                {{truckingInvoice.total_amount}}
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        {{truckingInvoice.total_amount}}
+                                                    </div>
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        <button (click)="payInvoice('trucking',truckingInvoice.id )"
+                                                            [disabled]="truckingInvoice.status=='paid'"
+                                                            class="{{ truckingInvoice.status =='invoiced' ? 'bg-green-300' : ''}}"
+                                                            mat-flat-button [color]="'green'">
+                                                            <span class="px-1 text-white">Pay</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <!-- Odometer -->
-                                            <div class="md:block">
-                                                <button (click)="payInvoice('trucking',truckingInvoice.id )"
-                                                    [disabled]="truckingInvoice.status=='paid'"
-                                                    class="{{ truckingInvoice.status =='invoiced' ? 'bg-green-300' : ''}}"
-                                                    mat-flat-button [color]="'green'">
-                                                    <span class="px-1 text-white">Pay</span>
-                                                </button>
-                                            </div>
-
 
 
                                         </div>
 
                                     </ng-container>
                                 </ng-container>
-                                <div class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
+                                
+                            </div>
+
+
+                            <div>
+                                <header class="ml-4 my-4 text-3xl font-extrabold tracking-tight text-black">
+                                    Paid Invoices
+                                </header>
+                            </div>
+
+                            <div class="grid mx-auto border">
+                                <!-- Header -->
+                                <div class="invoice-farming-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
-                                    <div class="flex justify-end ml-12 font-bold">Total: 1234567</div>
+                                    <div class="sm:block">Title</div>
+                                    <div class="hidden md:block">Date</div>
+                                    <!-- <div class="hidden md:block">Invoice ID</div> -->
+                                    <div class="md:block">Total Amount</div>
+                                    <div class="md:block">Action</div>
+                                </div>
+                                <!-- Rows -->
+                                <ng-container *ngIf="customTruckingInvoiceList$ | async as truckingInvoices">
+                                    <ng-container *ngIf="truckingInvoices.invoices?.length > 0; else noJobs ">
+                                        <div *ngFor="let truckingInvoice of truckingInvoices.invoices">
+                                            <div *ngIf="truckingInvoice.status=='paid'">
+                                                <div
+                                                    class="invoice-farming-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-white">
+
+
+                                                    <!-- Name -->
+                                                    <div class="truncate">
+                                                        {{truckingInvoice.invoice_name}}
+                                                    </div>
+
+                                                    <!-- Make -->
+                                                    <div class="hidden sm:block">
+                                                        {{truckingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                    </div>
+
+                                                    <!-- Model -->
+                                                    <!-- <div class="hidden md:block">
+                                                {{truckingInvoice.id}}
+                                            </div> -->
+
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        {{truckingInvoice.total_amount}}
+                                                    </div>
+                                                    <!-- Odometer -->
+                                                    <div class="md:block">
+                                                        <button (click)="payInvoice('trucking',truckingInvoice.id )"
+                                                            [disabled]="truckingInvoice.status=='paid'"
+                                                            class="{{ truckingInvoice.status =='invoiced' ? 'bg-green-300' : 'hidden'}}"
+                                                            mat-flat-button [color]="'green'">
+                                                            <span class="px-1 text-white">Pay</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </ng-container>
+                                </ng-container>
+                                <div
+                                    class="justify-end grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5">
+                                    <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
+
+                                        <mat-label class="font-bold">Total: {{this.totalTruckingInvoiceAmount()}}</mat-label>
+
+
+                                    </div>
 
                                 </div>
                             </div>
+
+
+
                         </div>
 
                     </ng-container>
@@ -904,8 +1057,8 @@
 
 
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="toggling-info-job-result my-4 bg-gray-100  py-1">
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false" class="toggling-info-job-result my-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
                                     Create Invoice
@@ -951,7 +1104,7 @@
 
 
                                             <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
-                                                <mat-label>Period</mat-label>
+                                                <mat-label>Invoice Period</mat-label>
                                                 <mat-date-range-input [rangePicker]="picker">
                                                     <input matStartDate formControlName="date_period_start"
                                                         placeholder="Start date">
@@ -1008,7 +1161,8 @@
                                         </mat-form-field>
                                     </form>
 
-                                    <mat-label class="">Details: {{this.truckingTitleForm.controls['details'].value}}</mat-label>
+                                    <mat-label class="">Details:
+                                        {{this.truckingTitleForm.controls['details'].value}}</mat-label>
                                     <mat-label>Bill To: <span class="font-bold">
                                             {{customer.customer_name}} </span></mat-label>
                                     <mat-label>Address: <span class="font-bold">
@@ -1022,11 +1176,13 @@
                                     <div class="flex flex-row">
 
                                         <mat-label class="">Date: </mat-label>
-                                        <mat-label> {{this.truckingTitleForm.controls['date'].value | date: "dd-MM-YYYY"}}</mat-label>
+                                        <mat-label> {{this.truckingTitleForm.controls['date'].value | date:
+                                            "dd-MM-YYYY"}}</mat-label>
                                     </div>
 
 
-                                    <mat-label>Notes: {{this.truckingTitleForm.controls['notes'].value}}<span class="font-bold">
+                                    <mat-label>Notes: {{this.truckingTitleForm.controls['notes'].value}}<span
+                                            class="font-bold">
                                         </span></mat-label>
 
 
@@ -1038,16 +1194,17 @@
 
 
 
-                                    <mat-label>Deliver In: {{this.truckingTitleForm.controls['deliver_in'].value}}</mat-label>
+                                    <mat-label>Deliver In:
+                                        {{this.truckingTitleForm.controls['deliver_in'].value}}</mat-label>
                                 </div>
 
 
                             </div>
                             <button class="ml-2 mt-2" mat-flat-button [color]="'primary'"
-                                    (click)="openDetailsDialog('trucking')">
-                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                    <span class="ml-1 sm:ml-2">Add Details</span>
-                                </button>
+                                (click)="openDetailsDialog('trucking')">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                <span class="ml-1 sm:ml-2">Add Details</span>
+                            </button>
 
 
                             <!-- Total Sum Invoices Farming -->
@@ -1116,7 +1273,7 @@
                                 <ng-template #noInvoices>
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         There
-                                        are no Invoices!</div>
+                                        are no Records!</div>
                                 </ng-template>
 
                             </div>
@@ -1154,8 +1311,8 @@
                     </mat-accordion>
 
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="toggling-info-job-result mb-4 bg-gray-100  py-1">
+                        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false" class="toggling-info-job-result mb-4 bg-gray-100  py-1">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="text-lg font-extrabold text-gray-500">
                                     Filtered Job Results
@@ -1258,7 +1415,7 @@
                                 <ng-template #noInvoices>
                                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
                                         There
-                                        are no Invoices!</div>
+                                        are no Jobs!</div>
                                 </ng-template>
 
                             </div>
