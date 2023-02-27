@@ -6,20 +6,20 @@ import { AddCustomer } from '../../../add/add.component';
 import { CustomersService } from '../../../customers.service';
 
 @Component({
-  selector: 'app-add-trucking-item',
-  templateUrl: './add-trucking-item.component.html',
-  styleUrls: ['./add-trucking-item.component.scss']
+  selector: 'app-add-details',
+  templateUrl: './add-details.component.html',
+  styleUrls: ['./add-details.component.scss']
 })
-export class AddTruckingItemComponent implements OnInit {
+export class AddDetailsComponent implements OnInit {
 
   public form: FormGroup;
   rateTypes = ['Bushels', 'Flat', 'Hours', 'Hundred Weight', 'Loaded Miles', 'Pounds', 'Tons'];
 
-  isLoadingCustomTruckingInvoiceList$: Observable<any>
+  isLoadingCustomRentalInvoiceList$: Observable<any>
   closeDialog$: Observable<boolean>;
 
   constructor(
-    public matDialogRef: MatDialogRef<AddTruckingItemComponent>,
+    public matDialogRef: MatDialogRef<AddDetailsComponent>,
     private _formBuilder: FormBuilder,
     private api: CustomersService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,43 +39,59 @@ export class AddTruckingItemComponent implements OnInit {
           this._customersService.closeDialog.next(false);
       }
     });
-    
+
   }
 
-  //#region Init Observables 
+  //#region Init Observables
  initObservables() {
-  this.isLoadingCustomTruckingInvoiceList$ = this._customersService.isLoadingCustomTruckingInvoiceList$
+  this.isLoadingCustomRentalInvoiceList$ = this._customersService.isLoadingCustomRentalInvoiceList$
   this.closeDialog$ = this._customersService.closeDialog$;
 }
 //#endregion
 
   onSubmit(): void {
-    this.matDialogRef.close({ 
-      data: {
-      rate_type : this.form.value.rate_type,
-      amount: this.form.value.amount,
-      rate:this.form.value.rate,
-      quantity:this.form.value.quantity
-      }
-    })
-}
+    this.matDialogRef.close({
+        data: {
+            date: this.form.value.date,
+            invoice_no: this.form.value.invoice_no,
+            details: this.form.value.details,
+            notes: this.form.value.notes,
+            terms: this.form.value.terms,
+            deliver_in: this.form.value.deliver_in
+        }
+      })
+  }
 
-  
+
 //#region Form
 initForm() {
   // Create the form
   this.form = this._formBuilder.group({
-    id: [''],
-    rate_type      : [''],
-    amount :[''],
-    rate:[''],
-    quantity:[''],
-    customer_id: this.data.customer_id,
+    id:[''],
+    date: [''],
+    invoice_no:[''],
+    details:[''],
+    notes:[''],
+    terms:[''],
+    deliver_in:[''],
 
 
 
 });
+  if (this.data && this.data.isEdit) {
+    const { invoiceData, customer_id } = this.data;
+    this.form.patchValue({
+      id: invoiceData.id,
+      date: invoiceData.date,
+      invoice_no: invoiceData.invoice_no,
+      details: invoiceData.details,
+      notes: invoiceData.notes,
+      terms: invoiceData.terms,
+      deliver_in: invoiceData.deliver_in
+    });
 
+
+  }
 }
 
 

@@ -20,25 +20,38 @@
         <div class="mb-6 font-bold grid-cols-1 flex items-center justify-between	" >
         </div>
         <div class="flex flex-col flex-auto sm:grid-cols-1 justify-between gap-x-6 p-0">
+            <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input id="date" name="date" formControlName="date" matInput
+                    [matDatepicker]="picker4" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
+                </mat-form-field>
+
             <mat-form-field appearance="outline">
-                <mat-label>Rate Type</mat-label>
-                <input matInput formControlName="rate_type">
+                <mat-label>Invoice #</mat-label>
+                <input matInput formControlName="invoice_no">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Details</mat-label>
+                <input matInput formControlName="details">
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Quantity</mat-label>
-                <input matInput formControlName="quantity">
+                <mat-label>Notes</mat-label>
+                <input matInput formControlName="notes">
+            </mat-form-field>
+
+
+
+            <mat-form-field appearance="outline">
+                <mat-label>Terms</mat-label>
+                <input matInput formControlName="terms">
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Rate</mat-label>
-                <input matInput formControlName="rate">
-            </mat-form-field>
-          
-            
-            <mat-form-field appearance="outline">
-                <mat-label>Amount</mat-label>
-                <input matInput formControlName="amount">
+                <mat-label>Deliver In</mat-label>
+                <input matInput formControlName="deliver_in">
             </mat-form-field>
 
         </div>
@@ -48,7 +61,7 @@
             <button class="ml-auto sm:ml-0" mat-flat-button (click)="discard()">
                 Discard
             </button>
-           
+
             <button type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
                 Save
             </button>
