@@ -2494,11 +2494,10 @@ export class CustomersService {
             .get(`api-1/customer-invoices?customer_id=${id}`, { params })
     }
 
-    getJobResultsTruckingInvoice(id: string, operation, filters: any = { service_type: '', quantity_type: '', date_period_start: '', date_period_end: '' }) {
+    getJobResultsTruckingInvoice(id: string, operation, filters: any = { date_period_start: '', date_period_end: '' }) {
+        debugger;
         let params = new HttpParams();
         params = params.set('operation', operation);
-        params = params.set('service_type', filters.service_type);
-        params = params.set('quantity_type', filters.quantity_type);
         params = params.set('from', filters.date_period_start);
         params = params.set('to', filters.date_period_end);
         return this._httpClient
