@@ -553,13 +553,19 @@
                     </div>
                     <div *ngIf="this.employee?.employee_info?.contract_w4 " class="flex bg-gray-100 flex-col sm:flex-row
              rounded-md mt-2 px-4  shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:6/12 md:w-4/12 py-4">
+                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                             <div>
                                 <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">W-4 (USA Only)
                                 </p>
                             </div>
                         </div>
-                        <div class="sm:w-6/12 md:w-8/12">
+                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.w4_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.w4_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2">
+                            </mat-icon>
+                        </div>
+                        <div class="sm:w-5/12 md:w-8/12">
                             <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
                                 <div class="flex flex-row sm:items-center sm:p-0 p-2">
                                     <mat-label

@@ -1,13 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Documents, Item } from '../../employee.types';
-import { UploadDocumentComponent } from './upload-document/upload-document.component';
-import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { Observable, Subject } from 'rxjs';
+import { Item } from '../../employee.types';
 
 @Component({
     selector: 'app-documents',
@@ -19,19 +15,14 @@ export class DocumentsComponent implements OnInit {
     drawerMode: 'side' | 'over';
     selectedItem: Item;
     documents: any;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     activeID: any;
-    policyDocument$: Observable<any[]>;
     routeID: any;
-
+    employeeDocs$: Observable<any>;
+    policyDocument$: Observable<any[]>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
         private _employeeService: EmployeeService,
-        private _activatedRoute: ActivatedRoute,
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
     ) { }
 
@@ -47,40 +38,14 @@ export class DocumentsComponent implements OnInit {
     }
     // #region Init Api's
     initApis(): void {
-        // Get Documents
+        // Get Documents Uploaded by Employee
+        this.employeeDocs$ = this._employeeService.employeeDocuments$
+        this._employeeService.getEmployeeDocs(this.routeID);
+
+        // Get Documents Uploaded by Admin
         this.policyDocument$ = this._employeeService.policyDocuments$;
         this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
     }
-    //#endregion
-
-    //#region Upload Document Popup
-    // uploadDocument() {
-
-    //     const dialogRef = this._matDialog.open(UploadDocumentComponent, {
-    //         data: this.routeID,
-    //     });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //         console.log('Compose dialog was closed!');
-    //     });
-    // }
-
-    //#endregion
-
-    //#region Delete confirmation
-    // confirmDeleteDialog(id: string): void {
-    //     const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
-    //         data: {
-    //             message: 'Are you sure you want to delete this Document?',
-    //             title: 'Policy Document',
-    //         },
-    //     });
-
-    //     dialogRef.afterClosed().subscribe((dialogResult) => {
-    //         if (dialogResult)
-    //             this._employeeService.deletePolicyDocument(id, this.routeID);
-    //     });
-    // }
-
     //#endregion
 
     //#region Download Document

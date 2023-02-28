@@ -16,7 +16,7 @@
                 <div class="tab">
                     <mat-tab-group (selectedTabChange)="tabChanged($event)"  mat-align-tabs="start"   >
                         <mat-tab label="Onboarding">
-                            <app-onboarding-documents [onboardingDocuments] = "(policyDocument$ | async)" [employeeId] = "routeID" ></app-onboarding-documents>
+                            <app-onboarding-documents [employeeDocs] = "(employeeDocs$ | async)" [onboardingDocuments] = "(policyDocument$ | async)" [employeeId] = "routeID" ></app-onboarding-documents>
                         </mat-tab>
                         <mat-tab label="CDL">
                             <app-cdl-documents [employeeId] = "routeID" ></app-cdl-documents>
