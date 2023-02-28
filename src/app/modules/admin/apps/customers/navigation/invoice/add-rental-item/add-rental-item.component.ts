@@ -6,20 +6,20 @@ import { AddCustomer } from '../../../add/add.component';
 import { CustomersService } from '../../../customers.service';
 
 @Component({
-  selector: 'app-add-trucking-item',
-  templateUrl: './add-trucking-item.component.html',
-  styleUrls: ['./add-trucking-item.component.scss']
+  selector: 'app-add-rental-item',
+  templateUrl: './add-rental-item.component.html',
+  styleUrls: ['./add-rental-item.component.scss']
 })
-export class AddTruckingItemComponent implements OnInit {
+export class AddRentalItemComponent implements OnInit {
 
   public form: FormGroup;
   rateTypes = ['Bushels', 'Flat', 'Hours', 'Hundred Weight', 'Loaded Miles', 'Pounds', 'Tons'];
 
-  isLoadingCustomTruckingInvoiceList$: Observable<any>
+  isLoadingCustomRentalInvoiceList$: Observable<any>
   closeDialog$: Observable<boolean>;
 
   constructor(
-    public matDialogRef: MatDialogRef<AddTruckingItemComponent>,
+    public matDialogRef: MatDialogRef<AddRentalItemComponent>,
     private _formBuilder: FormBuilder,
     private api: CustomersService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,38 +44,55 @@ export class AddTruckingItemComponent implements OnInit {
 
   //#region Init Observables 
  initObservables() {
-  this.isLoadingCustomTruckingInvoiceList$ = this._customersService.isLoadingCustomTruckingInvoiceList$
+  this.isLoadingCustomRentalInvoiceList$ = this._customersService.isLoadingCustomRentalInvoiceList$
   this.closeDialog$ = this._customersService.closeDialog$;
 }
 //#endregion
 
   onSubmit(): void {
-    this.matDialogRef.close({ 
-      data: {
-      rate_type : this.form.value.rate_type,
-      amount: this.form.value.amount,
-      rate:this.form.value.rate,
-      quantity:this.form.value.quantity
-      }
-    })
-}
+    // this._customersService.isLoadingCustomRentalInvoiceList.next(true);
+
+    // if (this.data && this.data.isEdit) {
+    //   this._customersService.updateRentalInvoice(this.form.value);
+
+    // } else {
+    //   this._customersService.createRentalInvoice(this.form.value);
+    // }
+    // console.log(this.form.value);
+  }
 
   
 //#region Form
 initForm() {
   // Create the form
   this.form = this._formBuilder.group({
-    id: [''],
-    rate_type      : [''],
-    amount :[''],
-    rate:[''],
+    id:[''],
+    date: [''],
+    rental_type:[''],
+    quantity_type:[''],
     quantity:[''],
+    rate:[''],
+    amount:[''],
     customer_id: this.data.customer_id,
 
 
 
 });
+  if (this.data && this.data.isEdit) {
+    const { invoiceData, customer_id } = this.data;
+    this.form.patchValue({
+      customer_id: customer_id,
+      id: invoiceData.id,
+      date: invoiceData.date,
+      rental_type: invoiceData.rental_type,
+      quantity_type: invoiceData.quantity_type,
+      quantity: invoiceData.quantity,
+      rate: invoiceData.rate,
+      amount: invoiceData.amount
+    });
 
+
+  }
 }
 
 

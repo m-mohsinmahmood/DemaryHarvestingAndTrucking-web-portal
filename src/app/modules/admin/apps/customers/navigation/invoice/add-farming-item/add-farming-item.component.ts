@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { alternatives } from 'joi';
 import { Observable } from 'rxjs';
 import { AddCustomer } from '../../../add/add.component';
 import { CustomersService } from '../../../customers.service';
@@ -51,15 +52,14 @@ this._customersService.closeDialog$.subscribe((res) => {
 //#endregion
 
   onSubmit(): void {
-    this._customersService.isLoadingCustomFarmingInvoiceList.next(true);
-
-    if (this.data && this.data.isEdit) {
-      this._customersService.updateFarmingInvoice(this.form.value);
-
-    } else {
-      this._customersService.createFarmingInvoice(this.form.value);
-    }
-    console.log(this.form.value);
+    this.matDialogRef.close({ 
+      data: {
+      description : this.form.value.description,
+      amount: this.form.value.amount,
+      rate:this.form.value.rate,
+      quantity:this.form.value.quantity
+      }
+    })
   }
 
 
@@ -68,33 +68,16 @@ this._customersService.closeDialog$.subscribe((res) => {
     // Create the form
     this.form = this._formBuilder.group({
       id: [''],
-      date    : [''],
-      equipment_type         : [''],
-      quantity_type        :[''],
-      quantity      : [''],
+      description      : [''],
       amount :[''],
       rate:[''],
+      quantity:[''],
       customer_id: this.data.customer_id,
 
 
   
   });
-    if (this.data && this.data.isEdit) {
-      const { invoiceData, customer_id } = this.data;
-      this.form.patchValue({
-        customer_id: customer_id,
-        id: invoiceData.id,
-        date: invoiceData.date,
-        equipment_type: invoiceData.equipment_type,
-        quantity_type: invoiceData.quantity_type,
-        quantity: invoiceData.quantity,
-        amount: invoiceData.amount,
-        rate: invoiceData.rate
-      });
-
-
-    }
-  }
+ }
  
  
   discard(): void {
