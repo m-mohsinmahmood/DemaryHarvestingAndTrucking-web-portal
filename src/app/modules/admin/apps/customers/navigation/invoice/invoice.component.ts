@@ -58,6 +58,7 @@ export class InvoiceComponent implements OnInit {
     filteredTruckingJobs: any[] = [];
 
     farmingFilterBoolean: boolean = false;
+    truckingFilterBoolean: boolean = false;
 
 
 
@@ -282,7 +283,7 @@ export class InvoiceComponent implements OnInit {
             quantity_type: ['acres'],
             date_period_start: [''],
             date_period_end: [''],
-            created_at: [''],
+            //created_at: [''],
         });
 
         this.truckingFiltersForm = this._formBuilder.group({
@@ -290,7 +291,7 @@ export class InvoiceComponent implements OnInit {
             quantity_type: [''],
             date_period_start: [''],
             date_period_end: [''],
-            created_at: [''],
+            //created_at: [''],
         });
 
         this.farmingTitleForm = this._formBuilder.group({
@@ -361,8 +362,10 @@ export class InvoiceComponent implements OnInit {
     async applyFarmingFilters() {
         !this.jobsFiltersForm.value.service_type ? (this.jobsFiltersForm.value.service_type = '') : ('');
         !this.jobsFiltersForm.value.quantity_type ? (this.jobsFiltersForm.value.quantity_type = '') : ('');
-        !this.jobsFiltersForm.value.date_period_start ? (this.jobsFiltersForm.value.from = '') : ('');
-        !this.jobsFiltersForm.value.date_period_end ? (this.jobsFiltersForm.value.to = '') : ('');
+
+        !this.jobsFiltersForm.value.date_period_start ? (this.jobsFiltersForm.value.date_period_start = '') : ('');
+        !this.jobsFiltersForm.value.date_period_end ? (this.jobsFiltersForm.value.date_period_end = '') : ('');
+
         this.jobsFiltersForm.value.date_period_start ? this.jobsFiltersForm.controls['date_period_start'].setValue(moment(this.jobsFiltersForm.value.date_period_start).format('YYYY-MM-DD')) : ('');
         this.jobsFiltersForm.value.date_period_end ? this.jobsFiltersForm.controls['date_period_end']?.setValue(moment(this.jobsFiltersForm.value.date_period_end).format('YYYY-MM-DD')) : ('');
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
@@ -375,7 +378,7 @@ export class InvoiceComponent implements OnInit {
     async removeFarmingFilters() {
         this.jobsFiltersForm.reset();
         this.jobsFiltersForm.value.service_type = '';
-        this.jobsFiltersForm.value.quantity_type = 'acres';
+        this.jobsFiltersForm.controls['quantity_type'].setValue('acres');
         this.jobsFiltersForm.value.date_period_start = '';
         this.jobsFiltersForm.value.date_period_end = '';
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
@@ -391,14 +394,14 @@ export class InvoiceComponent implements OnInit {
     async applyTruckingFilters() {
         !this.truckingFiltersForm.value.service_type ? (this.truckingFiltersForm.value.service_type = '') : ('');
         !this.truckingFiltersForm.value.quantity_type ? (this.truckingFiltersForm.value.quantity_type = '') : ('');
-        !this.truckingFiltersForm.value.date_period_start ? (this.truckingFiltersForm.value.from = '') : ('');
-        !this.truckingFiltersForm.value.date_period_end ? (this.truckingFiltersForm.value.to = '') : ('');
+        !this.truckingFiltersForm.value.date_period_start ? (this.truckingFiltersForm.value.date_period_start = '') : ('');
+        !this.truckingFiltersForm.value.date_period_end ? (this.truckingFiltersForm.value.date_period_end = '') : ('');
         this.truckingFiltersForm.value.date_period_start ? this.truckingFiltersForm.controls['date_period_start'].setValue(moment(this.truckingFiltersForm.value.date_period_start).format('YYYY-MM-DD')) : ('');
         this.truckingFiltersForm.value.date_period_end ? this.truckingFiltersForm.controls['date_period_end']?.setValue(moment(this.truckingFiltersForm.value.date_period_end).format('YYYY-MM-DD')) : ('');
         let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
         this.filteredTruckingArray = result2.totalAmount;
         this.filteredTruckingJobs = result2.jobResults;
-        this.farmingFilterBoolean = true;
+        this.truckingFilterBoolean = true;
         this.cdr.detectChanges();
     }
 
@@ -411,7 +414,7 @@ export class InvoiceComponent implements OnInit {
         let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
         this.filteredTruckingArray = result2.totalAmount;
         this.filteredTruckingJobs = result2.jobResults;
-        this.farmingFilterBoolean = false;
+        this.truckingFilterBoolean = false;
         this.cdr.detectChanges();
 
     }
