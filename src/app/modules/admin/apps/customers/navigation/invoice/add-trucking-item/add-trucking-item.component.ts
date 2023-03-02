@@ -66,7 +66,7 @@ initForm() {
   // Create the form
   this.form = this._formBuilder.group({
     id: [''],
-    rate_type      : [''],
+    rate_type      : ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9]+$/)]],
     amount :[''],
     rate:[''],
     quantity:[''],
