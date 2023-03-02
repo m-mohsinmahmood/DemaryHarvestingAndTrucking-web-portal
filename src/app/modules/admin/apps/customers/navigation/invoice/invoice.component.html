@@ -398,7 +398,7 @@
 
                                                     <!-- Make -->
                                                     <div class="hidden sm:block">
-                                                        {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                        {{farmingInvoice.created_at | date: "MM-dd-YYYY"}}
                                                     </div>
 
                                                     <!-- Model -->
@@ -462,7 +462,7 @@
 
                                                     <!-- Make -->
                                                     <div class="hidden sm:block">
-                                                        {{farmingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                        {{farmingInvoice.created_at | date: "MM-dd-YYYY"}}
                                                     </div>
 
                                                     <!-- Model -->
@@ -629,7 +629,7 @@
                                             <div class="flex flex-col sm:flex-row items-center">
                                                 <mat-label class="sm:w-1/2">Invoice #</mat-label>
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Title</mat-label>
+                                                    <mat-label>Invoice #</mat-label>
                                                     <input matInput formControlName="invoice_no">
                                                 </mat-form-field>
                                             </div>
@@ -656,11 +656,11 @@
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Bill to</mat-label>
                                                     <input matInput formControlName="bill_to">
-                                                </mat-form-field>                                                
-                                                
+                                                </mat-form-field>
+
                                             </div>
                                             <div class="flex flex-col sm:flex-row items-center">
-                                               
+
                                                 <mat-label class="sm:w-1/2">Notes</mat-label>
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Notes</mat-label>
@@ -679,9 +679,9 @@
                                                     <input matInput formControlName="address">
                                                 </mat-form-field>
 
-                                            </div> 
+                                            </div>
                                             <div class="flex flex-col sm:flex-row items-center">
-                                                
+
                                                 <mat-label class="sm:w-1/2">Terms</mat-label>
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Terms</mat-label>
@@ -689,14 +689,14 @@
                                                 </mat-form-field>
 
                                             </div>
-                                        
-                                        <div class="flex flex-col sm:flex-row items-center">
-                                            <mat-label class="sm:w-1/2">Deliver In</mat-label>
 
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>Deliver In</mat-label>
-                                                <input matInput formControlName="deliver_in">
-                                            </mat-form-field>
+                                            <div class="flex flex-col sm:flex-row items-center">
+                                                <mat-label class="sm:w-1/2">Deliver In</mat-label>
+
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Deliver In</mat-label>
+                                                    <input matInput formControlName="deliver_in">
+                                                </mat-form-field>
                                             </div>
                                         </div>
                                     </form>
@@ -862,7 +862,7 @@
 
                                                     <!-- Date -->
                                                     <div class="truncate">
-                                                        {{farmingJob.date | date: "dd-MM-YYYY"}}
+                                                        {{farmingJob.date | date: "MM-dd-YYYY"}}
                                                     </div>
 
                                                     <!-- Service -->
@@ -972,7 +972,7 @@
 
                                                     <!-- Make -->
                                                     <div class="hidden sm:block">
-                                                        {{truckingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                        {{truckingInvoice.created_at | date: "MM-dd-YYYY"}}
                                                     </div>
 
                                                     <!-- Model -->
@@ -1037,7 +1037,7 @@
 
                                                     <!-- Make -->
                                                     <div class="hidden sm:block">
-                                                        {{truckingInvoice.created_at | date: "dd-MM-YYYY"}}
+                                                        {{truckingInvoice.created_at | date: "MM-dd-YYYY"}}
                                                     </div>
 
                                                     <!-- Model -->
@@ -1193,80 +1193,80 @@
 
 
                             <div class="flex sm:flex-row flex-col justify-between gap-6 px-8 bg-white p-4 details-summary-style"
-                                    *ngIf="customer$ | async as customer">
-                                    <form [formGroup]="truckingTitleForm" class="w-full">
-                                        <div class="grid grid-cols-2 sm:gap-x-12">
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Title</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Title</mat-label>
-                                                    <input matInput formControlName="truckingTitle">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Invoice #</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Title</mat-label>
-                                                    <input matInput formControlName="invoice_no">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Details</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Details</mat-label>
-                                                    <input matInput formControlName="details">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Date: </mat-label>
-                                                <mat-form-field birthdayFormat class="w-full" appearance="outline">
-                                                    <mat-label>Date</mat-label>
-                                                    <input id="date" name="date" formControlName="date" matInput
-                                                        [matDatepicker]="picker44" readonly>
-                                                    <mat-datepicker-toggle matSuffix
-                                                        [for]="picker44"></mat-datepicker-toggle>
-                                                    <mat-datepicker #picker44></mat-datepicker>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Bill to</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Bill to</mat-label>
-                                                    <input matInput formControlName="bill_to">
-                                                </mat-form-field>                                                
-                                                
-                                            </div>
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                               
-                                                <mat-label class="sm:w-1/2">Notes</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Notes</mat-label>
-                                                    <input matInput formControlName="notes">
-                                                </mat-form-field>
+                                *ngIf="customer$ | async as customer">
+                                <form [formGroup]="truckingTitleForm" class="w-full">
+                                    <div class="grid grid-cols-2 sm:gap-x-12">
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Title</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Title</mat-label>
+                                                <input matInput formControlName="truckingTitle">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Invoice #</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Invoice #</mat-label>
+                                                <input matInput formControlName="invoice_no">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Details</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Details</mat-label>
+                                                <input matInput formControlName="details">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Date: </mat-label>
+                                            <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                                                <mat-label>Date</mat-label>
+                                                <input id="date" name="date" formControlName="date" matInput
+                                                    [matDatepicker]="picker44" readonly>
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="picker44"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker44></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Bill to</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Bill to</mat-label>
+                                                <input matInput formControlName="bill_to">
+                                            </mat-form-field>
 
-                                            </div>
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
 
+                                            <mat-label class="sm:w-1/2">Notes</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Notes</mat-label>
+                                                <input matInput formControlName="notes">
+                                            </mat-form-field>
 
+                                        </div>
 
 
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                <mat-label class="sm:w-1/2">Address</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Address</mat-label>
-                                                    <input matInput formControlName="address">
-                                                </mat-form-field>
 
-                                            </div> 
-                                            <div class="flex flex-col sm:flex-row items-center">
-                                                
-                                                <mat-label class="sm:w-1/2">Terms</mat-label>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Terms</mat-label>
-                                                    <input matInput formControlName="terms">
-                                                </mat-form-field>
 
-                                            </div>
-                                        
+                                        <div class="flex flex-col sm:flex-row items-center">
+                                            <mat-label class="sm:w-1/2">Address</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address</mat-label>
+                                                <input matInput formControlName="address">
+                                            </mat-form-field>
+
+                                        </div>
+                                        <div class="flex flex-col sm:flex-row items-center">
+
+                                            <mat-label class="sm:w-1/2">Terms</mat-label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Terms</mat-label>
+                                                <input matInput formControlName="terms">
+                                            </mat-form-field>
+
+                                        </div>
+
                                         <div class="flex flex-col sm:flex-row items-center">
                                             <mat-label class="sm:w-1/2">Deliver In</mat-label>
 
@@ -1274,10 +1274,10 @@
                                                 <mat-label>Deliver In</mat-label>
                                                 <input matInput formControlName="deliver_in">
                                             </mat-form-field>
-                                            </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
+                            </div>
                             <!-- <button class="ml-2 mt-2" mat-flat-button [color]="'primary'"
                                 (click)="openDetailsDialog('trucking')">
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
