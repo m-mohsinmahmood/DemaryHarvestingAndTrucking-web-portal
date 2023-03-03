@@ -94,6 +94,8 @@ export interface ApplicantFilters {
   status: string;
   ranking: string;
   date: string;
+  country: string;
+  employment_period: string;
 }
 
 export interface Country

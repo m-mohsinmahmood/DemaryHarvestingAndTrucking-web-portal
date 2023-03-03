@@ -65,25 +65,6 @@ export class ApplicantService {
     //#endregion
     // #endregion
 
-    // #region Applicants & Applicant
-    // Data
-    // private applicantList: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
-    // readonly applicantList$: Observable<any[] | null> = this.applicantList.asObservable();
-
-    // private applicant: BehaviorSubject<any | null> = new BehaviorSubject(null);
-    // readonly applicant$: Observable<any | null> = this.applicant.asObservable();
-
-    // // Loaders
-    // private isLoadingApplicantList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    // readonly isLoadingApplicantList$: Observable<boolean> = this.isLoadingApplicantList.asObservable();
-
-    // private isLoadingApplicant: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    // readonly isLoadingApplicant$: Observable<boolean> = this.isLoadingApplicant.asObservable();
-    // #endregion
-
-    /**
-     * Constructor
-     */
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService,
@@ -145,7 +126,7 @@ export class ApplicantService {
     //#endregion
 
     //#region Applicant API's 
-    getApplicants(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '', date: '' },
+    getApplicants(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '', filters: ApplicantFilters = { state: '', created_at: '', status: '', ranking: '', date: '', country: '', employment_period: ''},
     ) {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -158,6 +139,10 @@ export class ApplicantService {
         params = params.set('status', filters.status);
         params = params.set('ranking', filters.ranking);
         params = params.set('date', filters.date);
+        params = params.set('country', filters.country);
+        params = params.set('employment_period', filters.employment_period);
+
+
         return this._httpClient
             .get<any>(`api-1/applicants`, {
                 params,
@@ -325,7 +310,6 @@ export class ApplicantService {
             );
     }
     //#endregion
-
     //#region get countries
     getCountries(): Observable<Country[]> {
         return this._httpClient.get<Country[]>('api/apps/employee/countries').pipe(
@@ -335,7 +319,6 @@ export class ApplicantService {
         );
     }
     //#endregion
-
     //#region Async Validator 
     async checkIfEmailExists(email: string): Promise<any> {
         let params = new HttpParams();

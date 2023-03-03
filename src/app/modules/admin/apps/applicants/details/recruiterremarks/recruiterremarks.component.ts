@@ -10,6 +10,8 @@ import { ApplicantService } from '../../applicants.services';
     styleUrls: ['./recruiterremarks.component.scss']
 })
 export class RecruiterremarksComponent implements OnInit {
+
+    //#region Observables
     applicant$: Observable<Applicant>;
     isLoadingApplicant$: Observable<boolean>;
     applicants$: Observable<Applicant[]>;
@@ -17,8 +19,9 @@ export class RecruiterremarksComponent implements OnInit {
     closeDialog$: Observable<boolean>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     // @Input() applicantData: any;
+    //#endregion
 
-
+    //#region local variables
     form: FormGroup;
     employees: any;
     flashMessage: 'success' | 'error' | null = null;
@@ -35,6 +38,8 @@ export class RecruiterremarksComponent implements OnInit {
     status_step;
     applicantData;
     score: string;
+    isSave: string = '0';
+    //#endregion
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -54,7 +59,6 @@ export class RecruiterremarksComponent implements OnInit {
 
     // #region initializing forms
     initApplicantForm() {
-        
         this.firstFormGroup = this._formBuilder.group({
             id: [''],
             first_name: ['', [Validators.required]],
@@ -113,57 +117,67 @@ export class RecruiterremarksComponent implements OnInit {
         });
 
         this.firstInterviewForm = this._formBuilder.group({
-            first_call_remarks: this.applicantData?.first_call_remarks == null ? 
-            "· What is the most important aspect of the job, money, environment, travel, learning something new, the nature of the work? \n· Does applicant have a girlfriend/married/children? \n· Have you ever completed foreign work tour? \n· Do you have a trade certiﬁcate, or special training? Any college? \n· What is your biggest accomplishment to date? (later – 3rd interview) \n· What were your duties in prior job? \n· What can you offer to the company? (later – 3rd interview) \n· Is this person eager to get the job, have a team spirit and willing to help others?"
-            : this.applicantData?.first_call_remarks,
-            first_call_ranking: this.applicantData?.first_call_ranking,
-            first_interviewer_id: this.applicantData?.first_interviewer_name,
+            first_call_remarks: [{
+                value: this.applicantData?.first_call_remarks == null ?
+                    "· What is the most important aspect of the job, money, environment, travel, learning something new, the nature of the work? \n· Does applicant have a girlfriend/married/children? \n· Have you ever completed foreign work tour? \n· Do you have a trade certiﬁcate, or special training? Any college? \n· What is your biggest accomplishment to date? (later – 3rd interview) \n· What were your duties in prior job? \n· What can you offer to the company? (later – 3rd interview) \n· Is this person eager to get the job, have a team spirit and willing to help others?"
+                    : this.applicantData?.first_call_remarks, disabled: this.applicantData.first_interviewer_id && this.applicantData.first_call_remarks && this.applicantData.first_call_ranking
+            }],
+            first_call_ranking: [{ value: this.applicantData?.first_call_ranking, disabled: this.applicantData.first_call_ranking }],
+            first_interviewer_id: [{ value: this.applicantData?.first_interviewer_name, disabled: this.applicantData.first_interviewer_id }],
             prev_status_message: ['Preliminary Review'],
             status_message: ['First Interview Completed'],
-            status_step:['3'],
+            status_step: ['3'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
-        this.secondInterviewForm = this._formBuilder.group({        
-            second_call_remarks: this.applicantData?.second_call_remarks == null ? 
-            "· Have you ever had roommates and what problems does that present? \n· What mistakes do supervisors most commonly make? \n· Does he seem arrogant and insubordinate? \n· What are your expectations from this job experience? \n· Does he understand the priority is getting the job done? \n· What implements, trailers, wagons have you pulled and for how long? \n· What model combine have you operated/platforms/crops and for how long? \n· What trucks/lorries have you driven for how long? Describe loads? \n· How concerned are you about the quality of your performance and others? \n· Do you have any licenses? \n· What mechanical experience? \n· What repairs have you done on gear you’ve operated? \n· Any work history or training as a mechanic?"
-            : this.applicantData?.second_call_remarks, 
-            second_call_ranking: this.applicantData?.second_call_ranking,
-            second_interviewer_id: this.applicantData?.second_interviewer_name,
+        this.secondInterviewForm = this._formBuilder.group({
+            second_call_remarks: [{
+                value: this.applicantData?.second_call_remarks == null ?
+                    "· Have you ever had roommates and what problems does that present? \n· What mistakes do supervisors most commonly make? \n· Does he seem arrogant and insubordinate? \n· What are your expectations from this job experience? \n· Does he understand the priority is getting the job done? \n· What implements, trailers, wagons have you pulled and for how long? \n· What model combine have you operated/platforms/crops and for how long? \n· What trucks/lorries have you driven for how long? Describe loads? \n· How concerned are you about the quality of your performance and others? \n· Do you have any licenses? \n· What mechanical experience? \n· What repairs have you done on gear you’ve operated? \n· Any work history or training as a mechanic?"
+                    : this.applicantData?.second_call_remarks, disabled: this.applicantData.second_interviewer_id && this.applicantData.second_call_remarks && this.applicantData.second_call_ranking
+            }],
+            second_call_ranking: [{ value: this.applicantData?.second_call_ranking, disabled: this.applicantData.second_call_ranking }],
+            second_interviewer_id: [{ value: this.applicantData?.second_interviewer_name, disabled: this.applicantData.second_interviewer_id }],
             prev_status_message: ['First Interview Completed'],
             status_message: ['Second Interview Completed'],
-            status_step:['4'],
+            status_step: ['4'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
-        this.thirdInterviewForm = this._formBuilder.group({           
-            third_call_remarks: this.applicantData?.third_call_remarks == null ? 
-            "· Three to four weeks of company orientation, training, or administrative tasks with minimal pay. \n· Weather impacts work schedule which requires ﬂexibility.\n· Explain compensation\n· Pre-employment and random drug and alcohol tests\n· Explain Reprimand process.\n· Living conditions.\n· Arizona heat, living and working with others 24/7 so must share company vehicles and housing.\n· Don’t come if you can’t complete the season, are strictly interested in how much money you make, or drinking and partying is a priority for you?\n· Importance of keeping living area and vehicle clean. (Cleaning charge.) \n· Explain onboarding process.\n· Explain the process for using a Smart Phone for data entry.\n· Explain TEAM online training prior to arrival. (Web Portal and Mobile App)\n· Explain Visa process, consulate interview and reimbursement.\n· CDL training prior to arrival.\n· Explain travel and reimbursement.\n· Explain the importance for maintaining contact with recruiter/company.\n· If we hire you, will you accept the job. If yes, make an offer.\n· Applicant must accept job within three days."
-            : this.applicantData?.third_call_remarks,
-            third_call_ranking: this.applicantData?.third_call_ranking,
-            third_interviewer_id: this.applicantData?.third_interviewer_name,
+        this.thirdInterviewForm = this._formBuilder.group({
+            third_call_remarks: [{
+                value: this.applicantData?.third_call_remarks == null ?
+                    "· Three to four weeks of company orientation, training, or administrative tasks with minimal pay. \n· Weather impacts work schedule which requires ﬂexibility.\n· Explain compensation\n· Pre-employment and random drug and alcohol tests\n· Explain Reprimand process.\n· Living conditions.\n· Arizona heat, living and working with others 24/7 so must share company vehicles and housing.\n· Don’t come if you can’t complete the season, are strictly interested in how much money you make, or drinking and partying is a priority for you?\n· Importance of keeping living area and vehicle clean. (Cleaning charge.) \n· Explain onboarding process.\n· Explain the process for using a Smart Phone for data entry.\n· Explain TEAM online training prior to arrival. (Web Portal and Mobile App)\n· Explain Visa process, consulate interview and reimbursement.\n· CDL training prior to arrival.\n· Explain travel and reimbursement.\n· Explain the importance for maintaining contact with recruiter/company.\n· If we hire you, will you accept the job. If yes, make an offer.\n· Applicant must accept job within three days."
+                    : this.applicantData?.third_call_remarks, disabled: this.applicantData.third_interviewer_id && this.applicantData.third_call_remarks && this.applicantData.third_call_ranking
+            }],
+
+            third_call_ranking: [{ value: this.applicantData?.third_call_ranking, disabled: this.applicantData.third_call_ranking }],
+            third_interviewer_id: [{ value: this.applicantData?.third_interviewer_name, disabled: this.applicantData.third_interviewer_id }],
             prev_status_message: ['Reference Call Completed'],
             status_message: ['Third Interview Completed'],
-            status_step:['6'],
+            status_step: ['6'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
 
-        this.referenceForm = this._formBuilder.group({         
-            reference_call_remarks: this.applicantData?.reference_call_remarks == null ? 
-            "· What duties did he/she have and the quality of work? \n· Was the applicant dependable, any tardiness or absence?\n· How were his human relations? Did he get along with co-workers and customers?\n· How was his stewardship? Does he take care of the gear, tools, or supplies for which he is responsible?\n· Is the applicant cooperative, does he readily and enthusiastically perform the work he is assigned?\n· Would you rehire this person? Yes - No"
-            : this.applicantData?.reference_call_remarks,
-            reference_call_ranking: this.applicantData?.reference_call_ranking,
-            reference_interviewer_id: this.applicantData?.reference_interviewer_name,
+        this.referenceForm = this._formBuilder.group({
+            reference_call_remarks: [{
+                value: this.applicantData?.reference_call_remarks == null ?
+                    "· What duties did he/she have and the quality of work? \n· Was the applicant dependable, any tardiness or absence?\n· How were his human relations? Did he get along with co-workers and customers?\n· How was his stewardship? Does he take care of the gear, tools, or supplies for which he is responsible?\n· Is the applicant cooperative, does he readily and enthusiastically perform the work he is assigned?\n· Would you rehire this person? Yes - No"
+                    : this.applicantData?.reference_call_remarks, disabled: this.applicantData.reference_interviewer_id && this.applicantData.reference_call_remarks && this.applicantData.reference_call_ranking
+            }],
+
+            reference_call_ranking: [{ value: this.applicantData?.reference_call_ranking, disabled: this.applicantData.reference_call_ranking }],
+            reference_interviewer_id: [{ value: this.applicantData?.reference_interviewer_name, disabled: this.applicantData.reference_interviewer_id }],
             prev_status_message: ['Second Interview Completed'],
             status_message: ['Reference Call Completed'],
-            status_step:['5'],
+            status_step: ['5'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
-        
+
         if (this.applicantData !== null) {
             this.firstFormGroup.patchValue({
                 id: this.applicantData?.id,
@@ -222,7 +236,7 @@ export class RecruiterremarksComponent implements OnInit {
                 emergency_contact_phone: this.applicantData?.emergency_contact_phone,
 
             });
-            
+
             this.firstInterviewForm.patchValue({
                 id: this.applicantData?.id,
                 //first_call_remarks: this.applicantData?.first_call_remarks,
@@ -231,21 +245,21 @@ export class RecruiterremarksComponent implements OnInit {
             });
 
             this.secondInterviewForm.patchValue({
-                id: this.applicantData?.id,            
-               // second_call_remarks: this.applicantData?.second_call_remarks,
+                id: this.applicantData?.id,
+                // second_call_remarks: this.applicantData?.second_call_remarks,
                 second_call_ranking: this.applicantData?.second_call_ranking,
                 second_interviewer_id: this.applicantData?.second_interviewer_name,
             });
 
             this.thirdInterviewForm.patchValue({
-                id: this.applicantData?.id,            
+                id: this.applicantData?.id,
                 //third_call_remarks: this.applicantData?.third_call_remarks,
                 third_call_ranking: this.applicantData?.third_call_ranking,
                 third_interviewer_id: this.applicantData?.third_interviewer_name,
             });
-            
+
             this.referenceForm.patchValue({
-                id: this.applicantData?.id,            
+                id: this.applicantData?.id,
                 //reference_call_remarks: this.applicantData?.reference_call_remarks,
                 reference_call_ranking: this.applicantData?.reference_call_ranking,
                 reference_interviewer_id: this.applicantData?.reference_interviewer_name,
@@ -255,86 +269,144 @@ export class RecruiterremarksComponent implements OnInit {
     }
     // #endregion
 
-    validation(form:string){
-        if( form === "firstInterview" && 
-            (!this.firstInterviewForm.get('first_interviewer_id').value || 
-            !this.firstInterviewForm.get('first_call_remarks').value ||
-            !this.firstInterviewForm.get('first_call_ranking').value)
-        )return true;
+    validation(form: string) {
+        if (form === "firstInterview" &&
+            (!this.firstInterviewForm.get('first_interviewer_id').value ||
+                !this.firstInterviewForm.get('first_call_remarks').value ||
+                !this.firstInterviewForm.get('first_call_ranking').value)
+        ) return true;
 
-        else if( form === "secondInterview" && 
-        (!this.secondInterviewForm.get('second_interviewer_id').value || 
-        !this.secondInterviewForm.get('second_call_remarks').value ||
-        !this.secondInterviewForm.get('second_call_ranking').value)
-        )return true;
+        else if (form === "secondInterview" &&
+            (!this.secondInterviewForm.get('second_interviewer_id').value ||
+                !this.secondInterviewForm.get('second_call_remarks').value ||
+                !this.secondInterviewForm.get('second_call_ranking').value)
+        ) return true;
 
-        else if( form === "thirdInterview" && 
-        (!this.thirdInterviewForm.get('third_interviewer_id').value || 
-        !this.thirdInterviewForm.get('third_call_remarks').value ||
-        !this.thirdInterviewForm.get('third_call_ranking').value)
-        )return true;
+        else if (form === "thirdInterview" &&
+            (!this.thirdInterviewForm.get('third_interviewer_id').value ||
+                !this.thirdInterviewForm.get('third_call_remarks').value ||
+                !this.thirdInterviewForm.get('third_call_ranking').value)
+        ) return true;
 
-        else if( form === "refrenceInterview" && 
-        (!this.referenceForm.get('reference_interviewer_id').value || 
-        !this.referenceForm.get('reference_call_remarks').value ||
-        !this.referenceForm.get('reference_call_ranking').value)
-        )return true;
-        
+        else if (form === "refrenceInterview" &&
+            (!this.referenceForm.get('reference_interviewer_id').value ||
+                !this.referenceForm.get('reference_call_remarks').value ||
+                !this.referenceForm.get('reference_call_ranking').value)
+        ) return true;
+
     }
 
+    //#region Submit
     submit(interViewer: string): void {
-        if(interViewer === 'First'){
-            this.firstInterviewForm.value.status_step = '3'
-            this.calculateScore(this.firstInterviewForm);
-            this._applicantService.patchApplicant(this.firstInterviewForm.value , true , false);
-        }else if(interViewer === 'Second'){
-            this.secondInterviewForm.value.status_step = '4'
-            this.calculateScore(this.secondInterviewForm);
-            this._applicantService.patchApplicant(this.secondInterviewForm.value , true , false);
-        }else if(interViewer === 'Reference'){
-            this.referenceForm.value.status_step = '5'
-            this.calculateScore(this.referenceForm);
-            this._applicantService.patchApplicant(this.referenceForm.value , true , false);
+        this.isSave = '0';
+        if (interViewer === 'First') {
+            if (this.applicantData.status_step != 3) {
+                this.calculateScore(this.firstInterviewForm);
+                this.firstInterviewForm.controls['status_message'].setValue('First Interview Updated')
+                this._applicantService.patchApplicant(this.firstInterviewForm.value, true, false);
+            }
+            else {
+                this.firstInterviewForm.value.status_step = '3'
+                this.calculateScore(this.firstInterviewForm);
+                this._applicantService.patchApplicant(this.firstInterviewForm.value, true, false);
+            }
+        } else if (interViewer === 'Second') {
+            if (this.applicantData.status_step != 4) {
+                this.calculateScore(this.secondInterviewForm);
+                this.secondInterviewForm.controls['status_message'].setValue('Second Interview Updated')
+                this._applicantService.patchApplicant(this.secondInterviewForm.value, true, false);
+            }
+            else {
+                this.secondInterviewForm.value.status_step = '4'
+                this.calculateScore(this.secondInterviewForm);
+                this._applicantService.patchApplicant(this.secondInterviewForm.value, true, false);
+            }
+        } else if (interViewer === 'Reference') {
+            if (this.applicantData.status_step != 5) {
+                this.calculateScore(this.referenceForm);
+                this.referenceForm.controls['status_message'].setValue('Reference Interview Updated')
+                this._applicantService.patchApplicant(this.referenceForm.value, true, false);
+            }
+            else {
+                this.referenceForm.value.status_step = '5'
+                this.calculateScore(this.referenceForm);
+                this._applicantService.patchApplicant(this.referenceForm.value, true, false);
+            }
         }
-        else if(interViewer === 'Third'){
-            this.thirdFormGroup.value.status_step = '6'
-            this.calculateScore(this.thirdInterviewForm);
-            this._applicantService.patchApplicant(this.thirdInterviewForm.value , true , false);
+        else if (interViewer === 'Third') {
+            if (this.applicantData.status_step != 6) {
+                this.calculateScore(this.thirdInterviewForm);
+                this.thirdInterviewForm.controls['status_message'].setValue('Third Interview Updated')
+                this._applicantService.patchApplicant(this.thirdInterviewForm.value, true, false);
+            }
+            else {
+                this.thirdFormGroup.value.status_step = '6'
+                this.calculateScore(this.thirdInterviewForm);
+                this._applicantService.patchApplicant(this.thirdInterviewForm.value, true, false);
+            }
         }
     }
-     //#region Calculate Score
-     calculateScore(form) {
+    //#endregion
+
+    //#region Update Recruiter Remarks
+    update(interviewer: string): void {
+        if (interviewer === 'First') {
+            this.isSave = '1';
+            this.firstInterviewForm.controls['first_call_remarks'].enable();
+            this.firstInterviewForm.controls['first_call_ranking'].enable();
+        }
+        else if (interviewer === 'Second') {
+            this.isSave = '2';
+            this.secondInterviewForm.controls['second_call_remarks'].enable();
+            this.secondInterviewForm.controls['second_call_ranking'].enable();
+        }
+        else if (interviewer === 'Reference') {
+            this.isSave = '3';
+            this.referenceForm.controls['reference_call_remarks'].enable();
+            this.referenceForm.controls['reference_call_ranking'].enable();
+        }
+        else if (interviewer === 'Third') {
+            this.isSave = '4';
+            this.thirdInterviewForm.controls['third_call_remarks'].enable();
+            this.thirdInterviewForm.controls['third_call_ranking'].enable();
+        }
+        //#endregion
+
+
+    }
+    //#region Calculate Score
+    calculateScore(form) {
         let firstRanking = this.firstInterviewForm.controls['first_call_ranking'].value;
         let secondRanking = this.secondInterviewForm.controls['second_call_ranking'].value;
         let thirdRanking = this.thirdInterviewForm.controls['third_call_ranking'].value;
         let refRanking = this.referenceForm.controls['reference_call_ranking'].value;
         this.score = "0";
-        if (firstRanking && secondRanking && thirdRanking && refRanking){
+        if (firstRanking && secondRanking && thirdRanking && refRanking) {
 
-            this.score = (((+firstRanking + +secondRanking + +thirdRanking + +refRanking) / 40) * 100).toFixed(2) 
+            this.score = (((+firstRanking + +secondRanking + +thirdRanking + +refRanking) / 40) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);
         }
-        else if (firstRanking && secondRanking && refRanking ){
+        else if (firstRanking && secondRanking && refRanking) {
 
             this.score = (((+firstRanking + +secondRanking + +refRanking) / 30) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);
         }
-        else if (firstRanking && refRanking ){
+        else if (firstRanking && refRanking) {
 
             this.score = (((+firstRanking + +refRanking) / 20) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);
         }
-        else if (firstRanking && secondRanking && thirdRanking){
+        else if (firstRanking && secondRanking && thirdRanking) {
 
             this.score = (((+firstRanking + +secondRanking + +thirdRanking) / 30) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);
         }
-        else if (firstRanking && secondRanking){
+        else if (firstRanking && secondRanking) {
 
             this.score = (((+firstRanking + +secondRanking) / 20) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);
         }
-        else if (firstRanking){
+        else if (firstRanking) {
 
             this.score = (((+firstRanking) / 10) * 100).toFixed(2)
             form.controls['ranking'].setValue(this.score);

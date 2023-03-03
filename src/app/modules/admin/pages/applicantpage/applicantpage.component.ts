@@ -193,6 +193,7 @@ export class ApplicantpageComponent implements OnInit {
             id: [''],
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
+            legal_name: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], this.asyncValidator.bind(this)],
             date_of_birth: ['', [Validators.required]],
             age: ['', [Validators.required]],
