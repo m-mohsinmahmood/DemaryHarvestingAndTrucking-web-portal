@@ -68,7 +68,7 @@ this._customersService.closeDialog$.subscribe((res) => {
     // Create the form
     this.form = this._formBuilder.group({
       id: [''],
-      description      : [''],
+      description: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9]+$/)]],
       amount :[''],
       rate:[''],
       quantity:[''],

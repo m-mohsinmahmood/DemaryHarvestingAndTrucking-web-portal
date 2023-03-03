@@ -78,6 +78,8 @@ import { AddFarmingItemComponent } from './navigation/invoice/add-farming-item/a
 import { AddRentalItemComponent } from './navigation/invoice/add-rental-item/add-rental-item.component';
 import { ConfirmDialogComponent } from './navigation/invoice/confirm-dialog/confirm-dialog.component';
 import { AddDetailsComponent } from './navigation/invoice/add-details/add-details.component';
+import { EditTruckingJobComponent } from './navigation/job-result/edit-trucking-job/edit-trucking-job.component';
+import { EditFarmingJobComponent } from './navigation/job-result/edit-farming-job/edit-farming-job.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -126,7 +128,9 @@ import { AddDetailsComponent } from './navigation/invoice/add-details/add-detail
         AddFarmingItemComponent,
         AddRentalItemComponent,
         ConfirmDialogComponent,
-        AddDetailsComponent
+        AddDetailsComponent,
+        EditTruckingJobComponent,
+        EditFarmingJobComponent
     ],
     imports: [
     RouterModule.forChild(customersRoutes),

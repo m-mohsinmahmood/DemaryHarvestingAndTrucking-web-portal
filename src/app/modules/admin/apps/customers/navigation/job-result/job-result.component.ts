@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { number } from 'joi';
+import moment from 'moment';
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { CustomersService } from '../../customers.service';
 import { customerFilters } from '../../customers.types';
 import { Customers } from '../../customers.types';
+import { EditTruckingJobComponent } from './edit-trucking-job/edit-trucking-job.component';
+import { EditFarmingJobComponent } from './edit-farming-job/edit-farming-job.component';
 
 @Component({
   selector: 'app-job-result',
@@ -16,7 +20,9 @@ import { Customers } from '../../customers.types';
 export class JobResultComponent implements OnInit {
   panelOpenState = false;
   jobsFiltersForm: FormGroup;
-  created_at: any;
+  truckingFiltersForm: FormGroup;
+  farmingFiltersForm: FormGroup;
+
   //#region Auto Complete Farms
   allFarms: Observable<any>;
   farm_search$ = new Subject();
@@ -34,6 +40,9 @@ export class JobResultComponent implements OnInit {
   commercialTruckingJobs$: any;
   formValid: boolean;
 
+  harvestingFilterBool: boolean = false;
+  truckingFilterBool: boolean = false;
+  farmingFilterBool: boolean = false;
 
   routeID; // URL ID
 
@@ -47,6 +56,8 @@ export class JobResultComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _customerService: CustomersService,
     public activatedRoute: ActivatedRoute,
+    private _matDialog: MatDialog,
+
 
 
   ) { }
@@ -141,30 +152,87 @@ export class JobResultComponent implements OnInit {
       farm_id: [''],
       destinations: [''],
       crop_id: [''],
-      created_at: [''],
     });
+
+    this.truckingFiltersForm = this._formBuilder.group({
+      
+      from: [''],
+      to: [''],
+      //created_at: [''],
+  });
+
+  this.farmingFiltersForm = this._formBuilder.group({
+    service_type: [''],
+    quantity_type: [''],
+    from: [''],
+    to: [''],
+});
+
+
   }
-  initCreatedAt() {
-    this.created_at = new FormControl();
-  }
+  
   applyFilters() {
-    !this.jobsFiltersForm.value.created_at ? (this.jobsFiltersForm.value.created_at = '') : ('');
     !this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '';
     !this.jobsFiltersForm.value.destinations ? (this.jobsFiltersForm.value.destinations = '') : ('');
     !this.jobsFiltersForm.value.crop_id?.id ? (this.jobsFiltersForm.value.crop_id = this.jobsFiltersForm.value.crop_id?.id) : '';
+    this.harvestingFilterBool = true;
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
   }
 
   removeFilters() {
     this.jobsFiltersForm.reset();
     this.jobsFiltersForm.value.farm_id = '';
-    this.jobsFiltersForm.value.created_at = '';
     this.jobsFiltersForm.value.destinations = '';
     this.jobsFiltersForm.value.crop_id = '';
-    this.created_at.setValue('');
+    this.harvestingFilterBool = false;
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
 
   }
+
+  async applyTruckingFilters() {
+    !this.truckingFiltersForm.value.from ? (this.truckingFiltersForm.value.from = '') : ('');
+    !this.truckingFiltersForm.value.to ? (this.truckingFiltersForm.value.to = '') : ('');
+    this.truckingFiltersForm.value.from ? this.truckingFiltersForm.controls['from'].setValue(moment(this.truckingFiltersForm.value.from).format('YYYY-MM-DD')) : ('');
+    this.truckingFiltersForm.value.to ? this.truckingFiltersForm.controls['to']?.setValue(moment(this.truckingFiltersForm.value.to).format('YYYY-MM-DD')) : ('');
+    this.truckingFilterBool = true;
+    this._customerService.getTruckingJobs(this.routeID, 'trucking', this.truckingFiltersForm.value);
+
+}
+
+async removeTruckingFilters() {
+    this.truckingFiltersForm.reset();
+    this.truckingFiltersForm.value.from = '';
+    this.truckingFiltersForm.value.to = '';
+    this.truckingFilterBool = false;
+    this._customerService.getTruckingJobs(this.routeID, 'trucking', this.truckingFiltersForm.value);
+
+
+}
+async applyFarmingFilters() {
+  !this.farmingFiltersForm.value.service_type ? (this.farmingFiltersForm.value.service_type = '') : ('');
+  !this.farmingFiltersForm.value.quantity_type ? (this.farmingFiltersForm.value.quantity_type = '') : ('');
+  !this.farmingFiltersForm.value.from ? (this.farmingFiltersForm.value.from = '') : ('');
+  !this.farmingFiltersForm.value.to ? (this.farmingFiltersForm.value.to = '') : ('');
+  this.farmingFiltersForm.value.from ? this.farmingFiltersForm.controls['from'].setValue(moment(this.farmingFiltersForm.value.from).format('YYYY-MM-DD')) : ('');
+  this.farmingFiltersForm.value.to ? this.farmingFiltersForm.controls['to']?.setValue(moment(this.farmingFiltersForm.value.to).format('YYYY-MM-DD')) : ('');
+  this.farmingFilterBool = true;
+  this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
+
+}
+
+async removeFarmingFilters() {
+  this.farmingFiltersForm.reset();
+  this.farmingFiltersForm.value.service_type = '';
+  this.farmingFiltersForm.controls['quantity_type'].setValue('');
+  this.farmingFiltersForm.value.from = '';
+  this.farmingFiltersForm.value.to = '';
+  this.farmingFilterBool = false ;
+  this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
+
+
+
+}
+
 
 
   getRelativeTabJobs(index: number) {
@@ -201,6 +269,34 @@ export class JobResultComponent implements OnInit {
     typeof (e) == 'string' ? (this.formValid = true) : (this.formValid = false)
 }
 //#endregion
+
+//#region edit job
+
+editTruckingJob(data: any, id:any)
+{
+  const dialogRef = this._matDialog.open(EditTruckingJobComponent, {
+    data: {
+        isEdit: true,
+        customerId: this.routeID,
+        jobId: id,
+        jobData: data,
+    },
+});
+dialogRef.afterClosed().subscribe((result) => {});
+}
+
+editFarmingJob(data: any, id:any)
+{
+  const dialogRef = this._matDialog.open(EditFarmingJobComponent, {
+    data: {
+        isEdit: true,
+        customerId: this.routeID,
+        jobId: id,
+        jobData: data,
+    },
+});
+dialogRef.afterClosed().subscribe((result) => {});
+}
 
 }
 

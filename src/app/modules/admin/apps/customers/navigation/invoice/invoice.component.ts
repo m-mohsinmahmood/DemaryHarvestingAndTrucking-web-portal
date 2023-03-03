@@ -7,7 +7,7 @@ import { AddTruckingItemComponent } from './add-trucking-item/add-trucking-item.
 import { CustomersService } from '../../customers.service';
 import { AddHarvestingItemComponent } from './add-harvesting-item/add-harvesting-item.component';
 import { AddFarmingItemComponent } from './add-farming-item/add-farming-item.component';
-import { firstValueFrom, lastValueFrom, Observable, skipWhile } from 'rxjs';
+import { debounceTime, distinctUntilChanged, firstValueFrom, lastValueFrom, map, Observable, skipWhile, startWith, throttleTime } from 'rxjs';
 import { Customers } from '../../customers.types';
 import { AddRentalItemComponent } from './add-rental-item/add-rental-item.component';
 import moment from 'moment';
@@ -75,6 +75,9 @@ export class InvoiceComponent implements OnInit {
     farmingObject = {};
     selectedIndexInner: any;
     panelOpenState = true;
+    filter: any;
+    filtersss: any;
+    filters: any;
 
 
 
@@ -98,6 +101,68 @@ export class InvoiceComponent implements OnInit {
         this.initObservables();
         this.initApis();
 
+        // this.jobsFiltersForm.valueChanges.pipe(
+        //     startWith(''),
+        //     map(value => this.applyFarmingFilters()),
+        // );
+
+        //#region farming filters change
+
+        this.filters =this.jobsFiltersForm.controls['date_period_end'].valueChanges
+            .pipe(
+                startWith(''),
+
+                distinctUntilChanged(),
+                )
+            .subscribe(() => {
+                this.applyFarmingFilters();
+            });
+
+            this.filters =this.jobsFiltersForm.controls['service_type'].valueChanges
+            .pipe(
+                startWith(''),
+
+                distinctUntilChanged(),
+                )
+            .subscribe(() => {
+                this.applyFarmingFilters();
+            });
+
+            this.filters =this.jobsFiltersForm.controls['quantity_type'].valueChanges
+            .pipe(
+                startWith(''),
+                distinctUntilChanged(),
+                )
+            .subscribe(() => {
+                this.applyFarmingFilters();
+            });
+        //#endregion
+
+        //#region trucking filters change
+
+        this.truckingFiltersForm.controls['date_period_end'].valueChanges
+            .pipe(
+                distinctUntilChanged())
+            .subscribe((data) => {
+                this.applyFarmingFilters();
+            });
+
+        this.truckingFiltersForm.controls['service_type'].valueChanges
+            .pipe(
+                distinctUntilChanged())
+            .subscribe((data) => {
+                this.applyFarmingFilters();
+            });
+
+        this.truckingFiltersForm.controls['quantity_type'].valueChanges
+            .pipe(
+                distinctUntilChanged())
+            .subscribe((data) => {
+                this.applyFarmingFilters();
+            });
+
+
+            //#endregion
 
     }
 
@@ -165,11 +230,10 @@ export class InvoiceComponent implements OnInit {
 
         }
     }
-    async getFarmingTabApis(index: number){
+    async getFarmingTabApis(index: number) {
         if (index == 0) {
             this._customerService.getFarmingInvoiceList(this.routeID, 'getFarmingInvoices');
-        } else if (index == 1)
-        {
+        } else if (index == 1) {
             // let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
             // this.filteredFarmingArray = result.totalAmount;
             // this.filteredFarmingJobs = result.jobResults;
@@ -178,11 +242,10 @@ export class InvoiceComponent implements OnInit {
 
     }
 
-    async getTruckingTabApis(index: number){
+    async getTruckingTabApis(index: number) {
         if (index == 0) {
             this._customerService.getTruckingInvoiceList(this.routeID, 'getTruckingInvoices');
-        } else if (index == 1)
-        {
+        } else if (index == 1) {
             // let result2: any = await lastValueFrom(this._customerService.getJobResultsTruckingInvoice(this.routeID, 'allTruckingCustomerJobResult', this.truckingFiltersForm.value));
             // this.filteredTruckingArray = result2.totalAmount;
             // this.filteredTruckingJobs = result2.jobResults;
@@ -229,16 +292,16 @@ export class InvoiceComponent implements OnInit {
         })
 
         dialogRef.afterClosed().subscribe(res => {
-            if(res){
-            this.filteredFarmingArray.push({
-                total_amount: res.data.amount,
-                description: res.data.description,
-                rate: res.data.rate,
-                quantity: res.data.quantity,
-            })
-            this.filteredFarmingArray = [...this.filteredFarmingArray];
-            this.cdr.detectChanges(); // Force change detection
-        }
+            if (res) {
+                this.filteredFarmingArray.push({
+                    total_amount: res.data.amount,
+                    description: res.data.description,
+                    rate: res.data.rate,
+                    quantity: res.data.quantity,
+                })
+                this.filteredFarmingArray = [...this.filteredFarmingArray];
+                this.cdr.detectChanges(); // Force change detection
+            }
 
 
         })
@@ -257,17 +320,17 @@ export class InvoiceComponent implements OnInit {
         })
 
         dialogRef.afterClosed().subscribe(res => {
-            
-            if(res)
-            {this.filteredTruckingArray.push({
-                total_amount: res.data.amount,
-                rate_type: res.data.rate_type,
-                rate: res.data.rate,
-                quantity: res.data.quantity,
-            })
-            this.filteredTruckingArray = [...this.filteredTruckingArray];
-            this.cdr.detectChanges(); // Force change detection
-        }
+
+            if (res) {
+                this.filteredTruckingArray.push({
+                    total_amount: res.data.amount,
+                    rate_type: res.data.rate_type,
+                    rate: res.data.rate,
+                    quantity: res.data.quantity,
+                })
+                this.filteredTruckingArray = [...this.filteredTruckingArray];
+                this.cdr.detectChanges(); // Force change detection
+            }
 
 
         })
@@ -302,8 +365,8 @@ export class InvoiceComponent implements OnInit {
             notes: [''],
             terms: [''],
             deliver_in: [''],
-            address:[''],
-            bill_to:['']
+            address: [''],
+            bill_to: ['']
         });
 
         this.truckingTitleForm = this._formBuilder.group({
@@ -314,45 +377,43 @@ export class InvoiceComponent implements OnInit {
             notes: [''],
             terms: [''],
             deliver_in: [''],
-            address:[''],
-            bill_to:['']
+            address: [''],
+            bill_to: ['']
         });
 
 
     }
     //#region Create Invoice
     createInvoice() {
-        if(this.filteredFarmingArray.length > 0)
-        {
-        let invoiceObj = {
-            invoice: this.filteredFarmingArray,
-            total_amount: this.totalAmount(),
-            filters: this.jobsFiltersForm.value,
-            title: this.farmingTitleForm.value,
+        if (this.filteredFarmingArray.length > 0) {
+            let invoiceObj = {
+                invoice: this.filteredFarmingArray,
+                total_amount: this.totalAmount(),
+                filters: this.jobsFiltersForm.value,
+                title: this.farmingTitleForm.value,
+            }
+            this._customerService.createFarmingInvoice(invoiceObj, this.routeID, 'updateInvoicedWorkOrder');
+            this.selectedIndexInner = 0;
+            // this.cdr.detectChanges();
+            console.log("Invoice Object", invoiceObj);
         }
-        this._customerService.createFarmingInvoice(invoiceObj, this.routeID, 'updateInvoicedWorkOrder');
-        this.selectedIndexInner = 0;
-        // this.cdr.detectChanges();
-        console.log("Invoice Object", invoiceObj);
-    }
     }
 
     createTruckingInvoice() {
-        if(this.filteredTruckingArray.length > 0)
-        {
-        let invoiceObj = {
-            invoice: this.filteredTruckingArray,
-            total_amount: this.totalTruckingAmount(),
-            filters: this.truckingFiltersForm.value,
-            title: this.truckingTitleForm.value,
+        if (this.filteredTruckingArray.length > 0) {
+            let invoiceObj = {
+                invoice: this.filteredTruckingArray,
+                total_amount: this.totalTruckingAmount(),
+                filters: this.truckingFiltersForm.value,
+                title: this.truckingTitleForm.value,
+            }
+            this._customerService.createTruckingInvoice(invoiceObj, this.routeID, 'updateInvoicedDeliveryTicket');
+            this.selectedIndexInner = 0;
+
+            this.cdr.detectChanges();
+
+            console.log("Invoice Object", invoiceObj);
         }
-        this._customerService.createTruckingInvoice(invoiceObj, this.routeID, 'updateInvoicedDeliveryTicket');
-        this.selectedIndexInner = 0;
-
-        this.cdr.detectChanges();
-
-        console.log("Invoice Object", invoiceObj);
-    }
     }
 
 
@@ -360,20 +421,35 @@ export class InvoiceComponent implements OnInit {
 
 
     async applyFarmingFilters() {
-        !this.jobsFiltersForm.value.service_type ? (this.jobsFiltersForm.value.service_type = '') : ('');
-        !this.jobsFiltersForm.value.quantity_type ? (this.jobsFiltersForm.value.quantity_type = '') : ('');
-
-        !this.jobsFiltersForm.value.date_period_start ? (this.jobsFiltersForm.value.date_period_start = '') : ('');
-        !this.jobsFiltersForm.value.date_period_end ? (this.jobsFiltersForm.value.date_period_end = '') : ('');
-
-        this.jobsFiltersForm.value.date_period_start ? this.jobsFiltersForm.controls['date_period_start'].setValue(moment(this.jobsFiltersForm.value.date_period_start).format('YYYY-MM-DD')) : ('');
-        this.jobsFiltersForm.value.date_period_end ? this.jobsFiltersForm.controls['date_period_end']?.setValue(moment(this.jobsFiltersForm.value.date_period_end).format('YYYY-MM-DD')) : ('');
+        debugger;
+        if (!this.jobsFiltersForm.value.service_type) {
+          this.jobsFiltersForm.value.service_type = '';
+        }
+        if (!this.jobsFiltersForm.value.quantity_type) {
+          this.jobsFiltersForm.value.quantity_type = '';
+        }
+      
+        if (!this.jobsFiltersForm.value.date_period_start) {
+          this.jobsFiltersForm.value.date_period_start = '';
+        }
+        if (!this.jobsFiltersForm.value.date_period_end) {
+          this.jobsFiltersForm.value.date_period_end = '';
+        }
+      
+        if (this.jobsFiltersForm.value.date_period_start) {
+          this.jobsFiltersForm.controls['date_period_start'].patchValue(moment(this.jobsFiltersForm.value.date_period_start).format('YYYY-MM-DD'));
+        }
+        if (this.jobsFiltersForm.value.date_period_end) {
+          this.jobsFiltersForm.controls['date_period_end'].patchValue(moment(this.jobsFiltersForm.value.date_period_end).format('YYYY-MM-DD'));
+        }
+      
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
         this.filteredFarmingArray = result.totalAmount;
         this.filteredFarmingJobs = result.jobResults;
         this.farmingFilterBoolean = true;
         this.cdr.detectChanges();
-    }
+      }
+      
 
     async removeFarmingFilters() {
         this.jobsFiltersForm.reset();
@@ -384,7 +460,7 @@ export class InvoiceComponent implements OnInit {
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
         this.filteredFarmingArray = result.totalAmount;
         this.filteredFarmingJobs = result.jobResults;
-        this.farmingFilterBoolean = false ;
+        this.farmingFilterBoolean = false;
         this.cdr.detectChanges();
 
 
@@ -467,21 +543,21 @@ export class InvoiceComponent implements OnInit {
         this.filteredFarmingArray.map((item) => {
             amount = amount + parseFloat(item.total_amount);
         });
-        return amount;
+        return amount.toFixed(2);
     }
     totalFarmingInvoiceAmount() {
         let amount = 0;
         let arr: any[] = [];
         this.customFarmingInvoiceList$.pipe(
             skipWhile(data => data == null),
-          )
-          .subscribe((item) => {
-            arr = item.invoices;
-        });
+        )
+            .subscribe((item) => {
+                arr = item.invoices;
+            });
         arr.map((item) => {
             amount = amount + parseFloat(item.total_amount);
         });
-        return amount;
+        return amount.toFixed(2);
     }
 
 
@@ -501,14 +577,14 @@ export class InvoiceComponent implements OnInit {
         let arr: any[] = [];
         this.customTruckingInvoiceList$.pipe(
             skipWhile(data => data == null),
-          )
-          .subscribe((item) => {
-            arr = item.invoices;
-        });
+        )
+            .subscribe((item) => {
+                arr = item.invoices;
+            });
         arr.map((item) => {
             amount = amount + parseFloat(item.total_amount);
         });
-        return amount;
+        return amount.toFixed(2);
     }
 
 
