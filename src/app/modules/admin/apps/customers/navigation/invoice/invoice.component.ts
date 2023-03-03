@@ -108,31 +108,29 @@ export class InvoiceComponent implements OnInit {
 
         //#region farming filters change
 
-        this.filters =this.jobsFiltersForm.controls['date_period_end'].valueChanges
+        this.filters = this.jobsFiltersForm.controls['date_period_end'].valueChanges
             .pipe(
-                startWith(''),
-
+                debounceTime(500),
                 distinctUntilChanged(),
-                )
+            )
             .subscribe(() => {
                 this.applyFarmingFilters();
             });
 
-            this.filters =this.jobsFiltersForm.controls['service_type'].valueChanges
+        this.filters = this.jobsFiltersForm.controls['service_type'].valueChanges
             .pipe(
-                startWith(''),
-
+                debounceTime(500),
                 distinctUntilChanged(),
-                )
+            )
             .subscribe(() => {
                 this.applyFarmingFilters();
             });
 
-            this.filters =this.jobsFiltersForm.controls['quantity_type'].valueChanges
+        this.filters = this.jobsFiltersForm.controls['quantity_type'].valueChanges
             .pipe(
-                startWith(''),
+                debounceTime(500),
                 distinctUntilChanged(),
-                )
+            )
             .subscribe(() => {
                 this.applyFarmingFilters();
             });
@@ -142,27 +140,33 @@ export class InvoiceComponent implements OnInit {
 
         this.truckingFiltersForm.controls['date_period_end'].valueChanges
             .pipe(
-                distinctUntilChanged())
+                distinctUntilChanged(),
+                throttleTime(500),
+            )
             .subscribe((data) => {
-                this.applyFarmingFilters();
+                this.applyTruckingFilters();
             });
 
-        this.truckingFiltersForm.controls['service_type'].valueChanges
-            .pipe(
-                distinctUntilChanged())
-            .subscribe((data) => {
-                this.applyFarmingFilters();
-            });
+        // this.truckingFiltersForm.controls['service_type'].valueChanges
+        //     .pipe(
+        //         debounceTime(500),
+        //         distinctUntilChanged(),
+        //     )
+        //     .subscribe((data) => {
+        //         this.applyTruckingFilters();
+        //     });
 
-        this.truckingFiltersForm.controls['quantity_type'].valueChanges
-            .pipe(
-                distinctUntilChanged())
-            .subscribe((data) => {
-                this.applyFarmingFilters();
-            });
+        // this.truckingFiltersForm.controls['quantity_type'].valueChanges
+        //     .pipe(
+        //         debounceTime(500),
+        //         distinctUntilChanged(),
+        //     )
+        //     .subscribe((data) => {
+        //         this.applyTruckingFilters();
+        //     });
 
 
-            //#endregion
+        //#endregion
 
     }
 
@@ -421,35 +425,34 @@ export class InvoiceComponent implements OnInit {
 
 
     async applyFarmingFilters() {
-        debugger;
         if (!this.jobsFiltersForm.value.service_type) {
-          this.jobsFiltersForm.value.service_type = '';
+            this.jobsFiltersForm.value.service_type = '';
         }
         if (!this.jobsFiltersForm.value.quantity_type) {
-          this.jobsFiltersForm.value.quantity_type = '';
+            this.jobsFiltersForm.value.quantity_type = '';
         }
-      
+
         if (!this.jobsFiltersForm.value.date_period_start) {
-          this.jobsFiltersForm.value.date_period_start = '';
+            this.jobsFiltersForm.value.date_period_start = '';
         }
         if (!this.jobsFiltersForm.value.date_period_end) {
-          this.jobsFiltersForm.value.date_period_end = '';
+            this.jobsFiltersForm.value.date_period_end = '';
         }
-      
+
         if (this.jobsFiltersForm.value.date_period_start) {
-          this.jobsFiltersForm.controls['date_period_start'].patchValue(moment(this.jobsFiltersForm.value.date_period_start).format('YYYY-MM-DD'));
+            this.jobsFiltersForm.controls['date_period_start'].patchValue(moment(this.jobsFiltersForm.value.date_period_start).format('YYYY-MM-DD'));
         }
         if (this.jobsFiltersForm.value.date_period_end) {
-          this.jobsFiltersForm.controls['date_period_end'].patchValue(moment(this.jobsFiltersForm.value.date_period_end).format('YYYY-MM-DD'));
+            this.jobsFiltersForm.controls['date_period_end'].patchValue(moment(this.jobsFiltersForm.value.date_period_end).format('YYYY-MM-DD'));
         }
-      
+
         let result: any = await lastValueFrom(this._customerService.getJobResultsFarmingInvoice(this.routeID, 'allCustomerJobResult', this.jobsFiltersForm.value));
         this.filteredFarmingArray = result.totalAmount;
         this.filteredFarmingJobs = result.jobResults;
         this.farmingFilterBoolean = true;
         this.cdr.detectChanges();
-      }
-      
+    }
+
 
     async removeFarmingFilters() {
         this.jobsFiltersForm.reset();
@@ -468,6 +471,7 @@ export class InvoiceComponent implements OnInit {
 
 
     async applyTruckingFilters() {
+        debugger;
         !this.truckingFiltersForm.value.service_type ? (this.truckingFiltersForm.value.service_type = '') : ('');
         !this.truckingFiltersForm.value.quantity_type ? (this.truckingFiltersForm.value.quantity_type = '') : ('');
         !this.truckingFiltersForm.value.date_period_start ? (this.truckingFiltersForm.value.date_period_start = '') : ('');
