@@ -36,6 +36,14 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Legal Name</mat-label>
+                                    <input matInput type="text" formControlName="legal_name">
+                                    <mat-hint *ngIf="this.firstFormGroup.get('legal_name').hasError('required')"
+                                        class="text-md uppercase text-red-500">Legal Name is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Email</mat-label>
                                     <input matInput type="email" formControlName="email">
                                     <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')"

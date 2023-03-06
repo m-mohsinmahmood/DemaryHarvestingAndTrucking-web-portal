@@ -196,6 +196,7 @@ export class UpdateComponent implements OnInit {
             id: ['' || this.data?.applicantData?.id],
             first_name: ['' || this.data?.applicantData?.first_name, [Validators.required]],
             last_name: ['' || this.data?.applicantData?.last_name, [Validators.required]],
+            legal_name: ['' || this.data?.applicantData?.legal_name, [Validators.required]],
             email: ['' || this.data?.applicantData?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")], !this.data?.isEdit ? this.asyncValidator.bind(this) : ''],
             date_of_birth: ['' || this.data?.applicantData?.date_of_birth, [Validators.required]],
             age: ['' || this.data?.applicantData?.age, [Validators.required]],

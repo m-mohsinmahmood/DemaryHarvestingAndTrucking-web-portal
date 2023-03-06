@@ -2,14 +2,14 @@
     grid-template-columns: 15% 15% 15%;
 
     @screen sm {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-template-columns: 10% 10% 10% 15% 10% 10% 10% 10% 10%;
     }
     @screen md {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-template-columns: 10% 10% 10% 15% 10% 10% 10% 10% 10%;
     }
 
     @screen lg {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-template-columns: 10% 10% 10% 15% 10% 10% 10% 10% 10%;
     }
 }
 .job-result-custom-trucking-grid {
@@ -78,5 +78,7 @@
 }
 ::ng-deep .filters-job-result .mat-form-field-wrapper
 {
-    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0rem !important;
+    margin-top: 0rem !important;
 }

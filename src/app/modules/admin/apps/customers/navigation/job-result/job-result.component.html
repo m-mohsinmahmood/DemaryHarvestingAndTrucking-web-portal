@@ -4,7 +4,7 @@
         <!-- Custom Harvesting-->
         <mat-tab label="Custom Harvesting">
             <div class="flex justify-end py-4">
-                
+
 
                 <!-- 
                 <button class="ml-2" mat-flat-button [color]="'warn'">
@@ -12,23 +12,24 @@
                     <span class="ml-1 sm:ml-2">Filter</span>
                 </button> -->
             </div>
-            <div class="bg-gray justify-center w-11/12 mx-auto my-8 shadow rounded-lg" style="background-color:#EFEEFF; border:1px solid #DFE4EA">
+            <div class="bg-gray justify-center px-2 my-8">
                 <div class="flex flex-col justify-center items-center">
-                    <div class="flex flex-row gap-x-3 pt-2">
-                        <div class="w-inherit flex flex-col filters-job-result">
+                    <div class="flex flex-row gap-x-3 pt-2 w-full justify-between">
+                        <div class="w-inherit flex flex-col filters-job-result sm:w-8/12 px-2">
                             <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFilters()"
-                                class="flex flex-row flex-auto gap-x-8">
+                                class="flex flex-col lg:flex-row flex-auto gap-x-8">
                                 <!-- MAT AUTOCOMPLETE -->
-                                <mat-form-field class="w-72" appearance="outline" fxFlex>
+                                <mat-form-field class="md:w-1/3" appearance="outline" fxFlex>
                                     <mat-label>Farm Name</mat-label>
                                     <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
-                                        (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id"
-                                        name="name" placeholder="Farm Name" />
+                                        (keyup)="farm_search$.next($event.target.value)" matInput
+                                        formControlName="farm_id" name="name" placeholder="Farm Name" />
                                 </mat-form-field>
                                 <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
                                     <div *ngIf="allFarms | withLoading | async as allFarms">
                                         <ng-template [ngIf]="allFarms.value">
-                                            <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm">
+                                            <mat-option *ngFor="let farm of allFarms.value.customer_farms"
+                                                [value]="farm">
                                                 {{ farm.name }}
                                             </mat-option>
                                         </ng-template>
@@ -41,86 +42,81 @@
                                                 </div>
                                             </mat-option>
                                         </ng-template>
-        
+
                                         <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
                                             <mat-option disabled> No Farm(s) found </mat-option>
                                         </ng-template>
                                     </div>
                                 </mat-autocomplete>
                                 <!-- MAT AUTOCOMPLETE -->
-        
-        
-        
+
+
+
                                 <!-- Crop AUTOCOMPLETE -->
-        
-                <mat-form-field class="w-72" appearance="outline" fxFlex>
-                    <mat-label>Crop Name</mat-label>
-                    <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops"
-                        (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name"
-                        placeholder="Crop Name" />
-                </mat-form-field>
-        
-                <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
-                    <div *ngIf="allCrops | withLoading | async as allCrops">
-                        <ng-template [ngIf]="allCrops.value">
-                            <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
-                                {{ crop.name }}
-                            </mat-option>
-                        </ng-template>
-                        <ng-template [ngIf]="allCrops?.loading">
-                            <mat-option>
-                                <div style="display: flex;
+
+                                <mat-form-field class="md:w-1/3" appearance="outline" fxFlex>
+                                    <mat-label>Crop Name</mat-label>
+                                    <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()"
+                                        [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)"
+                                        matInput formControlName="crop_id" name="name" placeholder="Crop Name" />
+                                </mat-form-field>
+
+                                <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+                                    <div *ngIf="allCrops | withLoading | async as allCrops">
+                                        <ng-template [ngIf]="allCrops.value">
+                                            <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
+                                                {{ crop.name }}
+                                            </mat-option>
+                                        </ng-template>
+                                        <ng-template [ngIf]="allCrops?.loading">
+                                            <mat-option>
+                                                <div style="display: flex;
                                             justify-content: center;
                                             text-align: center;">
-                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                </div>
-                            </mat-option>
-                        </ng-template>
-        
-                        <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
-                            <mat-option disabled> No Crop(s) found </mat-option>
-                        </ng-template>
-                    </div>
-                </mat-autocomplete>
-                <!-- Crop AUTOCOMPLETE -->
-        
-        
-                                <mat-form-field class="w-72" appearance="outline">
+                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                                </div>
+                                            </mat-option>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
+                                            <mat-option disabled> No Crop(s) found </mat-option>
+                                        </ng-template>
+                                    </div>
+                                </mat-autocomplete>
+                                <!-- Crop AUTOCOMPLETE -->
+
+
+                                <mat-form-field class="md:w-1/3" appearance="outline">
                                     <mat-label>Destinations</mat-label>
                                     <input matInput formControlName="destinations" />
                                 </mat-form-field>
-        
+
                             </form>
                         </div>
-                        <div class="flex flex-row justify-evenly items-start gap-x-3 pt-2">
+                        <div class="flex flex-col lg:flex-row justify-evenly items-start gap-x-3 pt-2 sm:4/12 px-2">
                             <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                                <button (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
-                                    [color]="'primary'">
+                                <button *ngIf="!harvestingFilterBool" (click)="applyFilters(); filtersDrawer.close()"
+                                    class="" mat-flat-button [color]="'primary'"
+                                    [disabled]="(!jobsFiltersForm.controls['farm_id'].value && !jobsFiltersForm.controls['destinations'].value && !jobsFiltersForm.controls['crop_id'].value)">
                                     <span class="">Apply filters</span>
                                 </button>
-                            </div>
-                            <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                                <button (click)="removeFilters(); filtersDrawer.close()"
-            
-                                    [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.created_at && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
+
+                                <button *ngIf="harvestingFilterBool" (click)="removeFilters()"
+                                    [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
                                     class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                                    <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    <mat-icon class="m-0 icon-size-4" color="warn"
+                                        [svgIcon]="'heroicons_outline:x'"></mat-icon>
                                     <span>Remove filters</span>
                                 </button>
-                            </div>
-                            <div class="w-inherit flex justify-center items-center mt-1 mb-1">
 
-                            <button mat-flat-button [color]="'primary'">
-                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                <span class="lg:ml-2">Ready Invoice</span>
-                            </button>
                             </div>
+
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-            <div class="w-11/12 mx-auto">
+            <div class="">
                 <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                         class="toggling-info-job-result mb-4 bg-gray-100  py-1">
@@ -133,59 +129,67 @@
                             class="grid grid-cols-3 table-auto py-5 justify-between gap-x-8 gap-y-2 sm:p-8 p-3 m-auto gray-custom-bg">
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Net Pounds</mat-label>
-                                <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds ? harvestingJobs.details[0]?.total_net_pounds : "N/A" }}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds ?
+                                    harvestingJobs.details[0]?.total_net_pounds : "N/A" }}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Tons</mat-label>
-                                <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds? harvestingJobs.details[0]?.total_net_pounds/2000 : "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
+                                    harvestingJobs.details[0]?.total_net_pounds/2000 : "N/A"}}</mat-label>
 
                             </div>
 
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Tons per Acre</mat-label>
                                 <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres? harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres : "N/A"}}</mat-label>
+                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres?
+                                    harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres :
+                                    "N/A"}}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Bushels</mat-label>
-                                <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_bushels? harvestingJobs.details[0]?.total_net_bushels : "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_bushels?
+                                    harvestingJobs.details[0]?.total_net_bushels : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Bushels per Acre</mat-label>
                                 <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres? harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres : "N/A"}}</mat-label>
+                                    class="text-right">{{harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres?
+                                    harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres
+                                    : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Hundred Weight</mat-label>
-                                <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds? harvestingJobs.details[0]?.total_net_pounds/100: "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
+                                    harvestingJobs.details[0]?.total_net_pounds/100: "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Total Loaded Miles</mat-label>
-                                <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles? harvestingJobs.details[0]?.total_loaded_miles: "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles?
+                                    harvestingJobs.details[0]?.total_loaded_miles: "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Average Miles</mat-label>
                                 <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets? harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets: "N/A"}}</mat-label>
+                                    class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets?
+                                    harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets:
+                                    "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Loads</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.total_loads? harvestingJobs.total_loads: "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.total_loads? harvestingJobs.total_loads:
+                                    "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Tickets</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_tickets ? harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.total_tickets ?
+                                    harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
@@ -195,7 +199,8 @@
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Company</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.details[0]?.company_name ? harvestingJobs.details[0]?.company_name  : "N/A"}}</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.company_name ?
+                                    harvestingJobs.details[0]?.company_name : "N/A"}}</mat-label>
 
                             </div>
 
@@ -203,74 +208,12 @@
 
                         </div>
                     </mat-expansion-panel>
-
-                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                        class="toggling-info-job-result bg-gray-100 py-1">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title class="text-lg font-extrabold text-gray-500 items-center">
-                                Invoice
-                            </mat-panel-title>
-                            <mat-panel-description class="grow-0 justify-end">
-                                <button class="border-1 border-b" mat-flat-button [color]="'white'">
-                                    <span class="ml-2 mr-1">Invoice</span>
-                                </button>
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <div class="Sgap-4 grid-cols-1 table-auto py-5 justify-between sm:w-180 m-auto">
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">Hauling Rate, Per Ton</mat-label>
-                                <mat-label class="text-right">161616</mat-label>
-                            </div>
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">DHT Ton Hauled</mat-label>
-                                <mat-label class="text-right">Cinnova</mat-label>
-
-                            </div>
-
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">Non - DHT Ton Hauled, Owner Hauled</mat-label>
-                                <mat-label class="text-right">Cinnova</mat-label>
-                            </div>
-                            <div class="flex justify-between border-t pt-4 border-gray-400">
-                                <mat-label class="text-lg font-bold text-gray-500 w-1/2">Hauling Fee:</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
-
-                            </div>
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">Harvest Rate per Acre</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
-
-                            </div>
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">Acres Harvested</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
-
-                            </div>
-                            <div class="flex flex-row justify-center py-1">
-                                <mat-label class="text-lg text-gray-500 font-bold">GPS Acres</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
-
-                            </div>
-                            <div class="flex justify-between border-t pt-4 border-gray-400">
-                                <mat-label class="text-lg font-bold text-gray-500 w-1/2">Harvesting Fee:</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
-
-                            </div>
-
-                            <div class="flex justify-between border-t pt-4 border-gray-400">
-                                <mat-label class="text-lg font-bold text-gray-500 w-1/2">Total:</mat-label>
-                                <mat-label class="text-right">$496165</mat-label>
-                            </div>
-
-                        </div>
-
-
-                    </mat-expansion-panel> -->
                 </mat-accordion>
             </div>
-               
-            
-            <div class="mt-4 px-4 py-5 sm:p-0 w-11/12 mx-auto rounded-xl shadow" *ngIf="customHarvestingJobs$ | async as harvestingJobs">
+
+
+            <div class="mt-4 px-4 py-5 sm:p-0 mx-auto rounded-xl shadow"
+                *ngIf="customHarvestingJobs$ | async as harvestingJobs">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -284,10 +227,10 @@
                                         <div class="sm:block">
                                             Field
                                         </div>
-                                        <div class="sm:block pl-2">
+                                        <div class="sm:block">
                                             Load Date
                                         </div>
-                                        <div class="sm:block pl-2">
+                                        <div class="sm:block">
                                             Destination
                                         </div>
                                         <div class="hidden lg:block">
@@ -299,10 +242,10 @@
                                         <div class="hidden sm:block">
                                             Net Bushels
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Load Miles
                                         </div>
-                                        <div class="hidden sm:block pl-2">
+                                        <div class="hidden sm:block">
                                             Status
                                         </div>
                                     </div>
@@ -323,36 +266,37 @@
                                                         </div>
 
                                                         <!-- Email -->
-                                                        <div class="sm:block items-center">
-                                                            <div class="min-w-4 ml-2">
+                                                        <div class="sm:block">
+                                                            <div class="">
                                                                 {{harvestingJob.destination}}
                                                             </div>
                                                         </div>
 
                                                         <!-- Contact -->
-                                                        <div class="hidden sm:block items-center">
-                                                            <div class="min-w-4 ml-2">
+                                                        <div class="hidden lg:block">
+                                                            <div class="">
                                                                 {{harvestingJob.id}}
                                                             </div>
                                                         </div>
                                                         <!-- Active -->
-                                                        <div class="hidden lg:block">
+                                                        <div class="hidden sm:block">
                                                             <div class="min-w-4 ml-2">
                                                                 {{harvestingJob.net_pounds}}
                                                             </div>
                                                         </div>
 
-                                                        <div class="hidden lg:block">
+                                                        <div class="hidden sm:block">
                                                             <div class="min-w-4 ml-2">{{harvestingJob.net_bushel}}
                                                             </div>
                                                         </div>
-                                                        <div class="hidden lg:block">
+                                                        <div class="hidden sm:block">
                                                             <div class="min-w-4 ml-2">
                                                                 {{harvestingJob.load_miles}}
                                                             </div>
                                                         </div>
-                                                        <div class="hidden lg:block">
-                                                            <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                        <div class="hidden sm:block">
+                                                            <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                                style="background: #4ADE80;">
                                                                 {{harvestingJob.status}}
                                                             </div>
                                                         </div>
@@ -381,8 +325,47 @@
 
         <!--Commercial Trucking -->
         <mat-tab label="Commercial Trucking">
-            <div class="mt-4 px-4 py-5 sm:p-0 w-11/12 mx-auto rounded-xl shadow">
-                <!-- Main -->
+            <div class="mt-4 px-4 py-5 sm:p-0 mx-auto rounded-xl shadow">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="flex flex-row gap-x-3 pt-2 px-4 w-full">
+                        <div class="w-inherit flex flex-col filters-job-result sm:w-3/4">
+                            <form [formGroup]="truckingFiltersForm" (ngSubmit)="applyTruckingFilters()"
+                                class="flex flex-row flex-auto gap-x-8 justify-between">
+
+                                <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
+                                    <mat-label>Period</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker">
+                                        <input matStartDate formControlName="from" placeholder="Start date">
+                                        <input matEndDate formControlName="to" placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker></mat-date-range-picker>
+                                </mat-form-field>
+
+                            </form>
+                        </div>
+                        <div class="flex flex-row items-start gap-x-3 pt-2 sm:w-1/4 justify-end">
+                            <div class="w-inherit flex items-center mt-1 mb-1">
+                                <button *ngIf="!truckingFilterBool" (click)="applyTruckingFilters()"
+                                    [disabled]="(!truckingFiltersForm.controls['from'].value && !truckingFiltersForm.controls['to'].value)"
+                                    class="text-white" mat-flat-button
+                                    style="background-color: transparent; border: 2px solid #4F46E5;">
+                                    <span class="" style="color:#4F46E5">Apply filters</span>
+                                </button>
+
+                                <button *ngIf="truckingFilterBool" (click)="removeTruckingFilters()"
+                                    class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                                    <mat-icon class="m-0 icon-size-4" color="warn"
+                                        [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    <span>Remove filters</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
@@ -416,9 +399,7 @@
                                         <div class="sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="hidden sm:block pl-2">
-                                            Invoice
-                                        </div>
+
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
@@ -445,7 +426,7 @@
 
                                                     <!-- Contact -->
                                                     <div class="sm:block items-center">
-                                                        <div class="min-w-4 ml-2">
+                                                        <div (click)="editTruckingJob(truckingJob, truckingJob.id)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
                                                             {{truckingJob.id}}
 
                                                         </div>
@@ -464,18 +445,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="hidden lg:block">
-                                                        <div class="min-w-4 ml-2">{{truckingJob.destination_state }}</div>
+                                                        <div class="min-w-4 ml-2">{{truckingJob.destination_state }}
+                                                        </div>
                                                     </div>
                                                     <div class="lg:block">
-                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                            style="background: #4ADE80;">
                                                             {{truckingJob.status }}
 
                                                         </div>
                                                     </div>
-                                                    <div class="hidden lg:block">
-                                                        <div class="min-w-4 ml-2">"Invoice"
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -500,8 +480,78 @@
         <!--Custom Farming-->
         <mat-tab label="Custom Farming">
             <div class="mt-4 px-4 border-t border-gray-100 py-5 sm:p-0">
-                <!-- Main -->
-                <div class="flex flex-auto overflow-hidden  w-11/12 mx-auto rounded-xl shadow">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="flex flex-row gap-x-3 pt-2 w-full px-4">
+                        <div class="w-inherit flex flex-col filters-job-result sm:w-3/4">
+                            <form [formGroup]="farmingFiltersForm" (ngSubmit)="applyFarmingFilters()"
+                                class="flex flex-row flex-auto gap-x-8 justify-between">
+                                <mat-form-field class="sm:w-1/3" appearance="outline">
+                                    <mat-label>Service Type</mat-label>
+                                    <mat-select formControlName="service_type">
+                                        <mat-option value="Ripper">Ripper</mat-option>
+                                        <mat-option value="Offset Disking">Offset Disking</mat-option>
+                                        <mat-option value="Drilling">Drilling</mat-option><mat-option
+                                            value="Ripper">Ripper</mat-option>
+                                        <mat-option value="Offset Disking & Crumbler">Offset Disking &
+                                            Crumbler</mat-option>
+                                        <mat-option value="Listing">Listing</mat-option><mat-option
+                                            value="Ripper">Ripper</mat-option>
+                                        <mat-option value="Tiger">Tiger</mat-option>
+                                        <mat-option value="Swathing - 35' Draper">Swathing - 35'
+                                            Draper</mat-option>
+                                        <mat-option value="Swathing - 15' Draper">Swathing - 15'
+                                            Draper</mat-option>
+                                        <mat-option value="Tilling">Tilling</mat-option>
+                                        <mat-option value="Seeding">Seeding</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="sm:w-1/3" appearance="outline">
+                                    <mat-label>Quantity Type</mat-label>
+                                    <!-- (ngModelChange)="quantityType()" -->
+                                    <mat-select formControlName="quantity_type">
+                                        <mat-option value="acres">Acres</mat-option>
+                                        <mat-option value="flat_rate">Flat Rate</mat-option>
+                                        <mat-option value="hours">Hours</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+
+                                <mat-form-field birthdayFormat class="sm:w-1/3" appearance="outline">
+                                    <mat-label>Invoice Period</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker2">
+                                        <input matStartDate formControlName="from" placeholder="Start date">
+                                        <input matEndDate formControlName="to" placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker2></mat-date-range-picker>
+                                </mat-form-field>
+
+                            </form>
+                        </div>
+                        <div class="flex flex-row items-start gap-x-3 pt-2 justify-end sm:w-1/4">
+                            <div class="w-inherit flex items-center mt-1 mb-1">
+                                <button *ngIf="!farmingFilterBool" (click)="applyFarmingFilters()"
+                                    [disabled]="(!farmingFiltersForm.controls['service_type'].value && !farmingFiltersForm.controls['quantity_type'].value && !farmingFiltersForm.controls['from'].value && !farmingFiltersForm.controls['to'].value)"
+                                    class="text-white" mat-flat-button
+                                    style="background-color: transparent; border: 2px solid #4F46E5;">
+                                    <span class="" style="color:#4F46E5">Apply filters</span>
+                                </button>
+
+                                <button *ngIf="farmingFilterBool" (click)="removeFarmingFilters()"
+                                    class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                                    <mat-icon class="m-0 icon-size-4" color="warn"
+                                        [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    <span>Remove filters</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                         <ng-container>
@@ -540,9 +590,6 @@
                                         <div class="sm:block pl-2">
                                             Status
                                         </div>
-                                        <div class="lg:block">
-                                            Invoice
-                                        </div>
                                     </div>
                                     <!-- Rows -->
                                     <ng-container>
@@ -556,7 +603,9 @@
 
                                                     <!-- Harvest Year -->
                                                     <div class="hidden sm:block">
+                                                        <div  (click)="editFarmingJob(farmingJob, farmingJob.id)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
                                                         {{farmingJob.service}}
+                                                        </div>
                                                     </div>
 
                                                     <!-- Email -->
@@ -592,7 +641,7 @@
                                                     </div>
                                                     <div class="hidden lg:block">
                                                         <div class="min-w-4 ml-2">
-                                                            {{farmingJob.end_time}}
+                                                            {{farmingJob.end_time | date: "dd-MM-YYYY, h:mm a"}}
 
                                                         </div>
                                                     </div>
@@ -600,13 +649,10 @@
                                                         <div class="min-w-4 ml-2">{{farmingJob.engine_hours}}</div>
                                                     </div>
                                                     <div class="lg:block">
-                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                            style="background: #4ADE80;">
                                                             {{farmingJob.status}}
 
-                                                        </div>
-                                                    </div>
-                                                    <div class="lg:block">
-                                                        <div class="min-w-4 ml-2">"Invoice"
                                                         </div>
                                                     </div>
                                                 </div>
@@ -639,7 +685,8 @@
             <div>
                 <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Custom Harvesting </header>
             </div>
-            <div class="mt-4 px-4 py-5 sm:p-0 w-11/12 mx-auto rounded-xl shadow" *ngIf="customHarvestingJobs$ | async as harvestingJobs">
+            <div class="mt-4 px-4 py-5 sm:p-0 mx-auto rounded-xl shadow"
+                *ngIf="customHarvestingJobs$ | async as harvestingJobs">
                 <!-- Main -->
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
@@ -721,7 +768,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="hidden lg:block">
-                                                            <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                            <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                                style="background: #4ADE80;">
                                                                 {{harvestingJob.status}}
                                                             </div>
                                                         </div>
@@ -749,7 +797,7 @@
             <div>
                 <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Commercial Trucking </header>
             </div>
-            <div class="flex flex-auto overflow-hidden w-11/12 mx-auto rounded shadow">
+            <div class="flex flex-auto overflow-hidden mx-auto rounded shadow">
                 <!-- Products list -->
                 <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                     <ng-container>
@@ -833,7 +881,8 @@
                                                     <div class="min-w-4 ml-2">{{truckingJob.destination_state }}</div>
                                                 </div>
                                                 <div class="lg:block">
-                                                    <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                    <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                        style="background: #4ADE80;">
                                                         {{truckingJob.status }}
 
                                                     </div>
@@ -864,7 +913,7 @@
                 <header class="mt-4 ml-2  text-2xl font-extrabold tracking-tight"> Custom Farming </header>
             </div>
 
-            <div class="mt-4 px-4 py-5 sm:p-0 w-11/12 mx-auto rounded-xl shadow">
+            <div class="mt-4 px-4 py-5 sm:p-0 mx-auto rounded-xl shadow">
                 <div class="flex flex-auto overflow-hidden">
                     <!-- Products list -->
                     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
@@ -964,7 +1013,8 @@
                                                         <div class="min-w-4 ml-2">{{farmingJob.engine_hours}}</div>
                                                     </div>
                                                     <div class="lg:block">
-                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2" style="background: #4ADE80;">
+                                                        <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                            style="background: #4ADE80;">
                                                             {{farmingJob.status}}
 
                                                         </div>
@@ -1051,36 +1101,36 @@
 
                         <!-- Crop AUTOCOMPLETE -->
 
-        <mat-form-field appearance="outline" fxFlex>
-            <mat-label>Crop Name</mat-label>
-            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()" [matAutocomplete]="crops"
-                (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name"
-                placeholder="Crop Name" />
-        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Crop Name</mat-label>
+                            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()"
+                                [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput
+                                formControlName="crop_id" name="name" placeholder="Crop Name" />
+                        </mat-form-field>
 
-        <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
-            <div *ngIf="allCrops | withLoading | async as allCrops">
-                <ng-template [ngIf]="allCrops.value">
-                    <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
-                        {{ crop.name }}
-                    </mat-option>
-                </ng-template>
-                <ng-template [ngIf]="allCrops?.loading">
-                    <mat-option>
-                        <div style="display: flex;
+                        <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+                            <div *ngIf="allCrops | withLoading | async as allCrops">
+                                <ng-template [ngIf]="allCrops.value">
+                                    <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
+                                        {{ crop.name }}
+                                    </mat-option>
+                                </ng-template>
+                                <ng-template [ngIf]="allCrops?.loading">
+                                    <mat-option>
+                                        <div style="display: flex;
                                     justify-content: center;
                                     text-align: center;">
-                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                        </div>
-                    </mat-option>
-                </ng-template>
+                                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                        </div>
+                                    </mat-option>
+                                </ng-template>
 
-                <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
-                    <mat-option disabled> No Crop(s) found </mat-option>
-                </ng-template>
-            </div>
-        </mat-autocomplete>
-        <!-- Crop AUTOCOMPLETE -->
+                                <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
+                                    <mat-option disabled> No Crop(s) found </mat-option>
+                                </ng-template>
+                            </div>
+                        </mat-autocomplete>
+                        <!-- Crop AUTOCOMPLETE -->
 
 
                         <mat-form-field appearance="outline">
@@ -1100,8 +1150,7 @@
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
                     <button (click)="removeFilters(); filtersDrawer.close()"
-
-                        [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.created_at && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
+                        [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
                         class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
                         <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
                         <span>Remove filters</span>

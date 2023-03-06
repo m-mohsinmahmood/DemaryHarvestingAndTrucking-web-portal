@@ -13,24 +13,32 @@ import { EmployeeService } from '../../../employee.service';
 export class OnboardingDocumentsComponent implements OnInit {
 
   @Input() onboardingDocuments: Observable<any>;
+  @Input() employeeDocs: Observable<any>;
   @Input() employeeId: any;
   policyDocument$: Observable<any[]>;
+  filteredEmployeeDocs= <any>{} ;
+  employeeDocsName = {
+    "passport_doc": "Passport",
+    "dot_physical_doc": "DOT Physical",
+    "drug_test_doc": "Drug Test",
+    "cdl_license_doc": "State/CDL Driver License",
+    "visa_doc": "VISA",
+    "i9_doc": "I-9",
+    "i94_doc": "I-94",
+    "cert_doc": "E - Verify Cert",
+    "bank_acc_doc": "Bank Account",
+    "social_sec_doc": "Social Security",
+    "w4_doc": "W-4",
+    "foreign_driver_license_doc": "Foreign Driver License",
+    "american_license_doc": "American/CDL License"
+  }
+  
 
   policyDocuments: any[] = [
-    { value: 'Passport' },
-    { value: 'Foreign Drivers License' },
     { value: 'Contract' },
     { value: 'Approval Letter' },
-    { value: 'VISA' },
     { value: 'Social Security' },
     { value: 'W-4 (USA only)' },
-    { value: 'American Drivers License' },
-    { value: 'CDL Drivers License' },
-    { value: 'E-verify' },
-    { value: 'I-90' },
-    { value: 'I-94' },
-    { value: 'Physical Test' },
-    { value: 'Drug Test' },
   ];
 
 
@@ -41,8 +49,20 @@ export class OnboardingDocumentsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.displayEmployeeDocs();
   }
 
+  displayEmployeeDocs(){
+    for (const [key, value] of Object.entries(this.employeeDocs)) {
+      for (const [key, val] of Object.entries(value)) {
+        if (key.includes('doc') && val){
+            this.filteredEmployeeDocs[key] = val;
+        }
+      }
+    }
+    console.log(this.filteredEmployeeDocs);
+  }
+  
   //#region Upload Document Popup
   uploadDocument() {
     const dialogRef = this._matDialog.open(UploadDocumentComponent, {

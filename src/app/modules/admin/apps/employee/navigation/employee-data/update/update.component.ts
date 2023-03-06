@@ -153,6 +153,7 @@ export class UpdateEmployeeComponent implements OnInit {
             id: [this.data.id],
             first_name: ['' || this.data.employeeData?.employee_info?.first_name, [Validators.required]],
             last_name: ['' || this.data.employeeData?.employee_info?.last_name, [Validators.required]],
+            legal_name: ['' || this.data.employeeData?.employee_info?.legal_name, [Validators.required]],
             email: ['' || this.data.employeeData?.employee_info?.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             date_of_birth: ['' || this.data.employeeData?.employee_info?.date_of_birth, [Validators.required]],
             age: ['' || this.data.employeeData?.employee_info?.age, [Validators.required]],

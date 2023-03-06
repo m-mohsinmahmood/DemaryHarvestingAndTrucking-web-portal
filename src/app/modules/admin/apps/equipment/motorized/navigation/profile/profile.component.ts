@@ -18,6 +18,8 @@ export class MotorizedProfileComponent implements OnInit {
   routeID;
   result: string = '';
   allExpandState = false;
+  pictures:string[] = [];
+
 
   //#endregion
 
@@ -45,6 +47,8 @@ export class MotorizedProfileComponent implements OnInit {
     });
     this.initApi();
     this.initObservables();
+    this.picturesHandling();
+
   }
 
   ngOnDestroy(): void {
@@ -66,6 +70,16 @@ export class MotorizedProfileComponent implements OnInit {
     this.motorizedVehicle$ = this._motorizedService.motorizedVehicle$;
   }
   //#endregion
+
+  picturesHandling(){
+    this.motorizedVehicle$.subscribe((res=> { 
+      if(res){
+      this.pictures = res.pictures?.replace(/\s/g, '').split(',');
+
+  }
+}));
+      
+  }
 
 
 }

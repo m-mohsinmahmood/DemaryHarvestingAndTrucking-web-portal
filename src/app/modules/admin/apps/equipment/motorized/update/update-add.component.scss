@@ -1,23 +1,8 @@
 
 #fileInput {
-    position: absolute;
-    cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    left: 0px;
-    top: 0px;
-    height: 4rem;
+   display: none;
 }
-.pictures-fields-label
-{
-    font-size: 14px;
-    font-weight: 500;
-    color:#B7BFC9 !important;
-}
-.mat-toolbar-row, .mat-toolbar-single-row
-{
-    padding: 0px !important;
-}
+
 
 ::ng-deep .mat-form-field-wrapper 
 {
@@ -48,4 +33,9 @@
     border: 2px solid #ffffff;
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
+}
+
+::ng-deep .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-subscript-wrapper .mat-hint
+{
+    color: red !important;
 }

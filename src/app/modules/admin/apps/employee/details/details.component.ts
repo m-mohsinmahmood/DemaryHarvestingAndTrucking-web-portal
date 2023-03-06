@@ -118,6 +118,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     //#region Initial APIs
     initApis(id: string) {
         this._employeeService.getEmployeeById(id, 'false');
+        this._employeeService.getEmployeeDocs(id);
+
     }
     //#endregion
 
