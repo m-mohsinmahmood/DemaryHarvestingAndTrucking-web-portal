@@ -15,6 +15,7 @@ import {
     MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { string } from 'joi';
 
 export const MY_FORMATS = {
     parse: {
@@ -83,7 +84,10 @@ export class UpdateAddMachineryComponent implements OnInit {
     routeID: string;
     avatar: string = '';
     year;
-        isImage: boolean = true;
+    pictures1Preview:string= '';
+    pictures2Preview:string= '';
+    pictures3Preview:string= '';
+
 
 
 
@@ -121,77 +125,82 @@ export class UpdateAddMachineryComponent implements OnInit {
                     this._machineryService.closeDialog.next(false);
                 }
             });
+
+
     }
 
     //#region init form
     initForm() {
         // Create the form
         this.form = this._formBuilder.group({
-            id                      : [''],
-            type                    : ['', [Validators.required]],
-            status                  : true,
-            name                    : ['', [Validators.required]],
-            serial_number           : [''],
-            engine_hours            : [''],
-            eh_reading              : [''],
-            separator_hours         : [''],
-            sh_reading              : [''],
-            company_id              : ['', [Validators.required]],
-            color                   : [''],
-            year                    : [moment()],
-            make                    : ['', [Validators.required]],
-            model                   : [''],
-            insurance_status        : [''],
-            liability               : [''],
-            collision               : [''],
-            comprehensive           : [''],
-            purchase_price          : [''],
-            date_of_purchase        : [''],
-            sales_price             : [''],
-            date_of_sales           : [''],
-            estimated_market_value  : [''],
-            source_of_market_value  : [''],
-            date_of_market_value    : [''],
-            pictures                : ['']
+            id: [''],
+            type: ['', [Validators.required]],
+            status: true,
+            name: ['', [Validators.required]],
+            serial_number: [''],
+            engine_hours: [''],
+            eh_reading: [''],
+            separator_hours: [''],
+            sh_reading: [''],
+            company_id: ['', [Validators.required]],
+            color: [''],
+            year: [moment()],
+            make: ['', [Validators.required]],
+            model: [''],
+            insurance_status: [''],
+            liability: [''],
+            collision: [''],
+            comprehensive: [''],
+            purchase_price: [''],
+            date_of_purchase: [''],
+            sales_price: [''],
+            date_of_sales: [''],
+            estimated_market_value: [''],
+            source_of_market_value: [''],
+            date_of_market_value: [''],
+            pictures1: [''],
+            pictures2: [''],
+            pictures3: ['']
+
 
         });
         if (this.data) {
             this.form.patchValue({
 
-                id              : this.data.machineryData.id,
-                type            : this.data.machineryData.type,
-                status          : this.data.machineryData.status.toString(),
-                name            : this.data.machineryData.name,
+                id: this.data.machineryData.id,
+                type: this.data.machineryData.type,
+                status: this.data.machineryData.status.toString(),
+                name: this.data.machineryData.name,
 
-                company_id      : this.data.machineryData.company_id,
-                color           : this.data.machineryData.color,
-                year            : this.data.machineryData.year,
-                make            : this.data.machineryData.make,
-                model           : this.data.machineryData.model,
+                company_id: this.data.machineryData.company_id,
+                color: this.data.machineryData.color,
+                year: this.data.machineryData.year,
+                make: this.data.machineryData.make,
+                model: this.data.machineryData.model,
 
-                serial_number   : this.data.machineryData?.serial_number,
-                engine_hours    : this.data.machineryData.engine_hours,
-                eh_reading      : this.data.machineryData.eh_reading,
-                separator_hours : this.data.machineryData.separator_hours,
-                sh_reading      : this.data.machineryData.sh_reading,
+                serial_number: this.data.machineryData?.serial_number,
+                engine_hours: this.data.machineryData.engine_hours,
+                eh_reading: this.data.machineryData.eh_reading,
+                separator_hours: this.data.machineryData.separator_hours,
+                sh_reading: this.data.machineryData.sh_reading,
 
                 insurance_status: this.data.machineryData.insurance_status,
-                liability       : this.data.machineryData.liability,
-                collision       : this.data.machineryData.collision,
-                comprehensive   : this.data.machineryData.comprehensive,
-                purchase_price  : this.data.machineryData.purchase_price,
+                liability: this.data.machineryData.liability,
+                collision: this.data.machineryData.collision,
+                comprehensive: this.data.machineryData.comprehensive,
+                purchase_price: this.data.machineryData.purchase_price,
                 date_of_purchase: this.data.machineryData.date_of_purchase,
-                sales_price     : this.data.machineryData.sales_price,
-                date_of_sales   : this.data.machineryData.date_of_sales,
+                sales_price: this.data.machineryData.sales_price,
+                date_of_sales: this.data.machineryData.date_of_sales,
                 estimated_market_value: this.data.machineryData.estimated_market_value,
                 source_of_market_value: this.data.machineryData.source_of_market_value,
                 date_of_market_value: this.data.machineryData.date_of_market_value,
-                pictures         : this.data.machineryData.pictures
+                pictures: this.data.machineryData.pictures
             });
         }
 
     }
-//#endregion
+    //#endregion
     //#region Init Observables
     initObservables() {
         this.isLoadingMachinery$ = this._machineryService.isLoadingMachinery$;
@@ -200,14 +209,15 @@ export class UpdateAddMachineryComponent implements OnInit {
     //#endregion
 
     onSubmit(): void {
-        console.log("form", this.form.value)
         this._machineryService.isLoadingMachinery.next(true);
         if (this.data) {
             this._machineryService.updateMachinery(this.form.value);
         } else {
             var formData: FormData = new FormData();
-            formData.append('image', this.form.get('pictures').value);
             formData.append('form', JSON.stringify(this.form.value));
+            formData.append('image', this.form.get('pictures1').value);
+            formData.append('image', this.form.get('pictures2').value);
+            formData.append('image', this.form.get('pictures3').value);
             this._machineryService.createMachinery(formData);
         }
     }
@@ -246,23 +256,39 @@ export class UpdateAddMachineryComponent implements OnInit {
 
     //#endregion
 
-       //#region Upload Image
-    uploadImage(event: any) {
+    //#region Upload Image
+    uploadImage(event: any, picture) {
+        
         if (
             event.target.files &&
             event.target.files[0] &&
             event.target.files[0].type.includes('image/')
         ) {
-            this.isImage = true;
             const reader = new FileReader();
-            reader.onload = (_event: any) => {
-                this.imageURL = _event.target.result;
-                this.form.controls['pictures']?.setValue(event.target.files[0]);
-                //this.imageURL.markAsDirty();
-            };
-            reader.readAsDataURL(event.target.files[0]);
+            if (picture === 'pictures1') {
+                reader.onload = (_event: any) => {
+                    this.pictures1Preview = event.target.files[0].name
+                    this.form.controls['pictures1']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            } else  if (picture === 'pictures2') {
+                reader.onload = (_event: any) => {
+                    this.pictures2Preview = event.target.files[0].name
+                    this.form.controls['pictures2']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            } else  if (picture === 'pictures3') {
+                reader.onload = (_event: any) => {
+                    this.pictures3Preview = event.target.files[0].name
+
+                    this.form.controls['pictures3']?.setValue(event.target.files[0]);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
         } else {
-            this.isImage = false;
+            this.form.controls[picture].setErrors({'incorrect': true});
+
         }
     }
     //#endregion
