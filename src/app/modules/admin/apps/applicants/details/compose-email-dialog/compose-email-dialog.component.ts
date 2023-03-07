@@ -149,7 +149,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
   recruiterSelect(recruiter: any) {
     console.log(recruiter);
     if (this.data.preliminaryReview) {
-      if (this.data?.form?.controls['status_message'].value == 'First Interview Completed') {
+      if (this.data?.form?.controls['status_message'].value == 'First Interview Scheduled') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLinkUpdate(recruiter, 1);
         }
@@ -175,7 +175,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       }
     }
     if (this.data.interviewCompletedForm) {
-      if (this.data?.form.controls['status_message'].value == 'Second Interview Completed' || this.data?.form.controls['status_message'].value == 'Third Interview Completed') {
+      if (this.data?.form.controls['status_message'].value == 'Second Interview Scheduled' || this.data?.form.controls['status_message'].value == 'Third Interview Scheduled') {
         if (this.emails[1].email.includes('&#8205')) {
           this.changeCalendlyLinkUpdate(recruiter, 1);
         }
@@ -183,7 +183,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
           this.changeCalendlyLinkAdd(recruiter, 1);
         }
       }
-      if (this.data?.form.controls['status_message'].value == 'Reference Call Completed') {
+      if (this.data?.form.controls['status_message'].value == 'Scheduled Reference Call') {
         if (this.emails[4].email.includes('&#8205')) {
           this.changeCalendlyLinkUpdate(recruiter, 4);
         }
@@ -250,7 +250,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
       //#region Advance Preliminary Review Handlers //
       if (this.data.preliminaryReview) {
         // Advance to 1st Interview //
-        if (this.current_status_step == 2 && _formValues["status_message"] === "First Interview Completed") {          
+        if (this.current_status_step == 2 && _formValues["status_message"] === "First Interview Scheduled") {          
           this.reason_for_rejection = false;
           this.next_status_step = 3;
           this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
@@ -262,7 +262,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
               prev_status_step: this.current_status_step,
               prev_status_message: this.current_status_message,
               status_step: '3',
-              status_message: 'First Interview Completed'
+              status_message: 'First Interview Scheduled'
             },
             {
               emitEvent: false,
@@ -274,14 +274,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         // Wait Listed //
         else if (this.current_status_step == 2 && _formValues["status_message"] === "Waitlisted") {
           this.reason_for_rejection = true;
-          this.next_status_step = 10.2;
+          this.next_status_step = 12.2;
           this.email_text = this.emails[2].email;
           this.data.form.patchValue({
             subject: this.emails[2].subject,
             body: this.emails[2].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '10.2',
+            status_step: '12.2',
             status_message: "Waitlisted"
 
           },
@@ -294,14 +294,14 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         // Qualifications dont match current openings //
         else if (this.current_status_step == 2 && _formValues["status_message"] === "Qualifications dont match current openings") {
           this.reason_for_rejection = true;
-          this.next_status_step = '10.3';
+          this.next_status_step = '12.3';
           this.email_text = this.emails[3].email;
           this.data.form.patchValue({
             subject: this.emails[3].subject,
             body: this.emails[3].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '10.3',
+            status_step: '12.3',
             status_message: "Qualifications dont match current openings"
           },
             {
@@ -310,63 +310,83 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             })
           this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
         }
+          // Wait Listed //
+          else if (this.current_status_step == 2 && _formValues["status_message"] === "Rejected") {
+            this.reason_for_rejection = true;
+            this.next_status_step = 12.5;
+            this.email_text = this.emails[3].email;
+            this.data.form.patchValue({
+              subject: this.emails[3].subject,
+              body: this.emails[3].email,
+              prev_status_step: this.current_status_step,
+              prev_status_message: this.current_status_message,
+              status_step: '12.5',
+              status_message: "Rejected"
+  
+            },
+              {
+                emitEvent: false,
+                onlySelf: true
+              })
+            this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
+          }
       }
       //#endregion
 
       //#region Interview Handlers //
       if (this.data.interviewCompletedForm) {
-        if (_formValues['status_message'] === "Second Interview Completed") {
-          
-          this.reason_for_rejection = false;
-          this.next_status_step = 4;
-          this.email_text = this.emails[1].email;
-          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
-          this.data.form.patchValue({
-            subject: this.emails[1].subject,
-            body: this.emails[1].email,
-            prev_status_step: this.current_status_step,
-            prev_status_message: this.current_status_message,
-            status_step: '4',
-            status_message: "Second Interview Completed",
-          },
-            {
-              emitEvent: false,
-              onlySelf: true
-            })
-          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
-        }
-        else if (_formValues['status_message'] === "Third Interview Completed") {
-          
-          this.reason_for_rejection = false;
-          this.next_status_step = 6;
-          this.email_text = this.emails[1].email;
-          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
-          this.data.form.patchValue({
-            subject: this.emails[1].subject,
-            body: this.emails[1].email,
-            prev_status_step: this.current_status_step,
-            prev_status_message: this.current_status_message,
-            status_step: '6',
-            status_message: "Third Interview Completed"
-          },
-            {
-              emitEvent: false,
-              onlySelf: true
-            })
-          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
-        }
-        else if (_formValues['status_message'] === 'Reference Call Completed') {
+        if (_formValues['status_message'] === "Second Interview Scheduled") {
           
           this.reason_for_rejection = false;
           this.next_status_step = 5;
+          this.email_text = this.emails[1].email;
+          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
+          this.data.form.patchValue({
+            subject: this.emails[1].subject,
+            body: this.emails[1].email,
+            prev_status_step: this.current_status_step,
+            prev_status_message: this.current_status_message,
+            status_step: '5',
+            status_message: "Second Interview Scheduled",
+          },
+            {
+              emitEvent: false,
+              onlySelf: true
+            })
+          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
+        }
+        else if (_formValues['status_message'] === "Third Interview Scheduled") {
+          
+          this.reason_for_rejection = false;
+          this.next_status_step = 9;
+          this.email_text = this.emails[1].email;
+          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
+          this.data.form.patchValue({
+            subject: this.emails[1].subject,
+            body: this.emails[1].email,
+            prev_status_step: this.current_status_step,
+            prev_status_message: this.current_status_message,
+            status_step: '9',
+            status_message: "Third Interview Scheduled"
+          },
+            {
+              emitEvent: false,
+              onlySelf: true
+            })
+          this.data.form.controls['recruiter_id'].enable({ emitEvent: false });
+        }
+        else if (_formValues['status_message'] === 'Scheduled Reference Call') {
+          
+          this.reason_for_rejection = false;
+          this.next_status_step = 7;
           this.email_text = this.emails[4].email;
           this.data.form.patchValue({
             subject: this.emails[4].subject,
             body: this.emails[4].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '5',
-            status_message: "Reference Call Completed"
+            status_step: '7',
+            status_message: "Scheduled Reference Call"
           },
             {
               emitEvent: false,
@@ -383,7 +403,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[5].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '10.2',
+            status_step: '12.2',
             status_message: "Waitlisted"
           },
             {
@@ -400,8 +420,25 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             body: this.emails[6].email,
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
-            status_step: '10.3',
+            status_step: '12.3',
             status_message: "Qualifications dont match current openings"
+          },
+            {
+              emitEvent: false,
+              onlySelf: true
+            })
+          this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
+        }
+        else if (_formValues['status_message'] === 'Rejected') {
+          this.reason_for_rejection = true;
+          this.email_text = this.emails[3].email;
+          this.data.form.patchValue({
+            subject: this.emails[3].subject,
+            body: this.emails[3].email,
+            prev_status_step: this.current_status_step,
+            prev_status_message: this.current_status_message,
+            status_step: '12.5',
+            status_message: "Rejected"
           },
             {
               emitEvent: false,
@@ -417,15 +454,15 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         if (_formValues['status_message'] === 'Offer Made') {
           
           this.reason_for_rejection = false;
-          this.next_status_step = '8';
+          this.next_status_step = '11';
           this.email_text = this.emails[7].email;
           this.data.form.patchValue({
             subject: this.emails[7].subject,
             body: this.emails[7].email,
-            prev_status_step: '7',
-            prev_status_message: "Offer Made",
+            prev_status_step: '10',
+            prev_status_message: "Recruiter Decision Made",
             previous_status_message: this.data.applicant.status_message,
-            status_step: '9',
+            status_step: '11',
             status_message: "Offer Made"
           },
             {
@@ -442,7 +479,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
             previous_status_message: this.data.applicant.status_message,
-            status_step: '10.2',
+            status_step: '12.2',
             status_message: "Waitlisted"
           },
             {
@@ -453,7 +490,7 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
         }
         else if (_formValues['status_message'] === 'Qualifications dont match current openings') {
           this.reason_for_rejection = true;
-          this.next_status_step = '10.3';
+          this.next_status_step = '12.3';
           this.email_text = this.emails[8].email;
           this.data.form.patchValue({
             subject: this.emails[8].subject,
@@ -461,13 +498,31 @@ export class ComposeEmailDialogComponent implements OnInit, AfterViewInit {
             prev_status_step: this.current_status_step,
             prev_status_message: this.current_status_message,
             previous_status_message: this.data.applicant.status_message,
-            status_step: '10.3',
+            status_step: '12.3',
             status_message: "Qualifications dont match current openings"
           },
             {
               emitEvent: false,
               onlySelf: true
             })
+        }
+        else if (_formValues['status_message'] === 'Rejected') {
+          this.reason_for_rejection = true;
+          this.email_text = this.emails[3].email;
+          this.data.form.patchValue({
+            subject: this.emails[3].subject,
+            body: this.emails[3].email,
+            prev_status_step: this.current_status_step,
+            prev_status_message: this.current_status_message,
+            previous_status_message: this.data.applicant.status_message,
+            status_step: '12.5',
+            status_message: "Rejected"
+          },
+            {
+              emitEvent: false,
+              onlySelf: true
+            })
+          this.data.form.controls['recruiter_id'].disable({ emitEvent: false });
         }
       }
     }));

@@ -64,7 +64,7 @@
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="first_name">First Name</div>
                             <div mat-sort-header="last_name">Last Name</div>
-                            <div mat-sort-header="email" class="hidden sm:block">Email</div>
+                            <div mat-sort-header="employment_period" class="hidden sm:block">Employment Period</div>
                             <div mat-sort-header="country" class="hidden sm:block">Country</div>
                             <div mat-sort-header="home_phone_number" class="hidden sm:block">
                                 Phone Number
@@ -102,9 +102,9 @@
                                             {{ applicant?.last_name }}
                                         </div>
                                         <!-- Email -->
-                                        <div class="hidden sm:block truncate" matTooltip="{{ applicant.email }}"
-                                            matTooltipPosition="above">
-                                            {{ applicant.email }}
+                                        <div class="hidden sm:block truncate"
+                                            matTooltip="{{ applicant.employment_period }}" matTooltipPosition="above">
+                                            {{ applicant.employment_period }}
                                         </div>
                                         <!-- Role -->
                                         <div class="hidden sm:block truncate" matTooltip="{{ applicant.country }}"
@@ -122,10 +122,10 @@
                                         </div>
                                         <!-- Status -->
                                         <div class="hidden sm:block">
-                                            <div matTooltip="{{ applicant.status_step == '10.1'? 'Hired' : applicant.status_message == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '10.4'? 'Rejected' : applicant.status_message }}"
+                                            <div matTooltip="{{ applicant.status_step == '12.1'? 'Hired' : applicant.status_message == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '12.4'? 'Rejected' : applicant.status_message }}"
                                                 matTooltipPosition="above" class="truncate justify-center items-center">
-                                                {{ applicant.status_step == '10.1'? 'Hired' : applicant.status_message
-                                                == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '10.4'?
+                                                {{ applicant.status_step == '12.1'? 'Hired' : applicant.status_message
+                                                == 'Offer Accepted'? 'Offer Made' : applicant.status_step == '12.4'?
                                                 'Rejected' : applicant.status_message }}
                                             </div>
                                         </div>
@@ -252,7 +252,8 @@
                                 </mat-option>
                             </mat-autocomplete>
                             <mat-hint class="flex flex-col">
-                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from given list only </span>
+                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
+                                    given list only </span>
                             </mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="w-full">
@@ -273,25 +274,28 @@
                             </mat-datepicker>
                         </mat-form-field>
                     </form>
-                </div>
-            </div>
-            <div class="flex flex-row justify-evenly items-center w-80">
-                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button [disabled]="applicantFiltersForm.invalid" (click)="applyFilters(); filtersDrawer.close()"
-                        class="" mat-flat-button [color]="'primary'">
-                        <span class="">Apply filters</span>
-                    </button>
-                </div>
-                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button
-                        [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status || applicantFiltersForm.value.country || applicantFiltersForm.value.employment_period )"
-                        (click)="removeFilters(); filtersDrawer.close()"
-                        class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                        <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                        <span>Remove filters</span>
-                    </button>
+                    <div class="mt-4 flex flex-row justify-evenly items-center">
+                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button [disabled]="applicantFiltersForm.invalid"
+                                (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                                [color]="'primary'">
+                                <span class="">Apply filters</span>
+                            </button>
+                        </div>
+                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button
+                                [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status || applicantFiltersForm.value.country || applicantFiltersForm.value.employment_period )"
+                                (click)="removeFilters(); filtersDrawer.close()"
+                                class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                                <mat-icon class="m-0 icon-size-4" color="warn"
+                                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                <span>Remove filters</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </fuse-drawer>

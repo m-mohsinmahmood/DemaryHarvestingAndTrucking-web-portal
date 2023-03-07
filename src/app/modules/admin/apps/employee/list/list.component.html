@@ -98,12 +98,14 @@
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="first_name">First Name</div>
                             <div mat-sort-header="last_name">Last Name</div>
+                            <div mat-sort-header="country">Country</div>
                             <div mat-sort-header="role" class="hidden sm:block">Role</div>
+                            <div mat-sort-header="status_step" class="hidden sm:block">Onboarding Staus</div>
+                            <div mat-sort-header="employment_period" class="hidden sm:block">Employment Period</div>
                             <div mat-sort-header="email" class="hidden sm:block">Email</div>
                             <div mat-sort-header="cell_phone_number" class="hidden sm:block">
-                                Cell Phone Number
+                                Employee Type
                             </div>
-                            <div mat-sort-header="status_step" class="hidden sm:block">Staus</div>
                             <div>Actions</div>
                         </div>
                         <!-- Rows -->
@@ -111,28 +113,34 @@
                             <ng-container *ngIf="employees.count > 0; else noEmployee">
                                 <ng-container *ngFor="let employee of employees.employees;">
                                     <div class="employee-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-
-                                        <div class="flex items-center truncate break-words">
+                                        <div class="flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600" (click)="toggleDetails(employee.id)">
                                             {{ employee?.first_name }}
                                         </div>
                                         <div class="flex items-center truncate">
                                             {{ employee?.last_name }}
                                         </div>
+                                        <div class="flex items-center truncate">
+                                            {{ employee?.country }}
+                                        </div>
                                         <div class="flex items-center hidden sm:block truncate">
                                             {{ employee.role? employee.role : "-" }}
                                         </div>
+                                        <div class="flex items-center hidden sm:block truncate">
+                                            {{getStatusCode(employee.status_step)}}
+                                        </div>
+                                        <div class="flex items-center hidden sm:block truncate">
+                                            {{ employee.employment_period }}
+                                        </div>
                                         <div class="hidden truncate sm:block lg:flex items-center"
                                             matTooltip="{{ employee.email }}" matTooltipPosition="above">
-                                            <div class="min-w-4 ml-2">
+                                            <div class="min-w-4">
                                                 {{ employee.email }}
                                             </div>
                                         </div>
                                         <div class="hidden sm:block">
-                                            {{getCountryCode(employee.cell_phone_country_code)}} {{ employee.cell_phone_number }}
+                                            {{employee.country == "United States of America"? "USA" : "H2A"}}
                                         </div>
-                                        <div class="hidden sm:block">
-                                            {{getStatusCode(employee.status_step)}}
-                                        </div>
+                                       
                                         <!-- Details button -->
                                         <div class="flex">
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button

@@ -126,7 +126,7 @@ export class RecruiterremarksComponent implements OnInit {
             first_interviewer_id: [{ value: this.applicantData?.first_interviewer_name, disabled: this.applicantData.first_interviewer_id }],
             prev_status_message: ['Preliminary Review'],
             status_message: ['First Interview Completed'],
-            status_step: ['3'],
+            status_step: ['4'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -141,7 +141,7 @@ export class RecruiterremarksComponent implements OnInit {
             second_interviewer_id: [{ value: this.applicantData?.second_interviewer_name, disabled: this.applicantData.second_interviewer_id }],
             prev_status_message: ['First Interview Completed'],
             status_message: ['Second Interview Completed'],
-            status_step: ['4'],
+            status_step: ['6'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -157,7 +157,7 @@ export class RecruiterremarksComponent implements OnInit {
             third_interviewer_id: [{ value: this.applicantData?.third_interviewer_name, disabled: this.applicantData.third_interviewer_id }],
             prev_status_message: ['Reference Call Completed'],
             status_message: ['Third Interview Completed'],
-            status_step: ['6'],
+            status_step: ['10'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -173,7 +173,7 @@ export class RecruiterremarksComponent implements OnInit {
             reference_interviewer_id: [{ value: this.applicantData?.reference_interviewer_name, disabled: this.applicantData.reference_interviewer_id }],
             prev_status_message: ['Second Interview Completed'],
             status_message: ['Reference Call Completed'],
-            status_step: ['5'],
+            status_step: ['8'],
             ranking: this.applicantData?.ranking,
             id: [this.applicantData?.id]
         });
@@ -311,36 +311,36 @@ export class RecruiterremarksComponent implements OnInit {
                 this._applicantService.patchApplicant(this.firstInterviewForm.value, true, false);
             }
         } else if (interViewer === 'Second') {
-            if (this.applicantData.status_step != 4) {
+            if (this.applicantData.status_step != 5) {
                 this.calculateScore(this.secondInterviewForm);
                 this.secondInterviewForm.controls['status_message'].setValue('Second Interview Updated')
                 this._applicantService.patchApplicant(this.secondInterviewForm.value, true, false);
             }
             else {
-                this.secondInterviewForm.value.status_step = '4'
+                this.secondInterviewForm.value.status_step = '5'
                 this.calculateScore(this.secondInterviewForm);
                 this._applicantService.patchApplicant(this.secondInterviewForm.value, true, false);
             }
         } else if (interViewer === 'Reference') {
-            if (this.applicantData.status_step != 5) {
+            if (this.applicantData.status_step != 7) {
                 this.calculateScore(this.referenceForm);
                 this.referenceForm.controls['status_message'].setValue('Reference Interview Updated')
                 this._applicantService.patchApplicant(this.referenceForm.value, true, false);
             }
             else {
-                this.referenceForm.value.status_step = '5'
+                this.referenceForm.value.status_step = '7'
                 this.calculateScore(this.referenceForm);
                 this._applicantService.patchApplicant(this.referenceForm.value, true, false);
             }
         }
         else if (interViewer === 'Third') {
-            if (this.applicantData.status_step != 6) {
+            if (this.applicantData.status_step != 9) {
                 this.calculateScore(this.thirdInterviewForm);
                 this.thirdInterviewForm.controls['status_message'].setValue('Third Interview Updated')
                 this._applicantService.patchApplicant(this.thirdInterviewForm.value, true, false);
             }
             else {
-                this.thirdFormGroup.value.status_step = '6'
+                this.thirdFormGroup.value.status_step = '9'
                 this.calculateScore(this.thirdInterviewForm);
                 this._applicantService.patchApplicant(this.thirdInterviewForm.value, true, false);
             }

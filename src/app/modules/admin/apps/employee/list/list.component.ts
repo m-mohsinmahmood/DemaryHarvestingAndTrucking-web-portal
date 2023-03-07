@@ -80,6 +80,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         'Not Being Considered',
     ];
     isLoading: boolean = false;
+    actionRequired: boolean;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
 
@@ -297,6 +298,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         return  '+' + country_code?.split("+")[1];
     }
     getStatusCode(status_step){
+        // status_step % 2 == 0 && status_step != 2 ? this.actionRequired = true : this.actionRequired = false;
         return this.status_step[status_step];
     }
 

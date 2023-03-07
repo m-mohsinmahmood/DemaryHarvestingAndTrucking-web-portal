@@ -47,11 +47,11 @@
                     <span class="whitespace-normal">Edit</span>
                 </button>
                 <button class="mr-1" mat-flat-button [color]="'primary'" (click)="composeEmail(8)"
-                    [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
+                    [disabled]="applicant?.applicant_info.status_step >= 10 ? true : false">
                     <span class="whitespace-normal">Advance to offer</span>
                 </button>
                 <button class="m-1" mat-flat-button [color]="'warn'" (click)="composeEmail(-1)"
-                    [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
+                    [disabled]="applicant?.applicant_info.status_step >= 10 ? true : false">
                     <span class="">Reject</span>
                 </button>
 
@@ -133,26 +133,26 @@
                                         <div
                                             [ngClass]="{ 'animate-bounce cursor-pointer': item.click, 'pointer-events-none': !item.click }">
                                             <mat-icon matTooltip="Compose Email" (click)="composeEmail(i)"
-                                                *ngIf="i == 1 || i == 2 || i == 3 || i == 4 || i == 6"
+                                                *ngIf="i == 1 || i == 3 || i == 5 || i == 5 || i == 7 || i == 10"
                                                 class="ml-2 icon-size-5" [svgIcon]="'heroicons_outline:envelope'">
                                             </mat-icon>
                                             <mat-icon matTooltip="Make Employee"
-                                                (click)="confirmAcceptRejectOffer('Accept')" *ngIf="i == 8"
+                                                (click)="confirmAcceptRejectOffer('Accept')" *ngIf="i == 12"
                                                 class="ml-2 mt-2 icon-size-5"
                                                 [svgIcon]="'heroicons_outline:check-circle'">
                                             </mat-icon>
                                             <mat-icon matTooltip="Offer Rejected"
-                                                (click)="confirmAcceptRejectOffer('Reject')" *ngIf="i == 8"
+                                                (click)="confirmAcceptRejectOffer('Reject')" *ngIf="i == 12"
                                                 class="ml-2 mt-2 icon-size-5" [svgIcon]="'heroicons_outline:x-circle'">
                                             </mat-icon>
                                         </div>
                                     </span>
                                     <mat-hint
-                                        *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection != 'null'  && applicantInfo?.applicant_info?.reason_for_rejection && i == 9 "
+                                        *ngIf="applicantInfo?.applicant_info?.reason_for_rejection != 'undefined' && applicantInfo?.applicant_info?.reason_for_rejection != 'null'  && applicantInfo?.applicant_info?.reason_for_rejection && i == 13 "
                                         class="my-1 text-red-600 text-md font-semibold">
                                         {{applicantInfo?.applicant_info?.reason_for_rejection}}
                                     </mat-hint>
-                                    <button *ngIf="applicantInfo?.applicant_info?.status_message == 'Waitlisted' && i == 9 "
+                                    <button *ngIf="(applicantInfo?.applicant_info?.status_message == 'Waitlisted' || applicantInfo?.applicant_info?.status_message == 'Rejected' || applicantInfo?.applicant_info?.status_message == 'Qualifications dont match current openings' ) && i == 13 "
                                      class="" mat-flat-button [color]="'primary'" (click)="resumeOnboarding()">
                                         <span class="p-2">Resume Onboarding</span>
                                     </button>
@@ -160,15 +160,15 @@
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}
                                     </mat-hint>
-                                    <mat-hint *ngIf="i == 3" class="my-1 text-md font-semibold">
+                                    <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.second_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.second_interviewer_name + ")"}}
                                     </mat-hint>
-                                    <mat-hint *ngIf="i == 5" class="my-1 text-md font-semibold">
+                                    <mat-hint *ngIf="i == 8" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.third_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.third_interviewer_name + ")"}}
                                     </mat-hint>
-                                    <mat-hint *ngIf="i == 4" class="my-1 text-md font-semibold">
+                                    <mat-hint *ngIf="i == 6" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.reference_interviewer_name === null ?
                                         "": "(" + applicantInfo?.applicant_info.reference_interviewer_name + ")"}}
                                     </mat-hint>

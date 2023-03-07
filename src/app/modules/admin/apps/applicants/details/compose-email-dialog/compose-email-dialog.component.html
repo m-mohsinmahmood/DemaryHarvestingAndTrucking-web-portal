@@ -18,26 +18,26 @@
             <mat-label>Next Step</mat-label>
             <mat-select formControlName="status_message">
                 <mat-option *ngIf="current_status_step == 2 && !data.makeOffer && !data.reject"
-                    value="First Interview Completed">First Interview
-                </mat-option>
-                <mat-option *ngIf="current_status_step == 3 && !data.makeOffer && !data.reject"
-                    value="Second Interview Completed">Second Interview
+                    value="First Interview Scheduled">First Interview
                 </mat-option>
                 <mat-option *ngIf="current_status_step == 4 && !data.makeOffer && !data.reject"
-                    value="Reference Call Completed">Reference Call
+                    value="Second Interview Scheduled">Second Interview
+                </mat-option>
+                <mat-option *ngIf="current_status_step == 6 && !data.makeOffer && !data.reject"
+                    value="Scheduled Reference Call">Reference Call
                 </mat-option>
                 <mat-option
-                    *ngIf="(current_status_step == 4 || current_status_step == 5) && !data.makeOffer && !data.reject"
-                    value="Third Interview Completed">Third Interview</mat-option>
+                    *ngIf="(current_status_step == 6 || current_status_step == 8) && !data.makeOffer && !data.reject"
+                    value="Third Interview Scheduled">Third Interview</mat-option>
                 <mat-option *ngIf="!data.makeOffer" value="Waitlisted">Wait-listed</mat-option>
-                <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not
-                    Qualified</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Qualifications dont match current openings">Not Qualified</mat-option>
+                <mat-option *ngIf="!data.makeOffer" value="Rejected">Rejected</mat-option>
                 <mat-option *ngIf="data.makeOffer || data.recruiterDecision" value="Offer Made">Make Offer</mat-option>
             </mat-select>
         </mat-form-field>
 
         <!-- MAT AUTOCOMPLETE -->
-        <mat-form-field *ngIf="[3, 4, 5, 6].includes(next_status_step)" appearance="outline" fxFlex>
+        <mat-form-field *ngIf="[3, 4, 5, 7,9].includes(next_status_step)" appearance="outline" fxFlex>
             <mat-label>Recruiter Name</mat-label>
             <input (ngModelChange)="formValidation($event)" (click)="getDropdownRecruiters()"
                 [matAutocomplete]="recruiters" (keyup)="recruiter_search$.next($event.target.value)" matInput

@@ -207,8 +207,8 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe((result) => { });
 
         }
-        else if (index == 2 || index == 3 || index == 4) {
-            if (index == 2) {
+        else if (index == 2 || index == 3 || index == 4 || index == 5 || index == 7) {
+            if (index == 3) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         firstInterview: true,
@@ -220,7 +220,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 3) {
+            if (index == 5) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         secondInterview: true,
@@ -232,7 +232,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 });
                 dialogRef.afterClosed().subscribe((result) => { });
             }
-            if (index == 4) {
+            if (index == 7) {
                 const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                     data: {
                         thirdInterview: true,
@@ -245,7 +245,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                 dialogRef.afterClosed().subscribe((result) => { });
             }
         }
-        else if (index == 6) {
+        else if (index == 10) {
             const dialogRef = this._matDialog.open(ComposeEmailDialogComponent, {
                 data: {
                     decisionMadeForm: true,
@@ -302,9 +302,9 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             if (dialogResult && type === "Accept") {
                 this._applicantService.patchApplicant({
                     id: this.applicant.applicant_info.id,
-                    prev_status_message: "Results",
+                    prev_status_message: "Offer Accepted",
                     status_message: "Results",
-                    status_step: "10.1",
+                    status_step: "12.1",
                     to: this.applicant.applicant_info.email,
                     subject: 'Employee Portal Credentials',
                     body:  this.applicant.applicant_info.country == "United States of America" ? 
@@ -317,7 +317,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     id: this.applicant.applicant_info.id,
                     prev_status_message: "Results",
                     status_message: "Results",
-                    status_step: "10.4"
+                    status_step: "12.4"
                 }, false , false);
             }
             this._applicantService.getApplicantByIdNew(this.applicant.applicant_info.id);

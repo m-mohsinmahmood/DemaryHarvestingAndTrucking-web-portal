@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
@@ -11,6 +12,8 @@ import { UpdateEmployeeComponent } from './update/update.component';
   styleUrls: ['./employee-data.component.scss']
 })
 export class EmployeeDataComponent implements OnInit {
+  @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
+  drawerMode: 'side' | 'over';
 
   //#region variables
   employeeData;
@@ -79,7 +82,23 @@ export class EmployeeDataComponent implements OnInit {
   //#region find country code 
   getCountryCode(country_code) {
     if (country_code && country_code != 'zz')
-     return '+' + country_code?.split("+")[1];
+      return '+' + country_code?.split("+")[1];
+  }
+  //#endregion
+
+  //#region  Tab Change
+  tabChanged(event) {
+    switch (event.tab.textLabel) {
+      case 'Onboarding':
+        break;
+      case 'CDL':
+        break;
+      case 'Work':
+        break;
+      case 'Miscellaneous':
+        break;
+      default:
+    }
   }
   //#endregion
 }
