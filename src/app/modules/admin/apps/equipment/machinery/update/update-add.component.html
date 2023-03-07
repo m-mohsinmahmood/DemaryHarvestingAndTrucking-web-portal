@@ -187,36 +187,43 @@
                     <mat-datepicker #picker5></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field>
-                    <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 1</mat-label>
-                        <input matInput />
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
-                    </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="image/*"
-                    (change)="uploadImage($event)"  />
-                </mat-form-field>            
+              <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline" (click)="file1Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 1</mat-label>
+                    <input matInput [value]=this.pictures1Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures1')" #file1Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures1').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
             </div>
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
-                <mat-form-field>
-                    <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 2</mat-label>
-                        <input matInput />
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
-                    </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
-                </mat-form-field>            
+
+                <mat-form-field appearance="outline" (click)="file2Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 2</mat-label>
+                    <input matInput [value]=this.pictures2Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures2')" #file2Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures2').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
             </div>
-            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0 pic-3">
-                <mat-form-field>
-                    <mat-toolbar>
-                        <mat-label class="pictures-fields-label text-gray-900">Picture 3</mat-label>
-                        <input matInput />
-                        <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
-                    </mat-toolbar>
-                    <input type="file" id="fileInput" name="fileInput" accept="" multiple  />
-                </mat-form-field>            
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+
+                <mat-form-field appearance="outline" (click)="file3Upload.click()" class="w-full">
+                    <mat-label>Upload Picture 3</mat-label>
+                    <input matInput [value]=this.pictures3Preview />
+                    <input for="file" name="fileInput" id="fileInput" type='file' accept="image/*"
+                        (change)="uploadImage($event, 'pictures3')" #file3Upload />
+                    <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                    <mat-hint *ngIf="this.form.get('pictures3').hasError('incorrect')"
+                        class="text-xs text-red-500 image-hint">Only
+                        Image files can be uploaded</mat-hint>
+                </mat-form-field>
             </div>
             <!-- </div> -->
         </div>

@@ -95,7 +95,6 @@ export class MachineryService {
             );
     }
 createMachinery(data: any) {
-    console.log(data);
         this._httpClient
             .post(`api-1/machinery`, data)
             .pipe(take(1))
