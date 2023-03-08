@@ -1,0 +1,52 @@
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Add Item</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 sm:grid overflow-y-auto gap-y-4">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Rate Type</mat-label>
+            <input type="text" matInput formControlName="rate_type">
+            <mat-hint *ngIf="this.form.get('rate_type').hasError('pattern')" class="text-md uppercase text-red-500 mt-3">
+                Special Characters are not allowed.
+            </mat-hint>
+        </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Quantity</mat-label>
+                <input type="number" matInput formControlName="quantity">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Rate</mat-label>
+                <input type="number" matInput formControlName="rate">
+            </mat-form-field>
+          
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input type="number" matInput formControlName="amount">
+            </mat-form-field>
+
+    </form>
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 text-on-primary">
+        <div class="flex items-center mt-4 sm:mt-0  gap-x-4">
+            <button class="ml-auto sm:ml-0 bg-amber-600 text-white" mat-flat-button (click)="discard()">
+                Discard
+            </button>
+           
+            <button [disabled]="form.invalid" type="submit" class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

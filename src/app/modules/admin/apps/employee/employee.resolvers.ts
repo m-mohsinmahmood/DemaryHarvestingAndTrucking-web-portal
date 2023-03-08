@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { catchError, Observable, throwError } from 'rxjs';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
 import { EmployeePagination, Employee , Country, Item  } from 'app/modules/admin/apps/employee/employee.types';
+import { ApplicantService } from '../applicants/applicants.services';
 
 
 @Injectable({
@@ -43,7 +44,9 @@ export class ContactsCountriesResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _employeeService: EmployeeService)
+    constructor(
+        private _applicantService: ApplicantService,
+        private _employeeService: EmployeeService)
     {
     }
 

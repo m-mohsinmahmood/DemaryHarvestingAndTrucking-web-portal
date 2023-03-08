@@ -8,8 +8,8 @@
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
                 <mat-label>Interview 1 Questions</mat-label>
                 <p>Pre-Populated Questions/Comments: (10 Possible Points)</p>
-                <textarea class="leading-loose mt-2" rows="10" formControlName="first_call_remarks" matInput type="text" id="interviewResults"
-                    placeholder="1st Interview Result">Pre Populated
+                <textarea class="leading-loose mt-2" rows="10" formControlName="first_call_remarks" matInput type="text"
+                    id="interviewResults" placeholder="1st Interview Result">Pre Populated
                 </textarea>
             </mat-form-field>
 
@@ -48,8 +48,12 @@
                     </div>
                 </div>
                 <div>
+                    <button [disabled]="!applicantData.first_call_ranking" class="my-4 mr-2" mat-flat-button
+                        [color]="'primary'" data-bs-dismiss="modal" (click)="update('First')">
+                        Edit
+                    </button>
                     <button
-                        [disabled]="(applicantData.first_interviewer_id && applicantData.first_call_remarks && applicantData.first_call_ranking) || (validation('firstInterview'))"
+                        [disabled]="((applicantData.first_interviewer_id && applicantData.first_call_remarks && applicantData.first_call_ranking) && isSave != '1') || (validation('firstInterview'))"
                         class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
                         (click)="submit('First')">
                         Save
@@ -68,8 +72,8 @@
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
                 <mat-label>Interview 2 Questions</mat-label>
                 <p>Pre-Populated Questions/Comments: (10 Possible Points)</p>
-                <textarea class="leading-loose mt-2" rows="10" formControlName="second_call_remarks" matInput type="text" id="secondInterviewResult"
-                    placeholder="2nd Interview Result"> </textarea>
+                <textarea class="leading-loose mt-2" rows="10" formControlName="second_call_remarks" matInput
+                    type="text" id="secondInterviewResult" placeholder="2nd Interview Result"> </textarea>
             </mat-form-field>
 
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
@@ -107,7 +111,11 @@
                     </div>
                 </div>
                 <div>
-                    <button [disabled]="(applicantData.second_interviewer_id && applicantData.second_call_remarks && applicantData.second_call_ranking) ||
+                    <button [disabled]="!applicantData.second_call_ranking" class="my-4 mr-2" mat-flat-button
+                        [color]="'primary'" data-bs-dismiss="modal" (click)="update('Second')">
+                        Edit
+                    </button>
+                    <button [disabled]="(applicantData.second_interviewer_id && applicantData.second_call_remarks && applicantData.second_call_ranking && isSave != '2') ||
                 validation('secondInterview')" class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
                         (click)="submit('Second')">
                         Save
@@ -127,8 +135,8 @@
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
                 <mat-label>Reference Interview</mat-label>
                 <p>Pre-Populated Questions/Comments: (10 Possible Points)</p>
-                <textarea class="leading-loose mt-2" rows="10" formControlName="reference_call_remarks" matInput type="text" id="refreeInterviewResult"
-                    placeholder="Refree Phone Interview Results"> </textarea>
+                <textarea class="leading-loose mt-2" rows="10" formControlName="reference_call_remarks" matInput
+                    type="text" id="refreeInterviewResult" placeholder="Refree Phone Interview Results"> </textarea>
             </mat-form-field>
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
                 <mat-label>Interviewer</mat-label>
@@ -165,7 +173,11 @@
                     </div>
                 </div>
                 <div>
-                    <button [disabled]="(applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking) ||
+                    <button [disabled]="!applicantData.reference_call_ranking" class="my-4 mr-2" mat-flat-button
+                        [color]="'primary'" data-bs-dismiss="modal" (click)="update('Reference')">
+                        Edit
+                    </button>
+                    <button [disabled]="(applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking && isSave != '3') ||
                 validation('referenceInterview')" class="my-4" mat-flat-button [color]="'primary'"
                         data-bs-dismiss="modal" (click)="submit('Reference')">
                         Save
@@ -177,16 +189,16 @@
     </form>
     <!-- Reference Interview -->
 
-     <!-- Third Interview -->
-     <form *ngIf="applicantData.status_step >= 6 && applicantData.third_interviewer_id" [formGroup]="thirdInterviewForm"
+    <!-- Third Interview -->
+    <form *ngIf="applicantData.status_step >= 6 && applicantData.third_interviewer_id" [formGroup]="thirdInterviewForm"
         class="interview-results-form mb-3 rounded-lg">
 
         <div class="interview-section bg-gray-100 p-4 my-2 rounded-lg shadow">
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
                 <mat-label>Interview 3 Questions</mat-label>
                 <p>Pre-Populated Questions/Comments: (10 Possible Points)</p>
-                <textarea  class="leading-loose mt-2" rows="10" formControlName="third_call_remarks" matInput type="text" id="thirdInterviewResult"
-                    placeholder="3rd Interview Result"> </textarea>
+                <textarea class="leading-loose mt-2" rows="10" formControlName="third_call_remarks" matInput type="text"
+                    id="thirdInterviewResult" placeholder="3rd Interview Result"> </textarea>
             </mat-form-field>
 
             <mat-form-field class="w-full sm:w-full md:w-8/12 lg:w-full" appearance="outline">
@@ -224,7 +236,11 @@
                     </div>
                 </div>
                 <div>
-                    <button [disabled]="(applicantData.third_interviewer_id && applicantData.third_call_remarks && applicantData.third_call_ranking) ||
+                    <button [disabled]="!applicantData.third_call_ranking" class="my-4 mr-2" mat-flat-button
+                        [color]="'primary'" data-bs-dismiss="modal" (click)="update('Third')">
+                        Edit
+                    </button>
+                    <button [disabled]="(applicantData.third_interviewer_id && applicantData.third_call_remarks && applicantData.third_call_ranking && isSave != '4') ||
                 validation('thirdInterview')" class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
                         (click)="submit('Third')">
                         Save

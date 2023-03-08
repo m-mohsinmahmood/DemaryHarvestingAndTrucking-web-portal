@@ -36,7 +36,7 @@ export class OnboardingStatusBarComponent implements OnInit {
     this.email = {
       email: this.employee?.employee_info.email,
       subject: 'Document Rejection',
-      emailBody: 'Dear ' + this.employee.employee_info.first_name + ',</br> I regret to inform you that the document you submitted has been rejected due to incorrect information. In order for your submission to be considered, please upload a revised document with the correct information.</br>Please ensure that all required information is included and that all data is accurate before resubmitting. If you have any questions or need assistance, please do not hesitate to contact us.</br>Thank you for your understanding and cooperation.</br>Best regards,</br> Admin.' 
+      emailBody: 'Dear ' + this.employee.employee_info.first_name + ',<br><br> I regret to inform you that the document you submitted has been rejected due to incorrect information. In order for your submission to be considered, please upload a revised document with the correct information.<br>Please ensure that all required information is included and that all data is accurate before resubmitting. If you have any questions or need assistance, please do not hesitate to contact us.<br>Thank you for your understanding and cooperation.<br>Best regards,<br><br> Admin.' 
     }
   }
 
@@ -239,7 +239,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           prev_status_message: this.employee?.employee_info.status_message,
           status_message: "Verified",
           status_step: +this.employee?.employee_info.status_step + 1,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
       }
       else if (dialogResult === true && type === 'Reject') {
         var formData: FormData = new FormData();
@@ -251,6 +251,7 @@ export class OnboardingStatusBarComponent implements OnInit {
         formData.append('email', this.email.email);
         formData.append('subject', this.email.subject);
         formData.append('emailBody', this.email.emailBody);
+        formData.append('h2a', this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
         this._employeeService.patchEmployeeDocuments(this.routeID, formData);
         this._employeeService.patchEmployee({
           id: this.employee?.employee_info.employee_id,
@@ -259,7 +260,7 @@ export class OnboardingStatusBarComponent implements OnInit {
           status_message: "Inprogress",
           status_step: +this.employee?.employee_info.status_step,
           rejected: true,
-        },'false');
+        },this.employee?.employee_info?.country == 'United States of America'? 'false' : 'true');
 
       }
 

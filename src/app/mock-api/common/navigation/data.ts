@@ -71,13 +71,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon: "heroicons_outline:user-circle",
     link: "/apps/applicants",
   },
-  // {
-  //   id: "employee",
-  //   title: "Employees",
-  //   type: "basic",
-  //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/employee",
-  // },
+  {
+    id: "employee",
+    title: "Employees",
+    type: "basic",
+    icon: "heroicons_outline:user-circle",
+    link: "/apps/employee",
+  },
   {
     id: "crops",
     title: "Crops",
@@ -114,19 +114,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ],
   },
-  // {
-  //   id: "employee",
-  //   title: "Employees",
-  //   type: "basic",
-  //   icon: "heroicons_outline:user-circle",
-  //   link: "/apps/employee",
-  // }
-  // {
-  //   id: "h2a-rates",
-  //   title: "H2A Rates",
-  //   type: "basic",
-  //   icon: "heroicons_outline:cog",
-  //   link: "/apps/h2a-rates",
-  // },
+  {
+    id: "h2a-rates",
+    title: "H2A Rates",
+    type: "basic",
+    icon: "heroicons_outline:cog",
+    link: "/apps/h2a-rates",
+  },
+  {
+    id: "policy-documents",
+    title: "Company Documents",
+    type: "basic",
+    icon: "heroicons_outline:document",
+    link: "/apps/policy-documents",
+  },
 
 ]

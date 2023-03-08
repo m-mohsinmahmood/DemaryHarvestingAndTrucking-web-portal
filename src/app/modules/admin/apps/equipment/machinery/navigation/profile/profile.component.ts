@@ -19,6 +19,7 @@ export class MachineryProfileComponent implements OnInit {
   routeID;
   result: string = '';
   allExpandState = false;
+  pictures: string[] = [];
 
   //#endregion
 
@@ -46,7 +47,7 @@ export class MachineryProfileComponent implements OnInit {
     });
     this.initApi();
     this.initObservables();
-    console.log(this.machinery$)
+    this.picturesHandling();
   }
 
   ngOnDestroy(): void {
@@ -67,8 +68,21 @@ export class MachineryProfileComponent implements OnInit {
     this.isLoadingMachinery$ = this._machineryService.isLoadingMachinery$;
     this.machinery$ = this._machineryService.machinery$;
   }
+
   //#endregion
 
+  //#region pictures handling
+
+  picturesHandling() {
+    this.machinery$.subscribe((res => {
+      if (res) {
+        this.pictures = res.pictures?.replace(/\s/g, '').split(',');
+
+      }
+    }));
+
+  }
+  //#endregion
 
 
 }

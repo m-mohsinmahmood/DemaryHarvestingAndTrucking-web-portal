@@ -34,6 +34,8 @@ import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { countryList } from './../../../../../../JSON/country';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+
 
 @Component({
     selector: 'app-employee',
@@ -53,9 +55,9 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
 
     //#region variables
-    page: number;
-    pageSize = 50;
-    pageSizeOptions: number[] = [50, 100, 150, 200];
+    page: number = 1;
+    pageSize = 200;
+    pageSizeOptions: number[] = [50, 100, 150, 200,250,300,350,500];
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -99,6 +101,33 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //#endregion
 
+    status_step = {
+        "2":  "Account Activated",
+        "3":  "Admin sending email to upload PP, DL, and SS docs",
+        "4":  "Passport and Drivers License verified",
+        "5":  "CDL training instructions posted",
+        "6":  "CDL training instructions verified",
+        "7":  "Compliance docs posted",
+        "8":  "Compliance docs verified",
+        "9":  "Employee Contract posted",
+        "10": "Employee Contract verified",
+        "11": "Bank account information requested",
+        "12": "Bank account details verified",
+        "13": "Visa Application Instructions posted",
+        "14": "VISA Interview Date and Consulate Details verified",
+        "15": "Approval Letter posted",
+        "16": "Approval Letter verified",
+        "17": "Waiting for VISA verification",
+        "18": "VISA is verified",
+        "19": "Waiting for further H2A required documentation",
+        "20": "Additional H2A documentation verified",
+        "21": "Social Security Card posted",
+        "22": "Social Security Card verified",
+        "23": "American and CDL (if applicable) Drivers license posted ",
+        "24": "Drivers license verified",
+        "25": "Onboarding completed",
+    };
+
     constructor(
         private _router: Router,
         private _employeeService: EmployeeService,
@@ -139,7 +168,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.searchResult = data.search;
                 this.page = 1;
                 this._employeeService.getEmployees(
-                    1,
+                    this.page,
                     this.pageSize,
                     '',
                     '',
@@ -248,6 +277,28 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+     //#region Confirmation Customer Crops Delete Dialog
+     confirmDeleteDialog(id: string , fb_id: string): void {
+        const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this Employee?',
+                title: 'Employee',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            if (dialogResult)
+                this._employeeService.deleteEmployee(id, fb_id, this.page, this.pageSize);
+        });
+    }
+    //#endregion
+    getCountryCode(country_code){
+        if (country_code && country_code != 'zz')
+        return  '+' + country_code?.split("+")[1];
+    }
+    getStatusCode(status_step){
+        return this.status_step[status_step];
+    }
 
 }
 

@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import { Subject, takeUntil } from 'rxjs';
-import { Documents, Item } from '../../employee.types';
+import { Observable, Subject } from 'rxjs';
+import { Item } from '../../employee.types';
 
 @Component({
     selector: 'app-documents',
@@ -16,70 +15,62 @@ export class DocumentsComponent implements OnInit {
     drawerMode: 'side' | 'over';
     selectedItem: Item;
     documents: any;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     activeID: any;
+    routeID: any;
+    employeeDocs$: Observable<any>;
+    policyDocument$: Observable<any[]>;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
         private _employeeService: EmployeeService,
-        private _activatedRoute: ActivatedRoute,
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
-    ) {}
+        public activatedRoute: ActivatedRoute,
+    ) { }
 
     ngOnInit(): void {
+        this.getParamsId();
         this.initApis();
-
-        // Subscribe to media query change
-        this._fuseMediaWatcherService
-            .onMediaQueryChange$('(min-width: 1440px)')
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((state) => {
-                // Calculate the drawer mode
-                this.drawerMode = state.matches ? 'side' : 'over';
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
     }
 
-    /**
-     * On backdrop clicked
-     */
-    onBackdropClicked(): void {
-        // Go back to the list
-        this._router.navigate(['./'], { relativeTo: this._activatedRoute });
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
+    getParamsId() {
+        this.activatedRoute.params.subscribe((params) => {
+            this.routeID = params.Id;
+        });
     }
-    getFiles(id: any): void{
-        this.activeID = id;
-        this._employeeService.getItems(id).subscribe((a) => {});
-    }
-   // #region Init Api's
+    // #region Init Api's
     initApis(): void {
-        // Get the items
-        this._employeeService.documents$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((documents: Documents) => {
-                this.documents = documents;
-                if (this.documents.files.length < 1) {
-                    this.getFiles(this.documents.folders[0].id);
-                }
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // Get Documents Uploaded by Employee
+        this.employeeDocs$ = this._employeeService.employeeDocuments$
+        this._employeeService.getEmployeeDocs(this.routeID);
 
-        // Get the item
-        this._employeeService.item$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((item: Item) => {
-                this.selectedItem = item;
+        // Get Documents Uploaded by Admin
+        this.policyDocument$ = this._employeeService.policyDocuments$;
+        this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
+    }
+    //#endregion
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+    //#region Download Document
+    downloadDocument(url) {
+        window.open(url, "_blank");
+    }
+    //#endregion
+
+    //#region  Tab Change
+    tabChanged(event) {
+        switch (event.tab.textLabel) {
+            case 'Onboarding':
+                this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
+                break;
+            case 'CDL':
+                this._employeeService.getPolicyDocuments(this.routeID, 'cdl');
+                break;
+            case 'Work':
+                this._employeeService.getPolicyDocuments(this.routeID, 'work');
+                break;
+            case 'Miscellaneous':
+                this._employeeService.getPolicyDocuments(this.routeID, 'miscellaneous');
+                break;
+            default:
+        }
     }
     //#endregion
 }

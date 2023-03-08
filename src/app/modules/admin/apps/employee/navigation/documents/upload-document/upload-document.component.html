@@ -1,0 +1,45 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Upload Document</div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+    <!-- Header -->
+    <!-- form -->
+    <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="documentForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Select Document </mat-label>
+            <mat-select formControlName="name">
+                <mat-option *ngFor="let policyDocument of data.policyDocuments" [value]="policyDocument.value">
+                    {{policyDocument.value}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" (click)="fileUpload.click()" class="w-full">
+            <mat-label>Upload Document</mat-label>
+            <input matInput [value]=this.docPreview />
+            <input class="cursor-pointer" for="file" type="file" id="fileInput" name="fileInput" accept="file"
+                (change)="uploadDoc($event)" #fileUpload />
+            <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+
+        </mat-form-field>
+        <!-- Actions -->
+        <div class="flex items-center justify-end mt-8">
+            <div class="flex items-center">
+                <!-- Discard -->
+                <button class="mr-2 bg-amber-600 text-white" mat-stroked-button (click)="discard()">
+                    Discard
+                </button>
+
+                <!-- Send -->
+                <button [class.spinner]="isLoadingPolicyDocument$ | async"  [disabled]="documentForm.invalid || (isLoadingPolicyDocument$ | async)  " class="" mat-flat-button [color]="'primary'" (click)="send()">
+                    <span class=" ">Save</span>
+                </button>
+            </div>
+        </div>
+        <!-- Actions -->
+    </form>
+    <!-- form -->
+</div>

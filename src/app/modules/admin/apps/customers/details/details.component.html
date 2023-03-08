@@ -37,7 +37,7 @@
 
             <div class="flex sub-sidenav-content bg-light">
                 <div class="w-full h-full">
-                    <div class="tab bg-white shadow overflow-auto">
+                    <div class="tab bg-white overflow-auto">
                         <div>
                             <ng-template [ngIf]="selectedIndex ==='Customer Information'">
                                 <app-customer-detail></app-customer-detail>
@@ -72,7 +72,7 @@
                         </div>
                         <div>
                             <ng-template [ngIf]="selectedIndex === 'Invoice'">
-                                <app-invoice> </app-invoice>
+                                <app-invoice [customer]="(customer$ | async)"> </app-invoice>
                             </ng-template>
                         </div>
                         <div>

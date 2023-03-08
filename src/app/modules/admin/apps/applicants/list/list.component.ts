@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, map, merge, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
+import { debounceTime, map, merge, Observable, startWith, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import { ApplicantPagination, Applicant } from 'app/modules/admin/apps/applicants/applicants.types';
+import { ApplicantPagination, Applicant, Country } from 'app/modules/admin/apps/applicants/applicants.types';
 import { ApplicantService } from 'app/modules/admin/apps/applicants/applicants.services';
 import { UpdateComponent } from '../update/update.component';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
-import { FilterComponent } from './../filter/filter.component';
 import { date_format, date_format_2 } from 'JSON/date-format';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -18,6 +17,8 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { Moment } from 'moment';
 import moment from 'moment';
 import { states } from './../../../../../../JSON/state';
+import { countryList } from 'JSON/country';
+
 @Directive({
     selector: '[birthdayFormat]',
     providers: [
@@ -59,6 +60,7 @@ export class ApplicantsListComponent
     tagsEditMode: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     panelOpenState = false;
+    countryList: string[] = [];
     statusList: string[] = [
         'Hired',
         'Evaluated',
@@ -67,12 +69,11 @@ export class ApplicantsListComponent
         'N/A',
         'Not Being Considered',
     ];
-    countries: string[] = [];
     page: number;
     limit: number;
-    pageSize = 50;
+    pageSize = 200;
     currentPage = 0;
-    pageSizeOptions: number[] = [50, 100, 150, 200];
+    pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
     isEdit: boolean;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
@@ -83,14 +84,14 @@ export class ApplicantsListComponent
     isLoadingApplicant$: Observable<boolean>;
     applicantList$: Observable<Applicant[]>;
     isLoadingApplicants$: Observable<boolean>;
+    countryOptions: Observable<string[]>;
     searchResult: string;
     applicantFiltersForm: FormGroup;
     created_at: any;
     sortActive;
     sortDirection;
     states: string[] = [];
-
-
+    validCountry: boolean = true;
     // #endregion
 
     /**
@@ -100,7 +101,8 @@ export class ApplicantsListComponent
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _applicantService: ApplicantService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
+
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -114,7 +116,13 @@ export class ApplicantsListComponent
         this.initApis();
         this.initFiltersForm();
 
+        this.countryOptions = this.applicantFiltersForm.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
+
         this.states = states;
+        this.countryList = countryList;
     }
 
     initObservables() {
@@ -145,6 +153,11 @@ export class ApplicantsListComponent
     }
     ngAfterViewInit(): void { }
 
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countryList.filter(country => country.toLowerCase().includes(filterValue));
+    }
+
     initFiltersForm() {
         this.applicantFiltersForm = this._formBuilder.group({
             date: [''],
@@ -152,6 +165,8 @@ export class ApplicantsListComponent
             ranking: [''],
             state: [''],
             created_at: [''],
+            country: [''],
+            employment_period: [''],
         });
     }
 
@@ -217,6 +232,20 @@ export class ApplicantsListComponent
     initCreatedAt() {
         this.created_at = new FormControl();
     }
+    //#region Country Form Validation
+    formValidation(e, type) {
+        if (type === "country") {
+            if (this.countryList.includes(e) || e == '') {
+                this.validCountry = true;
+                this.applicantFiltersForm.controls['country'].setErrors(null);
+            }
+            else {
+                this.validCountry = false;
+                this.applicantFiltersForm.controls['country'].setErrors({ 'incorrect': true });
+            }
+        }
+    }
+    //#endregion
     applyFilters() {
         this.page = 1;
         !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
@@ -224,6 +253,8 @@ export class ApplicantsListComponent
         !this.applicantFiltersForm.value.status ? (this.applicantFiltersForm.value.status = '') : ('');
         !this.applicantFiltersForm.value.date ? (this.applicantFiltersForm.value.date = '') : ('');
         !this.applicantFiltersForm.value.ranking ? (this.applicantFiltersForm.value.ranking = '') : ('');
+        !this.applicantFiltersForm.value.country ? (this.applicantFiltersForm.value.country = '') : ('');
+        !this.applicantFiltersForm.value.employment_period ? (this.applicantFiltersForm.value.employment_period = '') : ('');
         this.created_at.value ? (this.applicantFiltersForm.value.created_at = this.created_at.value) : ''
         this._applicantService.getApplicants(
             1,
@@ -243,6 +274,9 @@ export class ApplicantsListComponent
         this.applicantFiltersForm.value.status = '';
         this.applicantFiltersForm.value.ranking = '';
         this.applicantFiltersForm.value.date = '';
+        this.applicantFiltersForm.value.country = '';
+        this.applicantFiltersForm.value.employment_period = '';
+
         this.created_at.setValue('');
         this._applicantService.getApplicants(
             1,
@@ -278,6 +312,13 @@ export class ApplicantsListComponent
             if (dialogResult)
                 this._applicantService.deleteApplicant(applicantId);
         });
+    }
+    //#endregion
+
+    //#region find country code 
+    getCountryCode(country_code) {
+        if (country_code && country_code != 'zz')
+            return '+' + country_code?.split("+")[1];
     }
     //#endregion
 }

@@ -11,8 +11,8 @@
             <div class="flex items-center" *ngIf="applicant$ | async as applicantInfo">
                 <mat-icon (click)="backHandler()" class="icon-size-6 text-secondary"
                     [svgIcon]="'heroicons_solid:arrow-circle-left'"></mat-icon>
-                <img *ngIf="applicantInfo?.applicant_info.avatar" class="inline-block h-24 w-24 rounded-full" src="{{applicantInfo.applicant_info.avatar}}"
-                    alt="">
+                <img *ngIf="applicantInfo?.applicant_info.avatar" class="inline-block h-24 w-24 rounded-full"
+                    src="{{applicantInfo.applicant_info.avatar}}" alt="">
                 <img *ngIf="applicantInfo?.applicant_info.avatar == ''" class="inline-block h-24 w-24 rounded-full"
                     src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
                     alt="">
@@ -43,6 +43,9 @@
 
             </div>
             <div class="buttons-wrapper-1">
+                <button class="mr-1" mat-flat-button [color]="'primary'" (click)="openUpdateDialog(applicant)">
+                    <span class="whitespace-normal">Edit</span>
+                </button>
                 <button class="mr-1" mat-flat-button [color]="'primary'" (click)="composeEmail(8)"
                     [disabled]="applicant?.applicant_info.status_step >= 8 ? true : false">
                     <span class="whitespace-normal">Advance to offer</span>
@@ -149,6 +152,10 @@
                                         class="my-1 text-red-600 text-md font-semibold">
                                         {{applicantInfo?.applicant_info?.reason_for_rejection}}
                                     </mat-hint>
+                                    <button *ngIf="applicantInfo?.applicant_info?.status_message == 'Waitlisted' && i == 9 "
+                                     class="" mat-flat-button [color]="'primary'" (click)="resumeOnboarding()">
+                                        <span class="p-2">Resume Onboarding</span>
+                                    </button>
                                     <mat-hint *ngIf="i == 2" class="my-1 text-md font-semibold">
                                         {{applicantInfo?.applicant_info.first_interviewer_name === null ?
                                         "" : "(" + applicantInfo?.applicant_info.first_interviewer_name + ")"}}

@@ -1,7 +1,7 @@
 <div class="flex flex-col max-w-250 md:min-w-160 md:max-h-screen -m-6 add-update-applicant-form">
     <header
         class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary   rounded-tl-2xl rounded-tr-2xl">
-        <div class="text-lg font-medium">{{this.isEdit? 'Edit Appicant':'Add Applicant'}}</div>
+        <div class="text-lg font-medium">{{this.isEdit? 'Edit Applicant':'Add Applicant'}}</div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
             <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
@@ -32,6 +32,14 @@
                                     <input matInput type="text" formControlName="last_name">
                                     <mat-hint *ngIf="this.firstFormGroup.get('last_name').hasError('required')"
                                         class="text-md uppercase text-red-500">Last Name is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Legal Name</mat-label>
+                                    <input matInput type="text" formControlName="legal_name">
+                                    <mat-hint *ngIf="this.firstFormGroup.get('legal_name').hasError('required')"
+                                        class="text-md uppercase text-red-500">Legal Name is required</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
@@ -158,7 +166,7 @@
                                     <img class="w-24 h-24 mx-auto rounded-full object-cover object-center"
                                         src="{{secondFormGroup.get('avatar').value}}" alt=" " />
                                 </div>
-                                <div class="mb-4" *ngIf="imageURL ==='' && secondFormGroup.get('avatar').value === ''">
+                                <div class="mb-4" *ngIf="imageURL ==='' && secondFormGroup.get('avatar').value == null">
                                     <img class="w-24 h-24 mx-auto rounded-full object-cover object-center"
                                         src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
                                         alt="Avatar Upload" />
@@ -590,7 +598,7 @@
                             <div>
                                 <mat-form-field appearance="outline" (click)="fileUpload.click()" class="w-full">
                                     <mat-label>Upload Resume</mat-label>
-                                    <input matInput [value]=this.resumePreview />
+                                    <input matInput [value]=this.resumePreview formControlName="resume"  />
                                     <input for="file" name="fileInput" id="fileInput" type='file' accept="file"
                                         (change)="uploadResume($event)" #fileUpload />
                                     <mat-icon matSuffix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
@@ -649,7 +657,8 @@
                             </mat-form-field>
                         </div>
 
-                        <h3 class="mt-2 text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5. With
+                        <h3 class="mt-2 text-xl font-bold">On the next 5 questions, Rate yourself on a scale of 1 to 5.
+                            With
                             5 being the highest.</h3>
                         <div class="md:flex lg:flex align-center my-1.5">
                             <div class="sm:w-auto md:w-8/12 lg:w-96">
@@ -739,6 +748,20 @@
                                     class="text-md uppercase text-red-500">This field is
                                     required
                                 </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" class="w-full">
+                                <mat-label>Please choose which employment period you prefer?</mat-label>
+                                <mat-select matNativeControl formControlName="employment_period">
+                                    <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th, 2024 </mat-option>
+                                    <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th, 2024</mat-option>
+                                    <mat-option value="Either option works for me (no preference)">Either option works for me (no preference)</mat-option>
+
+                                </mat-select>
+                                <mat-hint *ngIf="this.thirdFormGroup.get('employment_period').hasError('required')"
+                                    class="text-md uppercase text-red-500">Employment Period field is
+                                    required</mat-hint>
                             </mat-form-field>
                         </div>
                     </form>

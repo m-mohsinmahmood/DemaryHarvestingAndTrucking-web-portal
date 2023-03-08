@@ -42,7 +42,7 @@ import { ResourcesComponent } from './navigation/resources/resources.component';
 import { JobResultComponent } from './navigation/job-result/job-result.component';
 import { ContactsDataComponent } from './navigation/customer-information/edit/contacts-data.component';
 import { CustomersContactsList } from './navigation/customer-information/list/customers-contacts.component';
-import { AddItemComponent } from './navigation/invoice/add-item/add-item.component';
+import { AddTruckingItemComponent } from './navigation/invoice/add-trucking-item/add-trucking-item.component';
 import { AddFieldComponent } from './navigation/farm-data/fields/add-field/add-field.component';
 import { AddCropComponent } from './navigation/farm-data/crops/add-crop/add-crop.component';
 import { AddDestinationComponent } from './navigation/farm-data/destinations/add-destination/add-destination.component';
@@ -73,8 +73,13 @@ import { ImportFarmsComponent } from './navigation/farm-data/farms/import-farms/
 import { ImportFieldsComponent } from './navigation/farm-data/fields/import-fields/import-fields.component';
 import { ImportCropsComponent } from './navigation/farm-data/crops/import-crops/import-crops.component';
 import { ImportDestinationsComponent } from './navigation/farm-data/destinations/import-destinations/import-destinations.component';
-
-
+import { AddHarvestingItemComponent } from './navigation/invoice/add-harvesting-item/add-harvesting-item.component';
+import { AddFarmingItemComponent } from './navigation/invoice/add-farming-item/add-farming-item.component';
+import { AddRentalItemComponent } from './navigation/invoice/add-rental-item/add-rental-item.component';
+import { ConfirmDialogComponent } from './navigation/invoice/confirm-dialog/confirm-dialog.component';
+import { AddDetailsComponent } from './navigation/invoice/add-details/add-details.component';
+import { EditTruckingJobComponent } from './navigation/job-result/edit-trucking-job/edit-trucking-job.component';
+import { EditFarmingJobComponent } from './navigation/job-result/edit-farming-job/edit-farming-job.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -90,7 +95,7 @@ import { ImportDestinationsComponent } from './navigation/farm-data/destinations
         JobResultComponent,
         ContactsDataComponent,
         CustomersContactsList,
-        AddItemComponent,
+        AddTruckingItemComponent,
         AddFieldComponent,
         AddCropComponent,
         AddDestinationComponent,
@@ -118,7 +123,14 @@ import { ImportDestinationsComponent } from './navigation/farm-data/destinations
         ImportFarmsComponent,
         ImportFieldsComponent,
         ImportCropsComponent,
-        ImportDestinationsComponent
+        ImportDestinationsComponent,
+        AddHarvestingItemComponent,
+        AddFarmingItemComponent,
+        AddRentalItemComponent,
+        ConfirmDialogComponent,
+        AddDetailsComponent,
+        EditTruckingJobComponent,
+        EditFarmingJobComponent
     ],
     imports: [
     RouterModule.forChild(customersRoutes),

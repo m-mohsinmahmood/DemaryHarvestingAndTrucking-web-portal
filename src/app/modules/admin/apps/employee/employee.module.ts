@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
@@ -43,6 +44,11 @@ import { ConfirmDialogComponent } from './navigation/account-management/confirm-
 import { UpdateEmployeeComponent } from './navigation/employee-data/update/update.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { OnboardingStatusBarComponent } from './navigation/onboarding/onboarding-status-bar/onboarding-status-bar.component';
+import { UploadDocumentComponent } from './navigation/documents/upload-document/upload-document.component';
+import { CdlDocumentsComponent } from './navigation/documents/cdl-documents/cdl-documents.component';
+import { OnboardingDocumentsComponent } from './navigation/documents/onboarding-documents/onboarding-documents.component';
+import { MiscellaneousDocumentsComponent } from './navigation/documents/miscellaneous-documents/miscellaneous-documents.component';
+import { WorkDocumentsComponent } from './navigation/documents/work-documents/work-documents.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +66,12 @@ import { OnboardingStatusBarComponent } from './navigation/onboarding/onboarding
       UpdateProfileData,
       ConfirmDialogComponent,
       UpdateEmployeeComponent,
-      OnboardingStatusBarComponent
+      OnboardingStatusBarComponent,
+      UploadDocumentComponent,
+      CdlDocumentsComponent,
+      OnboardingDocumentsComponent,
+      MiscellaneousDocumentsComponent,
+      WorkDocumentsComponent
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),
@@ -73,6 +84,7 @@ import { OnboardingStatusBarComponent } from './navigation/onboarding/onboarding
         MatMenuModule,
         MatPaginatorModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatRippleModule,
         MatSortModule,
         MatSelectModule,

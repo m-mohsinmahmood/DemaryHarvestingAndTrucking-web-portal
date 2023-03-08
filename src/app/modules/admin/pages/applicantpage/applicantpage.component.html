@@ -40,6 +40,14 @@
                             </div>
                             <div>
                                 <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Legal Name</mat-label>
+                                    <input matInput type="text" formControlName="legal_name">
+                                    <mat-hint *ngIf="this.firstFormGroup.get('legal_name').hasError('required')"
+                                        class="uppercase text-md text-red-500">Legal Name is required</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field appearance="outline" class="w-full">
                                     <mat-label>Email</mat-label>
                                     <input matInput type="email" formControlName="email">
                                     <mat-hint *ngIf="this.firstFormGroup.get('email').hasError('required')"
@@ -744,6 +752,21 @@
                                     *ngIf="this.thirdFormGroup.get('work_experience_description').hasError('required')"
                                     class="uppercase text-md text-red-500">This field is required
                                 </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" class="w-full">
+                                <mat-label>Please choose which employment period you prefer?
+                                </mat-label>
+                                <mat-select matNativeControl formControlName="employment_period">
+                                    <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th, 2024 </mat-option>
+                                    <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th, 2024</mat-option>
+                                    <mat-option value="Either option works for me (no preference)">Either option works for me (no preference)</mat-option>
+
+                                </mat-select>
+                                <mat-hint *ngIf="this.thirdFormGroup.get('employment_period').hasError('required')"
+                                    class="text-md uppercase text-red-500">Employment Period field is
+                                    required</mat-hint>
                             </mat-form-field>
                         </div>
                     </form>

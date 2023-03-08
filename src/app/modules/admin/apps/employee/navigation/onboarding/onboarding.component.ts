@@ -5,6 +5,7 @@ import { MailboxComposeComponent } from './compose/compose.component';
 import { EmployeeService } from '../../employee.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { PolicyDocumentsService } from '../../../policy-documents/policy-documents.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -14,9 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 export class OnboardingComponent implements OnInit {
 
   //#region Variables
-  items = [];
-  folders = [];
-  block: any;
+  folders: any  = [];
+  block: string = '';
   routeID; // URL ID
   statusStep: string = '2';
   statusMessage: string = 'Application Submitted';
@@ -24,18 +24,23 @@ export class OnboardingComponent implements OnInit {
   interviewCompletedForm: FormGroup;
   decisionMadeForm: FormGroup;
   employee: any;
+  h2a: string;
   //#endregion
 
   //#region observables
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   employee$: Observable<any>;
   employeeDocs$: Observable<any>;
+  personalizedDocument$: Observable<any[]>;
+  policyDocument$: Observable<any[]>;
+
   //#endregion
 
   constructor(
     private _matDialog: MatDialog,
     private _formBuilder: FormBuilder,
     private _employeeService: EmployeeService,
+    private _policyDocumentService: PolicyDocumentsService,
     public activatedRoute: ActivatedRoute,
   ) { }
 
@@ -43,28 +48,9 @@ export class OnboardingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRouteParams();
-    this.initApi();
     this.initObservables();
-    
-    this.items = [
-      { content: 'Applicant accepts offer', name: '', date: '15/02/2022', status: 'a', active: true },
-      { content: 'Applicant to set up a new DHT Account', name: 'Bethnay Blake', date: '15/02/2022', status: 'b', active: false },
-      { content: 'Activate the Applicants Account', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-      { content: 'Automated email for the following:​', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-      { content: 'US Applicants upload Drivers License and SS Card', name: 'Bethnay Blake', date: '15/02/2022', status: 'd1', active: false },
-      { content: 'H2A upload Passport and Foreign Drivers License', name: 'Katherine synder', date: '15/02/2022', status: 'e2', active: false },
-      { content: 'Pictures Readable and complete?', name: 'Bill Demaray', date: '15/02/2022', status: 'e1', active: false },
-      { content: 'Applicant to review/sign Compliance docs & notify Admin.', name: '', date: '15/02/2022', status: 'e1', active: false },
-      { content: 'Review/complete Visa app (foreign applicant only)', name: '', date: '15/02/2022', status: 'e1', active: false },
-      { content: 'Notify & initiate final step before hiring', name: '', date: '15/02/2022', status: 'e1', active: false },
-      { content: 'Create and send final 2 docs prior to hiring', name: '', date: '15/02/2022', status: 'e2', active: false },
-      { content: 'Travel arrangements and apply for online bank account', name: '', date: '15/02/2022', status: 'e2', active: false },
-      { content: 'Walk through remaining documents​', name: '', date: '15/02/2022', status: 'e2', active: false },
-      { content: 'officially begin his/her job and start payroll​', name: '', date: '15/02/2022', status: 'e2', active: false },
+    this.initApi();
 
-
-
-    ];
     this.preliminaryReviewForm = this._formBuilder.group({
       preliminary_review: [''],
       recruiter: [''],
@@ -95,38 +81,47 @@ export class OnboardingComponent implements OnInit {
       body: ['', [Validators.required]]
     });
 
-
-
-    this.folders = [
-      { folder: 'DOI' },
-      { folder: 'DOT' },
+    this.folders = this.employee?.employee_info.country == 'United States of America'? [
+      { folder: 'Department of Transportation (DOT)' },
       { folder: 'Payroll' },
-      { folder: 'DHS' },
-      { folder: 'Documents' },
-    ];
-    // on page rending of Folder
-    this.block = 'DOI';
+      { folder: 'Department of Labor (DOL)' },
+      { folder: 'DHT Onboarding Documents' },
+    ]:[
+      { folder: 'Department of Immigration (DOI)' },
+      { folder: 'Department of Transportation (DOT)' },
+      { folder: 'Payroll' },
+      { folder: 'Department of Labor (DOL)' },
+      { folder: 'DHT Onboarding Documents' },
+    ]
+    this.employee?.employee_info.country == 'United States of America'? this.block = 'Department of Transportation (DOT)' : this.block =  'Department of Immigration (DOI)'
   }
 
   //#region Get Applicant By id 
   initApi() {
-    this._employeeService.getEmployeeById(this.routeID, 'false');
     this._employeeService.getEmployeeDocs(this.routeID);
+    this._employeeService.getPolicyDocuments(this.routeID);
+    this._policyDocumentService.getPolicyDocuments();
   }
   //#endregion
 
   //#region Initilize Observables 
-  initObservables(){
+  async initObservables() {
     this.employeeDocs$ = this._employeeService.employeeDocuments$
     this.employee$ = this._employeeService.employee$;
-    this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+    this.personalizedDocument$ = this._employeeService.policyDocuments$;
+    this.policyDocument$ = this._policyDocumentService.policyDocuments$;
+
+    await this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
       this.employee = res;
+      this.employee?.employee_info?.country == 'United States of America' ? this.h2a = 'false' : this.h2a = 'true';
     });
+    this._employeeService.getEmployeeById(this.routeID, this.h2a);
+
   }
   //#endregion
 
   //#region route params function
-  getRouteParams(){
+  getRouteParams() {
     this.activatedRoute.params.subscribe((params) => {
       this.routeID = params.Id;
     });
@@ -151,10 +146,10 @@ export class OnboardingComponent implements OnInit {
     this.block = foldename.folder;
   }
 
-  downloadDocument(doc){
+  downloadDocument(doc) {
     window.open(doc, "_blank");
   }
 
-  
+
 
 }

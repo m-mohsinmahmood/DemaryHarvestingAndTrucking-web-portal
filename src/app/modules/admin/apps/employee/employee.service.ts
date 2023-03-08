@@ -57,6 +57,14 @@ export class EmployeeService {
 
     //#endregion
 
+    //#region Policy Documents 
+    private policyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly policyDocuments$: Observable<any | null> = this.policyDocuments.asObservable();
+
+    isLoadingPolicyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingPolicyDocuments$: Observable<any | null> = this.isLoadingPolicyDocuments.asObservable();
+    //#endregion
+
     constructor(
         private _httpClient: HttpClient,
         private _alertSerice: AlertService
@@ -110,7 +118,7 @@ export class EmployeeService {
 
 
     //#region Applicant API's 
-    getEmployees(page: number = 1, limit: number = 50, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
+    getEmployees(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
         params = params.set('limit', limit);
@@ -209,19 +217,27 @@ export class EmployeeService {
             );
     }
 
-    deleteEmployee(id: string) {
+    deleteEmployee(id: string, fb_id:string, page , limit) {
         this._httpClient
-            .delete(`api-1/employee?employeeId=${id}`)
+            .delete(`api-1/employee?id=${id}&fb_id=${fb_id}`)
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
                     this.isLoadingEmployee.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Delete Employee',
+                        message: res.message,
+                        time: 5000,
+                    });
                 },
                 (err) => {
                     this.handleError(err);
                 },
                 () => {
-                    this.getEmployees();
+                    this.getEmployees(page , limit);
                     this.isLoadingEmployee.next(false);
                 }
             );
@@ -236,7 +252,6 @@ export class EmployeeService {
             })
         );
     }
-
     //#endregion
 
     //#region get Items
@@ -275,12 +290,11 @@ export class EmployeeService {
     //#endregion
 
     //#region Patch Employee
-
     patchEmployee(data: any, h2a: string) {
         let newData;
         const { body, subject, to, ...employee_data } = data;
         const { id, status_step, prev_status_message, prev_status_step, status_message, ...email_data } = data;
-        newData = Object.assign({}, { employee_data }, { email_data });
+        newData = Object.assign({}, { employee_data }, { email_data }, { h2a });
         this._httpClient
             .patch(`api-1/employee`, newData)
             .pipe(take(1))
@@ -303,7 +317,7 @@ export class EmployeeService {
                     this.isLoadingEmployee.next(false);
                 },
                 () => {
-                    this.getEmployeeById(newData.employee_data.id,h2a);
+                    this.getEmployeeById(newData.employee_data.id, h2a);
                 }
             );
     }
@@ -358,6 +372,7 @@ export class EmployeeService {
 
     //#endregion
 
+    //#region Payroll 
     getPayrollById(id: string) {
         return this._httpClient
             .get(`api-1/employee-payroll?id=${id}`)
@@ -369,9 +384,82 @@ export class EmployeeService {
                     this.isLoadingEmployeeDwr.next(false);
                 },
                 (err) => {
+                    this.isLoadingEmployeeDwr.next(false);
                     this.handleError(err);
                 }
             );
     }
+    //#endregion
+    // Policy Documents 
+
+    //#region Get Policy Documents
+    getPolicyDocuments(id: string,category: string = '') {
+        return this._httpClient
+            .get(`api-1/policy-documents?id=${id}&type=${'personalized'}&category=${category}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(true);
+                    this.policyDocuments.next(res);
+                    this.isLoadingPolicyDocuments.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+    //#endregion
+
+    //#region Patch Policy Documents
+    addPolicyDocument(data: any, employee_id:string,category:string) {
+        this._httpClient
+            .post(`api-1/policy-documents`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(false);
+                    this.closeDialog.next(true);
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Company Documents',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingPolicyDocuments.next(false);
+                },
+                () => {
+                    this.getPolicyDocuments(employee_id,category);
+                }
+            );
+    }
+
+    //#endregion
+
+    //#region Delete Policy Documents
+    deletePolicyDocument(id: string, employee_id: string,category:string) {
+        this._httpClient
+            .delete(`api-1/policy-documents?id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPolicyDocuments.next(true);
+                },
+                (err) => {
+                    this.handleError(err);
+                },
+                () => {
+                    this.getPolicyDocuments(employee_id,category);
+                    this.isLoadingPolicyDocuments.next(false);
+                }
+            );
+    }
+
+    //#endregion
 
 }

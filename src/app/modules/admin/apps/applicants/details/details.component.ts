@@ -127,6 +127,7 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
             status_step: [''],
             prev_status_step: [''],
             prev_status_message: [''],
+            previous_status_message: [''],
             to: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
             subject: [''],
             body: ['', [Validators.required]],
@@ -306,7 +307,9 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
                     status_step: "10.1",
                     to: this.applicant.applicant_info.email,
                     subject: 'Employee Portal Credentials',
-                    body:  'Dear ' + this.applicant.applicant_info.first_name + ', </br>We thank you for accepting our offer.</br></br>Use the following credentials to login to employee portal.</br></br> Email:' + this.applicant.applicant_info.email + '</br>Password: dht@123',
+                    body:  this.applicant.applicant_info.country == "United States of America" ? 
+                    'Dear ' + this.applicant.applicant_info.first_name +',<br><br>Welcome to Demaray Harvesting and Trucking!  We are excited that you have joined the team and are looking forward to a great harvesting year.  Please visit our website at https://employee.dht-usa.com and log-in with your personalized credentials to create your own DHT web portal.  Email: ' + this.applicant.applicant_info.email + ' Password: dht@123.<br><br>We will be using this web portal for our new employee onboarding process where we will be assisting you in gathering all the required DHT and US Government documentation. We will need your active involvement in this process as there are numerous documents to review, date, sign, and upload.<br><br> We appreciate your patience with this process and are looking forward to getting started.<br><br>Kind regards, <br><br>':
+                    'Dear ' + this.applicant.applicant_info.first_name +',<br><br>Welcome to Demaray Harvesting and Trucking!  We are excited that you have joined the team and are looking forward to a great harvesting year.  Please visit our website at https://employee.dht-usa.com and log-in with your personalized credentials to create your own DHT web portal.  Email: ' + this.applicant.applicant_info.email + ' Password: dht@123.<br><br>We will be using this web portal for our new employee onboarding process where we will be assisting you in gathering all the required DHT and US Government documentation as well as facilitating the process of you applying for your H2A VISA.  We will need your active involvement in this process as there are numerous documents to review, date, sign, and upload.  Our rough timeline goals would include you beginning your VISA application process by March 1st.<br><br>Please note that this process will need to continue even after your arrival in the U.S. as there is some required documentation that you cannot receive or verify until you are here in the U.S.  We appreciate your patience with this process and are looking forward to getting started.<br><br>Kind regards, <br><br>'                   
                 }, false, false,this.applicant.applicant_info);
             }
             else if (dialogResult && type === "Reject") {
@@ -340,5 +343,15 @@ export class ApplicantDetailComponent implements OnInit, OnDestroy {
 
     expandAll() {
         this.panelOpenState = true;
+    } 
+
+    //#region Resume Onboarding
+    resumeOnboarding(){
+        this._applicantService.patchApplicant({
+            id: this.applicant.applicant_info.id,
+            prev_status_message: "Resume Onboarding",
+            status_message: this.applicant.applicant_info.previous_status_message,
+        }, false, false,this.applicant.applicant_info);
+
     }
 }

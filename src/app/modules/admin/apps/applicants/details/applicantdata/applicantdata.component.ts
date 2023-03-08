@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ApplicantService } from '../../applicants.services';
+
 
 @Component({
     selector: 'app-applicantdata',
@@ -24,13 +21,10 @@ export class ApplicantdataComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
-        private _matDialog: MatDialog,
-        private _formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public _applicantService: ApplicantService,
-        private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _changeDetectorRef: ChangeDetectorRef,
+        
     ) {}
 
     ngOnInit(): void {
@@ -42,5 +36,9 @@ export class ApplicantdataComponent implements OnInit {
 
     downloadResume(link) {
         window.open(link, "_blank");
+    }
+    getCountryCode(country_code){
+        if (country_code && country_code != 'zz')
+        return  '+' + country_code?.split("+")[1];
     }
 }
