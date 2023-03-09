@@ -119,13 +119,13 @@
                                         <div class="flex items-center truncate">
                                             {{ employee?.last_name }}
                                         </div>
-                                        <div class="flex items-center truncate">
+                                        <div class="flex items-center hidden sm:block truncate">
                                             {{ employee?.country }}
                                         </div>
                                         <div class="flex items-center hidden sm:block truncate">
                                             {{ employee.role? employee.role : "-" }}
                                         </div>
-                                        <div class="flex items-center hidden sm:block truncate">
+                                        <div matTooltip="{{getStatusCode(employee.status_step)}}" [ngClass]="{'text-red-600': employee.action_required === true}" class="flex items-center hidden sm:block truncate">
                                             {{getStatusCode(employee.status_step)}}
                                         </div>
                                         <div class="flex items-center hidden sm:block truncate">
@@ -146,7 +146,8 @@
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
                                                 (click)="toggleDetails(employee.id)">
                                                 <mat-icon class="icon-size-5"
-                                                    [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                                                    [svgIcon]="'heroicons_solid:chevron-right'">
+                                                </mat-icon>
                                             </button>
                                             <button class=" ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
                                                 mat-stroked-button (click)="confirmDeleteDialog(employee.id, employee.fb_id)"
