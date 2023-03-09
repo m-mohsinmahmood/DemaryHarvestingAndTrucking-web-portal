@@ -239,6 +239,7 @@ export class ApplicantpageComponent implements OnInit {
             previous_contact_supervisor: ['', [Validators.required]],
             resume: [''],
             employment_period: ['', [Validators.required]],
+            applied_job: ['', [Validators.required]],
 
             authorized_to_work: ['', [Validators.required]],
             cdl_license: ['', [Validators.required]],

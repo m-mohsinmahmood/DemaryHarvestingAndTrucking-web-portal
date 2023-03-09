@@ -245,6 +245,8 @@ export class UpdateComponent implements OnInit {
             previous_contact_supervisor: [false || this.data?.applicantData?.previous_contact_supervisor.toString(), [Validators.required]],
             resume: ['' || this.data?.applicantData?.resume],
             employment_period: ['' || this.data?.applicantData?.employment_period, [Validators.required]],
+            applied_job: ['' || this.data?.applicantData?.applied_job, [Validators.required]],
+
 
             authorized_to_work: ['' || this.data?.applicantData?.authorized_to_work.toString(), [Validators.required]],
             cdl_license: ['' || this.data?.applicantData?.cdl_license.toString(), [Validators.required]],

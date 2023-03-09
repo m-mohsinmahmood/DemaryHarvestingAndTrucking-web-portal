@@ -756,11 +756,22 @@
                                 <mat-select matNativeControl formControlName="employment_period">
                                     <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January 15th, 2024 </mat-option>
                                     <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th, 2024</mat-option>
-                                    <mat-option value="Either option works for me (no preference)">Either option works for me (no preference)</mat-option>
-
                                 </mat-select>
                                 <mat-hint *ngIf="this.thirdFormGroup.get('employment_period').hasError('required')"
                                     class="text-md uppercase text-red-500">Employment Period field is
+                                    required</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" class="w-full">
+                                <mat-label>Which job are you applying for?
+                                </mat-label>
+                                <mat-select matNativeControl formControlName="applied_job">
+                                    <mat-option value="Seasonal Harvest">Seasonal Harvest Position (US Citizen / H2A Visa)</mat-option>
+                                    <mat-option value="Full Time">Full-time Employee Position (US Citizen / Permanent Residency)</mat-option>
+                                </mat-select>
+                                <mat-hint *ngIf="this.thirdFormGroup.get('applied_job').hasError('required')"
+                                    class="text-md uppercase text-red-500">Applied Job field is
                                     required</mat-hint>
                             </mat-form-field>
                         </div>
