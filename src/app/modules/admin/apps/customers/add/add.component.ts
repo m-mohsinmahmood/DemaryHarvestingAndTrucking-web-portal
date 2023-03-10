@@ -22,7 +22,6 @@ export class AddCustomer implements OnInit {
     closeDialog$: Observable<boolean>;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     //#endregion
-
     //#region Variables
     public form: FormGroup;
     selectedProduct: any;

@@ -67,8 +67,9 @@
 
 // Left Navigation CSS //
 
-.mat-drawer-inner-container div:nth-child(3),
-.mat-drawer-inner-container div:nth-child(4)
+.employee-mat-drawer .mat-drawer-inner-container div:nth-child(4),
+.employee-mat-drawer .mat-drawer-inner-container div:nth-child(5)
+
 {
-    //  pointer-events: none;
+      pointer-events: none;
 }
