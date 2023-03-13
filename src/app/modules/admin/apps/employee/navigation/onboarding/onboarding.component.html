@@ -163,9 +163,12 @@
                                     <p class="text-sm font-normal text-gray-500">Provided by Administrator</p>
                                 </div>
                             </div>
-                            <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
-                                <ng-container *ngFor="let policyDocument of policyDocuments.policy_docs; trackBy:trackByFn">
-                                    <mat-icon *ngIf="policyDocument.document_name == 'I-797B' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
+                            <div
+                                class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
+                                <ng-container
+                                    *ngFor="let policyDocument of policyDocuments.policy_docs; trackBy:trackByFn">
+                                    <mat-icon
+                                        *ngIf="policyDocument.document_name == 'I-797B' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
                                         (click)="downloadDocument(policyDocument.document_url)" matSuffix
                                         [svgIcon]="'heroicons_outline:download'" class="ml-2">
                                     </mat-icon>
@@ -174,8 +177,8 @@
                             <div class="sm:w-5/12 md:w-8/12">
                                 <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
                                     <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                        <mat-label
-                                            class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">IOE Number:</mat-label>
+                                        <mat-label class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">IOE
+                                            Number:</mat-label>
                                         <mat-label>{{employeeDocs?.employee_docs?.b797_number}}</mat-label>
                                     </div>
                                     <div class="flex flex-row sm:items-center sm:p-0 p-2">
@@ -476,40 +479,6 @@
                 </div>
                 <!-- Payroll BLOCK -->
                 <div *ngIf="block === 'Payroll'">
-                    <div *ngIf="this.employee?.employee_info?.passport_driver_license"
-                        class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
-                            <div class="flex items-center">
-                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Social Security
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
-                            <mat-icon *ngIf="employeeDocs?.employee_docs?.social_sec_doc"
-                                (click)="downloadDocument(employeeDocs?.employee_docs?.social_sec_doc)" matSuffix
-                                [svgIcon]="'heroicons_outline:download'" class="ml-2">
-                            </mat-icon>
-                        </div>
-                        <div class="sm:w-5/12 md:w-8/12">
-                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_number}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_name}}</mat-label>
-                                </div>
-                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
-                                    <mat-label
-                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
-                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_sign}}</mat-label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div *ngIf="this.employee?.employee_info?.bank_account "
                         class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
@@ -550,6 +519,41 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="this.employee?.employee_info?.passport_driver_license"
+                        class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
+                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
+                            <div class="flex items-center">
+                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Social Security
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
+                            <mat-icon *ngIf="employeeDocs?.employee_docs?.social_sec_doc"
+                                (click)="downloadDocument(employeeDocs?.employee_docs?.social_sec_doc)" matSuffix
+                                [svgIcon]="'heroicons_outline:download'" class="ml-2">
+                            </mat-icon>
+                        </div>
+                        <div class="sm:w-5/12 md:w-8/12">
+                            <div class="grid p-2 sm:gap-3 grid-cols-1 py-4">
+                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                    <mat-label
+                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Number:</mat-label>
+                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_number}}</mat-label>
+                                </div>
+                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                    <mat-label
+                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Name:</mat-label>
+                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_name}}</mat-label>
+                                </div>
+                                <div class="flex flex-row sm:items-center sm:p-0 p-2">
+                                    <mat-label
+                                        class="text-base font-extrabold text-gray-500 sm:w-5/12 w-36">Signature:</mat-label>
+                                    <mat-label>{{employeeDocs?.employee_docs?.social_sec_sign}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div *ngIf="this.employee?.employee_info?.contract_w4 " class="flex bg-gray-100 flex-col sm:flex-row
              rounded-md mt-2 px-4  shadow">
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
@@ -637,7 +641,8 @@
                         </div>
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
                             <ng-container *ngFor="let policyDocument of policyDocuments.policy_docs; trackBy:trackByFn">
-                                <mat-icon *ngIf="policyDocument.document_name == 'Ag Work Agreement' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
+                                <mat-icon
+                                    *ngIf="policyDocument.document_name == 'Ag Work Agreement' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
                                     (click)="downloadDocument(policyDocument.document_url)" matSuffix
                                     [svgIcon]="'heroicons_outline:download'" class="ml-2">
                                 </mat-icon>
@@ -670,7 +675,8 @@
                         </div>
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">
                             <ng-container *ngFor="let policyDocument of policyDocuments.policy_docs; trackBy:trackByFn">
-                                <mat-icon *ngIf="policyDocument.document_name == 'Work Itinerary' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
+                                <mat-icon
+                                    *ngIf="policyDocument.document_name == 'Work Itinerary' && policyDocument.employment_period == this.employee?.employee_info.employment_period"
                                     (click)="downloadDocument(policyDocument.document_url)" matSuffix
                                     [svgIcon]="'heroicons_outline:download'" class="ml-2">
                                 </mat-icon>
@@ -885,7 +891,8 @@
                         class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 sm:h-auto px-4 shadow">
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                             <div>
-                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Employee Handbook
+                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">Employee
+                                    Handbook
                                 </p>
                             </div>
                         </div>
@@ -917,7 +924,8 @@
                         class="flex bg-gray-100 flex-col sm:flex-row rounded-md mt-2 px-4  shadow">
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center sm:5/12 md:w-2/12 py-4">
                             <div>
-                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">DHT Work Rules</p>
+                                <p class="font-semibold text-xl text-blue-600 text-center sm:text-left">DHT Work Rules
+                                </p>
                             </div>
                         </div>
                         <div class="flex justify-center sm:justify-start sm:pl-4 items-center py-4 sm:2/12 md:w-2/12">

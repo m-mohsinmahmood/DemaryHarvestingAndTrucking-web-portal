@@ -10,36 +10,6 @@
             <div class="text-2xl font-extrabold tracking-tight">Employees</div>
             <!-- Actions -->
             <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 ">
-                <!-- <div class="">
-                    <input
-                        type="file"
-                        style="display: inline-block"
-                        (change)="incomingfile($event)"
-                        placeholder="Upload file"
-                        accept=".xlsx, .xls, .csv"
-                    />
-                    <button
-                        class="ml-4 mr-4 bg-green-500"
-                        mat-flat-button
-                        (click)="upload()"
-                    >
-                        <mat-icon
-                            [svgIcon]="'heroicons_outline:upload'"
-                        ></mat-icon>
-                        <span class="lg:ml-2">Import</span>
-                    </button>
-                    <button
-                        class="ml-4 mr-4"
-                        mat-flat-button
-                        [color]="'warn'"
-                        (click)="handleExport()"
-                    >
-                        <mat-icon
-                            [svgIcon]="'heroicons_outline:download'"
-                        ></mat-icon>
-                        <span class="lg:ml-2">Export</span>
-                    </button>
-                </div> -->
                 <div class="flex">
                     <!-- Search -->
                     <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded sm:min-w-64 min-w-60">
@@ -49,41 +19,9 @@
                                 [placeholder]="'Search Employee'" />
                         </form>
                     </mat-form-field>
-                    <!-- FILTER BUTTON -->
-                    <!-- <button
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Example icon-button with a menu"
-                    >
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="settingsDrawer.toggle()">
-                            <mat-icon>filter</mat-icon>
-                            <span>Filters</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>upload</mat-icon>
-                            <span>Import</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>download</mat-icon>
-                            <span>Export</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>download</mat-icon>
-                            <span>Download Template</span>
-                        </button>
-                    </mat-menu> -->
                 </div>
             </div>
         </div>
-        <!-- <p
-            *ngIf="this.fileError !== ''"
-            class="text-2xl font-bold tracking-tight"
-        >
-            Error: {{ this.fileError }}
-        </p> -->
     </div>
 
     <!-- Main -->
@@ -111,9 +49,10 @@
                         <!-- Rows -->
                         <ng-container *ngIf="employeeList$ | async as employees">
                             <ng-container *ngIf="employees.count > 0; else noEmployee">
-                                <ng-container *ngFor="let employee of employees.employees;">
+                                <ng-container *ngFor="let employee of employees.employees; trackBy: trackByFn">
                                     <div class="employee-grid grid items-center gap-4 py-4 px-6 md:px-8 border-b">
-                                        <div class="flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600" (click)="toggleDetails(employee.id)">
+                                        <div class="flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                                            (click)="toggleDetails(employee.id)">
                                             {{ employee?.first_name }}
                                         </div>
                                         <div class="flex items-center truncate">
@@ -125,7 +64,9 @@
                                         <div class="flex items-center hidden sm:block truncate">
                                             {{ employee.role? employee.role : "-" }}
                                         </div>
-                                        <div matTooltip="{{getStatusCode(employee.status_step)}}" [ngClass]="{'text-red-600': employee.action_required === true}" class="flex items-center hidden sm:block truncate">
+                                        <div matTooltip="{{getStatusCode(employee.status_step)}}"
+                                            [ngClass]="{'text-red-600': employee.action_required === true}"
+                                            class="flex items-center hidden sm:block truncate">
                                             {{getStatusCode(employee.status_step)}}
                                         </div>
                                         <div class="flex items-center hidden sm:block truncate">
@@ -140,7 +81,7 @@
                                         <div class="hidden sm:block">
                                             {{employee.country == "United States of America"? "USA" : "H2A"}}
                                         </div>
-                                       
+
                                         <!-- Details button -->
                                         <div class="flex">
                                             <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
@@ -150,7 +91,8 @@
                                                 </mat-icon>
                                             </button>
                                             <button class=" ml-2 min-w-10 min-h-7 h-7 px-2 leading-6 items-center"
-                                                mat-stroked-button (click)="confirmDeleteDialog(employee.id, employee.fb_id)"
+                                                mat-stroked-button
+                                                (click)="confirmDeleteDialog(employee.id, employee.fb_id)"
                                                 matTooltip="Delete" matTooltipPosition="above">
                                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:trash'">
                                                 </mat-icon>
@@ -161,7 +103,6 @@
                             </ng-container>
                         </ng-container>
                     </div>
-
                     <mat-paginator
                         class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                         [ngClass]="{ 'pointer-events-none': isLoading }" [length]="employees.count"
@@ -195,14 +136,14 @@
                         <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Select Country</mat-label>
                             <mat-select>
-                                <mat-option *ngFor="let country of countries" [value]="country">{{ country
+                                <mat-option *ngFor="let country of countries; trackBy: trackByFn" [value]="country">{{ country
                                     }}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="mx-1 mt-2 w-full">
                             <mat-label>Select status</mat-label>
                             <mat-select>
-                                <mat-option *ngFor="let status of statusList" [value]="status">{{ status }}</mat-option>
+                                <mat-option *ngFor="let status of statusList; trackBy: trackByFn" [value]="status">{{ status }}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>

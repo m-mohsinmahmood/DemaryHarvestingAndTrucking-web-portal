@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="tab">
-                    <mat-tab-group (selectedTabChange)="tabChanged($event)"  mat-align-tabs="start"   >
+                    <mat-tab-group *ngIf="employeeDocs$ | async" (selectedTabChange)="tabChanged($event)"  mat-align-tabs="start"   >
                         <mat-tab label="Onboarding">
                             <app-onboarding-documents [employeeDocs] = "(employeeDocs$ | async)" [onboardingDocuments] = "(policyDocument$ | async)" [employeeId] = "routeID" ></app-onboarding-documents>
                         </mat-tab>

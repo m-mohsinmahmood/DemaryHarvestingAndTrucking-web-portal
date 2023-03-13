@@ -226,8 +226,8 @@ export class UpdateEmployeeComponent implements OnInit {
         });
 
         this.sixthFormGroup = this._formBuilder.group({
-            status_step: [''],
-            status_message: [''],
+            status_step: ['' || this.data.employeeData.employee_info.status_step],
+            status_message: ['' || this.data.employeeData.employee_info.status_message],
         });
 
         this.formArr = [
@@ -378,7 +378,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
     //#region Form Value Updates
     formUpdates() {
-        this.secondFormGroup?.get('country').valueChanges.subscribe((_formValue => {
+        this.secondFormGroup?.get('country').valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((_formValue => {
             if (_formValue === "United States of America") {
                 this.isState = true;
                 this.secondFormGroup.controls['state'].setValue('');

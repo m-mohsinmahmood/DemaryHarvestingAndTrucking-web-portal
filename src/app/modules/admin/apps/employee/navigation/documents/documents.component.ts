@@ -29,6 +29,7 @@ export class DocumentsComponent implements OnInit {
     ngOnInit(): void {
         this.getParamsId();
         this.initApis();
+        this.initObservables();
     }
 
     getParamsId() {
@@ -39,12 +40,17 @@ export class DocumentsComponent implements OnInit {
     // #region Init Api's
     initApis(): void {
         // Get Documents Uploaded by Employee
-        this.employeeDocs$ = this._employeeService.employeeDocuments$
         this._employeeService.getEmployeeDocs(this.routeID);
 
         // Get Documents Uploaded by Admin
-        this.policyDocument$ = this._employeeService.policyDocuments$;
         this._employeeService.getPolicyDocuments(this.routeID, 'onboarding');
+    }
+    //#endregion
+
+    //#region Init Observables 
+    initObservables() {
+        this.employeeDocs$ = this._employeeService.employeeDocuments$
+        this.policyDocument$ = this._employeeService.policyDocuments$;
     }
     //#endregion
 
