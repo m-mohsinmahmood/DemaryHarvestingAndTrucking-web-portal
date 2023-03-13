@@ -62,13 +62,13 @@
         grid-template-columns: 18% 18% 18% 18% 18%;
     }
 }
-.mat-drawer-inner-container div:nth-child(5),
-.mat-drawer-inner-container div:nth-child(6),
-.mat-drawer-inner-container div:nth-child(7),
-.mat-drawer-inner-container div:nth-child(8)
+.customer-mat-drawer .mat-drawer-inner-container div:nth-child(5),
+.customer-mat-drawer .mat-drawer-inner-container div:nth-child(6),
+.customer-mat-drawer .mat-drawer-inner-container div:nth-child(7),
+.customer-mat-drawer .mat-drawer-inner-container div:nth-child(8)
 
 {
-    // pointer-events: none;
+     pointer-events: none;
 
 
 }

@@ -36,7 +36,7 @@ export class OnboardingStatusBarComponent implements OnInit {
     this.email = {
       email: this.employee?.employee_info.email,
       subject: 'Document Rejection',
-      emailBody: 'Dear ' + this.employee.employee_info.first_name + ',</br> I regret to inform you that the document you submitted has been rejected due to incorrect information. In order for your submission to be considered, please upload a revised document with the correct information.</br>Please ensure that all required information is included and that all data is accurate before resubmitting. If you have any questions or need assistance, please do not hesitate to contact us.</br>Thank you for your understanding and cooperation.</br>Best regards,</br> Admin.' 
+      emailBody: 'Dear ' + this.employee.employee_info.first_name + ',<br><br> I regret to inform you that the document you submitted has been rejected due to incorrect information. In order for your submission to be considered, please upload a revised document with the correct information.<br>Please ensure that all required information is included and that all data is accurate before resubmitting. If you have any questions or need assistance, please do not hesitate to contact us.<br>Thank you for your understanding and cooperation.<br>Best regards,<br><br> Admin.' 
     }
   }
 
