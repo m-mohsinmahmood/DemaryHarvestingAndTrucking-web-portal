@@ -177,7 +177,7 @@
                         [color]="'primary'" data-bs-dismiss="modal" (click)="update('Reference')">
                         Edit
                     </button>
-                    <button [disabled]="((applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking) && isSave != '3') ||
+                    <button [disabled]="(applicantData.reference_interviewer_id && applicantData.reference_call_remarks && applicantData.reference_call_ranking && isSave != '3') ||
                 (validation('referenceInterview'))" class="my-4" mat-flat-button [color]="'primary'"
                         data-bs-dismiss="modal" (click)="submit('Reference')">
                         Save
@@ -241,7 +241,7 @@
                         Edit
                     </button>
                     <button [disabled]="(applicantData.third_interviewer_id && applicantData.third_call_remarks && applicantData.third_call_ranking && isSave != '4') ||
-                validation('thirdInterview')" class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
+                (validation('thirdInterview'))" class="my-4" mat-flat-button [color]="'primary'" data-bs-dismiss="modal"
                         (click)="submit('Third')">
                         Save
                     </button>

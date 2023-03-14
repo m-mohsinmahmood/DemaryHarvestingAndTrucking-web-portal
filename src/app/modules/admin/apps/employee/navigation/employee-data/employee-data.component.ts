@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -32,7 +32,6 @@ export class EmployeeDataComponent implements OnInit {
     private _employeeService: EmployeeService,
     private _matDialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   //#region Lifecycle Functions
@@ -54,7 +53,9 @@ export class EmployeeDataComponent implements OnInit {
   initObservables() {
     this.isLoadingEmployeeData$ = this._employeeService.isLoadingEmployee$;
     this.employeeData$ = this._employeeService.employee$;
-    this.employeeData$.subscribe((value) => {
+    this.employeeData$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((value) => {
       this.employeeData = value;
     })
   }
@@ -101,4 +102,8 @@ export class EmployeeDataComponent implements OnInit {
     }
   }
   //#endregion
+
+  downloadResume(link) {
+    window.open(link, "_blank");
+  } 
 }

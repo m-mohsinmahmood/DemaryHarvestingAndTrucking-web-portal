@@ -29,7 +29,6 @@ import { EmployeeDetailComponent } from './details/details.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { employeeRoutes } from 'app/modules/admin/apps/employee/employee.routing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { UploadDocModal } from './details/details.component';
 import { EmployeeDataComponent } from './navigation/employee-data/employee-data.component';
 import { ProfileDataComponent } from './navigation/profile-data/profile-data.component';
 import { OnboardingComponent } from './navigation/onboarding/onboarding.component';
@@ -55,7 +54,6 @@ import { WorkDocumentsComponent } from './navigation/documents/work-documents/wo
       EmployeeComponent,
       EmployeeListComponent,
       EmployeeDetailComponent,
-      UploadDocModal,
       EmployeeDataComponent,
       ProfileDataComponent,
       OnboardingComponent,

@@ -4,42 +4,11 @@ import {
     OnDestroy,
     OnInit,
     ViewEncapsulation,
-    Inject,
 } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
-import {
-    MatDialog,
-    MatDialogRef,
-    MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-
-export interface DialogData {
-    note: string;
-    file: string;
-}
-
-const governmentDocs = [
-    { id: '1', name: 'Passport', type: 'PDF' },
-    { id: '2', name: 'Visa', type: 'DOC' },
-    { id: '3', name: 'I-94', type: 'XLS' },
-    { id: '4', name: 'License', type: 'TXT' },
-    { id: '5', name: 'Social Security ', type: 'JPG' },
-    { id: '6', name: 'DOT docs', type: 'DOC' },
-    { id: '7', name: 'Physical', type: 'PDF' },
-    { id: '8', name: 'Drug Testing', type: 'TXT' },
-];
-const companyDocs = [
-    { id: '9', name: 'Drug Testing', type: 'TXT' },
-    { id: '10', name: 'Contract', type: 'PDF' },
-    { id: '11', name: 'Approval Letter', type: 'DOC' },
-    { id: '12', name: 'Departure Form', type: 'JPG' },
-    { id: '13', name: 'Equipment Usage', type: 'XLS' },
-    { id: '14', name: 'Work Agreement', type: 'PDF' },
-];
 
 @Component({
     selector: 'employee-details',
@@ -63,8 +32,6 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     note: string;
     file: string;
     routes = [];
-    employeeGovernemtDocs: any[] = governmentDocs;
-    employeeCompanyDocs: any[] = companyDocs;
     // Sidebar stuff
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -74,7 +41,6 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
     constructor(
-        private _matDialog: MatDialog,
         public activatedRoute: ActivatedRoute,
         public _employeeService: EmployeeService,
         private _router: Router,
@@ -87,7 +53,6 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
         this.activatedRoute.params.subscribe((params) => {
             this.routeID = params.Id;
         })
-
         this.routes = this._employeeService.navigationLabels;
     }
 
@@ -108,18 +73,14 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
         // Data
         this.employee$ = this._employeeService.employee$;
         this.isLoadingEmployee$ = this._employeeService.isLoadingEmployee$;
-        this.employee$.pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
-            this.employee = res;
-        });
         // Loader
     }
     //#endregion
 
     //#region Initial APIs
     initApis(id: string) {
-        this._employeeService.getEmployeeById(id, 'false');
+        //this._employeeService.getEmployeeById(id, 'false');
         this._employeeService.getEmployeeDocs(id);
-
     }
     //#endregion
 
@@ -160,51 +121,14 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     };
     //#endregion
 
-    //#region Update Dialog
-    openUploadDialog(): void {
-        // Open the dialog
-        const dialogRef = this._matDialog.open(UploadDocModal, {
-            data: { name: this.note, animal: this.file },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log('The dialog was closed');
-            this.note = result;
-        });
-    }
-
-    //#endregion
-
     backHandler(): void {
         this._router.navigate(['/apps/employee/']);
     }
 
-}
-
-@Component({
-    selector: 'upload-doc-modal',
-    templateUrl: 'upload-doc-modal.html',
-})
-export class UploadDocModal {
-    form: FormGroup;
-
-    constructor(
-        public dialogRef: MatDialogRef<UploadDocModal>,
-        private _formBuilder: FormBuilder,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData
-    ) { }
-
-    ngOnInit(): void {
-        this.form = this._formBuilder.group({
-            file: ['', [Validators.required]],
-            note: ['', [Validators.required]],
-        });
+    //#region trackByFn
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
     }
+    //#endregion
 
-    onSubmit(): void { }
-
-    discard(): void {
-        // Close the dialog
-        this.dialogRef.close();
-    }
 }

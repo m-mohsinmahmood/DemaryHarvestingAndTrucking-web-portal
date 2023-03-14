@@ -20,14 +20,15 @@ export class Interceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         let requestUrl = request.url;
         if (requestUrl.indexOf('api-1') !== -1) {
-            requestUrl = requestUrl.replace('api-1', 'https://dht-uat.azurewebsites.net/api');
+            requestUrl = requestUrl.replace('api-1', 'https://dht-dev.azurewebsites.net/api');
         }
         else if(requestUrl.indexOf('api-2') !== -1) {
-            requestUrl = requestUrl.replace('api-2', 'https://dht-uat-node.azurewebsites.net/api');
+            requestUrl = requestUrl.replace('api-2', 'https://dht-dev-node.azurewebsites.net/api');
         }
         request = request.clone({
             url: requestUrl,
         });
+        // move to next HttpClient request life cycle
         return next.handle(request);
     }
     //https://dht-dev.azurewebsites.net

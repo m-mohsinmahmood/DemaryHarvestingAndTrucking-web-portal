@@ -1,41 +1,16 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from '@angular/forms';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    debounceTime,
-    Observable,
-    Subject,
-    Subscription,
-} from 'rxjs';
+import { debounceTime, Observable, Subject, Subscription } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-import {
-    EmployeePagination,
-    Employee,
-} from 'app/modules/admin/apps/employee/employee.types';
+import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
 import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { countryList } from './../../../../../../JSON/country';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
-
 
 @Component({
     selector: 'app-employee',
@@ -46,7 +21,7 @@ import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-d
     animations: fuseAnimations,
 })
 export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
-    
+
     //#region observable
     employeeList$: Observable<Employee[]>;
     employee$: Observable<Employee[]>;
@@ -57,7 +32,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#region variables
     page: number = 1;
     pageSize = 200;
-    pageSizeOptions: number[] = [50, 100, 150, 200,250,300,350,500];
+    pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 500];
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -102,15 +77,17 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //#endregion
 
+    //#region Status Step Object
+
     status_step = {
-        "2":  "Account Activated",
-        "3":  "Admin sending email to upload PP, DL, and SS docs",
-        "4":  "Passport and Drivers License verified",
-        "5":  "CDL training instructions posted",
-        "6":  "CDL training instructions verified",
-        "7":  "Compliance docs posted",
-        "8":  "Compliance docs verified",
-        "9":  "Employee Contract posted",
+        "2": "Account Activated",
+        "3": "Admin sending email to upload PP, DL, and SS docs",
+        "4": "Passport and Drivers License verified",
+        "5": "CDL training instructions posted",
+        "6": "CDL training instructions verified",
+        "7": "Compliance docs posted",
+        "8": "Compliance docs verified",
+        "9": "Employee Contract posted",
         "10": "Employee Contract verified",
         "11": "Bank account information requested",
         "12": "Bank account details verified",
@@ -128,6 +105,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         "24": "Drivers license verified",
         "25": "Onboarding completed",
     };
+    //#endregion
 
     constructor(
         private _router: Router,
@@ -135,11 +113,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         private _matDialog: MatDialog
     ) { }
 
-   
     //#region LifeCycle Hooks
     ngOnInit(): void {
         this.countries = countryList;
-     
+
     }
 
     ngAfterViewInit(): void {
@@ -272,14 +249,15 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         this._employeeService.getEmployees(this.page, this.pageSize, '', '', this.searchResult);
     }
     //#endregion
+
     //#region open details
     toggleDetails(employeeId: string): void {
         this._router.navigate(['/apps/employee/details/' + employeeId]);
     }
     //#endregion
 
-     //#region Confirmation Customer Crops Delete Dialog
-     confirmDeleteDialog(id: string , fb_id: string): void {
+    //#region Confirmation Customer Crops Delete Dialog
+    confirmDeleteDialog(id: string, fb_id: string): void {
         const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this Employee?',
@@ -293,15 +271,24 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
     //#endregion
-    getCountryCode(country_code){
+    //#region get country code 
+    getCountryCode(country_code) {
         if (country_code && country_code != 'zz')
-        return  '+' + country_code?.split("+")[1];
+            return '+' + country_code?.split("+")[1];
     }
-    getStatusCode(status_step){
-        // status_step % 2 == 0 && status_step != 2 ? this.actionRequired = true : this.actionRequired = false;
+    //#endregion
+
+    //#region get status code
+    getStatusCode(status_step) {
         return this.status_step[status_step];
     }
-
+    //#endregion
+    
+    //#region trackByFn
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
+    //#endregion
 }
 
 

@@ -287,8 +287,7 @@ export class RecruiterremarksComponent implements OnInit {
                 !this.thirdInterviewForm.get('third_call_remarks').value ||
                 !this.thirdInterviewForm.get('third_call_ranking').value)
         ) return true;
-
-        else if (form === "refrenceInterview" &&
+        else if (form === "referenceInterview" &&
             (!this.referenceForm.get('reference_interviewer_id').value ||
                 !this.referenceForm.get('reference_call_remarks').value ||
                 !this.referenceForm.get('reference_call_ranking').value)
