@@ -9,3 +9,12 @@
 {
     display: none !important;
 }
+
+// Left Navigation CSS //
+
+.non-motorized-drawer .mat-drawer-inner-container div:nth-child(2),
+.non-motorized-drawer .mat-drawer-inner-container div:nth-child(4)
+
+{
+      pointer-events: none;
+}
