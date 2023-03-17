@@ -5,6 +5,8 @@ import { MailboxComposeComponent } from './compose/compose.component';
 import { EmployeeService } from '../../employee.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { jsPDF } from 'jspdf';
+import * as htmlToImage from 'html-to-image';
 import { PolicyDocumentsService } from '../../../policy-documents/policy-documents.service';
 
 @Component({
@@ -15,7 +17,7 @@ import { PolicyDocumentsService } from '../../../policy-documents/policy-documen
 export class OnboardingComponent implements OnInit {
 
   //#region Variables
-  folders: any  = [];
+  folders: any = [];
   block: string = '';
   routeID; // URL ID
   statusStep: string = '2';
@@ -81,19 +83,19 @@ export class OnboardingComponent implements OnInit {
       body: ['', [Validators.required]]
     });
 
-    this.folders = this.employee?.employee_info.country == 'United States of America'? [
+    this.folders = this.employee?.employee_info.country == 'United States of America' ? [
       { folder: 'Department of Transportation (DOT)' },
       { folder: 'Payroll' },
       { folder: 'Department of Labor (DOL)' },
       { folder: 'DHT Onboarding Documents' },
-    ]:[
+    ] : [
       { folder: 'Department of Immigration (DOI)' },
       { folder: 'Department of Transportation (DOT)' },
       { folder: 'Payroll' },
       { folder: 'Department of Labor (DOL)' },
       { folder: 'DHT Onboarding Documents' },
     ]
-    this.employee?.employee_info.country == 'United States of America'? this.block = 'Department of Transportation (DOT)' : this.block =  'Department of Immigration (DOI)'
+    this.employee?.employee_info.country == 'United States of America' ? this.block = 'Department of Transportation (DOT)' : this.block = 'Department of Immigration (DOI)'
   }
 
   //#region Get Applicant By id 
@@ -149,6 +151,20 @@ export class OnboardingComponent implements OnInit {
   downloadDocument(doc) {
     window.open(doc, "_blank");
   }
+
+  //#region Generate Approval Letter
+  async exportAsPDF() {
+    let div = document.getElementById("print_approval_letter");
+    div.style.display = "block";
+    var pdf = new jsPDF('p', 'cm');
+    var pageWidth = pdf.internal.pageSize.width;
+    var pageHeight = pdf.internal.pageSize.height;
+    let dataUrl1 = await htmlToImage.toPng(div, { quality: 1, height: div.offsetHeight, width: div.offsetWidth });
+    pdf.addImage(dataUrl1, 'PNG', 0, 0, pageWidth, pageHeight);
+    div.style.display = "none";
+    pdf.save('Approval-Letter.pdf')
+  }
+  //#endregion
 
 
 
