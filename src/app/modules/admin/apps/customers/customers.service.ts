@@ -2588,50 +2588,6 @@ export class CustomersService {
     //#endregion
 
 
-
-
-
-    //#region Customer Custom Invoicing
-
-    //  getFarmingInvoices(id: string, data) {
-    //     let params = new HttpParams();
-    //     params = params.set('data', data);
-
-    //     return this._httpClient
-    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.isLoadingFarmingInvoices.next(true);
-    //                 this.farmingInvoices.next(res);
-    //                 this.isLoadingFarmingInvoices.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-
-    // getTruckingInvoices(id: string, data) {
-    //     let params = new HttpParams();
-    //     params = params.set('data', data);
-
-    //     return this._httpClient
-    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.isLoadingTruckingInvoices.next(true);
-    //                 this.truckingInvoices.next(res);
-    //                 this.isLoadingTruckingInvoices.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-
-
     createHarvestingInvoice(data: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',

@@ -1,9 +1,9 @@
 <div *ngIf="(machinery$ | async) as machinery">
 
-    <div class="parent-class overflow-y-auto mb-16 flex flex-row gap-4 p-4">
+    <div class="parent-class overflow-y-auto mb-16 flex flex-col sm:flex-row gap-4 p-4">
 
         <!-- Profile Data -->
-        <div class="w-8/12">
+        <div class="sm:w-8/12">
             <div class="justify-end flex">
                 <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
                     (click)="allExpandState = true" matTooltip="Expand All">
@@ -297,7 +297,7 @@
         </div>
 
         <!-- Images  -->
-        <div class="block w-4/12 images-gallery">
+        <div class="block sm:w-4/12 images-gallery">
             <div class="mb-4" >
                 <img class="py-4" *ngFor="let picture of pictures"
                     src="{{picture}}" alt=" " />

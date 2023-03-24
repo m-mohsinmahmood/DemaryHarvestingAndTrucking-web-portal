@@ -18,8 +18,8 @@ export class MachineryService {
     readonly isLoadingMachineries$: Observable<boolean> =
         this.isLoadingMachineries.asObservable();
 
-    isLoadingMachinery: BehaviorSubject<boolean> = 
-    new BehaviorSubject<boolean>(false);
+    isLoadingMachinery: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
 
     readonly isLoadingMachinery$: Observable<boolean> =
         this.isLoadingMachinery.asObservable();
@@ -31,20 +31,44 @@ export class MachineryService {
     readonly machineries$: Observable<Machineries[] | null> =
         this.machineries.asObservable();
 
-    private machinery: BehaviorSubject<Machineries | null> = 
-    new BehaviorSubject(null);
+    private machinery: BehaviorSubject<Machineries | null> =
+        new BehaviorSubject(null);
     readonly machinery$: Observable<Machineries | null> =
         this.machinery.asObservable();
 
     private machineryExport: BehaviorSubject<Machineries | null> = new BehaviorSubject(null);
     readonly machineryExport$: Observable<Machineries | null> = this.machineryExport.asObservable();
     //#endregion
+
+    isLoadingMaintenanceRepairList: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingMaintenanceRepairList$: Observable<boolean> =
+        this.isLoadingMaintenanceRepairList.asObservable();
+
+    private maintenanceRepair: BehaviorSubject<Machineries[] | null> =
+        new BehaviorSubject(null);
+    readonly maintenanceRepair$: Observable<Machineries[] | null> =
+        this.maintenanceRepair.asObservable();
+
+
+    isLoadingMaintenanceRepair: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingMaintenanceRepair$: Observable<boolean> =
+        this.isLoadingMaintenanceRepair.asObservable();
+
+    private maintenanceRepairTicket: BehaviorSubject<Machineries[] | null> =
+        new BehaviorSubject(null);
+    readonly maintenanceRepairTicket$: Observable<Machineries[] | null> =
+        this.maintenanceRepairTicket.asObservable();
+
     /**
      * Constructor
      */
     constructor(private _httpClient: HttpClient,
         private _alertSerice: AlertService,
-        ) {
+    ) {
     }
     //#region API Functions
     getMachineries(
@@ -78,7 +102,7 @@ export class MachineryService {
                 }
             );
     }
-    
+
     getMachineryById(id: string) {
         this._httpClient
             .get(`api-1/machinery?id=${id}`)
@@ -94,7 +118,27 @@ export class MachineryService {
                 }
             );
     }
-createMachinery(data: any) {
+
+    getMainRepairTicketById(id: string) {
+        this._httpClient
+            .get(`api-1/main_repair?operation=ticketById&id=${id}`)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingMaintenanceRepair.next(true);
+                    this.maintenanceRepairTicket.next(res);
+                    this.isLoadingMaintenanceRepair.next(false);
+                    console.log("im here")
+
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+
+    createMachinery(data: any) {
         this._httpClient
             .post(`api-1/machinery`, data)
             .pipe(take(1))
@@ -182,4 +226,41 @@ createMachinery(data: any) {
         return throwError(errorMessage);
     }
     //#endregion
+
+
+    //#region machinery repair records
+    getMaintenanceRepairList(id: any, operation: any,
+        page: number = 1,
+        limit: number = 50,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+    ) {
+        let params = new HttpParams();
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('id', id);
+        params = params.set('operation', operation);
+
+        // params = params.set('type', filters.type);
+        // params = params.set('status', filters.status)
+        return this._httpClient
+            .get<any>('api-1/main_repair', {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingMaintenanceRepairList.next(true);
+                    this.maintenanceRepair.next(res);
+                    this.isLoadingMaintenanceRepairList.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
 }
