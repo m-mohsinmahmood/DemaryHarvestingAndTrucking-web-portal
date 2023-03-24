@@ -36,7 +36,7 @@ export class EditMainRepair implements OnInit {
     this.initObservables();
     this.initApis()
 
-    setTimeout(() => {
+  
       this._machineryService.maintenanceRepairTicket$
         .subscribe((item) => {
           this.arr = item;
@@ -44,7 +44,7 @@ export class EditMainRepair implements OnInit {
           this.initForm();
 
         });
-    }, 500);
+    
 
 
 
@@ -91,10 +91,10 @@ export class EditMainRepair implements OnInit {
     if (this.data.isEdit) {
       this.form.patchValue({
         id: this.arr.id,
-        repairTicketId: this.arr.repairTicketId,
-        assignedById: this.arr.assignedById,
-        assignedToId: this.arr.assignedToId,
-        equipmentId: this.arr.equipmentId,
+        // repairTicketId: this.arr.repairTicketId,
+        // assignedById: this.arr.assignedById,
+        // assignedToId: this.arr.assignedToId,
+        // equipmentId: this.arr.equipmentId,
         city: this.arr.city,
         state: this.arr.state,
         issueCategory: this.arr.issueCategory,
@@ -103,7 +103,11 @@ export class EditMainRepair implements OnInit {
         summary: this.arr.summary,
         description: this.arr.description,
         ticketType: this.arr.ticketType,
-        empId: this.arr.empId
+        empId: this.arr.empId,
+        repairTicketId: this.arr.repairTicketId,
+        assignedById: this.arr.assignedById,
+        assignedToId: this.arr.assignedToId,
+        equipmentId: this.arr.equipmentId,
       });
 
 
