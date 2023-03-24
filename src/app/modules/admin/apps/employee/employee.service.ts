@@ -57,6 +57,15 @@ export class EmployeeService {
 
     //#endregion
 
+    //#Employee Dwr Period
+    private payrollPeriodDwr: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly payrollPeriodDwr$: Observable<any | null> = this.payrollPeriodDwr.asObservable();
+
+    private isLoadingPayrollPeriodDwr: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingPayrollPeriodDwr$: Observable<any | null> = this.isLoadingEmployeeDwr.asObservable();
+
+    //#endregion
+
     //#region Policy Documents 
     private policyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
     readonly policyDocuments$: Observable<any | null> = this.policyDocuments.asObservable();
@@ -381,6 +390,7 @@ export class EmployeeService {
                 (res: any) => {
                     this.isLoadingEmployeeDwr.next(true);
                     this.employeeDwr.next(res);
+                    console.log("employee-payroll?id",res);
                     this.isLoadingEmployeeDwr.next(false);
                 },
                 (err) => {
@@ -390,6 +400,32 @@ export class EmployeeService {
             );
     }
     //#endregion
+
+    //#region Payroll by Period
+    getPayrollByPeriod(id: string, operation, filters: any = { to: '', from: '' }) {
+        let params = new HttpParams();
+        params = params.set('operation', operation);
+        params = params.set('from', filters.from);
+        params = params.set('to', filters.to);
+        debugger;
+        return this._httpClient
+            .get(`api-1/employee-payroll?id=${id}`,{ params })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPayrollPeriodDwr.next(true);
+                    this.payrollPeriodDwr.next(res);
+                    console.log("employee-payroll?id with date range",res);
+                    this.isLoadingPayrollPeriodDwr.next(false);
+                },
+                (err) => {
+                    this.isLoadingPayrollPeriodDwr.next(false);
+                    this.handleError(err);
+                }
+            );
+    }
+    //#endregion
+
     // Policy Documents 
 
     //#region Get Policy Documents

@@ -1,4 +1,4 @@
-<div class="parent-class overflow-y-auto mb-16 sm:w-9/12 sm:m-auto mb-20">
+<div class="parent-class overflow-y-auto mb-16 mb-20">
     <!-- Profile Data -->
     <div class="flex justify-end mt-4 -mb-4">
 
@@ -216,54 +216,66 @@
                                     <div class="hidden md:block">Location</div>
                                     <div class="hidden md:block">Type</div>
                                     <div class="hidden md:block">Notes</div>
-                                    <div class="hidden md:block">Reports</div>
+                                    <div class="text-center">Status</div>
 
 
                                 </div>
                                 <!-- Rows -->
-                                <ng-container>
+                                <ng-container *ngIf="maintenanceRepair$ | async as tickets">
                                     <ng-container
-                                    *ngFor="let number1 of [0,1,2,3,4]">
+                                    *ngIf="tickets.maintenanceRepair?.length > 0; else noTickets ">
+                                    <div *ngFor="let ticket of tickets.maintenanceRepair">
                                         <div
                                             class="machinery-grid grid items-center gap-4 py-3 px-4 border-b bg-white"
                                         >
         
                                             <!-- Name -->
-                                            <div class="truncate">
-                                                Service Repair-01
+                                            <div (click)="openTicketData(ticket.id)" 
+                                            class="truncate cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                                                {{ticket.id}}
                                             </div>
                                             <!-- Mechanic -->
                                             <div class="hidden sm:block">
-                                                Adam Smith
+                                                {{ticket.first_name}}{{ticket.last_name}}
                                             </div>
         
                                             <!-- Make -->
                                             <div class="hidden md:block">
-                                                21548
+                                                {{ticket.equipmentId}}
+
                                             </div>
         
                                             <!-- Model -->
                                             <div class="hidden md:block">
-                                                Burnsville, MN
+                                                {{ticket.state}}
                                             </div>
         
                                             <!-- Odometer -->
-                                            <div class="hidden md:block">
-                                                Electrical
+                                            <div class="hidden md:block capitalize">
+                                                {{ticket.severityType}}
+
                                             </div>
         
                                             <!-- Value -->
                                             <div class="hidden md:block">
-                                                Left tailing is out....
+                                                {{ticket.description}}
                                             </div>
 
                                             <!-- Value -->
-                                            <div class="hidden md:block">
-                                                View Ticket
+                                            <div class="text-white text-center rounded-xl px-2
+                                            {{ticket.status== 'repair-in-process' ? 'bg-yellow-500' : 
+                                                ticket.status== 'repair-reported' ? 'bg-red-500' :
+                                                ticket.status== 'maintenance-in-process' ? 'bg-green-500' : ticket.status}}
+                                            
+                                            ">
+                                                {{ticket.status== 'repair-in-process' ? 'Repair in Progress' : 
+                                                ticket.status== 'repair-reported' ? 'Repair Reported' :
+                                                ticket.status== 'maintenance-in-process' ? 'Maintenance in Process' : ticket.status}}
                                             </div>
         
                                             
                                         </div>
+                                    </div>
                                         
                                     </ng-container>
                                 </ng-container>
@@ -271,6 +283,10 @@
         
                         </ng-container>
                     </ng-container>
+                    <ng-template #noTickets>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no tickets!</div>
+                    </ng-template>
                    
                 </div>
             </mat-expansion-panel>

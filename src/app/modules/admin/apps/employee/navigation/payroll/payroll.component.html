@@ -1,4 +1,4 @@
-<div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b">
+<div class="relative flex  flex-row flex-0 items-center justify-between py-4 px-6 md:px-8 border-b" *ngIf="isLoadingEmployeeDwr$  | async">
     <div class="flex gap-3 items-center text-2xl font-extrabold tracking-tight pl-2 cursor-pointer">
         <span class="ml-1 capitalize">Payroll</span>
     </div>
@@ -8,11 +8,11 @@
          <div class="flex flex-col sm:w-5/12 w-full p-3 bg-gray-100 mr-2 rounded-md">
             <div class="flex justify-between py-1">
                <p class="text-sm font-normal text-gray-500">Name</p>
-               <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0].first_name}} {{employee?.dwrTasks[0].last_name}}</p>
+               <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0][0].first_name}} {{employee?.dwrTasks[0][0].last_name}}</p>
             </div>
             <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">Role</p>
-                <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0].role}}</p>
+                <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0][0].role}}</p>
              </div>
              <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">Payroll Type</p>
@@ -24,10 +24,10 @@
              </div>
              <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">H2A Rate (State Dependent)</p>
-                <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0].hourly_rate}}</p>
+                <p class="text-sm font-semibold text-black">${{employee?.dwrTasks[0][0].hourly_rate}}</p>
              </div>
              <div class="flex justify-between py-1">
-                <p class="text-sm font-normal text-gray-500">YTD Hpurs worked</p>
+                <p class="text-sm font-normal text-gray-500">YTD Hours worked</p>
                 <p class="text-sm font-semibold text-black">{{employee?.total_hours}}</p>
              </div>
              <div class="flex justify-between py-1">
@@ -43,13 +43,12 @@
     </div>
     <div class="flex justify-between mx-3 rounded-md ">
         <p class="text-black font-semibold text-lg py-3 ">
-            Current Pay Period Daily Work Records
+            Trucking: Current Pay Period Daily Work Records
         </p>
     </div>
     <div class="sm:p-0 rounded-md mx-2 my-2 border">
         <!-- Main -->
         <div class="flex flex-auto overflow-hidden">
-            <!-- Products list -->
             <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                 <ng-container>
                     <ng-container>
@@ -67,26 +66,19 @@
                             </div>
                             <!-- Rows -->
                             <ng-container>
-                                <ng-container>
-                                    <div *ngFor="let payroll of employee?.dwrTasks" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                <ng-container *ngIf="employee?.dwrTasks[0].length > 0; else noPayroll">
+                                    <div *ngFor="let payroll of employee?.dwrTasks[0]" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                         <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
-                                        <div class="truncate">Demaray Time</div>
+                                        <div class="truncate">{{payroll.supervisor}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
-                                        <div class="truncate hidden sm:block">{{payroll.hourly_rate}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
                                         <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
                                         <div class="truncate  rounded-full h-7 w-26 bg-blue-200 flex  justify-center items-center">Verified</div>
-
-                                        <!-- Action -->
-                                        <!-- <div (click)="openEditFarmDialog()">
-                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                        </div> -->
                                     </div>
                                 </ng-container>
                             </ng-container>
                         </div>
-                        <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                            [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
                     </ng-container>
                 </ng-container>
                 <ng-template #noProducts>
@@ -97,8 +89,111 @@
             </div>
         </div>
     </div>
-    <div class="flex justify-between mx-2 rounded-md ">
+
+    <div class="flex justify-between mx-3 rounded-md ">
         <p class="text-black font-semibold text-lg py-3 ">
+            Farming: Current Pay Period Daily Work Records
+        </p>
+    </div>
+    <div class="sm:p-0 rounded-md mx-2 my-2 border">
+        <!-- Main -->
+        <div class="flex flex-auto overflow-hidden">
+            <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                <ng-container>
+                    <ng-container>
+                        <div class="grid">
+                            <!-- Header -->
+                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Date</div>
+                                <div>Chief Crew</div>
+                                <div class="hidden sm:block">State</div>
+                                <div class="hidden sm:block">Hours</div>
+                                <div class="hidden sm:block">Hourly Rate</div>
+                                <div class="hidden sm:block">Total Wages</div>
+                                <div class="">Status</div>
+                                <!-- <div class="">Actions</div> -->
+                            </div>
+                            <!-- Rows -->
+                            <ng-container>
+                                <ng-container *ngIf="employee?.dwrTasks[1].length > 0; else noPayroll">
+                                    <div *ngFor="let payroll of employee?.dwrTasks[1]" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
+                                        <div class="truncate">{{payroll.supervisor}}</div>
+                                        <div class="truncate hidden sm:block">{{payroll.state}}</div>
+                                        <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
+                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
+                                        <div class="truncate  rounded-full h-7 w-26 bg-blue-200 flex  justify-center items-center">Verified</div>
+                                    </div>
+
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-template #noProducts>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There is no Payroll Data!
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-between mx-3 rounded-md ">
+        <p class="text-black font-semibold text-lg py-3 ">
+            Harvesting: Current Pay Period Daily Work Records
+        </p>
+    </div>
+    <div class="sm:p-0 rounded-md mx-2 my-2 border">
+        <!-- Main -->
+        <div class="flex flex-auto overflow-hidden">
+            <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
+                <ng-container>
+                    <ng-container>
+                        <div class="grid">
+                            <!-- Header -->
+                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Date</div>
+                                <div>Chief Crew</div>
+                                <div class="hidden sm:block">State</div>
+                                <div class="hidden sm:block">Hours</div>
+                                <div class="hidden sm:block">Hourly Rate</div>
+                                <div class="hidden sm:block">Total Wages</div>
+                                <div class="">Status</div>
+                                <!-- <div class="">Actions</div> -->
+                            </div>
+                            <!-- Rows -->
+                            <ng-container>
+                                <ng-container *ngIf="employee?.dwrTasks[2].length > 0; else noPayroll">
+                                    <div *ngFor="let payroll of employee?.dwrTasks[2]" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
+                                        <div class="truncate">{{payroll.supervisor}}</div>
+                                        <div class="truncate hidden sm:block">{{payroll.state}}</div>
+                                        <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
+                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
+                                        <div class="truncate  rounded-full h-7 w-26 bg-blue-200 flex  justify-center items-center">Verified</div>
+                                    </div>
+
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-template #noPayroll>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There is no Payroll Data!
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="flex justify-between mx-2 rounded-md ">
+        <p class="text-black font-semibold text-4xl py-3 ">
             Summary DWR Report
         </p>
     </div>
@@ -113,7 +208,7 @@
                             <div class="flex justify-evenly pl-6 py-3 border-b">
                                 <div class=" w-6/12 flex justify-around items-center">
                                         <p class="text-sm font-semibold text-black">Employee Name:</p>
-                                        <p class="text-sm font-normal text-gray-500">{{employee?.dwrTasks[0].first_name}} {{employee?.dwrTasks[0].last_name}}</p>
+                                        <p class="text-sm font-normal text-gray-500">{{employee?.dwrTasks[0][0].first_name}} {{employee?.dwrTasks[0][0].last_name}}</p>
                                 </div>
                                 <form [formGroup]="form" class="w-6/12 fles flex-col">
 
@@ -121,9 +216,9 @@
                                     <mat-form-field birthdayFormat class="w-full" appearance="outline">
                                         <mat-label>Payroll Period</mat-label>
                                         <mat-date-range-input [rangePicker]="picker">
-                                            <input matStartDate formControlName="payroll_period_start"
+                                            <input matStartDate formControlName="from"
                                                 placeholder="Start date">
-                                            <input matEndDate formControlName="payroll_period_end"
+                                            <input matEndDate formControlName="to"
                                                 placeholder="End date">
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -135,54 +230,97 @@
                                 </form>
                             </div>
                             <!-- Header -->
+
+                            <div *ngIf="(payrollPeriodDwr$ | async) as payrollPeriod">
+                            <!-- <div class="flex justify-between mx-3 rounded-md ">
+                                <p class="text-black font-semibold text-lg py-3 ">
+                                    Trucking: 
+                                </p>
+                            </div> -->
                             <div class="farm-data-farms2 z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                <div class="hidden sm:block">Date</div>
+                                <div class="hidden sm:block">Period</div>
                                 <div>Chief Crew</div>
-                                <div class="hidden sm:block">Hours Worked(hths)</div>
+                                <div class="hidden sm:block">Hours Worked</div>
                                 <div class="hidden sm:block">State</div>
                                 <div>Wages</div>
                                 <!-- <div>Actions</div> -->
                             </div>
                             <!-- Rows -->
                             <ng-container>
-                                <ng-container>
-                                    <div *ngFor="
-                                            let number of [
-                                                0, 1,2
-                                            ]
-                                        " class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate hidden sm:block">09/02/22</div>
+                                <ng-container  >
+                                    <div *ngFor="let payrollP of payrollPeriod.payrollPeriod" 
+                                    class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payrollP.PayPeroidStart |  date: "MM-d-YYYY"}}-{{payrollP.PayPeriodEnd |  date: "MM-dd-YYYY"}}</div>
                                         <div class="truncate">Demaray Time</div>
-                                        <div class="truncate hidden sm:block">10.22</div>
-                                        <div class="truncate hidden sm:block">Noth Dakota</div>
-                                        <div class="truncate">23.4</div>
-
-
-                                        <!-- Action -->
-                                        <!-- <div (click)="openEditFarmDialog()">
-                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                        </div> -->
+                                        <div class="truncate hidden sm:block">{{payrollP.total_hours_worked}}</div>
+                                        <!-- <div class="truncate hidden sm:block">{{payrollP.state}}</div> -->
+                                        <!-- <div class="truncate">${{payrollP.wage}}</div> -->
                                     </div>
                                 </ng-container>
-                                <!-- <div class="flex justify-evenly pl-6 py-3 border-b">
-                                    <div class=" w-6/12 flex justify-around">
-                                            <p class="text-sm font-semibold text-black">Employee Name:</p>
-                                            <p class="text-sm font-normal text-gray-500">Adam Smith</p>
-                                    </div>
-                                    <div class="w-6/12 flex justify-around">
-                                        <p class="text-sm font-semibold text-black">Payroll Period:</p>
-                                        <p class="text-sm font-normal text-gray-500">09 Jan 2022 to 09 Mar 2022</p>
-                                    </div>
-                                </div> -->
+                    
                             </ng-container>
+                            <!-- <div class="flex justify-between mx-3 rounded-md ">
+                                <p class="text-black font-semibold text-lg py-3 ">
+                                    Farming:
+                                </p>
+                            </div> -->
+                            <!-- <div class="farm-data-farms2 z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Period</div>
+                                <div>Chief Crew</div>
+                                <div class="hidden sm:block">Hours Worked(hths)</div>
+                                <div class="hidden sm:block">State</div>
+                                <div>Wages</div>
+                            </div> -->
+                            <!-- Rows -->
+                            <!-- <ng-container>
+                                <ng-container *ngIf="totalHoursWorked(payrollPeriod.payrollPeriod[1]); else noSummary">
+                                    <div *ngFor="let payrollP of payrollPeriod.payrollPeriod[1]" 
+                                    class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payrollP.PayPeroidStart |  date: "MM-d-YYYY"}}-{{payrollP.PayPeriodEnd |  date: "MM-d-YYYY"}}</div>
+                                        <div class="truncate">Demaray Time</div>
+                                        <div class="truncate hidden sm:block">{{payrollP.total_hours_worked}}</div>
+                                        <div class="truncate hidden sm:block">{{payrollP.state}}</div>
+                                        <div class="truncate">${{payrollP.wage}}</div>
+                                    </div>
+                                </ng-container>
+                    
+                            </ng-container> -->
+                            <!-- <div class="flex justify-between mx-3 rounded-md ">
+                                <p class="text-black font-semibold text-lg py-3 ">
+                                    Harvesting:
+                                </p>
+                            </div> -->
+
+                             <!-- <div class="farm-data-farms2 z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                                <div class="hidden sm:block">Period</div>
+                                <div>Chief Crew</div>
+                                <div class="hidden sm:block">Hours Worked(hths)</div>
+                                <div class="hidden sm:block">State</div>
+                                <div>Wages</div>
+                            </div> -->
+                            <!-- Rows -->
+                            <!-- <ng-container>
+                                <ng-container *ngIf="totalHoursWorked(payrollPeriod.payrollPeriod[2]); else noSummary">
+                                    <div *ngFor="let payrollP of payrollPeriod.payrollPeriod[2]" 
+                                    class="farm-data-farms2 grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payrollP.PayPeroidStart |  date: "MM-d-YYYY"}}-{{payrollP.PayPeriodEnd |  date: "MM-d-YYYY"}}</div>
+                                        <div class="truncate">Demaray Time</div>
+                                        <div class="truncate hidden sm:block">{{payrollP.total_hours_worked}}</div>
+                                        <div class="truncate hidden sm:block">{{payrollP.state}}</div>
+                                        <div class="truncate">${{payrollP.wage}}</div>
+                                    </div>
+                                </ng-container>
+                    
+                            </ng-container> -->
                         </div>
-                        <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
-                            [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
+
+                        </div>
+                        
                     </ng-container>
                 </ng-container>
-                <ng-template #noProducts>
+                <ng-template #noSummary>
                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                        There is no Payroll Data!
+                        There is no Summary Data!
                     </div>
                 </ng-template>
             </div>

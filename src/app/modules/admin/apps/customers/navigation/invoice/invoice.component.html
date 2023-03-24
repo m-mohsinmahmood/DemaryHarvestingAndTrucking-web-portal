@@ -427,6 +427,17 @@
 
                                     </ng-container>
                                 </ng-container>
+                                <div
+                                    class="justify-end grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5">
+                                    <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
+
+                                        <mat-label class="font-bold">Total:
+                                            {{this.totalUnpaidFarmingInvoiceAmount()}}</mat-label>
+
+
+                                    </div>
+
+                                </div>
                                 <div class="machinery-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5"
                                     matSort matSortDisableClear>
 
@@ -496,7 +507,7 @@
                                     <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
 
                                         <mat-label class="font-bold">Total:
-                                            {{this.totalFarmingInvoiceAmount()}}</mat-label>
+                                            {{this.totalPaidFarmingInvoiceAmount()}}</mat-label>
 
 
                                     </div>
@@ -1001,6 +1012,17 @@
 
                                     </ng-container>
                                 </ng-container>
+                                <div
+                                    class="justify-end grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary dark:bg-black dark:bg-opacity-5">
+                                    <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
+
+                                        <mat-label class="font-bold">Total:
+                                            {{this.totalUnpaidTruckingInvoiceAmount()}}</mat-label>
+
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
@@ -1071,7 +1093,7 @@
                                     <div class="flex flex-col float-right sm:mr-8 border-2 p-8">
 
                                         <mat-label class="font-bold">Total:
-                                            {{this.totalTruckingInvoiceAmount()}}</mat-label>
+                                            {{this.totalPaidTruckingInvoiceAmount()}}</mat-label>
 
 
                                     </div>

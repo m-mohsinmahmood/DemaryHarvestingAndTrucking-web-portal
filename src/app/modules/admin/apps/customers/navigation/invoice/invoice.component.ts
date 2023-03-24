@@ -135,6 +135,9 @@ export class InvoiceComponent implements OnInit {
             .subscribe(() => {
                 this.applyFarmingFilters();
             });
+        
+
+            
         //#endregion
 
         //#region trucking filters change
@@ -559,7 +562,8 @@ export class InvoiceComponent implements OnInit {
         });
         return amount.toFixed(2);
     }
-    totalFarmingInvoiceAmount() {
+
+    totalPaidFarmingInvoiceAmount() {
         let amount = 0;
         let arr: any[] = [];
         this.customFarmingInvoiceList$.pipe(
@@ -569,7 +573,25 @@ export class InvoiceComponent implements OnInit {
                 arr = item.invoices;
             });
         arr.map((item) => {
-            if (item.total_amount != null && item.total_amount != '') {
+            if (item.total_amount != null && item.total_amount != '' && item.status=='paid') {
+
+                amount = amount + parseFloat(item.total_amount);
+            }
+        });
+        return amount.toFixed(2);
+    }
+
+    totalUnpaidFarmingInvoiceAmount() {
+        let amount = 0;
+        let arr: any[] = [];
+        this.customFarmingInvoiceList$.pipe(
+            skipWhile(data => data == null),
+        )
+            .subscribe((item) => {
+                arr = item.invoices;
+            });
+        arr.map((item) => {
+            if (item.total_amount != null && item.total_amount != '' && item.status=='invoiced') {
 
                 amount = amount + parseFloat(item.total_amount);
             }
@@ -589,7 +611,7 @@ export class InvoiceComponent implements OnInit {
         return amount.toFixed(2);
     }
 
-    totalTruckingInvoiceAmount() {
+    totalPaidTruckingInvoiceAmount() {
         let amount = 0;
         let arr: any[] = [];
         this.customTruckingInvoiceList$.pipe(
@@ -599,7 +621,25 @@ export class InvoiceComponent implements OnInit {
                 arr = item.invoices;
             });
         arr.map((item) => {
-            if (item.total_amount != null && item.total_amount != '') {
+            if (item.total_amount != null && item.total_amount != '' && item.status=='paid') {
+
+                amount = amount + parseFloat(item.total_amount);
+            }
+        });
+        return amount.toFixed(2);
+    }
+
+    totalUnpaidTruckingInvoiceAmount() {
+        let amount = 0;
+        let arr: any[] = [];
+        this.customTruckingInvoiceList$.pipe(
+            skipWhile(data => data == null),
+        )
+            .subscribe((item) => {
+                arr = item.invoices;
+            });
+        arr.map((item) => {
+            if (item.total_amount != null && item.total_amount != '' && item.status=='invoiced') {
 
                 amount = amount + parseFloat(item.total_amount);
             }

@@ -1,10 +1,10 @@
 <div *ngIf="(nonMotorizedVehicle$ | async) as nonMotorizedVehicle" class="parent-class overflow-y-auto mb-16">
 
-    <div class="parent-class overflow-y-auto mb-16 flex flex-row gap-4 p-4">
+    <div class="parent-class overflow-y-auto mb-16 flex flex-col sm:flex-row gap-4 p-4">
 
 
 
-        <div class="w-8/12">
+        <div class="sm:w-8/12">
             <div class="flex justify-end">
 
                 <button *ngIf="allExpandState == false" class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
@@ -310,7 +310,7 @@
             </div>
 
         </div>
-        <div class="block w-4/12 images-gallery">
+        <div class="block sm:w-4/12 images-gallery">
             <div class="mb-4" >
                 <img class="py-4" *ngFor="let picture of pictures"
                     src="{{picture}}" alt=" " />

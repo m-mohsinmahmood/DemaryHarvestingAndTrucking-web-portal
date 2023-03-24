@@ -49,6 +49,7 @@ import { UpdateAddMotorizedComponent } from './motorized/update/update-add.compo
 import { UpdateAddNonMotorizedComponent } from './non-motorized/update/update-add.component';
 import { BirthDateFormat } from './machinery/update/update-add.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { EditMainRepair } from './machinery/navigation/main-repair/edit-main-repair/edit-main-repair.component';
 
 
 
@@ -77,7 +78,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         FuelsMilesComponent,
         UpdateAddMotorizedComponent,
         UpdateAddNonMotorizedComponent,
-        BirthDateFormat
+        BirthDateFormat,
+        EditMainRepair
         
 
     ],
