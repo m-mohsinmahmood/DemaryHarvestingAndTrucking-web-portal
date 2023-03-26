@@ -407,7 +407,6 @@ export class EmployeeService {
         params = params.set('operation', operation);
         params = params.set('from', filters.from);
         params = params.set('to', filters.to);
-        debugger;
         return this._httpClient
             .get(`api-1/employee-payroll?id=${id}`,{ params })
             .pipe(take(1))

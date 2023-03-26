@@ -8,11 +8,13 @@
          <div class="flex flex-col sm:w-5/12 w-full p-3 bg-gray-100 mr-2 rounded-md">
             <div class="flex justify-between py-1">
                <p class="text-sm font-normal text-gray-500">Name</p>
-               <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0][0].first_name}} {{employee?.dwrTasks[0][0].last_name}}</p>
+               <p class="text-sm font-semibold text-black">
+                {{employee.total_hours.first_name}} {{employee.total_hours.last_name}}
+            </p>
             </div>
             <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">Role</p>
-                <p class="text-sm font-semibold text-black">{{employee?.dwrTasks[0][0].role}}</p>
+                <p class="text-sm font-semibold text-black">{{employee.total_hours.role}}</p>
              </div>
              <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">Payroll Type</p>
@@ -22,13 +24,13 @@
                 <p class="text-sm font-normal text-gray-500">Base Hourly Rate</p>
                 <p class="text-sm font-semibold text-black">$21</p>
              </div>
-             <div class="flex justify-between py-1">
+             <!-- <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">H2A Rate (State Dependent)</p>
-                <p class="text-sm font-semibold text-black">${{employee?.dwrTasks[0][0].hourly_rate}}</p>
-             </div>
+                <p class="text-sm font-semibold text-black"></p>
+             </div> -->
              <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">YTD Hours worked</p>
-                <p class="text-sm font-semibold text-black">{{employee?.total_hours}}</p>
+                <p class="text-sm font-semibold text-black">{{employee.total_hours.sum}}</p>
              </div>
              <div class="flex justify-between py-1">
                 <p class="text-sm font-normal text-gray-500">YTD Wages Received</p>
@@ -205,10 +207,12 @@
                 <ng-container>
                     <ng-container>
                         <div class="grid">
-                            <div class="flex justify-evenly pl-6 py-3 border-b">
+                            <div class="flex flex-col gap-y-4 sm:flex-row sm:gap-4 justify-evenly pl-6 py-3 border-b">
                                 <div class=" w-6/12 flex justify-around items-center">
                                         <p class="text-sm font-semibold text-black">Employee Name:</p>
-                                        <p class="text-sm font-normal text-gray-500">{{employee?.dwrTasks[0][0].first_name}} {{employee?.dwrTasks[0][0].last_name}}</p>
+                                        <p class="text-sm font-normal text-gray-500">
+                                            {{employee.total_hours.first_name}} {{employee.total_hours.last_name}}
+                                        </p>
                                 </div>
                                 <form [formGroup]="form" class="w-6/12 fles flex-col">
 
@@ -228,6 +232,12 @@
                                 </div>
 
                                 </form>
+                                <button (click)="removeFarmingFilters()"
+                                                class="bg-transparent w-2/12 h-12 m-auto hover:bg-red-500 text-red-500 font-semibold hover:text-white px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                                                <mat-icon class="m-0 icon-size-4" color="warn"
+                                                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                                <span>Remove filters</span>
+                                            </button>
                             </div>
                             <!-- Header -->
 

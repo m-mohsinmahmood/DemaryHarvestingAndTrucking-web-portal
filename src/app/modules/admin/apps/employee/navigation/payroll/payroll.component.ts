@@ -37,6 +37,7 @@ export class PayrollComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.employee,"emp")
     this.initForm();
 
     this.getRouteParams();
@@ -68,16 +69,24 @@ export class PayrollComponent implements OnInit {
   }
 
   submit(): void {
+    debugger
     if (this.form.get('to').value !== null) {
       if (this.form.value.from) {
         this.form.controls['from'].patchValue(moment(this.form.value.from).format('YYYY-MM-DD'));
       }
       if (this.form.value.to) {
-        this.form.controls['to'].patchValue(moment(this.form.value.to).format('YYYY-MM-DD'));
+        this.form.controls['to'].patchValue(moment(this.form.value.from).format('YYYY-MM-DD'));
       }
 
       this._employeeService.getPayrollByPeriod(this.routeID, 'PayrollPeriod', this.form.value)
     }
+  }
+  removeFarmingFilters(){
+    this.form.controls['from'].setValue('');
+    this.form.controls['to'].setValue('');
+
+    this._employeeService.getPayrollByPeriod(this.routeID, 'PayrollPeriod', this.form.value)
+
   }
 
 

@@ -123,44 +123,52 @@ export class MachineryDetailComponent implements OnInit, OnDestroy {
 
     //#region helper Functions
 
-  openUpdateDialog(event): void {
-    this.isEdit = true;
-    //Open the dialog
-    const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
-      data: {
-        isEdit: this.isEdit,
-        machineryData: {
-          id: event.id,
-          type: event.type,
-          status: event.status,
-          name: event.name,
-          license_plate: event.license_plate,
-          vin_number: event.vin_number,
-          company_id: event.company_id,
-          color: event.color,
-          year: event.year,
-          make: event.make,
-          model: event.model,
-          title: event.title,
-          license: event.license,
-          registration: event.registration,
-          insurance_status: event.insurance_status,
-          liability: event.liability,
-          collision: event.collision,
-          comprehensive: event.comprehensive,
-          purchase_price: event.purchase_price,
-          date_of_purchase: event.date_of_purchase,
-          sales_price: event.sales_price,
-          date_of_sales: event.date_of_sales,
-          estimated_market_value: event.estimated_market_value,
-          source_of_market_value: event.source_of_market_value,
-          date_of_market_value: event.date_of_market_value,
-        },
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-    });
-  }
+    openUpdateDialog(event): void {
+        this.isEdit = true;
+        //Open the dialog
+        const dialogRef = this._matDialog.open(UpdateAddMachineryComponent, {
+            data: {
+                isEdit: this.isEdit,
+                machineryData: {
+                    id: event.id,
+                    type: event.type,
+                    status: event.status,
+                    name: event.name,
+                    license_plate: event.license_plate,
+                    vin_number: event.vin_number,
+                    company_id: event.company_id,
+                    color: event.color,
+                    year: event.year,
+                    make: event.make,
+                    model: event.model,
+
+                    serial_number: event.serial_number,
+                    engine_hours: event.engine_hours,
+                    eh_reading: event.eh_reading,
+                    separator_hours: event.separator_hours,
+                    sh_reading: event.sh_reading,
+
+
+                    title: event.title,
+                    license: event.license,
+                    registration: event.registration,
+                    insurance_status: event.insurance_status,
+                    liability: event.liability,
+                    collision: event.collision,
+                    comprehensive: event.comprehensive,
+                    purchase_price: event.purchase_price,
+                    date_of_purchase: event.date_of_purchase,
+                    sales_price: event.sales_price,
+                    date_of_sales: event.date_of_sales,
+                    estimated_market_value: event.estimated_market_value,
+                    source_of_market_value: event.source_of_market_value,
+                    date_of_market_value: event.date_of_market_value,
+                },
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+    }
     backHandler(): void {
         this._router.navigate(['/apps/equipment/machinery/']);
     }

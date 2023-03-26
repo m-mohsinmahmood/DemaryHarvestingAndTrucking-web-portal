@@ -165,6 +165,7 @@ export class UpdateAddMachineryComponent implements OnInit {
 
         });
         if (this.data) {
+            debugger;
             this.form.patchValue({
 
                 id: this.data.machineryData.id,
