@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
 import { Employee } from '../../employee.types';
+import { PeriodicPayrollDetails } from './periodic-payroll-details/periodic-payroll-details.component';
 
 @Component({
   selector: 'app-payroll',
@@ -30,6 +32,8 @@ export class PayrollComponent implements OnInit {
     private _employeeService: EmployeeService,
     public activatedRoute: ActivatedRoute,
     private _formBuilder: FormBuilder,
+    private _matDialog: MatDialog
+
 
 
 
@@ -69,13 +73,12 @@ export class PayrollComponent implements OnInit {
   }
 
   submit(): void {
-    debugger
     if (this.form.get('to').value !== null) {
       if (this.form.value.from) {
         this.form.controls['from'].patchValue(moment(this.form.value.from).format('YYYY-MM-DD'));
       }
       if (this.form.value.to) {
-        this.form.controls['to'].patchValue(moment(this.form.value.from).format('YYYY-MM-DD'));
+        this.form.controls['to'].patchValue(moment(this.form.value.to).format('YYYY-MM-DD'));
       }
 
       this._employeeService.getPayrollByPeriod(this.routeID, 'PayrollPeriod', this.form.value)
@@ -148,6 +151,15 @@ export class PayrollComponent implements OnInit {
     else return false;
 
     
+  }
+  toggleDetails(from:any , to:any){
+    const dialogRef = this._matDialog.open(PeriodicPayrollDetails, {
+      data:{
+        id:this.routeID,
+        from: from,
+        to: to,
+      }
+    })
   }
 
 }

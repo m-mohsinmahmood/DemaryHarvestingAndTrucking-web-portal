@@ -74,7 +74,7 @@
                                         <div class="truncate">{{payroll.supervisor}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
-                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.destination_hourly_rate}}</div>
                                         <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
                                         <div class="truncate  rounded-full h-7 w-26 bg-blue-200 flex  justify-center items-center">Verified</div>
                                     </div>
@@ -260,7 +260,10 @@
                                 <ng-container  >
                                     <div *ngFor="let payrollP of payrollPeriod.payrollPeriod" 
                                     class="payroll-period grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate hidden sm:block">{{payrollP.PayPeroidStart |  date: "MM-d-YYYY"}}-{{payrollP.PayPeriodEnd |  date: "MM-dd-YYYY"}}</div>
+                                        <div class="flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                                        (click)="toggleDetails(payrollP.PayPeroidStart, payrollP.PayPeriodEnd)">
+                                            {{payrollP.PayPeroidStart |  date: "MM-d-YYYY"}}-{{payrollP.PayPeriodEnd |  date: "MM-dd-YYYY"}}
+                                        </div>
                                         <div class="truncate">Demaray Time</div>
                                         <div class="truncate hidden sm:block">{{payrollP.total_hours_worked}}</div>
                                         <!-- <div class="truncate hidden sm:block">{{payrollP.state}}</div> -->

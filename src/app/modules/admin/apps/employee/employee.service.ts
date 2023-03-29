@@ -66,6 +66,16 @@ export class EmployeeService {
 
     //#endregion
 
+    //#Employee Dwr Period Details
+    private payrollPeriodDetails: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly payrollPeriodDetails$: Observable<any | null> = this.payrollPeriodDetails.asObservable();
+
+    private isLoadingPayrollPeriodDetails: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly isLoadingPayrollPeriodDetails$: Observable<any | null> = this.isLoadingPayrollPeriodDetails.asObservable();
+
+    //#endregion
+
+
     //#region Policy Documents 
     private policyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
     readonly policyDocuments$: Observable<any | null> = this.policyDocuments.asObservable();
@@ -226,7 +236,7 @@ export class EmployeeService {
             );
     }
 
-    deleteEmployee(id: string, fb_id:string, page , limit) {
+    deleteEmployee(id: string, fb_id: string, page, limit) {
         this._httpClient
             .delete(`api-1/employee?id=${id}&fb_id=${fb_id}`)
             .pipe(take(1))
@@ -246,7 +256,7 @@ export class EmployeeService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getEmployees(page , limit);
+                    this.getEmployees(page, limit);
                     this.isLoadingEmployee.next(false);
                 }
             );
@@ -390,7 +400,7 @@ export class EmployeeService {
                 (res: any) => {
                     this.isLoadingEmployeeDwr.next(true);
                     this.employeeDwr.next(res);
-                    console.log("employee-payroll?id",res);
+                    console.log("employee-payroll?id", res);
                     this.isLoadingEmployeeDwr.next(false);
                 },
                 (err) => {
@@ -408,13 +418,12 @@ export class EmployeeService {
         params = params.set('from', filters.from);
         params = params.set('to', filters.to);
         return this._httpClient
-            .get(`api-1/employee-payroll?id=${id}`,{ params })
+            .get(`api-1/employee-payroll?id=${id}`, { params })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
                     this.isLoadingPayrollPeriodDwr.next(true);
                     this.payrollPeriodDwr.next(res);
-                    console.log("employee-payroll?id with date range",res);
                     this.isLoadingPayrollPeriodDwr.next(false);
                 },
                 (err) => {
@@ -425,10 +434,35 @@ export class EmployeeService {
     }
     //#endregion
 
+
+    //#region Payroll by Period
+    getPayrollByPeriodDetails(id: string, operation, filters: any = { to: '', from: '' }) {
+        let params = new HttpParams();
+        params = params.set('operation', operation);
+        params = params.set('from', filters.from);
+        params = params.set('to', filters.to);
+        return this._httpClient
+            .get(`api-1/employee-payroll?id=${id}`, { params })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingPayrollPeriodDetails.next(true);
+                    this.payrollPeriodDetails.next(res);
+                    this.isLoadingPayrollPeriodDetails.next(false);
+                },
+                (err) => {
+                    this.isLoadingPayrollPeriodDetails.next(false);
+                    this.handleError(err);
+                }
+            );
+    }
+    //#endregion
+
+
     // Policy Documents 
 
     //#region Get Policy Documents
-    getPolicyDocuments(id: string,category: string = '') {
+    getPolicyDocuments(id: string, category: string = '') {
         return this._httpClient
             .get(`api-1/policy-documents?id=${id}&type=${'personalized'}&category=${category}`)
             .pipe(take(1))
@@ -446,7 +480,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Patch Policy Documents
-    addPolicyDocument(data: any, employee_id:string,category:string) {
+    addPolicyDocument(data: any, employee_id: string, category: string) {
         this._httpClient
             .post(`api-1/policy-documents`, data)
             .pipe(take(1))
@@ -469,7 +503,7 @@ export class EmployeeService {
                     this.isLoadingPolicyDocuments.next(false);
                 },
                 () => {
-                    this.getPolicyDocuments(employee_id,category);
+                    this.getPolicyDocuments(employee_id, category);
                 }
             );
     }
@@ -477,7 +511,7 @@ export class EmployeeService {
     //#endregion
 
     //#region Delete Policy Documents
-    deletePolicyDocument(id: string, employee_id: string,category:string) {
+    deletePolicyDocument(id: string, employee_id: string, category: string) {
         this._httpClient
             .delete(`api-1/policy-documents?id=${id}`)
             .pipe(take(1))
@@ -489,7 +523,7 @@ export class EmployeeService {
                     this.handleError(err);
                 },
                 () => {
-                    this.getPolicyDocuments(employee_id,category);
+                    this.getPolicyDocuments(employee_id, category);
                     this.isLoadingPolicyDocuments.next(false);
                 }
             );
