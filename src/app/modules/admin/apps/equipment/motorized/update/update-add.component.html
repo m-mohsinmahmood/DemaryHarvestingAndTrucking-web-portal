@@ -21,8 +21,12 @@
 
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
-                    <mat-label class="w-4/12">Type</mat-label>
-                    <input matInput formControlName="type" />
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option value="Tractor">Tractor</mat-option>
+                        <mat-option value="Truck">Truck</mat-option>
+                        <mat-option value="TRUCK IFTA">TRUCK IFTA</mat-option>
+                    </mat-select>
                     <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is
                         required</mat-hint>
 

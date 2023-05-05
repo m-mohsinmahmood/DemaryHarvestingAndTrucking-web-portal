@@ -6,6 +6,7 @@ import moment from 'moment';
 import { debounceTime, distinctUntilChanged, Observable, Subject } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
 import { Employee } from '../../employee.types';
+import { DWRTasksDetails } from './dwr-tasks-details/dwr-tasks-details.component';
 import { PeriodicPayrollDetails } from './periodic-payroll-details/periodic-payroll-details.component';
 
 @Component({
@@ -41,7 +42,6 @@ export class PayrollComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.employee,"emp")
     this.initForm();
 
     this.getRouteParams();
@@ -158,6 +158,15 @@ export class PayrollComponent implements OnInit {
         id:this.routeID,
         from: from,
         to: to,
+      }
+    })
+  }
+  toggleDWRTasks(id:any)
+  {
+    console.log(id)
+    const dialogRef = this._matDialog.open(DWRTasksDetails, {
+      data:{
+        id:id,
       }
     })
   }
