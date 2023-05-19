@@ -23,9 +23,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Type</mat-label>
                     <mat-select formControlName="type">
-                        <mat-option value="Tractor">Tractor</mat-option>
-                        <mat-option value="Truck">Truck</mat-option>
-                        <mat-option value="TRUCK IFTA">TRUCK IFTA</mat-option>
+                        <mat-option value="Truck IFTA">Truck IFTA</mat-option>
                     </mat-select>
                     <mat-hint *ngIf="this.form.get('type').hasError('required')" class="text-xs text-red-500">Type is
                         required</mat-hint>
