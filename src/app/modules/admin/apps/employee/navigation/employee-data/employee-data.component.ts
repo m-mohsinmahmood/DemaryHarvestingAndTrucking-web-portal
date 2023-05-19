@@ -53,11 +53,11 @@ export class EmployeeDataComponent implements OnInit {
   initObservables() {
     this.isLoadingEmployeeData$ = this._employeeService.isLoadingEmployee$;
     this.employeeData$ = this._employeeService.employee$;
-    this.employeeData$
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((value) => {
-      this.employeeData = value;
-    })
+      this.employeeData$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((value) => {
+        this.employeeData = value;
+      })
   }
   //#endregion
 
