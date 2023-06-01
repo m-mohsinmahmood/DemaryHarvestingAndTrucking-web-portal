@@ -81,8 +81,8 @@
                                         <div class="truncate">{{payroll.supervisor}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
-                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
-                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.state=='Arizona' ? employee?.hourly_rate.arizona_rate : employee?.hourly_rate.max_hourly_rate}}</div>
+                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked, employee?.hourly_rate.arizona_rate, employee?.hourly_rate.max_hourly_rate, payroll.state)}}</div>
                                     </div>
                                 </ng-container>
                             </ng-container>

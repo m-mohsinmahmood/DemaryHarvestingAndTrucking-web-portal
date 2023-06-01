@@ -62,7 +62,7 @@ export class PayrollComponent implements OnInit {
       );
 
 
-    console.log(this.payrollPeriodDwr$, this.employeeDwr$, "period")
+    console.log(this.payrollPeriodDwr$, this.employeeDwr$, "hellooooo")
   }
 
   initForm() {
@@ -120,14 +120,24 @@ export class PayrollComponent implements OnInit {
   }
   //#endregion
 
-  totalWage(a: any, b: any) {
-    if (a && b) {
+  totalWage(hours_worked: any, arizona_rate:any, max_rate:any, state:any ) {
+    if (arizona_rate && max_rate) {
+      if(state== 'Arizona')
+      {
       return (
         (
-          parseFloat((a).replace("$", "")) *
-          parseFloat((b).replace("$", ""))
+          parseFloat((hours_worked).replace("$", "")) *
+          parseFloat((arizona_rate).replace("$", ""))
         ).toFixed(2));
+      } else {
+        return (
+          (
+            parseFloat((hours_worked).replace("$", "")) *
+            parseFloat((max_rate).replace("$", ""))
+          ).toFixed(2));
+      }
     }
+    
   }
 
   totalPayrollPeriodWage(a: any, b: any) {

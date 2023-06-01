@@ -87,6 +87,28 @@
                                 <div
                                     class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
                                     <dt class="text-sm font-bold text-gray-500">
+                                        Company Name
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{motorizedVehicle.company_name}}
+                                    </dd>
+                                </div>
+
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
+                                        Truck ID
+                                    </dt>
+                                    <dd
+                                        class="mt-1 font-normal text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-end">
+                                        {{motorizedVehicle.truck_id}}
+                                    </dd>
+                                </div>
+
+                                <div
+                                    class="py-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex justify-between items-center">
+                                    <dt class="text-sm font-bold text-gray-500">
                                         Color
                                     </dt>
                                     <dd
@@ -312,10 +334,10 @@
 
         </div>
         <div class="block sm:w-4/12 images-gallery">
-            <div class="mb-4" >
-                <img class="py-4" *ngFor="let picture of pictures"
-                    src="{{picture}}" alt=" " />
-            </div>
+           
+            <div class="mb-4">
+                <img class="py-4" *ngFor="let picture of pictures" [src]="picture?.url || 'assets/images/apps/equipment/emptyImg.jpg'" alt=" "/>
+              </div>
 
            
         </div>

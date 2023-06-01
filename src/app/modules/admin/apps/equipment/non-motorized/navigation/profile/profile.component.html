@@ -311,9 +311,8 @@
 
         </div>
         <div class="block sm:w-4/12 images-gallery">
-            <div class="mb-4" >
-                <img class="py-4" *ngFor="let picture of pictures"
-                    src="{{picture}}" alt=" " />
+            <div class="mb-4">
+                <img class="py-4" *ngFor="let picture of pictures" [src]="picture?.url || 'assets/images/apps/equipment/emptyImg.jpg'" alt=" "/>
             </div>
 
         </div>

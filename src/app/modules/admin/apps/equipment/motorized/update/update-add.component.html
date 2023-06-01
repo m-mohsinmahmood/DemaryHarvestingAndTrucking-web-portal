@@ -74,6 +74,27 @@
 
                 </mat-form-field>
             </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Company Name</mat-label>
+                    <input matInput formControlName="company_name" />
+                    <mat-hint *ngIf="this.form.get('company_name').hasError('required')"
+                        class="text-xs text-red-500">Company Name is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Truck ID</mat-label>
+                    <input matInput formControlName="truck_id" />
+                    <mat-hint *ngIf="this.form.get('truck_id').hasError('required')"
+                        class="text-xs text-red-500">Truck ID is required</mat-hint>
+
+                </mat-form-field>
+            </div>
+
             <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                 <mat-form-field appearance="outline">
                     <mat-label>Color</mat-label>

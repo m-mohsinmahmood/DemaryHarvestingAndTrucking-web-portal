@@ -136,6 +136,8 @@ export class MotorizedDetailComponent implements OnInit, OnDestroy {
           license_plate: event.license_plate,
           vin_number: event.vin_number,
           company_id: event.company_id,
+          company_name: event.company_name,
+          truck_id: event.truck_id,
           color: event.color,
           year: event.year,
           make: event.make,
