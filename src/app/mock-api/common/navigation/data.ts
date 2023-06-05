@@ -72,11 +72,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
     link: "/apps/applicants",
   },
   {
-    id: "employee",
+    id: "",
     title: "Employees",
-    type: "basic",
+    type: "collapsable",
     icon: "heroicons_outline:user-circle",
-    link: "/apps/employee",
+    children: [
+        {
+            id: "employee",
+            title: "Employees",
+            type: "basic",
+            icon: "heroicons_outline:user-circle",
+            link: "/apps/employee/employees",
+          },
+        {
+          id: "all-dwrs",
+          title: "All DWRs",
+          type: "basic",
+          icon: "heroicons_outline:cog",
+          link: "/apps/employee/all-dwrs",
+        },
+    ]
   },
   {
     id: "crops",

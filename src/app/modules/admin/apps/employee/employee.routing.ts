@@ -4,10 +4,15 @@ import { EmployeeListComponent } from 'app/modules/admin/apps/employee/list/list
 import { EmployeeDetailComponent } from 'app/modules/admin/apps/employee/details/details.component';
 import { EmployeesResolver, EmployeeResolver, ContactsCountriesResolver, DocumentItemsResolver } from 'app/modules/admin/apps/employee/employee.resolvers';
 // import { DocumentItemsResolver } from '../customers/customers.resolvers';
+import { AllDwrsComponent } from './all-dwrs/all-dwrs.component';
 
 export const employeeRoutes: Route[] = [
     {
-        path     : '',
+        path: '',
+        pathMatch: 'full',
+    },
+    {
+        path     : 'employees',
         component: EmployeeComponent,
         children : [
             {
@@ -32,5 +37,9 @@ export const employeeRoutes: Route[] = [
                 },
             },
         ]
-    }
+    },
+    {
+        path: 'all-dwrs',
+        component: AllDwrsComponent,
+    },
 ];

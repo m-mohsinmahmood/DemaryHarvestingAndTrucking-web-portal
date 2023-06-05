@@ -50,6 +50,7 @@ import { MiscellaneousDocumentsComponent } from './navigation/documents/miscella
 import { WorkDocumentsComponent } from './navigation/documents/work-documents/work-documents.component';
 import { PeriodicPayrollDetails } from './navigation/payroll/periodic-payroll-details/periodic-payroll-details.component';
 import { DWRTasksDetails } from './navigation/payroll/dwr-tasks-details/dwr-tasks-details.component';
+import { AllDwrsComponent } from './all-dwrs/all-dwrs.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import { DWRTasksDetails } from './navigation/payroll/dwr-tasks-details/dwr-task
       MiscellaneousDocumentsComponent,
       WorkDocumentsComponent,
       PeriodicPayrollDetails,
-      DWRTasksDetails
+      DWRTasksDetails,
+      AllDwrsComponent
     ],
     imports     : [
         RouterModule.forChild(employeeRoutes),

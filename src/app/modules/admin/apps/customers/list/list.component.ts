@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/member-ordering */
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -132,7 +136,7 @@ export class CustomersListComponent implements OnInit {
 
     openImportDialog(): void {
         const dialogRef = this._matDialog.open(ImportCustomersComponent, {
-            data: { 
+            data: {
                 limit: this.pageSize,
                 sort: this.sort,
                 order: this.order,
@@ -213,7 +217,7 @@ export class CustomersListComponent implements OnInit {
 
     //#endregion
 
-    //#region Filters 
+    //#region Filters
     applyFilters() {
         this.page = 1;
         !this.customerFiltersForm.value.type ? (this.customerFiltersForm.value.type = '') : ('');
