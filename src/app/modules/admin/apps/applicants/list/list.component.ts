@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -315,7 +318,7 @@ export class ApplicantsListComponent
     }
     //#endregion
 
-    //#region find country code 
+    //#region find country code
     getCountryCode(country_code) {
         if (country_code && country_code != 'zz')
             return '+' + country_code?.split("+")[1];

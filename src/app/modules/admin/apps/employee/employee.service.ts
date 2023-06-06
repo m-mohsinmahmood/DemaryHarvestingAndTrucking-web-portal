@@ -1,3 +1,10 @@
+/* eslint-disable no-debugger */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable quotes */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'; import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 import { EmployeePagination, Employee, Country, Documents, Item } from 'app/modules/admin/apps/employee/employee.types';
@@ -36,6 +43,7 @@ export class EmployeeService {
 
     isLoadingEmployee: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly isLoadingEmployee$: Observable<boolean> = this.isLoadingEmployee.asObservable();
+
     // #endregion
 
     //#region Employeee Documents
@@ -57,6 +65,15 @@ export class EmployeeService {
 
     //#endregion
 
+    //#region All DWR
+    private allDwrsList: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    readonly allDwrsList$: Observable<any | null> = this.allDwrsList.asObservable();
+
+
+    isLoadingAllDwrs: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingAllDwrs$: Observable<boolean> = this.isLoadingAllDwrs.asObservable();
+    //endregion
+
     //#Employee Dwr Period
     private payrollPeriodDwr: BehaviorSubject<any | null> = new BehaviorSubject(null);
     readonly payrollPeriodDwr$: Observable<any | null> = this.payrollPeriodDwr.asObservable();
@@ -76,7 +93,7 @@ export class EmployeeService {
     //#endregion
 
 
-    //#region Policy Documents 
+    //#region Policy Documents
     private policyDocuments: BehaviorSubject<any | null> = new BehaviorSubject(null);
     readonly policyDocuments$: Observable<any | null> = this.policyDocuments.asObservable();
 
@@ -105,7 +122,7 @@ export class EmployeeService {
 
     //#endregion
 
-    //#region Error 
+    //#region Error
     handleError(error: HttpErrorResponse) {
         let errorMessage = 'Unknown error!';
         if (error.error instanceof ErrorEvent) {
@@ -136,7 +153,7 @@ export class EmployeeService {
     //#endregion
 
 
-    //#region Applicant API's 
+    //#region Applicant API's
     getEmployees(page: number = 1, limit: number = 200, sort: string = '', order: 'asc' | 'desc' | '' = '', search: string = '') {
         let params = new HttpParams();
         params = params.set('page', page);
@@ -391,7 +408,7 @@ export class EmployeeService {
 
     //#endregion
 
-    //#region Payroll 
+    //#region Payroll
     getPayrollById(id: string) {
         return this._httpClient
             .get(`api-1/employee-payroll?id=${id}`)
@@ -459,7 +476,7 @@ export class EmployeeService {
     //#endregion
 
 
-    // Policy Documents 
+    // Policy Documents
 
     //#region Get Policy Documents
     getPolicyDocuments(id: string, category: string = '') {
@@ -529,6 +546,33 @@ export class EmployeeService {
             );
     }
 
+    //#endregion
+
+    //#region Dwr List
+    getDwrList(operation,
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '' }) {
+        let params = new HttpParams();
+        params = params.set('operation', operation);
+        params = params.set('beginning_date', filters.beginning_date);
+        params = params.set('ending_date', filters.ending_date);
+        params = params.set('category', filters.category);
+        params = params.set('supervisor_name', filters.supervisor_name);
+        params = params.set('name', filters.name);
+        return this._httpClient
+            .get(`api-1/employee-payroll` , {params})
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingAllDwrs.next(true);
+                    this.allDwrsList.next(res);
+                    this.isLoadingAllDwrs.next(false);
+                },
+                (err) => {
+                    this.isLoadingAllDwrs.next(false);
+                    this.handleError(err);
+                }
+            );
+    }
     //#endregion
 
 }

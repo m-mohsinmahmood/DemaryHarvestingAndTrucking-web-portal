@@ -1,3 +1,10 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable curly */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable quotes */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';

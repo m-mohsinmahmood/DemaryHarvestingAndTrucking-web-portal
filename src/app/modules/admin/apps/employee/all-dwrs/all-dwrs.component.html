@@ -1,6 +1,6 @@
 <div class="w-full">
-    <div class="px-3 mt-4" >
-        <div class="sm:p-0 rounded-md mx-2 my-2 border">
+    <div class="px-3 mt-4" *ngIf="(allDwrsList$ | async) as employee">
+        <div class="sm:p-0 rounded-md mx-2 my-2 border" *ngIf="employee?.dwrTasks">
             <!-- Main -->
             <div class="flex flex-auto overflow-hidden">
                 <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
@@ -21,31 +21,33 @@
                                 </div>
                                 <!-- Header -->
                                 <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
-                                    <div>ID</div>
-                                    <div>Name</div>
-                                    <div>Date</div>
+                                    <div class="sm:block">ID</div>
+                                    <div class="sm:block">Date</div>
                                     <div>Supervisor</div>
                                     <div>Category</div>
-                                    <div>State</div>
-                                    <div>Hours</div>
-                                    <div>Hourly Rate</div>
-                                    <div>Total Wages</div>
+                                    <div class="hidden sm:block">State</div>
+                                    <div class="hidden sm:block">Hours</div>
+                                    <div class="hidden sm:block">Hourly Rate</div>
+                                    <div class="hidden sm:block">Total Wages</div>
                                     <!-- <div class="">Actions</div> -->
                                 </div>
                                 <!-- Rows -->
                                 <ng-container>
-                                    <ng-container >
-                                        <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                    <ng-container *ngIf="employee?.dwrTasks.length > 0; else noPayroll">
+                                        <div *ngFor="let payroll of employee?.dwrTasks" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                             <div
-                                            class="sm:block flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
-                                            <div class="truncate"></div>
+                                            class="sm:block flex items-center cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600"
+
+
+                                            >{{payroll.id}}</div>
+
+                                            <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
+                                            <div class="truncate">{{payroll.supervisor}}</div>
+                                            <div class="truncate">{{payroll.supervisor}}</div>
+                                            <div class="truncate hidden sm:block">{{payroll.state}}</div>
+                                            <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
+                                            <div class="truncate hidden sm:block">${{payroll.state=='Arizona' ? employee?.hourly_rate[0].arizona_rate : employee?.hourly_rate[0].max_hourly_rate}}</div>
+                                            <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked, employee?.hourly_rate[0].arizona_rate, employee?.hourly_rate[0].max_hourly_rate, payroll.state)}}</div>
                                         </div>
                                     </ng-container>
                                 </ng-container>
@@ -80,34 +82,30 @@
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="dwrFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
+                        <mat-form-field birthdayFormat class="w-full" appearance="outline">
+                            <mat-label>Payroll Period</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                                <input matStartDate formControlName="beginning_date"
+                                    placeholder="Start date">
+                                <input matEndDate formControlName="ending_date"
+                                    placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
                         <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                             <mat-form-field appearance="outline">
                                 <mat-label>Name</mat-label>
-                                <mat-select formControlName="name" multiple>
-                                    <mat-option value="F">Farming</mat-option>
-                                    <mat-option value="T">Trucking</mat-option>
-                                    <mat-option value="H">Harvesting</mat-option>
-                                    <mat-option value="L">Leasing</mat-option>
-                                    <mat-option value="P">Prospect</mat-option>
-                                </mat-select>
+                                <input matInput formControlName="name" >
                             </mat-form-field>
                         </div>
                         <mat-form-field appearance="outline">
-                            <mat-label>Date</mat-label>
-                            <mat-select formControlName="date">
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
                             <mat-label>Category</mat-label>
-                            <mat-select formControlName="category">
-
-                            </mat-select>
+                            <input matInput formControlName="category" >
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Supervisor</mat-label>
-                            <mat-select formControlName="supervisor">
-
-                            </mat-select>
+                            <input matInput formControlName="supervisor_name" >
                         </mat-form-field>
                     </form>
                 </div>
