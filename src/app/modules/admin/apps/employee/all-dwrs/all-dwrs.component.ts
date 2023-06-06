@@ -65,9 +65,11 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region Filters
     applyFilters() {
+        this.initApis();
     }
 
     removeFilters() {
+        this.initApis();
     }
 
     initFiltersForm() {

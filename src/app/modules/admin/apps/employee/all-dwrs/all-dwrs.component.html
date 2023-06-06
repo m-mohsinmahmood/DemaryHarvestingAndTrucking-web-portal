@@ -23,6 +23,7 @@
                                 <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                     <div class="sm:block">ID</div>
                                     <div class="sm:block">Date</div>
+                                    <div class="sm:block">Name</div>
                                     <div>Supervisor</div>
                                     <div>Category</div>
                                     <div class="hidden sm:block">State</div>
@@ -42,8 +43,9 @@
                                             >{{payroll.id}}</div>
 
                                             <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
+                                            <div class="truncate">{{payroll.first_name}} {{payroll.last_name}}</div>
                                             <div class="truncate">{{payroll.supervisor}}</div>
-                                            <div class="truncate">{{payroll.supervisor}}</div>
+                                            <div class="truncate">{{payroll.category}}</div>
                                             <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                             <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
                                             <div class="truncate hidden sm:block">${{payroll.state=='Arizona' ? employee?.hourly_rate[0].arizona_rate : employee?.hourly_rate[0].max_hourly_rate}}</div>
