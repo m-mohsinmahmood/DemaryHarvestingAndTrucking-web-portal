@@ -252,7 +252,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region open details
     toggleDetails(employeeId: string): void {
-        this._router.navigate(['/apps/employee/details/' + employeeId]);
+        this._router.navigate(['/apps/employee/employees/details/' + employeeId]);
     }
     //#endregion
 
@@ -271,7 +271,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
     //#endregion
-    //#region get country code 
+    //#region get country code
     getCountryCode(country_code) {
         if (country_code && country_code != 'zz')
             return '+' + country_code?.split("+")[1];
@@ -283,7 +283,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.status_step[status_step];
     }
     //#endregion
-    
+
     //#region trackByFn
     trackByFn(index: number, item: any): any {
         return item.id || index;

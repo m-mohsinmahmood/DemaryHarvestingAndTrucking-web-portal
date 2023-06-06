@@ -122,7 +122,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
     //#endregion
 
     backHandler(): void {
-        this._router.navigate(['/apps/employee/']);
+        this._router.navigate(['/apps/employee/employees']);
     }
 
     //#region trackByFn
