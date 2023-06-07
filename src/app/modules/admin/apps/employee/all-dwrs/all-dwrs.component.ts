@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable quotes */
 /* eslint-disable eqeqeq */
@@ -77,9 +78,15 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.dwrFiltersForm.value.ending_date) {
               this.dwrFiltersForm.controls['ending_date'].patchValue(moment(this.dwrFiltersForm.value.ending_date).format('YYYY-MM-DD'));
             }
-
-            this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
         }
+        !this.dwrFiltersForm.value.name ? (this.dwrFiltersForm.value.name = '') : ('');
+        !this.dwrFiltersForm.value.state ? (this.dwrFiltersForm.value.state = '') : ('');
+        !this.dwrFiltersForm.value.beginning_date ? (this.dwrFiltersForm.value.beginning_date = '') : ('');
+        !this.dwrFiltersForm.value.ending_date ? (this.dwrFiltersForm.value.ending_date = '') : ('');
+        !this.dwrFiltersForm.value.supervisor_name ? (this.dwrFiltersForm.value.supervisor_name = '') : ('');
+        !this.dwrFiltersForm.value.category ? (this.dwrFiltersForm.value.category = '') : ('');
+        this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
+
     }
 
     removeFilters() {
@@ -90,7 +97,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dwrFiltersForm.value.ending_date='';
         this.dwrFiltersForm.value.supervisor_name='';
         this.dwrFiltersForm.value.category='';
-        this.initApis();
+        this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
     }
 
     initFiltersForm() {
