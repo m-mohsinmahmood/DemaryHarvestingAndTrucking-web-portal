@@ -66,7 +66,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region Filters
     applyFilters() {
-        debugger
+        //debugger
         if (this.dwrFiltersForm.get('ending_date').value !== null) {
             if (this.dwrFiltersForm.value.beginning_date) {
               this.dwrFiltersForm.controls['beginning_date'].patchValue(moment(this.dwrFiltersForm.value.beginning_date).format('YYYY-MM-DD'));
@@ -74,11 +74,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.dwrFiltersForm.value.ending_date) {
               this.dwrFiltersForm.controls['ending_date'].patchValue(moment(this.dwrFiltersForm.value.ending_date).format('YYYY-MM-DD'));
             }
-      
+
             this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
         }
-
-        this.initApis();
     }
 
     removeFilters() {

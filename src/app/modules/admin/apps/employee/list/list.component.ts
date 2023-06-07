@@ -6,10 +6,10 @@
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime, map, Observable, startWith, Subject, Subscription } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
@@ -18,6 +18,8 @@ import * as XLSX from 'xlsx';
 import * as Joi from 'joi';
 import { countryList } from './../../../../../../JSON/country';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import moment, { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
     selector: 'app-employee',
@@ -37,9 +39,14 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#endregion
 
     //#region variables
+    countryList: string[] = [];
+    countryOptions: Observable<string[]>;
+    created_at: any;
+    validCountry: boolean = true;
     page: number = 1;
     pageSize = 200;
     pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 500];
+    employeeFiltersForm: FormGroup;
     searchform: FormGroup = new FormGroup({
         search: new FormControl(),
     });
@@ -52,7 +59,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     isFileError: boolean = false;
     fileHeaders: any[] = [];
     importFileData: any;
-    countries: string[] = [];
     statusList: string[] = [
         'Hired',
         'Evaluated',
@@ -117,12 +123,19 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private _router: Router,
         private _employeeService: EmployeeService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
+        private _formBuilder: FormBuilder,
     ) { }
 
     //#region LifeCycle Hooks
     ngOnInit(): void {
-        this.countries = countryList;
+        this.initFiltersForm();
+
+        this.countryOptions = this.employeeFiltersForm.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
+        this.countryList = countryList;
 
     }
 
@@ -167,6 +180,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countryList.filter(country => country.toLowerCase().includes(filterValue));
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -294,6 +311,53 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#region trackByFn
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+    //#endregion
+
+    //#region filters form
+    initFiltersForm() {
+        this.employeeFiltersForm = this._formBuilder.group({
+            role: [''],
+            status: [''],
+            created_at: [''],
+            country: [''],
+            employment_period: [''],
+            employment_type: ['']
+        });
+    }
+
+    applyFilters() {
+    }
+
+    removeFilters() {
+        this.employeeFiltersForm.reset();
+    }
+
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.created_at.setValue(ctrlValue.format('YYYY'));
+        this.employeeFiltersForm.value.created_at = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
+
+    //#endregion
+
+    //#region Country Form Validation
+    formValidation(e, type) {
+        if (type === "country") {
+            if (this.countryList.includes(e) || e == '') {
+                this.validCountry = true;
+                this.employeeFiltersForm.controls['country'].setErrors(null);
+            }
+            else {
+                this.validCountry = false;
+                this.employeeFiltersForm.controls['country'].setErrors({ 'incorrect': true });
+            }
+        }
     }
     //#endregion
 }
