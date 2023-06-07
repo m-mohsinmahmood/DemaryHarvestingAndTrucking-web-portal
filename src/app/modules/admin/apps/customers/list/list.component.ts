@@ -90,6 +90,7 @@ export class CustomersListComponent implements OnInit {
 
     //#region Lifecycle Functions
     ngOnInit(): void {
+        this.initCreatedAt();
         this.initApis();
         this.initFiltersForm();
         this.initObservables();
@@ -257,6 +258,12 @@ export class CustomersListComponent implements OnInit {
     //#endregion
 
     //#region Filters
+    initCreatedAt() {
+        this.created_at = new FormControl();
+    }
+    //#endregion
+
+    //#region Filters
     applyFilters() {
         this.page = 1;
         !this.customerFiltersForm.value.type ? (this.customerFiltersForm.value.type = '') : ('');
@@ -265,6 +272,7 @@ export class CustomersListComponent implements OnInit {
     }
 
     removeFilters() {
+        this.created_at.setValue('');
         this.page = 1;
         this.customerFiltersForm.reset();
         this.customerFiltersForm.value.type = '';

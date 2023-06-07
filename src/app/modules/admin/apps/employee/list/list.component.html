@@ -241,9 +241,9 @@
                             <mat-label>Employment Type</mat-label>
                             <input matInput formControlName="employment_type" >
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="cat w-full">
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Year</mat-label>
-                            <input readonly matInput [matDatepicker]="dp" placeholder="Year" formControlName="created_at" [formControl]="created_at">
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="created_at">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                             <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
                                 panelClass="example-month-picker">

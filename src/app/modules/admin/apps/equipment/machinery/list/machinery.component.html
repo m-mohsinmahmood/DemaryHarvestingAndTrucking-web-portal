@@ -13,7 +13,7 @@
         <!-- Title -->
         <div class="text-2xl font-extrabold tracking-tight">Machinery</div>
         <!-- Actions -->
-        <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+        <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 space-x-2">
             <!-- Search -->
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-44 lg:min-w-44 lg:min-w-64">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
@@ -30,6 +30,15 @@
             >
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2 mr-1">Add</span>
+            </button>
+            <!--Filter-->
+            <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
+                <mat-icon
+                    *ngIf="machineryFiltersForm.value.type || machineryFiltersForm.value.make || machineryFiltersForm.value.model"
+                    [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+                <mat-icon
+                    *ngIf="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model"
+                    [svgIcon]="'heroicons_outline:filter'"></mat-icon>
             </button>
         </div>
     </div>
@@ -69,10 +78,10 @@
                                 <div
                                     class="machinery-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b"
                                 >
-                                   
+
 
                                     <!-- Name -->
-                                    <div (click)="toggleDetails(machinery.id)" 
+                                    <div (click)="toggleDetails(machinery.id)"
                                     class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate">
                                         {{ machinery.name }}
                                     </div>
@@ -169,3 +178,88 @@
         </div>
     </div>
 </div>
+<!-- Filters -->
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+    [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
+    <div class="flex flex-col w-100 overflow-auto bg-card">
+        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+            <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
+            </div>
+            <button class="ml-auto" mat-icon-button mat-icon-button (click)="filtersDrawer.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center items-center h-screen">
+            <div class="h-5/6 w-96">
+                <div class="w-inherit flex flex-col">
+                    <form [formGroup]="machineryFiltersForm" (ngSubmit)="applyFilters()"
+                        class="flex flex-col flex-auto p-6 sm:p-8">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Type</mat-label>
+                            <input matInput formControlName="type" >
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Make</mat-label>
+                            <input matInput formControlName="make" >
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Model</mat-label>
+                            <input matInput formControlName="model" >
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat w-full">
+                            <mat-label>Manufacture Year</mat-label>
+                            <input readonly matInput [matDatepicker]="mdp" placeholder="Manufacture Year" [formControl]="manufacture_year">
+                            <mat-datepicker-toggle matSuffix [for]="mdp"></mat-datepicker-toggle>
+                            <mat-datepicker #mdp startView="multi-year" (yearSelected)="manufactureYearHandler($event, mdp)"
+                                panelClass="example-month-picker">
+                            </mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat w-full">
+                            <mat-label>Select Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value="Preliminary Review">Preliminary Review</mat-option>
+                                <mat-option value="First Interview Completed">First Interview Completed</mat-option>
+                                <mat-option value="Second Interview Completed">Second Interview Completed</mat-option>
+                                <mat-option value="Reference Call Completed">Reference Call Completed</mat-option>
+                                <mat-option value="Third Interview Completed">Third Interview Completed</mat-option>
+                                <mat-option value="Recruiter Decision Made">Recruiter Decision Made</mat-option>
+                                <mat-option value="Offer Made">Offer Made</mat-option>
+                                <mat-option value="Offer Accepted">Offer Accepted</mat-option>
+                                <mat-option value="Results">Hired</mat-option>
+                                <mat-option value="Waitlisted">Waitlisted</mat-option>
+                                <mat-option value="Qualifications dont match current openings">Qualifications dont match
+                                    current openings</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat w-full">
+                            <mat-label>Year</mat-label>
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="created_at">
+                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
+                                panelClass="example-month-picker">
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model || machineryFiltersForm.invalid"
+                    (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                        [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
+                </div>
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model || machineryFiltersForm.invalid"
+                    (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
+                        <span>Remove filters</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</fuse-drawer>
+

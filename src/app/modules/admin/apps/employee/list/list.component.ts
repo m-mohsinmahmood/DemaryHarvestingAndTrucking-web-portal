@@ -130,7 +130,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     //#region LifeCycle Hooks
     ngOnInit(): void {
         this.initFiltersForm();
-
+        this.initCreatedAt();
         this.countryOptions = this.employeeFiltersForm.valueChanges.pipe(
             startWith(''),
             map(value => this._filterCountries(value.country || '')),
@@ -314,13 +314,19 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+    //#region Filters
+    initCreatedAt() {
+        this.created_at = new FormControl();
+    }
+    //#endregion
+
     //#region filters form
     initFiltersForm() {
         this.employeeFiltersForm = this._formBuilder.group({
             role: [''],
             status: [''],
-            created_at: [''],
             country: [''],
+            created_at: [''],
             employment_period: [''],
             employment_type: ['']
         });

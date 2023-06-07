@@ -10,6 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { EmployeeService } from '../employee.service';
 import { Observable } from 'rxjs';
 import moment from 'moment';
+import { states } from './../../../../../../JSON/state';
 
 @Component({
     selector: 'app-all-dwrs',
@@ -22,6 +23,7 @@ import moment from 'moment';
 export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //#region variables
+    states: string[] = [];
     page: number = 1;
     pageSize = 200;
     pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 500];
@@ -44,6 +46,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initObservables();
         this.initApis();
         console.log(this.allDwrsList$);
+        this.states = states;
     }
 
     ngAfterViewInit(): void {
@@ -81,16 +84,23 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     removeFilters() {
         this.dwrFiltersForm.reset();
+        this.dwrFiltersForm.value.name='';
+        this.dwrFiltersForm.value.state='';
+        this.dwrFiltersForm.value.beginning_date='';
+        this.dwrFiltersForm.value.ending_date='';
+        this.dwrFiltersForm.value.supervisor_name='';
+        this.dwrFiltersForm.value.category='';
         this.initApis();
     }
 
     initFiltersForm() {
         this.dwrFiltersForm = this._formBuilder.group({
             name: [''],
+            state: [''],
             beginning_date: [''],
             ending_date: [''],
-            category: [''],
             supervisor_name: [''],
+            category: [''],
         });
     }
 
