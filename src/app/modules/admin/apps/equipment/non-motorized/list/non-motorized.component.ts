@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -34,6 +36,8 @@ import { Router } from '@angular/router';
 import { NonMotorized } from '../non-motorized.types';
 import { NonMotorizedService } from '../non-motorized.service';
 import { UpdateAddNonMotorizedComponent } from '../update/update-add.component';
+import { MatDatepicker } from '@angular/material/datepicker';
+import moment, { Moment } from 'moment';
 
 @Component({
     selector: 'non-motorized-list',
@@ -51,6 +55,9 @@ export class NonMotorizedListComponent
 
     //#region Variables
 
+    nonMotorizedFiltersForm: FormGroup;
+    created_at: any;
+    manufacture_year: any;
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
     searchInputControl: FormControl = new FormControl();
@@ -95,6 +102,9 @@ export class NonMotorizedListComponent
     //#region Lifecycle Functions
 
     ngOnInit(): void {
+        this.initCreatedAt();
+        this.initManufacturedYear();
+        this.initFiltersForm();
         this.initApis();
         this.initObservables();
 
@@ -172,7 +182,7 @@ export class NonMotorizedListComponent
     sortData(sort: any) {
         this.page = 1;
         this.sort = sort.active;
-        this.order = sort.direction
+        this.order = sort.direction;
         this._nonMotorizedService.getNonMotorizedVehicles(
             this.page,
             this.limit,
@@ -192,6 +202,60 @@ export class NonMotorizedListComponent
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this._nonMotorizedService.getNonMotorizedVehicles(this.page, this.limit, '', '');
+    }
+    //#endregion
+
+        //#region Filters
+    initCreatedAt() {
+        this.created_at = new FormControl();
+    }
+
+    initManufacturedYear() {
+        this.manufacture_year = new FormControl();
+    }
+    //#endregion
+
+    //#region Filters
+    applyFilters() {
+        //debugger
+    }
+
+    removeFilters() {
+        this.nonMotorizedFiltersForm.reset();
+        this.initApis();
+    }
+
+    initFiltersForm() {
+        this.nonMotorizedFiltersForm = this._formBuilder.group({
+            type: [''],
+            make: [''],
+            model: [''],
+            status: [''],
+            created_at: [''],
+            manufacture_year:['']
+        });
+    }
+
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.created_at.setValue(ctrlValue.format('YYYY'));
+        this.nonMotorizedFiltersForm.value.created_at = ctrlValue.format('YYYY');
+        datepicker.close();
+    }
+
+    manufactureYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.manufacture_year.setValue(ctrlValue.format('YYYY'));
+        this.nonMotorizedFiltersForm.value.manufacture_year = ctrlValue.format('YYYY');
+        datepicker.close();
     }
     //#endregion
 }

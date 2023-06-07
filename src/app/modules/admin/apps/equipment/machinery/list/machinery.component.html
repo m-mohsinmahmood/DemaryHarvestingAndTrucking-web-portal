@@ -34,10 +34,10 @@
             <!--Filter-->
             <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
                 <mat-icon
-                    *ngIf="machineryFiltersForm.value.type || machineryFiltersForm.value.make || machineryFiltersForm.value.model"
+                    *ngIf="machineryFiltersForm.value.type || machineryFiltersForm.value.make || machineryFiltersForm.value.model || machineryFiltersForm.value.manufacture_year || machineryFiltersForm.value.status || machineryFiltersForm.value.created_at"
                     [svgIcon]="'heroicons_solid:filter'"></mat-icon>
                 <mat-icon
-                    *ngIf="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model"
+                    *ngIf="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model && !machineryFiltersForm.value.manufacture_year && !machineryFiltersForm.value.status && !machineryFiltersForm.value.created_at"
                     [svgIcon]="'heroicons_outline:filter'"></mat-icon>
             </button>
         </div>
@@ -246,14 +246,14 @@
             </div>
             <div class="flex flex-row justify-evenly items-center w-80">
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model || machineryFiltersForm.invalid"
+                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model && !machineryFiltersForm.value.manufacture_year && !machineryFiltersForm.value.status && !machineryFiltersForm.value.created_at || machineryFiltersForm.invalid"
                     (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
                         [color]="'primary'">
                         <span class="">Apply filters</span>
                     </button>
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model || machineryFiltersForm.invalid"
+                    <button [disabled]="!machineryFiltersForm.value.type && !machineryFiltersForm.value.make && !machineryFiltersForm.value.model && !machineryFiltersForm.value.manufacture_year && !machineryFiltersForm.value.status && !machineryFiltersForm.value.created_at || machineryFiltersForm.invalid"
                     (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
                         <span>Remove filters</span>
                     </button>

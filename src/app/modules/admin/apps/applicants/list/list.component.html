@@ -204,11 +204,43 @@
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="applicantFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
-                        <mat-form-field birthdayFormat appearance="outline" class="cat mx-1 mt-2 w-full">
+                        <!-- <mat-form-field birthdayFormat appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Date </mat-label>
                             <input id="date" name="date" formControlName="date" matInput [matDatepicker]="picker4">
                             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                             <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Select Employment period</mat-label>
+                            <mat-select matNativeControl formControlName="employment_period">
+                                <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January
+                                    15th, 2024 </mat-option>
+                                <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th,
+                                    2024</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Country</mat-label>
+                            <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
+                                matInput formControlName="country" [matAutocomplete]="country">
+                            <mat-autocomplete #country="matAutocomplete">
+                                <mat-option *ngFor="let country of countryOptions | async" [value]="country">
+                                    {{country}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint class="flex flex-col">
+                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
+                                    given list only </span>
+                            </mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select Ranking</mat-label>
+                            <mat-select formControlName="ranking">
+                                <mat-option value="first_ranking">
+                                    < 30%</mat-option>
+                                        <mat-option value="second_ranking"> 30% - 70% </mat-option>
+                                        <mat-option value="third_ranking"> > 70%</mat-option>
+                            </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Select Status</mat-label>
@@ -227,44 +259,12 @@
                                     current openings</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
-                            <mat-label>Select Ranking</mat-label>
-                            <mat-select formControlName="ranking">
-                                <mat-option value="first_ranking">
-                                    < 30%</mat-option>
-                                        <mat-option value="second_ranking"> 30% - 70% </mat-option>
-                                        <mat-option value="third_ranking"> > 70%</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                        <!-- <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Select State</mat-label>
                             <mat-select formControlName="state">
                                 <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
                             </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-full">
-                            <mat-label>Country</mat-label>
-                            <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
-                                matInput formControlName="country" [matAutocomplete]="country">
-                            <mat-autocomplete #country="matAutocomplete">
-                                <mat-option *ngFor="let country of countryOptions | async" [value]="country">
-                                    {{country}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <mat-hint class="flex flex-col">
-                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
-                                    given list only </span>
-                            </mat-hint>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-full">
-                            <mat-label>Select Employment period</mat-label>
-                            <mat-select matNativeControl formControlName="employment_period">
-                                <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January
-                                    15th, 2024 </mat-option>
-                                <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th,
-                                    2024</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
                         <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Year</mat-label>
                             <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="created_at">

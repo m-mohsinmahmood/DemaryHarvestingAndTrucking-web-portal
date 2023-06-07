@@ -193,10 +193,27 @@
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="employeeFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
+
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Country</mat-label>
+                            <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
+                                matInput formControlName="country" [matAutocomplete]="country">
+                            <mat-autocomplete #country="matAutocomplete">
+                                <mat-option *ngFor="let country of countryOptions | async" [value]="country">
+                                    {{country}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint class="flex flex-col">
+                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
+                                    given list only </span>
+                            </mat-hint>
+                        </mat-form-field>
+
                         <mat-form-field appearance="outline">
                             <mat-label>Role</mat-label>
                             <input matInput formControlName="role" >
                         </mat-form-field>
+
                         <mat-form-field appearance="outline" class="cat w-full">
                             <mat-label>Select Status</mat-label>
                             <mat-select formControlName="status">
@@ -214,20 +231,7 @@
                                     current openings</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-full">
-                            <mat-label>Country</mat-label>
-                            <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
-                                matInput formControlName="country" [matAutocomplete]="country">
-                            <mat-autocomplete #country="matAutocomplete">
-                                <mat-option *ngFor="let country of countryOptions | async" [value]="country">
-                                    {{country}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <mat-hint class="flex flex-col">
-                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
-                                    given list only </span>
-                            </mat-hint>
-                        </mat-form-field>
+
                         <mat-form-field appearance="outline" class="w-full">
                             <mat-label>Select Employment period</mat-label>
                             <mat-select matNativeControl formControlName="employment_period">
@@ -237,10 +241,12 @@
                                     2024</mat-option>
                             </mat-select>
                         </mat-form-field>
+
                         <mat-form-field appearance="outline">
                             <mat-label>Employment Type</mat-label>
                             <input matInput formControlName="employment_type" >
                         </mat-form-field>
+
                         <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
                             <mat-label>Year</mat-label>
                             <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="created_at">
@@ -249,6 +255,7 @@
                                 panelClass="example-month-picker">
                             </mat-datepicker>
                         </mat-form-field>
+
                     </form>
                 </div>
             </div>

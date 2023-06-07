@@ -164,13 +164,13 @@ export class ApplicantsListComponent
 
     initFiltersForm() {
         this.applicantFiltersForm = this._formBuilder.group({
-            date: [''],
-            status: [''],
-            ranking: [''],
-            state: [''],
-            created_at: [''],
-            country: [''],
             employment_period: [''],
+            country: [''],
+            ranking: [''],
+            status: [''],
+            created_at: [''],
+            // date: [''],
+            // state: [''],
         });
     }
 
@@ -252,10 +252,10 @@ export class ApplicantsListComponent
     //#endregion
     applyFilters() {
         this.page = 1;
-        !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
+        // !this.applicantFiltersForm.value.state ? (this.applicantFiltersForm.value.state = '') : ('');
         !this.applicantFiltersForm.value.created_at ? (this.applicantFiltersForm.value.created_at = '') : ('');
         !this.applicantFiltersForm.value.status ? (this.applicantFiltersForm.value.status = '') : ('');
-        !this.applicantFiltersForm.value.date ? (this.applicantFiltersForm.value.date = '') : ('');
+        // !this.applicantFiltersForm.value.date ? (this.applicantFiltersForm.value.date = '') : ('');
         !this.applicantFiltersForm.value.ranking ? (this.applicantFiltersForm.value.ranking = '') : ('');
         !this.applicantFiltersForm.value.country ? (this.applicantFiltersForm.value.country = '') : ('');
         !this.applicantFiltersForm.value.employment_period ? (this.applicantFiltersForm.value.employment_period = '') : ('');
@@ -273,11 +273,11 @@ export class ApplicantsListComponent
     removeFilters() {
         this.page = 1;
         this.applicantFiltersForm.reset();
-        this.applicantFiltersForm.value.state = '';
+        // this.applicantFiltersForm.value.state = '';
         this.applicantFiltersForm.value.created_at = '';
         this.applicantFiltersForm.value.status = '';
         this.applicantFiltersForm.value.ranking = '';
-        this.applicantFiltersForm.value.date = '';
+        // this.applicantFiltersForm.value.date = '';
         this.applicantFiltersForm.value.country = '';
         this.applicantFiltersForm.value.employment_period = '';
 
