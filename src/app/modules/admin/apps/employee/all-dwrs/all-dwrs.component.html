@@ -124,11 +124,10 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Category</mat-label>
                             <mat-select formControlName="category">
-                                <mat-option value="training">Training</mat-option>
-                                <mat-option value="farming">Farming</mat-option>
-                                <mat-option value="maintenance-repair">Maintenance Repair</mat-option>
-                                <mat-option value="other">Other</mat-option>
-
+                                <mat-option [value]="'training'">Training</mat-option>
+                                <mat-option [value]="'farming'">Farming</mat-option>
+                                <mat-option [value]="'maintenance-repair'">Maintenance Repair</mat-option>
+                                <mat-option [value]="'other'">Other</mat-option>
                             </mat-select>
                         </mat-form-field>
 
