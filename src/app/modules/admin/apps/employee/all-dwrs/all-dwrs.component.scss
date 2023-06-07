@@ -1,13 +1,13 @@
 .farm-data-farms {
     grid-template-columns: 35% 45% 45%;
     @screen sm {
-        grid-template-columns: 10% 10% 10% 10% 13% 12% 6% 8% 10%;
+        grid-template-columns: 10% 13% 13% 13% 13% 6% 8% 10%;
     }
     @screen md {
-        grid-template-columns: 10% 10% 10% 10% 13% 12% 6% 8% 10%;
+        grid-template-columns: 10% 13% 13% 13% 13% 6% 8% 10%;
     }
     @screen lg {
-        grid-template-columns: 10% 10% 10% 10% 13% 12% 6% 8% 10%;
+        grid-template-columns: 10% 13% 13% 13% 13% 6% 8% 10%;
     }
 }
 ::ng-deep .mat-form-field-wrapper
