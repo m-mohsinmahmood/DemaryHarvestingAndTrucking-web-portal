@@ -276,13 +276,19 @@
                     </form>
                     <div class="mt-4 flex flex-row justify-evenly items-center">
                         <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                            <button [disabled]="applicantFiltersForm.invalid"
-                                (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                            (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
                                 [color]="'primary'">
                                 <span class="">Apply filters</span>
                             </button>
                         </div>
                         <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                                (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
+                                <span>Remove filters</span>
+                            </button>
+                        </div>
+                        <!-- <div class="w-inherit flex justify-center items-center mt-1 mb-1">
                             <button
                                 [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status || applicantFiltersForm.value.country || applicantFiltersForm.value.employment_period )"
                                 (click)="removeFilters(); filtersDrawer.close()"
@@ -291,7 +297,7 @@
                                     [svgIcon]="'heroicons_outline:x'"></mat-icon>
                                 <span>Remove filters</span>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

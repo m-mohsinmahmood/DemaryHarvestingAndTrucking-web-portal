@@ -69,6 +69,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     removeFilters() {
+        this.dwrFiltersForm.reset();
         this.initApis();
     }
 

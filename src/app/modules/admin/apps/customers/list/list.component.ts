@@ -1,3 +1,8 @@
+/* eslint-disable quotes */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable max-len */
@@ -17,7 +22,7 @@ import {
     FormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime,Observable,Subject,Subscription,takeUntil} from 'rxjs';
+import { debounceTime,Observable,Subject,Subscription,takeUntil,startWith,map} from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { Customers } from 'app/modules/admin/apps/customers/customers.types';
 import { CustomersService } from 'app/modules/admin/apps/customers/customers.service';
@@ -25,6 +30,10 @@ import { AddCustomer } from '../add/add.component';
 import { ImportCustomersComponent } from '../import-customers/import-customers.component';
 import { Router } from '@angular/router';
 import { read, utils, writeFile } from 'xlsx';
+import { states } from './../../../../../../JSON/state';
+import { MatDatepicker } from '@angular/material/datepicker';
+import moment, { Moment } from 'moment';
+import { countryList } from 'JSON/country';
 
 
 @Component({
@@ -47,6 +56,11 @@ export class CustomersListComponent implements OnInit {
     //#endregion
 
     //#region Variables
+    states: string[] = [];
+    created_at: any;
+    countryOptions: Observable<string[]>;
+    countryList: string[] = [];
+    validCountry: boolean = true;
 
     isEdit: boolean = false;
     pageSize = 50;
@@ -79,6 +93,12 @@ export class CustomersListComponent implements OnInit {
         this.initApis();
         this.initFiltersForm();
         this.initObservables();
+        this.countryOptions = this.customerFiltersForm.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCountries(value.country || '')),
+        );
+        this.states = states;
+        this.countryList = countryList;
         localStorage.removeItem("state");
     }
     ngAfterViewInit(): void { }
@@ -90,6 +110,10 @@ export class CustomersListComponent implements OnInit {
     }
     //#endregion
 
+    private _filterCountries(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.countryList.filter(country => country.toLowerCase().includes(filterValue));
+    }
     //#region Init Observables and Apis
     initObservables() {
         this.isLoadingCustomers$ = this._customersService.isLoadingCustomers$;
@@ -153,7 +177,7 @@ export class CustomersListComponent implements OnInit {
     sortData(sort: any) {
         this.page = 1;
         this.sort = sort.active;
-        this.order = sort.direction
+        this.order = sort.direction;
         this._customersService.getCustomers(
             this.page,
             this.limit,
@@ -217,6 +241,21 @@ export class CustomersListComponent implements OnInit {
 
     //#endregion
 
+    //#region Country Form Validation
+    formValidation(e, type) {
+        if (type === "country") {
+            if (this.countryList.includes(e) || e !== '') {
+                this.validCountry = true;
+                this.customerFiltersForm.controls['country'].setErrors(null);
+            }
+            else {
+                this.validCountry = false;
+                this.customerFiltersForm.controls['country'].setErrors({ 'incorrect': true });
+            }
+        }
+    }
+    //#endregion
+
     //#region Filters
     applyFilters() {
         this.page = 1;
@@ -237,7 +276,22 @@ export class CustomersListComponent implements OnInit {
         this.customerFiltersForm = this._formBuilder.group({
             type: [''],
             status: [''],
+            state: [''],
+            created_at: [''],
+            country: [''],
+            position: ['']
         });
+    }
+
+    chosenYearHandler(
+        normalizedYear: Moment,
+        datepicker: MatDatepicker<Moment>
+    ) {
+        const ctrlValue = moment();
+        ctrlValue.year(normalizedYear.year());
+        this.created_at.setValue(ctrlValue.format('YYYY'));
+        this.customerFiltersForm.value.created_at = ctrlValue.format('YYYY');
+        datepicker.close();
     }
     //#endregion
 
