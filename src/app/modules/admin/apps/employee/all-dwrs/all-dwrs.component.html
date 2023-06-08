@@ -69,6 +69,11 @@
                                 </ng-container>
                             </ng-container>
                         </div>
+                        <mat-paginator
+                        class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{ 'pointer-events-none': isLoading }" [length]="employee.count"
+                        [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="pageChanged($event)" [showFirstLastButtons]="true"></mat-paginator>
                     </ng-container>
                 </ng-container>
                 <ng-template #noProducts>

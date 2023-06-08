@@ -68,6 +68,14 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //#endregion
 
+    //#region  Pagination
+    pageChanged(event) {
+        this.page = event.pageIndex + 1;
+        this.pageSize = event.pageSize;
+        this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value,this.page, this.pageSize);
+    }
+    //#endregion
+
     //#region Filters
     applyFilters() {
         //debugger

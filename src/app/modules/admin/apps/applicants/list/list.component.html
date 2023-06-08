@@ -187,7 +187,7 @@
         </div>
     </div>
 </div>
-<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+<!-- <fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
     [name]="'settingsDrawer'" [position]="'right'" #filtersDrawer>
     <div class="flex flex-col w-100 overflow-auto bg-card">
         <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
@@ -201,6 +201,125 @@
         </div>
         <div class="flex flex-col justify-center items-center md:h-screen">
             <div class="md:h-5/6 h-160 w-100">
+                <div class="w-inherit flex flex-col">
+                    <form [formGroup]="applicantFiltersForm" (ngSubmit)="applyFilters()"
+                        class="flex flex-col flex-auto p-6 sm:p-8">
+                        <mat-form-field birthdayFormat appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Date </mat-label>
+                            <input id="date" name="date" formControlName="date" matInput [matDatepicker]="picker4">
+                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                            <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Select Employment period</mat-label>
+                            <mat-select matNativeControl formControlName="employment_period">
+                                <mat-option value="March 15th, 2023 to January 15th, 2024">March 15th, 2023 to January
+                                    15th, 2024 </mat-option>
+                                <mat-option value="July 1st,2023 to January 15th, 2024">July 1st,2023 to January 15th,
+                                    2024</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-full">
+                            <mat-label>Country</mat-label>
+                            <input (ngModelChange)="formValidation($event,'country')" type="text" aria-label="country"
+                                matInput formControlName="country" [matAutocomplete]="country">
+                            <mat-autocomplete #country="matAutocomplete">
+                                <mat-option *ngFor="let country of countryOptions | async" [value]="country">
+                                    {{country}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint class="flex flex-col">
+                                <span *ngIf="!validCountry" class="text-md uppercase text-red-500"> Select Country from
+                                    given list only </span>
+                            </mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select Ranking</mat-label>
+                            <mat-select formControlName="ranking">
+                                <mat-option value="first_ranking">
+                                    < 30%</mat-option>
+                                        <mat-option value="second_ranking"> 30% - 70% </mat-option>
+                                        <mat-option value="third_ranking"> > 70%</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value="Preliminary Review">Preliminary Review</mat-option>
+                                <mat-option value="First Interview Completed">First Interview Completed</mat-option>
+                                <mat-option value="Second Interview Completed">Second Interview Completed</mat-option>
+                                <mat-option value="Reference Call Completed">Reference Call Completed</mat-option>
+                                <mat-option value="Third Interview Completed">Third Interview Completed</mat-option>
+                                <mat-option value="Recruiter Decision Made">Recruiter Decision Made</mat-option>
+                                <mat-option value="Offer Made">Offer Made</mat-option>
+                                <mat-option value="Offer Accepted">Offer Accepted</mat-option>
+                                <mat-option value="Results">Hired</mat-option>
+                                <mat-option value="Waitlisted">Waitlisted</mat-option>
+                                <mat-option value="Qualifications dont match current openings">Qualifications dont match
+                                    current openings</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Select State</mat-label>
+                            <mat-select formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="cat mx-1 mt-2 w-full">
+                            <mat-label>Year</mat-label>
+                            <input readonly matInput [matDatepicker]="dp" placeholder="Year" [formControl]="created_at">
+                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event, dp)"
+                                panelClass="example-month-picker">
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </form>
+                    <div class="mt-4 flex flex-row justify-evenly items-center">
+                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                            (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                                [color]="'primary'">
+                                <span class="">Apply filters</span>
+                            </button>
+                        </div>
+                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                                (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
+                                <span>Remove filters</span>
+                            </button>
+                        </div>
+                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                            <button
+                                [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status || applicantFiltersForm.value.country || applicantFiltersForm.value.employment_period )"
+                                (click)="removeFilters(); filtersDrawer.close()"
+                                class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
+                                <mat-icon class="m-0 icon-size-4" color="warn"
+                                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                <span>Remove filters</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</fuse-drawer> -->
+<!-- Filters -->
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+    [name]="'filtersDrawer'" [position]="'right'" #filtersDrawer>
+    <div class="flex flex-col w-100 overflow-auto bg-card">
+        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+            <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
+            </div>
+            <button class="ml-auto" mat-icon-button mat-icon-button (click)="filtersDrawer.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center items-center h-screen">
+            <div class="h-5/6 w-96">
                 <div class="w-inherit flex flex-col">
                     <form [formGroup]="applicantFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
@@ -273,35 +392,25 @@
                                 panelClass="example-month-picker">
                             </mat-datepicker>
                         </mat-form-field>
+
                     </form>
-                    <div class="mt-4 flex flex-row justify-evenly items-center">
-                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
-                            (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
-                                [color]="'primary'">
-                                <span class="">Apply filters</span>
-                            </button>
-                        </div>
-                        <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                            <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
-                                (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
-                                <span>Remove filters</span>
-                            </button>
-                        </div>
-                        <!-- <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                            <button
-                                [disabled]="!(applicantFiltersForm.value.state || applicantFiltersForm.value.created_at || applicantFiltersForm.value.date || applicantFiltersForm.value.ranking || applicantFiltersForm.value.status || applicantFiltersForm.value.country || applicantFiltersForm.value.employment_period )"
-                                (click)="removeFilters(); filtersDrawer.close()"
-                                class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                                <mat-icon class="m-0 icon-size-4" color="warn"
-                                    [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                                <span>Remove filters</span>
-                            </button>
-                        </div> -->
-                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                    (click)="applyFilters(); filtersDrawer.close()" class="" mat-flat-button
+                        [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
+                </div>
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="!applicantFiltersForm.value.state && !applicantFiltersForm.value.created_at && !applicantFiltersForm.value.date && !applicantFiltersForm.value.ranking && !applicantFiltersForm.value.status && !applicantFiltersForm.value.country && !applicantFiltersForm.value.employment_period || applicantFiltersForm.invalid"
+                        (click)="removeFilters(); filtersDrawer.close()" mat-flat-button [color]="'warn'">
+                        <span>Remove filters</span>
+                    </button>
                 </div>
             </div>
         </div>
-
     </div>
 </fuse-drawer>
