@@ -62,6 +62,8 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initObservables();
     this.initApis();
     this.employeeSearchSubscription();
+    this.states = states;
+
     console.log("All Employee", this.allDwrsList$)
     // this.generateDateRange();
   }
@@ -229,9 +231,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.totalWages = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const payroll of data?.final_wages) {
-        for (const state of payroll?.result?.state_details) {
-          this.totalWages += parseFloat(state.state_wage);
-        }
+        if(payroll.result.total_wages)
+          this.totalWages += parseFloat(payroll.result.total_wages);
+
       }
 
     });
@@ -243,8 +245,10 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.totalHours = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const payroll of data?.final_wages) {
-        for (const state of payroll?.result?.state_details) {
-          this.totalHours += parseFloat(state.state_hours);
+        if(payroll.result?.total_hours)
+        {
+          this.totalHours += parseFloat(payroll.result?.total_hours);
+
         }
       }
 
