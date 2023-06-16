@@ -577,6 +577,20 @@ export class EmployeeService {
                 }
             );
     }
+
+
+    getAllEmployeesDropDown(search: string = '', entity: string = '', role: string = '') {
+        this._httpClient;
+        let params = new HttpParams();
+        params = params.set('entity', entity);
+        params = params.set('role', role);
+        params = params.set('search', search);
+          return this._httpClient
+            .get<any>('api-1/dropdowns', {
+              params,
+            })
+            .pipe(take(1));
+        }
     //#endregion
 
 }
