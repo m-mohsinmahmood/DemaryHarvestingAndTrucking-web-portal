@@ -22,6 +22,10 @@
                                 *ngIf="!dwrFiltersForm.value.beginning_date && !dwrFiltersForm.value.ending_date && !dwrFiltersForm.value.name && !dwrFiltersForm.value.category && !dwrFiltersForm.value.supervisor_name && !dwrFiltersForm.value.state"
                                 [svgIcon]="'heroicons_outline:filter'"></mat-icon>
                         </button>
+                        <button class="flex flex-row justify-center items-center" (click)="exportToExcel()" >
+                            <mat-icon>download</mat-icon>
+                            <span>Export</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -61,9 +65,9 @@
                                     found' }}</div>
                                 <div class="break-normal hidden sm:block">{{getStateList(payroll.result.state_details)}}
                                 </div>
-                                <div class="truncate">{{payroll.result.total_hours}}</div>
-                                <div class="truncate hidden sm:block">${{payroll.result.hourly_rates?.join(', ')}}</div>
-                                <div class="truncate hidden sm:block">${{payroll.result.total_wages}}</div>
+                                <div class="break-normal">{{payroll.result.total_hours}}</div>
+                                <div class="break-normal hidden sm:block">${{payroll.result.hourly_rates?.join(', ')}}</div>
+                                <div class="break-normal hidden sm:block">${{payroll.result.total_wages}}</div>
 
                             </div>
                         </div>
@@ -72,22 +76,14 @@
                     </ng-container>
                 </ng-container>
                 <div>
-                    <div class="flex flex-col float-right sm:mr-8  py-2 items-end pr-20">
+                    <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
                         <mat-label class="w-2/12 border-2 font-bold p-6">Total Hours:
                             {{calculateTotalHours().toFixed(2)}}</mat-label>
+                            <mat-label class="w-2/12 border-2 font-bold p-6">Total Wages:
+                                ${{calculateTotalWages().toFixed(2)}}</mat-label>
                     </div>
 
-                    <div class="flex flex-col float-right sm:mr-8  py-2 items-end pr-20">
-                        <mat-label class="w-2/12 border-2 font-bold p-6">Total Wages:
-                            ${{calculateTotalWages().toFixed(2)}}</mat-label>
-                    </div>
                 </div>
-
-
-                <mat-paginator class="sm:inset-x-0 border-b sm:border-t border-b z-10 bg-gray-50 dark:bg-transparent"
-                    [ngClass]="{ 'pointer-events-none': isLoading }" [length]="employee.count" [pageIndex]="page - 1"
-                    [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)"
-                    [showFirstLastButtons]="true"></mat-paginator>
 
                 <ng-template #noProducts>
                     <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
@@ -147,7 +143,13 @@
         <div class="flex flex-auto overflow-hidden">
             <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                 <!-- Title -->
+                <div class="flex flex-row justify-between">
                 <div class="pl-8 text-2xl font-extrabold tracking-tight">Top 10 Wages</div>
+                <button class="pr-20 flex flex-row justify-center items-center" (click)="exportTopTenDataExcel()" >
+                    <mat-icon>download</mat-icon>
+                    <span>Export</span>
+                </button>
+            </div>
                 <!-- Testing All wages -->
                 <ng-container>
                     <ng-container>
@@ -176,6 +178,18 @@
                             <div class="truncate">{{payroll.employee_name}}</div>
                             <div class="truncate">{{payroll.hours_worked}}</div>
                             <div class="truncate hidden sm:block">${{payroll.wages}}</div>
+                            <div class="truncate"></div>
+                            <div class="truncate hidden sm:block"></div>
+                            <div class="truncate hidden sm:block"></div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
+                    <ng-container>
+                        <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                            <div class="truncate font-extrabold">Total = </div>
+                            <div class="truncate font-extrabold">{{calculateTopTenTotalHours().toFixed(2)}}</div>
+                            <div class="truncate font-extrabold">${{calculateTopTenWagesTotal().toFixed(2)}}</div>
                             <div class="truncate"></div>
                             <div class="truncate hidden sm:block"></div>
                             <div class="truncate hidden sm:block"></div>
@@ -216,14 +230,15 @@
                         class="flex flex-col flex-auto p-6 sm:p-8">
                         <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
                             <mat-form-field appearance="outline">
-                                <mat-label>Name</mat-label>
-
-                                <input (ngModelChange)="formValidation($event)" (click)="getallEmployees()"
-                                    [matAutocomplete]="employeesMenu"
-                                    (keyup)="employee_search$.next($event.target.value)" matInput formControlName="name" name="first_name"
-                                     placeholder="Employee Name"  />
-                            </mat-form-field>
-
+                                <mat-label>Employee Name</mat-label>
+                                <input (ngModelChange)="formValidation($event)" (input)="getallEmployees()"
+                                       (keyup)="employee_search$.next($event.target.value)"
+                                       (click)="getallEmployees()"
+                                       [matAutocomplete]="employeesMenu"
+                                       matInput formControlName="name" name="first_name"
+                                       placeholder="Employee Name" />
+                              </mat-form-field>
+                              
 
 
                             <mat-autocomplete #employeesMenu="matAutocomplete"
@@ -272,7 +287,9 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Supervisor</mat-label>
-                            <input (ngModelChange)="formValidation($event)" (click)="getallSupervisor()"
+                            <input (ngModelChange)="formValidation($event)" 
+                            (input)="getallSupervisor()"
+                            (click)="getallSupervisor()"
                                     [matAutocomplete]="supervisorList"
                                     (keyup)="supervisor_search$.next($event.target.value)" matInput formControlName="supervisor_name" name="first_name"
                                      placeholder="Supervisor Name" />
@@ -304,7 +321,7 @@
                             </mat-autocomplete>
 
 
-                        <mat-form-field appearance="outline">
+                        <!-- <mat-form-field appearance="outline">
                             <mat-label>Category</mat-label>
                             <mat-select formControlName="category">
                                 <mat-option [value]="'training'">Training</mat-option>
@@ -312,7 +329,7 @@
                                 <mat-option [value]="'maintenance-repair'">Maintenance Repair</mat-option>
                                 <mat-option [value]="'other'">Other</mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
                     </form>
                 </div>

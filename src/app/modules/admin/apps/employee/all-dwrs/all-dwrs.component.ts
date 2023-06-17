@@ -13,6 +13,9 @@ import { Observable, Subject, debounceTime, distinctUntilChanged, takeUntil } fr
 import moment from 'moment';
 import { states } from './../../../../../../JSON/state';
 import { formatDate } from '@angular/common';
+import { utils, writeFile } from 'xlsx';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-all-dwrs',
@@ -31,7 +34,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 500];
   dwrFiltersForm: FormGroup;
   totalWages: number = 0; // Variable to store the total wages
+  topTenWages: number = 0; // Variable to store the total wages
   totalHours: number = 0;
+  topTenWorkingHours: number = 0;
   wagesObj;
   employeeTotalWage: number = 0;
   dateRangeArray: any[] = [];
@@ -82,7 +87,6 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.employee_search$
       .pipe(
-        debounceTime(500),
         distinctUntilChanged(),
         takeUntil(this._unsubscribeAll)
       )
@@ -257,6 +261,39 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.totalHours;
   }
 
+  calculateTopTenTotalHours(): number {
+    this.topTenWorkingHours = 0; // Reset the total wages
+    this.allDwrsList$.subscribe(data => {
+      for (const hoursWorked of data?.top_ten_wages) {
+        if(hoursWorked.hours_worked)
+        {
+          this.topTenWorkingHours += parseFloat(hoursWorked.hours_worked);
+
+        }
+      }
+
+    });
+
+    return this.topTenWorkingHours;
+  }
+
+
+  calculateTopTenWagesTotal(): number {
+    this.topTenWages = 0; // Reset the total wages
+    this.allDwrsList$.subscribe(data => {
+      for (const wage of data?.top_ten_wages) {
+        if(wage.wages)
+          this.topTenWages += parseFloat(wage.wages);
+
+      }
+
+    });
+
+    return this.topTenWages;
+  }
+
+
+
   generateDateRange(): void {
     const currentDate = new Date();
 
@@ -273,6 +310,118 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   public getStateList(stateDetails: any[]): string {
     return stateDetails.map(item => item.state).join(', ');
   }
+
+
+  exportToExcel(): void {
+    const wb = XLSX.utils.book_new();
+  
+    this.allDwrsList$.subscribe((val) => {
+      const employee = val;
+  
+      // Prepare data for export
+      const data = [];
+      const headerRow = [
+        'Employee Name',
+        'Supervisors',
+        'State Details',
+        'Total Hours',
+        'Hourly Rates',
+        'Total Wages'
+      ];
+      data.push(headerRow);
+  
+      employee?.final_wages.forEach((payroll) => {
+        const row = [
+          payroll.result.employee_name,
+          payroll.result.supervisors?.join(', ') || 'No supervisors found',
+          this.getStateList(payroll.result.state_details),
+          payroll.result.total_hours,
+          payroll.result.hourly_rates?.join(', '),
+          payroll.result.total_wages
+        ];
+        data.push(row);
+      });
+  
+      // Calculate total hours and total wages
+      const totalHours = this.calculateTotalHours().toFixed(2);
+      const totalWages = this.calculateTotalWages().toFixed(2);
+  
+      // Add totals row
+      const totalsRow = ['', '', '', "Total Hours: " + totalHours, '', "Total Wages: " + totalWages];
+      data.push(totalsRow);
+  
+      // Create the worksheet
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wsName = 'DWR Data';
+  
+      // Add the worksheet to the workbook
+      XLSX.utils.book_append_sheet(wb, ws, wsName);
+  
+      // Generate the Excel file and save it
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const date = new Date().toISOString().slice(0, 10);
+      const filename = `dwr_data_${date}.xlsx`;
+      const file = new Blob([wbout], { type: 'application/octet-stream' });
+      saveAs(file, filename);
+    });
+  }
+  
+
+  exportTopTenDataExcel(): void {
+      const wb = XLSX.utils.book_new();
+    
+      this.allDwrsList$.subscribe((val) => {
+        const employee = val;
+    
+        // Prepare data for export
+        const data = [];
+        const headerRow = [
+          'Employee Name',
+          'Total Hours Worked',
+          'Total Wages'
+        ];
+        data.push(headerRow);
+    
+        employee?.top_ten_wages.forEach((payroll) => {
+          const row = [
+            payroll.employee_name,
+            payroll.hours_worked,
+            payroll.wages
+          ];
+          data.push(row);
+        });
+    
+        // Calculate total hours and total wages
+        const totalHours = this.calculateTopTenTotalHours().toFixed(2);
+        const totalWages = this.calculateTopTenWagesTotal().toFixed(2);
+    
+        // Add totals row
+        const totalsRow = ['Total =', totalHours, totalWages];
+        data.push(totalsRow);
+    
+        // Create the worksheet
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wsName = 'Top Ten Wages Data';
+    
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, wsName);
+    
+        // Generate the Excel file and save it
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const date = new Date().toISOString().slice(0, 10);
+        const filename = `top_ten_wages_data_${date}.xlsx`;
+        const file = new Blob([wbout], { type: 'application/octet-stream' });
+        saveAs(file, filename);
+      });
+    
+    
+  }
+
+  
+  
+  
+  
+
 
 
   //#endregion

@@ -578,6 +578,24 @@ export class EmployeeService {
             );
     }
 
+    getAllDwrListExport(operation,
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state:'' },page: number = 1, limit: number = 200) {
+        let params = new HttpParams();
+        params = params.set('operation', operation);
+        params = params.set('beginning_date', filters.beginning_date);
+        params = params.set('ending_date', filters.ending_date);
+        params = params.set('category', filters.category);
+        params = params.set('supervisor_name', filters.supervisor_name);
+        params = params.set('name', filters.name);
+        params = params.set('state', filters.state);
+        params = params.set('page', page);
+        params = params.set('limit', limit);
+
+        return this._httpClient
+            .get(`api-1/employee-payroll` , {params})
+            .pipe(take(1))
+    }
+
 
     getAllEmployeesDropDown(search: string = '', entity: string = '', role: string = '') {
         this._httpClient;
