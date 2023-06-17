@@ -550,7 +550,8 @@ export class EmployeeService {
 
     //#region Dwr List
     getDwrList(operation,
-        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state:'' },page: number = 1, limit: number = 200) {
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state:'' },page: number = 1, limit: number = 200, sort: string = '',
+        order: 'asc' | 'desc' | '' = '') {
         let params = new HttpParams();
         params = params.set('operation', operation);
         params = params.set('beginning_date', filters.beginning_date);
@@ -561,6 +562,9 @@ export class EmployeeService {
         params = params.set('state', filters.state);
         params = params.set('page', page);
         params = params.set('limit', limit);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+
 
         return this._httpClient
             .get(`api-1/employee-payroll` , {params})

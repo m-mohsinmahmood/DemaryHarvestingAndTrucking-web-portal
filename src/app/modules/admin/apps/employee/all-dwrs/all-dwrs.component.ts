@@ -31,6 +31,10 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   states: string[] = [];
   page: number = 1;
   pageSize = 200;
+  sort: any;
+  order: any;
+  limit: number;
+
   pageSizeOptions: number[] = [50, 100, 150, 200, 250, 300, 350, 500];
   dwrFiltersForm: FormGroup;
   totalWages: number = 0; // Variable to store the total wages
@@ -419,12 +423,27 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   
   
-  
-  
-
-
-
   //#endregion
+
+
+
+  //#region Sort Function
+  sortData(sort: any) {
+    this.page = 1;
+    this.sort = sort.active;
+    this.order = sort.direction;
+    this._employeeService.getDwrList(
+        'dwrList',
+        this.dwrFiltersForm.value,
+        this.page,
+        this.limit,
+        sort.active,
+        sort.direction,
+
+    );
+}
+//#endregion
+
 }
 
 
