@@ -16,6 +16,7 @@ import { formatDate } from '@angular/common';
 import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-all-dwrs',
@@ -31,7 +32,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   states: string[] = [];
   page: number = 1;
   pageSize = 200;
-  sort: any;
+  sort: MatSort = new MatSort();
   order: any;
   limit: number;
 
@@ -49,6 +50,8 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   employee_search$ = new Subject();
   supervisor_search$ = new Subject();
   formValid: boolean;
+  lastSortDirection: string;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -79,12 +82,13 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getallEmployees() {
     let value;
-    typeof this.dwrFiltersForm.controls['name'].value === 'object' ? (value = this.dwrFiltersForm.controls['name'].value.name) : (value = this.dwrFiltersForm.controls['name'].value);
+    typeof this.dwrFiltersForm.controls['employee_id'].value === 'object' ? (value = this.dwrFiltersForm.controls['employee_id'].value?.name) : value = this.dwrFiltersForm.controls['employee_id'].value;
+    !value ? value = '' : '';
     this.allEmployeesList = this._employeeService.getAllEmployeesDropDown(value, 'allEmployees', '');
   }
   //#region Auto Complete Crops Display Function
   displayEmployeeForAutoComplete(employees: any) {
-    return employees ? `${employees}` : undefined;
+    return employees ? `${employees.first_name} ${employees.last_name}` : undefined;
   }
 
   employeeSearchSubscription() {
@@ -105,12 +109,14 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getallSupervisor() {
     let value;
-    typeof this.dwrFiltersForm.controls['supervisor_name'].value === 'object' ? (value = this.dwrFiltersForm.controls['supervisor_name'].value.name) : (value = this.dwrFiltersForm.controls['supervisor_name'].value);
-    this.allSupervisorsList = this._employeeService.getAllEmployeesDropDown(value, 'allSupervisors', '');
+    typeof this.dwrFiltersForm.controls['supervisor_id'].value === 'object' ? (value = this.dwrFiltersForm.controls['supervisor_id'].value?.name) : value = this.dwrFiltersForm.controls['supervisor_id'].value;
+    !value ? value = '' : '';
+    this.allSupervisorsList = this._employeeService.getAllEmployeesDropDown(value, 'allSupervisors', ''); 
+    // this.allSupervisorsList.subscribe((val)=>console.log(val));
   }
 
   displaySupervisorForAutoComplete(supervisor: any) {
-    return supervisor ? `${supervisor}` : undefined;
+    return supervisor ? `${supervisor.first_name} ${supervisor.last_name}` : undefined;
   }
   supervisorSearchSubscription() {
 
@@ -164,7 +170,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //#region Filters
   applyFilters() {
-    //debugger
+    
+    this.dwrFiltersForm.value['supervisor_id'] = this.dwrFiltersForm.value['supervisor_id']?.id != undefined ? this.dwrFiltersForm.value['supervisor_id']?.id : "";
+    this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id']?.id != undefined ? this.dwrFiltersForm.value['employee_id']?.id : "";
     if (this.dwrFiltersForm.get('ending_date').value !== null) {
       if (this.dwrFiltersForm.value.beginning_date) {
         this.dwrFiltersForm.controls['beginning_date'].patchValue(moment(this.dwrFiltersForm.value.beginning_date).format('YYYY-MM-DD'));
@@ -173,24 +181,26 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dwrFiltersForm.controls['ending_date'].patchValue(moment(this.dwrFiltersForm.value.ending_date).format('YYYY-MM-DD'));
       }
     }
-    !this.dwrFiltersForm.value.name ? (this.dwrFiltersForm.value.name = '') : ('');
+    !this.dwrFiltersForm.value.status ? (this.dwrFiltersForm.value.status = '') : ('');
     !this.dwrFiltersForm.value.state ? (this.dwrFiltersForm.value.state = '') : ('');
     !this.dwrFiltersForm.value.beginning_date ? (this.dwrFiltersForm.value.beginning_date = '') : ('');
     !this.dwrFiltersForm.value.ending_date ? (this.dwrFiltersForm.value.ending_date = '') : ('');
-    !this.dwrFiltersForm.value.supervisor_name ? (this.dwrFiltersForm.value.supervisor_name = '') : ('');
-    !this.dwrFiltersForm.value.category ? (this.dwrFiltersForm.value.category = '') : ('');
+    !this.dwrFiltersForm.value.supervisor_id ? (this.dwrFiltersForm.value.supervisor_id = '') : ('');
+    !this.dwrFiltersForm.value.employee_id ? (this.dwrFiltersForm.value.employee_id = '') : ('');
+    // !this.dwrFiltersForm.value.category ? (this.dwrFiltersForm.value.category = '') : ('');
     this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
 
   }
 
   removeFilters() {
     this.dwrFiltersForm.reset();
-    this.dwrFiltersForm.value.name = '';
+    this.dwrFiltersForm.value.status = '';
     this.dwrFiltersForm.value.state = '';
     this.dwrFiltersForm.value.beginning_date = '';
     this.dwrFiltersForm.value.ending_date = '';
-    this.dwrFiltersForm.value.supervisor_name = '';
-    this.dwrFiltersForm.value.category = '';
+    this.dwrFiltersForm.value.supervisor_id = '';
+    this.dwrFiltersForm.value.employee_id = '';
+    // this.dwrFiltersForm.value.category = '';
     this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
   }
 
@@ -202,6 +212,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       ending_date: [''],
       supervisor_name: [''],
       category: [''],
+      supervisor_id:[''],
+      employee_id:[''],
+      status:['']
     });
   }
 
@@ -428,20 +441,26 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   //#region Sort Function
-  sortData(sort: any) {
+  sortData(event: Sort) {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  
     this.page = 1;
-    this.sort = sort.active;
-    this.order = sort.direction;
+    
+    console.log(this.sortDirection);
+    
     this._employeeService.getDwrList(
-        'dwrList',
-        this.dwrFiltersForm.value,
-        this.page,
-        this.limit,
-        sort.active,
-        sort.direction,
-
+      'dwrList',
+      this.dwrFiltersForm.value,
+      this.page,
+      this.limit,
+      event.active,
+      this.sortDirection
     );
-}
+    
+    this.sort.active = event.active;
+    this.sort.direction = this.sortDirection;
+  }
+  
 //#endregion
 
 }

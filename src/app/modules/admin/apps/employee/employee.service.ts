@@ -550,7 +550,7 @@ export class EmployeeService {
 
     //#region Dwr List
     getDwrList(operation,
-        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state:'' },page: number = 1, limit: number = 200, sort: string = '',
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', status: '', state:'', supervisor_id:'', employee_id:'' },page: number = 1, limit: number = 200, sort: string = '',
         order: 'asc' | 'desc' | '' = '') {
         let params = new HttpParams();
         params = params.set('operation', operation);
@@ -558,7 +558,9 @@ export class EmployeeService {
         params = params.set('ending_date', filters.ending_date);
         params = params.set('category', filters.category);
         params = params.set('supervisor_name', filters.supervisor_name);
-        params = params.set('name', filters.name);
+        params = params.set('supervisor_id', filters.supervisor_id);
+        params = params.set('employee_id', filters.employee_id);
+        params = params.set('status', filters.status);
         params = params.set('state', filters.state);
         params = params.set('page', page);
         params = params.set('limit', limit);
