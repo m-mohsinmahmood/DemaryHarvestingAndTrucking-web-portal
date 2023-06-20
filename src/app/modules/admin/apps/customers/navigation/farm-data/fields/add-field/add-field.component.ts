@@ -105,7 +105,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
                 }
             });
     }
-    AfterViewInit(): void { }
+    ngAfterViewInit(): void { }
 
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
@@ -128,7 +128,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
             fieldFormGroup.push(
                 this._formBuilder.group({
                     name: ['All Fields',[Validators.required]],
-                    acres: ['', [Validators.required]],
+                    acres: [0],
                     calendar_year: [moment()],
                     status: ['', [Validators.required]]
 
@@ -187,7 +187,7 @@ export class AddFieldComponent implements OnInit, OnDestroy {
     addField(): void {
         const fieldGroup = this._formBuilder.group({
             name: ['All Fields',[Validators.required]],
-            acres: ['',[Validators.required]],
+            acres: [0],
             calendar_year: [moment()],
             status: ['',[Validators.required]]
         });
