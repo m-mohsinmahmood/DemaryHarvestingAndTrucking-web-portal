@@ -460,6 +460,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sort.active = event.active;
     this.sort.direction = this.sortDirection;
   }
+  wagesToFloat(wages:any){
+    return parseFloat(wages).toFixed(2);
+  }
   
 //#endregion
 
