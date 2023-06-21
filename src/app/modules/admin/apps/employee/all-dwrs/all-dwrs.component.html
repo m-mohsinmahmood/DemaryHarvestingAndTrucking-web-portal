@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="break-normal">{{payroll.result.total_hours}}</div>
                                 <div class="break-normal hidden sm:block">${{payroll.result.hourly_rates?.join(', ')}}</div>
-                                <div class="break-normal hidden sm:block">${{payroll.result.total_wages.toFixed(2)}}</div>
+                                <div class="break-normal hidden sm:block">${{ toDecimalPoint(payroll.result.total_wages.toFixed(2))}}</div>
 
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                         <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
                             {{calculateTotalHours().toFixed(2)}}</mat-label>
                             <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
-                                ${{calculateTotalWages().toFixed(2)}}</mat-label>
+                                ${{calculateTotalWages()}}</mat-label>
                     </div>
 
                 </div>
@@ -149,7 +149,7 @@
                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                             <div class="truncate font-extrabold">Total = </div>
                             <div class="truncate font-extrabold">{{calculateTopTenTotalHours().toFixed(2)}}</div>
-                            <div class="truncate font-extrabold">${{calculateTopTenWagesTotal().toFixed(2)}}</div>
+                            <div class="truncate font-extrabold">${{calculateTopTenWagesTotal()}}</div>
                             <div class="truncate"></div>
                             <div class="truncate hidden sm:block"></div>
                             <div class="truncate hidden sm:block"></div>

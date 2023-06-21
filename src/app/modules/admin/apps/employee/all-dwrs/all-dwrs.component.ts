@@ -12,7 +12,7 @@ import { EmployeeService } from '../employee.service';
 import { Observable, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import moment from 'moment';
 import { states } from './../../../../../../JSON/state';
-import { formatDate } from '@angular/common';
+import { CurrencyPipe, formatDate } from '@angular/common';
 import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -161,18 +161,18 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   //#endregion
 
   //#region  Pagination
-  pageChanged(event) {
-    this.page = event.pageIndex + 1;
-    this.pageSize = event.pageSize;
-    this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value, this.page, this.pageSize);
-  }
+  // pageChanged(event) {
+  //   this.page = event.pageIndex + 1;
+  //   this.pageSize = event.pageSize;
+  //   this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value, this.page, this.pageSize);
+  // }
   //#endregion
 
   //#region Filters
   applyFilters() {
-    
     this.dwrFiltersForm.value['supervisor_id'] = this.dwrFiltersForm.value['supervisor_id']?.id != undefined ? this.dwrFiltersForm.value['supervisor_id']?.id : "";
-    this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id']?.id != undefined ? this.dwrFiltersForm.value['employee_id']?.id : "";
+    this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id']?.id != undefined ? this.dwrFiltersForm.value['employee_id']?.id : this.dwrFiltersForm.value['employee_id'].id;
+
     if (this.dwrFiltersForm.get('ending_date').value !== null) {
       if (this.dwrFiltersForm.value.beginning_date) {
         this.dwrFiltersForm.controls['beginning_date'].patchValue(moment(this.dwrFiltersForm.value.beginning_date).format('YYYY-MM-DD'));
@@ -188,6 +188,16 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     !this.dwrFiltersForm.value.supervisor_id ? (this.dwrFiltersForm.value.supervisor_id = '') : ('');
     !this.dwrFiltersForm.value.employee_id ? (this.dwrFiltersForm.value.employee_id = '') : ('');
     // !this.dwrFiltersForm.value.category ? (this.dwrFiltersForm.value.category = '') : ('');
+    if(this.dwrFiltersForm.value['employee_id'].toString() === "[object Object]"){
+      this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id'].id
+
+    }
+
+    if(this.dwrFiltersForm.value['supervisor_id'].toString() === "[object Object]"){
+      this.dwrFiltersForm.value['supervisor_id'] = this.dwrFiltersForm.value['supervisor_id'].id
+
+    }
+
     this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
 
   }
@@ -259,7 +269,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     });
 
-    return this.totalWages;
+    return this.toDecimalPoint(this.totalWages.toFixed(2));
   }
 
   calculateTotalHours(): number {
@@ -306,7 +316,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     });
 
-    return this.topTenWages;
+    return this.toDecimalPoint(this.topTenWages.toFixed(2));
   }
 
 
@@ -354,14 +364,14 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.getStateList(payroll.result.state_details),
           payroll.result.total_hours,
           payroll.result.hourly_rates?.join(', '),
-          payroll.result.total_wages
+          this.toDecimalPoint(payroll.result.total_wages.toFixed(2))
         ];
         data.push(row);
       });
   
       // Calculate total hours and total wages
       const totalHours = this.calculateTotalHours().toFixed(2);
-      const totalWages = this.calculateTotalWages().toFixed(2);
+      const totalWages = this.calculateTotalWages();
   
       // Add totals row
       const totalsRow = ['', '', '', "Total Hours: " + totalHours, '', "Total Wages: " + totalWages];
@@ -403,14 +413,14 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           const row = [
             payroll.employee_name,
             payroll.hours_worked,
-            payroll.wages
+            this.wagesToFloat(payroll.wages)
           ];
           data.push(row);
         });
     
         // Calculate total hours and total wages
         const totalHours = this.calculateTopTenTotalHours().toFixed(2);
-        const totalWages = this.calculateTopTenWagesTotal().toFixed(2);
+        const totalWages = this.calculateTopTenWagesTotal();
     
         // Add totals row
         const totalsRow = ['Total =', totalHours, totalWages];
@@ -462,6 +472,12 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   wagesToFloat(wages:any){
     return parseFloat(wages).toFixed(2);
+  }
+
+  toDecimalPoint(number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
   }
   
 //#endregion
