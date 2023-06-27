@@ -169,8 +169,8 @@ export class ApplicantsListComponent
             ranking: [''],
             status: [''],
             created_at: [''],
-            // date: [''],
-            // state: [''],
+            date: [''],
+            state: [''],
         });
     }
 
