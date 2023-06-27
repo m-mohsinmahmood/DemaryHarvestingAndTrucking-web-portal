@@ -11,6 +11,9 @@ import { customerFilters } from '../../customers.types';
 import { Customers } from '../../customers.types';
 import { EditTruckingJobComponent } from './edit-trucking-job/edit-trucking-job.component';
 import { EditFarmingJobComponent } from './edit-farming-job/edit-farming-job.component';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-job-result',
@@ -297,6 +300,63 @@ editFarmingJob(data: any, id:any)
 });
 dialogRef.afterClosed().subscribe((result) => {});
 }
+
+exportToExcel() {
+  // Subscribe to the observable to get the data
+  this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
+    // Access the harvestingJobs and details from the customHarvestingJobs object
+    const harvestingJobs = customHarvestingJobs.harvestingJobs;
+    const details = customHarvestingJobs.details[0];
+
+    // Create a new workbook
+    var workbook = XLSX.utils.book_new();
+
+    // Create the summary tab
+    var summaryWorksheet = XLSX.utils.aoa_to_sheet([
+      ["Total Net Pounds", details?.total_net_pounds || "N/A"],
+      ["Total Tons", details?.total_net_pounds ? details?.total_net_pounds / 2000 : "N/A"],
+      ["Tons per Acre", details?.total_net_pounds / details?.total_acres || "N/A"],
+      ["Total Bushels", details?.total_net_bushels || "N/A"],
+      ["Bushels per Acre", details?.total_net_bushels / details?.total_acres || "N/A"],
+      ["Total Hundred Weight", details?.total_net_pounds ? details?.total_net_pounds / 100 : "N/A"],
+      ["DHT Total Loaded Miles", details?.total_loaded_miles || "N/A"],
+      ["DHT Average Miles", details?.total_loaded_miles / details?.total_tickets || "N/A"],
+      ["Total Loads", harvestingJobs.total_loads || "N/A"],
+      ["DHT Tickets", details?.total_tickets || "N/A"],
+      ["Farmer Tickets", "1234"],
+      ["Company", details?.company_name || "N/A"]
+    ]);
+
+    // Create a new worksheet and add the headers and rows for harvestingJobs
+    var jobResultsHeaders = ["Field Name", "Load Date", "Destination", "ID", "Net Pounds", "Net Bushel", "Load Miles", "Status"];
+    var jobResultsData = harvestingJobs.map(function(harvestingJob) {
+      var rowData = [
+        harvestingJob.field_name,
+        new Date(harvestingJob.load_date).toLocaleDateString("en-GB"),
+        harvestingJob.destination,
+        harvestingJob.id,
+        harvestingJob.net_pounds,
+        harvestingJob.net_bushel,
+        harvestingJob.load_miles,
+        harvestingJob.status
+      ];
+      return rowData;
+    });
+    var worksheet = XLSX.utils.aoa_to_sheet([jobResultsHeaders, ...jobResultsData]);
+
+    // Add the summary tab to the workbook
+    XLSX.utils.book_append_sheet(workbook, summaryWorksheet, 'Summary');
+
+    // Add the data tab to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Job Results');
+
+    // Export the workbook to an Excel file
+    var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'JobResults.xlsx');
+  });
+}
+
+
 
 }
 
