@@ -31,6 +31,17 @@ export class JobResultComponent implements OnInit {
   farm_search$ = new Subject();
   //#endregion
 
+ //#region Auto Complete Farms
+ allDestinations: Observable<any>;
+ destination_search$ = new Subject();
+ //#endregion
+
+  //#region Auto Complete fields
+  allFields: Observable<any>;
+  field_search$ = new Subject();
+  //#endregion
+
+
   //#region Auto Complete Farms
   allCrops: Observable<any>;
   crop_search$ = new Subject();
@@ -42,6 +53,8 @@ export class JobResultComponent implements OnInit {
   customHarvestingJobs$: any;
   commercialTruckingJobs$: any;
   formValid: boolean;
+  exportingExcel: boolean = false;
+
 
   harvestingFilterBool: boolean = false;
   truckingFilterBool: boolean = false;
@@ -86,6 +99,13 @@ export class JobResultComponent implements OnInit {
 
   //#endregion
 
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+}
+
+  //#region farms autocomplete
 
   getDropdownFarms() {
     let value = this.jobsFiltersForm.controls['farm_id'].value;
@@ -116,6 +136,73 @@ export class JobResultComponent implements OnInit {
   }
   //#endregion
 
+  //#region fields autocomplete
+  getDropdownFields() {
+    let value = this.jobsFiltersForm.controls['field_id'].value;
+    this.allFields = this._customerService.getDropdownCustomerFields(
+      this.routeID,
+      this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '',
+      value != null ? value : ''
+    );
+    this.allFields.subscribe((val)=>
+    console.log("val",val))
+  }
+
+  //Auto Complete Farms Display Function
+  displayFieldForAutoComplete(field: any) {
+    console.log(field)
+    return field ? `${field.field_name}` : undefined;
+  }
+  //Search Function
+  fieldSearchSubscription() {
+    this.field_search$
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe((value: string) => {
+        this.allFields = this._customerService.getDropdownCustomerFields(
+          this.routeID,
+          this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '',
+          value
+        );
+      });
+  }
+  //#endregion
+
+  //#region destinations autocomplete
+  getDropdownDestinations() {
+    let value = this.jobsFiltersForm.controls['destinations_id'].value;
+    this.allDestinations = this._customerService.getDropdownCustomerDestinations(
+      this.routeID,
+      this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '',
+  value != null ? value : ''
+    );
+    this.allDestinations.subscribe((val)=>console.log(val))
+  }
+
+  //Auto Complete Farms Display Function
+  displayDestinationsForAutoComplete(destination: any) {
+    return destination ? `${destination.name}` : undefined;
+  }
+  //Search Function
+  destinationsSearchSubscription() {
+    this.destination_search$
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe((value: string) => {
+        this.allDestinations = this._customerService.getDropdownCustomerDestinations(
+          this.routeID,
+          this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '',
+          value
+        );
+      });
+  }
+//#endregion
   //#region Auto Complete Crops Display Function
   getDropdownCrops() {
     let value;
@@ -146,15 +233,19 @@ export class JobResultComponent implements OnInit {
 
   //#region Init Apis on Tabs
   initApis() {
+    this.exportingExcel = false;
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
-    console.log(this.customHarvestingJobs$);
   }
 
   initFiltersForm() {
     this.jobsFiltersForm = this._formBuilder.group({
       farm_id: [''],
-      destinations: [''],
       crop_id: [''],
+      field_id: [''],
+      destinations_id:[''],
+      date_range:[''],
+      from_date:[''],
+      to_date:['']
     });
 
     this.truckingFiltersForm = this._formBuilder.group({
@@ -175,9 +266,23 @@ export class JobResultComponent implements OnInit {
   }
   
   applyFilters() {
+    if (this.jobsFiltersForm.get('to_date').value !== null) {
+      if (this.jobsFiltersForm.value.from_date) {
+        this.jobsFiltersForm.controls['from_date'].patchValue(moment(this.jobsFiltersForm.value.from_date).format('YYYY-MM-DD'));
+      }
+      if (this.jobsFiltersForm.value.to_date) {
+        this.jobsFiltersForm.controls['to_date'].patchValue(moment(this.jobsFiltersForm.value.to_date).format('YYYY-MM-DD'));
+      }
+    }
+
     !this.jobsFiltersForm.value.farm_id?.id ? (this.jobsFiltersForm.value.farm_id = this.jobsFiltersForm.value.farm_id?.id) : '';
-    !this.jobsFiltersForm.value.destinations ? (this.jobsFiltersForm.value.destinations = '') : ('');
     !this.jobsFiltersForm.value.crop_id?.id ? (this.jobsFiltersForm.value.crop_id = this.jobsFiltersForm.value.crop_id?.id) : '';
+    !this.jobsFiltersForm.value.destinations_id?.id ? (this.jobsFiltersForm.value.destinations_id = this.jobsFiltersForm.value.destinations_id?.id) : '';
+    !this.jobsFiltersForm.value.field_id?.id ? (this.jobsFiltersForm.value.field_id = this.jobsFiltersForm.value.field_id?.id) : '';
+    !this.jobsFiltersForm.value.date_range ? (this.jobsFiltersForm.value.date_range = '') : ('');
+    !this.jobsFiltersForm.value.from_date ? (this.jobsFiltersForm.value.from_date = '') : ('');
+    !this.jobsFiltersForm.value.to_date ? (this.jobsFiltersForm.value.to_date = '') : ('');
+
     this.harvestingFilterBool = true;
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
   }
@@ -185,8 +290,13 @@ export class JobResultComponent implements OnInit {
   removeFilters() {
     this.jobsFiltersForm.reset();
     this.jobsFiltersForm.value.farm_id = '';
-    this.jobsFiltersForm.value.destinations = '';
     this.jobsFiltersForm.value.crop_id = '';
+    this.jobsFiltersForm.value.field_id = '';
+    this.jobsFiltersForm.value.destinations_id = '';
+    this.jobsFiltersForm.value.date_range = '';
+    this.jobsFiltersForm.value.from_date = '';
+    this.jobsFiltersForm.value.to_date = '';
+
     this.harvestingFilterBool = false;
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
 
@@ -240,6 +350,7 @@ async removeFarmingFilters() {
 
   getRelativeTabJobs(index: number) {
     if (index == 0) {
+      this.exportingExcel = false;
       this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
       console.log(this.customHarvestingJobs$);
     }
@@ -301,7 +412,7 @@ editFarmingJob(data: any, id:any)
 dialogRef.afterClosed().subscribe((result) => {});
 }
 
-exportToExcel() {
+exportToExcel(boolean) {
   // Subscribe to the observable to get the data
   this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
     // Access the harvestingJobs and details from the customHarvestingJobs object
@@ -353,9 +464,10 @@ exportToExcel() {
     // Export the workbook to an Excel file
     var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'JobResults.xlsx');
-  });
-}
 
+  });
+
+}
 
 
 }

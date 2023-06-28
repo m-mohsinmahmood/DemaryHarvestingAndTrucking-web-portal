@@ -675,6 +675,23 @@ export class CustomersService {
             .pipe(take(1))
     }
 
+    getDropdownCustomerFields(customerId:string, farmId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=customerFields&customerId=${customerId}&farmId=${farmId}`, { params })
+            .pipe(take(1))
+    }
+
+    getDropdownCustomerDestinations(customerId:string, farmId: string, search: string): Observable<any> {
+        let params = new HttpParams();
+        params = params.set('search', search);
+        return this._httpClient
+            .get<any>(`api-1/dropdowns?entity=getCustomerDestination&customer_id=${customerId}&farm_id=${farmId}`, { params })
+            .pipe(take(1))
+    }
+
+
     getDropdownCustomerCropsAll(search: string = ''): Observable<any> {
         let params = new HttpParams();
         params = params.set('search', search);
@@ -2388,18 +2405,27 @@ export class CustomersService {
 
 
 
-    getHarvestingJobs(id: string, data, filters: any = { farm_id: '', destinations: '', crop_id: '' },) {
+    getHarvestingJobs(id: string, data, filters: any = { farm_id: '', destinations_id: '', crop_id: '' ,field_id: '', from_date: '', to_date:''},) {
         let params = new HttpParams();
         params = params.set('data', data);
         if (filters.farm_id?.id) {
             params = params.set('farmsId', filters.farm_id?.id);
         } else params = params.set('farmsId', '');
 
-        params = params.set('destinations', filters.destinations);
+        if (filters.field_id?.id) {
+            params = params.set('field_id', filters.field_id?.id);
+        } else params = params.set('field_id', '');
+
+        if (filters.destinations_id?.id) {
+            params = params.set('destinations_id', filters.destinations_id?.id);
+        } else params = params.set('destinations_id', '');
+
 
         if (filters.crop_id?.id) {
             params = params.set('cropsId', filters.crop_id.id);
         } else params = params.set('cropsId', '');
+        params = params.set('from_date', filters.from_date);
+        params = params.set('to_date', filters.to_date);
 
         return this._httpClient
             .get(`api-1/customer-job-result?customer_id=${id}`, { params })

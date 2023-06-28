@@ -19,7 +19,7 @@
                             <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFilters()"
                                 class="flex flex-col lg:flex-row flex-auto gap-x-8">
                                 <!-- MAT AUTOCOMPLETE -->
-                                <mat-form-field class="md:w-1/3" appearance="outline" fxFlex>
+                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
                                     <mat-label>Farm Name</mat-label>
                                     <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
                                         (keyup)="farm_search$.next($event.target.value)" matInput
@@ -50,11 +50,43 @@
                                 </mat-autocomplete>
                                 <!-- MAT AUTOCOMPLETE -->
 
+                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
+                                    <mat-label>Field Name</mat-label>
+                                    <input (click)="getDropdownFields()" [disabled]="jobsFiltersForm.value.farm_id" [matAutocomplete]="fields"
+                                        (keyup)="field_search$.next($event.target.value)" matInput
+                                        formControlName="field_id" name="name" placeholder="Field Name" />
+
+                                        
+                                </mat-form-field>
+
+                                <mat-autocomplete #fields="matAutocomplete" [displayWith]="displayFieldForAutoComplete">
+                                    <div *ngIf="allFields | withLoading | async as allFields">
+                                        <ng-template [ngIf]="allFields.value">
+                                            <mat-option *ngFor="let field of allFields.value.customer_fields"
+                                                [value]="field">
+                                                {{ field.field_name }}
+                                            </mat-option>
+                                        </ng-template>
+                                        <ng-template [ngIf]="allFields?.loading">
+                                            <mat-option>
+                                                <div style="display: flex;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                                </div>
+                                            </mat-option>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="allFields?.value?.customer_fields?.length == 0">
+                                            <mat-option disabled> No Field(s) found </mat-option>
+                                        </ng-template>
+                                    </div>
+                                </mat-autocomplete>
 
 
                                 <!-- Crop AUTOCOMPLETE -->
 
-                                <mat-form-field class="md:w-1/3" appearance="outline" fxFlex>
+                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
                                     <mat-label>Crop Name</mat-label>
                                     <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()"
                                         [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)"
@@ -86,10 +118,48 @@
                                 <!-- Crop AUTOCOMPLETE -->
 
 
-                                <mat-form-field class="md:w-1/3" appearance="outline">
-                                    <mat-label>Destinations</mat-label>
-                                    <input matInput formControlName="destinations" />
+                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
+                                    <mat-label>Destination Name</mat-label>
+                                    <input (click)="getDropdownDestinations()" [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
+                                        (keyup)="destination_search$.next($event.target.value)" matInput
+                                        formControlName="destinations_id" name="name" placeholder="Destination Name" />
+                                        
                                 </mat-form-field>
+
+                                <mat-autocomplete #destinations="matAutocomplete" [displayWith]="displayDestinationsForAutoComplete">
+                                    <div *ngIf="allDestinations | withLoading | async as allDestinations">
+                                        <ng-template [ngIf]="allDestinations.value">
+                                            <mat-option *ngFor="let destination of allDestinations.value.customers"
+                                                [value]="destination">
+                                                {{ destination.name }}
+                                            </mat-option>
+                                        </ng-template>
+                                        <ng-template [ngIf]="allDestinations?.loading">
+                                            <mat-option>
+                                                <div style="display: flex;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                                </div>
+                                            </mat-option>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="allDestinations?.value?.customers?.length == 0">
+                                            <mat-option disabled> No Field(s) found </mat-option>
+                                        </ng-template>
+                                    </div>
+                                </mat-autocomplete>
+
+                                <mat-form-field dateRangeFilter class="w-full" appearance="outline">
+                                    <mat-label>Date Range</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker333">
+                                        <input matStartDate formControlName="from_date" placeholder="Start date">
+                                        <input matEndDate formControlName="to_date" placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker333"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker333></mat-date-range-picker>
+                                </mat-form-field>
+
 
                             </form>
                         </div>
@@ -98,12 +168,12 @@
                                 
                                 <button *ngIf="!harvestingFilterBool" (click)="applyFilters(); filtersDrawer.close()"
                                     class="" mat-flat-button [color]="'primary'"
-                                    [disabled]="(!jobsFiltersForm.controls['farm_id'].value && !jobsFiltersForm.controls['destinations'].value && !jobsFiltersForm.controls['crop_id'].value)">
+                                    [disabled]="(!jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value)">
                                     <span class="">Apply filters</span>
                                 </button>
 
                                 <button *ngIf="harvestingFilterBool" (click)="removeFilters()"
-                                    [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
+                                    [disabled]="(!jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value)"
                                     class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
                                     <mat-icon class="m-0 icon-size-4" color="warn"
                                         [svgIcon]="'heroicons_outline:x'"></mat-icon>
@@ -117,12 +187,13 @@
                     </div>
                     
                 </div>
-                <div class="flex justify-end sm: pr-4">
-                    <button class="flex flex-row justify-center items-center" (click)="exportToExcel()" >
-                        <mat-icon>download</mat-icon>
-                        <span>Export</span>
+                <div class="flex justify-end sm:pr-4" *ngIf="(customHarvestingJobs$ | async) as harvestingJobs">
+                    <button class="flex flex-row justify-center items-center" (click)="exportToExcel(true)">
+                      <mat-icon>download</mat-icon>
+                      <span>Export</span>
                     </button>
-                </div>
+                  </div>
+                  
 
             </div>
             <div class="">
@@ -255,7 +326,7 @@
                                         <div class="hidden sm:block">
                                             Load Miles
                                         </div>
-                                        <div class="hidden sm:block">
+                                        <div class="hidden sm:block text-center">
                                             Status
                                         </div>
                                     </div>
@@ -1146,7 +1217,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Destinations</mat-label>
-                            <input matInput formControlName="destinations" />
+                            <input matInput formControlName="destinations_id" />
                         </mat-form-field>
 
                     </form>
@@ -1161,7 +1232,7 @@
                 </div>
                 <div class="w-inherit flex justify-center items-center mt-1 mb-1">
                     <button (click)="removeFilters(); filtersDrawer.close()"
-                        [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations"
+                        [disabled]="!jobsFiltersForm.value.farm_id && !jobsFiltersForm.value.crop_id && !jobsFiltersForm.value.destinations_id && !jobsFiltersForm.value.field_id && !jobsFiltersForm.value.date_range"
                         class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
                         <mat-icon class="m-0 icon-size-4" color="warn" [svgIcon]="'heroicons_outline:x'"></mat-icon>
                         <span>Remove filters</span>
