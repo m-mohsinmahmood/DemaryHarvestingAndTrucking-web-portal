@@ -2405,7 +2405,7 @@ export class CustomersService {
 
 
 
-    getHarvestingJobs(id: string, data, filters: any = { farm_id: '', destinations_id: '', crop_id: '' ,field_id: '', from_date: '', to_date:''},) {
+    getHarvestingJobs(id: string, data, filters: any = { farm_id: '', destinations_id: '', crop_id: '' ,field_id: '', from_date: '', to_date:'', status: ''},) {
         let params = new HttpParams();
         params = params.set('data', data);
         if (filters.farm_id?.id) {
@@ -2426,6 +2426,7 @@ export class CustomersService {
         } else params = params.set('cropsId', '');
         params = params.set('from_date', filters.from_date);
         params = params.set('to_date', filters.to_date);
+        params = params.set('status', filters.status);
 
         return this._httpClient
             .get(`api-1/customer-job-result?customer_id=${id}`, { params })

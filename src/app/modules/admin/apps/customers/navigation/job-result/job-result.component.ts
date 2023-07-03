@@ -13,7 +13,21 @@ import { EditTruckingJobComponent } from './edit-trucking-job/edit-trucking-job.
 import { EditFarmingJobComponent } from './edit-farming-job/edit-farming-job.component';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import RobotoFont from 'pdfmake/build/vfs_fonts.js';
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+const docDefinition = {
+  content: [
+    {
+      text: 'Hello World',
+      font: 'Roboto', // Use the name of the font you want to use
+    },
+  ],
+  // ...
+};
 
 @Component({
   selector: 'app-job-result',
@@ -21,6 +35,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./job-result.component.scss']
 })
 export class JobResultComponent implements OnInit {
+  dis=true
   panelOpenState = false;
   jobsFiltersForm: FormGroup;
   truckingFiltersForm: FormGroup;
@@ -54,6 +69,7 @@ export class JobResultComponent implements OnInit {
   commercialTruckingJobs$: any;
   formValid: boolean;
   exportingExcel: boolean = false;
+
 
 
   harvestingFilterBool: boolean = false;
@@ -245,7 +261,8 @@ export class JobResultComponent implements OnInit {
       destinations_id:[''],
       date_range:[''],
       from_date:[''],
-      to_date:['']
+      to_date:[''],
+      status:['']
     });
 
     this.truckingFiltersForm = this._formBuilder.group({
@@ -279,7 +296,7 @@ export class JobResultComponent implements OnInit {
     !this.jobsFiltersForm.value.crop_id?.id ? (this.jobsFiltersForm.value.crop_id = this.jobsFiltersForm.value.crop_id?.id) : '';
     !this.jobsFiltersForm.value.destinations_id?.id ? (this.jobsFiltersForm.value.destinations_id = this.jobsFiltersForm.value.destinations_id?.id) : '';
     !this.jobsFiltersForm.value.field_id?.id ? (this.jobsFiltersForm.value.field_id = this.jobsFiltersForm.value.field_id?.id) : '';
-    !this.jobsFiltersForm.value.date_range ? (this.jobsFiltersForm.value.date_range = '') : ('');
+    !this.jobsFiltersForm.value.status ? (this.jobsFiltersForm.value.status = '') : ('');
     !this.jobsFiltersForm.value.from_date ? (this.jobsFiltersForm.value.from_date = '') : ('');
     !this.jobsFiltersForm.value.to_date ? (this.jobsFiltersForm.value.to_date = '') : ('');
 
@@ -293,7 +310,7 @@ export class JobResultComponent implements OnInit {
     this.jobsFiltersForm.value.crop_id = '';
     this.jobsFiltersForm.value.field_id = '';
     this.jobsFiltersForm.value.destinations_id = '';
-    this.jobsFiltersForm.value.date_range = '';
+    this.jobsFiltersForm.value.status = '';
     this.jobsFiltersForm.value.from_date = '';
     this.jobsFiltersForm.value.to_date = '';
 
@@ -412,63 +429,134 @@ editFarmingJob(data: any, id:any)
 dialogRef.afterClosed().subscribe((result) => {});
 }
 
-exportToExcel(boolean) {
+exportToPdf() {
   // Subscribe to the observable to get the data
   this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
     // Access the harvestingJobs and details from the customHarvestingJobs object
     const harvestingJobs = customHarvestingJobs.harvestingJobs;
     const details = customHarvestingJobs.details[0];
 
-    // Create a new workbook
-    var workbook = XLSX.utils.book_new();
+    // Create the definition for the document
+    const docDefinition = {
+      content: [
+        { text: details?.customer_name , style: 'companyHeader' },
+        { text: 'Summary', style: 'header' },
+        {
+          table: {
+            body: [
+              [
+                {
+                  table: {
+                    body: [
+                      [
+                        { text: 'Total Net Pounds', style: 'tableHeader' },
+                        { text: details?.total_net_pounds || 'N/A', style: 'tableValue' },
+                        { text: 'Total Tons', style: 'tableHeader' },
+                        { text: details?.total_net_pounds ? details?.total_net_pounds / 2000 : 'N/A', style: 'tableValue' }
+                      ],
+                      [
+                        { text: 'Tons per Acre', style: 'tableHeader' },
+                        { text: details?.total_net_pounds / details?.total_acres || 'N/A', style: 'tableValue' },
+                        { text: 'Total Bushels', style: 'tableHeader' },
+                        { text: details?.total_net_bushels || 'N/A', style: 'tableValue' }
+                      ],
+                      [
+                        { text: 'Bushels per Acre', style: 'tableHeader' },
+                        { text: details?.total_net_bushels / details?.total_acres || 'N/A', style: 'tableValue' },
+                        { text: 'Total Hundred Weight', style: 'tableHeader' },
+                        { text: details?.total_net_pounds ? details?.total_net_pounds / 100 : 'N/A' , style: 'tableValue' }
+                      ],
+                      [
+                        { text: 'DHT Total Loaded Miles', style: 'tableHeader' },
+                        { text: details?.total_loaded_miles || 'N/A', style: 'tableValue' },
+                        { text: 'DHT Average Miles', style: 'tableHeader' },
+                        { text: details?.total_loaded_miles / details?.total_tickets , style: 'tableValue' }
+                      ],
+                      [
+                        { text: 'Total Loads', style: 'tableHeader' },
+                        { text: harvestingJobs.total_loads || 'N/A', style: 'tableValue' },
+                        { text: 'DHT Tickets', style: 'tableHeader' },
+                        { text: details?.total_tickets , style: 'tableValue' }
+                      ],
+                      [
+                        { text: 'Farmer Tickets', style: 'tableHeader' },
+                        { text: "1234", style: 'tableValue' },
+                        { text: 'Company', style: 'tableHeader' },
+                        { text: details?.customer_name , style: 'tableValue' }
+                      ],
+                      // Add more rows for other summary data
+                    ]
+                  }
+                }
+              ]
+            ]
+            
+          }
+        },
+        { text: 'Job Results', style: 'header' },
+        {
+          table: {
+            headerRows: 1,
+            widths: ['20%', '15%', '15%', '16%', '10%', '10%', '13%'],
+            body: [
+              [
+                { text: "Field Name", style: 'tableHeader' },
+                { text: "Load Date", style: 'tableHeader' },
+                { text: "Destination", style: 'tableHeader' },
+                { text: "ID/SL", style: 'tableHeader' },
+                { text: "Net Pounds", style: 'tableHeader' },
+                { text: "Net Bushel", style: 'tableHeader' },
+                { text: "Load Miles", style: 'tableHeader' }
+              ],
+              ...harvestingJobs.map(harvestingJob => [
+                { text: harvestingJob.field_name, style: 'tableCell' },
+                { text: new Date(harvestingJob.load_date).toLocaleDateString("en-GB"), style: 'tableCell' },
+                { text: harvestingJob.destination, style: 'tableCell' },
+                { text: harvestingJob.ticket_name + '/' + (harvestingJob.sl_number || ''), style: 'tableCell' },
+                { text: harvestingJob.net_pounds, style: 'tableCell' },
+                { text: harvestingJob.net_bushel, style: 'tableCell' },
+                { text: harvestingJob.load_miles, style: 'tableCell' }
+              ])
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          bold: true,
+          fontSize: 14,
+          margin: [0, 10, 0, 10]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 12,
+          fillColor: '#CCCCCC',
+          alignment: 'center'
+        },
+        tableValue: {
+          fontSize: 12,
+          alignment: 'center'
+        },
+        tableCell: {
+          alignment: 'center',
+          textTransform: 'uppercase'  
+        },
+        companyHeader: {
+          fontSize: 24,
+          bold: true,
+          alignment: 'center'
+        },
+      }
+  
+    };
 
-    // Create the summary tab
-    var summaryWorksheet = XLSX.utils.aoa_to_sheet([
-      ["Total Net Pounds", details?.total_net_pounds || "N/A"],
-      ["Total Tons", details?.total_net_pounds ? details?.total_net_pounds / 2000 : "N/A"],
-      ["Tons per Acre", details?.total_net_pounds / details?.total_acres || "N/A"],
-      ["Total Bushels", details?.total_net_bushels || "N/A"],
-      ["Bushels per Acre", details?.total_net_bushels / details?.total_acres || "N/A"],
-      ["Total Hundred Weight", details?.total_net_pounds ? details?.total_net_pounds / 100 : "N/A"],
-      ["DHT Total Loaded Miles", details?.total_loaded_miles || "N/A"],
-      ["DHT Average Miles", details?.total_loaded_miles / details?.total_tickets || "N/A"],
-      ["Total Loads", harvestingJobs.total_loads || "N/A"],
-      ["DHT Tickets", details?.total_tickets || "N/A"],
-      ["Farmer Tickets", "1234"],
-      ["Company", details?.company_name || "N/A"]
-    ]);
+    // Generate the PDF document
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
-    // Create a new worksheet and add the headers and rows for harvestingJobs
-    var jobResultsHeaders = ["Field Name", "Load Date", "Destination", "ID", "Net Pounds", "Net Bushel", "Load Miles", "Status"];
-    var jobResultsData = harvestingJobs.map(function(harvestingJob) {
-      var rowData = [
-        harvestingJob.field_name,
-        new Date(harvestingJob.load_date).toLocaleDateString("en-GB"),
-        harvestingJob.destination,
-        harvestingJob.id,
-        harvestingJob.net_pounds,
-        harvestingJob.net_bushel,
-        harvestingJob.load_miles,
-        harvestingJob.status
-      ];
-      return rowData;
-    });
-    var worksheet = XLSX.utils.aoa_to_sheet([jobResultsHeaders, ...jobResultsData]);
-
-    // Add the summary tab to the workbook
-    XLSX.utils.book_append_sheet(workbook, summaryWorksheet, 'Summary');
-
-    // Add the data tab to the workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Job Results');
-
-    // Export the workbook to an Excel file
-    var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'JobResults.xlsx');
-
+    // Download the PDF file
+    pdfDocGenerator.download('JobResults.pdf');
   });
-
 }
-
 
 }
 

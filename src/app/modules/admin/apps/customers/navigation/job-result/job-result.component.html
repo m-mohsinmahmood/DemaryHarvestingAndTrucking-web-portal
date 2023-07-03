@@ -1,199 +1,225 @@
+<fuse-drawer class="w-100 min-w-100 sm:w-100 sm:min-w-100 z-999 bg-green-300" fixed [mode]="'over'"
+    [name]="'filtersDrawerHarvesting'" [position]="'right'" #filtersDrawerHarvesting>
+    <div class="flex flex-col w-100 overflow-auto bg-card">
+        <div class="flex flex-row items-center px-6 h-20 min-h-20 text-white bg-primary">
+            <mat-icon class="icon-size-7 text-current" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+            <div class="ml-3 text-2xl font-semibold tracking-tight">
+                Filters
+            </div>
+            <button class="ml-auto" mat-icon-button mat-icon-button (click)="filtersDrawerHarvesting.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center items-center h-screen">
+            <div class="h-5/6 w-96">
+                <div class="w-inherit flex flex-col">
+                    <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFilters()"
+                        class="flex flex-col flex-auto p-6 sm:p-8">
+                        <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                            <!-- MAT AUTOCOMPLETE -->
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Farm Name</mat-label>
+                                <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
+                                    (keyup)="farm_search$.next($event.target.value)" matInput formControlName="farm_id"
+                                    name="name" placeholder="Farm Name" />
+                            </mat-form-field>
+                            <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+                                <div *ngIf="allFarms | withLoading | async as allFarms">
+                                    <ng-template [ngIf]="allFarms.value">
+                                        <mat-option *ngFor="let farm of allFarms.value.customer_farms" [value]="farm">
+                                            {{ farm.name }}
+                                        </mat-option>
+                                    </ng-template>
+                                    <ng-template [ngIf]="allFarms?.loading">
+                                        <mat-option>
+                                            <div style="display: flex;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                                                <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                            </div>
+                                        </mat-option>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                                        <mat-option disabled> No Farm(s) found </mat-option>
+                                    </ng-template>
+                                </div>
+                            </mat-autocomplete>
+                            <!-- MAT AUTOCOMPLETE -->
+
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Field Name</mat-label>
+                                <input (click)="getDropdownFields()" [matAutocomplete]="fields"
+                                    (keyup)="field_search$.next($event.target.value)" matInput
+                                    formControlName="field_id" name="name" placeholder="Field Name" />
+
+
+                            </mat-form-field>
+
+                            <mat-autocomplete #fields="matAutocomplete" [displayWith]="displayFieldForAutoComplete">
+                                <div *ngIf="allFields | withLoading | async as allFields">
+                                    <ng-template [ngIf]="allFields.value">
+                                        <mat-option *ngFor="let field of allFields.value.customer_fields"
+                                            [value]="field">
+                                            {{ field.field_name }}
+                                        </mat-option>
+                                    </ng-template>
+                                    <ng-template [ngIf]="allFields?.loading">
+                                        <mat-option>
+                                            <div style="display: flex;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                                                <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                            </div>
+                                        </mat-option>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="allFields?.value?.customer_fields?.length == 0">
+                                        <mat-option disabled> No Field(s) found </mat-option>
+                                    </ng-template>
+                                </div>
+                            </mat-autocomplete>
+
+
+                            <!-- Crop AUTOCOMPLETE -->
+
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Crop Name</mat-label>
+                                <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()"
+                                    [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput
+                                    formControlName="crop_id" name="name" placeholder="Crop Name" />
+                            </mat-form-field>
+
+                            <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+                                <div *ngIf="allCrops | withLoading | async as allCrops">
+                                    <ng-template [ngIf]="allCrops.value">
+                                        <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
+                                            {{ crop.name }}
+                                        </mat-option>
+                                    </ng-template>
+                                    <ng-template [ngIf]="allCrops?.loading">
+                                        <mat-option>
+                                            <div style="display: flex;
+                                            justify-content: center;
+                                            text-align: center;">
+                                                <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                            </div>
+                                        </mat-option>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
+                                        <mat-option disabled> No Crop(s) found </mat-option>
+                                    </ng-template>
+                                </div>
+                            </mat-autocomplete>
+                            <!-- Crop AUTOCOMPLETE -->
+
+
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Destination Name</mat-label>
+                                <input (click)="getDropdownDestinations()"
+                                    [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
+                                    (keyup)="destination_search$.next($event.target.value)" matInput
+                                    formControlName="destinations_id" name="name" placeholder="Destination Name" />
+
+                            </mat-form-field>
+
+                            <mat-autocomplete #destinations="matAutocomplete"
+                                [displayWith]="displayDestinationsForAutoComplete">
+                                <div *ngIf="allDestinations | withLoading | async as allDestinations">
+                                    <ng-template [ngIf]="allDestinations.value">
+                                        <mat-option *ngFor="let destination of allDestinations.value.customers"
+                                            [value]="destination">
+                                            {{ destination.name }}
+                                        </mat-option>
+                                    </ng-template>
+                                    <ng-template [ngIf]="allDestinations?.loading">
+                                        <mat-option>
+                                            <div style="display: flex;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                                                <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                            </div>
+                                        </mat-option>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="allDestinations?.value?.customers?.length == 0">
+                                        <mat-option disabled> No Field(s) found </mat-option>
+                                    </ng-template>
+                                </div>
+                            </mat-autocomplete>
+
+                            <mat-form-field dateRangeFilter appearance="outline">
+                                <mat-label>Date Range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker333">
+                                    <input matStartDate formControlName="from_date" placeholder="Start date">
+                                    <input matEndDate formControlName="to_date" placeholder="End date">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker333"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker333></mat-date-range-picker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Status</mat-label>
+                                <mat-select formControlName="status">
+                                    <mat-option value="verified">Verified</mat-option>
+                                    <mat-option value="sent">Sent</mat-option>
+                                    <mat-option value="pending">Pending</mat-option>
+                                    <mat-option value="">All</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="flex flex-row justify-evenly items-center w-80">
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="
+                        !jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['status'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value
+                        " (click)="applyFilters(); filtersDrawerHarvesting.close()" class="" mat-flat-button
+                        [color]="'primary'">
+                        <span class="">Apply filters</span>
+                    </button>
+                </div>
+                <div class="w-inherit flex justify-center items-center mt-1 mb-1">
+                    <button [disabled]="
+                        !jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['status'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value
+                        " (click)="removeFilters(); filtersDrawerHarvesting.close()" mat-flat-button [color]="'warn'">
+                        <span>Remove filters</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</fuse-drawer>
+
 <!--Resources Nested Tabs-->
 <div class="sm:rounded-lg overflow-auto" style="background-color: #fff;">
     <mat-tab-group mat-align-tabs="start" (selectedIndexChange)="getRelativeTabJobs($event)">
         <!-- Custom Harvesting-->
         <mat-tab label="Custom Harvesting">
-            <div class="flex justify-end py-4">
-
-
-                <!-- 
-                <button class="ml-2" mat-flat-button [color]="'warn'">
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:filter'"></mat-icon>
-                    <span class="ml-1 sm:ml-2">Filter</span>
-                </button> -->
-            </div>
             <div class="bg-gray justify-center px-2 my-8">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="flex flex-row gap-x-3 pt-2 w-full justify-between">
-                        <div class="w-inherit flex flex-col filters-job-result sm:w-8/12 px-2">
-                            <form [formGroup]="jobsFiltersForm" (ngSubmit)="applyFilters()"
-                                class="flex flex-col lg:flex-row flex-auto gap-x-8">
-                                <!-- MAT AUTOCOMPLETE -->
-                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
-                                    <mat-label>Farm Name</mat-label>
-                                    <input (click)="getDropdownFarms()" [matAutocomplete]="farms"
-                                        (keyup)="farm_search$.next($event.target.value)" matInput
-                                        formControlName="farm_id" name="name" placeholder="Farm Name" />
-                                </mat-form-field>
-                                <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
-                                    <div *ngIf="allFarms | withLoading | async as allFarms">
-                                        <ng-template [ngIf]="allFarms.value">
-                                            <mat-option *ngFor="let farm of allFarms.value.customer_farms"
-                                                [value]="farm">
-                                                {{ farm.name }}
-                                            </mat-option>
-                                        </ng-template>
-                                        <ng-template [ngIf]="allFarms?.loading">
-                                            <mat-option>
-                                                <div style="display: flex;
-                                                            justify-content: center;
-                                                            text-align: center;">
-                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                                </div>
-                                            </mat-option>
-                                        </ng-template>
+                <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 justify-end">
+                    <div class="flex">
 
-                                        <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
-                                            <mat-option disabled> No Farm(s) found </mat-option>
-                                        </ng-template>
-                                    </div>
-                                </mat-autocomplete>
-                                <!-- MAT AUTOCOMPLETE -->
+                        <button mat-flat-button class="mat-filter" (click)="filtersDrawerHarvesting.toggle()">
+                            <mat-icon
+                                *ngIf="
+                        jobsFiltersForm.controls['field_id'].value  || jobsFiltersForm.controls['status'].value  || jobsFiltersForm.controls['farm_id'].value  || jobsFiltersForm.controls['from_date'].value || jobsFiltersForm.controls['to_date'].value || jobsFiltersForm.controls['destinations_id'].value || jobsFiltersForm.controls['crop_id'].value"
+                                [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+                            <mat-icon *ngIf="
+                        !jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['status'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value
+                        " [svgIcon]="'heroicons_outline:filter'"></mat-icon>
+                        </button>
 
-                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
-                                    <mat-label>Field Name</mat-label>
-                                    <input (click)="getDropdownFields()" [disabled]="jobsFiltersForm.value.farm_id" [matAutocomplete]="fields"
-                                        (keyup)="field_search$.next($event.target.value)" matInput
-                                        formControlName="field_id" name="name" placeholder="Field Name" />
-
-                                        
-                                </mat-form-field>
-
-                                <mat-autocomplete #fields="matAutocomplete" [displayWith]="displayFieldForAutoComplete">
-                                    <div *ngIf="allFields | withLoading | async as allFields">
-                                        <ng-template [ngIf]="allFields.value">
-                                            <mat-option *ngFor="let field of allFields.value.customer_fields"
-                                                [value]="field">
-                                                {{ field.field_name }}
-                                            </mat-option>
-                                        </ng-template>
-                                        <ng-template [ngIf]="allFields?.loading">
-                                            <mat-option>
-                                                <div style="display: flex;
-                                                            justify-content: center;
-                                                            text-align: center;">
-                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                                </div>
-                                            </mat-option>
-                                        </ng-template>
-
-                                        <ng-template [ngIf]="allFields?.value?.customer_fields?.length == 0">
-                                            <mat-option disabled> No Field(s) found </mat-option>
-                                        </ng-template>
-                                    </div>
-                                </mat-autocomplete>
-
-
-                                <!-- Crop AUTOCOMPLETE -->
-
-                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
-                                    <mat-label>Crop Name</mat-label>
-                                    <input (ngModelChange)="formValidation($event)" (click)="getDropdownCrops()"
-                                        [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)"
-                                        matInput formControlName="crop_id" name="name" placeholder="Crop Name" />
-                                </mat-form-field>
-
-                                <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
-                                    <div *ngIf="allCrops | withLoading | async as allCrops">
-                                        <ng-template [ngIf]="allCrops.value">
-                                            <mat-option *ngFor="let crop of allCrops.value.crops" [value]="crop">
-                                                {{ crop.name }}
-                                            </mat-option>
-                                        </ng-template>
-                                        <ng-template [ngIf]="allCrops?.loading">
-                                            <mat-option>
-                                                <div style="display: flex;
-                                            justify-content: center;
-                                            text-align: center;">
-                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                                </div>
-                                            </mat-option>
-                                        </ng-template>
-
-                                        <ng-template [ngIf]="allCrops?.value?.crops?.length == 0">
-                                            <mat-option disabled> No Crop(s) found </mat-option>
-                                        </ng-template>
-                                    </div>
-                                </mat-autocomplete>
-                                <!-- Crop AUTOCOMPLETE -->
-
-
-                                <mat-form-field class="md:w-1/4" appearance="outline" fxFlex>
-                                    <mat-label>Destination Name</mat-label>
-                                    <input (click)="getDropdownDestinations()" [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
-                                        (keyup)="destination_search$.next($event.target.value)" matInput
-                                        formControlName="destinations_id" name="name" placeholder="Destination Name" />
-                                        
-                                </mat-form-field>
-
-                                <mat-autocomplete #destinations="matAutocomplete" [displayWith]="displayDestinationsForAutoComplete">
-                                    <div *ngIf="allDestinations | withLoading | async as allDestinations">
-                                        <ng-template [ngIf]="allDestinations.value">
-                                            <mat-option *ngFor="let destination of allDestinations.value.customers"
-                                                [value]="destination">
-                                                {{ destination.name }}
-                                            </mat-option>
-                                        </ng-template>
-                                        <ng-template [ngIf]="allDestinations?.loading">
-                                            <mat-option>
-                                                <div style="display: flex;
-                                                            justify-content: center;
-                                                            text-align: center;">
-                                                    <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                                </div>
-                                            </mat-option>
-                                        </ng-template>
-
-                                        <ng-template [ngIf]="allDestinations?.value?.customers?.length == 0">
-                                            <mat-option disabled> No Field(s) found </mat-option>
-                                        </ng-template>
-                                    </div>
-                                </mat-autocomplete>
-
-                                <mat-form-field dateRangeFilter class="w-full" appearance="outline">
-                                    <mat-label>Date Range</mat-label>
-                                    <mat-date-range-input [rangePicker]="picker333">
-                                        <input matStartDate formControlName="from_date" placeholder="Start date">
-                                        <input matEndDate formControlName="to_date" placeholder="End date">
-                                    </mat-date-range-input>
-                                    <mat-datepicker-toggle matSuffix [for]="picker333"></mat-datepicker-toggle>
-                                    <mat-date-range-picker #picker333></mat-date-range-picker>
-                                </mat-form-field>
-
-
-                            </form>
+                        <div class="flex justify-end sm:pr-4" *ngIf="(customHarvestingJobs$ | async) as harvestingJobs">
+                            <button class="flex flex-row justify-center items-center" (click)="exportToPdf()">
+                                <mat-icon>download</mat-icon>
+                                <span>Export</span>
+                            </button>
                         </div>
-                        <div class="flex flex-col lg:flex-row justify-evenly items-start gap-x-3 pt-2 sm:4/12 px-2">
-                            <div class="w-inherit flex justify-center items-center mt-1 mb-1">
-                                
-                                <button *ngIf="!harvestingFilterBool" (click)="applyFilters(); filtersDrawer.close()"
-                                    class="" mat-flat-button [color]="'primary'"
-                                    [disabled]="(!jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value)">
-                                    <span class="">Apply filters</span>
-                                </button>
-
-                                <button *ngIf="harvestingFilterBool" (click)="removeFilters()"
-                                    [disabled]="(!jobsFiltersForm.controls['field_id'].value  && !jobsFiltersForm.controls['farm_id'].value  && !jobsFiltersForm.controls['from_date'].value && !jobsFiltersForm.controls['to_date'].value && !jobsFiltersForm.controls['destinations_id'].value && !jobsFiltersForm.controls['crop_id'].value)"
-                                    class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded inline-flex items-center">
-                                    <mat-icon class="m-0 icon-size-4" color="warn"
-                                        [svgIcon]="'heroicons_outline:x'"></mat-icon>
-                                    <span>Remove filters</span>
-                                </button>
-
-                            </div>
-
-                        </div>
-                        
                     </div>
-                    
                 </div>
-                <div class="flex justify-end sm:pr-4" *ngIf="(customHarvestingJobs$ | async) as harvestingJobs">
-                    <button class="flex flex-row justify-center items-center" (click)="exportToExcel(true)">
-                      <mat-icon>download</mat-icon>
-                      <span>Export</span>
-                    </button>
-                  </div>
-                  
+
 
             </div>
             <div class="">
@@ -333,65 +359,66 @@
                                 </div>
                             </ng-container>
                         </ng-container>
-                                    <!-- Rows -->
-                                    <ng-container>
-                                        <ng-container>
-                                            <div *ngIf="customHarvestingJobs$ | async as harvestingJobs">
-                                                <div *ngIf=" harvestingJobs.harvestingJobs?.length > 0; else noJobs ">
-                                                    <div *ngFor="let harvestingJob of harvestingJobs.harvestingJobs"
-                                                        class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                                        <div class="truncate">
-                                                            {{harvestingJob.field_name}}
-                                                        </div>
+                        <!-- Rows -->
+                        <ng-container>
+                            <ng-container>
+                                <div *ngIf="customHarvestingJobs$ | async as harvestingJobs">
+                                    <div *ngIf=" harvestingJobs.harvestingJobs?.length > 0; else noJobs ">
+                                        <div *ngFor="let harvestingJob of harvestingJobs.harvestingJobs"
+                                            class="job-result-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                            <div class="truncate">
+                                                {{harvestingJob.field_name}}
+                                            </div>
 
-                                                        <!-- Harvest Year -->
-                                                        <div class="sm:block">
-                                                            {{harvestingJob.load_date | date: "dd-MM-YYYY" }}
-                                                        </div>
+                                            <!-- Harvest Year -->
+                                            <div class="sm:block">
+                                                {{harvestingJob.load_date | date: "dd-MM-YYYY" }}
+                                            </div>
 
-                                                        <!-- Email -->
-                                                        <div class="sm:block">
-                                                            <div class="">
-                                                                {{harvestingJob.destination}}
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Contact -->
-                                                        <div class="hidden lg:block">
-                                                            <div class="">
-                                                                {{harvestingJob.id}}
-                                                            </div>
-                                                        </div>
-                                                        <!-- Active -->
-                                                        <div class="hidden sm:block">
-                                                            <div class="min-w-4 ml-2">
-                                                                {{harvestingJob.net_pounds}}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="hidden sm:block">
-                                                            <div class="min-w-4 ml-2">{{harvestingJob.net_bushel}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="hidden sm:block">
-                                                            <div class="min-w-4 ml-2">
-                                                                {{harvestingJob.load_miles}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="hidden sm:block">
-                                                            <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
-                                                                style="background: #4ADE80;">
-                                                                {{harvestingJob.status}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <!-- Email -->
+                                            <div class="sm:block">
+                                                <div class="">
+                                                    {{harvestingJob.destination}}
                                                 </div>
                                             </div>
-                                        </ng-container>
-                                    </ng-container>
-                                <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
+
+                                            <!-- Contact -->
+                                            <div class="hidden lg:block">
+                                                <div class="">
+                                                    {{harvestingJob.ticket_name}}{{harvestingJob.sl_number? '/' :
+                                                    ''}}{{harvestingJob.sl_number}}
+                                                </div>
+                                            </div>
+                                            <!-- Active -->
+                                            <div class="hidden sm:block">
+                                                <div class="min-w-4 ml-2">
+                                                    {{harvestingJob.net_pounds}}
+                                                </div>
+                                            </div>
+
+                                            <div class="hidden sm:block">
+                                                <div class="min-w-4 ml-2">{{harvestingJob.net_bushel}}
+                                                </div>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <div class="min-w-4 ml-2">
+                                                    {{harvestingJob.load_miles}}
+                                                </div>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-2"
+                                                    style="background: #4ADE80;">
+                                                    {{harvestingJob.status}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <!-- <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.length" [pageIndex]="pagination.page" [pageSize]="pagination.size"
                                     [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator> -->
-                           
+
                         <ng-template #noJobs>
                             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
                                 are no Job Results!</div>
@@ -508,7 +535,8 @@
 
                                                     <!-- Contact -->
                                                     <div class="sm:block items-center">
-                                                        <div (click)="editTruckingJob(truckingJob, truckingJob.id)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                                                        <div (click)="editTruckingJob(truckingJob, truckingJob.id)"
+                                                            class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
                                                             {{truckingJob.id}}
 
                                                         </div>
@@ -685,8 +713,9 @@
 
                                                     <!-- Harvest Year -->
                                                     <div class="hidden sm:block">
-                                                        <div  (click)="editFarmingJob(farmingJob, farmingJob.id)" class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
-                                                        {{farmingJob.service}}
+                                                        <div (click)="editFarmingJob(farmingJob, farmingJob.id)"
+                                                            class="cursor-pointer truncate break-words text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                                                            {{farmingJob.service}}
                                                         </div>
                                                     </div>
 
