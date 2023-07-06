@@ -536,7 +536,7 @@ exportExcelSingleDwr() {
 
   // Export the workbook to an Excel file
   const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  this.saveExcelFile(excelBuffer, 'dwr_data.xlsx');
+  this.saveExcelFile(excelBuffer, 'DWR Data Detailed.xlsx');
 }
 
 getGridData() {
@@ -573,6 +573,141 @@ saveExcelFile(buffer: any, fileName: string) {
   link.click();
 }
 //#endregion
+
+
+
+//#region export by state
+
+exportExcelSingleDwrByState() {
+  // Create a new workbook
+  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+
+  // Extract the grid data
+  const gridDataByState = this.getGridDataByState();
+
+  // Define the columns and headers for the worksheet
+  const columns = [
+    { header: 'State', key: 'State' },
+    { header: 'Employee', key: 'Employee' },
+    { header: 'Hours', key: 'Hours' },
+    { header: 'Hourly Rate', key: 'Hourly Rate' },
+    { header: 'Wages', key: 'Wages' },
+  ];
+
+  // Convert the grid data to a worksheet with the specified columns and headers
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState);
+
+  // Calculate and add the total hours and wages row
+  const totalHours = this.calculateTotalHoursSingleDwr();
+  const totalWages = this.calculateTotalSingleWages();
+  const totalRow = {
+    State: '',
+    Employee: 'Total',
+    Hours: totalHours,
+    'Hourly Rate': '',
+    Wages: totalWages,
+  };
+  const totalRowIndex = gridDataByState.length + 2; // Add 2 to skip the header row and start from the next row after the data
+  XLSX.utils.sheet_add_json(worksheet, [totalRow], { origin: totalRowIndex });
+
+  // Add the worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
+
+  // Export the workbook to an Excel file
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  this.saveExcelFile(excelBuffer, 'DWR Data By State.xlsx');
+}
+
+getGridDataByState() {
+  // Extract the grid data and return as an array of objects
+  const gridDataByState = [];
+  // Iterate over the grid rows and extract the data, skipping the first row
+  const rows = document.getElementsByClassName('single-dwr-grid');
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rowData = {
+      State: row.children[2].textContent.trim(),
+      Employee: row.children[0].textContent.trim(),
+      Hours: row.children[5].textContent.trim(),
+      'Hourly Rate': row.children[6].textContent.trim(),
+      Wages: row.children[7].textContent.trim(),
+    };
+    gridDataByState.push(rowData);
+  }
+  return gridDataByState;
+}
+
+saveExcelFileByState(buffer: any, fileName: string) {
+  const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url: string = window.URL.createObjectURL(data);
+  const link: HTMLAnchorElement = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
+}
+//#endregion
+
+//#region export by supervisor
+
+exportExcelSingleDwrBySupervisor() {
+  // Create a new workbook
+  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+
+  // Extract the grid data
+  const gridDataBySupervisor = this.getGridDataBySupervisor();
+
+  // Define the columns and headers
+  const columns = [
+    { header: 'Supervisor', key: 'Supervisor' },
+    { header: 'Employee', key: 'Name' },
+    { header: 'Date', key: 'Date' },
+    { header: 'Hours', key: 'Hours' },
+    { header: 'Hourly Rate', key: 'Hourly Rate' },
+    { header: 'Wages', key: 'Wages' },
+    { header: 'Status', key: 'Status' }
+  ];
+
+  // Convert the grid data to a worksheet with the specified columns and headers
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor);
+
+  // Add the worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
+
+  // Export the workbook to an Excel file
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  this.saveExcelFile(excelBuffer, 'DWR Data by Supervisor.xlsx');
+}
+
+getGridDataBySupervisor() {
+  // Extract the grid data and return as an array of objects
+  const gridDataBySupervisor = [];
+  // Iterate over the grid rows and extract the data, skipping the first row
+  const rows = document.getElementsByClassName('single-dwr-grid');
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rowData = {
+      Supervisor: row.children[9].textContent.trim(),
+      Name: row.children[0].textContent.trim(),
+      Date: row.children[1].textContent.trim(),
+      Hours: row.children[5].textContent.trim(),
+      'Hourly Rate': row.children[6].textContent.trim(),
+      Wages: row.children[7].textContent.trim(),
+      Status: row.children[8].textContent.trim(),
+    };
+    gridDataBySupervisor.push(rowData);
+  }
+  return gridDataBySupervisor;
+}
+
+saveExcelFileBySupervisor(buffer: any, fileName: string) {
+  const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url: string = window.URL.createObjectURL(data);
+  const link: HTMLAnchorElement = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
+}
+
 
 }
 

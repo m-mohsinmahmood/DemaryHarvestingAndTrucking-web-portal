@@ -31,10 +31,28 @@
                                 *ngIf="!dwrFiltersForm.value.status && !dwrFiltersForm.value.beginning_date && !dwrFiltersForm.value.ending_date && !dwrFiltersForm.value.employee_id && !dwrFiltersForm.value.category && !dwrFiltersForm.value.supervisor_id && !dwrFiltersForm.value.state"
                                 [svgIcon]="'heroicons_outline:filter'"></mat-icon>
                         </button>
-                        <button class="flex flex-row justify-center items-center" (click)="exportExcelSingleDwr()">
+                        <!-- <button class="flex flex-row justify-center items-center" (click)="exportExcelSingleDwr()">
                             <mat-icon>download</mat-icon>
                             <span>Export</span>
+                        </button> -->
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
+                        <mat-menu #menu="matMenu">
+                            <button (click)="exportExcelSingleDwr()" mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Export Detailed DWR</span>
+                            </button>
+                            <button (click)="exportExcelSingleDwrByState()" mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Export DWR By State</span>
+                            </button>
+                            <button (click)="exportExcelSingleDwrBySupervisor()" mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Export  DWR By Supervisor</span>
+                            </button>
+                        </mat-menu>
+            
                     </div>
                 </div>
             </div>
