@@ -1,15 +1,30 @@
 .farm-data-farms {
     grid-template-columns: 35% 45% 45%;
     @screen sm {
-        grid-template-columns: 10% 13% 13% 13% 13% 10%;
+        grid-template-columns: 15% 15% 15% 7% 7% 10% 10%;
     }
     @screen md {
-        grid-template-columns: 20% 20% 20% 7% 7% 10%;
+        grid-template-columns: 15% 15% 15% 7% 7% 10% 10%;
     }
     @screen lg {
-        grid-template-columns: 20% 20% 20% 7% 7% 10%;
+        grid-template-columns: 15% 15% 15% 7% 7% 10% 10%;
     }
 }
+
+.single-dwr-grid {
+    grid-template-columns: 35% 45% 45%;
+    @screen sm {
+        grid-template-columns: 12% 7% 7% 7% 7% 7% 7% 7% 10% 7% 7%;
+    }
+    @screen md {
+        grid-template-columns: 12% 7% 7% 7% 7% 7% 7% 7% 10% 7% 7%;
+    }
+    @screen lg {
+        grid-template-columns: 12% 7% 7% 7% 7% 7% 7% 7% 10% 7% 7%;
+    }
+}
+
+
 ::ng-deep .mat-form-field-wrapper
 {
     padding: 0px !important;

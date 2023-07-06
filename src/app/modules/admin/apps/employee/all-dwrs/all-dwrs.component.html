@@ -8,15 +8,19 @@
                 </div>
                 <!-- Title -->
                 <div class="text-2xl font-extrabold tracking-tight">All DWRs
-                    <span class="text-sm font-normal" *ngIf="dwrFiltersForm.value.status || dwrFiltersForm.value.beginning_date || dwrFiltersForm.value.ending_date || dwrFiltersForm.value.employee_id || dwrFiltersForm.value.category || dwrFiltersForm.value.supervisor_id || dwrFiltersForm.value.state">
-                    Filters Applied</span>
-                    <span class="text-sm font-normal" *ngIf="dwrFiltersForm.value.beginning_date || dwrFiltersForm.value.ending_date">  For Date Range {{dwrFiltersForm.value.beginning_date |date:"MMM-dd-YYYY"}} {{dwrFiltersForm.value.ending_date|date:"MMM-dd-YYYY"}}</span>
+                    <span class="text-sm font-normal"
+                        *ngIf="dwrFiltersForm.value.status || dwrFiltersForm.value.beginning_date || dwrFiltersForm.value.ending_date || dwrFiltersForm.value.employee_id || dwrFiltersForm.value.category || dwrFiltersForm.value.supervisor_id || dwrFiltersForm.value.state">
+                        Filters Applied</span>
+                    <span class="text-sm font-normal"
+                        *ngIf="dwrFiltersForm.value.beginning_date || dwrFiltersForm.value.ending_date"> For Date Range
+                        {{dwrFiltersForm.value.beginning_date |date:"MMM-dd-YYYY"}}
+                        {{dwrFiltersForm.value.ending_date|date:"MMM-dd-YYYY"}}</span>
                 </div>
-                
+
                 <!-- Actions -->
                 <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 ">
                     <div class="flex">
-                       
+
 
                         <!--Filter-->
                         <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
@@ -27,7 +31,7 @@
                                 *ngIf="!dwrFiltersForm.value.status && !dwrFiltersForm.value.beginning_date && !dwrFiltersForm.value.ending_date && !dwrFiltersForm.value.employee_id && !dwrFiltersForm.value.category && !dwrFiltersForm.value.supervisor_id && !dwrFiltersForm.value.state"
                                 [svgIcon]="'heroicons_outline:filter'"></mat-icon>
                         </button>
-                        <button class="flex flex-row justify-center items-center" (click)="exportToExcel()" >
+                        <button class="flex flex-row justify-center items-center" (click)="exportExcelSingleDwr()">
                             <mat-icon>download</mat-icon>
                             <span>Export</span>
                         </button>
@@ -35,57 +39,63 @@
                 </div>
             </div>
         </div>
-        <!-- Main -->
+
+        <!-- Single DWRs Work-->
         <div class="flex flex-auto overflow-hidden">
             <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto mb-20">
 
                 <!-- Testing All wages -->
-                <ng-container *ngIf="employee?.final_wages.length > 0; else noEmployees1">
-                    <ng-container *ngFor="let payroll of employee?.final_wages; let z = index">
-                        <div class="grid" *ngIf="z === 0">
-                            <!-- Header -->
-                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                            matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction" (matSortChange)="sortData($event)">
-                                <!-- <div class="sm:block">ID</div> -->
-                                <div mat-sort-header="hw.employee_name" class="sm:block">Name</div>
-                                <div>Supervisor</div>
-                                <div class="hidden sm:block">State</div>
-                                <div mat-sort-header="ss.total_hours" class="custom-class-for-col-header">Total Hours</div>
-                                <div class="hidden sm:block custom-class-for-col-header" >Hourly Rate</div>
-                                <div mat-sort-header="ss.total_wages" class="hidden sm:block custom-class-for-col-header">Total Wages</div>
+                <ng-container *ngIf="employee?.dwrTasks.length > 0; else noEmployees1">
+                    <ng-container>
+                        <!-- Header -->
+                        <div class="single-dwr-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction"
+                            (matSortChange)="sortData($event)">
+                            <!-- <div class="sm:block">ID</div> -->
+                            <div mat-sort-header="first_name" class="sm:block">Name</div>
+                            <div mat-sort-header="created_at" class="hidden sm:block">Date</div>
+                            <div mat-sort-header="state" class="hidden sm:block">State</div>
+                            <div mat-sort-header="category" class="hidden sm:block">Category</div>
+                            <div class="hidden sm:block">Check In/Check Out</div>
+                            <div mat-sort-header="hours_worked" class="custom-class-for-col-header">Hours</div>
+                            <div class="hidden sm:block custom-class-for-col-header">Hourly Rate</div>
+                            <div mat-sort-header="wage" class="hidden sm:block custom-class-for-col-header">Wages</div>
+                            <div class="hidden sm:block">Status</div>
+                            <div mat-sort-header="supervisor" class="hidden sm:block">Supervisor</div>
+                            <div mat-sort-header="ticket_id" class="hidden sm:block">Ticket ID</div>
 
-                                <!-- <div class="">Actions</div> -->
-                            </div>
+                            <!-- <div class="">Actions</div> -->
                         </div>
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
-                    <ng-container *ngFor="let payroll of employee?.final_wages; let x = index">
-                        <div *ngFor="let state of payroll?.result.state_details; first as isFirst">
-                            <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b"
-                             *ngIf="isFirst">
+                    <ng-container *ngFor="let dwr of employee?.dwrTasks; let z = index">
+                        <div class="single-dwr-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
 
-                                <div class="break-normal">{{payroll.result.employee_name}}</div>
-                                <div class="break-normal">{{ payroll.result.supervisors?.join(', ') || 'No supervisors
-                                    found' }}</div>
-                                <div class="break-normal hidden sm:block">{{getStateList(payroll.result.state_details)}}
-                                </div>
-                                <div class="break-normal">{{payroll.result.total_hours}}</div>
-                                <div class="break-normal hidden sm:block">${{payroll.result.hourly_rates?.join(', ')}}</div>
-                                <div class="break-normal hidden sm:block">${{ toDecimalPoint(payroll.result.total_wages.toFixed(2))}}</div>
-
+                            <div class="break-normal hidden sm:block">{{ dwr.first_name}} {{ dwr.last_name}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.created_at | date : 'MMM-dd-yyyy'}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.state}}</div>
+                            <div class="break-normal hidden sm:block capitalize">{{ dwr.category}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.begining_day | date: 'HH:mm'}}/{{
+                                dwr.ending_day | date: 'HH:mm'}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.hours_worked}}</div>
+                            <div class="break-normal hidden sm:block">${{dwr.state ==='Arizona' ? '15.62' : '18.65'}}
                             </div>
+                            <div class="break-normal hidden sm:block">{{ dwr.wage}}</div>
+                            <div class="break-normal hidden sm:block capitalize">{{ dwr.dwr_status}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.supervisor}}</div>
+                            <div class="break-normal hidden sm:block">{{ getShortUUID(dwr.ticket_id)}}</div>
+
+
                         </div>
-                        <!-- <div class="truncate flex justify-end w-10/12">{{payroll.employee_wages}}
-                                </div> -->
                     </ng-container>
                 </ng-container>
                 <div>
                     <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
                         <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
-                            {{calculateTotalHours().toFixed(2)}}</mat-label>
-                            <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
-                                ${{calculateTotalWages()}}</mat-label>
+                            {{calculateTotalHoursSingleDwr().toFixed(2)}}</mat-label>
+                        <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
+                            ${{calculateTotalSingleWages()}}</mat-label>
                     </div>
 
                 </div>
@@ -95,7 +105,70 @@
                         There is no Employee Data!
                     </div>
                 </ng-template>
-             </div>
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="flex flex-auto overflow-hidden">
+            <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto mb-20">
+
+                <!-- Testing All wages -->
+                <!-- <ng-container *ngIf="employee?.final_wages.length > 0; else noEmployees1">
+                    <ng-container *ngFor="let payroll of employee?.final_wages; let z = index">
+                        <div class="grid" *ngIf="z === 0">
+                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction"
+                                (matSortChange)="sortData($event)">
+                                <div mat-sort-header="hw.employee_name" class="sm:block">Name</div>
+                                <div>Supervisor</div>
+                                <div class="hidden sm:block">State</div>
+                                <div mat-sort-header="ss.total_hours" class="custom-class-for-col-header">Total Hours
+                                </div>
+                                <div class="hidden sm:block custom-class-for-col-header">Hourly Rate</div>
+                                <div mat-sort-header="ss.total_wages"
+                                    class="hidden sm:block custom-class-for-col-header">Total Wages</div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container> -->
+                <!-- <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
+                    <ng-container *ngFor="let payroll of employee?.final_wages; let x = index">
+                        <div *ngFor="let state of payroll?.result.state_details;">
+                            <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+
+                                <div class="break-normal">{{payroll.result.employee_name}}</div>
+                                <div class="break-normal">{{ payroll.result.supervisors?.join(', ') || 'No supervisors
+                                    found' }}</div>
+                                <div class="break-normal hidden sm:block">{{state.state}}
+                                </div>
+
+                                <div class="break-normal">{{state.state_hours}}</div>
+                                <div class="break-normal hidden sm:block">${{state.state==='Arizona' ? '15.62' :
+                                    '18.65'}}</div>
+                                <div class="break-normal hidden sm:block">${{ state.state_wage}}</div>
+
+                            </div>
+                        </div>
+                        
+                    </ng-container>
+                </ng-container> -->
+                <!-- <div>
+                    <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
+                        <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
+                            {{calculateTotalHours().toFixed(2)}}</mat-label>
+                        <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
+                            ${{calculateTotalWages()}}</mat-label>
+                    </div>
+
+                </div> -->
+
+                <ng-template #noEmployees1>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        There is no Employee Data!
+                    </div>
+                </ng-template>
+            </div>
         </div>
 
 
@@ -104,19 +177,19 @@
             <div class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto">
                 <!-- Title -->
                 <div class="flex flex-row justify-between">
-                <div class="pl-8 pb-6 text-2xl  font-extrabold tracking-tight">Top 10 Wages</div>
-                <button class="pr-10 flex flex-row justify-center items-center" (click)="exportTopTenDataExcel()" >
-                    <mat-icon>download</mat-icon>
-                    <span>Export</span>
-                </button>
-            </div>
+                    <div class="pl-8 pb-6 text-2xl  font-extrabold tracking-tight">Top 10 Wages</div>
+                    <button class="pr-10 flex flex-row justify-center items-center" (click)="exportTopTenDataExcel()">
+                        <mat-icon>download</mat-icon>
+                        <span>Export</span>
+                    </button>
+                </div>
                 <!-- Testing All wages -->
                 <ng-container>
                     <ng-container>
                         <div class="grid">
                             <!-- Header -->
-                            <div class="farm-data-farms border-t z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                                >
+                            <div
+                                class="farm-data-farms border-t z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
                                 <!-- <div class="sm:block">ID</div> -->
                                 <div class="sm:block">Employee Name</div>
                                 <div class="sm:block">Total Hours Worked</div>
@@ -189,16 +262,30 @@
                     <form [formGroup]="dwrFiltersForm" (ngSubmit)="applyFilters()"
                         class="flex flex-col flex-auto p-6 sm:p-8">
                         <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+
+                            <!-- <ng-select [items]="allEmployeesList" [bindValue]="'id'" [bindLabel]="'fullName'"
+                                [clearable]="true" [typeahead]="employeeSearchControl.valueChanges.pipe(
+                                debounceTime(200),
+                                distinctUntilChanged(),
+                                switchMap(value => this._employeeService.getAllEmployeesDropDown(value, 'allEmployees', ''))
+                     )" placeholder="Employee Name">
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{ item.first_name }} {{ item.last_name }}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{ item.first_name }} {{ item.last_name }}
+                                </ng-template>
+                            </ng-select> -->
+
+
                             <mat-form-field appearance="outline">
                                 <mat-label>Employee Name</mat-label>
                                 <input (ngModelChange)="formValidation($event)" (input)="getallEmployees()"
-                                       (keyup)="employee_search$.next($event.target.value)"
-                                       (click)="getallEmployees()"
-                                       [matAutocomplete]="employeesMenu"
-                                       matInput formControlName="employee_id" name="employee_id"
-                                       placeholder="Employee Name" />
-                              </mat-form-field>
-                              
+                                    (keyup)="employee_search$.next($event.target.value)" (click)="getallEmployees()"
+                                    [matAutocomplete]="employeesMenu" matInput formControlName="employee_id"
+                                    name="employee_id" placeholder="Employee Name" />
+                            </mat-form-field>
+
 
 
                             <mat-autocomplete #employeesMenu="matAutocomplete"
@@ -206,8 +293,8 @@
                                 <div *ngIf="allEmployeesList | withLoading | async as allEmployeesList">
                                     <ng-template [ngIf]="allEmployeesList.value">
                                         <mat-option *ngFor="let employeeName of allEmployeesList.value.employees"
-                                        [value]="employeeName">
-                                        {{ employeeName.first_name }} {{ employeeName.last_name }}
+                                            [value]="employeeName">
+                                            {{ employeeName.first_name }} {{ employeeName.last_name }}
                                         </mat-option>
                                     </ng-template>
                                     <ng-template [ngIf]="allEmployeesList?.loading">
@@ -247,38 +334,36 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Supervisor</mat-label>
-                            <input (ngModelChange)="formValidation($event)" 
-                            (input)="getallSupervisor()"
-                            (click)="getallSupervisor()"
-                                    [matAutocomplete]="supervisorList"
-                                    (keyup)="supervisor_search$.next($event.target.value)" matInput formControlName="supervisor_id" name="first_name"
-                                     placeholder="Supervisor Name" />
+                            <input (ngModelChange)="formValidation($event)" (input)="getallSupervisor()"
+                                (click)="getallSupervisor()" [matAutocomplete]="supervisorList"
+                                (keyup)="supervisor_search$.next($event.target.value)" matInput
+                                formControlName="supervisor_id" name="first_name" placeholder="Supervisor Name" />
                         </mat-form-field>
 
-                       <mat-autocomplete #supervisorList="matAutocomplete"
-                                [displayWith]="displaySupervisorForAutoComplete">
-                                <div *ngIf="allSupervisorsList | withLoading | async as allSupervisorsList">
-                                    <ng-template [ngIf]="allSupervisorsList.value">
-                                        <mat-option *ngFor="let supervisor of allSupervisorsList.value.employees"
-                                            [value]="supervisor">
-                                            {{ supervisor.first_name }} {{ supervisor.last_name }}
-                                        </mat-option>
-                                    </ng-template>
-                                    <ng-template [ngIf]="allSupervisorsList?.loading">
-                                        <mat-option>
-                                            <div style="display: flex;
+                        <mat-autocomplete #supervisorList="matAutocomplete"
+                            [displayWith]="displaySupervisorForAutoComplete">
+                            <div *ngIf="allSupervisorsList | withLoading | async as allSupervisorsList">
+                                <ng-template [ngIf]="allSupervisorsList.value">
+                                    <mat-option *ngFor="let supervisor of allSupervisorsList.value.employees"
+                                        [value]="supervisor">
+                                        {{ supervisor.first_name }} {{ supervisor.last_name }}
+                                    </mat-option>
+                                </ng-template>
+                                <ng-template [ngIf]="allSupervisorsList?.loading">
+                                    <mat-option>
+                                        <div style="display: flex;
                                             justify-content: center;
                                             text-align: center;">
-                                                <mat-spinner class="text-primary" diameter="25"></mat-spinner>
-                                            </div>
-                                        </mat-option>
-                                    </ng-template>
+                                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                                        </div>
+                                    </mat-option>
+                                </ng-template>
 
-                                    <ng-template [ngIf]="allSupervisorsList?.employees?.length == 0">
-                                        <mat-option disabled> No Employee found </mat-option>
-                                    </ng-template>
-                                </div>
-                            </mat-autocomplete>
+                                <ng-template [ngIf]="allSupervisorsList?.employees?.length == 0">
+                                    <mat-option disabled> No Employee found </mat-option>
+                                </ng-template>
+                            </div>
+                        </mat-autocomplete>
 
 
                         <mat-form-field appearance="outline">

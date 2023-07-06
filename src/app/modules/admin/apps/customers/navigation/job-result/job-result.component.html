@@ -47,12 +47,15 @@
                             </mat-autocomplete>
                             <!-- MAT AUTOCOMPLETE -->
 
-                            <mat-form-field appearance="outline" fxFlex>
+                            <mat-form-field [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')" appearance="outline" fxFlex>
                                 <mat-label>Field Name</mat-label>
-                                <input (click)="getDropdownFields()" [matAutocomplete]="fields"
+                                <input (click)="getDropdownFields()" [disabled] [matAutocomplete]="fields"
                                     (keyup)="field_search$.next($event.target.value)" matInput
                                     formControlName="field_id" name="name" placeholder="Field Name" />
-
+                                    <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                        class="-ml-2 text-md uppercase text-red-500">
+                                        Farm is required
+                                    </mat-hint>
 
                             </mat-form-field>
 
@@ -115,13 +118,16 @@
                             <!-- Crop AUTOCOMPLETE -->
 
 
-                            <mat-form-field appearance="outline" fxFlex>
+                            <mat-form-field [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')" appearance="outline" fxFlex>
                                 <mat-label>Destination Name</mat-label>
                                 <input (click)="getDropdownDestinations()"
                                     [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
                                     (keyup)="destination_search$.next($event.target.value)" matInput
                                     formControlName="destinations_id" name="name" placeholder="Destination Name" />
-
+                                    <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                        class="-ml-2 text-md uppercase text-red-500">
+                                        Farm is required
+                                    </mat-hint>
                             </mat-form-field>
 
                             <mat-autocomplete #destinations="matAutocomplete"
@@ -198,7 +204,17 @@
         <!-- Custom Harvesting-->
         <mat-tab label="Custom Harvesting">
             <div class="bg-gray justify-center px-2 my-8">
-                <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 justify-end">
+                <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 justify-between">
+                    <div>
+                    <span class="text-sm font-normal"
+                        *ngIf="jobsFiltersForm.value.status || jobsFiltersForm.value.farm_id || jobsFiltersForm.value.field_id || jobsFiltersForm.value.crop_id || jobsFiltersForm.value.destinations_id || jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date">
+                        Filters Applied</span>
+                    <span class="text-sm font-normal"
+                        *ngIf="jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date"> For Date Range
+                        {{jobsFiltersForm.value.from_date |date:"MMM-dd-YYYY"}}
+                        {{jobsFiltersForm.value.to_date | date:"MMM-dd-YYYY"}}</span>
+                    </div>
+
                     <div class="flex">
 
                         <button mat-flat-button class="mat-filter" (click)="filtersDrawerHarvesting.toggle()">
@@ -341,7 +357,7 @@
                                             Destination
                                         </div>
                                         <div class="hidden lg:block">
-                                            Tickets
+                                            Delivery/Scale Ticket
                                         </div>
                                         <div class="hidden sm:block">
                                             Net Pounds</div>

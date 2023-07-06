@@ -288,6 +288,37 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.totalHours;
   }
 
+  calculateTotalHoursSingleDwr(): number {
+    this.totalHours = 0; // Reset the total wages
+    this.allDwrsList$.subscribe(data => {
+      for (const dwr of data?.dwrTasks) {
+        if(dwr.hours_worked)
+        {
+          this.totalHours += parseFloat(dwr?.hours_worked);
+
+        }
+      }
+
+    });
+
+    return this.totalHours;
+  }
+
+  calculateTotalSingleWages(): number {
+    this.totalWages = 0; // Reset the total wages
+    this.allDwrsList$.subscribe(data => {
+      for (const dwr of data?.dwrTasks) {
+        if(dwr.wage)
+          this.totalWages += parseFloat(dwr.wage);
+
+      }
+
+    });
+
+    return this.toDecimalPoint(this.totalWages.toFixed(2));
+  }
+
+
   calculateTopTenTotalHours(): number {
     this.topTenWorkingHours = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
@@ -358,17 +389,18 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       data.push(headerRow);
   
       employee?.final_wages.forEach((payroll) => {
-        const row = [
-          payroll.result.employee_name,
-          payroll.result.supervisors?.join(', ') || 'No supervisors found',
-          this.getStateList(payroll.result.state_details),
-          payroll.result.total_hours,
-          payroll.result.hourly_rates?.join(', '),
-          this.toDecimalPoint(payroll.result.total_wages.toFixed(2))
-        ];
-        data.push(row);
+        payroll?.result.state_details.forEach((state) => {
+          const row = [
+            payroll.result.employee_name,
+            payroll.result.supervisors?.join(', ') || 'No supervisors found',
+            state.state,
+            state.state_hours,
+            state.state === 'arizona' ? '15.62' : '18.65',
+            state.state_wage
+          ];
+          data.push(row);
+        });
       });
-  
       // Calculate total hours and total wages
       const totalHours = this.calculateTotalHours().toFixed(2);
       const totalWages = this.calculateTotalWages();
@@ -480,6 +512,66 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     return parts.join(".");
   }
   
+//#endregion
+
+getShortUUID(uuid): string {
+  const shortUUID = uuid.replace(/-/g, '').substring(0, 8);
+  return shortUUID;
+}
+
+//#region single dwr export
+
+exportExcelSingleDwr() {
+  // Create a new workbook
+  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+
+  // Extract the grid data
+  const gridData = this.getGridData();
+
+  // Convert the grid data to a worksheet
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridData);
+
+  // Add the worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
+
+  // Export the workbook to an Excel file
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  this.saveExcelFile(excelBuffer, 'dwr_data.xlsx');
+}
+
+getGridData() {
+  // Extract the grid data and return as an array of objects
+  const gridData = [];
+  // Iterate over the grid rows and extract the data, skipping the first row
+  const rows = document.getElementsByClassName('single-dwr-grid');
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rowData = {
+      Name: row.children[0].textContent.trim(),
+      Date: row.children[1].textContent.trim(),
+      State: row.children[2].textContent.trim(),
+      Category: row.children[3].textContent.trim(),
+      'Check In/Check Out': row.children[4].textContent.trim(),
+      Hours: row.children[5].textContent.trim(),
+      'Hourly Rate': row.children[6].textContent.trim(),
+      Wages: row.children[7].textContent.trim(),
+      Status: row.children[8].textContent.trim(),
+      Supervisor: row.children[9].textContent.trim(),
+      'Ticket ID': row.children[10].textContent.trim(),
+    };
+    gridData.push(rowData);
+  }
+  return gridData;
+}
+
+saveExcelFile(buffer: any, fileName: string) {
+  const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url: string = window.URL.createObjectURL(data);
+  const link: HTMLAnchorElement = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
+}
 //#endregion
 
 }
