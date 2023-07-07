@@ -556,8 +556,6 @@ export class EmployeeService {
         params = params.set('operation', operation);
         params = params.set('beginning_date', filters.beginning_date);
         params = params.set('ending_date', filters.ending_date);
-        params = params.set('category', filters.category);
-        params = params.set('supervisor_name', filters.supervisor_name);
         params = params.set('supervisor_id', filters.supervisor_id);
         params = params.set('employee_id', filters.employee_id);
         params = params.set('status', filters.status);
