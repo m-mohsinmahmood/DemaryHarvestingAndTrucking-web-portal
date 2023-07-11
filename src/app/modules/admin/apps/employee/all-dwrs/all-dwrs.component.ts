@@ -525,11 +525,32 @@ exportExcelSingleDwr() {
   // Create a new workbook
   const workbook: XLSX.WorkBook = XLSX.utils.book_new();
 
+  // Define the columns and headers for the worksheet
+  const columns = ['Name', 'Date', 'State', 'Category', 'Check In', 'Check Out', 'Hours', 'Hourly Rate', 'Wages', 'Status', 'Supervisor', 'Ticket ID', 'Notes'];
+
+  // Create a new worksheet
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([], { header: columns });
+
   // Extract the grid data
   const gridData = this.getGridData();
 
-  // Convert the grid data to a worksheet
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridData);
+  // Add the grid data to the worksheet
+  XLSX.utils.sheet_add_json(worksheet, gridData, { skipHeader: true, origin: -1 });
+
+  // Get the range for the last row
+  const range = XLSX.utils.decode_range(worksheet['!ref']);
+  const lastRow = range.e.r;
+
+  // Add an empty row
+
+  // Calculate total hours and total wages
+  const totalHours = this.calculateTotalHours().toFixed(2);
+  const totalWages = this.calculateTotalWages();
+
+  // Add totals row
+  const totalsRow = ['', '', '','','','', "Total Hours: " + totalHours, '','','', "Total Wages: " + totalWages];
+  const totalRowIndex = gridData.length + 1; // Add 2 to skip the header row and start from the next row after the data
+  XLSX.utils.sheet_add_json(worksheet, [totalsRow], { origin: totalRowIndex });
 
   // Add the worksheet to the workbook
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
@@ -540,9 +561,7 @@ exportExcelSingleDwr() {
 }
 
 getGridData() {
-  // Extract the grid data and return as an array of objects
   const gridData = [];
-  // Iterate over the grid rows and extract the data, skipping the first row
   const rows = document.getElementsByClassName('single-dwr-grid');
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
@@ -551,13 +570,15 @@ getGridData() {
       Date: row.children[1].textContent.trim(),
       State: row.children[2].textContent.trim(),
       Category: row.children[3].textContent.trim(),
-      'Check In/Check Out': row.children[4].textContent.trim(),
-      Hours: row.children[5].textContent.trim(),
-      'Hourly Rate': row.children[6].textContent.trim(),
-      Wages: row.children[7].textContent.trim(),
-      Status: row.children[8].textContent.trim(),
-      Supervisor: row.children[9].textContent.trim(),
-      'Ticket ID': row.children[10].textContent.trim(),
+      'Check In': row.children[4].textContent.trim(),
+      'Check Out': row.children[5].textContent.trim(),
+      Hours: row.children[6].textContent.trim(),
+      'Hourly Rate': row.children[7].textContent.trim(),
+      Wages: row.children[8].textContent.trim(),
+      Status: row.children[9].textContent.trim(),
+      Supervisor: row.children[10].textContent.trim(),
+      'Ticket ID': row.children[11].textContent.trim(),
+      Notes: row.children[12].textContent.trim(),
     };
     gridData.push(rowData);
   }
@@ -572,6 +593,8 @@ saveExcelFile(buffer: any, fileName: string) {
   link.download = fileName;
   link.click();
 }
+
+
 //#endregion
 
 
@@ -619,23 +642,69 @@ exportExcelSingleDwrByState() {
 }
 
 getGridDataByState() {
-  // Extract the grid data and return as an array of objects
   const gridDataByState = [];
-  // Iterate over the grid rows and extract the data, skipping the first row
   const rows = document.getElementsByClassName('single-dwr-grid');
+  let currentState = '';
+  let stateTotalHours = 0;
+  let stateTotalWages = 0;
+
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
+    const state = row.children[2].textContent.trim();
+    const hours = parseFloat(row.children[6].textContent.trim().replace(',', ''));
+    const wages = parseFloat(row.children[8].textContent.trim().replace('$', '').replace(',', ''));
+
+    if (currentState !== state && currentState !== '') {
+      if (stateTotalHours !== 0 && stateTotalWages !== 0) {
+        const stateTotalRow = {
+          State: '',
+          Employee: 'Subtotal',
+          Hours: stateTotalHours,
+          'Hourly Rate': '',
+          Wages: stateTotalWages,
+        };
+        gridDataByState.push(stateTotalRow);
+      }
+      stateTotalHours = 0;
+      stateTotalWages = 0;
+    }
+
+    if (currentState !== state) {
+      currentState = state;
+    }
+
     const rowData = {
-      State: row.children[2].textContent.trim(),
       Employee: row.children[0].textContent.trim(),
-      Hours: row.children[5].textContent.trim(),
-      'Hourly Rate': row.children[6].textContent.trim(),
-      Wages: row.children[7].textContent.trim(),
+      State: currentState === state ? state : '',
+      Hours: hours,
+      'Hourly Rate': row.children[7].textContent.trim(),
+      Wages: wages,
     };
+
     gridDataByState.push(rowData);
+
+    stateTotalHours += hours;
+    stateTotalWages += wages;
   }
+
+  // Add the final state subtotal row
+  if (currentState !== '') {
+    if (stateTotalHours !== 0 && stateTotalWages !== 0) {
+      const stateTotalRow = {
+        Employee: 'Subtotal',
+        State: '',
+        Hours: stateTotalHours,
+        'Hourly Rate': '',
+        Wages: stateTotalWages,
+      };
+      gridDataByState.push(stateTotalRow);
+    }
+  }
+
   return gridDataByState;
 }
+
+
 
 saveExcelFileByState(buffer: any, fileName: string) {
   const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -648,7 +717,6 @@ saveExcelFileByState(buffer: any, fileName: string) {
 //#endregion
 
 //#region export by supervisor
-
 exportExcelSingleDwrBySupervisor() {
   // Create a new workbook
   const workbook: XLSX.WorkBook = XLSX.utils.book_new();
@@ -656,46 +724,128 @@ exportExcelSingleDwrBySupervisor() {
   // Extract the grid data
   const gridDataBySupervisor = this.getGridDataBySupervisor();
 
-  // Define the columns and headers
-  const columns = [
-    { header: 'Supervisor', key: 'Supervisor' },
-    { header: 'Employee', key: 'Name' },
-    { header: 'Date', key: 'Date' },
-    { header: 'Hours', key: 'Hours' },
-    { header: 'Hourly Rate', key: 'Hourly Rate' },
-    { header: 'Wages', key: 'Wages' },
-    { header: 'Status', key: 'Status' }
-  ];
+  // Define the columns and headers for the worksheet
+  const columns = ['Supervisor', 'Employee', 'Hours', 'Hourly Rate', 'Wages','Date'];
 
   // Convert the grid data to a worksheet with the specified columns and headers
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor);
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
 
-  // Add the worksheet to the workbook
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
+  // Calculate and add the subtotal rows for each supervisor
+  const supervisors = Array.from(new Set(gridDataBySupervisor.map(item => item.Supervisor)));
+  supervisors.forEach(supervisor => {
+    const supervisorData = gridDataBySupervisor.filter(item => item.Supervisor === supervisor);
+    const totalHours = supervisorData.reduce((sum, item) => sum + item.Hours, 0);
+    const totalWages = supervisorData.reduce((sum, item) => sum + item.Wages, 0);
+
+    const subtotalRow = {
+      Supervisor: supervisor,
+      Employee: 'Subtotal',
+      Hours: totalHours,
+      'Hourly Rate': '',
+      Wages: totalWages,
+      Date: '',
+
+    };
+    gridDataBySupervisor.push(subtotalRow);
+  });
+
+  // Calculate the total hours and total wages for all supervisors
+  const totalHoursAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Hours, 0);
+  const totalWagesAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Wages, 0);
+
+  // Remove the subtotal rows for each supervisor
+  gridDataBySupervisor.splice(-supervisors.length);
+
+  // Add the total row for all supervisors at the end
+  const totalRowAll = {
+    Supervisor: 'Total',
+    Employee: '',
+    Hours: totalHoursAll,
+    'Hourly Rate': '',
+    Wages: totalWagesAll,
+    Date: '',
+
+  };
+  gridDataBySupervisor.push(totalRowAll);
+
+  // Convert the updated grid data to a worksheet with the specified columns and headers
+  const updatedWorksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
+
+  // Add the updated worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, updatedWorksheet, 'Grid Data');
 
   // Export the workbook to an Excel file
   const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  this.saveExcelFile(excelBuffer, 'DWR Data by Supervisor.xlsx');
+  this.saveExcelFileBySupervisor(excelBuffer, 'DWR Data By Supervisor.xlsx');
 }
 
+
 getGridDataBySupervisor() {
-  // Extract the grid data and return as an array of objects
   const gridDataBySupervisor = [];
-  // Iterate over the grid rows and extract the data, skipping the first row
   const rows = document.getElementsByClassName('single-dwr-grid');
+  let currentSupervisor = '';
+  let supervisorTotalHours = 0;
+  let supervisorTotalWages = 0;
+
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
+    const employee = row.children[0].textContent.trim();
+    const date = row.children[1].textContent.trim();
+    const supervisor = row.children[10].textContent.trim();
+    const hours = parseFloat(row.children[6].textContent.trim());
+    const hourlyRate = parseFloat(row.children[7].textContent.trim().replace('$', ''));
+    const wages = parseFloat(row.children[8].textContent.trim().replace('$', ''));
+
+    if (currentSupervisor !== supervisor && currentSupervisor !== '') {
+      if (supervisorTotalHours !== 0 && supervisorTotalWages !== 0) {
+        const supervisorTotalRow = {
+          Date: '',
+          Supervisor: '',
+          Employee: 'Subtotal',
+          Hours: supervisorTotalHours,
+          'Hourly Rate': '',
+          Wages: supervisorTotalWages,
+        };
+        gridDataBySupervisor.push(supervisorTotalRow);
+      }
+      supervisorTotalHours = 0;
+      supervisorTotalWages = 0;
+    }
+
+    if (currentSupervisor !== supervisor) {
+      currentSupervisor = supervisor;
+    }
+
     const rowData = {
-      Supervisor: row.children[9].textContent.trim(),
-      Name: row.children[0].textContent.trim(),
-      Date: row.children[1].textContent.trim(),
-      Hours: row.children[5].textContent.trim(),
-      'Hourly Rate': row.children[6].textContent.trim(),
-      Wages: row.children[7].textContent.trim(),
-      Status: row.children[8].textContent.trim(),
+      Date: date,
+      Supervisor: currentSupervisor === supervisor ? supervisor : '',
+      Employee: employee,
+      Hours: hours,
+      'Hourly Rate': hourlyRate,
+      Wages: wages,
     };
+
     gridDataBySupervisor.push(rowData);
+
+    supervisorTotalHours += hours;
+    supervisorTotalWages += wages;
   }
+
+  // Add the final supervisor subtotal row
+  if (currentSupervisor !== '') {
+    if (supervisorTotalHours !== 0 && supervisorTotalWages !== 0) {
+      const supervisorTotalRow = {
+        Date: '',
+        Supervisor: '',
+        Employee: 'Subtotal',
+        Hours: supervisorTotalHours,
+        'Hourly Rate': '',
+        Wages: supervisorTotalWages,
+      };
+      gridDataBySupervisor.push(supervisorTotalRow);
+    }
+  }
+
   return gridDataBySupervisor;
 }
 
@@ -707,6 +857,7 @@ saveExcelFileBySupervisor(buffer: any, fileName: string) {
   link.download = fileName;
   link.click();
 }
+
 
 
 }
