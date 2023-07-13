@@ -8,6 +8,7 @@ import { EmployeeService } from '../../employee.service';
 import { Employee } from '../../employee.types';
 import { DWRTasksDetails } from './dwr-tasks-details/dwr-tasks-details.component';
 import { PeriodicPayrollDetails } from './periodic-payroll-details/periodic-payroll-details.component';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-payroll',

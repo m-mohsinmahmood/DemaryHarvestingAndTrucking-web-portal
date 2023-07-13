@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { debounceTime, Observable } from 'rxjs';
 import { EmployeeService } from '../../../employee.service';
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-periodic-payroll-details',
@@ -19,6 +21,8 @@ export class PeriodicPayrollDetails implements OnInit {
   isLoadingPayrollPeriodDetails$: Observable<boolean>;
   arr: any;
   routeID; // URL ID
+  totalWages: number;
+  totalHours: number;
 
 
 
@@ -42,7 +46,7 @@ export class PeriodicPayrollDetails implements OnInit {
     this.initForm();
     this.initApis();
 
-
+    console.log(this.payrollPeriodDetails$)
   }
 
   initApis() {   
@@ -123,4 +127,91 @@ export class PeriodicPayrollDetails implements OnInit {
     }
   }
 
+
+  calculateTotalSingleWages(): number {
+    this.totalWages = 0; // Reset the total wages
+    this.payrollPeriodDetails$.subscribe(data => {
+      for (const dwr of data?.dwrsDetailed) {
+        if(dwr.wage)
+          this.totalWages += parseFloat(dwr.wage);
+
+      }
+
+    });
+
+    return this.toDecimalPoint(this.totalWages.toFixed(2));
+  }
+
+  calculateTotalHoursSingleDwr(): number {
+    this.totalHours = 0; // Reset the total wages
+    this.payrollPeriodDetails$.subscribe(data => {
+      for (const dwr of data?.dwrsDetailed) {
+        if(dwr.hours_worked)
+        {
+          this.totalHours += parseFloat(dwr?.hours_worked);
+
+        }
+      }
+
+    });
+
+    return this.totalHours;
+  }
+
+  toDecimalPoint(number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+  
+  exportToExcel(): void {
+    const wb = XLSX.utils.book_new();
+  
+    this.payrollPeriodDetails$.subscribe((data) => {
+      const employeeName = `${data.first_name}_${data.last_name}`;
+  
+      const exportData =  [];
+
+      const headerRow = [
+        'Date', 'Supervisor', 'State', 'Hours', 'Hourly Rate', 'Wage'
+
+      ];
+      exportData.push(headerRow);
+
+      // Prepare data for export
+      data.dwrsDetailed.map((dwr) => {
+        const row = [
+          dwr.created_at,
+          dwr.supervisor,
+          dwr.state,
+          dwr.hours_worked,
+          dwr.hourly_rate,
+          dwr.wage
+        ];
+        exportData.push(row);
+      });
+  
+      // Calculate total hours and total wages
+      const totalHours = this.calculateTotalHoursSingleDwr().toFixed(2);
+      const totalWages = this.calculateTotalSingleWages();
+  
+      // Add totals row
+      const totalsRow = ['', '', '', "Total Hours: " + totalHours, '', "Total Wages: " + totalWages];
+      exportData.push(totalsRow);
+  
+      // Create the worksheet
+      const ws = XLSX.utils.aoa_to_sheet(exportData);
+      const wsName = 'DWR Data';
+  
+      // Add the worksheet to the workbook
+      XLSX.utils.book_append_sheet(wb, ws, wsName);
+  
+      // Generate the Excel file and save it
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const date = new Date().toISOString().slice(0, 10);
+      const filename = `Dwr_Detailed_Data_${employeeName}_${date}.xlsx`;
+      const file = new Blob([wbout], { type: 'application/octet-stream' });
+      saveAs(file, filename);
+    });
+  }
 }

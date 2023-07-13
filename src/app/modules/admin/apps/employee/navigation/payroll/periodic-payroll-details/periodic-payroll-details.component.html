@@ -18,8 +18,13 @@
                 <ng-container>
                     <ng-container>
                         <div class="grid">
+                            <button (click)="exportToExcel()" mat-menu-item>
+                                <mat-icon>download</mat-icon>
+                                <span>Export Detailed DWR</span>
+                            </button>
+
                             <!-- Header -->
-                            <div class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                            <div id="grid" class="farm-data-farms z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                 <div class="hidden sm:block">Date</div>
                                 <div>Supervisor</div>
                                 <div class="hidden sm:block">State</div>
@@ -31,16 +36,22 @@
                             <!-- Rows -->
                             <ng-container>
                                 <ng-container *ngIf="employee?.dwrTasks[0].length > 0; else noPayroll">
-                                    <div *ngFor="let payroll of employee?.dwrTasks[0]" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate hidden sm:block">{{payroll.date |  date: "MM-d-YYYY"}}</div>
+                                    <div *ngFor="let payroll of employee?.dwrsDetailed" class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate hidden sm:block">{{payroll.created_at |  date: "MM-d-YYYY"}}</div>
                                         <div class="truncate">{{payroll.supervisor}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
-                                        <div class="truncate hidden sm:block">${{payroll.hourly_rate}}</div>
-                                        <div class="truncate hidden sm:block">${{totalWage(payroll.hours_worked,payroll.hourly_rate)}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.state === 'Arizona' ? 15.62 : 18.65}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.wage}}</div>
                                     </div>
                                 </ng-container>
                             </ng-container>
+                            <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
+                                <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
+                                    {{calculateTotalHoursSingleDwr().toFixed(2)}}</mat-label>
+                                <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
+                                    ${{calculateTotalSingleWages()}}</mat-label>
+                            </div>
                         </div>
                     </ng-container>
                 </ng-container>
