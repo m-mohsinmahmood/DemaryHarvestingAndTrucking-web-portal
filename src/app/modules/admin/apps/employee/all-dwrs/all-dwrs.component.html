@@ -104,8 +104,8 @@
                                 <div class="break-normal hidden sm:block">{{ dwr.begining_day | date: 'HH:mm'}}</div>
                                 <div class="break-normal hidden sm:block">{{dwr.ending_day | date: 'HH:mm'}}</div>
                                 <div class="break-normal hidden sm:block">{{ dwr.hours_worked}}</div>
-                                <div class="break-normal hidden sm:block">${{dwr.state ==='Arizona' ? '15.62' :
-                                    '18.65'}}
+                                <div class="break-normal hidden sm:block">${{dwr.state ==='Arizona' ? employee.hourly_rate[0].arizona_rate :
+                                    employee.hourly_rate[0].max_hourly_rate}}
                                 </div>
                                 <div class="break-normal hidden sm:block">{{ dwr.wage}}</div>
                                 <div class="break-normal hidden sm:block capitalize">{{ dwr.dwr_status}}</div>

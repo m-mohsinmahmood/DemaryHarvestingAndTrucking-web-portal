@@ -157,6 +157,16 @@ export class PeriodicPayrollDetails implements OnInit {
 
     return this.totalHours;
   }
+  wageCalculation(state:any, hours:any, max_rate:any , arizona_rate:any)
+  {
+    if(state==='Arizona'){
+
+      return (hours * arizona_rate).toFixed(2);
+    }
+    else {
+      return (hours * max_rate).toFixed(2);
+    }
+  }
 
   toDecimalPoint(number) {
     var parts = number.toString().split(".");

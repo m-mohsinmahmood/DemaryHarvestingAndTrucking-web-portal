@@ -42,7 +42,7 @@
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
                                         <div class="truncate hidden sm:block">${{payroll.state === 'Arizona' ? 15.62 : 18.65}}</div>
-                                        <div class="truncate hidden sm:block">${{payroll.wage}}</div>
+                                        <div class="truncate hidden sm:block">${{wageCalculation(payroll.state, payroll.hours_worked, employee.hourly_rates[0]?.max_hourly_rate, employee.hourly_rates[0]?.arizona_rate)}}</div>
                                     </div>
                                 </ng-container>
                             </ng-container>
