@@ -80,6 +80,7 @@ import { ConfirmDialogComponent } from './navigation/invoice/confirm-dialog/conf
 import { AddDetailsComponent } from './navigation/invoice/add-details/add-details.component';
 import { EditTruckingJobComponent } from './navigation/job-result/edit-trucking-job/edit-trucking-job.component';
 import { EditFarmingJobComponent } from './navigation/job-result/edit-farming-job/edit-farming-job.component';
+import { AcresHarvestingJobs } from './navigation/job-result/edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -130,7 +131,8 @@ import { EditFarmingJobComponent } from './navigation/job-result/edit-farming-jo
         ConfirmDialogComponent,
         AddDetailsComponent,
         EditTruckingJobComponent,
-        EditFarmingJobComponent
+        EditFarmingJobComponent,
+        AcresHarvestingJobs
     ],
     imports: [
     RouterModule.forChild(customersRoutes),

@@ -41,7 +41,7 @@
                         <mat-menu #menu="matMenu">
                             <button (click)="exportToExcel()" mat-menu-item>
                                 <mat-icon>download</mat-icon>
-                                <span>Export Detailed DWR</span>
+                                <span>Export Detailed DWR by Date</span>
                             </button>
                             <button (click)="exportExcelSingleDwrByState()" mat-menu-item>
                                 <mat-icon>download</mat-icon>
@@ -68,63 +68,56 @@
 
                     <ng-container *ngIf="employee?.dwrTasks.length > 0; else noEmployees1">
                         <ng-container>
-                            <!-- Header -->
-                            <div class="single-dwr-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                                matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction"
-                                (matSortChange)="sortData($event)">
-                                <!-- <div class="sm:block">ID</div> -->
-                                <div mat-sort-header="first_name" class="sm:block">Name</div>
-                                <div mat-sort-header="created_at" class="hidden sm:block">Date</div>
-                                <div mat-sort-header="state" class="hidden sm:block">State</div>
-                                <div mat-sort-header="category" class="hidden sm:block">Category</div>
-                                <div class="hidden sm:block">Check In</div>
-                                <div class="hidden sm:block">Check Out</div>
-                                <div mat-sort-header="hours_worked" class="custom-class-for-col-header">Hours</div>
-                                <div class="hidden sm:block custom-class-for-col-header">Hourly Rate</div>
-                                <div mat-sort-header="wage" class="hidden sm:block custom-class-for-col-header">Wages
-                                </div>
-                                <div class="hidden sm:block">Status</div>
-                                <div mat-sort-header="supervisor" class="hidden sm:block">Supervisor</div>
-                                <div mat-sort-header="ticket_id" class="hidden sm:block">Ticket ID</div>
-                                <div class="hidden">Notes</div>
-
-                                <!-- <div class="">Actions</div> -->
-                            </div>
+                          <!-- Header -->
+                          <div class="single-dwr-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction"
+                            (matSortChange)="sortData($event)">
+                            <!-- <div class="sm:block">ID</div> -->
+                            <div mat-sort-header="first_name" class="sm:block">Name</div>
+                            <div mat-sort-header="created_at" class="hidden sm:block">Date</div>
+                            <div mat-sort-header="state" class="hidden sm:block">State</div>
+                            <div mat-sort-header="category" class="hidden sm:block">Category</div>
+                            <div class="hidden sm:block">Check In</div>
+                            <div class="hidden sm:block">Check Out</div>
+                            <div mat-sort-header="hours_worked" class="custom-class-for-col-header">Hours</div>
+                            <div class="hidden sm:block custom-class-for-col-header">Hourly Rate</div>
+                            <div mat-sort-header="wage" class="hidden sm:block custom-class-for-col-header">Wages</div>
+                            <div class="hidden sm:block">Status</div>
+                            <div mat-sort-header="supervisor" class="hidden sm:block">Supervisor</div>
+                            <div mat-sort-header="ticket_id" class="hidden sm:block">Ticket ID</div>
+                            <div class="hidden">Notes</div>
+                            <!-- <div class="">Actions</div> -->
+                          </div>
                         </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
+                      </ng-container>
+                      <ng-container *ngIf="employee?.dwrTasks.length > 0; else noPayroll">
                         <ng-container *ngFor="let dwr of employee?.dwrTasks; let z = index">
-                            <div class="single-dwr-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-
-                                <div class="break-normal hidden sm:block">{{ dwr.first_name}} {{ dwr.last_name}}</div>
-                                <div class="break-normal hidden sm:block">{{ dwr.created_at | date : 'MMM-dd-yyyy'}}
-                                </div>
-                                <div class="break-normal hidden sm:block">{{ dwr.state}}</div>
-                                <div class="break-normal hidden sm:block capitalize">{{ dwr.category}}</div>
-                                <div class="break-normal hidden sm:block">{{ dwr.begining_day | date: 'HH:mm'}}</div>
-                                <div class="break-normal hidden sm:block">{{dwr.ending_day | date: 'HH:mm'}}</div>
-                                <div class="break-normal hidden sm:block">{{ dwr.hours_worked}}</div>
-                                <div class="break-normal hidden sm:block">${{dwr.state ==='Arizona' ? employee.hourly_rate[0].arizona_rate :
-                                    employee.hourly_rate[0].max_hourly_rate}}
-                                </div>
-                                <div class="break-normal hidden sm:block">{{ dwr.wage}}</div>
-                                <div class="break-normal hidden sm:block capitalize">{{ dwr.dwr_status}}</div>
-                                <div class="break-normal hidden sm:block">{{ dwr.supervisor}}</div>
-                                <div class="break-normal hidden sm:block">{{ getShortUUID(dwr.ticket_id)}}</div>
-                                <div class="hidden">{{ dwr.employee_notes}}</div>
-
-
-                            </div>
+                          <div class="single-dwr-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" *ngIf="dwr.ending_day">
+                            <div class="break-normal hidden sm:block">{{ dwr.first_name}} {{ dwr.last_name}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.created_at | date : 'MMM-dd-yyyy'}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.state}}</div>
+                            <div class="break-normal hidden sm:block capitalize">{{ dwr.category}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.begining_day | date: 'HH:mm'}}</div>
+                            <div class="break-normal hidden sm:block">{{dwr.ending_day | date: 'HH:mm'}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.hours_worked}}</div>
+                            <div class="break-normal hidden sm:block">${{dwr.state ==='Arizona' ? employee.hourly_rate[0].arizona_rate : employee.hourly_rate[0].max_hourly_rate}}</div>
+                            <div class="break-normal hidden sm:block">{{ wagesToFloat(dwr.wage)}}</div>
+                            <div class="break-normal hidden sm:block capitalize">{{ dwr.dwr_status === 'pendingVerification' ? 'Unverified' : dwr.dwr_status}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.supervisor}}</div>
+                            <div class="break-normal hidden sm:block">{{ getShortUUID(dwr.ticket_id)}}</div>
+                            <div class="hidden">{{ dwr.employee_notes}}</div>
+                          </div>
                         </ng-container>
-                    </ng-container>
+                      </ng-container>
+                      
                 </div>
 
                 <div>
                     <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
                         <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
-                            {{calculateTotalHoursSingleDwr().toFixed(2)}}</mat-label>
-                        <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
-                            ${{calculateTotalSingleWages()}}</mat-label>
+                            {{calculateTotalHoursSingleDwr()}}</mat-label>
+                            <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
+                                ${{calculateTotalSingleWages()}}</mat-label>
                     </div>
 
                 </div>
@@ -234,11 +227,11 @@
 
                     </ng-container>
                 </ng-container>
-                <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
+                <ng-container *ngIf="employee?.top_ten_wages.length > 0; else noPayroll">
                     <ng-container *ngFor="let payroll of employee?.top_ten_wages; let i = index">
                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                             <div class="truncate">{{payroll.employee_name}}</div>
-                            <div class="truncate">{{payroll.hours_worked}}</div>
+                            <div class="truncate">{{this.toDecimalPoint(payroll.hours_worked)}}</div>
                             <div class="truncate hidden sm:block">${{wagesToFloat(payroll.wages)}}</div>
                             <div class="truncate"></div>
                             <div class="truncate hidden sm:block"></div>
@@ -246,11 +239,11 @@
                         </div>
                     </ng-container>
                 </ng-container>
-                <ng-container *ngIf="employee?.final_wages.length > 0; else noPayroll">
+                <ng-container *ngIf="employee?.top_ten_wages.length > 0; else noPayroll">
                     <ng-container>
                         <div class="farm-data-farms grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                             <div class="truncate font-extrabold">Total = </div>
-                            <div class="truncate font-extrabold">{{calculateTopTenTotalHours().toFixed(2)}}</div>
+                            <div class="truncate font-extrabold">{{calculateTopTenTotalHours()}}</div>
                             <div class="truncate font-extrabold">${{calculateTopTenWagesTotal()}}</div>
                             <div class="truncate"></div>
                             <div class="truncate hidden sm:block"></div>

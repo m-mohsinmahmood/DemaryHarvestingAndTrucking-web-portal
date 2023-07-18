@@ -76,7 +76,6 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.employeeSearchSubscription();
     this.states = states;
 
-    console.log("All Employee", this.allDwrsList$)
     // this.generateDateRange();
   }
 
@@ -111,7 +110,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     let value;
     typeof this.dwrFiltersForm.controls['supervisor_id'].value === 'object' ? (value = this.dwrFiltersForm.controls['supervisor_id'].value?.name) : value = this.dwrFiltersForm.controls['supervisor_id'].value;
     !value ? value = '' : '';
-    this.allSupervisorsList = this._employeeService.getAllEmployeesDropDown(value, 'allSupervisors', ''); 
+    this.allSupervisorsList = this._employeeService.getAllEmployeesDropDown(value, 'allSupervisors', '');
     // this.allSupervisorsList.subscribe((val)=>console.log(val));
   }
 
@@ -170,38 +169,36 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //#region Filters
   applyFilters() {
-    this.dwrFiltersForm.value['supervisor_id'] = this.dwrFiltersForm.value['supervisor_id']?.id != undefined ? this.dwrFiltersForm.value['supervisor_id']?.id : "";
-    this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id']?.id != undefined ? this.dwrFiltersForm.value['employee_id']?.id : this.dwrFiltersForm.value['employee_id'].id;
-
-    if (this.dwrFiltersForm.get('ending_date').value !== null) {
-      if (this.dwrFiltersForm.value.beginning_date) {
-        this.dwrFiltersForm.controls['beginning_date'].patchValue(moment(this.dwrFiltersForm.value.beginning_date).format('YYYY-MM-DD'));
+    const filterValues = this.dwrFiltersForm.value;
+  
+    if (filterValues.ending_date !== null) {
+      if (filterValues.beginning_date) {
+        filterValues.beginning_date = moment(filterValues.beginning_date).format('YYYY-MM-DD');
       }
-      if (this.dwrFiltersForm.value.ending_date) {
-        this.dwrFiltersForm.controls['ending_date'].patchValue(moment(this.dwrFiltersForm.value.ending_date).format('YYYY-MM-DD'));
+      if (filterValues.ending_date) {
+        filterValues.ending_date = moment(filterValues.ending_date).format('YYYY-MM-DD');
       }
     }
-    !this.dwrFiltersForm.value.status ? (this.dwrFiltersForm.value.status = '') : ('');
-    !this.dwrFiltersForm.value.state ? (this.dwrFiltersForm.value.state = '') : ('');
-    !this.dwrFiltersForm.value.beginning_date ? (this.dwrFiltersForm.value.beginning_date = '') : ('');
-    !this.dwrFiltersForm.value.ending_date ? (this.dwrFiltersForm.value.ending_date = '') : ('');
-    !this.dwrFiltersForm.value.supervisor_id ? (this.dwrFiltersForm.value.supervisor_id = '') : ('');
-    !this.dwrFiltersForm.value.employee_id ? (this.dwrFiltersForm.value.employee_id = '') : ('');
-    // !this.dwrFiltersForm.value.category ? (this.dwrFiltersForm.value.category = '') : ('');
-    if(this.dwrFiltersForm.value['employee_id'].toString() === "[object Object]"){
-      this.dwrFiltersForm.value['employee_id'] = this.dwrFiltersForm.value['employee_id'].id
-
+  
+    filterValues.status = filterValues.status || '';
+    filterValues.state = filterValues.state || '';
+    filterValues.beginning_date = filterValues.beginning_date || '';
+    filterValues.ending_date = filterValues.ending_date || '';
+    filterValues.supervisor_id = filterValues.supervisor_id?.id || '';
+    filterValues.employee_id = filterValues.employee_id?.id || '';
+    filterValues.category = filterValues.category || '';
+  
+    if (typeof filterValues.employee_id === 'object') {
+      filterValues.employee_id = filterValues.employee_id.id;
     }
-
-    if(this.dwrFiltersForm.value['supervisor_id'].toString() === "[object Object]"){
-      this.dwrFiltersForm.value['supervisor_id'] = this.dwrFiltersForm.value['supervisor_id'].id
-
+  
+    if (typeof filterValues.supervisor_id === 'object') {
+      filterValues.supervisor_id = filterValues.supervisor_id.id;
     }
-
-    this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
-
+  
+    this._employeeService.getDwrList('dwrList', filterValues);
   }
-
+  
   removeFilters() {
     this.dwrFiltersForm.reset();
     this.dwrFiltersForm.value.status = '';
@@ -210,7 +207,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dwrFiltersForm.value.ending_date = '';
     this.dwrFiltersForm.value.supervisor_id = '';
     this.dwrFiltersForm.value.employee_id = '';
-    // this.dwrFiltersForm.value.category = '';
+    this.dwrFiltersForm.value.category = '';
     this._employeeService.getDwrList('dwrList', this.dwrFiltersForm.value);
   }
 
@@ -222,9 +219,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       ending_date: [''],
       supervisor_name: [''],
       category: [''],
-      supervisor_id:[''],
-      employee_id:[''],
-      status:['']
+      supervisor_id: [''],
+      employee_id: [''],
+      status: ['']
     });
   }
 
@@ -258,35 +255,34 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.employeeTotalWage;
   }
 
-  calculateTotalWages(): number {
-    this.totalWages = 0; // Reset the total wages
-    this.allDwrsList$.subscribe(data => {
-      for (const payroll of data?.final_wages) {
-        if(payroll.result.total_wages)
-          this.totalWages += parseFloat(payroll.result.total_wages);
+  // calculateTotalWages(): number {
+  //   this.totalWages = 0; // Reset the total wages
+  //   this.allDwrsList$.subscribe(data => {
+  //     for (const payroll of data?.final_wages) {
+  //       if (payroll.result.total_wages)
+  //         this.totalWages += parseFloat(payroll.result.total_wages);
 
-      }
+  //     }
 
-    });
+  //   });
 
-    return this.toDecimalPoint(this.totalWages.toFixed(2));
-  }
+  //   return this.toDecimalPoint(this.totalWages.toFixed(2));
+  // }
 
-  calculateTotalHours(): number {
-    this.totalHours = 0; // Reset the total wages
-    this.allDwrsList$.subscribe(data => {
-      for (const payroll of data?.final_wages) {
-        if(payroll.result?.total_hours)
-        {
-          this.totalHours += parseFloat(payroll.result?.total_hours);
+  // calculateTotalHours(): number {
+  //   this.totalHours = 0; // Reset the total wages
+  //   this.allDwrsList$.subscribe(data => {
+  //     for (const payroll of data?.final_wages) {
+  //       if (payroll.result?.total_hours) {
+  //         this.totalHours += parseFloat(payroll.result?.total_hours);
 
-        }
-      }
+  //       }
+  //     }
 
-    });
+  //   });
 
-    return this.totalHours;
-  }
+  //   return this.toDecimalPoint(this.totalHours.toFixed(2));
+  // }
 
   calculateTotalHoursSingleDwr(): number {
     this.totalHours = 0; // Reset the total wages
@@ -301,7 +297,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     });
 
-    return this.totalHours;
+    return this.toDecimalPoint(this.totalHours.toFixed(2));
   }
 
   calculateTotalSingleWages(): number {
@@ -323,8 +319,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.topTenWorkingHours = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const hoursWorked of data?.top_ten_wages) {
-        if(hoursWorked.hours_worked)
-        {
+        if (hoursWorked.hours_worked) {
           this.topTenWorkingHours += parseFloat(hoursWorked.hours_worked);
 
         }
@@ -332,7 +327,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     });
 
-    return this.topTenWorkingHours;
+    return this.toDecimalPoint(this.topTenWorkingHours.toFixed(2));
   }
 
 
@@ -340,7 +335,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.topTenWages = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const wage of data?.top_ten_wages) {
-        if(wage.wages)
+        if (wage.wages)
           this.topTenWages += parseFloat(wage.wages);
 
       }
@@ -366,16 +361,17 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public getStateList(stateDetails: any[]): string {
-    return stateDetails.map(item => item.state).join(', ');
+    if (stateDetails)
+      return stateDetails.map(item => item.state).join(', ');
   }
 
 
   exportToExcel(): void {
     const wb = XLSX.utils.book_new();
-  
+
     this.allDwrsList$.subscribe((val) => {
       const employee = val;
-  
+
       // Prepare data for export
       const data = [];
       const headerRow = [
@@ -385,13 +381,20 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       data.push(headerRow);
   
       employee?.dwrTasks.forEach((dwr) => {
+        const formattedBeginningDay = new Date(dwr.begining_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const formattedEndingDay = new Date(dwr.ending_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const createdAtDate = new Date(dwr.created_at);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedCreatedAt = `${monthNames[createdAtDate.getMonth()]}-${createdAtDate.getDate().toString().padStart(2, '0')}-${createdAtDate.getFullYear()}`;
+      
+        
           const row = [
             dwr.first_name + dwr.last_name,
-            dwr.created_at ,
+            formattedCreatedAt ,
             dwr.state,
             dwr.category,
-            dwr.begining_day,
-            dwr.ending_day,
+            formattedBeginningDay,
+            formattedEndingDay,
             dwr.hours_worked,
             dwr.state === 'arizona' ? '15.62' : '18.65',
             dwr.wage,
@@ -403,20 +406,20 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           data.push(row);
       });
       // Calculate total hours and total wages
-      const totalHours = this.calculateTotalHours().toFixed(2);
-      const totalWages = this.calculateTotalWages();
-  
+      const totalHours = this.calculateTotalHoursSingleDwr();
+      const totalWages = this.calculateTotalSingleWages();
+
       // Add totals row
       const totalsRow = ['', '', '', '', '', '', "Total Hours: " + totalHours, '', "Total Wages: " + totalWages];
       data.push(totalsRow);
-  
+
       // Create the worksheet
       const ws = XLSX.utils.aoa_to_sheet(data);
       const wsName = 'DWR Data';
-  
+
       // Add the worksheet to the workbook
       XLSX.utils.book_append_sheet(wb, ws, wsName);
-  
+
       // Generate the Excel file and save it
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       const date = new Date().toISOString().slice(0, 10);
@@ -425,60 +428,60 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       saveAs(file, filename);
     });
   }
-  
+
 
   exportTopTenDataExcel(): void {
-      const wb = XLSX.utils.book_new();
-    
-      this.allDwrsList$.subscribe((val) => {
-        const employee = val;
-    
-        // Prepare data for export
-        const data = [];
-        const headerRow = [
-          'Employee Name',
-          'Total Hours Worked',
-          'Total Wages'
+    const wb = XLSX.utils.book_new();
+
+    this.allDwrsList$.subscribe((val) => {
+      const employee = val;
+
+      // Prepare data for export
+      const data = [];
+      const headerRow = [
+        'Employee Name',
+        'Total Hours Worked',
+        'Total Wages'
+      ];
+      data.push(headerRow);
+
+      employee?.top_ten_wages.forEach((payroll) => {
+        const row = [
+          payroll.employee_name,
+          payroll.hours_worked,
+          this.wagesToFloat(payroll.wages)
         ];
-        data.push(headerRow);
-    
-        employee?.top_ten_wages.forEach((payroll) => {
-          const row = [
-            payroll.employee_name,
-            payroll.hours_worked,
-            this.wagesToFloat(payroll.wages)
-          ];
-          data.push(row);
-        });
-    
-        // Calculate total hours and total wages
-        const totalHours = this.calculateTopTenTotalHours().toFixed(2);
-        const totalWages = this.calculateTopTenWagesTotal();
-    
-        // Add totals row
-        const totalsRow = ['Total =', totalHours, totalWages];
-        data.push(totalsRow);
-    
-        // Create the worksheet
-        const ws = XLSX.utils.aoa_to_sheet(data);
-        const wsName = 'Top Ten Wages Data';
-    
-        // Add the worksheet to the workbook
-        XLSX.utils.book_append_sheet(wb, ws, wsName);
-    
-        // Generate the Excel file and save it
-        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const date = new Date().toISOString().slice(0, 10);
-        const filename = `top_ten_wages_data_${date}.xlsx`;
-        const file = new Blob([wbout], { type: 'application/octet-stream' });
-        saveAs(file, filename);
+        data.push(row);
       });
-    
-    
+
+      // Calculate total hours and total wages
+      const totalHours = this.calculateTopTenTotalHours();
+      const totalWages = this.calculateTopTenWagesTotal();
+
+      // Add totals row
+      const totalsRow = ['Total =', totalHours, totalWages];
+      data.push(totalsRow);
+
+      // Create the worksheet
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wsName = 'Top Ten Wages Data';
+
+      // Add the worksheet to the workbook
+      XLSX.utils.book_append_sheet(wb, ws, wsName);
+
+      // Generate the Excel file and save it
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const date = new Date().toISOString().slice(0, 10);
+      const filename = `top_ten_wages_data_${date}.xlsx`;
+      const file = new Blob([wbout], { type: 'application/octet-stream' });
+      saveAs(file, filename);
+    });
+
+
   }
 
-  
-  
+
+
   //#endregion
 
 
@@ -486,11 +489,11 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Sort Function
   sortData(event: Sort) {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  
+
     this.page = 1;
-    
+
     console.log(this.sortDirection);
-    
+
     this._employeeService.getDwrList(
       'dwrList',
       this.dwrFiltersForm.value,
@@ -499,21 +502,23 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       event.active,
       this.sortDirection
     );
-    
+
     this.sort.active = event.active;
     this.sort.direction = this.sortDirection;
   }
-  wagesToFloat(wages:any){
-    return parseFloat(wages).toFixed(2);
+  wagesToFloat(wages: any) {
+    return this.toDecimalPoint(parseFloat(wages).toFixed(2));
   }
 
   toDecimalPoint(number) {
-    var parts = number.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
+    if (number) {
+      var parts = number?.toString().split(".");
+      parts[0] = parts[0]?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }
   }
-  
-//#endregion
+
+  //#endregion
 
 getShortUUID(uuid): string {
   const shortUUID = uuid.replace(/-/g, '').substring(0, 8);
@@ -544,25 +549,48 @@ exportExcelSingleDwrByState() {
     { header: 'Wages', key: 'Wages' },
   ];
 
-  // Create a new worksheet
-  const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([columns.map(column => column.header)]);
+  // Convert the grid data to a worksheet with the specified columns and headers
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState, { header: columns.map(column => column.header) });
 
-  // Calculate and add the total hours and wages row
-  const totalHours = this.calculateTotalHoursSingleDwr();
-  const totalWages = this.calculateTotalSingleWages();
-  const totalRow = ['', 'Total', totalHours, '', totalWages];
+  // Calculate and add the subtotal rows for each state
+  const states = Array.from(new Set(gridDataByState.map(item => item.State)));
+  states.forEach(state => {
+    const stateData = gridDataByState.filter(item => item.State === state);
+    const totalHours = stateData.reduce((sum, item) => sum + item.Hours, 0);
+    const totalWages = stateData.reduce((sum, item) => sum + item.Wages, 0);
 
-  // Add the grid data to the worksheet
-  XLSX.utils.sheet_add_json(worksheet, gridDataByState, { skipHeader: true, origin: 1 });
+    const subtotalRow = {
+      State: state,
+      Employee: 'Subtotal',
+      Hours: totalHours,
+      'Hourly Rate': '',
+      Wages: totalWages,
+    };
+    gridDataByState.push(subtotalRow);
+  });
 
-  // Add the total row to the worksheet
-  XLSX.utils.sheet_add_aoa(worksheet, [totalRow], { origin: gridDataByState.length + 2 });
+  // Calculate the total hours and total wages for all states
+  const totalHoursAll = this.calculateTotalHoursSingleDwr();
+  const totalWagesAll = this.calculateTotalSingleWages();
 
-  // Set the worksheet columns widths
-  worksheet['!cols'] = columns.map(column => ({ width: 15 }));
+  // Remove the subtotal rows for each state
+  gridDataByState.splice(-states.length);
 
-  // Add the worksheet to the workbook
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
+  // Add the total row for all states at the end
+  const totalRowAll = {
+    State: 'Total',
+    Employee: '',
+    Hours: totalHoursAll,
+    'Hourly Rate': '',
+    Wages: totalWagesAll,
+  };
+  gridDataByState.push(totalRowAll);
+
+  // Convert the updated grid data to a worksheet with the specified columns and headers
+  const updatedWorksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState, { header: columns.map(column => column.header) });
+
+  // Add the updated worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, updatedWorksheet, 'Grid Data');
 
   // Export the workbook to an Excel file
   const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
@@ -722,9 +750,9 @@ getGridDataBySupervisor() {
     const employee = row.children[0].textContent.trim();
     const date = row.children[1].textContent.trim();
     const supervisor = row.children[10].textContent.trim();
-    const hours = parseFloat(row.children[6].textContent.trim());
-    const hourlyRate = parseFloat(row.children[7].textContent.trim().replace('$', ''));
-    const wages = parseFloat(row.children[8].textContent.trim().replace('$', ''));
+    const hours = parseFloat(row.children[6].textContent.trim().replace(/,|\$/g, ''));
+    const hourlyRate = parseFloat(row.children[7].textContent.trim().replace(/,|\$/g, ''));
+    const wages = parseFloat(row.children[8].textContent.trim().replace(/,|\$/g, ''));
 
     if (currentSupervisor !== supervisor && currentSupervisor !== '') {
       if (supervisorTotalHours !== 0 && supervisorTotalWages !== 0) {
@@ -791,6 +819,3 @@ saveExcelFileBySupervisor(buffer: any, fileName: string) {
 
 
 }
-
-
-

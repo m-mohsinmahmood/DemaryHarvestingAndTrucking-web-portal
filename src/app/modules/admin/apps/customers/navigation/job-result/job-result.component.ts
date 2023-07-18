@@ -16,6 +16,7 @@ import { saveAs } from 'file-saver';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import RobotoFont from 'pdfmake/build/vfs_fonts.js';
+import { AcresHarvestingJobs } from './edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -69,6 +70,7 @@ export class JobResultComponent implements OnInit {
   commercialTruckingJobs$: any;
   formValid: boolean;
   exportingExcel: boolean = false;
+  isEdit: boolean = false;
 
 
 
@@ -388,6 +390,25 @@ export class JobResultComponent implements OnInit {
 
   //#endregion
 
+  //#region Add/Edit/Import Dialog
+  
+  openEditDialog(event): void {
+    this.isEdit = true;
+    const dialogRef = this._matDialog.open(AcresHarvestingJobs, {
+        data: {
+            acreData: {
+                isEdit: this.isEdit,
+                id: event.id,
+                acres: event.acres,
+                customer_id: this.routeID,
+              },
+        },
+    });
+    dialogRef.afterClosed().subscribe((result) => { });
+}
+//#endregion
+
+
   //#region route params function
   getRouteParams() {
     this.activatedRoute.params.subscribe((params) => {
@@ -573,7 +594,7 @@ export class JobResultComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['20%', '15%', '15%', '16%', '10%', '10%', '13%'],
+              widths: ['20%', '15%', '15%', '16%', '10%', '10%', '10%', '8%'],
               body: [
                 [
                   { text: "Field Name", style: 'tableHeader' },
@@ -582,7 +603,8 @@ export class JobResultComponent implements OnInit {
                   { text: "Delivery/Scale Ticket", style: 'tableHeader' },
                   { text: "Net Pounds", style: 'tableHeader' },
                   { text: "Net Bushel", style: 'tableHeader' },
-                  { text: "Load Miles", style: 'tableHeader' }
+                  { text: "Load Miles", style: 'tableHeader' },
+                  { text: "Acres", style: 'tableHeader' }
                 ],
                 ...harvestingJobs.map(harvestingJob => [
                   { text: harvestingJob.field_name, style: 'tableCell' },
@@ -591,7 +613,8 @@ export class JobResultComponent implements OnInit {
                   { text: harvestingJob.ticket_name + '/' + (harvestingJob.sl_number || ''), style: 'tableCell' },
                   { text: harvestingJob.net_pounds, style: 'tableCell' },
                   { text: harvestingJob.net_bushel, style: 'tableCell' },
-                  { text: harvestingJob.load_miles, style: 'tableCell' }
+                  { text: harvestingJob.load_miles, style: 'tableCell' },
+                  { text: harvestingJob.acres, style: 'tableCell' }
                 ])
               ]
             }
@@ -634,6 +657,98 @@ export class JobResultComponent implements OnInit {
     });
   }
 
+
+exportToExcel() {
+  const filters = this.jobsFiltersForm.value;
+
+  // Define all filters
+  const allFilters = [
+    { label: 'Farm Name', value: filters.farm_id?.name },
+    { label: 'Field Name', value: filters.field_id?.field_name },
+    { label: 'Crop Name', value: filters.crop_id?.name },
+    { label: 'Destination Name', value: filters.destinations_id?.name },
+    { label: 'Date Range', value: filters.date_range },
+    { label: 'From Date', value: filters.from_date },
+    { label: 'To Date', value: filters.to_date },
+    { label: 'Status', value: filters.status }
+  ];
+
+  // Subscribe to the observable to get the data
+  this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
+    const harvestingJobs = customHarvestingJobs.harvestingJobs;
+    const details = customHarvestingJobs.details[0];
+
+    // Create Summary Data for Excel Sheet
+    const summaryData = [
+      ['Total Net Pounds', details?.total_net_pounds || 'N/A', 'Total Tons', details?.total_net_pounds ? details?.total_net_pounds / 2000 : 'N/A'],
+      ['Tons per Acre', details?.total_net_pounds / details?.total_acres || 'N/A', 'Total Bushels', details?.total_net_bushels || 'N/A'],
+      ['Bushels per Acre', details?.total_net_bushels / details?.total_acres || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? details?.total_net_pounds / 100 : 'N/A'],
+      ['DHT Total Loaded Miles', details?.total_loaded_miles || 'N/A', 'DHT Average Miles', details?.total_loaded_miles / details?.total_tickets || 'N/A'],
+      ['Total Loads', harvestingJobs.total_loads || 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
+      ['Farmer Tickets', '1234', 'Company', details?.customer_name || 'N/A'],
+      // Add more rows for other summary data
+    ];
+
+    // Create Job Results Data for Excel Sheet
+    const jobResultsData = [
+      ['Field Name', 'Load Date', 'Destination', 'Delivery/Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
+      ...harvestingJobs.map(harvestingJob => [
+        harvestingJob.field_name,
+        new Date(harvestingJob.load_date).toLocaleDateString('en-GB'),
+        harvestingJob.destination,
+        `${harvestingJob.ticket_name}/${harvestingJob.sl_number || ''}`,
+        harvestingJob.net_pounds,
+        harvestingJob.net_bushel,
+        harvestingJob.load_miles,
+        harvestingJob.acres
+      ])
+    ];
+     // Create Filters Data for Excel Sheet
+// Create Filters Data for Excel Sheet
+const filterSheetData = XLSX.utils.aoa_to_sheet(allFilters.map(filter => [filter.label, filter.value || 'N/A']));
+
+
+    // Create Summary Sheet Data for Excel Sheet
+    const summarySheetData = XLSX.utils.aoa_to_sheet(summaryData);
+
+    // Create Job Results Sheet Data for Excel Sheet
+    const jobResultsSheetData = XLSX.utils.aoa_to_sheet(jobResultsData);
+
+    // Create a new workbook
+    const workbook = XLSX.utils.book_new();
+
+    // Add Filter Sheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, filterSheetData, 'Filters');
+
+    // Add Summary Sheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, summarySheetData, 'Summary');
+
+    // Add Job Results Sheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, jobResultsSheetData, 'Job Results');
+
+    // Export the workbook to an Excel file
+    const excelOutput = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+
+    // Convert the Excel output to a Blob
+    const blob = new Blob([excelOutput], { type: 'application/octet-stream' });
+
+    // Create a download link
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'JobResults.xlsx';
+
+    // Append the link to the DOM
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Remove the link from the DOM
+    document.body.removeChild(link);
+  });
+}
+
+  
 }
 
 

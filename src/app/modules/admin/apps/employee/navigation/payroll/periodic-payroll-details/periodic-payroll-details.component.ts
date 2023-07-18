@@ -131,16 +131,42 @@ export class PeriodicPayrollDetails implements OnInit {
   calculateTotalSingleWages(): number {
     this.totalWages = 0; // Reset the total wages
     this.payrollPeriodDetails$.subscribe(data => {
-      for (const dwr of data?.dwrsDetailed) {
-        if(dwr.wage)
-          this.totalWages += parseFloat(dwr.wage);
+      const max_rate = data.hourly_rates[0]?.max_hourly_rate;
+      const arizona_rate = data.hourly_rates[0]?.arizona_rate;
 
+      for (const dwr of data?.dwrsDetailed) {
+        if(dwr.hours_worked)
+        {
+          this.totalWages += parseFloat(this.totalWagesCalculations(dwr.hours_worked, arizona_rate, max_rate, dwr.state));
+          console.log(this.totalWages,"wage" )
+        }
       }
 
     });
 
     return this.toDecimalPoint(this.totalWages.toFixed(2));
   }
+
+  totalWagesCalculations(hours_worked: any, arizona_rate:any, max_rate:any, state:any ) {
+    if (arizona_rate && max_rate) {
+      if(state=='Arizona')
+      {
+      return (
+        (
+          parseFloat((hours_worked)) *
+          parseFloat((arizona_rate))
+        ).toFixed(2));
+      } else {
+        return (
+          (
+            parseFloat((hours_worked)) *
+            parseFloat((max_rate))
+          ).toFixed(2));
+      }
+    }
+    
+  }
+
 
   calculateTotalHoursSingleDwr(): number {
     this.totalHours = 0; // Reset the total wages
@@ -178,6 +204,10 @@ export class PeriodicPayrollDetails implements OnInit {
     const wb = XLSX.utils.book_new();
   
     this.payrollPeriodDetails$.subscribe((data) => {
+      const max_rate = data.hourly_rates[0]?.max_hourly_rate;
+      const arizona_rate = data.hourly_rates[0]?.arizona_rate;
+
+
       const employeeName = `${data.first_name}_${data.last_name}`;
   
       const exportData =  [];
@@ -195,8 +225,8 @@ export class PeriodicPayrollDetails implements OnInit {
           dwr.supervisor,
           dwr.state,
           dwr.hours_worked,
-          dwr.hourly_rate,
-          dwr.wage
+          dwr.state === 'arizona' ? arizona_rate : max_rate,
+          this.wageCalculation(dwr.state,dwr.hours_worked, max_rate, arizona_rate)
         ];
         exportData.push(row);
       });

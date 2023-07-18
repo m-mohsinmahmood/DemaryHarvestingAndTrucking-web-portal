@@ -41,15 +41,15 @@
                                         <div class="truncate">{{payroll.supervisor}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.state}}</div>
                                         <div class="truncate hidden sm:block">{{payroll.hours_worked}}</div>
-                                        <div class="truncate hidden sm:block">${{payroll.state === 'Arizona' ? 15.62 : 18.65}}</div>
+                                        <div class="truncate hidden sm:block">${{payroll.state ==='Arizona' ? employee.hourly_rates[0].arizona_rate : employee.hourly_rates[0].max_hourly_rate}}</div>
                                         <div class="truncate hidden sm:block">${{wageCalculation(payroll.state, payroll.hours_worked, employee.hourly_rates[0]?.max_hourly_rate, employee.hourly_rates[0]?.arizona_rate)}}</div>
                                     </div>
                                 </ng-container>
                             </ng-container>
                             <div class="flex flex-row float-right sm:mr-8  py-2 items-end pr-20 gap-4 justify-end">
-                                <mat-label class="w-3/12 border-2 font-bold p-6">Total Hours:
+                                <mat-label class="w-4/12 border-2 font-bold p-6">Total Hours:
                                     {{calculateTotalHoursSingleDwr().toFixed(2)}}</mat-label>
-                                <mat-label class="w-3/12 border-2 font-bold p-6">Total Wages:
+                                <mat-label class="w-4/12 border-2 font-bold p-6">Total Wages:
                                     ${{calculateTotalSingleWages()}}</mat-label>
                             </div>
                         </div>

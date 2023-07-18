@@ -557,6 +557,15 @@ export class CustomersService {
     readonly isLoadingEditFarmingInvoice$: Observable<boolean> =
         this.isLoadingEditFarmingInvoice.asObservable();
 
+        //#region acre update in harvest jobs
+       
+
+        isLoadingJobAcres: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+
+    readonly isLoadingJobAcres$: Observable<boolean> =
+        this.isLoadingJobAcres.asObservable();
+        //#endregion
 
 
     //#region Observables Dropdowns
@@ -2948,6 +2957,38 @@ export class CustomersService {
             );
     }
 
+
+    //#endregion
+
+    //#region update acres
+    updateAcresInHarvestJobs(acreData: any, operation) {
+        this._httpClient
+            .patch(`api-1/customer-job-result`, {acreData, operation})
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingJobAcres.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingJobAcres.next(false);
+                },
+                () => {
+                    this.getHarvestingJobs(acreData.customer_id, 'harvesting');
+                }
+            );
+    }
 
     //#endregion
 

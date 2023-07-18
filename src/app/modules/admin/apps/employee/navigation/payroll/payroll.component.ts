@@ -127,14 +127,14 @@ export class PayrollComponent implements OnInit {
       {
       return (
         (
-          parseFloat((hours_worked).replace("$", "")) *
-          parseFloat((arizona_rate).replace("$", ""))
+          parseFloat((hours_worked)) *
+          parseFloat((arizona_rate))
         ).toFixed(2));
       } else {
         return (
           (
-            parseFloat((hours_worked).replace("$", "")) *
-            parseFloat((max_rate).replace("$", ""))
+            parseFloat((hours_worked)) *
+            parseFloat((max_rate))
           ).toFixed(2));
       }
     }
@@ -145,8 +145,8 @@ export class PayrollComponent implements OnInit {
     if (a && b) {
       return (
         (
-          parseFloat((a).replace("$", "")) *
-          parseFloat((b).replace("$", ""))
+          parseFloat((a)) *
+          parseFloat((b))
         ).toFixed(2));
     }
   }
