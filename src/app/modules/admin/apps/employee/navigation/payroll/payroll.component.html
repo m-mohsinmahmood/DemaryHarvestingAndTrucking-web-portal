@@ -153,7 +153,6 @@
                             <div class="payroll-period z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
                                 <div class="hidden sm:block">Period</div>
                                 <div class="hidden sm:block">Hours Worked</div>
-                                <div class="hidden sm:block">State</div>
                                 <div>Wages</div>
                                 <!-- <div>Actions</div> -->
                             </div>
@@ -169,7 +168,7 @@
                                         </div>
                                         <div class="truncate hidden sm:block">{{payrollP.total_hours_worked}}</div>
                                         <!-- <div class="truncate hidden sm:block">{{payrollP.state}}</div> -->
-                                        <!-- <div class="truncate">${{payrollP.wage}}</div> -->
+                                        <div class="truncate">{{payrollP.wage? '$' : '-'}} {{payrollP.wage}}</div>
                                     </div>
                                 </ng-container>
 

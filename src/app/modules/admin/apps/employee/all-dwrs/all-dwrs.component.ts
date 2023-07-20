@@ -170,35 +170,41 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Filters
   applyFilters() {
     const filterValues = this.dwrFiltersForm.value;
-  
+
     if (filterValues.ending_date !== null) {
       if (filterValues.beginning_date) {
-        filterValues.beginning_date = moment(filterValues.beginning_date).format('YYYY-MM-DD');
+        filterValues.beginning_date = moment(filterValues.beginning_date).format('YYYY-MM-DD HH:mm:ss');
       }
       if (filterValues.ending_date) {
-        filterValues.ending_date = moment(filterValues.ending_date).format('YYYY-MM-DD');
+        filterValues.ending_date = moment(filterValues.ending_date).format('YYYY-MM-DD HH:mm:ss');
       }
     }
-  
+
     filterValues.status = filterValues.status || '';
     filterValues.state = filterValues.state || '';
-    filterValues.beginning_date = filterValues.beginning_date || '';
-    filterValues.ending_date = filterValues.ending_date || '';
+    // filterValues.beginning_date = filterValues.beginning_date || '';
+    // filterValues.ending_date = filterValues.ending_date || '';
+
+    var stDay = moment(filterValues.beginning_date).startOf('day').format('MM/DD/YYYY HH:mm:ss');
+    var enDay = moment(filterValues.ending_date).endOf('day').format('MM/DD/YYYY HH:mm:ss');
+    filterValues.beginning_date = new Date(stDay).toISOString();
+    filterValues.ending_date = new Date(enDay).toISOString();
+
     filterValues.supervisor_id = filterValues.supervisor_id?.id || '';
     filterValues.employee_id = filterValues.employee_id?.id || '';
     filterValues.category = filterValues.category || '';
-  
+
     if (typeof filterValues.employee_id === 'object') {
       filterValues.employee_id = filterValues.employee_id.id;
     }
-  
+
     if (typeof filterValues.supervisor_id === 'object') {
       filterValues.supervisor_id = filterValues.supervisor_id.id;
     }
-  
+
     this._employeeService.getDwrList('dwrList', filterValues);
   }
-  
+
   removeFilters() {
     this.dwrFiltersForm.reset();
     this.dwrFiltersForm.value.status = '';
@@ -288,8 +294,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.totalHours = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const dwr of data?.dwrTasks) {
-        if(dwr.hours_worked)
-        {
+        if (dwr.hours_worked) {
           this.totalHours += parseFloat(dwr?.hours_worked);
 
         }
@@ -304,7 +309,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.totalWages = 0; // Reset the total wages
     this.allDwrsList$.subscribe(data => {
       for (const dwr of data?.dwrTasks) {
-        if(dwr.wage)
+        if (dwr.wage)
           this.totalWages += parseFloat(dwr.wage);
 
       }
@@ -370,6 +375,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     const wb = XLSX.utils.book_new();
 
     this.allDwrsList$.subscribe((val) => {
+      const max_rate = val.hourly_rate[0]?.max_hourly_rate;
+      const arizona_rate = val.hourly_rate[0]?.arizona_rate;
+
       const employee = val;
 
       // Prepare data for export
@@ -379,31 +387,31 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       ];
       data.push(headerRow);
-  
+
       employee?.dwrTasks.forEach((dwr) => {
         const formattedBeginningDay = new Date(dwr.begining_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
         const formattedEndingDay = new Date(dwr.ending_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
         const createdAtDate = new Date(dwr.created_at);
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const formattedCreatedAt = `${monthNames[createdAtDate.getMonth()]}-${createdAtDate.getDate().toString().padStart(2, '0')}-${createdAtDate.getFullYear()}`;
-      
-        
-          const row = [
-            dwr.first_name + dwr.last_name,
-            formattedCreatedAt ,
-            dwr.state,
-            dwr.category,
-            formattedBeginningDay,
-            formattedEndingDay,
-            dwr.hours_worked,
-            dwr.state === 'arizona' ? '15.62' : '18.65',
-            dwr.wage,
-            dwr.dwr_status,
-            dwr.supervisor,
-            this.getShortUUID(dwr.ticket_id),
-            dwr.employee_notes
-          ];
-          data.push(row);
+
+
+        const row = [
+          dwr.first_name + dwr.last_name,
+          formattedCreatedAt,
+          dwr.state,
+          dwr.category,
+          formattedBeginningDay,
+          formattedEndingDay,
+          parseFloat(dwr.hours_worked),
+          dwr.state === 'arizona' ? arizona_rate : max_rate,
+          parseFloat(dwr.wage),
+          dwr.dwr_status,
+          dwr.supervisor,
+          this.getShortUUID(dwr.ticket_id),
+          dwr.employee_notes
+        ];
+        data.push(row);
       });
       // Calculate total hours and total wages
       const totalHours = this.calculateTotalHoursSingleDwr();
@@ -520,301 +528,433 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //#endregion
 
-getShortUUID(uuid): string {
-  const shortUUID = uuid.replace(/-/g, '').substring(0, 8);
-  return shortUUID;
-}
+  getShortUUID(uuid): string {
+    const shortUUID = uuid.replace(/-/g, '').substring(0, 8);
+    return shortUUID;
+  }
 
-//#region single dwr export
+  //#region single dwr export
 
-//#endregion
+  //#endregion
 
 
 
-//#region export by state
+  //#region export by state
 
-exportExcelSingleDwrByState() {
-  // Create a new workbook
-  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+  // Function to export Excel file with subtotal rows
+  exportExcelSingleDwrByState() {
+    // Create a new workbook
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
 
-  // Extract the grid data
-  const gridDataByState = this.getGridDataByState();
+    // Extract the grid data
+    const gridDataByState = this.getGridDataByState();
 
-  // Define the columns and headers for the worksheet
-  const columns = [
-    { header: 'State', key: 'State' },
-    { header: 'Employee', key: 'Employee' },
-    { header: 'Hours', key: 'Hours' },
-    { header: 'Hourly Rate', key: 'Hourly Rate' },
-    { header: 'Wages', key: 'Wages' },
-  ];
+    // Define the columns and headers for the worksheet
+    const columns = [
+      { header: 'State', key: 'State' },
+      { header: 'Employee', key: 'Employee' },
+      { header: 'Hours', key: 'Hours' },
+      { header: 'Hourly Rate', key: 'Hourly Rate' },
+      { header: 'Wages', key: 'Wages' },
+    ];
 
-  // Convert the grid data to a worksheet with the specified columns and headers
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState, { header: columns.map(column => column.header) });
+    // Calculate and add the subtotal rows for each state
+    const states = Array.from(new Set(gridDataByState.map(item => item.State)));
+    this.addStateSubtotals(gridDataByState, states);
 
-  // Calculate and add the subtotal rows for each state
-  const states = Array.from(new Set(gridDataByState.map(item => item.State)));
-  states.forEach(state => {
-    const stateData = gridDataByState.filter(item => item.State === state);
-    const totalHours = stateData.reduce((sum, item) => sum + item.Hours, 0);
-    const totalWages = stateData.reduce((sum, item) => sum + item.Wages, 0);
+    // Calculate and add the subtotal rows for each employee within each state
+    const employees = Array.from(new Set(gridDataByState.map(item => item.Employee)));
+    this.addEmployeeSubtotals(gridDataByState, employees);
 
-    const subtotalRow = {
-      State: state,
-      Employee: 'Subtotal',
-      Hours: totalHours,
+    // Calculate the total hours and total wages for all states
+    const totalHoursAll = this.calculateTotalHoursSingleDwr();
+    const totalWagesAll = this.calculateTotalSingleWages();
+
+    // Add the total row for all states at the end
+    const totalRowAll = {
+      State: 'Total',
+      Employee: '',
+      Hours: totalHoursAll,
       'Hourly Rate': '',
-      Wages: totalWages,
+      Wages: totalWagesAll,
     };
-    gridDataByState.push(subtotalRow);
-  });
+    gridDataByState.push(totalRowAll);
 
-  // Calculate the total hours and total wages for all states
-  const totalHoursAll = this.calculateTotalHoursSingleDwr();
-  const totalWagesAll = this.calculateTotalSingleWages();
+    // Convert the updated grid data to a worksheet with the specified columns and headers
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState, { header: columns.map(column => column.header) });
 
-  // Remove the subtotal rows for each state
-  gridDataByState.splice(-states.length);
+    // Add the updated worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Grid Data');
 
-  // Add the total row for all states at the end
-  const totalRowAll = {
-    State: 'Total',
-    Employee: '',
-    Hours: totalHoursAll,
-    'Hourly Rate': '',
-    Wages: totalWagesAll,
-  };
-  gridDataByState.push(totalRowAll);
+    // Export the workbook to an Excel file
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveExcelFileByState(excelBuffer, 'DWR Data By State.xlsx');
+  }
 
-  // Convert the updated grid data to a worksheet with the specified columns and headers
-  const updatedWorksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataByState, { header: columns.map(column => column.header) });
+  // Helper function to calculate state subtotals
+  addStateSubtotals(gridDataByState, states) {
+    states.forEach(state => {
+      const stateData = gridDataByState.filter(item => item.State === state);
+      const totalHoursState = stateData.reduce((sum, item) => sum + item.Hours, 0);
+      const totalWagesState = stateData.reduce((sum, item) => sum + item.Wages, 0);
 
-  // Add the updated worksheet to the workbook
-  XLSX.utils.book_append_sheet(workbook, updatedWorksheet, 'Grid Data');
+      const subtotalStateRow = {
+        State: state,
+        Employee: 'State Subtotal',
+        Hours: totalHoursState,
+        'Hourly Rate': '',
+        Wages: totalWagesState,
+      };
+      // gridDataByState.push(subtotalStateRow);
+    });
+  }
 
-  // Export the workbook to an Excel file
-  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  this.saveExcelFileByState(excelBuffer, 'DWR Data By State.xlsx');
-}
+  // Helper function to calculate employee subtotals
+  addEmployeeSubtotals(gridDataByState, employees) {
+    let prevEmployee = '';
+    employees.forEach(employee => {
+      if (employee !== prevEmployee) {
+        const employeeData = gridDataByState.filter(item => item.Employee === employee);
+        const totalHoursEmployee = employeeData.reduce((sum, item) => sum + item.Hours, 0);
+        const totalWagesEmployee = employeeData.reduce((sum, item) => sum + item.Wages, 0);
 
+        const employeeSubtotalRow = {
+          State: '',
+          Employee: `${employee} Subtotal`,
+          Hours: totalHoursEmployee,
+          'Hourly Rate': '',
+          Wages: totalWagesEmployee,
+        };
+        // gridDataByState.push(employeeSubtotalRow);
 
-getGridDataByState() {
-  const gridDataByState = [];
-  const rows = document.getElementsByClassName('single-dwr-grid');
-  let currentState = '';
-  let stateTotalHours = 0;
-  let stateTotalWages = 0;
+        prevEmployee = employee;
+      }
+    });
+  }
 
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const state = row.children[2].textContent.trim();
-    const hours = parseFloat(row.children[6].textContent.trim().replace(',', ''));
-    const wages = parseFloat(row.children[8].textContent.trim().replace('$', '').replace(',', ''));
+  getGridDataByState() {
 
-    if (currentState !== state && currentState !== '') {
+    const gridDataByState = [];
+    const rows = document.getElementsByClassName('single-dwr-grid');
+    let currentState = '';
+    let stateTotalHours = 0;
+    let stateTotalWages = 0;
+    let currentEmployee = '';
+    let empTotalHours = 0;
+    let empTotalWages = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const state = row.children[2].textContent.trim();
+      const employee = row.children[0].textContent.trim();
+      const hours = parseFloat(row.children[6].textContent.trim().replace(',', ''));
+      const wages = parseFloat(row.children[8].textContent.trim().replace('$', '').replace(',', ''));
+
+      if (currentState !== state && currentState !== '') {
+        if (stateTotalHours !== 0 && stateTotalWages !== 0) {
+          const stateTotalRow = {
+            State: 'State Subtotal',
+            Employee: '',
+            Hours: stateTotalHours,
+            'Hourly Rate': '',
+            Wages: stateTotalWages,
+          };
+          gridDataByState.push(stateTotalRow);
+        }
+        stateTotalHours = 0;
+        stateTotalWages = 0;
+      }
+
+      if (currentState !== state) {
+        currentState = state;
+      }
+
+      if (currentEmployee !== employee && currentEmployee !== '') {
+        if (empTotalHours !== 0 && empTotalWages !== 0) {
+          const empTotalRow = {
+            State: '',
+            Employee: 'Employee Subtotal',
+            Hours: empTotalHours,
+            'Hourly Rate': '',
+            Wages: empTotalWages,
+          };
+          gridDataByState.push(empTotalRow);
+        }
+        empTotalHours = 0;
+        empTotalWages = 0;
+      }
+
+      if (currentEmployee !== employee) {
+        currentEmployee = employee;
+      }
+
+      const rowData = {
+        Employee: employee,
+        State: currentState,
+        Hours: hours,
+        'Hourly Rate': row.children[7].textContent.trim(),
+        Wages: wages,
+      };
+
+      gridDataByState.push(rowData);
+
+      stateTotalHours += hours;
+      empTotalHours += hours;
+      stateTotalWages += wages;
+      empTotalWages += wages;
+    }
+
+    // Add the final state subtotal row
+    if (currentState !== '') {
       if (stateTotalHours !== 0 && stateTotalWages !== 0) {
         const stateTotalRow = {
-          State: '',
-          Employee: 'Subtotal',
+          State: 'State Subtotal',
+          Employee: '',
           Hours: stateTotalHours,
           'Hourly Rate': '',
           Wages: stateTotalWages,
         };
         gridDataByState.push(stateTotalRow);
       }
-      stateTotalHours = 0;
-      stateTotalWages = 0;
     }
 
-    if (currentState !== state) {
-      currentState = state;
+    // Add the final emp subtotal row
+    if (currentEmployee !== '') {
+      if (empTotalHours !== 0 && empTotalWages !== 0) {
+        const empTotalRow = {
+          State: currentState,
+          Employee: 'Employee Subtotal',
+          Hours: empTotalHours,
+          'Hourly Rate': '',
+          Wages: empTotalWages,
+        };
+        gridDataByState.push(empTotalRow);
+      }
     }
 
-    const rowData = {
-      Employee: row.children[0].textContent.trim(),
-      State: currentState === state ? state : '',
-      Hours: hours,
-      'Hourly Rate': row.children[7].textContent.trim(),
-      Wages: wages,
-    };
-
-    gridDataByState.push(rowData);
-
-    stateTotalHours += hours;
-    stateTotalWages += wages;
+    return gridDataByState;
   }
 
-  // Add the final state subtotal row
-  if (currentState !== '') {
-    if (stateTotalHours !== 0 && stateTotalWages !== 0) {
-      const stateTotalRow = {
+  saveExcelFileByState(buffer: any, fileName: string) {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url: string = window.URL.createObjectURL(data);
+    const link: HTMLAnchorElement = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+  }
+
+  //#endregion
+
+  //#region export by supervisor
+  exportExcelSingleDwrBySupervisor() {
+    // Create a new workbook
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+
+    // Extract the grid data
+    const gridDataBySupervisor = this.getGridDataBySupervisor();
+
+    // Define the columns and headers for the worksheet
+    const columns = ['Supervisor', 'Employee', 'Hours', 'Hourly Rate', 'Wages', 'Date'];
+
+    // Convert the grid data to a worksheet with the specified columns and headers
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
+
+    // Calculate and add the subtotal rows for each supervisor
+    const supervisors = Array.from(new Set(gridDataBySupervisor.map(item => item.Supervisor)));
+    supervisors.forEach(supervisor => {
+      const supervisorData = gridDataBySupervisor.filter(item => item.Supervisor === supervisor);
+      const totalHours = supervisorData.reduce((sum, item) => sum + item.Hours, 0);
+      const totalWages = supervisorData.reduce((sum, item) => sum + item.Wages, 0);
+
+      const subtotalRow = {
+        Supervisor: supervisor,
         Employee: 'Subtotal',
-        State: '',
-        Hours: stateTotalHours,
+        Hours: totalHours,
         'Hourly Rate': '',
-        Wages: stateTotalWages,
+        Wages: totalWages,
+        Date: '',
+
       };
-      gridDataByState.push(stateTotalRow);
-    }
-  }
+      gridDataBySupervisor.push(subtotalRow);
+    });
 
-  return gridDataByState;
-}
+    // Calculate the total hours and total wages for all supervisors
+    // const totalHoursAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Hours, 0);
+    // const totalWagesAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Wages, 0);
+    const totalHoursAll = this.calculateTotalHoursSingleDwr();
+    const totalWagesAll = this.calculateTotalSingleWages();
+    // Remove the subtotal rows for each supervisor
+    gridDataBySupervisor.splice(-supervisors.length);
 
-
-
-saveExcelFileByState(buffer: any, fileName: string) {
-  const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  const url: string = window.URL.createObjectURL(data);
-  const link: HTMLAnchorElement = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  link.click();
-}
-//#endregion
-
-//#region export by supervisor
-exportExcelSingleDwrBySupervisor() {
-  // Create a new workbook
-  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-
-  // Extract the grid data
-  const gridDataBySupervisor = this.getGridDataBySupervisor();
-
-  // Define the columns and headers for the worksheet
-  const columns = ['Supervisor', 'Employee', 'Hours', 'Hourly Rate', 'Wages','Date'];
-
-  // Convert the grid data to a worksheet with the specified columns and headers
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
-
-  // Calculate and add the subtotal rows for each supervisor
-  const supervisors = Array.from(new Set(gridDataBySupervisor.map(item => item.Supervisor)));
-  supervisors.forEach(supervisor => {
-    const supervisorData = gridDataBySupervisor.filter(item => item.Supervisor === supervisor);
-    const totalHours = supervisorData.reduce((sum, item) => sum + item.Hours, 0);
-    const totalWages = supervisorData.reduce((sum, item) => sum + item.Wages, 0);
-
-    const subtotalRow = {
-      Supervisor: supervisor,
-      Employee: 'Subtotal',
-      Hours: totalHours,
+    // Add the total row for all supervisors at the end
+    const totalRowAll = {
+      Supervisor: 'Total',
+      Employee: '',
+      Hours: totalHoursAll,
       'Hourly Rate': '',
-      Wages: totalWages,
+      Wages: totalWagesAll,
       Date: '',
 
     };
-    gridDataBySupervisor.push(subtotalRow);
-  });
+    gridDataBySupervisor.push(totalRowAll);
 
-  // Calculate the total hours and total wages for all supervisors
-  // const totalHoursAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Hours, 0);
-  // const totalWagesAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Wages, 0);
-  const totalHoursAll = this.calculateTotalHoursSingleDwr();
-  const totalWagesAll = this.calculateTotalSingleWages();
-  // Remove the subtotal rows for each supervisor
-  gridDataBySupervisor.splice(-supervisors.length);
+    // Convert the updated grid data to a worksheet with the specified columns and headers
+    const updatedWorksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
 
-  // Add the total row for all supervisors at the end
-  const totalRowAll = {
-    Supervisor: 'Total',
-    Employee: '',
-    Hours: totalHoursAll,
-    'Hourly Rate': '',
-    Wages: totalWagesAll,
-    Date: '',
+    // Add the updated worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, updatedWorksheet, 'Grid Data');
 
-  };
-  gridDataBySupervisor.push(totalRowAll);
-
-  // Convert the updated grid data to a worksheet with the specified columns and headers
-  const updatedWorksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(gridDataBySupervisor, { header: columns });
-
-  // Add the updated worksheet to the workbook
-  XLSX.utils.book_append_sheet(workbook, updatedWorksheet, 'Grid Data');
-
-  // Export the workbook to an Excel file
-  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  this.saveExcelFileBySupervisor(excelBuffer, 'DWR Data By Supervisor.xlsx');
-}
+    // Export the workbook to an Excel file
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveExcelFileBySupervisor(excelBuffer, 'DWR Data By Supervisor.xlsx');
+  }
 
 
-getGridDataBySupervisor() {
-  const gridDataBySupervisor = [];
-  const rows = document.getElementsByClassName('single-dwr-grid');
-  let currentSupervisor = '';
-  let supervisorTotalHours = 0;
-  let supervisorTotalWages = 0;
+  getGridDataBySupervisor() {
+    const gridDataBySupervisor = [];
+    const rows = document.getElementsByClassName('single-dwr-grid');
+    let currentSupervisor = '';
+    let currentEmployee = '';
+    let supervisorTotalHours = 0;
+    let supervisorTotalWages = 0;
+    let employeeTotalHours = 0;
+    let employeeTotalWages = 0;
 
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const employee = row.children[0].textContent.trim();
-    const date = row.children[1].textContent.trim();
-    const supervisor = row.children[10].textContent.trim();
-    const hours = parseFloat(row.children[6].textContent.trim().replace(/,|\$/g, ''));
-    const hourlyRate = parseFloat(row.children[7].textContent.trim().replace(/,|\$/g, ''));
-    const wages = parseFloat(row.children[8].textContent.trim().replace(/,|\$/g, ''));
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const employee = row.children[0].textContent.trim();
+      const date = row.children[1].textContent.trim();
+      const supervisor = row.children[10].textContent.trim();
+      const hours = parseFloat(row.children[6].textContent.trim().replace(/,|\$/g, ''));
+      const hourlyRate = parseFloat(row.children[7].textContent.trim().replace(/,|\$/g, ''));
+      const wages = parseFloat(row.children[8].textContent.trim().replace(/,|\$/g, ''));
 
-    if (currentSupervisor !== supervisor && currentSupervisor !== '') {
-      if (supervisorTotalHours !== 0 && supervisorTotalWages !== 0) {
+      if (currentSupervisor !== supervisor && currentSupervisor !== '') {
+        if (currentEmployee !== '') {
+          // Add the employee subtotal row for the current supervisor and employee
+          const employeeTotalRow = {
+            Date: '',
+            Supervisor: currentSupervisor,
+            Employee: `${currentEmployee} Subtotal`,
+            Hours: employeeTotalHours,
+            'Hourly Rate': '',
+            Wages: employeeTotalWages,
+          };
+          gridDataBySupervisor.push(employeeTotalRow);
+        }
+
+        // Add the supervisor subtotal row
         const supervisorTotalRow = {
           Date: '',
-          Supervisor: '',
-          Employee: 'Subtotal',
+          Supervisor: currentSupervisor,
+          Employee: 'Supervisor Subtotal',
           Hours: supervisorTotalHours,
           'Hourly Rate': '',
           Wages: supervisorTotalWages,
         };
         gridDataBySupervisor.push(supervisorTotalRow);
+
+        supervisorTotalHours = 0;
+        supervisorTotalWages = 0;
+        employeeTotalHours = 0;
+        employeeTotalWages = 0;
+        currentEmployee = '';
       }
-      supervisorTotalHours = 0;
-      supervisorTotalWages = 0;
+
+      if (currentSupervisor !== supervisor) {
+        currentSupervisor = supervisor;
+      }
+
+      if (currentEmployee !== employee) {
+        if (currentEmployee !== '') {
+          // Add the employee subtotal row for the previous employee
+          const employeeTotalRow = {
+            Date: '',
+            Supervisor: currentSupervisor,
+            Employee: `${currentEmployee} Subtotal`,
+            Hours: employeeTotalHours,
+            'Hourly Rate': '',
+            Wages: employeeTotalWages,
+          };
+          gridDataBySupervisor.push(employeeTotalRow);
+        }
+
+        currentEmployee = employee;
+        employeeTotalHours = 0;
+        employeeTotalWages = 0;
+      }
+
+      const rowData = {
+        Date: date,
+        Supervisor: currentSupervisor,
+        Employee: currentEmployee,
+        Hours: hours,
+        'Hourly Rate': hourlyRate,
+        Wages: wages,
+      };
+
+      // gridDataBySupervisor.push(rowData);
+
+      supervisorTotalHours += hours;
+      supervisorTotalWages += wages;
+      employeeTotalHours += hours;
+      employeeTotalWages += wages;
     }
 
-    if (currentSupervisor !== supervisor) {
-      currentSupervisor = supervisor;
+    // Add the final employee and supervisor subtotal rows
+    if (currentEmployee !== '') {
+      const employeeTotalRow = {
+        Date: '',
+        Supervisor: currentSupervisor,
+        Employee: `${currentEmployee} Subtotal`,
+        Hours: employeeTotalHours,
+        'Hourly Rate': '',
+        Wages: employeeTotalWages,
+      };
+      gridDataBySupervisor.push(employeeTotalRow);
     }
 
-    const rowData = {
-      Date: date,
-      Supervisor: currentSupervisor === supervisor ? supervisor : '',
-      Employee: employee,
-      Hours: hours,
-      'Hourly Rate': hourlyRate,
-      Wages: wages,
-    };
-
-    gridDataBySupervisor.push(rowData);
-
-    supervisorTotalHours += hours;
-    supervisorTotalWages += wages;
-  }
-
-  // Add the final supervisor subtotal row
-  if (currentSupervisor !== '') {
-    if (supervisorTotalHours !== 0 && supervisorTotalWages !== 0) {
+    if (currentSupervisor !== '') {
       const supervisorTotalRow = {
         Date: '',
-        Supervisor: '',
-        Employee: 'Subtotal',
+        Supervisor: currentSupervisor,
+        Employee: 'Supervisor Subtotal',
         Hours: supervisorTotalHours,
         'Hourly Rate': '',
         Wages: supervisorTotalWages,
       };
       gridDataBySupervisor.push(supervisorTotalRow);
     }
+
+    // Calculate the total hours and total wages for all supervisors
+    const totalHoursAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Hours, 0);
+    const totalWagesAll = gridDataBySupervisor.reduce((sum, item) => sum + item.Wages, 0);
+
+    // Add the total row for all supervisors at the end
+    const totalRowAll = {
+      Supervisor: 'Total',
+      Employee: '',
+      Hours: totalHoursAll,
+      'Hourly Rate': '',
+      Wages: totalWagesAll,
+      Date: '',
+    };
+    // gridDataBySupervisor.push(totalRowAll);
+
+    return gridDataBySupervisor;
+
+
   }
 
-  return gridDataBySupervisor;
-}
-
-saveExcelFileBySupervisor(buffer: any, fileName: string) {
-  const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  const url: string = window.URL.createObjectURL(data);
-  const link: HTMLAnchorElement = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  link.click();
-}
+  saveExcelFileBySupervisor(buffer: any, fileName: string) {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url: string = window.URL.createObjectURL(data);
+    const link: HTMLAnchorElement = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+  }
 
 
 

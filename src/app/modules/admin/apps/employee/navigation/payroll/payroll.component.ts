@@ -21,9 +21,15 @@ export class PayrollComponent implements OnInit {
   isLoadingEmployeeDwr$: Observable<boolean>;
   payrollPeriodDwr$: Observable<any>;
   isLoadingPayrollPeriodDwr$: Observable<boolean>;
+  payrollPeriodDetails$: Observable<any>;
+  isLoadingPayrollPeriodDetails$: Observable<boolean>;
+  totalWages: number;
+
+
   routeID; // URL ID
   @Input() employee: any;
   form: FormGroup;
+  periodToFromDates: FormGroup;
 
 
 
@@ -44,7 +50,7 @@ export class PayrollComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-
+    this.initPeriodDatesForm();
     this.getRouteParams();
     this.initObservables();
 
@@ -110,6 +116,9 @@ export class PayrollComponent implements OnInit {
     this.payrollPeriodDwr$ = this._employeeService.payrollPeriodDwr$;
     this.isLoadingPayrollPeriodDwr$ = this._employeeService.isLoadingPayrollPeriodDwr$;
 
+    this.isLoadingPayrollPeriodDetails$ = this._employeeService.isLoadingPayrollPeriodDetails$;
+    this.payrollPeriodDetails$ = this._employeeService.payrollPeriodDetails$;
+
   }
 
   //#endregion
@@ -118,6 +127,8 @@ export class PayrollComponent implements OnInit {
   initApis() {
     this._employeeService.getPayrollById(this.routeID);
     this._employeeService.getPayrollByPeriod(this.routeID, 'PayrollPeriod', this.form.value)
+
+  
   }
   //#endregion
 
@@ -163,6 +174,16 @@ export class PayrollComponent implements OnInit {
 
     
   }
+  initPeriodDatesForm() {
+    this.periodToFromDates = this._formBuilder.group({
+    from: [''],
+    to: ['']
+
+  });
+}
+
+
+
   toggleDetails(from:any , to:any){
     const dialogRef = this._matDialog.open(PeriodicPayrollDetails, {
       data:{
