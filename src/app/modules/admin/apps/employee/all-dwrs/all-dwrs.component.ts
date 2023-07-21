@@ -174,22 +174,31 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (filterValues.ending_date !== null) {
       if (filterValues.beginning_date) {
         filterValues.beginning_date = moment(filterValues.beginning_date).format('YYYY-MM-DD HH:mm:ss');
+        var stDay = moment(filterValues.beginning_date).startOf('day').format('MM/DD/YYYY HH:mm:ss');
+
       }
       if (filterValues.ending_date) {
         filterValues.ending_date = moment(filterValues.ending_date).format('YYYY-MM-DD HH:mm:ss');
+        var enDay = moment(filterValues.ending_date).endOf('day').format('MM/DD/YYYY HH:mm:ss');
+
       }
     }
+    if(stDay&&enDay)
+    {
+      filterValues.beginning_date = new Date(stDay).toISOString() || '';
+      filterValues.ending_date = new Date(enDay).toISOString() || '';
+  
+    } else{
+
+      filterValues.beginning_date = filterValues.beginning_date || '';
+      filterValues.ending_date = filterValues.ending_date || '';
+  
+    }
+
+
 
     filterValues.status = filterValues.status || '';
     filterValues.state = filterValues.state || '';
-    // filterValues.beginning_date = filterValues.beginning_date || '';
-    // filterValues.ending_date = filterValues.ending_date || '';
-
-    var stDay = moment(filterValues.beginning_date).startOf('day').format('MM/DD/YYYY HH:mm:ss');
-    var enDay = moment(filterValues.ending_date).endOf('day').format('MM/DD/YYYY HH:mm:ss');
-    filterValues.beginning_date = new Date(stDay).toISOString();
-    filterValues.ending_date = new Date(enDay).toISOString();
-
     filterValues.supervisor_id = filterValues.supervisor_id?.id || '';
     filterValues.employee_id = filterValues.employee_id?.id || '';
     filterValues.category = filterValues.category || '';
@@ -836,7 +845,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           const employeeTotalRow = {
             Date: '',
             Supervisor: currentSupervisor,
-            Employee: `${currentEmployee} Subtotal`,
+            Employee: `${currentEmployee}`,
             Hours: employeeTotalHours,
             'Hourly Rate': '',
             Wages: employeeTotalWages,
@@ -872,7 +881,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           const employeeTotalRow = {
             Date: '',
             Supervisor: currentSupervisor,
-            Employee: `${currentEmployee} Subtotal`,
+            Employee: `${currentEmployee}`,
             Hours: employeeTotalHours,
             'Hourly Rate': '',
             Wages: employeeTotalWages,
@@ -907,7 +916,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       const employeeTotalRow = {
         Date: '',
         Supervisor: currentSupervisor,
-        Employee: `${currentEmployee} Subtotal`,
+        Employee: `${currentEmployee}`,
         Hours: employeeTotalHours,
         'Hourly Rate': '',
         Wages: employeeTotalWages,

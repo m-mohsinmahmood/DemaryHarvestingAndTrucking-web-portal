@@ -424,7 +424,7 @@
 
                                             <!-- Harvest Year -->
                                             <div class="sm:block">
-                                                {{harvestingJob.load_date | date: "dd-MM-YYYY" }}
+                                                {{harvestingJob.load_date | date: "MMM-dd-YYYY" }}
                                             </div>
 
                                             <!-- Email -->
@@ -454,12 +454,12 @@
                                             </div>
                                             <div class="hidden sm:block">
                                                 <div class="min-w-4 ml-2">
-                                                    {{this.toDecimalPoint(harvestingJob.load_miles)}}
+                                                    {{harvestingJob.load_miles? this.toDecimalPoint(harvestingJob.load_miles) : ''}}
                                                 </div>
                                             </div>
                                             <div class="hidden sm:block">
                                                 <div class="min-w-4 ml-2">
-                                                    {{this.toDecimalPoint(harvestingJob.acres)}}
+                                                    {{harvestingJob.acres? this.toDecimalPoint(harvestingJob.acres): ''}}
                                                 </div>
                                             </div>
                                             <div>

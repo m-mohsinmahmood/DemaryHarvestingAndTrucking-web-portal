@@ -663,95 +663,117 @@ export class JobResultComponent implements OnInit {
   }
 
 
-exportToExcel() {
-  const filters = this.jobsFiltersForm.value;
+  exportToExcel() {
+    const filters = this.jobsFiltersForm.value;
 
-  // Define all filters
-  const allFilters = [
-    { label: 'Farm Name', value: filters.farm_id?.name },
-    { label: 'Field Name', value: filters.field_id?.field_name },
-    { label: 'Crop Name', value: filters.crop_id?.name },
-    { label: 'Destination Name', value: filters.destinations_id?.name },
-    { label: 'Date Range', value: filters.date_range },
-    { label: 'From Date', value: filters.from_date },
-    { label: 'To Date', value: filters.to_date },
-    { label: 'Status', value: filters.status }
+    // Define all filters
+    const allFilters = [
+      { label: 'Farm Name', value: filters.farm_id?.name },
+      { label: 'Field Name', value: filters.field_id?.field_name },
+      { label: 'Crop Name', value: filters.crop_id?.name },
+      { label: 'Destination Name', value: filters.destinations_id?.name },
+      { label: 'Date Range', value: filters.date_range },
+      { label: 'From Date', value: filters.from_date },
+      { label: 'To Date', value: filters.to_date },
+      { label: 'Status', value: filters.status }
+    ];
+
+    // Subscribe to the observable to get the data
+    this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
+      const harvestingJobs = customHarvestingJobs.harvestingJobs;
+      const details = customHarvestingJobs.details[0];
+
+      // Create Summary Data for Excel Sheet
+      const summaryData = [
+        ['Total Net Pounds', details?.total_net_pounds? this.toDecimalPoint(details?.total_net_pounds):'N/A', 'Total Tons', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A'],
+        ['Tons per Acre', this.toDecimalPoint(details?.total_net_pounds / details?.total_acres) || 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
+        ['Bushels per Acre', this.toDecimalPoint(details?.total_net_bushels / details?.total_acres) || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
+        ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / details?.total_tickets) || 'N/A'],
+        ['Total Loads', harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
+        ['Farmer Tickets', '1234', 'Company', details?.customer_name || 'N/A'],
+        // Add more rows for other summary data
+      ];
+
+        // Create Job Results Data for Excel Sheet
+  const jobResultsData = [
+    ['Field Name', 'Load Date', 'Destination', 'Delivery/Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
+    ...harvestingJobs.map(harvestingJob => [
+      harvestingJob.field_name,
+      new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
+      harvestingJob.destination,
+      `${harvestingJob.ticket_name}/${harvestingJob.sl_number || ''}`,
+      harvestingJob.net_pounds,
+      harvestingJob.net_bushel,
+      harvestingJob.load_miles,
+      harvestingJob.acres
+    ])
   ];
 
-  // Subscribe to the observable to get the data
-  this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
-    const harvestingJobs = customHarvestingJobs.harvestingJobs;
-    const details = customHarvestingJobs.details[0];
+  // Apply custom format to the specific columns in the data rows
+  for (let row = 1; row < jobResultsData.length; row++) {
+    const rowData = jobResultsData[row];
+    for (let col = 4; col <= 7; col++) {
+      if (!isNaN(rowData[col])) {
+        // Apply custom number format with 1000 separator to the cell
+        rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
+      }
+    }
+  }
+  // Create Job Results Sheet Data for Excel Sheet
 
-    // Create Summary Data for Excel Sheet
-    const summaryData = [
-      ['Total Net Pounds', details?.total_net_pounds || 'N/A', 'Total Tons', details?.total_net_pounds ? details?.total_net_pounds / 2000 : 'N/A'],
-      ['Tons per Acre', details?.total_net_pounds / details?.total_acres || 'N/A', 'Total Bushels', details?.total_net_bushels || 'N/A'],
-      ['Bushels per Acre', details?.total_net_bushels / details?.total_acres || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? details?.total_net_pounds / 100 : 'N/A'],
-      ['DHT Total Loaded Miles', details?.total_loaded_miles || 'N/A', 'DHT Average Miles', details?.total_loaded_miles / details?.total_tickets || 'N/A'],
-      ['Total Loads', harvestingJobs.total_loads || 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
-      ['Farmer Tickets', '1234', 'Company', details?.customer_name || 'N/A'],
-      // Add more rows for other summary data
-    ];
-
-    // Create Job Results Data for Excel Sheet
-    const jobResultsData = [
-      ['Field Name', 'Load Date', 'Destination', 'Delivery/Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
-      ...harvestingJobs.map(harvestingJob => [
-        harvestingJob.field_name,
-        new Date(harvestingJob.load_date).toLocaleDateString('en-GB'),
-        harvestingJob.destination,
-        `${harvestingJob.ticket_name}/${harvestingJob.sl_number || ''}`,
-        harvestingJob.net_pounds,
-        harvestingJob.net_bushel,
-        harvestingJob.load_miles,
-        harvestingJob.acres
-      ])
-    ];
-     // Create Filters Data for Excel Sheet
-// Create Filters Data for Excel Sheet
-const filterSheetData = XLSX.utils.aoa_to_sheet(allFilters.map(filter => [filter.label, filter.value || 'N/A']));
+      // Create Filters Data for Excel Sheet
+  // Create Filters Data for Excel Sheet
+  const filterSheetData = XLSX.utils.aoa_to_sheet(allFilters.map(filter => [filter.label, filter.value || 'N/A']));
 
 
-    // Create Summary Sheet Data for Excel Sheet
-    const summarySheetData = XLSX.utils.aoa_to_sheet(summaryData);
+      // Create Summary Sheet Data for Excel Sheet
+      const summarySheetData = XLSX.utils.aoa_to_sheet(summaryData);
 
-    // Create Job Results Sheet Data for Excel Sheet
-    const jobResultsSheetData = XLSX.utils.aoa_to_sheet(jobResultsData);
+      // Create Job Results Sheet Data for Excel Sheet
+      const jobResultsSheetData = XLSX.utils.aoa_to_sheet(jobResultsData);
 
-    // Create a new workbook
-    const workbook = XLSX.utils.book_new();
+      // Create a new workbook
+      const workbook = XLSX.utils.book_new();
 
-    // Add Filter Sheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, filterSheetData, 'Filters');
+      // Add Filter Sheet to the workbook
+      XLSX.utils.book_append_sheet(workbook, filterSheetData, 'Filters');
 
-    // Add Summary Sheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, summarySheetData, 'Summary');
+      // Add Summary Sheet to the workbook
+      XLSX.utils.book_append_sheet(workbook, summarySheetData, 'Summary');
 
-    // Add Job Results Sheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, jobResultsSheetData, 'Job Results');
+      // Add Job Results Sheet to the workbook
+      XLSX.utils.book_append_sheet(workbook, jobResultsSheetData, 'Job Results');
 
-    // Export the workbook to an Excel file
-    const excelOutput = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+      // Export the workbook to an Excel file
+      const excelOutput = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
 
-    // Convert the Excel output to a Blob
-    const blob = new Blob([excelOutput], { type: 'application/octet-stream' });
+      // Convert the Excel output to a Blob
+      const blob = new Blob([excelOutput], { type: 'application/octet-stream' });
 
-    // Create a download link
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'JobResults.xlsx';
+      // Create a download link
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'JobResults.xlsx';
 
-    // Append the link to the DOM
-    document.body.appendChild(link);
+      // Append the link to the DOM
+      document.body.appendChild(link);
 
-    // Trigger the download
-    link.click();
+      // Trigger the download
+      link.click();
 
-    // Remove the link from the DOM
-    document.body.removeChild(link);
-  });
-}
+      // Remove the link from the DOM
+      document.body.removeChild(link);
+    });
+  }
+
+  toDecimal(value: number | string): string {
+    if (typeof value === 'number') {
+      // Convert the number to a formatted string with 1000 separator
+      return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    } else {
+      return value; // Return as is if it's not a number
+    }
+  }
 
   
 }
