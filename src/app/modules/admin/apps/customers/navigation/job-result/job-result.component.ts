@@ -584,7 +584,7 @@ export class JobResultComponent implements OnInit {
                           { text: 'Farmer Tickets', style: 'tableHeader' },
                           { text: "1234", style: 'tableValue' },
                           { text: 'Company', style: 'tableHeader' },
-                          { text: details?.customer_name, style: 'tableValue' }
+                          { text: details?.company_name, style: 'tableValue' }
                         ],
                         // Add more rows for other summary data
                       ]
@@ -690,7 +690,7 @@ export class JobResultComponent implements OnInit {
         ['Bushels per Acre', this.toDecimalPoint(details?.total_net_bushels / details?.total_acres) || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
         ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / details?.total_tickets) || 'N/A'],
         ['Total Loads', harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
-        ['Farmer Tickets', '1234', 'Company', details?.customer_name || 'N/A'],
+        ['Farmer Tickets', '1234', 'Company', details?.company_name || 'N/A'],
         // Add more rows for other summary data
       ];
 
