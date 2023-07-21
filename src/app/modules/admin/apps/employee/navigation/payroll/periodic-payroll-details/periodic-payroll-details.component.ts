@@ -218,19 +218,17 @@ export class PeriodicPayrollDetails implements OnInit {
       ];
       exportData.push(headerRow);
 
-      // Prepare data for export
       data.dwrsDetailed.map((dwr) => {
         const row = [
           dwr.created_at,
           dwr.supervisor,
           dwr.state,
-          dwr.hours_worked,
-          dwr.state === 'arizona' ? arizona_rate : max_rate,
-          this.wageCalculation(dwr.state,dwr.hours_worked, max_rate, arizona_rate)
+          { t: 'n', z: '#,##0.00', v: dwr.hours_worked }, // Apply custom number format to hours_worked with 1000 separators
+          { t: 'n', z: '#,##0.00', v: dwr.state === 'arizona' ? arizona_rate : max_rate }, // Apply custom number format to hours_worked with 1000 separators
+          { t: 'n', z: '#,##0.00', v: this.wageCalculation(dwr.state, dwr.hours_worked, max_rate, arizona_rate) }, // Apply custom number format to wage with 1000 separators
         ];
         exportData.push(row);
       });
-  
       // Calculate total hours and total wages
       const totalHours = this.calculateTotalHoursSingleDwr().toFixed(2);
       const totalWages = this.calculateTotalSingleWages();
@@ -249,7 +247,7 @@ export class PeriodicPayrollDetails implements OnInit {
       // Generate the Excel file and save it
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       const date = new Date().toISOString().slice(0, 10);
-      const filename = `Dwr_Detailed_Data_${employeeName}_${date}.xlsx`;
+      const filename = `Dwr_Detailed_Data.xlsx`;
       const file = new Blob([wbout], { type: 'application/octet-stream' });
       saveAs(file, filename);
     });
