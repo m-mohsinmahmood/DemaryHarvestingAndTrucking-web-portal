@@ -614,7 +614,7 @@ export class JobResultComponent implements OnInit {
                 ...harvestingJobs.map(harvestingJob => [
                   { text: harvestingJob.field_name, style: 'tableCell' },
                   { text: new Date(harvestingJob.load_date).toLocaleDateString("en-US"), style: 'tableCell' },
-                  { text: harvestingJob.destination, style: 'tableCell' },
+                  { text: harvestingJob.destination? harvestingJob.destination : '', style: 'tableCell' },
                   { text: (harvestingJob.ticket_name||'') + '/' +  (harvestingJob.sl_number ||''), style: 'tableCell' },
                   { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
                   { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },

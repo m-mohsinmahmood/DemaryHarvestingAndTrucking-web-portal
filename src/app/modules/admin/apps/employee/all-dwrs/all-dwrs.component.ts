@@ -420,7 +420,11 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.getShortUUID(dwr.ticket_id),
           dwr.employee_notes
         ];
-        data.push(row);
+        if(dwr.ending_day)
+        {
+          data.push(row);
+
+        }
       });
       // Calculate total hours and total wages
       const totalHours = this.calculateTotalHoursSingleDwr();
@@ -465,8 +469,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       employee?.top_ten_wages.forEach((payroll) => {
         const row = [
           payroll.employee_name,
-          payroll.hours_worked,
-          this.wagesToFloat(payroll.wages)
+          { t: 'n', z: '#,##0.00', v: payroll.hours_worked }, // Apply custom number format to hours_worked with 1000 separators
+          { t: 'n', z: '#,##0.00', v: this.wagesToFloat(payroll.wages) }, // Apply custom number format to hours_worked with 1000 separators
+          
         ];
         data.push(row);
       });
