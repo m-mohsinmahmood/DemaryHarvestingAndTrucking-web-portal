@@ -213,7 +213,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this._employeeService.getDwrList('dwrList', filterValues);
   }
-
+  
   removeFilters() {
     this.dwrFiltersForm.reset();
     this.dwrFiltersForm.value.status = '';
@@ -470,7 +470,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
         const row = [
           payroll.employee_name,
           { t: 'n', z: '#,##0.00', v: payroll.hours_worked }, // Apply custom number format to hours_worked with 1000 separators
-          { t: 'n', z: '#,##0.00', v: this.wagesToFloat(payroll.wages) }, // Apply custom number format to hours_worked with 1000 separators
+          { t: 'n', z: '#,##0.00', v: payroll.wages}, // Apply custom number format to hours_worked with 1000 separators
           
         ];
         data.push(row);

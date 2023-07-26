@@ -364,10 +364,14 @@ export class JobResultComponent implements OnInit {
 
   }
   toDecimalPoint(number) {
+    if(number){
     const num = parseFloat(number).toFixed(2);
     var parts = num.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
+    } else{
+      return 'N/A'
+    }
   }
   
 
@@ -544,11 +548,9 @@ export class JobResultComponent implements OnInit {
           { text: 'Summary', style: 'header' },
 
           {
-            table: {
-              body: [
-                [
-                  {
+            
                     table: {
+                      widths: ['25%', '25%', '25%', '25%'], // Set equal width for each cell in the inner table
                       body: [
                         [
                           { text: 'Total Net Pounds', style: 'tableHeader' },
@@ -589,33 +591,33 @@ export class JobResultComponent implements OnInit {
                         // Add more rows for other summary data
                       ]
                     }
-                  }
-                ]
-              ]
-
-            }
+                  
           },
           { text: 'Job Results', style: 'header' },
           {
             table: {
               headerRows: 1,
-              widths: ['20%', '15%', '15%', '16%', '10%', '10%', '10%', '8%'],
+              widths: ['6%','15%', '13%', '13%', '5%','8%', '10%', '10%', '10%', '8%'],
               body: [
                 [
+                  { text: "Job", style: 'tableHeader' },
                   { text: "Field Name", style: 'tableHeader' },
                   { text: "Load Date", style: 'tableHeader' },
                   { text: "Destination", style: 'tableHeader' },
-                  { text: "Delivery/Scale Ticket", style: 'tableHeader' },
+                  { text: "Delivery Ticket", style: 'tableHeader' },
+                  { text: "Scale Ticket", style: 'tableHeader' },
                   { text: "Net Pounds", style: 'tableHeader' },
                   { text: "Net Bushel", style: 'tableHeader' },
                   { text: "Load Miles", style: 'tableHeader' },
                   { text: "Acres", style: 'tableHeader' }
                 ],
                 ...harvestingJobs.map(harvestingJob => [
+                  { text: harvestingJob.job_setup_name, style: 'tableCell' },
                   { text: harvestingJob.field_name, style: 'tableCell' },
                   { text: new Date(harvestingJob.load_date).toLocaleDateString("en-US"), style: 'tableCell' },
                   { text: harvestingJob.destination? harvestingJob.destination : '', style: 'tableCell' },
-                  { text: (harvestingJob.ticket_name||'') + '/' +  (harvestingJob.sl_number ||''), style: 'tableCell' },
+                  { text: harvestingJob.ticket_name||'', style: 'tableCell' },
+                  { text: harvestingJob.sl_number ||'', style: 'tableCell' },
                   { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
                   { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },
                   { text: this.toDecimalPoint(harvestingJob.load_miles)|| '', style: 'tableCell' },
@@ -633,15 +635,16 @@ export class JobResultComponent implements OnInit {
           },
           tableHeader: {
             bold: true,
-            fontSize: 12,
+            fontSize: 10,
             fillColor: '#CCCCCC',
             alignment: 'center'
           },
           tableValue: {
-            fontSize: 12,
+            fontSize: 11,
             alignment: 'center'
           },
           tableCell: {
+            fontSize: 9,
             alignment: 'center',
             textTransform: 'uppercase'
           },
@@ -696,16 +699,18 @@ export class JobResultComponent implements OnInit {
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Field Name', 'Load Date', 'Destination', 'Delivery/Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
+    ['Job','Field Name', 'Load Date', 'Destination', 'Delivery','Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
     ...harvestingJobs.map(harvestingJob => [
+      harvestingJob.job_setup_name,
       harvestingJob.field_name,
       new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
       harvestingJob.destination,
-      `${harvestingJob.ticket_name}/${harvestingJob.sl_number || ''}`,
-      harvestingJob.net_pounds,
-      harvestingJob.net_bushel,
-      harvestingJob.load_miles,
-      harvestingJob.acres
+      harvestingJob.ticket_name? harvestingJob.ticket_name: '',
+      harvestingJob.sl_number?harvestingJob.sl_number:'',
+      harvestingJob.net_pounds? harvestingJob.net_pounds: '',
+      harvestingJob.net_bushel? harvestingJob.net_bushel:'',
+      harvestingJob.load_miles? harvestingJob.load_miles: '',
+      harvestingJob.acres? harvestingJob.acres:''
     ])
   ];
 

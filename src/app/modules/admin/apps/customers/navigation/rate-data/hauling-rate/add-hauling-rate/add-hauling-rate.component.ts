@@ -14,7 +14,7 @@ export class AddHaulingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles'];
+  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles', 'Bushels + Excess Yield'];
 
   //#endregion
 
@@ -71,6 +71,8 @@ initObservables(){
       rate: [''],
       base_rate: [''],
       premium_rate: [''],
+      base_bushels: [''],
+
   });
     if(this.data && this.data.isEdit){
       const { customer_id , haulingRate } = this.data;
@@ -80,6 +82,7 @@ initObservables(){
         rate_type: haulingRate.rate_type.toString(),
         rate: haulingRate.rate,
         base_rate: haulingRate.base_rate,
+        base_bushels: haulingRate.base_bushels,
         premium_rate: haulingRate.premium_rate,
       });
     }
@@ -87,11 +90,12 @@ initObservables(){
 onSubmit(): void {
   this._customerService.isLoadingHaulingRate.next(true);
   if (this.data && this.data.isEdit) {
-    if (this.form.value.rate_type != 'Ton Miles'){
+    if (this.form.value.rate_type != 'Ton Miles' || this.form.value.rate_type != 'Bushels + Excess Yield'){
       this.form.value.base_rate = 0;
       this.form.value.premium_rate = 0;
+      this.form.value.base_bushels = 0;
     }
-    if(this.form.value.rate_type == 'Ton Miles'){
+    if(this.form.value.rate_type == 'Ton Miles' || this.form.value.rate_type == 'Bushels + Excess Yield'){
       this.form.value.rate = 0;
     }
     this._customerService.updateHaulingRate(this.form.value);

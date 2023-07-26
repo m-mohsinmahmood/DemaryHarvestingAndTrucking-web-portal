@@ -72,10 +72,16 @@
                                 Base Rate
                                 <mat-hint>(Per Tons)</mat-hint>
                             </div>
+                            <div mat-sort-header="base_bushels" class="hidden sm:block">
+                                Base Bushels
+                                <mat-hint>(Per Acre)</mat-hint>
+                            </div>
+
                             <div mat-sort-header="premium_rate" class="hidden sm:block">
                                 Premium Rate
                                 <mat-hint>(Per Mile)</mat-hint>
                             </div>
+                            
                             <div>Actions</div>
                         </div>
                         <!-- Rows -->
@@ -91,6 +97,9 @@
                                         </div>
                                         <div class="hidden sm:block">
                                             {{haulingRate.base_rate == 0? '-' : haulingRate.base_rate}}
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            {{haulingRate.base_bushels == 0? '-' : haulingRate.base_bushels}}
                                         </div>
                                         <div class="hidden sm:block">
                                             {{haulingRate.premium_rate == 0? '-' : haulingRate.premium_rate}}
