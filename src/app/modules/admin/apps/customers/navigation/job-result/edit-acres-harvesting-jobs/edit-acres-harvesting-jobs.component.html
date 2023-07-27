@@ -3,7 +3,7 @@
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div>
             <div class="text-lg font-medium">
-                {{this.data && this.data.acreData.isEdit? 'Edit H2A Rate' : 'Add H2A Rate'}}
+                Edit Job Result
             </div>
         </div>
         <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
@@ -16,6 +16,37 @@
 
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
+        <mat-form-field appearance="outline">
+            <mat-label>Date of Purchase</mat-label>
+            <input id="date2" readonly="readonly" name="date2" formControlName="load_date" matInput [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>        </mat-form-field>
+      
+
+        <mat-form-field appearance="outline">
+            <mat-label>Scale Ticket</mat-label>
+            <input matInput formControlName="sl_number" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Net Pounds</mat-label>
+            <input matInput formControlName="net_pounds" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Net Bushels</mat-label>
+            <input matInput formControlName="net_bushel" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Load Miles</mat-label>
+            <input matInput formControlName="load_miles" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option value="pending">Pending</mat-option>
+                        <mat-option value="sent">Sent</mat-option>
+                        <mat-option value="verified">Verified</mat-option>
+                    </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Acres</mat-label>
             <input matInput formControlName="acres" />

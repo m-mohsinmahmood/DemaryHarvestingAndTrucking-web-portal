@@ -23,7 +23,7 @@ export class AcresHarvestingJobs implements OnInit {
         private _formBuilder: FormBuilder,
         public matDialogRef: MatDialogRef<AcresHarvestingJobs>,
         @Inject(MAT_DIALOG_DATA) public data: any
-    ) {}
+    ) { }
     //#region Lifecycle Functions
     ngOnInit(): void {
         this.initObservables();
@@ -47,18 +47,35 @@ export class AcresHarvestingJobs implements OnInit {
     //#endregion
 
     //#region Form
-    initForm(){
+    initForm() {
         // Create the form
         this.form = this._formBuilder.group({
             id: [''],
             acres: [''],
-            customer_id: ['']
+            customer_id: [''],
+            load_date: [''],
+            delivery_ticket: [''],
+            sl_number: [''],
+            net_pounds: [''],
+            net_bushel: [''],
+            load_miles: [''],
+            status: [''],
+            crop_id:['']
         });
         if (this.data && this.data.acreData.isEdit) {
+            console.log(this.data)
             this.form.patchValue({
                 id: this.data.acreData.id,
                 acres: this.data.acreData.acres,
                 customer_id: this.data.acreData.customer_id,
+                load_date: this.data.acreData.load_date,
+                delivery_ticket: this.data.acreData.delivery_ticket,
+                sl_number: this.data.acreData.sl_number,
+                net_pounds: this.data.acreData.net_pounds,
+                net_bushel: this.data.acreData.net_bushel,
+                load_miles: this.data.acreData.load_miles,
+                status: this.data.acreData.status,
+                crop_id: this.data.acreData.crop_id,
             });
         }
     }
@@ -73,7 +90,7 @@ export class AcresHarvestingJobs implements OnInit {
     onSubmit(): void {
         this._customerService.isLoadingJobAcres.next(true);
         if (this.data && this.data.acreData.isEdit) {
-            this.updateAcresInHarvestJobs(this.form.value );
+            this.updateAcresInHarvestJobs(this.form.value);
         } else {
             // this.createCrop(this.form.value);
         }

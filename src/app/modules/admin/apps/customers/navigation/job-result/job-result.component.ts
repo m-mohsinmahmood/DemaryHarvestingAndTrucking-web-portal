@@ -402,6 +402,7 @@ export class JobResultComponent implements OnInit {
   //#region Add/Edit/Import Dialog
   
   openEditDialog(event): void {
+    console.log(event)
     this.isEdit = true;
     const dialogRef = this._matDialog.open(AcresHarvestingJobs, {
         data: {
@@ -410,6 +411,14 @@ export class JobResultComponent implements OnInit {
                 id: event.id,
                 acres: event.acres,
                 customer_id: this.routeID,
+                load_date: event.load_date,
+                delivery_ticket: event.delivery_ticket,
+                sl_number: event.sl_number,
+                net_pounds: event.net_pounds,
+                net_bushel: event.net_bushel,
+                load_miles: event.load_miles,
+                status: event.status,
+                crop_id:event.crop_id
               },
         },
     });
@@ -588,6 +597,12 @@ export class JobResultComponent implements OnInit {
                           { text: 'Company', style: 'tableHeader' },
                           { text: details?.company_name, style: 'tableValue' }
                         ],
+                        [
+                          { text: 'Acres', style: 'tableHeader' },
+                          { text: details?.crop_acres || '', style: 'tableValue' },
+                          { text: '', style: 'tableHeader' },
+                          { text: '', style: 'tableValue' },
+                        ],
                         // Add more rows for other summary data
                       ]
                     }
@@ -597,22 +612,23 @@ export class JobResultComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['6%','15%', '13%', '13%', '5%','8%', '10%', '10%', '10%', '8%'],
+              widths: ['6%','10%','13%', '13%', '13%', '8%','11%', '14%', '10%', '10%'],
               body: [
                 [
                   { text: "Job", style: 'tableHeader' },
+                  { text: "Farm Name", style: 'tableHeader' },
                   { text: "Field Name", style: 'tableHeader' },
                   { text: "Load Date", style: 'tableHeader' },
                   { text: "Destination", style: 'tableHeader' },
-                  { text: "Delivery Ticket", style: 'tableHeader' },
-                  { text: "Scale Ticket", style: 'tableHeader' },
+                  { text: "D. Tkt.", style: 'tableHeader' },
+                  { text: "S. Tkt.", style: 'tableHeader' },
                   { text: "Net Pounds", style: 'tableHeader' },
                   { text: "Net Bushel", style: 'tableHeader' },
-                  { text: "Load Miles", style: 'tableHeader' },
-                  { text: "Acres", style: 'tableHeader' }
+                  { text: "Load Miles", style: 'tableHeader' }
                 ],
                 ...harvestingJobs.map(harvestingJob => [
                   { text: harvestingJob.job_setup_name, style: 'tableCell' },
+                  { text: harvestingJob.farm_name, style: 'tableCell' },
                   { text: harvestingJob.field_name, style: 'tableCell' },
                   { text: new Date(harvestingJob.load_date).toLocaleDateString("en-US"), style: 'tableCell' },
                   { text: harvestingJob.destination? harvestingJob.destination : '', style: 'tableCell' },
@@ -620,8 +636,7 @@ export class JobResultComponent implements OnInit {
                   { text: harvestingJob.sl_number ||'', style: 'tableCell' },
                   { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
                   { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },
-                  { text: this.toDecimalPoint(harvestingJob.load_miles)|| '', style: 'tableCell' },
-                  { text: harvestingJob.acres? this.toDecimalPoint(harvestingJob.acres):'', style: 'tableCell' }
+                  { text: harvestingJob.load_miles|| '', style: 'tableCell' }
                 ])
               ]
             }
@@ -694,14 +709,17 @@ export class JobResultComponent implements OnInit {
         ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / details?.total_tickets) || 'N/A'],
         ['Total Loads', harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
         ['Farmer Tickets', '1234', 'Company', details?.company_name || 'N/A'],
+        ['Acres', details.crop_acres|| 'N/A'],
+
         // Add more rows for other summary data
       ];
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Field Name', 'Load Date', 'Destination', 'Delivery','Scale Ticket', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Acres'],
+    ['Job','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
+      harvestingJob.farm_name,
       harvestingJob.field_name,
       new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
       harvestingJob.destination,
@@ -709,15 +727,14 @@ export class JobResultComponent implements OnInit {
       harvestingJob.sl_number?harvestingJob.sl_number:'',
       harvestingJob.net_pounds? harvestingJob.net_pounds: '',
       harvestingJob.net_bushel? harvestingJob.net_bushel:'',
-      harvestingJob.load_miles? harvestingJob.load_miles: '',
-      harvestingJob.acres? harvestingJob.acres:''
+      harvestingJob.load_miles? harvestingJob.load_miles: ''
     ])
   ];
 
   // Apply custom format to the specific columns in the data rows
   for (let row = 1; row < jobResultsData.length; row++) {
     const rowData = jobResultsData[row];
-    for (let col = 4; col <= 7; col++) {
+    for (let col = 5; col <= 8; col++) {
       if (!isNaN(rowData[col])) {
         // Apply custom number format with 1000 separator to the cell
         rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
