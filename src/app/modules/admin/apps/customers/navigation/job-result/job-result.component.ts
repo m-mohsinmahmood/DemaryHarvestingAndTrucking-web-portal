@@ -419,7 +419,14 @@ export class JobResultComponent implements OnInit {
                 load_miles: event.load_miles,
                 status: event.status,
                 crop_id:event.crop_id,
-                ticket_name:event.ticket_name
+                ticket_name:event.ticket_name,
+                destination:event.destination,
+                field_name: event.field_name,
+                field_id:event.field_id,
+                routeID: this.routeID,
+                farm_id:event.farm_id,
+                destinations_id: event.destinations_id
+
               },
         },
     });

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { CustomersService } from '../../../customers.service';
 
 @Component({
@@ -16,6 +16,18 @@ export class AcresHarvestingJobs implements OnInit {
     closeDialog$: Observable<boolean>;
     //#endregion
     form: FormGroup;
+    routeID;
+    farmIdEdit;
+    //#region Auto Complete fields
+    allFields: Observable<any>;
+    field_search$ = new Subject();
+    //#endregion
+
+    //#region Auto Complete Farms
+    allDestinations: Observable<any>;
+    destination_search$ = new Subject();
+    //#endregion
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
     constructor(
@@ -34,6 +46,8 @@ export class AcresHarvestingJobs implements OnInit {
                 this._customerService.closeDialog.next(false);
             }
         });
+        this.routeID = this.data.acreData.routeID;
+        this.farmIdEdit = this.data.acreData.farm_id;
 
     }
     //#endregion
@@ -60,10 +74,15 @@ export class AcresHarvestingJobs implements OnInit {
             net_bushel: [''],
             load_miles: [''],
             status: [''],
-            crop_id:['']
+            crop_id: [''],
+            ticket_name: [''],
+            destinations_id: [''],
+            field_name: [this.data.acreData.field_name],
+            field_id: [''],
+            farm_id: [''],
         });
         if (this.data && this.data.acreData.isEdit) {
-            console.log(this.data)
+            console.log(this.data.acreData)
             this.form.patchValue({
                 id: this.data.acreData.id,
                 acres: this.data.acreData.acres,
@@ -76,8 +95,17 @@ export class AcresHarvestingJobs implements OnInit {
                 load_miles: this.data.acreData.load_miles,
                 status: this.data.acreData.status,
                 crop_id: this.data.acreData.crop_id,
+                ticket_name: this.data.acreData.ticket_name,
+                field_name: this.data.acreData.field_name, // Corrected the typo here
+                field_id: this.data.acreData.field_id,
+                farm_id: this.data.acreData.farm_id,
+                destinations_id: this.data.acreData.destinations_id
+
             });
+            this.getDropdownFields();
+
         }
+        this.displayFieldForAutoComplete(this.data.acreData.field_name)
     }
 
     // createCrop(cropData: any): void {
@@ -90,6 +118,9 @@ export class AcresHarvestingJobs implements OnInit {
     onSubmit(): void {
         this._customerService.isLoadingJobAcres.next(true);
         if (this.data && this.data.acreData.isEdit) {
+            this.form.value.field_id?.field_id ? (this.form.value.field_id = this.form.value.field_id?.field_id) : '';
+            this.form.value.destinations_id?.name ? this.form.value.destinations_id = this.form.value.destinations_id?.name : '';
+
             this.updateAcresInHarvestJobs(this.form.value);
         } else {
             // this.createCrop(this.form.value);
@@ -101,5 +132,75 @@ export class AcresHarvestingJobs implements OnInit {
         this.matDialogRef.close();
     }
     //#endregion
+
+    //#region fields autocomplete
+    getDropdownFields() {
+        console.log("Test: , ", this.farmIdEdit);
+
+        let value = this.form.controls['field_id'].value;
+        this.allFields = this._customerService.getDropdownCustomerFields(
+            this.routeID,
+            this.farmIdEdit,
+            value != null ? value : ''
+        );
+
+    }
+
+    //Auto Complete Farms Display Function
+    displayFieldForAutoComplete(field: any) {
+        console.log(field)
+        return field ? `${field.field_name}` : undefined;
+    }
+    //Search Function
+    fieldSearchSubscription() {
+        this.field_search$
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((value: string) => {
+                this.allFields = this._customerService.getDropdownCustomerFields(
+                    this.routeID,
+                    this.farmIdEdit,
+                    value
+                );
+            });
+    }
+    //#endregion
+
+    //#region destinations autocomplete
+    getDropdownDestinations() {
+        let value = this.form.controls['destinations_id'].value;
+        this.allDestinations = this._customerService.getDropdownCustomerDestinations(
+            this.routeID,
+            this.farmIdEdit,
+            value != null ? value : ''
+        );
+        this.allDestinations.subscribe((val) => console.log(val))
+    }
+
+    //Auto Complete Farms Display Function
+    displayDestinationsForAutoComplete(destination: any) {
+        return destination ? `${destination.name}` : undefined;
+    }
+    //Search Function
+    destinationsSearchSubscription() {
+        this.destination_search$
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe((value: string) => {
+                this.allDestinations = this._customerService.getDropdownCustomerDestinations(
+                    this.routeID,
+                    this.farmIdEdit,
+                    value
+                );
+            });
+    }
+    //#endregion
+
 
 }

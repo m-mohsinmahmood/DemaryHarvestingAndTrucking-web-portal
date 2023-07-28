@@ -15,7 +15,76 @@
     </div>
 
     <!-- Compose form -->
+
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Field Name</mat-label>
+            <input (click)="getDropdownFields()" [disabled] [matAutocomplete]="fields"
+                (keyup)="field_search$.next($event.target.value)" matInput
+                formControlName="field_id" name="name" placeholder="Field Name" />
+                
+    
+        </mat-form-field>
+    
+        <mat-autocomplete #fields="matAutocomplete" [displayWith]="displayFieldForAutoComplete">
+            <div *ngIf="allFields | withLoading | async as allFields">
+                <ng-template [ngIf]="allFields.value">
+                    <mat-option *ngFor="let field of allFields.value.customer_fields"
+                        [value]="field">
+                        {{ field.field_name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFields?.loading">
+                    <mat-option>
+                        <div style="display: flex;
+                                        justify-content: center;
+                                        text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFields?.value?.customer_fields?.length == 0">
+                    <mat-option disabled> No Field(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Destination Name</mat-label>
+            <input (click)="getDropdownDestinations()"
+                [matAutocomplete]="destinations"
+                (keyup)="destination_search$.next($event.target.value)" matInput
+                formControlName="destinations_id" name="name" placeholder="Destination Name" />
+                
+        </mat-form-field>
+
+        <mat-autocomplete #destinations="matAutocomplete"
+            [displayWith]="displayDestinationsForAutoComplete">
+            <div *ngIf="allDestinations | withLoading | async as allDestinations">
+                <ng-template [ngIf]="allDestinations.value">
+                    <mat-option *ngFor="let destination of allDestinations.value.customers"
+                        [value]="destination">
+                        {{ destination.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allDestinations?.loading">
+                    <mat-option>
+                        <div style="display: flex;
+                                        justify-content: center;
+                                        text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+
+                <ng-template [ngIf]="allDestinations?.value?.customers?.length == 0">
+                    <mat-option disabled> No Field(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        
+        
         <mat-form-field appearance="outline">
             <mat-label>Date of Purchase</mat-label>
             <input id="date2" readonly="readonly" name="date2" formControlName="load_date" matInput [matDatepicker]="picker2">
