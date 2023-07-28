@@ -373,7 +373,7 @@ export class JobResultComponent implements OnInit {
       return 'N/A'
     }
   }
-  
+
 
 
   getRelativeTabJobs(index: number) {
@@ -400,7 +400,7 @@ export class JobResultComponent implements OnInit {
   //#endregion
 
   //#region Add/Edit/Import Dialog
-  
+
   openEditDialog(event): void {
     console.log(event)
     this.isEdit = true;
@@ -418,7 +418,8 @@ export class JobResultComponent implements OnInit {
                 net_bushel: event.net_bushel,
                 load_miles: event.load_miles,
                 status: event.status,
-                crop_id:event.crop_id
+                crop_id:event.crop_id,
+                ticket_name:event.ticket_name
               },
         },
     });
@@ -557,7 +558,7 @@ export class JobResultComponent implements OnInit {
           { text: 'Summary', style: 'header' },
 
           {
-            
+
                     table: {
                       widths: ['25%', '25%', '25%', '25%'], // Set equal width for each cell in the inner table
                       body: [
@@ -606,7 +607,7 @@ export class JobResultComponent implements OnInit {
                         // Add more rows for other summary data
                       ]
                     }
-                  
+
           },
           { text: 'Job Results', style: 'header' },
           {
@@ -797,7 +798,7 @@ export class JobResultComponent implements OnInit {
     }
   }
 
-  
+
 }
 
 
