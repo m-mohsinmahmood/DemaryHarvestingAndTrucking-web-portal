@@ -48,7 +48,8 @@ export class AcresHarvestingJobs implements OnInit {
         });
         this.routeID = this.data.acreData.routeID;
         this.farmIdEdit = this.data.acreData.farm_id;
-
+        this.fieldSearchSubscription();
+        this.destinationsSearchSubscription();
     }
     //#endregion
 
@@ -96,16 +97,11 @@ export class AcresHarvestingJobs implements OnInit {
                 status: this.data.acreData.status,
                 crop_id: this.data.acreData.crop_id,
                 ticket_name: this.data.acreData.ticket_name,
-                field_name: this.data.acreData.field_name, // Corrected the typo here
-                field_id: this.data.acreData.field_id,
+                field_id: this.data.acreData.field,
                 farm_id: this.data.acreData.farm_id,
-                destinations_id: this.data.acreData.destinations_id
-
+                destinations_id: this.data.acreData.destination
             });
-            this.getDropdownFields();
-
         }
-        this.displayFieldForAutoComplete(this.data.acreData.field_name)
     }
 
     // createCrop(cropData: any): void {
@@ -135,8 +131,6 @@ export class AcresHarvestingJobs implements OnInit {
 
     //#region fields autocomplete
     getDropdownFields() {
-        console.log("Test: , ", this.farmIdEdit);
-
         let value = this.form.controls['field_id'].value;
         this.allFields = this._customerService.getDropdownCustomerFields(
             this.routeID,
@@ -148,7 +142,6 @@ export class AcresHarvestingJobs implements OnInit {
 
     //Auto Complete Farms Display Function
     displayFieldForAutoComplete(field: any) {
-        console.log(field)
         return field ? `${field.field_name}` : undefined;
     }
     //Search Function
@@ -177,12 +170,11 @@ export class AcresHarvestingJobs implements OnInit {
             this.farmIdEdit,
             value != null ? value : ''
         );
-        this.allDestinations.subscribe((val) => console.log(val))
     }
 
     //Auto Complete Farms Display Function
     displayDestinationsForAutoComplete(destination: any) {
-        return destination ? `${destination.name}` : undefined;
+        return destination ? `${destination.destination_name}` : undefined;
     }
     //Search Function
     destinationsSearchSubscription() {

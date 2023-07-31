@@ -348,7 +348,6 @@ export class JobResultComponent implements OnInit {
     this.farmingFiltersForm.value.to ? this.farmingFiltersForm.controls['to']?.setValue(moment(this.farmingFiltersForm.value.to).format('YYYY-MM-DD')) : ('');
     this.farmingFilterBool = true;
     this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
-
   }
 
   async removeFarmingFilters() {
@@ -359,10 +358,8 @@ export class JobResultComponent implements OnInit {
     this.farmingFiltersForm.value.to = '';
     this.farmingFilterBool = false;
     this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
-
-
-
   }
+  
   toDecimalPoint(number) {
     if(number){
     const num = parseFloat(number).toFixed(2);
@@ -373,8 +370,6 @@ export class JobResultComponent implements OnInit {
       return 'N/A'
     }
   }
-
-
 
   getRelativeTabJobs(index: number) {
     if (index == 0) {
@@ -405,33 +400,38 @@ export class JobResultComponent implements OnInit {
     console.log(event)
     this.isEdit = true;
     const dialogRef = this._matDialog.open(AcresHarvestingJobs, {
-        data: {
-            acreData: {
-                isEdit: this.isEdit,
-                id: event.id,
-                acres: event.acres,
-                customer_id: this.routeID,
-                load_date: event.load_date,
-                delivery_ticket: event.delivery_ticket,
-                sl_number: event.sl_number,
-                net_pounds: event.net_pounds,
-                net_bushel: event.net_bushel,
-                load_miles: event.load_miles,
-                status: event.status,
-                crop_id:event.crop_id,
-                ticket_name:event.ticket_name,
-                destination:event.destination,
-                field_name: event.field_name,
-                field_id:event.field_id,
-                routeID: this.routeID,
-                farm_id:event.farm_id,
-                destinations_id: event.destinations_id
-
-              },
+      data: {
+        acreData: {
+          isEdit: this.isEdit,
+          id: event.id,
+          acres: event.acres,
+          customer_id: this.routeID,
+          load_date: event.load_date,
+          delivery_ticket: event.delivery_ticket,
+          sl_number: event.sl_number,
+          net_pounds: event.net_pounds,
+          net_bushel: event.net_bushel,
+          load_miles: event.load_miles,
+          status: event.status,
+          crop_id: event.crop_id,
+          ticket_name: event.ticket_name,
+          destination: {
+            destination_name: event.destination,
+            destinations_id: event.destinations_id,
+          },
+          field: {
+            field_name: event.field_name,
+            field_id: event.field_id,
+          },
+          routeID: this.routeID,
+          farm_id: event.farm_id,
         },
+      },
     });
-    dialogRef.afterClosed().subscribe((result) => { });
-}
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("Object retuned upon closing the modal", result);
+    });
+  }
 //#endregion
 
 
