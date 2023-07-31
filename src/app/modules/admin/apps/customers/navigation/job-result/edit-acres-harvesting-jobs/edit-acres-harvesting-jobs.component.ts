@@ -77,13 +77,12 @@ export class AcresHarvestingJobs implements OnInit {
             status: [''],
             crop_id: [''],
             ticket_name: [''],
-            destinations_id: [''],
-            field_name: [this.data.acreData.field_name],
+            destination_id: [''],
+            field_name: [''],
             field_id: [''],
             farm_id: [''],
         });
         if (this.data && this.data.acreData.isEdit) {
-            console.log(this.data.acreData)
             this.form.patchValue({
                 id: this.data.acreData.id,
                 acres: this.data.acreData.acres,
@@ -99,7 +98,7 @@ export class AcresHarvestingJobs implements OnInit {
                 ticket_name: this.data.acreData.ticket_name,
                 field_id: this.data.acreData.field,
                 farm_id: this.data.acreData.farm_id,
-                destinations_id: this.data.acreData.destination
+                destination_id: this.data.acreData.destination
             });
         }
     }
@@ -174,7 +173,7 @@ export class AcresHarvestingJobs implements OnInit {
 
     //Auto Complete Farms Display Function
     displayDestinationsForAutoComplete(destination: any) {
-        return destination ? `${destination.destination_name}` : undefined;
+        return destination ? `${destination.name}` : undefined;
     }
     //Search Function
     destinationsSearchSubscription() {

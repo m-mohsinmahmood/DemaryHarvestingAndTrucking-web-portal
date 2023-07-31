@@ -397,7 +397,6 @@ export class JobResultComponent implements OnInit {
   //#region Add/Edit/Import Dialog
 
   openEditDialog(event): void {
-    console.log(event)
     this.isEdit = true;
     const dialogRef = this._matDialog.open(AcresHarvestingJobs, {
       data: {
@@ -416,8 +415,8 @@ export class JobResultComponent implements OnInit {
           crop_id: event.crop_id,
           ticket_name: event.ticket_name,
           destination: {
-            destination_name: event.destination,
-            destinations_id: event.destinations_id,
+            name: event.destination,
+            destination_id: event.destination_id,
           },
           field: {
             field_name: event.field_name,
@@ -429,7 +428,7 @@ export class JobResultComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("Object retuned upon closing the modal", result);
+      
     });
   }
 //#endregion
@@ -620,7 +619,7 @@ export class JobResultComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['5%','15%','15%', '8%', '15%', '5%','10%', '12%', '12%', '6%'],
+              widths: ['5%','15%','18%', '8%', '18%', '5%','10%', '8%', '8%', '6%'],
               body: [
                 [
                   { text: "Job", style: 'tableHeader' },
