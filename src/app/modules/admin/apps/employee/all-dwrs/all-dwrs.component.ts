@@ -413,7 +413,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           formattedBeginningDay,
           formattedEndingDay,
           parseFloat(dwr.hours_worked),
-          dwr.state === 'arizona' ? arizona_rate : max_rate,
+          dwr.state == 'arizona' || dwr.state == 'Arizona'   ? arizona_rate : max_rate,
           parseFloat(dwr.wage),
           dwr.dwr_status,
           dwr.supervisor,
@@ -785,7 +785,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
         Supervisor: supervisor,
         Employee: 'Subtotal',
         Hours: totalHours,
-        'Hourly Rate': '',
+        'Hourly Rate': '6',
         Wages: totalWages,
         Date: '',
 
@@ -806,7 +806,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       Supervisor: 'Total',
       Employee: '',
       Hours: totalHoursAll,
-      'Hourly Rate': '',
+      'Hourly Rate': '5',
       Wages: totalWagesAll,
       Date: '',
 
@@ -840,6 +840,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       const employee = row.children[0].textContent.trim();
       const date = row.children[1].textContent.trim();
       const supervisor = row.children[10].textContent.trim();
+      const state = row.children[2].textContent.trim();
       const hours = parseFloat(row.children[6].textContent.trim().replace(/,|\$/g, ''));
       const hourlyRate = parseFloat(row.children[7].textContent.trim().replace(/,|\$/g, ''));
       const wages = parseFloat(row.children[8].textContent.trim().replace(/,|\$/g, ''));
@@ -852,7 +853,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
             Supervisor: currentSupervisor,
             Employee: `${currentEmployee}`,
             Hours: employeeTotalHours,
-            'Hourly Rate': '',
+            'Hourly Rate': hourlyRate,
             Wages: employeeTotalWages,
           };
           gridDataBySupervisor.push(employeeTotalRow);
@@ -888,7 +889,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
             Supervisor: currentSupervisor,
             Employee: `${currentEmployee}`,
             Hours: employeeTotalHours,
-            'Hourly Rate': '',
+            'Hourly Rate': hourlyRate,
             Wages: employeeTotalWages,
           };
           gridDataBySupervisor.push(employeeTotalRow);
@@ -970,6 +971,20 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     link.click();
   }
 
+  getHourlyRate(state:any){
+    this.allDwrsList$.subscribe((val) => {
+      const max_rate = val.hourly_rate[0]?.max_hourly_rate;
+      const arizona_rate = val.hourly_rate[0]?.arizona_rate;
+
+      if(state=='arizona' || state == 'Arizona')
+      {
+        return arizona_rate;
+      }
+      else {
+        return max_rate;
+      }
+    } );
+  }
 
 
 }
