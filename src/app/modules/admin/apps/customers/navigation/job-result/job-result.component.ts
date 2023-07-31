@@ -620,7 +620,7 @@ export class JobResultComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['6%','10%','13%', '13%', '13%', '8%','11%', '14%', '10%', '10%'],
+              widths: ['5%','15%','15%', '8%', '15%', '5%','10%', '12%', '12%', '6%'],
               body: [
                 [
                   { text: "Job", style: 'tableHeader' },
@@ -663,11 +663,11 @@ export class JobResultComponent implements OnInit {
             alignment: 'center'
           },
           tableValue: {
-            fontSize: 11,
+            fontSize: 7,
             alignment: 'center'
           },
           tableCell: {
-            fontSize: 9,
+            fontSize: 7,
             alignment: 'center',
             textTransform: 'uppercase'
           },
