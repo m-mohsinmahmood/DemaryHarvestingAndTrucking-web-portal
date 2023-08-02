@@ -47,15 +47,17 @@
                             </mat-autocomplete>
                             <!-- MAT AUTOCOMPLETE -->
 
-                            <mat-form-field [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')" appearance="outline" fxFlex>
+                            <mat-form-field
+                                [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')"
+                                appearance="outline" fxFlex>
                                 <mat-label>Field Name</mat-label>
                                 <input (click)="getDropdownFields()" [disabled] [matAutocomplete]="fields"
                                     (keyup)="field_search$.next($event.target.value)" matInput
                                     formControlName="field_id" name="name" placeholder="Field Name" />
-                                    <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
-                                        class="-ml-2 text-md uppercase text-red-500">
-                                        Farm is required
-                                    </mat-hint>
+                                <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                    class="-ml-2 text-md uppercase text-red-500">
+                                    Farm is required
+                                </mat-hint>
 
                             </mat-form-field>
 
@@ -118,16 +120,18 @@
                             <!-- Crop AUTOCOMPLETE -->
 
 
-                            <mat-form-field [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')" appearance="outline" fxFlex>
+                            <mat-form-field
+                                [class]="(jobsFiltersForm.value.farm_id !== '' ? '' : 'pointer-events-none')"
+                                appearance="outline" fxFlex>
                                 <mat-label>Destination Name</mat-label>
                                 <input (click)="getDropdownDestinations()"
                                     [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
                                     (keyup)="destination_search$.next($event.target.value)" matInput
                                     formControlName="destinations_id" name="name" placeholder="Destination Name" />
-                                    <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
-                                        class="-ml-2 text-md uppercase text-red-500">
-                                        Farm is required
-                                    </mat-hint>
+                                <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                    class="-ml-2 text-md uppercase text-red-500">
+                                    Farm is required
+                                </mat-hint>
                             </mat-form-field>
 
                             <mat-autocomplete #destinations="matAutocomplete"
@@ -205,24 +209,57 @@
         <mat-tab label="Custom Harvesting">
             <div class="bg-gray justify-center px-2 my-8">
                 <div class="flex sm:flex-row flex-col flex-shrink-0 items-center mt-1 sm:mt-0 sm:ml-4 justify-between">
-                    <div>
-                    <span class="text-sm font-normal"
-                        *ngIf="jobsFiltersForm.value.status || jobsFiltersForm.value.farm_id || jobsFiltersForm.value.field_id || jobsFiltersForm.value.crop_id || jobsFiltersForm.value.destinations_id || jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date">
-                        Filters Applied </span>
-                        <span class="text-sm font-normal" *ngIf="jobsFiltersForm.value.farm_id">
-                            Farm: {{jobsFiltersForm.value.farm_id.name}}</span>
-                            <span class="text-sm font-normal" *ngIf="jobsFiltersForm.value.field_id">
-                                Field: {{jobsFiltersForm.value.field_id.field_name}}</span>
-                                <span class="text-sm font-normal" *ngIf="jobsFiltersForm.value.destinations_id">
-                                    Destination: {{jobsFiltersForm.value.destinations_id.name}}</span>
-                                    <span class="text-sm font-normal" *ngIf="jobsFiltersForm.value.crop_id">
-                                        Crop: {{jobsFiltersForm.value.crop_id.name}}</span>
-                                        <span class="text-sm font-normal" *ngIf="jobsFiltersForm.value.status">
-                                            Status: {{jobsFiltersForm.value.status}}</span>
-                    <span class="text-sm font-normal"
-                        *ngIf="jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date"> For Date Range
-                        {{jobsFiltersForm.value.from_date |date:"MMM-dd-YYYY"}}
-                        {{jobsFiltersForm.value.to_date | date:"MMM-dd-YYYY"}}</span>
+                    <div class="flex flex-col mb-4">
+                        <div class="text-lg text-gray-500 font-bold"
+                            *ngIf="jobsFiltersForm.value.status || jobsFiltersForm.value.farm_id || jobsFiltersForm.value.field_id || jobsFiltersForm.value.crop_id || jobsFiltersForm.value.destinations_id || jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date">
+                            Filters Applied </div>
+
+                        <div class="flex flex-row gap-8">
+                            <div class="text-sm font-normal sm:w-64" *ngIf="jobsFiltersForm.value.farm_id">
+                                <span class="text-lg text-gray-500 font-bold">Farm:</span>
+                                {{jobsFiltersForm.value.farm_id.name}}
+                            </div>
+
+                            <div class="text-sm font-normal sm:w-64" *ngIf="jobsFiltersForm.value.field_id">
+                                <span class="text-lg text-gray-500 font-bold">Field:</span>
+                                {{jobsFiltersForm.value.field_id.field_name}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-row gap-8">
+                            <div class="text-sm font-normal sm:w-64" *ngIf="jobsFiltersForm.value.destinations_id">
+                                <span class="text-lg text-gray-500 font-bold">Destination:</span>
+                                {{jobsFiltersForm.value.destinations_id.name}}
+                            </div>
+
+                            <div class="text-sm font-normal sm:w-64" *ngIf="jobsFiltersForm.value.crop_id">
+                                <span class="text-lg text-gray-500 font-bold">Crop:</span>
+                                {{jobsFiltersForm.value.crop_id.name}}
+                            </div>
+
+
+                        </div>
+                        <div class="flex flex-row gap-8">
+                            <div class="text-sm font-normal sm:w-64" *ngIf="jobsFiltersForm.value.status">
+                                <span class="text-lg text-gray-500 font-bold">Status:</span>
+                                {{jobsFiltersForm.value.status}}
+
+                            </div>
+                            <div class="text-sm font-normal sm:w-80"
+                                *ngIf="jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date"> 
+                                <span class="text-lg text-gray-500 font-bold">
+
+                              Date Range  </span>
+                                {{jobsFiltersForm.value.from_date |date:"MMM-dd-YYYY"}} To 
+                                {{jobsFiltersForm.value.to_date | date:"MMM-dd-YYYY"}}
+                            </div>
+                        </div>
+
+
+
+
                     </div>
 
                     <div class="flex">
@@ -249,7 +286,7 @@
                                 <mat-icon>download</mat-icon>
                                 <span>Export to Excel</span>
                             </button>
-                            
+
                         </mat-menu>
 
 
@@ -287,12 +324,14 @@
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Net Pounds</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds ?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : "N/A" }}</mat-label>
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : "N/A"
+                                    }}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Tons</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/2000) : "N/A"}}</mat-label>
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/2000) :
+                                    "N/A"}}</mat-label>
 
                             </div>
 
@@ -300,46 +339,51 @@
                                 <mat-label class="text-lg text-gray-500 font-bold">Tons per Acre</mat-label>
                                 <mat-label
                                     class="text-right">{{harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres?
-                                        this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres) :
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres)
+                                    :
                                     "N/A"}}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Bushels</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_bushels?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels) : "N/A"}}</mat-label>
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels) :
+                                    "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Bushels per Acre</mat-label>
                                 <mat-label
                                     class="text-right">{{harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres?
-                                        this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres)
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres)
                                     : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Hundred Weight</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/100): "N/A"}}</mat-label>
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/100):
+                                    "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Total Loaded Miles</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles): "N/A"}}</mat-label>
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles):
+                                    "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Average Miles</mat-label>
                                 <mat-label
                                     class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets?
-                                        this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets):
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets):
                                     "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Loads</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads):
+                                <mat-label class="text-right">{{harvestingJobs.total_loads?
+                                    this.toDecimalPoint(harvestingJobs.total_loads):
                                     "N/A"}}</mat-label>
 
                             </div>
@@ -405,7 +449,8 @@
                                         </div>
                                         <div class="hidden lg:block">
                                             D. Tkt.
-                                        </div><div class="hidden lg:block">
+                                        </div>
+                                        <div class="hidden lg:block">
                                             S. Tkt.
                                         </div>
                                         <div class="hidden sm:block">
@@ -453,35 +498,39 @@
 
                                             <!-- Email -->
                                             <div class="sm:block">
-                                                <div class="">
+                                                <div class="break-words">
                                                     {{harvestingJob.destination? harvestingJob.destination: ''}}
                                                 </div>
                                             </div>
 
                                             <!-- Contact -->
                                             <div class="hidden lg:block">
-                                                <div class="">
+                                                <div class="break-words">
                                                     {{harvestingJob.ticket_name}}
                                                 </div>
-                                            </div><div class="hidden lg:block">
-                                                <div class="">
+                                            </div>
+                                            <div class="hidden lg:block">
+                                                <div class="break-words">
                                                     {{harvestingJob.sl_number}}
                                                 </div>
                                             </div>
                                             <!-- Active -->
                                             <div class="hidden sm:block">
-                                                <div class="min-w-4 ml-2">
-                                                    {{harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds) : ''}}
+                                                <div class="min-w-4 ml-2 break-words">
+                                                    {{harvestingJob.net_pounds?
+                                                    this.toDecimalPoint(harvestingJob.net_pounds) : ''}}
                                                 </div>
                                             </div>
 
                                             <div class="hidden sm:block">
-                                                <div class="min-w-4 ml-2">{{harvestingJob.net_bushel? this.toDecimalPoint(harvestingJob.net_bushel) : ''}}
+                                                <div class="min-w-4 ml-2 break-words">{{harvestingJob.net_bushel?
+                                                    this.toDecimalPoint(harvestingJob.net_bushel) : ''}}
                                                 </div>
                                             </div>
                                             <div class="hidden sm:block">
-                                                <div class="min-w-4 ml-2">
-                                                    {{harvestingJob.load_miles? this.toDecimalPoint(harvestingJob.load_miles) : ''}}
+                                                <div class="min-w-4 ml-2 break-words">
+                                                    {{harvestingJob.load_miles?
+                                                    this.toDecimalPoint(harvestingJob.load_miles) : ''}}
                                                 </div>
                                             </div>
                                             <!-- <div class="hidden sm:block">
@@ -490,13 +539,14 @@
                                                 </div>
                                             </div> -->
                                             <div>
-                                                <button class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block" mat-stroked-button
-                                                    (click)="openEditDialog(harvestingJob)" matTooltip="Edit" matTooltipPosition="above">
+                                                <button class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block"
+                                                    mat-stroked-button (click)="openEditDialog(harvestingJob)"
+                                                    matTooltip="Edit" matTooltipPosition="above">
                                                     <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                                 </button>
-                                                
+
                                             </div>
-                                            
+
                                             <div class="hidden sm:block">
                                                 <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-1"
                                                     style="background: #4ADE80;">
