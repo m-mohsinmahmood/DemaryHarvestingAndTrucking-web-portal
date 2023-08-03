@@ -585,7 +585,7 @@ export class JobResultComponent implements OnInit {
                 ],
                 [
                   { text: destinationName || 'N/A' },
-                  { text: ( new Date(filters.from_date).toLocaleDateString("en-US") +'-' + new Date(filters.to_date).toLocaleDateString("en-US")) || 'N/A' },
+                  { text: filters.to_date? ( new Date(filters.from_date).toLocaleDateString("en-US") +'-' + new Date(filters.to_date).toLocaleDateString("en-US")) : 'N/A' },
                   { text: capitalizeFirstCharacter(filters.status)  || 'N/A' }
                 ]
               ]
@@ -649,10 +649,9 @@ export class JobResultComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['5%','15%','18%', '8%', '18%', '5%','10%', '8%', '8%', '6%'],
+              widths: ['15%','18%', '8%', '18%', '5%','10%', '10%', '8%', '6%'],
               body: [
                 [
-                  { text: "Job", style: 'tableHeader' },
                   { text: "Farm Name", style: 'tableHeader' },
                   { text: "Field Name", style: 'tableHeader' },
                   { text: "Load Date", style: 'tableHeader' },
@@ -664,7 +663,6 @@ export class JobResultComponent implements OnInit {
                   { text: "Load Miles", style: 'tableHeader' }
                 ],
                 ...harvestingJobs.map(harvestingJob => [
-                  { text: harvestingJob.job_setup_name, style: 'tableCell' },
                   { text: harvestingJob.farm_name, style: 'tableCell' },
                   { text: harvestingJob.field_name, style: 'tableCell' },
                   { text: new Date(harvestingJob.load_date).toLocaleDateString("en-US"), style: 'tableCell' },
@@ -728,8 +726,8 @@ export class JobResultComponent implements OnInit {
       { label: 'Crop Name', value: filters.crop_id?.name },
       { label: 'Destination Name', value: filters.destinations_id?.name },
       { label: 'Date Range', value: filters.date_range },
-      { label: 'From Date', value: new Date(filters.from_date).toLocaleDateString("en-US") },
-      { label: 'To Date', value: new Date(filters.to_date).toLocaleDateString("en-US") },
+      { label: 'From Date', value: filters.from_date? new Date(filters.from_date).toLocaleDateString("en-US") : 'N/A'},
+      { label: 'To Date', value: filters.to_date? new Date(filters.to_date).toLocaleDateString("en-US") : 'N/A'},
       { label: 'Status', value: filters.status }
     ];
 
@@ -753,9 +751,10 @@ export class JobResultComponent implements OnInit {
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles'],
+    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
+      harvestingJob.acres? harvestingJob.acres: '',
       harvestingJob.farm_name,
       harvestingJob.field_name,
       new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
@@ -771,7 +770,17 @@ export class JobResultComponent implements OnInit {
   // Apply custom format to the specific columns in the data rows
   for (let row = 1; row < jobResultsData.length; row++) {
     const rowData = jobResultsData[row];
-    for (let col = 5; col <= 8; col++) {
+    for (let col = 6; col <= 9; col++) {
+      if (!isNaN(rowData[col])) {
+        // Apply custom number format with 1000 separator to the cell
+        rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
+      }
+    }
+  }
+
+  for (let row = 1; row < jobResultsData.length; row++) {
+    const rowData = jobResultsData[row];
+    for (let col = 1; col <= 1; col++) {
       if (!isNaN(rowData[col])) {
         // Apply custom number format with 1000 separator to the cell
         rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };

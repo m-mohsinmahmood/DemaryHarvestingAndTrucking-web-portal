@@ -450,6 +450,9 @@
                                         <div class="sm:block">
                                             Job
                                         </div>
+                                        <div class="hidden sm:block">
+                                            Job Acres
+                                        </div>
                                         <div class="sm:block">
                                             Farm
                                         </div>
@@ -477,9 +480,7 @@
                                         <div class="hidden sm:block">
                                             Load Miles
                                         </div>
-                                        <!-- <div class="hidden sm:block">
-                                            Acres
-                                        </div> -->
+                                        
                                         <div class="hidden sm:block">Actions</div>
 
                                         <div class="hidden sm:block text-center">
@@ -499,6 +500,12 @@
                                             <div class="truncate">
                                                 {{harvestingJob.job_setup_name}}
                                             </div>
+                                            <div class="hidden sm:block">
+                                                <div class="min-w-4 ml-2">
+                                                    {{harvestingJob.acres? this.toDecimalPoint(harvestingJob.acres): ''}}
+                                                </div>
+                                            </div>
+
                                             <div class="truncate">
                                                 {{harvestingJob.farm_name}}
                                             </div>
@@ -548,11 +555,7 @@
                                                     this.toDecimalPoint(harvestingJob.load_miles) : ''}}
                                                 </div>
                                             </div>
-                                            <!-- <div class="hidden sm:block">
-                                                <div class="min-w-4 ml-2">
-                                                    {{harvestingJob.acres? this.toDecimalPoint(harvestingJob.acres): ''}}
-                                                </div>
-                                            </div> -->
+                                            
                                             <div>
                                                 <button class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block"
                                                     mat-stroked-button (click)="openEditDialog(harvestingJob)"
