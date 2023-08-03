@@ -74,7 +74,7 @@
                             (matSortChange)="sortData($event)">
                             <!-- <div class="sm:block">ID</div> -->
                             <div mat-sort-header="first_name" class="sm:block">Name</div>
-                            <div mat-sort-header="created_at" class="hidden sm:block">Date</div>
+                            <div mat-sort-header="begining_day" class="hidden sm:block">Date</div>
                             <div mat-sort-header="state" class="hidden sm:block">State</div>
                             <div mat-sort-header="category" class="hidden sm:block">Category</div>
                             <div class="hidden sm:block">Check In</div>
@@ -94,7 +94,7 @@
                         <ng-container *ngFor="let dwr of employee?.dwrTasks; let z = index">
                           <div class="single-dwr-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b" *ngIf="dwr.ending_day">
                             <div class="break-normal hidden sm:block">{{ dwr.first_name}} {{ dwr.last_name}}</div>
-                            <div class="break-normal hidden sm:block">{{ dwr.created_at | date : 'MMM-dd-yyyy'}}</div>
+                            <div class="break-normal hidden sm:block">{{ dwr.begining_day | date : 'MMM-dd-yyyy'}}</div>
                             <div class="break-normal hidden sm:block">{{ dwr.state}}</div>
                             <div class="break-normal hidden sm:block capitalize">{{ dwr.category}}</div>
                             <div class="break-normal hidden sm:block">{{ dwr.begining_day | date: 'HH:mm'}}</div>
