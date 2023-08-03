@@ -17,6 +17,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import RobotoFont from 'pdfmake/build/vfs_fonts.js';
 import { AcresHarvestingJobs } from './edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
+import { EditAcresInHarvesting } from './only-acres-edit/edit-acres.component';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -77,6 +78,7 @@ export class JobResultComponent implements OnInit {
   harvestingFilterBool: boolean = false;
   truckingFilterBool: boolean = false;
   farmingFilterBool: boolean = false;
+  editAcreField: boolean = false;
 
   routeID; // URL ID
 
@@ -302,6 +304,11 @@ export class JobResultComponent implements OnInit {
     !this.jobsFiltersForm.value.to_date ? (this.jobsFiltersForm.value.to_date = '') : ('');
 
     this.harvestingFilterBool = true;
+    if(this.jobsFiltersForm.value.farm_id != null || this.jobsFiltersForm.value.farm_id == '')
+    {
+      this.editAcreField = true;
+
+    }
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
   }
 
@@ -316,6 +323,8 @@ export class JobResultComponent implements OnInit {
     this.jobsFiltersForm.value.to_date = '';
 
     this.harvestingFilterBool = false;
+    this.editAcreField = false;
+
     this._customerService.getHarvestingJobs(this.routeID, 'harvesting', this.jobsFiltersForm.value);
 
   }
@@ -431,7 +440,28 @@ export class JobResultComponent implements OnInit {
       
     });
   }
+
+  openEditAcresDialog(event): void {
+    this.isEdit = true;
+    const dialogRef = this._matDialog.open(EditAcresInHarvesting, {
+      data: {
+        acreData: {
+          isEdit: this.isEdit,
+          // id: event.id,
+          // acres: event.acres,
+          // field_id: event.field_id,
+          // farm_id: event.farm_id,
+
+        },
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      
+    });
+  }
+
 //#endregion
+
 
 
   //#region route params function
@@ -555,7 +585,7 @@ export class JobResultComponent implements OnInit {
                 ],
                 [
                   { text: destinationName || 'N/A' },
-                  { text: ( filters.from_date +'-' +filters.to_date) || 'N/A' },
+                  { text: ( new Date(filters.from_date).toLocaleDateString("en-US") +'-' + new Date(filters.to_date).toLocaleDateString("en-US")) || 'N/A' },
                   { text: capitalizeFirstCharacter(filters.status)  || 'N/A' }
                 ]
               ]
@@ -698,8 +728,8 @@ export class JobResultComponent implements OnInit {
       { label: 'Crop Name', value: filters.crop_id?.name },
       { label: 'Destination Name', value: filters.destinations_id?.name },
       { label: 'Date Range', value: filters.date_range },
-      { label: 'From Date', value: filters.from_date },
-      { label: 'To Date', value: filters.to_date },
+      { label: 'From Date', value: new Date(filters.from_date).toLocaleDateString("en-US") },
+      { label: 'To Date', value: new Date(filters.to_date).toLocaleDateString("en-US") },
       { label: 'Status', value: filters.status }
     ];
 

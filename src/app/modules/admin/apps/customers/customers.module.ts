@@ -81,6 +81,7 @@ import { AddDetailsComponent } from './navigation/invoice/add-details/add-detail
 import { EditTruckingJobComponent } from './navigation/job-result/edit-trucking-job/edit-trucking-job.component';
 import { EditFarmingJobComponent } from './navigation/job-result/edit-farming-job/edit-farming-job.component';
 import { AcresHarvestingJobs } from './navigation/job-result/edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
+import { EditAcresInHarvesting } from './navigation/job-result/only-acres-edit/edit-acres.component';
 @NgModule({
     declarations: [
         CustomersComponent,
@@ -132,7 +133,8 @@ import { AcresHarvestingJobs } from './navigation/job-result/edit-acres-harvesti
         AddDetailsComponent,
         EditTruckingJobComponent,
         EditFarmingJobComponent,
-        AcresHarvestingJobs
+        AcresHarvestingJobs,
+        EditAcresInHarvesting
     ],
     imports: [
     RouterModule.forChild(customersRoutes),

@@ -248,11 +248,11 @@
 
                             </div>
                             <div class="text-sm font-normal sm:w-80"
-                                *ngIf="jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date"> 
+                                *ngIf="jobsFiltersForm.value.from_date || jobsFiltersForm.value.to_date">
                                 <span class="text-lg text-gray-500 font-bold">
 
-                              Date Range  </span>
-                                {{jobsFiltersForm.value.from_date |date:"MMM-dd-YYYY"}} To 
+                                    Date Range </span>
+                                {{jobsFiltersForm.value.from_date |date:"MMM-dd-YYYY"}} To
                                 {{jobsFiltersForm.value.to_date | date:"MMM-dd-YYYY"}}
                             </div>
                         </div>
@@ -404,12 +404,27 @@
                                     harvestingJobs.details[0]?.company_name : "N/A"}}</mat-label>
 
                             </div>
-                            <div class="flex flex-col justify-center py-1 items-start">
-                                <mat-label class="text-lg text-gray-500 font-bold">Acres</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.details[0]?.crop_acres ?
-                                    harvestingJobs.details[0]?.crop_acres : "N/A"}}</mat-label>
-
+                            <div class="flex flex-row">
+                                <div class="flex flex-col justify-center py-1 items-start">
+                                    <mat-label class="text-lg text-gray-500 font-bold">Acres</mat-label>
+                                    <mat-label class="text-right">{{harvestingJobs.details[0]?.crop_acres ?
+                                        harvestingJobs.details[0]?.crop_acres : "N/A"}}</mat-label>
+                                </div>
+                                
+                                <!-- <button *ngIf="editAcreField"
+                                    class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block mt-4" mat-stroked-button
+                                    (click)="openEditAcresDialog(harvestingJob)" matTooltip="Edit"
+                                    matTooltipPosition="above">
+                                    <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                </button> -->
                             </div>
+                            <!-- <div>
+                                <button *ngIf="editAcreField" class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block" mat-stroked-button
+                                    (click)="openEditDialog(harvestingJob)" matTooltip="Edit"
+                                    matTooltipPosition="above">
+                                    <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                </button>
+                            </div> -->
 
 
 
