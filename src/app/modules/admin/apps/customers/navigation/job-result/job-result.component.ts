@@ -514,16 +514,16 @@ export class JobResultComponent implements OnInit {
 
 
     // Retrieve the farm name from the farm_id input field
-    const farmName = this.jobsFiltersForm.controls['farm_id'].value.name;
+    const farmName = this.jobsFiltersForm.controls['farm_id'].value?.name;
 
     // Retrieve the field name from the field_id input field
-    const fieldName = this.jobsFiltersForm.controls['field_id'].value.field_name;
+    const fieldName = this.jobsFiltersForm.controls['field_id'].value?.field_name;
 
     // Retrieve the crop name from the crop_id input field
-    const cropName = this.jobsFiltersForm.controls['crop_id'].value.name;
+    const cropName = this.jobsFiltersForm.controls['crop_id'].value?.name;
 
     // Retrieve the destination name from the destinations_id input field
-    const destinationName = this.jobsFiltersForm.controls['destinations_id'].value.name;
+    const destinationName = this.jobsFiltersForm.controls['destinations_id'].value?.name;
 
     this.customHarvestingJobs$.subscribe(customHarvestingJobs => {
 
@@ -636,7 +636,7 @@ export class JobResultComponent implements OnInit {
                         ],
                         [
                           { text: 'Acres', style: 'tableHeader' },
-                          { text: details?.crop_acres || '', style: 'tableValue' },
+                          { text: details?.total_acres || '', style: 'tableValue' },
                           { text: '', style: 'tableHeader' },
                           { text: '', style: 'tableValue' },
                         ],
@@ -744,14 +744,14 @@ export class JobResultComponent implements OnInit {
         ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / details?.total_tickets) || 'N/A'],
         ['Total Loads', harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
         ['Farmer Tickets', '1234', 'Company', details?.company_name || 'N/A'],
-        ['Acres', details?.crop_acres|| 'N/A'],
+        ['Acres', details?.total_acres|| 'N/A'],
 
         // Add more rows for other summary data
       ];
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles'],
+    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
       harvestingJob.acres? harvestingJob.acres: '',
@@ -763,7 +763,11 @@ export class JobResultComponent implements OnInit {
       harvestingJob.sl_number?harvestingJob.sl_number:'',
       harvestingJob.net_pounds? harvestingJob.net_pounds: '',
       harvestingJob.net_bushel? harvestingJob.net_bushel:'',
-      harvestingJob.load_miles? harvestingJob.load_miles: ''
+      harvestingJob.load_miles? harvestingJob.load_miles: '',
+      harvestingJob.protein? harvestingJob.protein:'',
+      harvestingJob.moisture? harvestingJob.moisture:'',
+      harvestingJob.test_weight? harvestingJob.test_weight:''
+
     ])
   ];
 
