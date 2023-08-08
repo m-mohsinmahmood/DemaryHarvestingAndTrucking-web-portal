@@ -606,7 +606,7 @@ export class JobResultComponent implements OnInit {
                         ],
                         [
                           { text: 'Tons per Acre', style: 'tableHeader' },
-                          { text: this.toDecimalPoint(details?.total_net_pounds / details?.total_acres) || 'N/A', style: 'tableValue' },
+                          { text: (details?.total_net_pounds/2000) / details?.total_acres || 'N/A', style: 'tableValue' },
                           { text: 'Total Bushels', style: 'tableHeader' },
                           { text: this.toDecimalPoint(details?.total_net_bushels) || 'N/A', style: 'tableValue' }
                         ],
@@ -739,7 +739,7 @@ export class JobResultComponent implements OnInit {
       // Create Summary Data for Excel Sheet
       const summaryData = [
         ['Total Net Pounds', details?.total_net_pounds? this.toDecimalPoint(details?.total_net_pounds):'N/A', 'Total Tons', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A'],
-        ['Tons per Acre', this.toDecimalPoint(details?.total_net_pounds / details?.total_acres) || 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
+        ['Tons per Acre', (details?.total_net_pounds/2000) / details?.total_acres || 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
         ['Bushels per Acre', this.toDecimalPoint(details?.total_net_bushels / details?.total_acres) || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
         ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / (details?.total_tickets-details?.farmers_tickets)) || 'N/A'],
         ['Total Loads', details?.total_tickets || 'N/A', 'DHT Tickets', (details?.total_tickets-details?.farmers_tickets) || 'N/A'],
