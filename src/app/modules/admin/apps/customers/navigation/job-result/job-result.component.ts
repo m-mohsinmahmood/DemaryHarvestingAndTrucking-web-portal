@@ -624,13 +624,13 @@ export class JobResultComponent implements OnInit {
                         ],
                         [
                           { text: 'Total Loads', style: 'tableHeader' },
-                          { text: harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', style: 'tableValue' },
+                          { text: details?.total_tickets|| 'N/A', style: 'tableValue' },
                           { text: 'DHT Tickets', style: 'tableHeader' },
-                          { text: details?.total_tickets, style: 'tableValue' }
+                          { text: (details?.total_tickets-details?.farmers_tickets) || 'N/A', style: 'tableValue' }
                         ],
                         [
                           { text: 'Farmer Tickets', style: 'tableHeader' },
-                          { text: "1234", style: 'tableValue' },
+                          { text: details?.farmers_tickets, style: 'tableValue' },
                           { text: 'Company', style: 'tableHeader' },
                           { text: details?.company_name, style: 'tableValue' }
                         ],
@@ -742,8 +742,8 @@ export class JobResultComponent implements OnInit {
         ['Tons per Acre', this.toDecimalPoint(details?.total_net_pounds / details?.total_acres) || 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
         ['Bushels per Acre', this.toDecimalPoint(details?.total_net_bushels / details?.total_acres) || 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
         ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', this.toDecimalPoint(details?.total_loaded_miles / details?.total_tickets) || 'N/A'],
-        ['Total Loads', harvestingJobs.total_loads? this.toDecimalPoint(harvestingJobs.total_loads): 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
-        ['Farmer Tickets', '1234', 'Company', details?.company_name || 'N/A'],
+        ['Total Loads', details?.total_tickets || 'N/A', 'DHT Tickets', (details?.total_tickets-details?.farmers_tickets) || 'N/A'],
+        ['Farmer Tickets', details?.farmers_tickets, 'Company', details?.company_name || 'N/A'],
         ['Acres', details?.total_acres|| 'N/A'],
 
         // Add more rows for other summary data

@@ -338,8 +338,8 @@
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Tons per Acre</mat-label>
                                 <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/harvestingJobs.details[0]?.total_acres)
+                                    class="text-right">{{(harvestingJobs.details[0]?.total_net_pounds/2000)/harvestingJobs.details[0]?.total_acres?
+                                    this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/2000)/harvestingJobs.details[0]?.total_acres)
                                     :
                                     "N/A"}}</mat-label>
                             </div>
@@ -382,20 +382,19 @@
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Loads</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.total_loads?
-                                    this.toDecimalPoint(harvestingJobs.total_loads):
-                                    "N/A"}}</mat-label>
-
-                            </div>
-                            <div class="flex flex-col justify-center py-1 items-start">
-                                <mat-label class="text-lg text-gray-500 font-bold">DHT Tickets</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_tickets ?
                                     harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
+                                <mat-label class="text-lg text-gray-500 font-bold">DHT Tickets</mat-label>
+                                <mat-label class="text-right">{{(harvestingJobs.details[0]?.total_tickets || harvestingJobs.details[0]?.farmers_tickets) ? (harvestingJobs.details[0]?.total_tickets - harvestingJobs.details[0]?.farmers_tickets) : "N/A"}}</mat-label>
+
+                            </div>
+                            <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Farmer Tickets</mat-label>
-                                <mat-label class="text-right">1234</mat-label>
+                                <mat-label class="text-right">{{harvestingJobs.details[0]?.farmers_tickets ?
+                                    harvestingJobs.details[0]?.farmers_tickets : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
