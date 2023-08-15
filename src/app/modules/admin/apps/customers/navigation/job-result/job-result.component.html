@@ -324,14 +324,14 @@
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Net Pounds</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds ?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : "N/A"
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : "-"
                                     }}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Tons</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
                                     this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/2000) :
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
 
                             </div>
 
@@ -341,13 +341,13 @@
                                     class="text-right">{{(harvestingJobs.details[0]?.total_net_pounds&&harvestingJobs.details[0]?.total_acres)?
                                     (harvestingJobs.details[0]?.total_net_pounds/2000)/harvestingJobs.details[0]?.total_acres
                                     :
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Bushels</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_bushels?
                                     this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels) :
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
@@ -355,21 +355,21 @@
                                 <mat-label class="text-right">{{(harvestingJobs.details[0]?.total_net_bushels &&
                                     harvestingJobs.details[0]?.total_acres)?
                                     harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres
-                                    : "N/A"}}</mat-label>
+                                    : "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Hundred Weight</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_net_pounds?
                                     this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/100):
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Total Loaded Miles</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles?
                                     this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles):
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
@@ -377,39 +377,39 @@
                                 <mat-label
                                     class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles/(harvestingJobs.details[0]?.total_tickets)?
                                     this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets):
-                                    "N/A"}}</mat-label>
+                                    "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Total Loads</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.total_tickets ?
-                                    harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
+                                    harvestingJobs.details[0]?.total_tickets : "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Tickets</mat-label>
                                 <mat-label class="text-right">
                                     {{harvestingJobs.details[0]?.total_tickets ?
-                                    harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
+                                    harvestingJobs.details[0]?.total_tickets : "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Farmer Tickets</mat-label>
                                 <!-- <mat-label class="text-right">{{harvestingJobs.details[0]?.farmers_tickets ?
-                                    harvestingJobs.details[0]?.farmers_tickets : "N/A"}}</mat-label> -->
+                                    harvestingJobs.details[0]?.farmers_tickets : "-"}}</mat-label> -->
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Company</mat-label>
                                 <mat-label class="text-right">{{harvestingJobs.details[0]?.company_name ?
-                                    harvestingJobs.details[0]?.company_name : "N/A"}}</mat-label>
+                                    harvestingJobs.details[0]?.company_name : "-"}}</mat-label>
 
                             </div>
                             <div class="flex flex-row">
                                 <div class="flex flex-col justify-center py-1 items-start">
                                     <mat-label class="text-lg text-gray-500 font-bold">Acres</mat-label>
                                     <mat-label class="text-right">{{harvestingJobs.details[0]?.total_acres ?
-                                        harvestingJobs.details[0]?.total_acres : "N/A"}}</mat-label>
+                                        harvestingJobs.details[0]?.total_acres : "-"}}</mat-label>
                                 </div>
 
                                 <!-- <button *ngIf="editAcreField"
@@ -440,15 +440,15 @@
                         class="toggling-info-job-result mb-4 bg-gray-100  py-1">
                         <mat-expansion-panel-header>
                             <mat-panel-title class="text-lg font-extrabold text-gray-500">
-                                Invoicing Tab
+                                Invoice
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div *ngIf="customHarvestingJobs$ | async as harvestingJobs"
                             class="grid grid-cols-2 table-auto py-5 justify-between gap-x-8 gap-y-2 sm:p-8 p-3 m-auto gray-custom-bg">
                             <div class="hauling-tab flex flex-col">
-                                <h1 class="text-lg font-extrabold text-gray-500">Hauling Tab</h1>
+                                <h1 class="text-lg font-extrabold text-gray-500">Hauling Fees</h1>
                                 <mat-form-field>
-                                    <mat-label>Select an option</mat-label>
+                                    <mat-label>Select rate type</mat-label>
                                     <mat-select [(ngModel)]="selectedOption" disableRipple (selectionChange)="onChangeHaulingRates(selectedOption)">
                                         <mat-option value="Ton Miles">Ton + Miles</mat-option>
                                         <mat-option value="Bushels">Bushels</mat-option>
@@ -456,121 +456,143 @@
                                         <mat-option value="Miles">Miles</mat-option>
                                         <mat-option value="Tons">Tons</mat-option>
                                         <mat-option value="Bushels + Excess Yield">Bushels + Excess Yield</mat-option>
+                                        <mat-option value="Load Count">Load Count</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
                                 <!--Loaders sync-->
                                 <div *ngIf="haulingRateList$ | async as haulingRateList">
-                                    <div *ngIf="haulingRateList?.hauling_rates?.length > 0">
-                                        <div *ngIf="selectedOption === 'Ton Miles'"
-                                            class="ton-miles-1 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
-                                            <div class="font-bold">Ton + Miles</div>
-                                            <div></div>
-                                
+                                    <div class="mt-2" *ngIf="haulingRateList?.hauling_rates?.length > 0" >
+                                        <!-- TON MILES -->
+                                        <div *ngIf="selectedOption === 'Ton Miles'" class="ton-miles-1 grid grid-cols-2 table-auto  justify-end gap-x-8 gap-y-2">
+                                        
                                             <div class="grid-item">DHT Average Miles</div>
-                                            <div class="grid-item">{{(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets)?
+                                            <div class="grid-item flex items-center justify-center">
+                                                {{(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets)?
                                                 this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets):
-                                                "N/A"}}</div>
-                                
+                                                "-"}}</div>
+                                        
                                             <div class="grid-item">Base Rate per Ton</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.base_rate? haulingRateList.hauling_rates[0]?.base_rate: 'N/A'}}</div>
-                                
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.base_rate?
+                                                haulingRateList.hauling_rates[0]?.base_rate: '-'}}</div>
+                                        
                                             <div class="grid-item">Premium Per incremental mile over the Base</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.premium_rate? haulingRateList.hauling_rates[0]?.premium_rate: 'N/A'}}</div>
-                                
-                                            <div class="grid-item">Hauling Fee</div>
-                                            <div class="grid-item">${{ 
-                                                (haulingRateList.hauling_rates[0]?.premium_rate && haulingRateList.hauling_rates[0]?.premium_rate && harvestingJobs.details[0]?.total_loaded_miles && harvestingJobs.details[0]?.total_tickets)? 
-                                                this.toDecimalPoint((haulingRateList.hauling_rates[0]?.premium_rate * (harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets) + haulingRateList.hauling_rates[0]?.base_rate)*(harvestingJobs.details[0]?.total_net_pounds/2000)) : 'N/A'}}</div>
-                                
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.premium_rate?
+                                                haulingRateList.hauling_rates[0]?.premium_rate: '-'}}</div>
+                                        
+                                            <div class="grid-item" matTooltip="((Premium Per incremental mile over the Base * DHT Average Miles) + Base Rate per Ton ) * Total Tons">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">${{
+                                                (haulingRateList.hauling_rates[0]?.premium_rate && haulingRateList.hauling_rates[0]?.premium_rate &&
+                                                harvestingJobs.details[0]?.total_loaded_miles && harvestingJobs.details[0]?.total_tickets)?
+                                                this.toDecimalPoint((haulingRateList.hauling_rates[0]?.premium_rate *
+                                                (harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets) +
+                                                haulingRateList.hauling_rates[0]?.base_rate)*(harvestingJobs.details[0]?.total_net_pounds/2000)) : '-'}}</div>
+                                        
                                         </div>
+                                        <!-- TON MILES -->
                                 
+                                        <!-- BUSHELS -->
                                         <div *ngIf="selectedOption === 'Bushels'"
                                             class="bushels-2 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
-                                            <div class="font-bold">Bushels</div>
-                                            <div> </div>
                                 
                                             <div class="grid-item">Hauling Rate, Per Bushel</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                 
                                             <div class="grid-item">DHT Bushels Hauled</div>
-                                            <div class="grid-item">{{harvestingJobs.details[0]?.total_net_bushels?
-                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels) : 'N/A'}}</div>
+                                            <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_net_bushels?
+                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels) : '-'}}</div>
                                 
                                             <div class="grid-item">Non-DHT Bushels, Owner Hauled (NC*)</div>
-                                            <div class="grid-item">-</div>
+                                            <div class="grid-item flex items-center justify-center">-</div>
                                 
-                                            <div class="grid-item">Hauling Fee</div>
-                                            <div class="grid-item">${{(harvestingJobs.details[0]?.total_net_bushels &&
+                                            <div class="grid-item" matTooltip="Hauling Rate, Per Bushel * DHT Bushels Hauled">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_net_bushels &&
                                                 haulingRateList.hauling_rates[0]?.rate) ?
                                                 this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels *
-                                                haulingRateList.hauling_rates[0]?.rate) : 'N/A' }}</div>
-                                
+                                                haulingRateList.hauling_rates[0]?.rate) : '-' }}</div>
                                         </div>
-                                
+                                        <!-- BUSHELS -->
+
+                                        <!-- HUNDRED WEIGHT -->
                                         <div *ngIf="selectedOption === 'Hundred Weight'"
                                             class="hundred-weight-3 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
-                                            <div class="font-bold">Hundred Weight</div>
-                                            <div> </div>
-                                
+                                        
                                             <div class="grid-item">Rate per Hundred Weight</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.rate}}</div>
-                                
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
+                                        
                                             <div class="grid-item">Total Hundred Weight</div>
-                                            <div class="grid-item">{{harvestingJobs.details[0]?.total_net_pounds?
-                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : 'N/A'}}</div>
-                                
-                                            <div class="grid-item">Hauling Fee</div>
-                                            <div class="grid-item">${{(harvestingJobs.details[0]?.total_net_pounds &&
+                                            <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_net_pounds?
+                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds) : '-'}}</div>
+                                        
+                                            <div class="grid-item" matTooltip="Rate per Hundred Weight * Total Hundred Weight">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_net_pounds &&
                                                 haulingRateList.hauling_rates[0]?.rate)?
                                                 this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/100)*haulingRateList.hauling_rates[0]?.rate):
-                                                'N/A'}}</div>
-                                
+                                                '-'}}</div>
                                         </div>
+                                        <!-- HUNDRED WEIGHT -->
                                 
+                                        <!-- MILES -->
                                         <div *ngIf="selectedOption === 'Miles'" class="miles-4 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
-                                            <div class="font-bold">Miles</div>
-                                            <div> </div>
-                                
+                                        
                                             <div class="grid-item">Rate per Mile</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.rate}}</div>
-                                
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
+                                        
                                             <div class="grid-item">Total Miles</div>
-                                            <div class="grid-item">{{harvestingJobs.details[0]?.total_loaded_miles?
-                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles): 'N/A'}}</div>
-                                
-                                            <div class="grid-item">Hauling Fee</div>
-                                            <div class="grid-item">${{(harvestingJobs.details[0]?.total_loaded_miles &&
+                                            <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_loaded_miles?
+                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles): '-'}}</div>
+                                        
+                                            <div class="grid-item" matTooltip="Rate per Mile * Total Miles">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_loaded_miles &&
                                                 haulingRateList.hauling_rates[0]?.rate)?
                                                 this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles*haulingRateList.hauling_rates[0]?.rate):
-                                                'N/A'}}</div>
-                                
+                                                '-'}}</div>
                                         </div>
-                                
+                                        <!-- MILES -->
+
+                                        <!-- TONS -->
                                         <div *ngIf="selectedOption === 'Tons'" class="tons-5 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
-                                            <div class="font-bold">Tons</div>
-                                            <div> </div>
-                                
+                                        
                                             <div class="grid-item">Rate per Ton</div>
-                                            <div class="grid-item">${{haulingRateList.hauling_rates[0]?.rate}}</div>
-                                
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
+                                        
                                             <div class="grid-item">Total Tons</div>
-                                            <div class="grid-item">{{(harvestingJobs.details[0]?.total_net_pounds)?
-                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/2000): 'N/A'}}</div>
-                                
-                                            <div class="grid-item">Hauling Fee</div>
-                                            <div class="grid-item">
+                                            <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_net_pounds)?
+                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_net_pounds/2000): '-'}}</div>
+                                        
+                                            <div class="grid-item" matTooltip="Rate per Ton * Total Tons">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">
                                                 ${{(harvestingJobs.details[0]?.total_net_pounds&&haulingRateList.hauling_rates[0]?.rate)?
                                                 this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/2000)*haulingRateList.hauling_rates[0]?.rate):
-                                                'N/A'}}</div>
-                                
+                                                '-'}}</div>
                                         </div>
+                                        <!-- TONS -->
+
+                                        <!-- LOAD COUNT -->
+                                        <div *ngIf="selectedOption === 'Load Count'" class="tons-5 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
+                                        
+                                            <div class="grid-item">Rate per Load</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
+                                        
+                                            <div class="grid-item">Total Loads</div>
+                                            <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_tickets)?
+                                                harvestingJobs.details[0]?.total_tickets: '-'}}</div>
+                                        
+                                            <div class="grid-item" matTooltip="Rate per Load * Total Loads">Hauling Fee</div>
+                                            <div class="grid-item flex items-center justify-center">
+                                                ${{(harvestingJobs.details[0]?.total_tickets && haulingRateList.hauling_rates[0]?.rate)?
+                                                harvestingJobs.details[0]?.total_tickets * haulingRateList.hauling_rates[0]?.rate:
+                                                '-'}}
+                                            </div>
+                                        </div>
+                                        <!-- LOAD COUNT -->
+
                                     </div>
                                 
                                 
                                     <div *ngIf="haulingRateList?.hauling_rates?.length === 0"
                                         class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
-                                        No Rates found
+                                        No such Rate Type found for this Customer
                                     </div>
                                 </div>
 
@@ -578,18 +600,37 @@
                             </div>
 
                             <div class="combining-tab flex flex-col">
-                                <h1 class="text-lg font-extrabold text-gray-500">Combining Tab</h1>
+                                <h1 class="text-lg font-extrabold text-gray-500">Combining Fees</h1>
 
-                                <!-- <mat-form-field>
-                                    <mat-label>Select an option</mat-label>
-                                    <mat-select disableRipple>
-                                        <mat-option value="1">Option 1</mat-option>
-                                        <mat-option value="2">Option 2</mat-option>
-                                        <mat-option value="3">Option 3</mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
+                                <div class="tons-5 grid grid-cols-2 mt-24 table-auto justify-end gap-x-8 gap-y-2">
+                                        
+                                    <div class="grid-item">Combining Rate per Acre</div>
+                                    <div class="grid-item flex items-center justify-center"></div>
+                                
+                                    <div class="grid-item">Total Acres</div>
+                                    <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_acres)?
+                                        harvestingJobs.details[0]?.total_acres: '-'}}</div>
+                                
+                                    <div class="grid-item" matTooltip="Rate per Load * Total Loads">Combining Fee</div>
+                                    <div class="grid-item"></div>
+                                    <!-- <div class="grid-item flex items-center justify-center">
+                                        ${{(harvestingJobs.details[0]?.total_acres && haulingRateList.hauling_rates[0]?.rate)?
+                                        harvestingJobs.details[0]?.total_acres * haulingRateList.hauling_rates[0]?.rate:
+                                        '-'}}
+                                    </div> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="total-tab flex flex-col px-8">
+                            <div class="tons-5 grid grid-cols-4 table-auto justify-end gap-x-8 gap-y-2">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div class="grid-item flex items-center justify-center">Total Fees</div>
                             </div>
                         </div>
+                        
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>

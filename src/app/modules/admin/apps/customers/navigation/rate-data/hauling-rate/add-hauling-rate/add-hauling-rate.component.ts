@@ -14,7 +14,7 @@ export class AddHaulingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles', 'Bushels + Excess Yield'];
+  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles', 'Bushels + Excess Yield', 'Load Count'];
 
   //#endregion
 
