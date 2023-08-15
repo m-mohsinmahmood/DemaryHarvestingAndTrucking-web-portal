@@ -434,6 +434,46 @@
                 </mat-accordion>
             </div>
 
+            <div class="">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        class="toggling-info-job-result mb-4 bg-gray-100  py-1">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="text-lg font-extrabold text-gray-500">
+                                Invoicing Tab
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div *ngIf="customHarvestingJobs$ | async as harvestingJobs"
+                            class="grid grid-cols-2 table-auto py-5 justify-between gap-x-8 gap-y-2 sm:p-8 p-3 m-auto gray-custom-bg">
+                            <div class="hauling-tab flex flex-col">
+                                <h1 class="text-lg font-extrabold text-gray-500">Hauling Tab</h1>
+                                <mat-form-field>
+                                    <mat-label>Select an option</mat-label>
+                                    <mat-select disableRipple>
+                                      <mat-option value="1">Option 1</mat-option>
+                                      <mat-option value="2">Option 2</mat-option>
+                                      <mat-option value="3">Option 3</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+
+                            <div class="combining-tab flex flex-col">
+                                <h1 class="text-lg font-extrabold text-gray-500">Combining Tab</h1>
+
+                                <mat-form-field>
+                                    <mat-label>Select an option</mat-label>
+                                    <mat-select disableRipple>
+                                      <mat-option value="1">Option 1</mat-option>
+                                      <mat-option value="2">Option 2</mat-option>
+                                      <mat-option value="3">Option 3</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
 
             <div class="mt-4 px-4 py-5 sm:p-0 mx-auto rounded-xl shadow"
                 *ngIf="customHarvestingJobs$ | async as harvestingJobs">
