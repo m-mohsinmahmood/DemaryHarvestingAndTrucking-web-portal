@@ -54,7 +54,7 @@
                                 <input (click)="getDropdownFields()" [disabled] [matAutocomplete]="fields"
                                     (keyup)="field_search$.next($event.target.value)" matInput
                                     formControlName="field_id" name="name" placeholder="Field Name" />
-                                <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                    <mat-hint *ngIf="jobsFiltersForm.value.farm_id === ''"
                                     class="-ml-2 text-md uppercase text-red-500">
                                     Farm is required
                                 </mat-hint>
@@ -128,7 +128,7 @@
                                     [disabled]="!jobsFiltersForm.get('farm_id').value" [matAutocomplete]="destinations"
                                     (keyup)="destination_search$.next($event.target.value)" matInput
                                     formControlName="destinations_id" name="name" placeholder="Destination Name" />
-                                <mat-hint *ngIf="jobsFiltersForm.get('farm_id').value === ''"
+                                   <mat-hint *ngIf="jobsFiltersForm.value.farm_id === ''"
                                     class="-ml-2 text-md uppercase text-red-500">
                                     Farm is required
                                 </mat-hint>
@@ -338,7 +338,7 @@
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Tons per Acre</mat-label>
                                 <mat-label
-                                    class="text-right">{{(harvestingJobs.details[0]?.total_net_pounds/2000)/harvestingJobs.details[0]?.total_acres?
+                                    class="text-right">{{(harvestingJobs.details[0]?.total_net_pounds&&harvestingJobs.details[0]?.total_acres)?
                                     (harvestingJobs.details[0]?.total_net_pounds/2000)/harvestingJobs.details[0]?.total_acres
                                     :
                                     "N/A"}}</mat-label>
@@ -353,8 +353,8 @@
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Bushels per Acre</mat-label>
                                 <mat-label
-                                    class="text-right">{{harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres)
+                                    class="text-right">{{(harvestingJobs.details[0]?.total_net_bushels && harvestingJobs.details[0]?.total_acres)?
+                                    harvestingJobs.details[0]?.total_net_bushels/harvestingJobs.details[0]?.total_acres
                                     : "N/A"}}</mat-label>
 
                             </div>
@@ -376,7 +376,7 @@
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Average Miles</mat-label>
                                 <mat-label
                                     class="text-right">{{harvestingJobs.details[0]?.total_loaded_miles/(harvestingJobs.details[0]?.total_tickets-harvestingJobs.details[0]?.farmers_tickets)?
-                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/(harvestingJobs.details[0]?.total_tickets-harvestingJobs.details[0]?.farmers_tickets)):
+                                    this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets):
                                     "N/A"}}</mat-label>
 
                             </div>
@@ -388,13 +388,15 @@
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">DHT Tickets</mat-label>
-                                <mat-label class="text-right">{{(harvestingJobs.details[0]?.total_tickets || harvestingJobs.details[0]?.farmers_tickets) ? (harvestingJobs.details[0]?.total_tickets - harvestingJobs.details[0]?.farmers_tickets) : "N/A"}}</mat-label>
+                                <mat-label class="text-right">
+                                    {{harvestingJobs.details[0]?.total_tickets ?
+                                        harvestingJobs.details[0]?.total_tickets : "N/A"}}</mat-label>
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Farmer Tickets</mat-label>
-                                <mat-label class="text-right">{{harvestingJobs.details[0]?.farmers_tickets ?
-                                    harvestingJobs.details[0]?.farmers_tickets : "N/A"}}</mat-label>
+                                <!-- <mat-label class="text-right">{{harvestingJobs.details[0]?.farmers_tickets ?
+                                    harvestingJobs.details[0]?.farmers_tickets : "N/A"}}</mat-label> -->
 
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
@@ -567,7 +569,7 @@
                                             <div class="hidden sm:block">
                                                 <div class="min-w-4 ml-2 capitalize text-center text-white m-4 rounded-full py-1"
                                                     style="background: #4ADE80;">
-                                                    {{harvestingJob.status}}
+                                                    {{harvestingJob.status? harvestingJob.status: '-'}}
                                                 </div>
                                             </div>
                                         </div>
