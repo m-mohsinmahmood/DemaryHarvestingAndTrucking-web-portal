@@ -1,0 +1,81 @@
+<!-- Header -->
+<div class="flex flex-col max-w-250 md:min-w-160 max-h-screen -m-6">
+    <!-- Title -->
+    <header class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">
+            Add New Guest Employee
+        </div>
+        <button mat-icon-button (click)="discard()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </header>
+
+    <form [formGroup]="form" class="flex flex-col flex-auto sm:p-8 p-6 sm:grid overflow-y-auto">
+        <div class="flex flex-col flex-auto sm:grid lg:grid-cols-2 md:grid-cols-2 justify-between gap-x-6 p-0">
+            <mat-form-field appearance="outline">
+                <mat-label class="sm:w-4/12">First Name</mat-label>
+                <input matInput formControlName="first_name" />
+                <mat-hint *ngIf="this.form.get('first_name').hasError('required')"
+                    class="text-xs text-red-500">Employee First Name is required</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label class="sm:w-4/12">Last Name</mat-label>
+                <input matInput formControlName="last_name" />
+                <mat-hint *ngIf="this.form.get('last_name').hasError('required')"
+                    class="text-xs text-red-500">Employee Last Name is required</mat-hint>
+            </mat-form-field>
+
+            <div class="flex flex-col flex-auto justify-between gap-x-6 p-0">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email" />
+                    <mat-hint *ngIf="this.form.get('email').hasError('required')" class="text-xs text-red-500">Email
+                        is
+                        required</mat-hint>
+                    <!--question mark(?) is a safe navigation operator-->
+                    <mat-hint *ngIf="this.form.get('email').hasError('pattern')" class="text-xs text-red-500">Please
+                        provide a valid email address</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+                <mat-label class="sm:w-4/12">Employee Company</mat-label>
+                <input matInput formControlName="employee_company" />
+                <mat-hint *ngIf="this.form.get('employee_company').hasError('required')"
+                    class="text-xs text-red-500">Employee Company is required</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Role</mat-label>
+                <mat-select formControlName="employee_role">
+                    <mat-option value="Truck Driver">Truck Driver</mat-option>
+                </mat-select>
+                <mat-hint *ngIf="this.form.get('employee_role').hasError('required')"
+                    class="text-xs text-red-500">Employee Role is required</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label class="sm:w-4/12">Machinery</mat-label>
+                <input matInput formControlName="machinery" />
+                <mat-hint *ngIf="this.form.get('machinery').hasError('required')" class="text-xs text-red-500">Machinery
+                    is required</mat-hint>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+    <div class="flex flex-0 items-center justify-end h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-white text-on-primary">
+        <div class="flex gap-2 items-center mt-4 sm:mt-0">
+            <!-- Discard -->
+            <button type="submit" class="bg-amber-600" mat-flat-button [color]="'primary'" (click)="discard()">
+                Discard
+            </button>
+            <button [class.spinner]="isLoadingEmployee$ | async"
+                [disabled]="form.invalid || ((isLoadingEmployee$) | async)" mat-flat-button color="primary"
+                (click)="onSubmit()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

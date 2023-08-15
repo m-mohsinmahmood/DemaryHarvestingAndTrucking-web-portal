@@ -9,7 +9,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, V
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, map, Observable, startWith, Subject, Subscription } from 'rxjs';
+import { debounceTime, map, Observable, startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { Employee } from 'app/modules/admin/apps/employee/employee.types';
 import { EmployeeService } from 'app/modules/admin/apps/employee/employee.service';
@@ -20,6 +20,7 @@ import { countryList } from './../../../../../../JSON/country';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 
 @Component({
     selector: 'app-employee',
@@ -30,6 +31,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
     animations: fuseAnimations,
 })
 export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
+    isEdit: boolean = false;
 
     //#region observable
     employeeList$: Observable<Employee[]>;
@@ -366,6 +368,18 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
     //#endregion
+
+    openAddDialog(): void {
+        const dialogRef = this._matDialog.open(AddEmployeeComponent, {
+            data: {
+                isEdit: this.isEdit,
+                // filters: this.customerFiltersForm.value,
+            },
+        });
+        dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((result) => {
+            //Call this function only when success is returned from the create API call//
+        });
+    }
 }
 
 

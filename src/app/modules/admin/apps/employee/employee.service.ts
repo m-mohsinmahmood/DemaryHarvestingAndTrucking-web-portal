@@ -17,6 +17,20 @@ import { AlertService } from 'app/core/alert/alert.service';
     providedIn: 'root'
 })
 export class EmployeeService {
+    //#region Loaders Employee
+    private isLoadingAddEmployees: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
+    readonly isLoadingAddEmployees$: Observable<boolean> =
+        this.isLoadingAddEmployees.asObservable();
+
+    isLoadingAddEmployee: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
+    readonly isLoadingAddEmployee$: Observable<boolean> =
+        this.isLoadingAddEmployee.asObservable();
+    //#endregion
+
+
     // Private
     public navigationLabels = employeeNavigation;
     public _employeedata: BehaviorSubject<Employee | null> = new BehaviorSubject(null);
@@ -550,7 +564,7 @@ export class EmployeeService {
 
     //#region Dwr List
     getDwrList(operation,
-        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', status: '', state:'', supervisor_id:'', employee_id:'' },page: number = 1, limit: number = 200, sort: string = '',
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', status: '', state: '', supervisor_id: '', employee_id: '' }, page: number = 1, limit: number = 200, sort: string = '',
         order: 'asc' | 'desc' | '' = '') {
         let params = new HttpParams();
         params = params.set('operation', operation);
@@ -567,7 +581,7 @@ export class EmployeeService {
 
 
         return this._httpClient
-            .get(`api-1/employee-payroll` , {params})
+            .get(`api-1/employee-payroll`, { params })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {
@@ -583,7 +597,7 @@ export class EmployeeService {
     }
 
     getAllDwrListExport(operation,
-        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state:'' },page: number = 1, limit: number = 200) {
+        filters: any = { beginning_date: '', ending_date: '', category: '', supervisor_name: '', name: '', state: '' }, page: number = 1, limit: number = 200) {
         let params = new HttpParams();
         params = params.set('operation', operation);
         params = params.set('beginning_date', filters.beginning_date);
@@ -596,7 +610,7 @@ export class EmployeeService {
         params = params.set('limit', limit);
 
         return this._httpClient
-            .get(`api-1/employee-payroll` , {params})
+            .get(`api-1/employee-payroll`, { params })
             .pipe(take(1))
     }
 
@@ -607,12 +621,40 @@ export class EmployeeService {
         params = params.set('entity', entity);
         params = params.set('role', role);
         params = params.set('search', search);
-          return this._httpClient
+        return this._httpClient
             .get<any>('api-1/dropdowns', {
-              params,
+                params,
             })
             .pipe(take(1));
-        }
+    }
     //#endregion
 
+    addNewGuestEmployee(data: any) {
+        this._httpClient
+            .post(`api-1/employee`, data)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.closeDialog.next(true);
+                    this.isLoadingAddEmployee.next(false);
+                    //show notification based on message returned from the api
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                    this.isLoadingAddEmployee.next(false);
+                },
+                () => {
+                    this.getEmployees();
+                }
+            );
+    }
 }

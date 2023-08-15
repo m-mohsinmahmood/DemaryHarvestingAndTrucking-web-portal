@@ -19,6 +19,12 @@
                                 [placeholder]="'Search Employee'" />
                         </form>
                     </mat-form-field>
+
+                    <button class="ml-2 mr-2" mat-flat-button [color]="'primary'" (click)="openAddDialog()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="lg:ml-2 mr-1">Add</span>
+                    </button>
+
                     <!--Filter-->
                     <button mat-flat-button class="mat-filter" (click)="filtersDrawer.toggle()">
                         <mat-icon
