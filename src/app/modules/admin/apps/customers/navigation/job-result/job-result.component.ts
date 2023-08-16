@@ -863,10 +863,14 @@ export class JobResultComponent implements OnInit {
 
   //#region Hauling rates calculation
 
-  onChangeHaulingRates(rateType) {
-    this._customerService.getCustomerRates(this.routeID, '', '', '', rateType);
+  onChangeHaulingRates(rateType){
+    this._customerService.getHaulingRate(this.routeID, '', '', '', rateType);
+    console.log(this.haulingRateList$)
   }
 
+  totalHaulingFee(rate:any, quantity:any, premium_rate:any, operation:any){
+    return this.toDecimalPoint(rate*quantity)
+  }
   //#endregion
 
 

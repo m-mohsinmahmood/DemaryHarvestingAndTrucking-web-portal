@@ -448,7 +448,7 @@
                             <div class="hauling-tab flex flex-col">
                                 <h1 class="text-lg font-extrabold text-gray-500">Hauling Fees</h1>
                                 <mat-form-field>
-                                    <mat-label>Select Rate Type</mat-label>
+                                    <mat-label>Select rate type</mat-label>
                                     <mat-select [(ngModel)]="selectedOption" disableRipple (selectionChange)="onChangeHaulingRates(selectedOption)">
                                         <mat-option value="Ton Miles">Ton + Miles</mat-option>
                                         <mat-option value="Bushels">Bushels</mat-option>
@@ -461,8 +461,8 @@
                                 </mat-form-field>
 
                                 <!--Loaders sync-->
-                                <div *ngIf="customerRateList$ | async as customerRateList">
-                                    <div class="mt-2" *ngIf="customerRateList?.hauling_rates?.length > 0" >
+                                <div *ngIf="haulingRateList$ | async as haulingRateList">
+                                    <div class="mt-2" *ngIf="haulingRateList?.hauling_rates?.length > 0" >
                                         <!-- TON MILES -->
                                         <div *ngIf="selectedOption === 'Ton Miles'" class="ton-miles-1 grid grid-cols-2 table-auto  justify-end gap-x-8 gap-y-2">
                                         
@@ -473,20 +473,20 @@
                                                 "-"}}</div>
                                         
                                             <div class="grid-item">Base Rate per Ton</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.base_rate?
-                                                customerRateList.hauling_rates[0]?.base_rate: '-'}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.base_rate?
+                                                haulingRateList.hauling_rates[0]?.base_rate: '-'}}</div>
                                         
                                             <div class="grid-item">Premium Per incremental mile over the Base</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.premium_rate?
-                                                customerRateList.hauling_rates[0]?.premium_rate: '-'}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.premium_rate?
+                                                haulingRateList.hauling_rates[0]?.premium_rate: '-'}}</div>
                                         
                                             <div class="grid-item" matTooltip="((Premium Per incremental mile over the Base * DHT Average Miles) + Base Rate per Ton ) * Total Tons">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">${{
-                                                (customerRateList.hauling_rates[0]?.premium_rate && customerRateList.hauling_rates[0]?.premium_rate &&
+                                                (haulingRateList.hauling_rates[0]?.premium_rate && haulingRateList.hauling_rates[0]?.premium_rate &&
                                                 harvestingJobs.details[0]?.total_loaded_miles && harvestingJobs.details[0]?.total_tickets)?
-                                                this.toDecimalPoint((customerRateList.hauling_rates[0]?.premium_rate *
+                                                this.toDecimalPoint((haulingRateList.hauling_rates[0]?.premium_rate *
                                                 (harvestingJobs.details[0]?.total_loaded_miles/harvestingJobs.details[0]?.total_tickets) +
-                                                customerRateList.hauling_rates[0]?.base_rate)*(harvestingJobs.details[0]?.total_net_pounds/2000)) : '-'}}</div>
+                                                haulingRateList.hauling_rates[0]?.base_rate)*(harvestingJobs.details[0]?.total_net_pounds/2000)) : '-'}}</div>
                                         
                                         </div>
                                         <!-- TON MILES -->
@@ -496,7 +496,7 @@
                                             class="bushels-2 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
                                 
                                             <div class="grid-item">Hauling Rate, Per Bushel</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                 
                                             <div class="grid-item">DHT Bushels Hauled</div>
                                             <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_net_bushels?
@@ -507,9 +507,9 @@
                                 
                                             <div class="grid-item" matTooltip="Hauling Rate, Per Bushel * DHT Bushels Hauled">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_net_bushels &&
-                                                customerRateList.hauling_rates[0]?.rate) ?
+                                                haulingRateList.hauling_rates[0]?.rate) ?
                                                 this.toDecimalPoint(harvestingJobs.details[0]?.total_net_bushels *
-                                                customerRateList.hauling_rates[0]?.rate) : '-' }}</div>
+                                                haulingRateList.hauling_rates[0]?.rate) : '-' }}</div>
                                         </div>
                                         <!-- BUSHELS -->
 
@@ -518,7 +518,7 @@
                                             class="hundred-weight-3 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
                                         
                                             <div class="grid-item">Rate per Hundred Weight</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                         
                                             <div class="grid-item">Total Hundred Weight</div>
                                             <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_net_pounds?
@@ -526,8 +526,8 @@
                                         
                                             <div class="grid-item" matTooltip="Rate per Hundred Weight * Total Hundred Weight">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_net_pounds &&
-                                                customerRateList.hauling_rates[0]?.rate)?
-                                                this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/100)*customerRateList.hauling_rates[0]?.rate):
+                                                haulingRateList.hauling_rates[0]?.rate)?
+                                                this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/100)*haulingRateList.hauling_rates[0]?.rate):
                                                 '-'}}</div>
                                         </div>
                                         <!-- HUNDRED WEIGHT -->
@@ -536,7 +536,7 @@
                                         <div *ngIf="selectedOption === 'Miles'" class="miles-4 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
                                         
                                             <div class="grid-item">Rate per Mile</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                         
                                             <div class="grid-item">Total Miles</div>
                                             <div class="grid-item flex items-center justify-center">{{harvestingJobs.details[0]?.total_loaded_miles?
@@ -544,8 +544,8 @@
                                         
                                             <div class="grid-item" matTooltip="Rate per Mile * Total Miles">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">${{(harvestingJobs.details[0]?.total_loaded_miles &&
-                                                customerRateList.hauling_rates[0]?.rate)?
-                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles*customerRateList.hauling_rates[0]?.rate):
+                                                haulingRateList.hauling_rates[0]?.rate)?
+                                                this.toDecimalPoint(harvestingJobs.details[0]?.total_loaded_miles*haulingRateList.hauling_rates[0]?.rate):
                                                 '-'}}</div>
                                         </div>
                                         <!-- MILES -->
@@ -554,7 +554,7 @@
                                         <div *ngIf="selectedOption === 'Tons'" class="tons-5 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
                                         
                                             <div class="grid-item">Rate per Ton</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                         
                                             <div class="grid-item">Total Tons</div>
                                             <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_net_pounds)?
@@ -562,8 +562,8 @@
                                         
                                             <div class="grid-item" matTooltip="Rate per Ton * Total Tons">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">
-                                                ${{(harvestingJobs.details[0]?.total_net_pounds&&customerRateList.hauling_rates[0]?.rate)?
-                                                this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/2000)*customerRateList.hauling_rates[0]?.rate):
+                                                ${{(harvestingJobs.details[0]?.total_net_pounds&&haulingRateList.hauling_rates[0]?.rate)?
+                                                this.toDecimalPoint((harvestingJobs.details[0]?.total_net_pounds/2000)*haulingRateList.hauling_rates[0]?.rate):
                                                 '-'}}</div>
                                         </div>
                                         <!-- TONS -->
@@ -572,7 +572,7 @@
                                         <div *ngIf="selectedOption === 'Load Count'" class="tons-5 grid grid-cols-2 table-auto justify-end gap-x-8 gap-y-2">
                                         
                                             <div class="grid-item">Rate per Load</div>
-                                            <div class="grid-item flex items-center justify-center">${{customerRateList.hauling_rates[0]?.rate}}</div>
+                                            <div class="grid-item flex items-center justify-center">${{haulingRateList.hauling_rates[0]?.rate}}</div>
                                         
                                             <div class="grid-item">Total Loads</div>
                                             <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_tickets)?
@@ -580,8 +580,8 @@
                                         
                                             <div class="grid-item" matTooltip="Rate per Load * Total Loads">Hauling Fee</div>
                                             <div class="grid-item flex items-center justify-center">
-                                                ${{(harvestingJobs.details[0]?.total_tickets && customerRateList.hauling_rates[0]?.rate)?
-                                                harvestingJobs.details[0]?.total_tickets * customerRateList.hauling_rates[0]?.rate:
+                                                ${{(harvestingJobs.details[0]?.total_tickets && haulingRateList.hauling_rates[0]?.rate)?
+                                                harvestingJobs.details[0]?.total_tickets * haulingRateList.hauling_rates[0]?.rate:
                                                 '-'}}
                                             </div>
                                         </div>
@@ -590,46 +590,38 @@
                                     </div>
                                 
                                 
-                                    <div *ngIf="customerRateList?.hauling_rates?.length === 0"
+                                    <div *ngIf="haulingRateList?.hauling_rates?.length === 0"
                                         class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
-                                        Selected rate not found
+                                        No such Rate Type found for this Customer
                                     </div>
                                 </div>
+
 
                             </div>
 
                             <div class="combining-tab flex flex-col">
                                 <h1 class="text-lg font-extrabold text-gray-500">Combining Fees</h1>
-                            
-                                <div *ngIf="customerRateList$ | async as customerRateList">
-                            
-                                    <div class="mt-2" *ngIf="customerRateList?.combining_rates?.length > 0">
-                                        <div class="tons-5 grid grid-cols-2 mt-24 table-auto justify-end gap-x-8 gap-y-2">
-                            
-                                            <div class="grid-item">Combining Rate per Acre</div>
-                                            <div class="grid-item flex items-center justify-center">
-                                                ${{customerRateList.combining_rates[0]?.combining_rate? customerRateList.combining_rates[0]?.combining_rate : '-'}}
-                                            </div>
-                            
-                                            <div class="grid-item">Total Acres</div>
-                                            <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_acres)?
-                                                harvestingJobs.details[0]?.total_acres: '-'}}</div>
-                            
-                                            <div class="grid-item" matTooltip="Rate per Load * Total Loads">Combining Fee</div>
-                                            <div class="grid-item flex items-center justify-center">
-                                                ${{customerRateList.combining_rates[0]?.combining_rate ? customerRateList.combining_rates[0]?.combining_rate * harvestingJobs.details[0]?.total_acres : '-'}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="customerRateList?.combining_rates?.length === 0"
-                                        class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
-                                        Combining rate not found
-                                    </div>
-                                </div>
-                            
-                            </div>
-                        </div>
 
+                                <div class="tons-5 grid grid-cols-2 mt-24 table-auto justify-end gap-x-8 gap-y-2">
+                                        
+                                    <div class="grid-item">Combining Rate per Acre</div>
+                                    <div class="grid-item flex items-center justify-center"></div>
+                                
+                                    <div class="grid-item">Total Acres</div>
+                                    <div class="grid-item flex items-center justify-center">{{(harvestingJobs.details[0]?.total_acres)?
+                                        harvestingJobs.details[0]?.total_acres: '-'}}</div>
+                                
+                                    <div class="grid-item" matTooltip="Rate per Load * Total Loads">Combining Fee</div>
+                                    <div class="grid-item"></div>
+                                    <!-- <div class="grid-item flex items-center justify-center">
+                                        ${{(harvestingJobs.details[0]?.total_acres && haulingRateList.hauling_rates[0]?.rate)?
+                                        harvestingJobs.details[0]?.total_acres * haulingRateList.hauling_rates[0]?.rate:
+                                        '-'}}
+                                    </div> -->
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="total-tab flex flex-col px-8">
                             <div class="tons-5 grid grid-cols-4 table-auto justify-end gap-x-8 gap-y-2">
                                 <div></div>
