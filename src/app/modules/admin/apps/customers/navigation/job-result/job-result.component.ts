@@ -82,16 +82,13 @@ export class JobResultComponent implements OnInit {
 
   routeID; // URL ID
 
-  // Customer Rate Listing
-  customerRateList$: Observable<any[]>;
+ // Customer Hauling Rate Listing
+ haulingRateList$: Observable<any[]>;
+ isLoadingHaulingRateList$: Observable<boolean>;
 
-  // Customer Hauling Rate Listing
-  haulingRateList$: Observable<any[]>;
-  isLoadingHaulingRateList$: Observable<boolean>;
-
-  // Customer Combining Rate Listing
-  combiningRateList$: Observable<any[]>;
-  isLoadingCombiningRateList$: Observable<boolean>;
+// Customer Combining Rate Listing
+combiningRateList$: Observable<any[]>;
+isLoadingCombiningRateList$: Observable<boolean>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
@@ -124,7 +121,6 @@ export class JobResultComponent implements OnInit {
     // Data
     this.haulingRateList$ = this._customerService.haulingRateList$;
     this.combiningRateList$ = this._customerService.combiningRateList$;
-    this.customerRateList$ = this._customerService.customerRateList$;
 
     // Loaders
     this.isLoadingHaulingRateList$ = this._customerService.isLoadingHaulingRateList$;
@@ -319,7 +315,8 @@ export class JobResultComponent implements OnInit {
     !this.jobsFiltersForm.value.to_date ? (this.jobsFiltersForm.value.to_date = '') : ('');
 
     this.harvestingFilterBool = true;
-    if (this.jobsFiltersForm.value.farm_id != null || this.jobsFiltersForm.value.farm_id == '') {
+    if(this.jobsFiltersForm.value.farm_id != null || this.jobsFiltersForm.value.farm_id == '')
+    {
       this.editAcreField = true;
 
     }
@@ -382,14 +379,14 @@ export class JobResultComponent implements OnInit {
     this.farmingFilterBool = false;
     this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
   }
-
+  
   toDecimalPoint(number) {
-    if (number) {
-      const num = parseFloat(number).toFixed(2);
-      var parts = num.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    } else {
+    if(number){
+    const num = parseFloat(number).toFixed(2);
+    var parts = num.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+    } else{
       return 'N/A'
     }
   }
@@ -451,7 +448,7 @@ export class JobResultComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-
+      
     });
   }
 
@@ -470,11 +467,11 @@ export class JobResultComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-
+      
     });
   }
 
-  //#endregion
+//#endregion
 
 
 
@@ -599,8 +596,8 @@ export class JobResultComponent implements OnInit {
                 ],
                 [
                   { text: destinationName || 'N/A' },
-                  { text: filters.to_date ? (new Date(filters.from_date).toLocaleDateString("en-US") + '-' + new Date(filters.to_date).toLocaleDateString("en-US")) : 'N/A' },
-                  { text: capitalizeFirstCharacter(filters.status) || 'N/A' }
+                  { text: filters.to_date? ( new Date(filters.from_date).toLocaleDateString("en-US") +'-' + new Date(filters.to_date).toLocaleDateString("en-US")) : 'N/A' },
+                  { text: capitalizeFirstCharacter(filters.status)  || 'N/A' }
                 ]
               ]
             }
@@ -609,61 +606,61 @@ export class JobResultComponent implements OnInit {
 
           {
 
-            table: {
-              widths: ['25%', '25%', '25%', '25%'], // Set equal width for each cell in the inner table
-              body: [
-                [
-                  { text: 'Total Net Pounds', style: 'tableHeader' },
-                  { text: this.toDecimalPoint(details?.total_net_pounds) || 'N/A', style: 'tableValue' },
-                  { text: 'Total Tons', style: 'tableHeader' },
-                  { text: details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A', style: 'tableValue' }
-                ],
-                [
-                  { text: 'Tons per Acre', style: 'tableHeader' },
-                  { text: (details?.total_net_pounds && details?.total_acres) ? (details?.total_net_pounds / 2000) / details?.total_acres : 'N/A', style: 'tableValue' },
-                  { text: 'Total Bushels', style: 'tableHeader' },
-                  { text: details?.total_net_bushels ? this.toDecimalPoint(details?.total_net_bushels) : 'N/A', style: 'tableValue' }
-                ],
-                [
-                  { text: 'Bushels per Acre', style: 'tableHeader' },
-                  { text: (details?.total_net_bushels && details?.total_acres) ? details?.total_net_bushels / details?.total_acres : 'N/A', style: 'tableValue' },
-                  { text: 'Total Hundred Weight', style: 'tableHeader' },
-                  { text: details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A', style: 'tableValue' }
-                ],
-                [
-                  { text: 'DHT Total Loaded Miles', style: 'tableHeader' },
-                  { text: this.toDecimalPoint(details?.total_loaded_miles) || 'N/A', style: 'tableValue' },
-                  { text: 'DHT Average Miles', style: 'tableHeader' },
-                  { text: (details?.total_loaded_miles && details?.total_tickets) ? this.toDecimalPoint(details?.total_loaded_miles / (details?.total_tickets)) : 'N/A', style: 'tableValue' }
-                ],
-                [
-                  { text: 'Total Loads', style: 'tableHeader' },
-                  { text: details?.total_tickets || 'N/A', style: 'tableValue' },
-                  { text: 'DHT Tickets', style: 'tableHeader' },
-                  { text: details?.total_tickets || 'N/A', style: 'tableValue' }
-                ],
-                [
-                  { text: 'Farmer Tickets', style: 'tableHeader' },
-                  { text: '', style: 'tableValue' },
-                  { text: 'Company', style: 'tableHeader' },
-                  { text: details?.company_name, style: 'tableValue' }
-                ],
-                [
-                  { text: 'Acres', style: 'tableHeader' },
-                  { text: details?.total_acres || '', style: 'tableValue' },
-                  { text: '', style: 'tableHeader' },
-                  { text: '', style: 'tableValue' },
-                ],
-                // Add more rows for other summary data
-              ]
-            }
+                    table: {
+                      widths: ['25%', '25%', '25%', '25%'], // Set equal width for each cell in the inner table
+                      body: [
+                        [
+                          { text: 'Total Net Pounds', style: 'tableHeader' },
+                          { text: this.toDecimalPoint(details?.total_net_pounds) || 'N/A', style: 'tableValue' },
+                          { text: 'Total Tons', style: 'tableHeader' },
+                          { text: details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A', style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'Tons per Acre', style: 'tableHeader' },
+                          { text: (details?.total_net_pounds && details?.total_acres)? (details?.total_net_pounds/2000) / details?.total_acres : 'N/A', style: 'tableValue' },
+                          { text: 'Total Bushels', style: 'tableHeader' },
+                          { text: details?.total_net_bushels? this.toDecimalPoint(details?.total_net_bushels) : 'N/A', style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'Bushels per Acre', style: 'tableHeader' },
+                          { text: (details?.total_net_bushels && details?.total_acres)? details?.total_net_bushels / details?.total_acres : 'N/A', style: 'tableValue' },
+                          { text: 'Total Hundred Weight', style: 'tableHeader' },
+                          { text: details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A', style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'DHT Total Loaded Miles', style: 'tableHeader' },
+                          { text: this.toDecimalPoint(details?.total_loaded_miles) || 'N/A', style: 'tableValue' },
+                          { text: 'DHT Average Miles', style: 'tableHeader' },
+                          { text: (details?.total_loaded_miles && details?.total_tickets)? this.toDecimalPoint(details?.total_loaded_miles / (details?.total_tickets)) :'N/A', style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'Total Loads', style: 'tableHeader' },
+                          { text: details?.total_tickets|| 'N/A', style: 'tableValue' },
+                          { text: 'DHT Tickets', style: 'tableHeader' },
+                          { text: details?.total_tickets || 'N/A', style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'Farmer Tickets', style: 'tableHeader' },
+                          { text: '', style: 'tableValue' },
+                          { text: 'Company', style: 'tableHeader' },
+                          { text: details?.company_name, style: 'tableValue' }
+                        ],
+                        [
+                          { text: 'Acres', style: 'tableHeader' },
+                          { text: details?.total_acres || '', style: 'tableValue' },
+                          { text: '', style: 'tableHeader' },
+                          { text: '', style: 'tableValue' },
+                        ],
+                        // Add more rows for other summary data
+                      ]
+                    }
 
           },
           { text: 'Job Results', style: 'header' },
           {
             table: {
               headerRows: 1,
-              widths: ['15%', '18%', '8%', '18%', '5%', '10%', '10%', '8%', '6%'],
+              widths: ['15%','18%', '8%', '18%', '5%','10%', '10%', '8%', '6%'],
               body: [
                 [
                   { text: "Farm Name", style: 'tableHeader' },
@@ -680,12 +677,12 @@ export class JobResultComponent implements OnInit {
                   { text: harvestingJob.farm_name, style: 'tableCell' },
                   { text: harvestingJob.field_name, style: 'tableCell' },
                   { text: new Date(harvestingJob.load_date).toLocaleDateString("en-US"), style: 'tableCell' },
-                  { text: harvestingJob.destination ? harvestingJob.destination : '', style: 'tableCell' },
-                  { text: harvestingJob.ticket_name || '', style: 'tableCell' },
-                  { text: harvestingJob.sl_number || '', style: 'tableCell' },
-                  { text: harvestingJob.net_pounds ? this.toDecimalPoint(harvestingJob.net_pounds) : '', style: 'tableCell' },
-                  { text: this.toDecimalPoint(harvestingJob.net_bushel) || '', style: 'tableCell' },
-                  { text: harvestingJob.load_miles || '', style: 'tableCell' }
+                  { text: harvestingJob.destination? harvestingJob.destination : '', style: 'tableCell' },
+                  { text: harvestingJob.ticket_name||'', style: 'tableCell' },
+                  { text: harvestingJob.sl_number ||'', style: 'tableCell' },
+                  { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
+                  { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },
+                  { text: harvestingJob.load_miles|| '', style: 'tableCell' }
                 ])
               ]
             }
@@ -740,8 +737,8 @@ export class JobResultComponent implements OnInit {
       { label: 'Crop Name', value: filters.crop_id?.name },
       { label: 'Destination Name', value: filters.destinations_id?.name },
       { label: 'Date Range', value: filters.date_range },
-      { label: 'From Date', value: filters.from_date ? new Date(filters.from_date).toLocaleDateString("en-US") : 'N/A' },
-      { label: 'To Date', value: filters.to_date ? new Date(filters.to_date).toLocaleDateString("en-US") : 'N/A' },
+      { label: 'From Date', value: filters.from_date? new Date(filters.from_date).toLocaleDateString("en-US") : 'N/A'},
+      { label: 'To Date', value: filters.to_date? new Date(filters.to_date).toLocaleDateString("en-US") : 'N/A'},
       { label: 'Status', value: filters.status }
     ];
 
@@ -752,64 +749,64 @@ export class JobResultComponent implements OnInit {
 
       // Create Summary Data for Excel Sheet
       const summaryData = [
-        ['Total Net Pounds', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds) : 'N/A', 'Total Tons', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A'],
-        ['Tons per Acre', (details?.total_net_pounds && details?.total_acres) ? (details?.total_net_pounds / 2000) / details?.total_acres : 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
-        ['Bushels per Acre', (details?.total_net_bushels && details?.total_acres) ? details?.total_net_bushels / details?.total_acres : 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
-        ['DHT Total Loaded Miles', details?.total_loaded_miles ? this.toDecimalPoint(details?.total_loaded_miles) : 'N/A', 'DHT Average Miles', (details?.total_loaded_miles && details?.total_tickets) ? this.toDecimalPoint(details?.total_loaded_miles / (details?.total_tickets)) : 'N/A'],
+        ['Total Net Pounds', details?.total_net_pounds? this.toDecimalPoint(details?.total_net_pounds):'N/A', 'Total Tons', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 2000) : 'N/A'],
+        ['Tons per Acre',(details?.total_net_pounds && details?.total_acres) ?(details?.total_net_pounds/2000) / details?.total_acres : 'N/A', 'Total Bushels', this.toDecimalPoint(details?.total_net_bushels) || 'N/A'],
+        ['Bushels per Acre', (details?.total_net_bushels && details?.total_acres)? details?.total_net_bushels / details?.total_acres : 'N/A', 'Total Hundred Weight', details?.total_net_pounds ? this.toDecimalPoint(details?.total_net_pounds / 100) : 'N/A'],
+        ['DHT Total Loaded Miles', details?.total_loaded_miles? this.toDecimalPoint(details?.total_loaded_miles) :'N/A', 'DHT Average Miles', (details?.total_loaded_miles&&details?.total_tickets)? this.toDecimalPoint(details?.total_loaded_miles / (details?.total_tickets)) : 'N/A'],
         ['Total Loads', details?.total_tickets || 'N/A', 'DHT Tickets', details?.total_tickets || 'N/A'],
         ['Farmer Tickets', '', 'Company', details?.company_name || 'N/A'],
-        ['Acres', details?.total_acres || 'N/A'],
+        ['Acres', details?.total_acres|| 'N/A'],
 
         // Add more rows for other summary data
       ];
 
-      // Create Job Results Data for Excel Sheet
-      const jobResultsData = [
-        ['Job', 'Job Acres', 'Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.', 'S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles', 'Protein Content', 'Moisture Conent', 'Test Weight'],
-        ...harvestingJobs.map(harvestingJob => [
-          harvestingJob.job_setup_name,
-          harvestingJob.acres ? harvestingJob.acres : '',
-          harvestingJob.farm_name,
-          harvestingJob.field_name,
-          new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
-          harvestingJob.destination,
-          harvestingJob.ticket_name ? harvestingJob.ticket_name : '',
-          harvestingJob.sl_number ? harvestingJob.sl_number : '',
-          harvestingJob.net_pounds ? harvestingJob.net_pounds : '',
-          harvestingJob.net_bushel ? harvestingJob.net_bushel : '',
-          harvestingJob.load_miles ? harvestingJob.load_miles : '',
-          harvestingJob.protein ? harvestingJob.protein : '',
-          harvestingJob.moisture ? harvestingJob.moisture : '',
-          harvestingJob.test_weight ? harvestingJob.test_weight : ''
+        // Create Job Results Data for Excel Sheet
+  const jobResultsData = [
+    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
+    ...harvestingJobs.map(harvestingJob => [
+      harvestingJob.job_setup_name,
+      harvestingJob.acres? harvestingJob.acres: '',
+      harvestingJob.farm_name,
+      harvestingJob.field_name,
+      new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
+      harvestingJob.destination,
+      harvestingJob.ticket_name? harvestingJob.ticket_name: '',
+      harvestingJob.sl_number?harvestingJob.sl_number:'',
+      harvestingJob.net_pounds? harvestingJob.net_pounds: '',
+      harvestingJob.net_bushel? harvestingJob.net_bushel:'',
+      harvestingJob.load_miles? harvestingJob.load_miles: '',
+      harvestingJob.protein? harvestingJob.protein:'',
+      harvestingJob.moisture? harvestingJob.moisture:'',
+      harvestingJob.test_weight? harvestingJob.test_weight:''
 
-        ])
-      ];
+    ])
+  ];
 
-      // Apply custom format to the specific columns in the data rows
-      for (let row = 1; row < jobResultsData.length; row++) {
-        const rowData = jobResultsData[row];
-        for (let col = 6; col <= 9; col++) {
-          if (!isNaN(rowData[col])) {
-            // Apply custom number format with 1000 separator to the cell
-            rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
-          }
-        }
+  // Apply custom format to the specific columns in the data rows
+  for (let row = 1; row < jobResultsData.length; row++) {
+    const rowData = jobResultsData[row];
+    for (let col = 6; col <= 9; col++) {
+      if (!isNaN(rowData[col])) {
+        // Apply custom number format with 1000 separator to the cell
+        rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
       }
+    }
+  }
 
-      for (let row = 1; row < jobResultsData.length; row++) {
-        const rowData = jobResultsData[row];
-        for (let col = 1; col <= 1; col++) {
-          if (!isNaN(rowData[col])) {
-            // Apply custom number format with 1000 separator to the cell
-            rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
-          }
-        }
+  for (let row = 1; row < jobResultsData.length; row++) {
+    const rowData = jobResultsData[row];
+    for (let col = 1; col <= 1; col++) {
+      if (!isNaN(rowData[col])) {
+        // Apply custom number format with 1000 separator to the cell
+        rowData[col] = { t: 'n', z: '#,##0', v: rowData[col] };
       }
-      // Create Job Results Sheet Data for Excel Sheet
+    }
+  }
+  // Create Job Results Sheet Data for Excel Sheet
 
       // Create Filters Data for Excel Sheet
-      // Create Filters Data for Excel Sheet
-      const filterSheetData = XLSX.utils.aoa_to_sheet(allFilters.map(filter => [filter.label, filter.value || 'N/A']));
+  // Create Filters Data for Excel Sheet
+  const filterSheetData = XLSX.utils.aoa_to_sheet(allFilters.map(filter => [filter.label, filter.value || 'N/A']));
 
 
       // Create Summary Sheet Data for Excel Sheet
@@ -867,7 +864,6 @@ export class JobResultComponent implements OnInit {
     this._customerService.getHaulingRate(this.routeID, '', '', '', rateType);
     console.log(this.haulingRateList$)
   }
-
   totalHaulingFee(rate:any, quantity:any, premium_rate:any, operation:any){
     return this.toDecimalPoint(rate*quantity)
   }
