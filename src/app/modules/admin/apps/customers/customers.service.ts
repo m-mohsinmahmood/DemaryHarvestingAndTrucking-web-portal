@@ -238,6 +238,14 @@ export class CustomersService {
         this.isLoadingCombiningRate.asObservable();
     //#endregion
 
+    //#region Observables Customer Rates
+    // Data
+    private customerRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerRateList$: Observable<any[] | null> =
+        this.customerRateList.asObservable();
+    //#endregion
+
     //#region Observables Hauling Rate
     // Data
     private haulingRateList: BehaviorSubject<any[] | null> =
@@ -2006,6 +2014,39 @@ export class CustomersService {
     }
 
     //#endregion
+
+    //#region Customer Rate Hauling and Combining
+    getCustomerRates(
+        id: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        rateType: string = '',
+    ){
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('rateType', rateType);
+        params = params.set('data', 'rates');
+
+        return this._httpClient
+            .get<any>(`api-1/customer-job-result?customer_id=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.customerRateList.next(res);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    //#endregion
+
     //#region Customer Rate Data Hauling API
     getHaulingRate(
         id: string,
