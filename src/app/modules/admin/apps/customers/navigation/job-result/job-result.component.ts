@@ -433,7 +433,7 @@ isLoadingCombiningRateList$: Observable<boolean>;
           load_miles: event.load_miles,
           status: event.status,
           crop_id: event.crop_id,
-          ticket_name: event.ticket_name,
+          ticket_name: event.ticket_name.split('-')[0],
           destination: {
             name: event.destination,
             destination_id: event.destination_id,
@@ -867,6 +867,13 @@ isLoadingCombiningRateList$: Observable<boolean>;
   totalHaulingFee(rate:any, quantity:any, premium_rate:any, operation:any){
     return this.toDecimalPoint(rate*quantity)
   }
+  shouldDisplayLoadMiles(harvestingJob: any): boolean {
+  if (harvestingJob && harvestingJob.ticket_name && harvestingJob.ticket_name.includes('SL')) {
+    return false;
+  } else {
+    return true;
+  }
+}
   //#endregion
 
 

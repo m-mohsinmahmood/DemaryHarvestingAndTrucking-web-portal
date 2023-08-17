@@ -709,10 +709,12 @@
                                                 </div>
                                             </div>
 
-                                            <div class="truncate">
+                                            <div class="truncate" matTooltip="{{harvestingJob.farm_name}}"
+                                            matTooltipPosition="above">
                                                 {{harvestingJob.farm_name}}
                                             </div>
-                                            <div class="truncate">
+                                            <div class="truncate" matTooltip="{{harvestingJob.field_name}}"
+                                            matTooltipPosition="above">
                                                 {{harvestingJob.field_name}}
                                             </div>
 
@@ -722,7 +724,8 @@
                                             </div>
 
                                             <!-- Email -->
-                                            <div class="sm:block">
+                                            <div class="sm:block" matTooltip="{{harvestingJob.destination}}"
+                                            matTooltipPosition="above">
                                                 <div class="break-words">
                                                     {{harvestingJob.destination? harvestingJob.destination: ''}}
                                                 </div>
@@ -753,7 +756,7 @@
                                                 </div>
                                             </div>
                                             <div class="hidden sm:block">
-                                                <div class="min-w-4 ml-2 break-words">
+                                                <div class="min-w-4 ml-2 break-words" *ngIf="shouldDisplayLoadMiles(harvestingJob)">
                                                     {{harvestingJob.load_miles?
                                                     this.toDecimalPoint(harvestingJob.load_miles) : ''}}
                                                 </div>
