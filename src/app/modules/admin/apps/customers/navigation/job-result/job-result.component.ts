@@ -82,8 +82,13 @@ export class JobResultComponent implements OnInit {
 
   routeID; // URL ID
 
+ // Customer Hauling Rate Listing
+ haulingRateList$: Observable<any[]>;
+ isLoadingHaulingRateList$: Observable<boolean>;
 
-
+// Customer Combining Rate Listing
+combiningRateList$: Observable<any[]>;
+isLoadingCombiningRateList$: Observable<boolean>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   //#endregion
 
@@ -113,7 +118,13 @@ export class JobResultComponent implements OnInit {
     this.customFarmingJobs$ = this._customerService.customFarmingJobs;
     this.customHarvestingJobs$ = this._customerService.customHarvestingJobs;
     this.commercialTruckingJobs$ = this._customerService.commercialTruckingJobs;
+    // Data
+    this.haulingRateList$ = this._customerService.haulingRateList$;
+    this.combiningRateList$ = this._customerService.combiningRateList$;
 
+    // Loaders
+    this.isLoadingHaulingRateList$ = this._customerService.isLoadingHaulingRateList$;
+    this.isLoadingCombiningRateList$ = this._customerService.isLoadingCombiningRateList$;
 
   }
 
@@ -422,7 +433,7 @@ export class JobResultComponent implements OnInit {
           load_miles: event.load_miles,
           status: event.status,
           crop_id: event.crop_id,
-          ticket_name: event.ticket_name,
+          ticket_name: event.ticket_name.split('-')[0],
           destination: {
             name: event.destination,
             destination_id: event.destination_id,
@@ -846,6 +857,24 @@ export class JobResultComponent implements OnInit {
       return value; // Return as is if it's not a number
     }
   }
+
+  //#region Hauling rates calculation
+
+  onChangeHaulingRates(rateType){
+    this._customerService.getHaulingRate(this.routeID, '', '', '', rateType);
+    console.log(this.haulingRateList$)
+  }
+  totalHaulingFee(rate:any, quantity:any, premium_rate:any, operation:any){
+    return this.toDecimalPoint(rate*quantity)
+  }
+  shouldDisplayLoadMiles(harvestingJob: any): boolean {
+  if (harvestingJob && harvestingJob.ticket_name && harvestingJob.ticket_name.includes('SL')) {
+    return false;
+  } else {
+    return true;
+  }
+}
+  //#endregion
 
 
 }

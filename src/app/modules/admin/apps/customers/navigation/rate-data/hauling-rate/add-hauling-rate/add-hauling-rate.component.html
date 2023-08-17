@@ -20,14 +20,17 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Miles' && form.controls['rate_type'].value != 'Bushels + Excess Yield'" appearance="outline">
             <mat-label>Rate</mat-label>
             <input type='number' matInput formControlName="rate" />
         </mat-form-field>
+
         <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles'" appearance="outline">
             <mat-label>Base Rate</mat-label>
             <input type='number' matInput formControlName="base_rate" />
         </mat-form-field>
+
         <mat-form-field *ngIf="form.controls['rate_type'].value == 'Bushels + Excess Yield'" appearance="outline">
             <mat-label>Base Bushels</mat-label>
             <input type='number' matInput formControlName="base_bushels" />
@@ -39,12 +42,14 @@
         </mat-form-field>
         
     </form>
+
     <div class="flex justify-end mr-7 mt-0 mb-4">
         <button class="ml-4 bg-amber-600 text-white" mat-flat-button (click)="discard()">
             <span class="ml-2 mr-1">
                 Discard
             </span>
         </button>
+        
         <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingHaulingRate$ | async" [disabled]="form.invalid || ((isLoadingHaulingRate$) | async)" 
             (click)="onSubmit()" [disabled]="form.invalid">
             <span class=" mr-1">

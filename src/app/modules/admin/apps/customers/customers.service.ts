@@ -238,6 +238,14 @@ export class CustomersService {
         this.isLoadingCombiningRate.asObservable();
     //#endregion
 
+    //#region Observables Customer Rates
+    // Data
+    private customerRateList: BehaviorSubject<any[] | null> =
+        new BehaviorSubject(null);
+    readonly customerRateList$: Observable<any[] | null> =
+        this.customerRateList.asObservable();
+    //#endregion
+
     //#region Observables Hauling Rate
     // Data
     private haulingRateList: BehaviorSubject<any[] | null> =
@@ -557,15 +565,15 @@ export class CustomersService {
     readonly isLoadingEditFarmingInvoice$: Observable<boolean> =
         this.isLoadingEditFarmingInvoice.asObservable();
 
-        //#region acre update in harvest jobs
-       
+    //#region acre update in harvest jobs
 
-        isLoadingJobAcres: BehaviorSubject<boolean> =
+
+    isLoadingJobAcres: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
 
     readonly isLoadingJobAcres$: Observable<boolean> =
         this.isLoadingJobAcres.asObservable();
-        //#endregion
+    //#endregion
 
 
     //#region Observables Dropdowns
@@ -684,7 +692,7 @@ export class CustomersService {
             .pipe(take(1))
     }
 
-    getDropdownCustomerFields(customerId:string, farmId: string, search: string): Observable<any> {
+    getDropdownCustomerFields(customerId: string, farmId: string, search: string): Observable<any> {
         let params = new HttpParams();
         params = params.set('search', search);
         return this._httpClient
@@ -692,7 +700,7 @@ export class CustomersService {
             .pipe(take(1))
     }
 
-    getDropdownCustomerDestinations(customerId:string, farmId: string, search: string): Observable<any> {
+    getDropdownCustomerDestinations(customerId: string, farmId: string, search: string): Observable<any> {
         let params = new HttpParams();
         params = params.set('search', search);
         return this._httpClient
@@ -2006,17 +2014,52 @@ export class CustomersService {
     }
 
     //#endregion
+
+    //#region Customer Rate Hauling and Combining
+    getCustomerRates(
+        id: string,
+        sort: string = '',
+        order: 'asc' | 'desc' | '' = '',
+        search: string = '',
+        rateType: string = '',
+    ){
+        let params = new HttpParams();
+        params = params.set('search', search);
+        params = params.set('sort', sort);
+        params = params.set('order', order);
+        params = params.set('rateType', rateType);
+        params = params.set('data', 'rates');
+
+        return this._httpClient
+            .get<any>(`api-1/customer-job-result?customer_id=${id}`, {
+                params,
+            })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.customerRateList.next(res);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
+
+    //#endregion
+
     //#region Customer Rate Data Hauling API
     getHaulingRate(
         id: string,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
-        search: string = ''
+        search: string = '',
+        rateType: string = '',
     ) {
         let params = new HttpParams();
         params = params.set('search', search);
         params = params.set('sort', sort);
         params = params.set('order', order);
+        params = params.set('rateType', rateType);
         return this._httpClient
             .get<any>(`api-1/customer-hauling-rate?customerId=${id}`, {
                 params,
@@ -2416,7 +2459,7 @@ export class CustomersService {
 
     getHarvestingJobs(id: string, data: string, filters: { farm_id?: { id: string }, crop_id?: { id: string }, destinations_id?: { id: string }, field_id?: { field_id: string }, from_date?: string, to_date?: string, status?: string } = {}) {
         const { farm_id, crop_id, destinations_id, field_id, from_date, to_date, status } = filters;
-      
+
         let params = new HttpParams();
         params = params.set('data', data);
         params = params.set('farmsId', farm_id?.id || '');
@@ -2953,7 +2996,7 @@ export class CustomersService {
     //#region update acres
     updateAcresInHarvestJobs(acreData: any, operation) {
         this._httpClient
-            .patch(`api-1/customer-job-result`, {acreData, operation})
+            .patch(`api-1/customer-job-result`, { acreData, operation })
             .pipe(take(1))
             .subscribe(
                 (res: any) => {

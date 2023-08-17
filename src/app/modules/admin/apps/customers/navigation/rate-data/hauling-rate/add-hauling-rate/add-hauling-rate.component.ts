@@ -14,7 +14,7 @@ export class AddHaulingRateComponent implements OnInit {
 
   //#region  Local Variables
   form: FormGroup;
-  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles', 'Bushels + Excess Yield'];
+  rateTypes = ['Bushels','Hundred Weight','Miles','Tons','Ton Miles', 'Bushels + Excess Yield', 'Load Count'];
 
   //#endregion
 
@@ -90,7 +90,7 @@ initObservables(){
 onSubmit(): void {
   this._customerService.isLoadingHaulingRate.next(true);
   if (this.data && this.data.isEdit) {
-    if (this.form.value.rate_type != 'Ton Miles' || this.form.value.rate_type != 'Bushels + Excess Yield'){
+    if (this.form.value.rate_type != 'Ton Miles' && this.form.value.rate_type != 'Bushels + Excess Yield'){
       this.form.value.base_rate = 0;
       this.form.value.premium_rate = 0;
       this.form.value.base_bushels = 0;
