@@ -52,6 +52,7 @@ export class AddEmployeeComponent implements OnInit {
             employee_role: ['', [Validators.required]],
             employee_company: ['', [Validators.required]],
             machinery: ['', [Validators.required]],
+            user_type: ['', [Validators.required]],
             operation: ['addGuestEmployee']
         });
     }

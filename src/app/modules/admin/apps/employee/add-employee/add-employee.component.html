@@ -56,6 +56,18 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>Guest User Type</mat-label>
+                <mat-select formControlName="user_type">
+                    <mat-option value="customer">Customer</mat-option>
+                    <mat-option value="customerTP">Customer Third Party</mat-option>
+                    <mat-option value="dhtTP">DHT Third Party</mat-option>
+                    <mat-option value="other">Other</mat-option>
+                </mat-select>
+                <mat-hint *ngIf="this.form.get('user_type').hasError('required')"
+                    class="text-xs text-red-500">User Type is required</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
                 <mat-label class="sm:w-4/12">Machinery</mat-label>
                 <input matInput formControlName="machinery" />
                 <mat-hint *ngIf="this.form.get('machinery').hasError('required')" class="text-xs text-red-500">Machinery
