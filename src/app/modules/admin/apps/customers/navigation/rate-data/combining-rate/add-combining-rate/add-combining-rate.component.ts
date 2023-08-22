@@ -27,6 +27,11 @@ export class AddCombiningRateComponent implements OnInit {
   //#endregion
 
   //#region Auto Complete Farms
+  allFarms: Observable<any>;
+  farm_search$ = new Subject();
+  //#endregion
+  
+  //#region Auto Complete Crops
     allCrops: Observable<any>;
     crop_search$ = new Subject();
   //#endregion
@@ -68,6 +73,9 @@ export class AddCombiningRateComponent implements OnInit {
     initObservables(){
       this.isLoadingCombiningRate$ = this._customerService.isLoadingCombiningRate$      
       this.closeDialog$ = this._customerService.closeDialog$;
+
+      this.isLoadingCombiningRate$ = this._customerService.isLoadingCombiningRate$      
+      this.closeDialog$ = this._customerService.closeDialog$;
     }
   //#endregion
 
@@ -76,16 +84,18 @@ export class AddCombiningRateComponent implements OnInit {
         this.form = this._formBuilder.group({
             id: [''],
             customer_id: this.data.customer_id,
-            crop_id: ['', [Validators.required]],   
+            farm_id: ['', [Validators.required]],
+            crop_id: ['', [Validators.required]],
             combining_rate: ['',[Validators.required]],
             base_bushels: [],
             premium_rate: [],
         });
         if (this.data && this.data.isEdit) {
-          const {combiningRate , customer_id } = this.data;
+          const { combiningRate, customer_id } = this.data;
           this.form.patchValue({
             id: combiningRate.id,
             customer_id: customer_id,
+            farm_id: {farm_id: combiningRate.farm_id, name: combiningRate.farm_name},
             crop_id: {crop_id: combiningRate.crop_id, name: combiningRate.crop_name},
             combining_rate: combiningRate.combining_rate,
             base_bushels: combiningRate.base_bushels,
@@ -97,6 +107,7 @@ export class AddCombiningRateComponent implements OnInit {
     onSubmit(): void {
       this._customerService.isLoadingCombiningRate.next(true);
       this.form.value['crop_id'] = this.form.value['crop_id']?.crop_id;
+      this.form.value['farm_id'] = this.form.value['farm_id']?.farm_id;
       if (this.data && this.data.isEdit) {
           this._customerService.updateCombiningRate(this.form.value);
       } else {
@@ -104,10 +115,16 @@ export class AddCombiningRateComponent implements OnInit {
       }
     }
 
+    getDropdownCustomerFarms() {
+      let value;
+      typeof this.form.controls['farm_id'].value  === 'object' ? (value = this.form.controls['farm_id'].value.crop_name) : (value = this.form.controls['farm_id'].value);
+      this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id, value);
+    }
+
     getDropdownCustomerCrops() {
       let value;
       typeof this.form.controls['crop_id'].value  === 'object' ? (value = this.form.controls['crop_id'].value.crop_name) : (value = this.form.controls['crop_id'].value);
-      this.allCrops = this._customerService.getDropdownCustomerCrops(this.data.customer_id,value);
+      this.allCrops = this._customerService.getDropdownCustomerCrops(this.data.customer_id, value, "customerRates");
     }
 
     discard(): void {
@@ -116,27 +133,51 @@ export class AddCombiningRateComponent implements OnInit {
     }
   //#endregion
 
+  //#region Auto Complete Farms Display Function
+  displayFarmForAutoComplete(farm: any) {
+    return farm ? `${farm.name}` : undefined;
+  }
+  //#endregion
+
   //#region Auto Complete Crops Display Function
     displayCropForAutoComplete(crop: any) {
       return crop ? `${crop.name}` : undefined;
     }
   //#endregion
 
-  //#region Search Function
-   cropSearchSubscription() {
-    this.crop_search$
+  //#region Farm Search Function
+   farmSearchSubscription() {
+    this.farm_search$
         .pipe(
             debounceTime(500),
             distinctUntilChanged(),
             takeUntil(this._unsubscribeAll)
         )
         .subscribe((value: string) => {
-            this.allCrops = this._customerService.getDropdownCustomerCrops(
+            this.allFarms = this._customerService.getDropdownCustomerFarms(
               this.data.customer_id,
                 value
             );
         });
-}
+  }
+  //#endregion
+
+  //#region Crop Search Function
+  cropSearchSubscription() {
+    this.crop_search$
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe((value: string) => {
+        this.allCrops = this._customerService.getDropdownCustomerCrops(
+          this.data.customer_id,
+          value,
+          "customerRates"
+        );
+      });
+  }
 //#endregion
 
 //#region Validation

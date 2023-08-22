@@ -1,17 +1,19 @@
-.job-result-grid {
-    grid-template-columns: 15% 15% 15%;
+// .job-result-grid {
+//     grid-template-columns: 15% 15% 15%;
 
-    @screen sm {
-        grid-template-columns: 2% 7% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-    }
-    @screen md {
-        grid-template-columns: 2% 7% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-    }
+//     @screen sm {
+//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
+//     }
+//     @screen md {
+//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
+//     }
 
-    @screen lg {
-        grid-template-columns: 2% 7% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-    }
-}
+//     @screen lg {
+//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
+//     }
+// }
+
+
 .job-result-custom-trucking-grid {
     grid-template-columns: 25% 35% 25%;
 

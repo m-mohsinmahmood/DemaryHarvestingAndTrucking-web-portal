@@ -676,9 +676,10 @@ export class CustomersService {
 
 
     //#region Drop down API's
-    getDropdownCustomerCrops(customerId: string, search: string): Observable<any> {
+    getDropdownCustomerCrops(customerId: string, search: string, module: string): Observable<any> {
         let params = new HttpParams();
         params = params.set('search', search);
+        params = params.set('module', module);
         return this._httpClient
             .get<any>(`api-1/dropdowns?entity=customerCrops&customerId=${customerId}`, { params })
             .pipe(take(1))

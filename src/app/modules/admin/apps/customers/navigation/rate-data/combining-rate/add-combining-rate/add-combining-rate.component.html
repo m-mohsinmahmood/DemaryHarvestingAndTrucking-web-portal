@@ -11,7 +11,36 @@
     </div>
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-6 overflow-y-auto">
-         <!-- Crop AUTOCOMPLETE -->
+         
+        <!-- FARM AUTOCOMPLETE -->
+         <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Farm Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerFarms()" [matAutocomplete]="farms" 
+            (keyup)="farm_search$.next($event.target.value)" #trigger="matAutocompleteTrigger" matInput
+            formControlName="farm_id" name="name" placeholder="Farm Name" required />
+        </mat-form-field>
+        <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+            <div *ngIf="allFarms | withLoading | async as allFarms">
+                <ng-template [ngIf]="allFarms.value">
+                    <mat-option *ngFor="let farm of allFarms?.value?.customer_farms" [value]="farm">
+                        {{ farm.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.loading">
+                    <mat-option>
+                        <div style="display: flex;justify-content: center;text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                    <mat-option disabled> No Farm(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- FARM AUTOCOMPLETE -->
+
+         <!-- CROP AUTOCOMPLETE -->
          <mat-form-field appearance="outline" fxFlex>
             <mat-label>Crop Name</mat-label>
             <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerCrops()" [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput formControlName="crop_id" name="name" placeholder="Crop Name" required />
@@ -35,7 +64,8 @@
                 </ng-template>
             </div>
         </mat-autocomplete>
-        <!-- Crop AUTOCOMPLETE -->
+        <!-- CROP AUTOCOMPLETE -->
+
         <mat-form-field appearance="outline">
             <mat-label>Combining Rate</mat-label>
             <input type="number" matInput formControlName="combining_rate" />
