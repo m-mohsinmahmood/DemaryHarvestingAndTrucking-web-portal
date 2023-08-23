@@ -465,9 +465,9 @@
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.acres?
                                     this.toDecimalPoint(harvestingJob.acres):
                                     ''}}</td>
-                                <td class="px-4 text-center border-b w-64">{{harvestingJob.farm_name}}</td>
-                                <td class="px-4 text-center border-b w-64">{{harvestingJob.field_name}}</td>
-                                <td class="px-4 text-center border-b w-64">{{harvestingJob.crop_name}}</td>
+                                <td matTooltip="{{harvestingJob.farm_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.farm_name}}</td>
+                                <td matTooltip="{{harvestingJob.field_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.field_name}}</td>
+                                <td matTooltip="{{harvestingJob.crop_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.crop_name}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.bushel_weight}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.load_date | date:
                                     "MMM-dd-YYYY" }}
@@ -477,7 +477,7 @@
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.ticket_name}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.sl_number}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.net_pounds}}</td>
-                                <td class="px-4 text-center border-b w-64">{{this.toDecimalPoint(harvestingJob.bushel_weight/harvestingJob.net_pounds)}}</td>
+                                <td class="px-4 text-center border-b w-64">{{this.toDecimalPoint(harvestingJob.net_pounds/harvestingJob.bushel_weight)}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.load_miles && !harvestingJob.ticket_name.includes("SL") ?
                                     this.toDecimalPoint(harvestingJob.load_miles) : '-'}}</td>
                                 <td class="px-4 text-center border-b w-64">
