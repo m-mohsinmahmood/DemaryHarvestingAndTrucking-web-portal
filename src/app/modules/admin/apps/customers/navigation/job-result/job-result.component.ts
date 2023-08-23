@@ -18,6 +18,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import RobotoFont from 'pdfmake/build/vfs_fonts.js';
 import { AcresHarvestingJobs } from './edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
 import { EditAcresInHarvesting } from './only-acres-edit/edit-acres.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -458,11 +459,6 @@ export class JobResultComponent implements OnInit {
       data: {
         acreData: {
           isEdit: this.isEdit,
-          // id: event.id,
-          // acres: event.acres,
-          // field_id: event.field_id,
-          // farm_id: event.farm_id,
-
         },
       },
     });
@@ -848,6 +844,24 @@ export class JobResultComponent implements OnInit {
       document.body.removeChild(link);
     });
   }
+
+//#region Confirmation Customer Crops Delete Dialog
+  confirmDeleteDialog(ticketId: string): void {
+    const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+        data: {
+            message: 'Are you sure you want to delete this Delivery Ticket?',
+            title: 'Delivery Ticket',
+        },
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+        if (dialogResult){
+          this._customerService.deleteDeliveryTicket(ticketId, this.routeID, this.jobsFiltersForm.value);
+        }
+            
+    });
+  }
+//#endregion
 
   toDecimal(value: number | string): string {
     if (typeof value === 'number') {

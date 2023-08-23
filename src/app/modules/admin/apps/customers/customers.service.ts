@@ -2490,70 +2490,6 @@ export class CustomersService {
 
     //#region Customer Invoicing
 
-    // getFarmingInvoices(id: string, data) {
-    //     let params = new HttpParams();
-    //     params = params.set('data', data);
-
-    //     return this._httpClient
-    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.isLoadingFarmingInvoices.next(true);
-    //                 this.farmingInvoices.next(res);
-    //                 this.isLoadingFarmingInvoices.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-
-    // getTruckingInvoices(id: string, data) {
-    //     let params = new HttpParams();
-    //     params = params.set('data', data);
-
-    //     return this._httpClient
-    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.isLoadingTruckingInvoices.next(true);
-    //                 this.truckingInvoices.next(res);
-    //                 this.isLoadingTruckingInvoices.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-
-
-    // getHarvestingInvoices(id: string, data) {
-    //     let params = new HttpParams();
-    //     params = params.set('data', data);
-
-    //     return this._httpClient
-    //         .get(`api-1/customer-invoice?customer_id=${id}`, { params })
-    //         .pipe(take(1))
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.isLoadingHarvestingInvoices.next(true);
-    //                 this.harvestingInvoices.next(res);
-    //                 this.isLoadingHarvestingInvoices.next(false);
-    //             },
-    //             (err) => {
-    //                 this.handleError(err);
-    //             }
-    //         );
-    // }
-
-    //#endregion
-
-
-
-    //#region Customer Invoicing
-
     getFarmingInvoiceList(id: string, operation: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
@@ -2723,9 +2659,6 @@ export class CustomersService {
             );
     }
 
-
-
-
     createFarmingInvoice(invoice: any, customer_id: any, operation: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
@@ -2758,11 +2691,6 @@ export class CustomersService {
                 }
             );
     }
-
-
-
-
-
 
     createTruckingInvoice(invoice: any, customer_id: any, operation: any,
         sort: string = '',
@@ -2855,11 +2783,6 @@ export class CustomersService {
             );
     }
 
-
-
-
-
-
     createRentalInvoice(data: any,
         sort: string = '',
         order: 'asc' | 'desc' | '' = '',
@@ -2924,8 +2847,6 @@ export class CustomersService {
                 }
             );
     }
-
-
 
     updateTruckingJob(id: any, operation, data: any,
         sort: string = '',
@@ -3024,6 +2945,37 @@ export class CustomersService {
             );
     }
 
+    //#endregion
+
+    //#region Delete Harvesting Delivery Ticket
+    deleteDeliveryTicket(ticketId: any, customerId, filters) {
+        this._httpClient
+            .patch(`api-1/harvesting-ticket`, 
+                {
+                    id: ticketId,
+                    operation: 'deleteSentTicket'
+                })
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this._alertSerice.showAlert({
+                        type: 'success',
+                        shake: false,
+                        slideRight: true,
+                        title: 'Success',
+                        message: res.message,
+                        time: 5000,
+                    });
+                },
+                (err) => {
+                    this.handleError(err);
+                    this.closeDialog.next(false);
+                },
+                () => {
+                    this.getHarvestingJobs(customerId, 'harvesting', filters);
+                }
+            );
+    }
     //#endregion
 
 }
