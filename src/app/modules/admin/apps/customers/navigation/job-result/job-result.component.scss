@@ -1,25 +1,10 @@
-// .job-result-grid {
-//     grid-template-columns: 15% 15% 15%;
-
-//     @screen sm {
-//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-//     }
-//     @screen md {
-//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-//     }
-
-//     @screen lg {
-//         grid-template-columns: 2% 7% 8% 8% 8% 8% 8% 8% 7% 7% 8% 7% 5% 7% 4% 10%;
-//     }
-// }
-
-
 .job-result-custom-trucking-grid {
     grid-template-columns: 25% 35% 25%;
 
     @screen sm {
         grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 5% 10%;
     }
+
     @screen md {
         grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 5% 10%;
     }
@@ -36,6 +21,7 @@
     @screen sm {
         grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 10% 10%;
     }
+
     @screen md {
         grid-template-columns: 10% 10% 10% 5% 5% 5% 10% 10% 10% 10% 10%;
     }
@@ -45,21 +31,6 @@
     }
 }
 
-
-// ::ng-deep .mat-form-field + .mat-form-field {
-//     margin-left: 8px;
-//   }
-
-// .mat-expansion-panel
-//   {
-//     background: #F5F5F5 !important;
-//   }
-//   .mat-accordion .mat-expansion-panel
-//   {
-//     marging
-
-//   }
-
 .mat-filter {
     background-color: #f1f5f9 !important;
     color: #4f46e5 !important;
@@ -70,22 +41,20 @@
     color: #fff;
 }
 
-.mat-expansion-panel 
-{
+.mat-expansion-panel {
     background-color: #F5F5F5 !important;
 }
 
-.gray-custom-bg{
+.gray-custom-bg {
     background-color: #F5F5F5;
 }
-::ng-deep .filters-job-result .mat-form-field-wrapper
-{
+
+::ng-deep .filters-job-result .mat-form-field-wrapper {
     margin-bottom: 0.5rem !important;
     padding-bottom: 0rem !important;
     margin-top: 0rem !important;
 }
 
-
 .mat-filter {
     background-color: #f1f5f9 !important;
     color: #4f46e5 !important;
@@ -95,12 +64,13 @@
     background-color: green;
     color: #fff;
 }
-.custom-class-for-col-header div
-{
+
+.custom-class-for-col-header div {
     text-align: left;
 }
+
 .grid-item {
     padding: 10px;
     border: 1px solid #ccc;
     font-weight: bold;
-  }
+}

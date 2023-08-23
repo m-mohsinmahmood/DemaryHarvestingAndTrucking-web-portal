@@ -1,0 +1,197 @@
+<div>
+    <mat-accordion>
+        <mat-expansion-panel class="mb-4 bg-gray-100  py-1" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="text-lg font-extrabold text-gray-500">
+                    Harvesting And Hauling Revenue Estimates
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div>
+                <div class="w-full overflow-x-auto shadow rounded-md">
+                    <div>
+                        <table class="whitespace-nowrap">
+                            <thead
+                                class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                                <tr class="h-4">
+                                    <th class="border-b w-64">Harvesting Services</th>
+                                    <th class="py-4 px-4 border-b w-64">Farm</th>
+                                    <th class="py-4 px-4 border-b w-64">Crop</th>
+                                    <th class="py-4 px-4 border-b w-64">Rate Type</th>
+                                    <th class="py-4 px-4 border-b w-64">Quantity</th>
+                                    <th class="py-4 px-4 border-b w-64">Rate</th>
+                                    <th class="py-4 px-4 border-b w-64">Ravenue</th>
+                                    <th class="py-4 px-4 border-b w-64">Ravenue / Acre</th>
+                                    <th class="py-4 px-4 border-b w-64">Revenue / Bushel</th>
+                                    <th class="py-4 px-4 border-b w-64">Actions</th>
+                                    <th class="py-4 px-4 border-b w-128">Status</th>
+                                    <!-- ... add more headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 text-center border-b w-64">Job 1</td>
+                                    <td class="px-4 text-center border-b w-64">Farm 1</td>
+                                    <td class="px-4 text-center border-b w-64">Crop 1</td>
+                                    <td class="px-4 text-center border-b w-64">Test</td>
+                                    <td class="px-4 text-center border-b w-64">123</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">312</td>
+                                    <td class="px-4 text-center border-b w-64">
+                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block"
+                                            mat-stroked-button matTooltip="Edit" matTooltipPosition="above">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 text-center border-b w-128">
+                                        <div class="min-w-4 capitalize text-center text-white m-3 px-4 rounded-full"
+                                            style="background: #4ADE80;">
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <th>Sub Total</th>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #noJobs>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no Job Results!</div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div class="w-full overflow-x-auto shadow rounded-md">
+                    <div>
+                        <table class="whitespace-nowrap">
+                            <thead
+                                class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                                <tr class="h-4">
+                                    <th class="border-b w-64">Harvesting Services</th>
+                                    <th class="py-4 px-4 border-b w-64">Farm</th>
+                                    <th class="py-4 px-4 border-b w-64">Crop</th>
+                                    <th class="py-4 px-4 border-b w-64">Rate Type</th>
+                                    <th class="py-4 px-4 border-b w-64">Quantity</th>
+                                    <th class="py-4 px-4 border-b w-64">Rate</th>
+                                    <th class="py-4 px-4 border-b w-64">Ravenue</th>
+                                    <th class="py-4 px-4 border-b w-64">Ravenue / Acre</th>
+                                    <th class="py-4 px-4 border-b w-64">Revenue / Bushel</th>
+                                    <th class="py-4 px-4 border-b w-64">Actions</th>
+                                    <th class="py-4 px-4 border-b w-128">Status</th>
+                                    <!-- ... add more headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 text-center border-b w-64">Job 1</td>
+                                    <td class="px-4 text-center border-b w-64">Farm 1</td>
+                                    <td class="px-4 text-center border-b w-64">Crop 1</td>
+                                    <td class="px-4 text-center border-b w-64">Test</td>
+                                    <td class="px-4 text-center border-b w-64">123</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">321</td>
+                                    <td class="px-4 text-center border-b w-64">312</td>
+                                    <td class="px-4 text-center border-b w-64">
+                                        <button class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block"
+                                            mat-stroked-button matTooltip="Edit" matTooltipPosition="above">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 text-center border-b w-128">
+                                        <div class="min-w-4 capitalize text-center text-white m-3 px-4 rounded-full"
+                                            style="background: #4ADE80;">
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <th>Sub Total</th>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #noJobs>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no Job Results!</div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div class="w-full overflow-x-auto shadow rounded-md">
+                    <div>
+                        <table class="whitespace-nowrap">
+                            <thead
+                                class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                                <tr class="h-4">
+                                    <th class="border-b"></th>
+                                    <th class="py-4 px-4 border-b w-64">Revenue</th>
+                                    <th class="py-4 px-4 border-b w-64">Revenue / Acre</th>
+                                    <th class="py-4 px-4 border-b w-64">Revenue / Bushel</th>
+                                    <!-- ... add more headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th class="border-b flex pl-4">Total Wheat Crop</th>
+                                    <td class="px-4 text-center border-b w-64">Farm 1</td>
+                                    <td class="px-4 text-center border-b w-64">Crop 1</td>
+                                    <td class="px-4 text-center border-b w-64">456</td>
+                                </tr>
+
+                                <tr>
+                                    <th class="border-b flex pl-4">Total Milo Crop</th>
+                                    <td class="px-4 text-center border-b w-64">Farm 1</td>
+                                    <td class="px-4 text-center border-b w-64">Crop 1</td>
+                                    <td class="px-4 text-center border-b w-64">456</td>
+                                </tr>
+
+                                <tr>
+                                    <th class="border-b flex pl-4">Total Income</th>
+                                    <td class="px-4 text-center border-b w-64">Farm 1</td>
+                                    <td class="px-4 text-center border-b w-64">Crop 1</td>
+                                    <td class="px-4 text-center border-b w-64">456</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #noJobs>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
+                            are no Job Results!</div>
+                    </ng-template>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
