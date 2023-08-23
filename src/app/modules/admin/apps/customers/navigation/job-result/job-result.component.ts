@@ -677,7 +677,7 @@ export class JobResultComponent implements OnInit {
                   { text: harvestingJob.ticket_name||'', style: 'tableCell' },
                   { text: harvestingJob.sl_number ||'', style: 'tableCell' },
                   { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
-                  { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },
+                  { text: (harvestingJob.net_pounds && harvestingJob.bushel_weight) ? this.toDecimalPoint(harvestingJob.net_pounds/harvestingJob.bushel_weight) : '', style: 'tableCell' },
                   { text: harvestingJob.load_miles|| '', style: 'tableCell' }
                 ])
               ]
@@ -758,18 +758,20 @@ export class JobResultComponent implements OnInit {
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
+    ['Job','Job Acres','Farm Name', 'Field Name', 'Crop Name', 'Bushel Weight', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
       harvestingJob.acres? harvestingJob.acres: '',
       harvestingJob.farm_name,
       harvestingJob.field_name,
+      harvestingJob.crop_name,
+      harvestingJob.bushel_weight,
       new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
       harvestingJob.destination,
       harvestingJob.ticket_name? harvestingJob.ticket_name: '',
       harvestingJob.sl_number?harvestingJob.sl_number:'',
       harvestingJob.net_pounds? harvestingJob.net_pounds: '',
-      harvestingJob.net_bushel? harvestingJob.net_bushel:'',
+      harvestingJob.net_pounds && harvestingJob.bushel_weight ? harvestingJob.net_pounds/harvestingJob.bushel_weight : '',
       harvestingJob.load_miles? harvestingJob.load_miles: '',
       harvestingJob.protein? harvestingJob.protein:'',
       harvestingJob.moisture? harvestingJob.moisture:'',
