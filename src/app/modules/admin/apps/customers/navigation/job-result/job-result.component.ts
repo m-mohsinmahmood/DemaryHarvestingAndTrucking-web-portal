@@ -380,7 +380,7 @@ export class JobResultComponent implements OnInit {
     this.farmingFilterBool = false;
     this._customerService.getFarmingJobs(this.routeID, 'farming', this.farmingFiltersForm.value);
   }
-  
+
   toDecimalPoint(number) {
     if(number){
     const num = parseFloat(number).toFixed(2);
@@ -449,7 +449,7 @@ export class JobResultComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      
+
     });
   }
 
@@ -463,7 +463,7 @@ export class JobResultComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      
+
     });
   }
 
@@ -860,7 +860,7 @@ export class JobResultComponent implements OnInit {
         if (dialogResult){
           this._customerService.deleteDeliveryTicket(ticketId, this.routeID, this.jobsFiltersForm.value);
         }
-            
+
     });
   }
 //#endregion

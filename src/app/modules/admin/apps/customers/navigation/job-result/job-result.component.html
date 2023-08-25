@@ -476,24 +476,24 @@
                                     harvestingJob.destination: ''}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.ticket_name}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.sl_number}}</td>
-                                <td class="px-4 text-center border-b w-64">{{harvestingJob.net_pounds}}</td>
+                                <td class="px-4 text-center border-b w-64">{{harvestingJob.net_pounds | number:'1.0-0'}}</td>
                                 <td class="px-4 text-center border-b w-64">{{this.toDecimalPoint(harvestingJob.net_pounds/harvestingJob.bushel_weight)}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.load_miles && !harvestingJob.ticket_name.includes("SL") ?
                                     this.toDecimalPoint(harvestingJob.load_miles) : '-'}}</td>
                                 <td class="px-4 text-center border-b w-64">
                                     <div class="flex justify-center">
                                         <!-- Edit Button with Icon -->
-                                        <button 
-                                            class="min-w-5 min-h-5 h-5 px-1 hidden sm:block" 
-                                            (click)="openEditDialog(harvestingJob)" matTooltip="Edit" 
+                                        <button
+                                            class="min-w-5 min-h-5 h-5 px-1 hidden sm:block"
+                                            (click)="openEditDialog(harvestingJob)" matTooltip="Edit"
                                             matTooltipPosition="above">
                                             <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                                         </button>
-                                        
+
                                         <!-- Delete Button with Icon -->
-                                        <button 
+                                        <button
                                             class="min-w-5 min-h-5 h-5 px-1 hidden sm:block"
-                                            (click)="confirmDeleteDialog(harvestingJob.delivery_ticket_id)" matTooltip="Delete" 
+                                            (click)="confirmDeleteDialog(harvestingJob.delivery_ticket_id)" matTooltip="Delete"
                                             matTooltipPosition="above">
                                             <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                                         </button>

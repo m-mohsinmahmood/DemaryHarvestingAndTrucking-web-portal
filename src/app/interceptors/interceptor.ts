@@ -9,7 +9,6 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs';
-import { environment } from '../../environments/environment';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
