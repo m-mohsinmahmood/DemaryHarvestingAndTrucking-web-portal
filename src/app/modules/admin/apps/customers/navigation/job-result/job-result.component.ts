@@ -18,6 +18,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import RobotoFont from 'pdfmake/build/vfs_fonts.js';
 import { AcresHarvestingJobs } from './edit-acres-harvesting-jobs/edit-acres-harvesting-jobs.component';
 import { EditAcresInHarvesting } from './only-acres-edit/edit-acres.component';
+import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -458,11 +459,6 @@ export class JobResultComponent implements OnInit {
       data: {
         acreData: {
           isEdit: this.isEdit,
-          // id: event.id,
-          // acres: event.acres,
-          // field_id: event.field_id,
-          // farm_id: event.farm_id,
-
         },
       },
     });
@@ -681,7 +677,7 @@ export class JobResultComponent implements OnInit {
                   { text: harvestingJob.ticket_name||'', style: 'tableCell' },
                   { text: harvestingJob.sl_number ||'', style: 'tableCell' },
                   { text: harvestingJob.net_pounds? this.toDecimalPoint(harvestingJob.net_pounds):'', style: 'tableCell' },
-                  { text: this.toDecimalPoint(harvestingJob.net_bushel)|| '', style: 'tableCell' },
+                  { text: (harvestingJob.net_pounds && harvestingJob.bushel_weight) ? this.toDecimalPoint(harvestingJob.net_pounds/harvestingJob.bushel_weight) : '', style: 'tableCell' },
                   { text: harvestingJob.load_miles|| '', style: 'tableCell' }
                 ])
               ]
@@ -762,18 +758,20 @@ export class JobResultComponent implements OnInit {
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Job Acres','Farm Name', 'Field Name', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
+    ['Job','Job Acres','Farm Name', 'Field Name', 'Crop Name', 'Bushel Weight', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
       harvestingJob.acres? harvestingJob.acres: '',
       harvestingJob.farm_name,
       harvestingJob.field_name,
+      harvestingJob.crop_name,
+      harvestingJob.bushel_weight,
       new Date(harvestingJob.load_date).toLocaleDateString('en-US'),
       harvestingJob.destination,
       harvestingJob.ticket_name? harvestingJob.ticket_name: '',
       harvestingJob.sl_number?harvestingJob.sl_number:'',
       harvestingJob.net_pounds? harvestingJob.net_pounds: '',
-      harvestingJob.net_bushel? harvestingJob.net_bushel:'',
+      harvestingJob.net_pounds && harvestingJob.bushel_weight ? harvestingJob.net_pounds/harvestingJob.bushel_weight : '',
       harvestingJob.load_miles? harvestingJob.load_miles: '',
       harvestingJob.protein? harvestingJob.protein:'',
       harvestingJob.moisture? harvestingJob.moisture:'',
@@ -848,6 +846,24 @@ export class JobResultComponent implements OnInit {
       document.body.removeChild(link);
     });
   }
+
+//#region Confirmation Customer Crops Delete Dialog
+  confirmDeleteDialog(ticketId: string): void {
+    const dialogRef = this._matDialog.open(ConfirmationDialogComponent, {
+        data: {
+            message: 'Are you sure you want to delete this Delivery Ticket?',
+            title: 'Delivery Ticket',
+        },
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+        if (dialogResult){
+          this._customerService.deleteDeliveryTicket(ticketId, this.routeID, this.jobsFiltersForm.value);
+        }
+            
+    });
+  }
+//#endregion
 
   toDecimal(value: number | string): string {
     if (typeof value === 'number') {
