@@ -12,7 +12,7 @@ import 'rxjs';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
-    constructor() {}
+    constructor() { }
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
@@ -20,9 +20,7 @@ export class Interceptor implements HttpInterceptor {
         let requestUrl = request.url;
         if (requestUrl.indexOf('api-1') !== -1) {
             requestUrl = requestUrl.replace('api-1', 'http://localhost:7071/api');
-        }
-        else if(requestUrl.indexOf('api-2') !== -1) {
-            requestUrl = requestUrl.replace('api-2', 'https://dht-dev-node.azurewebsites.net/api');
+            // requestUrl = requestUrl.replace('api-1', 'https://dht-dev.azurewebsites.net');
         }
         request = request.clone({
             url: requestUrl,
@@ -30,7 +28,5 @@ export class Interceptor implements HttpInterceptor {
         // move to next HttpClient request life cycle
         return next.handle(request);
     }
-    //https://dht-dev.azurewebsites.net
-    //http://localhost:7071/
 }
 
