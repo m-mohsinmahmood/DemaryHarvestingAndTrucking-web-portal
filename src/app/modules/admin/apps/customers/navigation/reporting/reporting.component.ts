@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomersService } from '../../customers.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-reporting',
@@ -7,10 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportingComponent implements OnInit {
     panelOpenState = false;
+    customerReporting$: any;
+    customerId;
 
-    constructor() { }
+    constructor(
+        private _customerService: CustomersService,
+        private activatedRoute: ActivatedRoute
+    ) { }
 
     ngOnInit(): void {
+        this.activatedRoute.params.subscribe(param => {
+            this.customerId = param.Id;
+        });
+
+        this.initObservables();
+        this.initApis();
+    }
+
+    initObservables() {
+        this.customerReporting$ = this._customerService.customerReporting$;
+    }
+
+    initApis() {
+        this._customerService.getCustomerReporting(this.customerId, 'getHarvestingHaulingRevenue');
+
     }
 
 }

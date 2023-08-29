@@ -35,10 +35,19 @@ import { harvestingJobsFilters } from 'app/modules/admin/apps/customers/customer
     providedIn: 'root',
 })
 export class CustomersService {
+
     public navigationLabels = customerNavigation;
     closeDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly closeDialog$: Observable<boolean> =
         this.closeDialog.asObservable();
+
+    //#region Loaders Customers Reporting
+    private isLoadingCustomersReporting: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoadingCustomersReporting$: Observable<boolean> = this.isLoadingCustomersReporting.asObservable();
+
+    private customerReporting: BehaviorSubject<Customers[] | null> = new BehaviorSubject(null);
+    readonly customerReporting$: Observable<Customers[] | null> = this.customerReporting.asObservable();
+    //#endregion
 
     //#region Loaders Customers
     private isLoadingCustomers: BehaviorSubject<boolean> =
@@ -46,9 +55,7 @@ export class CustomersService {
     readonly isLoadingCustomers$: Observable<boolean> =
         this.isLoadingCustomers.asObservable();
 
-    isLoadingCustomer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-        false
-    );
+    isLoadingCustomer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly isLoadingCustomer$: Observable<boolean> =
         this.isLoadingCustomer.asObservable();
     //#endregion
@@ -2023,7 +2030,7 @@ export class CustomersService {
         order: 'asc' | 'desc' | '' = '',
         search: string = '',
         rateType: string = '',
-    ){
+    ) {
         let params = new HttpParams();
         params = params.set('search', search);
         params = params.set('sort', sort);
@@ -2950,7 +2957,7 @@ export class CustomersService {
     //#region Delete Harvesting Delivery Ticket
     deleteDeliveryTicket(ticketId: any, customerId, filters) {
         this._httpClient
-            .patch(`api-1/harvesting-ticket`, 
+            .patch(`api-1/harvesting-ticket`,
                 {
                     id: ticketId,
                     operation: 'deleteSentTicket'
@@ -2978,4 +2985,20 @@ export class CustomersService {
     }
     //#endregion
 
+
+    getCustomerReporting(id, operation) {
+        return this._httpClient
+            .get(`api-1/customer-reporting?customer_id=${id}&operation=${operation}`,)
+            .pipe(take(1))
+            .subscribe(
+                (res: any) => {
+                    this.isLoadingCustomersReporting.next(true);
+                    this.customerReporting.next(res);
+                    this.isLoadingCustomersReporting.next(false);
+                },
+                (err) => {
+                    this.handleError(err);
+                }
+            );
+    }
 }
