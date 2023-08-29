@@ -61,9 +61,9 @@
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <th>Sub Total</th>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue_per_acre')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold"></td>
                                 </tr>
 
                             </tbody>
@@ -130,9 +130,9 @@
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <th>Sub Total</th>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold">456</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue_per_acre')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold"></td>
                                 </tr>
 
                             </tbody>
@@ -170,9 +170,9 @@
 
                                 <tr>
                                     <th class="border-b flex pl-4">Total Income</th>
-                                    <td class="px-4 text-center border-b w-64"></td>
-                                    <td class="px-4 text-center border-b w-64"></td>
-                                    <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue_per_acre')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold"></td>
                                 </tr>
 
                             </tbody>
