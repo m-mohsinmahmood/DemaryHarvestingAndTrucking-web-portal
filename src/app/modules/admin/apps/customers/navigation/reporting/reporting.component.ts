@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./reporting.component.scss']
 })
 export class ReportingComponent implements OnInit {
-    panelOpenState = false;
+    panelOpenState = true;
     customerReporting$: any;
     customerId;
 
