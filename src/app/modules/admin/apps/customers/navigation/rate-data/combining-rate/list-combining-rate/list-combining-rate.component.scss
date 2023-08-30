@@ -1,13 +1,13 @@
 .combining-grid {
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 20% 20% 20% 20% 20%;
     @screen sm {
-        grid-template-columns: 20% 25% 25% 25% 20% ;
+        grid-template-columns: 20% 20% 20% 20% 20%;
     }
     @screen md {
-        grid-template-columns: 20% 25% 25% 25% 20% ;
+        grid-template-columns: 20% 20% 20% 20% 20%;
     }
     @screen lg {
-        grid-template-columns: 20% 25% 25% 25% 20% ;
+        grid-template-columns: 20% 20% 20% 20% 20%;
     }
 }       
 

@@ -63,6 +63,14 @@
                         <div class="hauling-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="rate_type">
+                                Farm
+                            </div>
+
+                            <div mat-sort-header="rate_type">
+                                Crop
+                            </div>
+                            
+                            <div mat-sort-header="rate_type">
                                 Rate Type
                             </div>
                             <div mat-sort-header="rate" class="hidden sm:block">
@@ -88,7 +96,15 @@
                         <div class="rows-wrapper">
                             <ng-container *ngIf="haulingRateList.hauling_rates.length > 0 else noHaulingRateList">
                                 <ng-container *ngFor="let haulingRate of haulingRateList?.hauling_rates">
-                                    <div class="hauling-grid grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                    <div class="hauling-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate">
+                                            {{haulingRate.farm_name}}
+                                        </div>
+
+                                        <div class="truncate">
+                                            {{haulingRate.crop_name}}
+                                        </div>
+                                        
                                         <div class="truncate">
                                             {{haulingRate.rate_type}}
                                         </div>

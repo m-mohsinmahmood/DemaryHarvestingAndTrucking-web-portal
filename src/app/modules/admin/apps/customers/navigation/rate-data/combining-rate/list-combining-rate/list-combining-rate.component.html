@@ -62,6 +62,10 @@
                         <!-- Header -->
                         <div class="combining-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
+
+                            <div mat-sort-header="farm_name">
+                                Farm
+                            </div>
                             <div mat-sort-header="crop_name">
                                 Crop
                             </div>
@@ -89,6 +93,9 @@
                                 *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
                                 <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
                                     <div class="combining-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                        <div class="truncate">
+                                            {{combiningRate.farm_name}}
+                                        </div>
                                         <div class="truncate">
                                             {{combiningRate.crop_name}}
                                         </div>

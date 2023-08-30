@@ -3,25 +3,81 @@
     <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
         <div class="text-lg font-medium">{{this.data.isEdit? 'Edit Hauling Rate': 'Add Hauling Rate'}}</div>
         <button mat-icon-button (click)="discard()" [tabIndex]="-1">
-            <mat-icon
-                class="text-current"
-                [svgIcon]="'heroicons_outline:x'"
-            ></mat-icon>
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
         </button>
     </div>
     <!-- Compose form -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 flex-auto p-6 sm:p-6 overflow-y-auto">
+
+
+        <!-- FARM AUTOCOMPLETE -->
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Farm Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerFarms()"
+                [matAutocomplete]="farms" (keyup)="farm_search$.next($event.target.value)"
+                #trigger="matAutocompleteTrigger" matInput formControlName="farm_id" name="name" placeholder="Farm Name"
+                required />
+        </mat-form-field>
+        <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
+            <div *ngIf="allFarms | withLoading | async as allFarms">
+                <ng-template [ngIf]="allFarms.value">
+                    <mat-option *ngFor="let farm of allFarms?.value?.customer_farms" [value]="farm">
+                        {{ farm.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.loading">
+                    <mat-option>
+                        <div style="display: flex;justify-content: center;text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allFarms?.value?.customer_farms?.length == 0">
+                    <mat-option disabled> No Farm(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- FARM AUTOCOMPLETE -->
+
+        <!-- CROP AUTOCOMPLETE -->
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Crop Name</mat-label>
+            <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerCrops()"
+                [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput
+                formControlName="crop_id" name="name" placeholder="Crop Name" required />
+        </mat-form-field>
+        <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
+            <div *ngIf="allCrops | withLoading | async as allCrops">
+                <ng-template [ngIf]="allCrops.value">
+                    <mat-option *ngFor="let crop of allCrops.value.customer_crops" [value]="crop">
+                        {{ crop.name }}
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allCrops?.loading">
+                    <mat-option>
+                        <div style="display: flex;justify-content: center;text-align: center;">
+                            <mat-spinner class="text-primary" diameter="25"></mat-spinner>
+                        </div>
+                    </mat-option>
+                </ng-template>
+                <ng-template [ngIf]="allCrops?.value?.customer_crops?.length == 0">
+                    <mat-option disabled> No Crop(s) found </mat-option>
+                </ng-template>
+            </div>
+        </mat-autocomplete>
+        <!-- CROP AUTOCOMPLETE -->
+
         <mat-form-field appearance="outline">
             <mat-label>Rate Type</mat-label>
-            <mat-select formControlName="rate_type" >
-                <mat-option
-                    *ngFor="let rateType of rateTypes"
-                    [value]="rateType">{{ rateType }}
+            <mat-select formControlName="rate_type">
+                <mat-option *ngFor="let rateType of rateTypes" [value]="rateType">{{ rateType }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="form.controls['rate_type'].value != 'Ton Miles' && form.controls['rate_type'].value != 'Bushels + Excess Yield'" appearance="outline">
+        <mat-form-field
+            *ngIf="form.controls['rate_type'].value != 'Ton Miles' && form.controls['rate_type'].value != 'Bushels + Excess Yield'"
+            appearance="outline">
             <mat-label>Rate</mat-label>
             <input type='number' matInput formControlName="rate" />
         </mat-form-field>
@@ -36,11 +92,13 @@
             <input type='number' matInput formControlName="base_bushels" />
         </mat-form-field>
 
-        <mat-form-field *ngIf="form.controls['rate_type'].value == 'Ton Miles' || form.controls['rate_type'].value == 'Bushels + Excess Yield'" appearance="outline">
+        <mat-form-field
+            *ngIf="form.controls['rate_type'].value == 'Ton Miles' || form.controls['rate_type'].value == 'Bushels + Excess Yield'"
+            appearance="outline">
             <mat-label>Premium Rate</mat-label>
             <input type='number' matInput formControlName="premium_rate" />
         </mat-form-field>
-        
+
     </form>
 
     <div class="flex justify-end mr-7 mt-0 mb-4">
@@ -49,9 +107,10 @@
                 Discard
             </span>
         </button>
-        
-        <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingHaulingRate$ | async" [disabled]="form.invalid || ((isLoadingHaulingRate$) | async)" 
-            (click)="onSubmit()" [disabled]="form.invalid">
+
+        <button class="ml-4" mat-flat-button [color]="'primary'" [class.spinner]="isLoadingHaulingRate$ | async"
+            [disabled]="form.invalid || ((isLoadingHaulingRate$) | async)" (click)="onSubmit()"
+            [disabled]="form.invalid">
             <span class=" mr-1">
                 {{this.data.isEdit? 'Update': 'Save'}}
             </span>
