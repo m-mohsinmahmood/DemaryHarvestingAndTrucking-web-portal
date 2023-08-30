@@ -50,6 +50,7 @@ export class AddCombiningRateComponent implements OnInit {
     ngOnInit(): void {
       this.initObservables();
       this.initForm();
+      this.farmSearchSubscription();
       this.cropSearchSubscription();
       this._customerService.closeDialog$
           .pipe(takeUntil(this._unsubscribeAll))
@@ -107,8 +108,9 @@ export class AddCombiningRateComponent implements OnInit {
     onSubmit(): void {
       this._customerService.isLoadingCombiningRate.next(true);
       this.form.value['crop_id'] = this.form.value['crop_id']?.crop_id;
-      this.form.value['farm_id'] = this.form.value['farm_id']?.farm_id;
+      this.form.value['farm_id'] = this.form.value['farm_id']?.id;
       if (this.data && this.data.isEdit) {
+          this.form.value['farm_id'] = this.form.value['farm_id']?.farm_id;
           this._customerService.updateCombiningRate(this.form.value);
       } else {
           this._customerService.createCombiningRate(this.form.value);
@@ -117,7 +119,7 @@ export class AddCombiningRateComponent implements OnInit {
 
     getDropdownCustomerFarms() {
       let value;
-      typeof this.form.controls['farm_id'].value  === 'object' ? (value = this.form.controls['farm_id'].value.crop_name) : (value = this.form.controls['farm_id'].value);
+      typeof this.form.controls['farm_id'].value  === 'object' ? (value = this.form.controls['farm_id'].value.farm_name) : (value = this.form.controls['farm_id'].value);
       this.allFarms = this._customerService.getDropdownCustomerFarms(this.data.customer_id, value);
     }
 
