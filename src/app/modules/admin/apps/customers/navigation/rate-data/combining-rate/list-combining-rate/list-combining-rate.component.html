@@ -93,16 +93,16 @@
                                 *ngIf="combiningRateList?.combining_rates.length > 0 else noCombiningRateList">
                                 <ng-container *ngFor="let combiningRate of combiningRateList.combining_rates">
                                     <div class="combining-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-                                        <div class="truncate">
+                                        <div class="truncate" matTooltip="{{combiningRate.farm_name}}">
                                             {{combiningRate.farm_name}}
                                         </div>
-                                        <div class="truncate">
+                                        <div class="truncate" matTooltip="{{combiningRate.crop_name}}">
                                             {{combiningRate.crop_name}}
                                         </div>
-                                        <div class="hidden sm:block">
+                                        <div class="hidden sm:block" matTooltip="{{combiningRate.bushel_weight}}">
                                             {{combiningRate.bushel_weight}}
                                         </div>
-                                        <div class="hidden sm:block items-center">
+                                        <div class="hidden sm:block items-center" matTooltip="{{combiningRate.combining_rate}}">
                                             {{combiningRate.combining_rate}}
                                         </div>
                                         <!-- <div class="hidden sm:block items-center">

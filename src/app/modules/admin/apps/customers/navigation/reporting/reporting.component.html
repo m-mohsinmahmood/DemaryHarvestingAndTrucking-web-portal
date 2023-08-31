@@ -15,7 +15,7 @@
                             <thead
                                 class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
                                 <tr class="h-4">
-                                    <th class="py-4 px-4 border-b w-64">Harvesting Services</th>
+                                    <th class="py-4 px-4 border-b w-64">Job</th>
                                     <th class="py-4 px-4 border-b w-64">Farm</th>
                                     <th class="py-4 px-4 border-b w-64">Crop</th>
                                     <th class="py-4 px-4 border-b w-64">Rate Type</th>
@@ -81,7 +81,7 @@
                             <thead
                                 class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
                                 <tr class="h-4">
-                                    <th class="py-4 px-4 border-b w-64">Hauling Services</th>
+                                    <th class="py-4 px-4 border-b w-64">Job</th>
                                     <th class="py-4 px-4 border-b w-64">Farm</th>
                                     <th class="py-4 px-4 border-b w-64">Crop</th>
                                     <th class="py-4 px-4 border-b w-64">Rate Type</th>
@@ -145,7 +145,7 @@
                             <!-- ... add more headers as needed -->
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-secondary">
                         <tr *ngFor="let harvestingReport of harvestingReports.totalByCrop">
                             <td class="px-4 py-4 text-center border-b w-64">Total {{harvestingReport.crop_name}} Crop</td>
                             <td class="px-4 text-center border-b w-64">{{harvestingReport.total_revenue}}</td>
