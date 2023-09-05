@@ -11,7 +11,8 @@
             <div class="bg-white">
                 <div class="w-full overflow-x-auto shadow rounded-md"  *ngIf="customerReporting$ | async as harvestingReports">
                     <div *ngIf=" harvestingReports.harvestingServices?.length > 0; else noReports ">
-                        <table class="whitespace-nowrap">
+                        <table class="">
+                            
                             <thead
                                 class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
                                 <tr class="h-4">
@@ -38,7 +39,6 @@
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_acre}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_bushel}}</td>
-                                    <td class="px-4 text-center border-b w-64"></td>
                                 </tr>
 
                                 <tr>
@@ -50,7 +50,6 @@
                                     <th>Sub Total</th>
                                     <td class="px-4 py-2 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue')}}</td>
                                     <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue_per_acre')}}</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold"></td>
                                 </tr>
 
                             </tbody>
@@ -111,7 +110,6 @@
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_acre}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_bushel}}</td>
-                                    <td class="px-4 text-center border-b w-64"></td>
                                 </tr>
 
                                 <tr>
@@ -125,7 +123,6 @@
                                     <th>Sub Total</th>
                                     <td class="px-4 py-2 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue')}}</td>
                                     <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue_per_acre')}}</td>
-                                    <td class="px-4 text-center border-b w-64 font-bold"></td>
                                 </tr>
 
                             </tbody>
@@ -143,41 +140,37 @@
 
     <div class="mt-12">
         <div class="w-full overflow-x-auto shadow rounded-md" *ngIf="customerReporting$ | async as harvestingReports">
-            <div *ngIf=" harvestingReports.totalByCrop?.length > 0; else noReports ">
-                <table class="whitespace-nowrap">
-                    <thead
-                        class="py-4 xshadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
-                        <tr class="h-4">
-                            <th class="border-b">Total</th>
-                            <th class="py-4 px-4 border-b w-64">Revenue</th>
-                            <th class="py-4 px-4 border-b w-64">Revenue / Acre</th>
-                            <th class="py-4 px-4 border-b w-64">Revenue / Bushel</th>
-                            <!-- ... add more headers as needed -->
-                        </tr>
-                    </thead>
-                    <tbody class="text-secondary">
-                        <tr *ngFor="let harvestingReport of harvestingReports.totalByCrop">
-                            <td class="px-4 py-4 text-center border-b w-64">Total {{harvestingReport.crop_name}} Crop</td>
-                            <td class="px-4 text-center border-b w-64">{{harvestingReport.total_revenue}}</td>
-                            <td class="px-4 text-center border-b w-64">{{harvestingReport.total_revenue_per_acre}}</td>
-                            <td class="px-4 text-center border-b w-64"></td>
-                        </tr>
-
-                        <tr>
-                            <th class="border-b py-4 flex pl-4">Total Income</th>
-                            <td class="px-4 py-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue')}}</td>
-                            <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue_per_acre')}}</td>
-                            <td class="px-4 text-center border-b w-64 font-bold"></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-
-            <ng-template #noReports>
-                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There
-                    are no Reports!</div>
-            </ng-template>
+          <div *ngIf=" harvestingReports.totalByCrop?.length > 0; else noReports ">
+            <table class="min-w-full table-fixed">
+              <thead class="py-4 bg-gray-50 dark:bg-black dark:bg-opacity-5 text-md font-semibold text-secondary">
+                <tr>
+                  <th class="w-1/4 py-4 px-4 border-b">Total</th>
+                  <th class="w-1/4 py-4 px-4 border-b">Revenue</th>
+                  <th class="w-1/4 py-4 px-4 border-b">Revenue / Acre</th>
+                  <th class="w-1/4 py-4 px-4 border-b">Revenue / Bushel</th>
+                </tr>
+              </thead>
+              <tbody class="text-secondary">
+                <tr *ngFor="let harvestingReport of harvestingReports.totalByCrop">
+                  <td class="w-1/4 py-4 px-4 text-center border-b">Total {{harvestingReport.crop_name}} Crop</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue_per_acre}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue_per_bushel}}</td>
+                </tr>
+                <tr>
+                  <th class="w-1/4 py-4 px-4 border-b">Total Income</th>
+                  <td class="w-1/4 py-4 px-4 text-center border-b font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue')}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue_per_acre')}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b font-bold">{{getSubTotal(harvestingReports.totalByCrop, 'total_revenue_per_bushel')}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+          <ng-template #noReports>
+            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                There are no Reports!</div>
+          </ng-template>
         </div>
-    </div>
+      </div>
 </div>
