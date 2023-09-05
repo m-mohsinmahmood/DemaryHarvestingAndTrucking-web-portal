@@ -25,7 +25,6 @@
                                     <th class="py-4 px-4 border-b w-64">Revenue</th>
                                     <th class="py-4 px-4 border-b w-64">Revenue / Acre</th>
                                     <th class="py-4 px-4 border-b w-64">Revenue / Bushel</th>
-                                    <!-- ... add more headers as needed -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,9 +35,9 @@
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.rate_type}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.quantity}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.rate}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_acre}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_bushel}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue)}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue_per_acre)}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue_per_bushel)}}</td>
                                 </tr>
 
                                 <tr>
@@ -50,6 +49,7 @@
                                     <th>Sub Total</th>
                                     <td class="px-4 py-2 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue')}}</td>
                                     <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue_per_acre')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.harvestingServices, 'revenue_per_bushel')}}</td>
                                 </tr>
 
                             </tbody>
@@ -107,9 +107,9 @@
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.base_rate}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.base_bushels}}</td>
                                     <td class="px-4 text-center border-b w-64">{{harvestingReport.premium_rate}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_acre}}</td>
-                                    <td class="px-4 text-center border-b w-64">{{harvestingReport.revenue_per_bushel}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue)}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue_per_acre)}}</td>
+                                    <td class="px-4 text-center border-b w-64">{{toDecimalPoint(harvestingReport.revenue_per_bushel)}}</td>
                                 </tr>
 
                                 <tr>
@@ -120,9 +120,11 @@
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <td class="px-4 text-center border-b w-64"></td>
                                     <td class="px-4 text-center border-b w-64"></td>
+                                    <td class="px-4 text-center border-b w-64"></td>
                                     <th>Sub Total</th>
                                     <td class="px-4 py-2 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue')}}</td>
                                     <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue_per_acre')}}</td>
+                                    <td class="px-4 text-center border-b w-64 font-bold">{{getSubTotal(harvestingReports.haulingServices, 'revenue_per_bushel')}}</td>
                                 </tr>
 
                             </tbody>
@@ -153,9 +155,9 @@
               <tbody class="text-secondary">
                 <tr *ngFor="let harvestingReport of harvestingReports.totalByCrop">
                   <td class="w-1/4 py-4 px-4 text-center border-b">Total {{harvestingReport.crop_name}} Crop</td>
-                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue}}</td>
-                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue_per_acre}}</td>
-                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.total_revenue_per_bushel}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue)}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue_per_acre)}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue_per_bushel)}}</td>
                 </tr>
                 <tr>
                   <th class="w-1/4 py-4 px-4 border-b">Total Income</th>

@@ -41,7 +41,18 @@ export class ReportingComponent implements OnInit {
             sum += param[getSum];
         })
 
-        return sum;
+        return this.toDecimalPoint(sum);
     }
+
+    toDecimalPoint(number) {
+        if(number){
+        const num = parseFloat(number).toFixed(2);
+        var parts = num.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+        } else{
+          return 'N/A'
+        }
+      }
 
 }
