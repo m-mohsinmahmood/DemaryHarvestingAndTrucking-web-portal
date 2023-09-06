@@ -96,7 +96,7 @@ export class AddCombiningRateComponent implements OnInit {
           this.form.patchValue({
             id: combiningRate.id,
             customer_id: customer_id,
-            farm_id: {farm_id: combiningRate.farm_id, name: combiningRate.farm_name},
+            farm_id: {id: combiningRate.farm_id, name: combiningRate.farm_name},
             crop_id: {crop_id: combiningRate.crop_id, name: combiningRate.crop_name},
             combining_rate: combiningRate.combining_rate,
             base_bushels: combiningRate.base_bushels,
@@ -110,7 +110,6 @@ export class AddCombiningRateComponent implements OnInit {
       this.form.value['crop_id'] = this.form.value['crop_id']?.crop_id;
       this.form.value['farm_id'] = this.form.value['farm_id']?.id;
       if (this.data && this.data.isEdit) {
-          this.form.value['farm_id'] = this.form.value['farm_id']?.farm_id;
           this._customerService.updateCombiningRate(this.form.value);
       } else {
           this._customerService.createCombiningRate(this.form.value);

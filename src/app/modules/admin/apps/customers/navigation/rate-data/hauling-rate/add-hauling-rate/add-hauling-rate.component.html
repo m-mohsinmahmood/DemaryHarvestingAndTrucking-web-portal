@@ -15,7 +15,7 @@
             <mat-label>Farm Name</mat-label>
             <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerFarms()"
                 [matAutocomplete]="farms" (keyup)="farm_search$.next($event.target.value)"
-                #trigger="matAutocompleteTrigger" matInput formControlName="farm_id" name="name" placeholder="Farm Name"
+                #trigger="matAutocompleteTrigger" matInput formControlName="farm_id" name="farm_id" placeholder="Farm Name"
                 required />
         </mat-form-field>
         <mat-autocomplete #farms="matAutocomplete" [displayWith]="displayFarmForAutoComplete">
@@ -44,7 +44,7 @@
             <mat-label>Crop Name</mat-label>
             <input (ngModelChange)="formValidation($event)" (click)="getDropdownCustomerCrops()"
                 [matAutocomplete]="crops" (keyup)="crop_search$.next($event.target.value)" matInput
-                formControlName="crop_id" name="name" placeholder="Crop Name" required />
+                formControlName="crop_id" name="crop_id" placeholder="Crop Name" required />
         </mat-form-field>
         <mat-autocomplete #crops="matAutocomplete" [displayWith]="displayCropForAutoComplete">
             <div *ngIf="allCrops | withLoading | async as allCrops">

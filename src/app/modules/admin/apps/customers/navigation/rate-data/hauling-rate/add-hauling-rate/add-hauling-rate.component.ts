@@ -91,10 +91,11 @@ export class AddHaulingRateComponent implements OnInit {
     });
     if (this.data && this.data.isEdit) {
       const { customer_id, haulingRate } = this.data;
+      console.log("Hauling Rate", haulingRate);
       this.form.patchValue({
         customer_id: customer_id,
         id: haulingRate.id,
-        farm_id: { farm_id: haulingRate.farm_id, name: haulingRate.farm_name },
+        farm_id: { id: haulingRate.farm_id, name: haulingRate.farm_name },
         crop_id: { crop_id: haulingRate.crop_id, name: haulingRate.crop_name },
         rate_type: haulingRate.rate_type.toString(),
         rate: haulingRate.rate,
@@ -102,15 +103,19 @@ export class AddHaulingRateComponent implements OnInit {
         base_bushels: haulingRate.base_bushels,
         premium_rate: haulingRate.premium_rate,
       });
+
+      console.log("FORM VALUES",this.form.value)
     }
   }
 
   onSubmit(): void {
+    console.log("SUBMIT FORM VALUES",this.form.value);
+    console.log("FARM ID", this.form.value['farm_id']?.id);
     this._customerService.isLoadingHaulingRate.next(true);
     this.form.value['crop_id'] = this.form.value['crop_id']?.crop_id;
     this.form.value['farm_id'] = this.form.value['farm_id']?.id;
     if (this.data && this.data.isEdit) {
-      this.form.value['farm_id'] = this.form.value['farm_id']?.farm_id;
+    
       if (this.form.value.rate_type != 'Ton Miles' && this.form.value.rate_type != 'Bushels + Excess Yield') {
         this.form.value.base_rate = 0;
         this.form.value.premium_rate = 0;
