@@ -153,7 +153,7 @@
               </thead>
               <tbody class="text-secondary">
                 <tr *ngFor="let harvestingReport of harvestingReports.totalByCrop">
-                  <td class="w-1/4 py-4 px-4 text-center border-b">Total {{harvestingReport.crop_name}}</td>
+                  <td class="w-1/4 py-4 px-4 text-center border-b">{{harvestingReport.crop_name}}</td>
                   <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue)}}</td>
                   <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue_per_acre)}}</td>
                   <td class="w-1/4 py-4 px-4 text-center border-b">{{toDecimalPoint(harvestingReport.total_revenue_per_bushel)}}</td>
