@@ -187,12 +187,12 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       filterValues.beginning_date = new Date(stDay).toISOString() || '';
       filterValues.ending_date = new Date(enDay).toISOString() || '';
-  
+
     } else{
 
       filterValues.beginning_date = filterValues.beginning_date || '';
       filterValues.ending_date = filterValues.ending_date || '';
-  
+
     }
 
 
@@ -213,7 +213,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this._employeeService.getDwrList('dwrList', filterValues);
   }
-  
+
   removeFilters() {
     this.dwrFiltersForm.reset();
     this.dwrFiltersForm.value.status = '';
@@ -400,10 +400,9 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
       employee?.dwrTasks.forEach((dwr) => {
         const formattedBeginningDay = new Date(dwr.begining_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
         const formattedEndingDay = new Date(dwr.ending_day).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-        const createdAtDate = new Date(dwr.created_at);
+        const createdAtDate = new Date(dwr.begining_day);
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const formattedCreatedAt = `${monthNames[createdAtDate.getMonth()]}-${createdAtDate.getDate().toString().padStart(2, '0')}-${createdAtDate.getFullYear()}`;
-
 
         const row = [
           dwr.first_name + dwr.last_name,
@@ -471,7 +470,7 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
           payroll.employee_name,
           { t: 'n', z: '#,##0.00', v: payroll.hours_worked }, // Apply custom number format to hours_worked with 1000 separators
           { t: 'n', z: '#,##0.00', v: payroll.wages}, // Apply custom number format to hours_worked with 1000 separators
-          
+
         ];
         data.push(row);
       });
@@ -513,8 +512,6 @@ export class AllDwrsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
 
     this.page = 1;
-
-    console.log(this.sortDirection);
 
     this._employeeService.getDwrList(
       'dwrList',
