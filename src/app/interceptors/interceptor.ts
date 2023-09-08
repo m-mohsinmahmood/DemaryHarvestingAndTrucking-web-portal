@@ -19,8 +19,8 @@ export class Interceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         let requestUrl = request.url;
         if (requestUrl.indexOf('api-1') !== -1) {
-            requestUrl = requestUrl.replace('api-1', 'http://localhost:7071/api');
-            // requestUrl = requestUrl.replace('api-1', 'https://dht-dev.azurewebsites.net/api');
+            // requestUrl = requestUrl.replace('api-1', 'http://localhost:7071/api');
+            requestUrl = requestUrl.replace('api-1', 'https://dht-dev.azurewebsites.net/api');
         }
         request = request.clone({
             url: requestUrl,
