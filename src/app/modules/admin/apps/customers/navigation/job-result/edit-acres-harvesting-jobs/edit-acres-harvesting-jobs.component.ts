@@ -79,7 +79,7 @@ export class AcresHarvestingJobs implements OnInit {
             ticket_name: [''],
             destination_id: [''],
             field_name: [''],
-            field_id: [''],
+            field_id: ['', Validators.required],
             farm_id: [''],
         });
         if (this.data && this.data.acreData.isEdit) {
