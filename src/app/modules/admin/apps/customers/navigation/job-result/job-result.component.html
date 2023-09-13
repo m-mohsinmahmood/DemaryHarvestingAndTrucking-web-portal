@@ -288,23 +288,6 @@
                             </button>
 
                         </mat-menu>
-
-
-
-                        <!-- <div class="flex justify-end sm:pr-4" *ngIf="(customHarvestingJobs$ | async) as harvestingJobs">
-                            <button class="flex flex-row justify-center items-center" (click)="exportToPdf()">
-                                <mat-icon>download</mat-icon>
-                                <span>Export to PDF</span>
-                            </button>
-                        </div>
-
-                        <div class="flex justify-end sm:pr-4" *ngIf="(customHarvestingJobs$ | async) as harvestingJobs">
-                            <button class="flex flex-row justify-center items-center" (click)="exportToExcel()">
-                                <mat-icon>download</mat-icon>
-                                <span>Export to Excel</span>
-                            </button>
-                        </div> -->
-
                     </div>
                 </div>
 
@@ -395,9 +378,6 @@
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Farmer Tickets</mat-label>
-                                <!-- <mat-label class="text-right">{{harvestingJobs.details[0]?.farmers_tickets ?
-                                    harvestingJobs.details[0]?.farmers_tickets : "-"}}</mat-label> -->
-
                             </div>
                             <div class="flex flex-col justify-center py-1 items-start">
                                 <mat-label class="text-lg text-gray-500 font-bold">Company</mat-label>
@@ -412,23 +392,7 @@
                                         harvestingJobs.details[0]?.total_acres : "-"}}</mat-label>
                                 </div>
 
-                                <!-- <button *ngIf="editAcreField"
-                                    class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block mt-4" mat-stroked-button
-                                    (click)="openEditAcresDialog(harvestingJob)" matTooltip="Edit"
-                                    matTooltipPosition="above">
-                                    <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                </button> -->
                             </div>
-                            <!-- <div>
-                                <button *ngIf="editAcreField" class="min-w-10 min-h-7 h-7 px-2 leading-6 hidden sm:block" mat-stroked-button
-                                    (click)="openEditDialog(harvestingJob)" matTooltip="Edit"
-                                    matTooltipPosition="above">
-                                    <mat-icon [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                </button>
-                            </div> -->
-
-
-
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -463,10 +427,10 @@
                         <tbody>
                             <tr *ngFor="let harvestingJob of harvestingJobs.harvestingJobs">
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.job_setup_name}}</td>
-                                <td class="px-4 text-center border-b w-64">{{harvestingJob.cart_operator_name}}</td>
                                 <td class="px-4 text-center border-b w-64">{{harvestingJob.acres?
                                     this.toDecimalPoint(harvestingJob.acres):
                                     ''}}</td>
+                                <td class="px-4 text-center border-b w-64">{{harvestingJob.cart_operator_name}}</td>
                                 <td matTooltip="{{harvestingJob.farm_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.farm_name}}</td>
                                 <td matTooltip="{{harvestingJob.field_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.field_name}}</td>
                                 <td matTooltip="{{harvestingJob.crop_name}}" class="px-4 text-center border-b w-64">{{harvestingJob.crop_name}}</td>
