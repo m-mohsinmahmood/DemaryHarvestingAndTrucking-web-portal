@@ -23,10 +23,10 @@
             <input (click)="getDropdownFields()" [disabled] [matAutocomplete]="fields"
                 (keyup)="field_search$.next($event.target.value)" matInput
                 formControlName="field_id" name="name" placeholder="Field Name" />
-                
-    
+
+
         </mat-form-field>
-    
+
         <mat-autocomplete #fields="matAutocomplete" [displayWith]="displayFieldForAutoComplete">
             <div *ngIf="allFields | withLoading | async as allFields">
                 <ng-template [ngIf]="allFields.value">
@@ -49,14 +49,14 @@
                 </ng-template>
             </div>
         </mat-autocomplete>
-        
+
         <mat-form-field appearance="outline" fxFlex>
             <mat-label>Destination Name</mat-label>
             <input (click)="getDropdownDestinations()"
                 [matAutocomplete]="destinations"
                 (keyup)="destination_search$.next($event.target.value)" matInput
                 formControlName="destination_id" name="name" placeholder="Destination Name" />
-                
+
         </mat-form-field>
 
         <mat-autocomplete #destinations="matAutocomplete"
@@ -83,34 +83,34 @@
                 </ng-template>
             </div>
         </mat-autocomplete>
-        
-        
+
+
         <mat-form-field appearance="outline">
             <mat-label>Date of Purchase</mat-label>
             <input id="date2" readonly="readonly" name="date2" formControlName="load_date" matInput [matDatepicker]="picker2">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>        </mat-form-field>
-      
+
 
         <mat-form-field appearance="outline">
             <mat-label>Scale Ticket</mat-label>
-            <input matInput formControlName="sl_number" />
+            <input type="number" matInput formControlName="sl_number" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Net Pounds</mat-label>
-            <input matInput formControlName="net_pounds" />
+            <input type="number" matInput formControlName="net_pounds" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Net Bushels</mat-label>
-            <input matInput formControlName="net_bushel" />
+            <input type="number" matInput formControlName="net_bushel" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Load Miles</mat-label>
-            <input matInput formControlName="load_miles" />
+            <input type="number" matInput formControlName="load_miles" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Acres</mat-label>
-            <input matInput formControlName="acres" />
+            <input type="number" matInput formControlName="acres" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Status</mat-label>
