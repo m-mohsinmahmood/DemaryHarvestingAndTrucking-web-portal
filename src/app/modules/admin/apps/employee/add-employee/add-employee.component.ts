@@ -48,7 +48,7 @@ export class AddEmployeeComponent implements OnInit {
         this.form = this._formBuilder.group({
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+            email: [''],
             employee_role: ['', [Validators.required]],
             employee_company: ['', [Validators.required]],
             machinery: ['', [Validators.required]],

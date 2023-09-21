@@ -58,10 +58,10 @@
             <mat-form-field appearance="outline">
                 <mat-label>Guest User Type</mat-label>
                 <mat-select formControlName="user_type">
-                    <mat-option value="customer">Customer</mat-option>
-                    <mat-option value="customerTP">Customer Third Party</mat-option>
-                    <mat-option value="dhtTP">DHT Third Party</mat-option>
-                    <mat-option value="other">Other</mat-option>
+                    <mat-option value="Customer Truck Driver">Customer Truck Driver</mat-option>
+                    <mat-option value="Customer Third Party Truck Driver">Customer Third Party Truck Driver</mat-option>
+                    <mat-option value="Customer Load Purchaser Truck Driver">Customer Load Purchaser Truck Driver</mat-option>
+                    <mat-option value="DHT Third Party Truck Driver">DHT Third Party Truck Driver</mat-option>
                 </mat-select>
                 <mat-hint *ngIf="this.form.get('user_type').hasError('required')"
                     class="text-xs text-red-500">User Type is required</mat-hint>
