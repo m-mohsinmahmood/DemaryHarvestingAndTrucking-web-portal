@@ -38,7 +38,7 @@ export class ReportingComponent implements OnInit {
     getSubTotal(data, getSum) {
         let sum = 0;
         data.map(param => {
-            sum += param[getSum];
+            sum += Number(param[getSum]);
         })
 
         return this.toDecimalPoint(sum);

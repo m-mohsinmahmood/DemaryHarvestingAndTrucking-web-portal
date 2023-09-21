@@ -758,10 +758,14 @@ export class JobResultComponent implements OnInit {
 
         // Create Job Results Data for Excel Sheet
   const jobResultsData = [
-    ['Job','Job Acres','Farm Name', 'Field Name', 'Crop Name', 'Bushel Weight', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
+    ['Job','Job Acres', 'Cart Operator', 'Truck Driver', 'Crew Cheif','Farm Name', 'Field Name', 'Crop Name', 'Bushel Weight', 'Load Date', 'Destination', 'D. Tkt.','S. Tkt.', 'Net Pounds', 'Net Bushel', 'Load Miles','Protein Content','Moisture Conent','Test Weight'],
     ...harvestingJobs.map(harvestingJob => [
       harvestingJob.job_setup_name,
       harvestingJob.acres? harvestingJob.acres: '',
+      harvestingJob.cart_operator_name,
+      harvestingJob.truck_driver_name,
+      harvestingJob.crew_cheif_name,
+      harvestingJob.acres,
       harvestingJob.farm_name,
       harvestingJob.field_name,
       harvestingJob.crop_name,
