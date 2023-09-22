@@ -57,6 +57,8 @@ export class EmployeeDataComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((value) => {
         this.employeeData = value;
+        console.log(this.employeeData);
+
       })
   }
   //#endregion
@@ -80,7 +82,7 @@ export class EmployeeDataComponent implements OnInit {
     });
   }
 
-  //#region find country code 
+  //#region find country code
   getCountryCode(country_code) {
     if (country_code && country_code != 'zz')
       return '+' + country_code?.split("+")[1];
@@ -105,5 +107,5 @@ export class EmployeeDataComponent implements OnInit {
 
   downloadResume(link) {
     window.open(link, "_blank");
-  } 
+  }
 }
