@@ -51,7 +51,7 @@
                             matSort matSortDisableClear (matSortChange)="sortData($event)">
                             <div mat-sort-header="first_name">First Name</div>
                             <div mat-sort-header="last_name">Last Name</div>
-                            <div mat-sort-header="country">Country</div>
+                            <div mat-sort-header="country" class="hidden sm:block">Country</div>
                             <div mat-sort-header="role" class="hidden sm:block">Role</div>
                             <div mat-sort-header="status_step" class="hidden sm:block">Onboarding Staus</div>
                             <div mat-sort-header="employment_period" class="hidden sm:block">Employment Period</div>
@@ -93,7 +93,10 @@
                                                 {{ employee.email }}
                                             </div>
                                         </div>
-                                        <div class="hidden sm:block">
+                                        <div *ngIf="employee?.is_guest_user" class="hidden sm:block">
+                                            {{"Guest"}}
+                                        </div>
+                                        <div *ngIf="!employee?.is_guest_user" class="hidden sm:block">
                                             {{employee.country == "United States of America"? "USA" : "H2A"}}
                                         </div>
 
